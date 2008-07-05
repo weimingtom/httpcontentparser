@@ -99,13 +99,13 @@ int WSPAPI WSPSelect (
 ) 
 { 
 	//ODS(_T("WSPSelect ..."));
-	ShowAllSOCKET("Begin WSPSelect ...", readfds);
+	// ShowAllSOCKET("Begin WSPSelect ...", readfds);
 	// 直接返回，自身填入select
 	if (g_select.preselect(readfds) == 0) {
 		char buffer[1024];
 		OutputDebugString("select return directly.................................");
  
-		ShowAllSOCKET("g_select.preselect(readfds)", readfds);
+		// ShowAllSOCKET("g_select.preselect(readfds)", readfds);
 
 		// firefox都是NULL
 		if (writefds != NULL)
@@ -120,7 +120,7 @@ int WSPAPI WSPSelect (
 	int iRet = NextProcTable.lpWSPSelect(nfds, 
 				readfds, writefds, exceptfds, timeout, lpErrno); 
 
-	ShowAllSOCKET("NextProcTable.lpWSPSelect", readfds);
+	// ShowAllSOCKET("NextProcTable.lpWSPSelect", readfds);
 	g_select.postselect(readfds);
 
 	return iRet;
@@ -139,14 +139,13 @@ int WSPAPI WSPRecv(
 ) 
 {
 	try { 
-		ODS(_T("WSPRecv ..."));
+		DebugStringNoDres(_T("WSPRecv ..."));
 
 		if (g_select.prerecv(s, lpBuffers, dwBufferCount, lpNumberOfBytesRecvd) == 0) {
-			OutputDebugString("prerecv ---- return....==================");
+			DebugStringNoDres("prerecv ---- return  directly  ... ");
 			return 0;
 		}
 		   
-		OutputDebugString("prerecv ---- return....+++++++++++++++++++++");
 		int iRet = NextProcTable.lpWSPRecv(s, lpBuffers, dwBufferCount
 				, lpNumberOfBytesRecvd, lpFlags, lpOverlapped
 				, lpCompletionRoutine, lpThreadId, lpErrno);
@@ -195,7 +194,7 @@ int WSPAPI WSPConnect(
 	LPINT			lpErrno
 )
 {
-	ODS(_T("WSPConnect ..."));
+	DebugStringNoDres(_T("WSPConnect ..."));
 	return NextProcTable.lpWSPConnect(s, name, namelen, lpCallerData
 		, lpCalleeData, lpSQOS, lpGQOS, lpErrno);
 }
@@ -406,13 +405,8 @@ int WSPAPI WSPGetSockOpt (
   LPINT			lpErrno        
 ) 
 {
-	try {
-		return NextProcTable.lpWSPGetSockOpt(
-			s, level, optname, optval, optlen, lpErrno);
-	} catch (...) {
-		*lpErrno = WSAEINVAL;
-		return SOCKET_ERROR;
-	}
+	return NextProcTable.lpWSPGetSockOpt(
+		s, level, optname, optval, optlen, lpErrno);
 }
 
 BOOL WSPAPI WSPGetQOSByName (
