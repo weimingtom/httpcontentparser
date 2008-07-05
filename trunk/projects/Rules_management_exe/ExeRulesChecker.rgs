@@ -1,0 +1,24 @@
+HKCR
+{
+	Rules_management_exe.ExeRulesChecker.1 = s 'ExeRulesChecker Class'
+	{
+		CLSID = s '{A7A82CE1-26DB-4B36-B0D7-ECFA04AEB03E}'
+	}
+	Rules_management_exe.ExeRulesChecker = s 'ExeRulesChecker Class'
+	{
+		CLSID = s '{A7A82CE1-26DB-4B36-B0D7-ECFA04AEB03E}'
+		CurVer = s 'Rules_management_exe.ExeRulesChecker.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {A7A82CE1-26DB-4B36-B0D7-ECFA04AEB03E} = s 'ExeRulesChecker Class'
+		{
+			ProgID = s 'Rules_management_exe.ExeRulesChecker.1'
+			VersionIndependentProgID = s 'Rules_management_exe.ExeRulesChecker'
+			ForceRemove 'Programmable'
+			LocalServer32 = s '%MODULE%'
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{1D97C684-6D93-4F41-B023-AB4A988B4905}'
+		}
+	}
+}
