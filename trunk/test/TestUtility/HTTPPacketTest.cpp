@@ -147,6 +147,20 @@ HTTPPacketTest::HTTPPacketTest(void) {
 HTTPPacketTest::~HTTPPacketTest(void) {
 }
 
+void HTTPPacketTest::testNoContentChunk() {
+	const char complex_chunk1[] = "HTTP/1.1 200 OK\r\n"
+		"Date: Thu, 24 Apr 2008 02:37:48 GMT\r\n"
+		"Content-Type: image/gif\r\n"
+		"Age: 220737\r\n"
+		"Transfer-Encoding: chunked\r\n"
+		"Connection: keep-alive\r\n\r\n0\r\n\r\n";
+
+	HTTPPacket *packet = new HTTPPacket;
+	CPPUNIT_ASSERT(strlen(complex_chunk1) == packet->addBuffer(complex_chunk1,
+		strlen(complex_chunk1)));
+
+	CPPUNIT_ASSERT(true == packet->isComplete());
+}
 void HTTPPacketTest::testNoContentPacket() {
 	const char no_content[] = "HTTP/1.0 304 Not Modified\r\n"
 							"Date: Mon, 30 Jun 2008 16:09:18 GMT\r\n"
