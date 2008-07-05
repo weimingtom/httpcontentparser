@@ -17,7 +17,9 @@ CSelectIO::CSelectIO(void) {
 }
 
 CSelectIO::~CSelectIO(void) {
-	freeAllCompletedPacket();
+	using namespace yanglei_utility;
+	SingleLock<CAutoCreateCS> lock(&cs_);
+	// freeAllCompletedPacket();
 	clearAllPackets();
 }
 
@@ -25,22 +27,23 @@ CSelectIO::~CSelectIO(void) {
 /////////////////////////////////////////////
 // public members
 // 在调用WSPRecv时使用
-// 如果给定的SOCKET 不能处理则返回1
+// 如果给定的SOCKET 不能处理则返回1 
 int CSelectIO::prerecv(SOCKET s, LPWSABUF lpBuffers, 
 					   DWORD dwBufferCount, DWORD *recv_bytes) {
+    using namespace yanglei_utility;
+	SingleLock<CAutoCreateCS> lock(&cs_);
 	// 如果没有完成的socket
 	HTTPPacket * packet = getCompletedPacket(s);
 	if (packet == NULL) {
 		return 1; 
 	}
 
-	DebugStringNoDres("prerecv ---- begin==================");
 	// 验证包是否合法，如果不合法, 则删除包，并填充
 	// 填充一个不可达包
 	//if ( false == checkWholePacket(packet)) {
 	//	*recv_bytes = 0;
 	//	removeCompletedPacket(s, packet); 
-	//	OutputDebugString("****************************************");
+	//	DebugStringNoDres("****************************************");
 	//	return 0;
 	//} 
 
@@ -48,18 +51,25 @@ int CSelectIO::prerecv(SOCKET s, LPWSABUF lpBuffers,
 	ProtocolPacket<HTTP_PACKET_SIZE> * raw_packet= packet->getRawPacket();
 	// 所有包都已经发送
 	if (raw_packet == NULL) {
-		DebugStringNoDres("prerecv ================================ remove packet");
 		*recv_bytes = 0;
 		// 移除包
 		removeCompletedPacket(s, packet);
 		return 0; 
 	} else {
+		char filename[1024];
+		sprintf(filename, "c:\\written\\%d_%d.log", s);
+		std::fstream file;
+		file.open(filename, std::ios::out | std::ios::app | std::ios::binary);
 		*recv_bytes = 0;
 		for (int i = 0; i < dwBufferCount; i++) {
 			DWORD bytes = raw_packet->read(lpBuffers[i].buf, lpBuffers[i].len);
+			file.write(lpBuffers[i].buf, bytes);
+
 			if (bytes == 0) break;	// 如果已经接受完毕
-			*recv_bytes += bytes;
+			*recv_bytes += bytes; 
 		} 
+
+		file.close();
 		return 0;
 	}
 }
@@ -68,6 +78,9 @@ int CSelectIO::prerecv(SOCKET s, LPWSABUF lpBuffers,
 // 这个函数在SPI中调用下一层的select之前调用
 // 如果返回0，则不再调用select,直接返回
 int CSelectIO::preselect(fd_set *readfds) {
+	using namespace yanglei_utility;
+	SingleLock<CAutoCreateCS> lock(&cs_);
+
 	if (readfds == NULL)
 		return 1;
 
@@ -105,6 +118,9 @@ int CSelectIO::preselect(fd_set *readfds) {
 // 然手从fd_set中移除(如果上未完成传输)
 // 如果已经完成传输，则将他放入到已完成的队列中
 int CSelectIO::postselect(fd_set *readfds) {
+	using namespace yanglei_utility;
+	SingleLock<CAutoCreateCS> lock(&cs_);
+
 	if (readfds == NULL)
 		return 0;
 	fd_set need_to_remove;
@@ -293,7 +309,12 @@ bool CSelectIO::isAnyCompleteSOCKET() {
 void CSelectIO::freeAllCompletedPacket() {
 	COMPLETED_PACKETS::const_iterator iter = completed_packets_.begin();
 	for (; iter != completed_packets_.end(); ++iter) {
-		delete iter->second;
+		char buffer[1024];
+		sprintf(buffer, "c:\\%d.log", iter->first);
+		iter->second->achieve(buffer);
+
+		if (iter->second != NULL)
+			delete iter->second;
 	}
 	completed_packets_.clear();
 }
@@ -305,20 +326,21 @@ int CSelectIO::addCompletedPacket(const SOCKET s, HTTPPacket *p) {
 }
  
 int CSelectIO::removeCompletedPacket(const SOCKET s, HTTPPacket *p) {
+	using namespace yanglei_utility;
+	SingleLock<CAutoCreateCS> lock(&cs_);
+
 	COMPLETED_PACKETS::iterator iter = completed_packets_.begin();
 	COMPLETED_PACKETS::const_iterator iterEnd = completed_packets_.end();
 	for (; iter != iterEnd; ++iter) {
-		OutputDebugString("======iterator ..........");
 		if (iter->second->getCode() == p->getCode()) {
+
+			DebugStringNoDres("prerecv ================================ remove packet");
 			delete p;		// **** 把这个忘了，导致内存泄漏
 			completed_packets_.erase(iter);
-			OutputDebugString("======Remove successly.........");
 			return 1;
 		}
 	}
-
-	OutputDebugString("=======Remove failed.........");
-	return 0;
+	return 0; 
 }
 
 // 获取与SOCKET对应第一个已经完成的包
