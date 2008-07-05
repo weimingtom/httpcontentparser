@@ -173,7 +173,13 @@ int HTTPPacket::addBuffer(const char *buf, const unsigned len) {
 	} catch (std::bad_alloc &) {
 		// 如果内存不足，交给上层程序来处理
 		throw; 
-	} catch (...) { 
+	} catch (...) {
+		char filename[1024];
+		sprintf(filename, "c:\\exp\\int%d.log", getCode());
+		std::fstream file;
+		file.open(filename, std::ios::out | std::ios::app | std::ios::binary);
+		file.write(buf, len);
+		file.close();
 		DEBUG_MESSAGE("addBuffer exception...");
 		return 0;
 	}
@@ -328,9 +334,6 @@ HTTP_RESPONSE_HEADER::~HTTP_RESPONSE_HEADER() {
 
 int HTTP_RESPONSE_HEADER::parseHeader(const char *header_data, const int len) {
 	char buf[HTTP_HEADER_MAX_LENGTH];
-	_snprintf(buf, HTTP_HEADER_MAX_LENGTH,
-		"HTTP_HEADER_MAX_LENGTH %d, length=%d", HTTP_HEADER_MAX_LENGTH,len);
-	OutputDebugString(buf);
 	assert(HTTP_HEADER_MAX_LENGTH > len);
 	// 复制数据
 	buf[len] = '\0';

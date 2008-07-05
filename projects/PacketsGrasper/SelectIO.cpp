@@ -19,7 +19,7 @@ CSelectIO::CSelectIO(void) {
 CSelectIO::~CSelectIO(void) {
 	using namespace yanglei_utility;
 	SingleLock<CAutoCreateCS> lock(&cs_);
-	// freeAllCompletedPacket();
+	freeAllCompletedPacket();
 	clearAllPackets();
 }
 
@@ -69,6 +69,8 @@ int CSelectIO::prerecv(SOCKET s, LPWSABUF lpBuffers,
 			*recv_bytes += bytes; 
 		} 
 
+		std::string str = "\r\n=================\r\n";
+		file.write(str.c_str(), str.length());
 		file.close();
 		return 0;
 	}
@@ -142,10 +144,15 @@ int CSelectIO::postselect(fd_set *readfds) {
 			int ret = NextProcTable.lpWSPRecv(s, &wsabuf, 1, 
 				&bytes_recv, &flags, NULL, NULL, NULL, &errorno);
 
-			graspData(s, wsabuf.buf, bytes_recv);
+			int completed = graspData(s, wsabuf.buf, bytes_recv);
 
 			// 在接受数据以后我学要移除socket从给定的readfds
-			FD_SET(s, &need_to_remove);
+			// 不一定要移除啊， 有时候收到的就是完整的包啊！！！
+			// 如果graspData处理的是一个完整的包， 则返回0
+			// 如果返回1，代表不是一个完整的包，那么就不需要放入到
+			// need_to_remove当中
+			if (completed == 1)
+				FD_SET(s, &need_to_remove);
 		}
 	}
 
@@ -174,17 +181,22 @@ HTTPPacket * CSelectIO::getSOCKETPacket(const SOCKET s) {
 } 
 
 // 从包中获取数据并保存
+// 返回0代表是一个完整的包
+// 返回1代表不是一个完整的包
 int CSelectIO::graspData(const SOCKET s, char *buf, const int len) {
 	HTTPPacket* sock_data  = getSOCKETPacket(s);
 
 	// 写入接受到的包
-	char filename[1024];
-	sprintf(filename, "c:\\recv\\%d_%d.log", s, len);
-	std::fstream file;
-	file.open(filename, std::ios::out | std::ios::app | std::ios::binary);
-	file.write(buf, len);
-	file.close();
+	//char filename[1024];
+	//sprintf(filename, "c:\\recv\\%d_%d.log", s, len);
+	//std::fstream file;
+	//file.open(filename, std::ios::out | std::ios::app | std::ios::binary);
+	//file.write(buf, len);
+	//file.close();
 
+	char buffer[1024];
+	sprintf(buffer, "socket : %d", s);
+	OutputDebugString(buffer);
 	ODS("sock_data->addBuffer(buf, len);");
 	int bytes_written = sock_data->addBuffer(buf, len);
 
@@ -197,9 +209,9 @@ int CSelectIO::graspData(const SOCKET s, char *buf, const int len) {
 		addCompletedPacket(s, sock_data);
 
 		// 保存完成的包
-		char filename[1024];
-		sprintf(filename, "c:\\comdata\\%d.log", s, len);
-		sock_data->achieve(filename);
+		//char filename[1024];
+		//sprintf(filename, "c:\\comdata\\%d.log", s, len);
+		//sock_data->achieve(filename);
 
 		// 如果下一个包存在，则更新map,否则直接删除
 		HTTPPacket * next_packet = sock_data->detachNext();
@@ -210,9 +222,14 @@ int CSelectIO::graspData(const SOCKET s, char *buf, const int len) {
 		} else {
 			_sockets_map_[s] = next_packet;
 		}
-	} 
+		
+		OutputDebugString("grasp data... 0 ");
+		return 0;
+	}
 
-	return bytes_written;
+	// 非完整的包，返回1
+	OutputDebugString("grasp data... 1");
+	return 1;
 }
 
 // 验证对应SOCKET的包是否应该被存储
@@ -255,6 +272,13 @@ bool CSelectIO::needStored(const SOCKET s) {
 		OutputDebugString("needcheck return false, too short");
 		return false;
 	}
+
+	char filename[1024]; 
+	sprintf(filename, "c:\\need\\%d.log", s);
+	std::fstream file;
+	file.open(filename, std::ios::out | std::ios::app | std::ios::binary);
+	file.write(buf, recv_bytes);
+	file.close();
 	 
 	// 如果以HTTP开头
 	buf[buf_size-1] = '\0';
@@ -270,7 +294,7 @@ bool CSelectIO::needStored(const SOCKET s) {
 				return true;
 			default:
 				return true;
-		}
+		} 
 	} else {
 		OutputDebugString("needcheck return false");
 		return false;
@@ -309,19 +333,28 @@ bool CSelectIO::isAnyCompleteSOCKET() {
 void CSelectIO::freeAllCompletedPacket() {
 	COMPLETED_PACKETS::const_iterator iter = completed_packets_.begin();
 	for (; iter != completed_packets_.end(); ++iter) {
-		char buffer[1024];
-		sprintf(buffer, "c:\\%d.log", iter->first);
-		iter->second->achieve(buffer);
-
-		if (iter->second != NULL)
-			delete iter->second;
+		if (iter->second != NULL) {
+			// 记录没有给上面的包
+			OutputDebugString("===================||||||||||||||||||");
+			//char buffer[1024];
+			//sprintf(buffer, "c:\\%d.log", iter->first);
+			//iter->second->achieve(buffer);
+			//delete iter->second;
+		}
 	}
 	completed_packets_.clear();
 }
 
 // 将与SOCKET对应HTTPPacket的包添加到完成队列当中
 int CSelectIO::addCompletedPacket(const SOCKET s, HTTPPacket *p) {
-	completed_packets_.insert(std::make_pair(s, p));
+	// 注意HTTPPacket可能包含多个包，因此必须将它们分开
+	// 而且对于某些包，他们可能是不完整的，因此我们必须将其分开
+	HTTPPacket *packet = p;
+	while (NULL != packet && packet->isComplete()) {
+		completed_packets_.insert(std::make_pair(s, packet));
+		packet = packet->detachNext();
+	}
+	
 	return 0;
 }
  
@@ -333,8 +366,6 @@ int CSelectIO::removeCompletedPacket(const SOCKET s, HTTPPacket *p) {
 	COMPLETED_PACKETS::const_iterator iterEnd = completed_packets_.end();
 	for (; iter != iterEnd; ++iter) {
 		if (iter->second->getCode() == p->getCode()) {
-
-			DebugStringNoDres("prerecv ================================ remove packet");
 			delete p;		// **** 把这个忘了，导致内存泄漏
 			completed_packets_.erase(iter);
 			return 1;

@@ -10,6 +10,7 @@ public:
 	~HTTPPacketTest(void);
 
 	CPPUNIT_TEST_SUITE(HTTPPacketTest);
+	CPPUNIT_TEST(testNoContentChunk);
 	CPPUNIT_TEST(testNoContentPacket);
 	CPPUNIT_TEST(testSeriesPacket);
 	CPPUNIT_TEST(testHTTPHeaderParsed);
@@ -29,6 +30,7 @@ protected:
 	void testAddSeriesPacket();
 	void testHTTPHeaderParsed();
 	void testRawPacket();
+	void testNoContentChunk();
 };
 
 #endif  // _UTILITY_TEST_HTTPPACKETTEST_H_
