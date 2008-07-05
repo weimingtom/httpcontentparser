@@ -1,0 +1,24 @@
+HKCR
+{
+	RulesHolder.RulesSetting.1 = s 'RulesSetting Class'
+	{
+		CLSID = s '{A31778F3-3300-4327-B4C4-8B24B55504E3}'
+	}
+	RulesHolder.RulesSetting = s 'RulesSetting Class'
+	{
+		CLSID = s '{A31778F3-3300-4327-B4C4-8B24B55504E3}'
+		CurVer = s 'RulesHolder.RulesSetting.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {A31778F3-3300-4327-B4C4-8B24B55504E3} = s 'RulesSetting Class'
+		{
+			ProgID = s 'RulesHolder.RulesSetting.1'
+			VersionIndependentProgID = s 'RulesHolder.RulesSetting'
+			ForceRemove 'Programmable'
+			LocalServer32 = s '%MODULE%'
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{8E167E68-FAEF-48D3-87EE-44CDAC7408AF}'
+		}
+	}
+}

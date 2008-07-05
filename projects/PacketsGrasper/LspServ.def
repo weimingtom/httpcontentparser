@@ -1,0 +1,8 @@
+LIBRARY			PacketsGrasper
+
+DESCRIPTION		""
+
+SECTIONS	
+				.inidata	READ WRITE SHARED
+EXPORTS   
+				WSPStartup

@@ -1,0 +1,11 @@
+HKCR
+{
+	NoRemove AppID
+	{
+		'%APPID%' = s 'Rules_management_exe'
+		'Rules_management_exe.EXE'
+		{
+			val AppID = s '%APPID%'
+		}
+	}
+}

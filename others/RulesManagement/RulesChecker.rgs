@@ -1,0 +1,27 @@
+HKCR
+{
+	RulesManagement.RulesChecker.1 = s 'RulesChecker Class'
+	{
+		CLSID = s '{57DBEF45-71BC-4E84-8474-99F0223EFF9A}'
+	}
+	RulesManagement.RulesChecker = s 'RulesChecker Class'
+	{
+		CLSID = s '{57DBEF45-71BC-4E84-8474-99F0223EFF9A}'
+		CurVer = s 'RulesManagement.RulesChecker.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {57DBEF45-71BC-4E84-8474-99F0223EFF9A} = s 'RulesChecker Class'
+		{
+			ProgID = s 'RulesManagement.RulesChecker.1'
+			VersionIndependentProgID = s 'RulesManagement.RulesChecker'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Free'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{415ED9C8-F251-47EC-B5E8-8BE516ED11F8}'
+		}
+	}
+}

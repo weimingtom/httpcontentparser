@@ -1,0 +1,2 @@
+ProtocolPacket 存在隐患，读指针只能被一个用户使用, getBytesRead存在效率问题
+HTTPPacket 需要修改头部

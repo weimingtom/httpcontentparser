@@ -1,0 +1,24 @@
+HKCR
+{
+	RulesHolder.RulesChecker.1 = s 'RulesChecker Class'
+	{
+		CLSID = s '{C7425D4F-F6D3-4F9C-A0BB-3297325A45A4}'
+	}
+	RulesHolder.RulesChecker = s 'RulesChecker Class'
+	{
+		CLSID = s '{C7425D4F-F6D3-4F9C-A0BB-3297325A45A4}'
+		CurVer = s 'RulesHolder.RulesChecker.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {C7425D4F-F6D3-4F9C-A0BB-3297325A45A4} = s 'RulesChecker Class'
+		{
+			ProgID = s 'RulesHolder.RulesChecker.1'
+			VersionIndependentProgID = s 'RulesHolder.RulesChecker'
+			ForceRemove 'Programmable'
+			LocalServer32 = s '%MODULE%'
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{8E167E68-FAEF-48D3-87EE-44CDAC7408AF}'
+		}
+	}
+}
