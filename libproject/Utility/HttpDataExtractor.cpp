@@ -156,6 +156,11 @@ int FixContent::addBuffer(const char *buf, const int len) {
 	const int except_len = http_header_->getContentLength();
 	assert(http_header_->isChunk() == false);
 	assert(finished_ == false);
+
+	// 如果传入了0， 则代表已经完成了
+	if (len == 0) {
+		finished_ == 0;
+	}
 	// 如果指定了长度
 	if (except_len != HTTP_RESPONSE_HEADER::NO_DESIGNATION) {
 		const int recv_len = data_->getTotalSize();	// 已经接受到的

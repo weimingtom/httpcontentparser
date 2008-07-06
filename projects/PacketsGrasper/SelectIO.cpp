@@ -23,7 +23,14 @@ CSelectIO::~CSelectIO(void) {
 	clearAllPackets();
 }
 
+int getBufferTotalSize(LPWSABUF lpBuffers, DWORD dwBufferCount) {
+	int total_size = 0;
+	for (int i = 0; i < dwBufferCount; ++i) {
+		total_size += lpBuffers[i].len;
+	}
 
+	return total_size;
+}
 /////////////////////////////////////////////
 // public members
 // 在调用WSPRecv时使用
@@ -32,6 +39,8 @@ int CSelectIO::prerecv(SOCKET s, LPWSABUF lpBuffers,
 					   DWORD dwBufferCount, DWORD *recv_bytes) {
     using namespace yanglei_utility;
 	SingleLock<CAutoCreateCS> lock(&cs_);
+
+	// 这里应该尽量多的先缓冲区内部写入
 	// 如果没有完成的socket
 	HTTPPacket * packet = getCompletedPacket(s);
 	if (packet == NULL) {
@@ -169,6 +178,14 @@ bool CSelectIO::checkWholePacket(HTTPPacket * packet) {
 }
 /////////////////////////////////////////////
 // 处理正在接受的IO
+void CSelectIO::setSOCKETPacket(const SOCKET s, HTTPPacket * packet) {
+	if (packet == NULL) {
+		SOCK_DATA_MAP::iterator iter = _sockets_map_.find(s);
+		_sockets_map_.erase(iter);
+	} else {
+		_sockets_map_[s] = packet;
+	}
+}
 HTTPPacket * CSelectIO::getSOCKETPacket(const SOCKET s) {
 	SOCK_DATA_MAP::iterator iter = _sockets_map_.find(s);
 	if (_sockets_map_.end() == iter) {
@@ -184,52 +201,59 @@ HTTPPacket * CSelectIO::getSOCKETPacket(const SOCKET s) {
 // 返回0代表是一个完整的包
 // 返回1代表不是一个完整的包
 int CSelectIO::graspData(const SOCKET s, char *buf, const int len) {
-	HTTPPacket* sock_data  = getSOCKETPacket(s);
+	try {
+		HTTPPacket* sock_data  = getSOCKETPacket(s);
 
-	// 写入接受到的包
-	//char filename[1024];
-	//sprintf(filename, "c:\\recv\\%d_%d.log", s, len);
-	//std::fstream file;
-	//file.open(filename, std::ios::out | std::ios::app | std::ios::binary);
-	//file.write(buf, len);
-	//file.close();
-
-	char buffer[1024];
-	sprintf(buffer, "socket : %d", s);
-	OutputDebugString(buffer);
-	ODS("sock_data->addBuffer(buf, len);");
-	int bytes_written = sock_data->addBuffer(buf, len);
-
-	// 如果当前包已经完成，则从map中移除，并放入到完成队列当中 
-	// 如果一些条件不符合约束，也应该放入完成队列
-	//    如：HTTP的类型， 大小等等.....
-	if (sock_data->isComplete()) { 
-		ODS("complete.....");
-		// 放入到完成队列当中
-		addCompletedPacket(s, sock_data);
-
-		// 保存完成的包
+		// 写入接受到的包
 		//char filename[1024];
-		//sprintf(filename, "c:\\comdata\\%d.log", s, len);
-		//sock_data->achieve(filename);
+		//sprintf(filename, "c:\\recv\\%d_%d.log", s, len);
+		//std::fstream file;
+		//file.open(filename, std::ios::out | std::ios::app | std::ios::binary);
+		//file.write(buf, len);
+		//file.close();
 
-		// 如果下一个包存在，则更新map,否则直接删除
-		HTTPPacket * next_packet = sock_data->detachNext();
-		if (next_packet == NULL) {
-			SOCK_DATA_MAP::iterator iter = _sockets_map_.find(s);
-			if (iter != _sockets_map_.end()) 
-				_sockets_map_.erase(iter);
-		} else {
-			_sockets_map_[s] = next_packet;
+		char buffer[1024];
+		sprintf(buffer, "socket : %d %d", s, sock_data);
+		OutputDebugString(buffer);
+		ODS("sock_data->addBuffer(buf, len);");
+		int bytes_written = sock_data->addBuffer(buf, len);
+
+		// 如果当前包已经完成，则从map中移除，并放入到完成队列当中 
+		// 如果一些条件不符合约束，也应该放入完成队列
+		//    如：HTTP的类型， 大小等等.....
+		if (sock_data->isComplete()) { 
+			ODS("complete.....");
+			// 放入到完成队列当中
+			addCompletedPacket(s, sock_data);
+	 
+			// 保存完成的包
+			char filename[1024];
+			sprintf(filename, "c:\\comdata\\%d.log", s, len);
+			sock_data->achieve(filename);
+
+			// 如果下一个包存在，则更新map,否则直接删除
+			HTTPPacket * next_packet = sock_data->detachNext();
+			if (next_packet == NULL) {
+				SOCK_DATA_MAP::iterator iter = _sockets_map_.find(s);
+				if (iter != _sockets_map_.end()) 
+					_sockets_map_.erase(iter);
+			} else {
+				_sockets_map_[s] = next_packet;
+			}
+			
+			OutputDebugString("grasp data... 0 ");
+			return 0;
 		}
-		
-		OutputDebugString("grasp data... 0 ");
-		return 0;
-	}
 
-	// 非完整的包，返回1
-	OutputDebugString("grasp data... 1");
-	return 1;
+		// 非完整的包，返回1
+		OutputDebugString("grasp data... 1");
+		return 1;
+	} catch (...) {
+		HTTPPacket* sock_data  = getSOCKETPacket(s);
+		sock_data->achieve("c:\\eee.log");
+		exit(0);
+		return 1;
+	}
 }
 
 // 验证对应SOCKET的包是否应该被存储
@@ -272,17 +296,17 @@ bool CSelectIO::needStored(const SOCKET s) {
 		OutputDebugString("needcheck return false, too short");
 		return false;
 	}
-
-	char filename[1024]; 
-	sprintf(filename, "c:\\need\\%d.log", s);
-	std::fstream file;
-	file.open(filename, std::ios::out | std::ios::app | std::ios::binary);
-	file.write(buf, recv_bytes);
-	file.close();
 	 
 	// 如果以HTTP开头
 	buf[buf_size-1] = '\0';
 	if ( buf == strstr(buf, HTTP_PACHET_HEADER)) {
+			char filename[1024]; 
+			sprintf(filename, "c:\\need\\%d.log", s);
+			std::fstream file;
+			file.open(filename, std::ios::out | std::ios::app | std::ios::binary);
+			file.write(buf, recv_bytes);
+			file.close();
+
 		// 解析头部
 		HTTP_RESPONSE_HEADER header;
 		header.parseHeader(buf, recv_bytes);
@@ -291,9 +315,13 @@ bool CSelectIO::needStored(const SOCKET s) {
 			case HTTP_RESPONSE_HEADER::CONTYPE_GIF:
 			case HTTP_RESPONSE_HEADER::CONTYPE_JPG:
 			case HTTP_RESPONSE_HEADER::CONTYPE_PNG:
+			case HTTP_RESPONSE_HEADER::CONTYPE_HTML:
 				return true;
+			case HTTP_RESPONSE_HEADER::CONTYPE_CSS:
+			case HTTP_RESPONSE_HEADER::CONTYPE_JS:
+				return false;
 			default:
-				return true;
+				return false;
 		} 
 	} else {
 		OutputDebugString("needcheck return false");
@@ -305,8 +333,12 @@ bool CSelectIO::needStored(const SOCKET s) {
 void CSelectIO::clearAllPackets() {
 	SOCK_DATA_MAP::iterator iter = _sockets_map_.begin();
 	for (; iter != _sockets_map_.end(); ++iter) {
-		if (iter->second != NULL) 
-		delete iter->second;
+		if (iter->second != NULL) {
+			char buffer[1024];
+			sprintf(buffer, "c:\\%d.log", iter->first);
+			iter->second->achieve(buffer);
+			delete iter->second;
+		}
 	}
 	_sockets_map_.clear();
 }
@@ -336,10 +368,10 @@ void CSelectIO::freeAllCompletedPacket() {
 		if (iter->second != NULL) {
 			// 记录没有给上面的包
 			OutputDebugString("===================||||||||||||||||||");
-			//char buffer[1024];
-			//sprintf(buffer, "c:\\%d.log", iter->first);
-			//iter->second->achieve(buffer);
-			//delete iter->second;
+			char buffer[1024];
+			sprintf(buffer, "c:\\%d.log", iter->first);
+			iter->second->achieve(buffer);
+			delete iter->second;
 		}
 	}
 	completed_packets_.clear();
@@ -351,10 +383,13 @@ int CSelectIO::addCompletedPacket(const SOCKET s, HTTPPacket *p) {
 	// 而且对于某些包，他们可能是不完整的，因此我们必须将其分开
 	HTTPPacket *packet = p;
 	while (NULL != packet && packet->isComplete()) {
+		OutputDebugString("Add complete packet......");
 		completed_packets_.insert(std::make_pair(s, packet));
 		packet = packet->detachNext();
 	}
-	
+
+	// 更改
+	setSOCKETPacket(s, packet);
 	return 0;
 }
  

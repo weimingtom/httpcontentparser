@@ -31,6 +31,7 @@ protected:
 	int  graspData(const SOCKET s, char *buf, const int len);
 	int  addHttpPacket(const SOCKET s, char *buf, const int len);
 	HTTPPacket * getSOCKETPacket(const SOCKET s);
+	void setSOCKETPacket(const SOCKET s, HTTPPacket * packet);
 
 
 	//==========================================
