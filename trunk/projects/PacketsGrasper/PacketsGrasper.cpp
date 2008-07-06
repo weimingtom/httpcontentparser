@@ -150,12 +150,12 @@ int WSPAPI WSPRecv(
 				, lpNumberOfBytesRecvd, lpFlags, lpOverlapped
 				, lpCompletionRoutine, lpThreadId, lpErrno);
 
-		//char filename[1024];
-		//sprintf(filename, "c:\\pppp\\%d.log", s);
-		//std::fstream file;
-		//file.open(filename, std::ios::out | std::ios::app | std::ios::binary);
-		//file.write(lpBuffers[0].buf, *lpNumberOfBytesRecvd > lpBuffers[0].len ? lpBuffers[0].len : *lpNumberOfBytesRecvd );
-		//file.close();
+		char filename[1024];
+		sprintf(filename, "c:\\recv\\%d.log", s);
+		std::fstream file;
+		file.open(filename, std::ios::out | std::ios::app | std::ios::binary);
+		file.write(lpBuffers[0].buf, *lpNumberOfBytesRecvd > lpBuffers[0].len ? lpBuffers[0].len : *lpNumberOfBytesRecvd );
+		file.close();
 		return iRet;
 	} catch (...) {
 		writeException("WSPRecv", "unknown");

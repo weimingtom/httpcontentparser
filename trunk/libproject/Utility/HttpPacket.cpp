@@ -88,10 +88,9 @@ HTTPPacket * HTTPPacket::getNextPacket() {
 int HTTPPacket::achieve(const char * filename) {
 	using namespace yanglei_utility;
 	SingleLock<CAutoCreateCS> lock(&cs_);
-	const header = achieve_header(filename);
-	const int content = achieve_data(filename);
-
-	return header + content;
+	int header_length = achieve_header(filename);
+	int data_length = achieve_data(filename);
+	return header_length + data_length;
 }
 int  HTTPPacket::achieve_data(const char * filename) {
 	using namespace yanglei_utility;
@@ -156,16 +155,18 @@ int HTTPPacket::addBuffer(const char *buf, const unsigned len) {
 	try {
 		using namespace yanglei_utility;
 		SingleLock<CAutoCreateCS> lock(&cs_);
-		addRawPacket(buf, len);
 
 		int bytes = 0;
 		// 循环调用指导数据处理完成
 		// 因为chunk编码方式可能多个包存在于一个物理包当中。。
 		// 所以必须不断的提取，知道数据结束
 		while (bytes != len) {
-			bytes += extractData(&(buf[bytes]), len - bytes);
+			int bytes_read = extractData(&(buf[bytes]), len - bytes);
+
+			// 将处理过的原始数据加入进去
+			addRawPacket(&(buf[bytes]), bytes_read);
+			bytes += bytes_read;
 		}
-		DEBUG_MESSAGE("add success.....");
 		return bytes;
 	} catch(int) {
 		DEBUG_MESSAGE("addBuffer int exception...");
@@ -203,6 +204,7 @@ int HTTPPacket::read(char *buf, const int bufsize, int &bytedread) {
 int HTTPPacket::extractData(const char *buf, const int len) {
 	// 如果包尚未完成，且不存在头部
 	if (!isComplete() && header_exist_ == false) {
+		OutputDebugString("if (!isComplete() && header_exist_ == false) ");
 		if (!testHttpHeaderPacket(buf, len)) {
 			OutputDebugString("throw exception...");
 			throw int(0);
@@ -237,11 +239,13 @@ int HTTPPacket::extractData(const char *buf, const int len) {
 
 		return bytes_dealed;
 	} else if (!isComplete() && header_exist_ == true) {
+		OutputDebugString("else if (!isComplete() && header_exist_ == true)");
 		// 如果已经得到了头部，且传入的数据不是
 		// 那么得到的数据就是
 		assert ( addBuffer != NULL);
 		return  dataextractor_->addBuffer(buf, len);
 	} else if (isComplete() && header_exist_ == true) {
+		OutputDebugString("else if (isComplete() && header_exist_ == true)");
 		// 如果已经完成了包的接受，则创建一个新包，保存数据
 		if (next_http_packet_ == NULL)
 			next_http_packet_ = new HTTPPacket();
