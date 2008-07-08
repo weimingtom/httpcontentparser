@@ -185,13 +185,6 @@ void HTTPPacketTest::testNoContentPacket() {
 void HTTPPacketTest::testSeriesPacket() {
 	const char packet1[] = 	"HTTP/1.1 200 OK\r\n"
 	"Date: Thu, 24 Apr 2008 02:37:48 GMT\r\n"
-	"Server: Apache/1.3.37 (Unix) mod_gzip/1.3.26.1\r\n"
-	"Vary: Accept-Encoding\r\n"
-	"Cache-Control: max-age=5184000\r\n"
-	"Expires: Mon, 23 Jun 2008 02:37:48 GMT\r\n"
-	"Last-Modified: Fri, 08 Jun 2007 03:13:16 GMT\r\n"
-	"ETag: \"434610-296-4668c94c\"\r\n"
-	"Accept-Ranges: bytes\r\n"
 	"Content-Length: 2\r\n"
 	"Content-Type: text/html\r\n"
 	"Age: 220737\r\n"
@@ -199,14 +192,6 @@ void HTTPPacketTest::testSeriesPacket() {
 	"Connection: close\r\n\r\n"
 	"aa"
 	"HTTP/1.1 200 OK\r\n"
-	"Date: Thu, 24 Apr 2008 02:37:48 GMT\r\n"
-	"Server: Apache/1.3.37 (Unix) mod_gzip/1.3.26.1\r\n"
-	"Vary: Accept-Encoding\r\n"
-	"Cache-Control: max-age=5184000\r\n"
-	"Expires: Mon, 23 Jun 2008 02:37:48 GMT\r\n"
-	"Last-Modified: Fri, 08 Jun 2007 03:13:16 GMT\r\n"
-	"ETag: \"434610-296-4668c94c\"\r\n"
-	"Accept-Ranges: bytes\r\n"
 	"Content-Length: 3\r\n"
 	"Content-Type: text/html\r\n"
 	"Age: 220737\r\n"
@@ -215,37 +200,39 @@ void HTTPPacketTest::testSeriesPacket() {
 	"aaa"
 	"HTTP/1.1 200 OK\r\n"
 	"Date: Thu, 24 Apr 2008 02:37:48 GMT\r\n"
-	"Server: Apache/1.3.37 (Unix) mod_gzip/1.3.26.1\r\n"
-	"Vary: Accept-Encoding\r\n"
-	"Cache-Control: max-age=5184000\r\n"
-	"Expires: Mon, 23 Jun 2008 02:37:48 GMT\r\n"
-	"Last-Modified: Fri, 08 Jun 2007 03:13:16 GMT\r\n"
-	"ETag: \"434610-296-4668c94c\"\r\n"
-	"Accept-Ranges: bytes\r\n"
 	"Content-Length: 6\r\n"
 	"Content-Type: text/html\r\n"
-	"Age: 220737\r\n"
 	"X-Cache: HIT from 168479083.sohu.com\r\n"
 	"Connection: close\r\n\r\n"
 	"aaaaaa";
 
 	HTTPPacket *packet = new HTTPPacket;
-	packet->addBuffer(packet1, strlen(packet1));
-
-	HTTPPacket *p1 = packet->detachNext();
+	const int bytes1 = packet->addBuffer(packet1, strlen(packet1));
 	CPPUNIT_ASSERT(true == packet->isComplete());
+	const char * packet2 = &(packet1[bytes1]);
+	CPPUNIT_ASSERT(packet2 == strstr(packet2, "HTTP"));
 	CPPUNIT_ASSERT(packet->getContentType()==HTTP_RESPONSE_HEADER::CONTYPE_HTML);
 	delete packet;
 
-	HTTPPacket *p2 = p1->detachNext();
-	CPPUNIT_ASSERT(true == p1->isComplete());
-	CPPUNIT_ASSERT(p1->getContentType()==HTTP_RESPONSE_HEADER::CONTYPE_HTML);
-	delete p1;
+	packet = new HTTPPacket;
+	const int bytes2 = packet->addBuffer(packet2, strlen(packet2));
+	CPPUNIT_ASSERT(true == packet->isComplete());
+	const char * packet3 = &(packet2[bytes2]);
+	CPPUNIT_ASSERT(packet3 == strstr(packet3, "HTTP"));
+	CPPUNIT_ASSERT(packet->getContentType()==HTTP_RESPONSE_HEADER::CONTYPE_HTML);
+	delete packet;
 
-	HTTPPacket *p3 = p2->detachNext();
-	CPPUNIT_ASSERT(true == p2->isComplete());
-	CPPUNIT_ASSERT(p2->getContentType()==HTTP_RESPONSE_HEADER::CONTYPE_HTML);
-	delete p2;
+	packet = new HTTPPacket;
+	const int bytes3 = packet->addBuffer(packet3, strlen(packet3));
+	CPPUNIT_ASSERT(true == packet->isComplete());
+	const char * packet4 = &(packet3[bytes3]);
+	CPPUNIT_ASSERT(packet->getContentType()==HTTP_RESPONSE_HEADER::CONTYPE_HTML);
+	delete packet;
+
+	packet = new HTTPPacket;
+	const int bytes4 = packet->addBuffer(packet4, strlen(packet4));
+	CPPUNIT_ASSERT(bytes4 == 0);
+	CPPUNIT_ASSERT(false == packet->isComplete());
 }
 
 void HTTPPacketTest::testWrongHeader() {
@@ -253,7 +240,7 @@ void HTTPPacketTest::testWrongHeader() {
 	char buffer1[] = "HTTP"; 
 	char buffer2[] = "HTTP aidji8vz2\r\noaijdfoin\r\n\r\n";
 	CPPUNIT_ASSERT(0 == packet->addBuffer(buffer1, strlen(buffer1)));
-//	CPPUNIT_ASSERT(0 == packet->addBuffer(buffer2, strlen(buffer2)));
+	// CPPUNIT_ASSERT(0 == packet->addBuffer(buffer2, strlen(buffer2)));
 }
 
 // 测试获取原始数据包
@@ -331,8 +318,6 @@ void HTTPPacketTest::testChunk() {
 	CPPUNIT_ASSERT(strlen(chunk6) == packet->addBuffer(chunk6, strlen(chunk6)));
 	CPPUNIT_ASSERT(packet->getDataSize() == 200);
 	CPPUNIT_ASSERT(packet->isComplete() == true);
-	HTTPPacket *p = packet->detachNext();
-	CPPUNIT_ASSERT(p == NULL);
 	delete packet;
 	}
 
@@ -367,17 +352,16 @@ void HTTPPacketTest::testChunk() {
 	CPPUNIT_ASSERT(strlen(complex_chunk5) == packet->addBuffer(complex_chunk5, strlen(complex_chunk5)));
 	CPPUNIT_ASSERT(packet->getDataSize() == 400);
 	CPPUNIT_ASSERT(packet->isComplete() == true);
+	delete packet;
 
+	packet = new HTTPPacket;
 	CPPUNIT_ASSERT(strlen(chunk1) == packet->addBuffer(chunk1, strlen(chunk1)));
 	CPPUNIT_ASSERT(strlen(chunk2) == packet->addBuffer(chunk2, strlen(chunk2)));
 	CPPUNIT_ASSERT(strlen(chunk3) == packet->addBuffer(chunk3, strlen(chunk3)));
 	CPPUNIT_ASSERT(strlen(chunk4) == packet->addBuffer(chunk4, strlen(chunk4)));
 	CPPUNIT_ASSERT(strlen(chunk5) == packet->addBuffer(chunk5, strlen(chunk5)));
 	CPPUNIT_ASSERT(strlen(chunk6) == packet->addBuffer(chunk6, strlen(chunk6)));
-	HTTPPacket *p = packet->detachNext();
 	delete packet;
-	CPPUNIT_ASSERT(p->getDataSize() == 200);
-	delete p;
 	} 
 }
 
@@ -398,56 +382,24 @@ void HTTPPacketTest::testAddSeriesPacket() {
 	CPPUNIT_ASSERT(strlen(series6) == packet->addBuffer(series5, strlen(series6)));
 	CPPUNIT_ASSERT(true == packet->isComplete());
 	CPPUNIT_ASSERT(packet->getDataSize() == 234);
-	HTTPPacket *p = packet->detachNext();
-	CPPUNIT_ASSERT(p == NULL);
 	delete packet;
 	}
 }
 
 void HTTPPacketTest::testAddSinglePacket() {
-	HTTPPacket *packet = new HTTPPacket;
-	CPPUNIT_ASSERT(strlen(packet1) == packet->addBuffer(packet1, strlen(packet1)));
-	CPPUNIT_ASSERT(strlen(packet2) == packet->addBuffer(packet2, strlen(packet2)));
-	CPPUNIT_ASSERT(strlen(packet3) == packet->addBuffer(packet3, strlen(packet3)));
+	HTTPPacket *httppacket1 = new HTTPPacket;
+	CPPUNIT_ASSERT(strlen(packet1) == httppacket1->addBuffer(packet1, strlen(packet1)));
+	HTTPPacket *httppacket2 = new HTTPPacket;
+	CPPUNIT_ASSERT(strlen(packet2) == httppacket2->addBuffer(packet2, strlen(packet2)));
+	HTTPPacket *httppacket3 = new HTTPPacket;
+	CPPUNIT_ASSERT(strlen(packet3) == httppacket3->addBuffer(packet3, strlen(packet3)));
 
-	HTTPPacket *p2 = packet->detachNext();
-	CPPUNIT_ASSERT(packet->getContentType()==HTTP_RESPONSE_HEADER::CONTYPE_HTML);
-	delete packet;
-
-	HTTPPacket *p3 = p2->detachNext();
-	CPPUNIT_ASSERT(p2->getContentType()==HTTP_RESPONSE_HEADER::CONTYPE_GIF);
-	delete p2;
-
-	CPPUNIT_ASSERT(NULL == p3->detachNext());
-	CPPUNIT_ASSERT(p3->getContentType()==HTTP_RESPONSE_HEADER::CONTYPE_JPG);
-	delete p3;
-
-	{
-	//=========================================
-	// 测试添加非HTTP协议的包
-	HTTPPacket *packet = new HTTPPacket;
-	CPPUNIT_ASSERT(strlen(packet1) == packet->addBuffer(packet1, strlen(packet1)));
-	CPPUNIT_ASSERT(strlen(packet2) == packet->addBuffer(packet2, strlen(packet2)));
-	CPPUNIT_ASSERT(strlen(packet3) == packet->addBuffer(packet3, strlen(packet3)));
-	CPPUNIT_ASSERT(0 == packet->addBuffer(packet5, strlen(packet5)));
-	CPPUNIT_ASSERT(strlen(packet3) == packet->addBuffer(packet3, strlen(packet3)));
-
-	HTTPPacket *p2 = packet->detachNext();
-	CPPUNIT_ASSERT(packet->getContentType()==HTTP_RESPONSE_HEADER::CONTYPE_HTML);
-	delete packet;
-
-	HTTPPacket *p3 = p2->detachNext();
-	CPPUNIT_ASSERT(p2->getContentType()==HTTP_RESPONSE_HEADER::CONTYPE_GIF);
-	delete p2;
-
-	HTTPPacket *p4 = p3->detachNext();
-	CPPUNIT_ASSERT(p3->getContentType()==HTTP_RESPONSE_HEADER::CONTYPE_JPG);
-	delete p3;
-	// 由于添加了两次包
-	CPPUNIT_ASSERT(NULL == p4->detachNext());
-	CPPUNIT_ASSERT(p4->getContentType()==HTTP_RESPONSE_HEADER::CONTYPE_JPG);
-	delete p4;
-	}
+	CPPUNIT_ASSERT(httppacket1->getContentType()==HTTP_RESPONSE_HEADER::CONTYPE_HTML);
+	CPPUNIT_ASSERT(httppacket2->getContentType()==HTTP_RESPONSE_HEADER::CONTYPE_GIF);
+	CPPUNIT_ASSERT(httppacket3->getContentType()==HTTP_RESPONSE_HEADER::CONTYPE_JPG);
+	delete httppacket1;
+	delete httppacket2;
+	delete httppacket3;
 }
 
 void HTTPPacketTest::testHTTPHeaderParsed() {

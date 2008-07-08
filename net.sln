@@ -25,6 +25,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PacketsGrasper", "projects\
 	ProjectSection(ProjectDependencies) = postProject
 		{0E786A34-69F8-45EA-A4BD-7E951A51225B} = {0E786A34-69F8-45EA-A4BD-7E951A51225B}
 		{CD11D86D-3173-4945-8215-7450A0D9CB3C} = {CD11D86D-3173-4945-8215-7450A0D9CB3C}
+		{9DBE4172-DCAE-4D27-8131-7B16A30D149A} = {9DBE4172-DCAE-4D27-8131-7B16A30D149A}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SPIInstaller", "projects\SPIInstaller\SPIInstaller.vcproj", "{D02BBF90-CC5B-4AD3-B637-2B9C8A790C6E}"
@@ -38,10 +39,6 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Utility", "libproject\Utility\Utility.vcproj", "{CD11D86D-3173-4945-8215-7450A0D9CB3C}"
 	ProjectSection(ProjectDependencies) = postProject
 		{EC738080-9EB3-45D7-8440-0B79B280ACD7} = {EC738080-9EB3-45D7-8440-0B79B280ACD7}
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Rules_management_exePS", "projects\Rules_management_exe\Rules_management_exePS.vcproj", "{2283AE7E-F5B1-4456-8383-A2E20E8E6C1C}"
-	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Rules_management_exe", "projects\Rules_management_exe\Rules_management_exe.vcproj", "{ABE69A26-0192-4D07-A701-BCA003DD1E06}"
@@ -63,6 +60,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "selectio", "libproject\sele
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestSelectIO", "test\TestSelectIO\TestSelectIO.vcproj", "{08BB70AD-DD8F-4547-891E-D7080499F9F5}"
 	ProjectSection(ProjectDependencies) = postProject
+		{CD11D86D-3173-4945-8215-7450A0D9CB3C} = {CD11D86D-3173-4945-8215-7450A0D9CB3C}
+		{9DBE4172-DCAE-4D27-8131-7B16A30D149A} = {9DBE4172-DCAE-4D27-8131-7B16A30D149A}
 	EndProjectSection
 EndProject
 Global
@@ -107,10 +106,6 @@ Global
 		{CD11D86D-3173-4945-8215-7450A0D9CB3C}.Debug.Build.0 = Debug|Win32
 		{CD11D86D-3173-4945-8215-7450A0D9CB3C}.Release.ActiveCfg = Release|Win32
 		{CD11D86D-3173-4945-8215-7450A0D9CB3C}.Release.Build.0 = Release|Win32
-		{2283AE7E-F5B1-4456-8383-A2E20E8E6C1C}.Debug.ActiveCfg = Debug|Win32
-		{2283AE7E-F5B1-4456-8383-A2E20E8E6C1C}.Debug.Build.0 = Debug|Win32
-		{2283AE7E-F5B1-4456-8383-A2E20E8E6C1C}.Release.ActiveCfg = Release|Win32
-		{2283AE7E-F5B1-4456-8383-A2E20E8E6C1C}.Release.Build.0 = Release|Win32
 		{ABE69A26-0192-4D07-A701-BCA003DD1E06}.Debug.ActiveCfg = Debug|Win32
 		{ABE69A26-0192-4D07-A701-BCA003DD1E06}.Debug.Build.0 = Debug|Win32
 		{ABE69A26-0192-4D07-A701-BCA003DD1E06}.Release.ActiveCfg = Release|Win32

@@ -11,13 +11,17 @@ public:
 
 public: 
 	CPPUNIT_TEST_SUITE(SelectIOTest);
+	CPPUNIT_TEST(testInvalidateHTTPPacket);
+	CPPUNIT_TEST(testCopyBuffer);
 	CPPUNIT_TEST(testPreSelect);
 	CPPUNIT_TEST(testPostSelect);
 	CPPUNIT_TEST_SUITE_END();
 
 private:
 	void testPreSelect();
+	void testInvalidateHTTPPacket();
 	void testPostSelect();
+	void testCopyBuffer();
 };
 
 #endif  // _TEST_SELECTIO_SELECTIO_TEST_H__

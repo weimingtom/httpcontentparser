@@ -60,7 +60,7 @@ void GetRightEntryIdItem(
 }
  
 BOOL GetHookProvider(
-	IN	WSAPROTOCOL_INFOW	*pProtocolInfo, 
+	IN	WSAPROTOCOL_INFOW	*pProtocolInfo,
 	OUT	TCHAR				*sPathName
 )
 {
@@ -81,7 +81,7 @@ BOOL GetHookProvider(
 		_tcscpy(sPathName, sTemp);
 	RegCloseKey(hSubkey);
 
-	return TRUE; 
+	return TRUE;
 }
 
 //！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！
@@ -97,15 +97,15 @@ int WSPAPI WSPSelect (
   const struct	timeval FAR * timeout,     
   LPINT			lpErrno                         
 ) 
-{ 
+{
 	//ODS(_T("WSPSelect ..."));
-	// ShowAllSOCKET("Begin WSPSelect ...", readfds);
+	 ShowAllSOCKET("Begin WSPSelect ...", readfds);
 	// 岷俊卦指��徭附野秘select
 	if (g_select.preselect(readfds) == 0) {
 		char buffer[1024];
 		OutputDebugString("select return directly.................................");
  
-		// ShowAllSOCKET("g_select.preselect(readfds)", readfds);
+		ShowAllSOCKET("g_select.preselect(readfds)", readfds);
 
 		// firefox脅頁NULL
 		if (writefds != NULL)
@@ -120,9 +120,9 @@ int WSPAPI WSPSelect (
 	int iRet = NextProcTable.lpWSPSelect(nfds, 
 				readfds, writefds, exceptfds, timeout, lpErrno); 
 
-	// ShowAllSOCKET("NextProcTable.lpWSPSelect", readfds);
+	ShowAllSOCKET("after lpWSPSelect", readfds);
 	g_select.postselect(readfds);
-
+	ShowAllSOCKET("g_select.postselect(readfds);", readfds);
 	return iRet;
 }
 
@@ -146,6 +146,7 @@ int WSPAPI WSPRecv(
 			return 0;
 		}
 
+		OutputDebugString("---=====lpWSPRecv=====---");
 		int iRet = NextProcTable.lpWSPRecv(s, lpBuffers, dwBufferCount
 				, lpNumberOfBytesRecvd, lpFlags, lpOverlapped
 				, lpCompletionRoutine, lpThreadId, lpErrno);
@@ -651,6 +652,7 @@ int WSPAPI WSPStartup(
 	lpProcTable->lpWSPShutdown 				= WSPShutdown;
 	lpProcTable->lpWSPStringToAddress 		= WSPStringToAddress;
 
+	g_select.setRecv(NextProcTable.lpWSPRecv);
 	LeaveCriticalSection(&gCriticalSection);
 	return 0;
 }

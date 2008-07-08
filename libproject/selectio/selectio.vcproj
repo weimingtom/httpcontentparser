@@ -32,11 +32,13 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="$(OutDir)/selectio.lib"/>
+				OutputFile="$(OutDir)/selectiod.lib"/>
 			<Tool
 				Name="VCMIDLTool"/>
 			<Tool
-				Name="VCPostBuildEventTool"/>
+				Name="VCPostBuildEventTool"
+				CommandLine="copy .\selectio.h ..\..\include
+copy .\Debug\selectiod.lib ..\..\lib"/>
 			<Tool
 				Name="VCPreBuildEventTool"/>
 			<Tool
@@ -75,7 +77,9 @@
 			<Tool
 				Name="VCMIDLTool"/>
 			<Tool
-				Name="VCPostBuildEventTool"/>
+				Name="VCPostBuildEventTool"
+				CommandLine="copy .\selectio.h ..\..\include
+copy .\release\selectio.lib ..\..\lib"/>
 			<Tool
 				Name="VCPreBuildEventTool"/>
 			<Tool

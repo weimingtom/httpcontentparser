@@ -223,12 +223,6 @@
 			<File
 				RelativePath=".\Overlapped.h">
 			</File>
-			<File
-				RelativePath=".\SelectIO.cpp">
-			</File>
-			<File
-				RelativePath=".\SelectIO.h">
-			</File>
 		</Filter>
 	</Files>
 	<Globals>

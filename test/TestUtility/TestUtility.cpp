@@ -13,7 +13,7 @@ CPPUNIT_TEST_SUITE_REGISTRATION(FDUtilityTest);
 
 int _tmain(int argc, _TCHAR* argv[])
 {
-	  // Create the event manager and test controller
+  // Create the event manager and test controller
   CPPUNIT_NS::TestResult controller;
 
   // Add a listener that colllects test result

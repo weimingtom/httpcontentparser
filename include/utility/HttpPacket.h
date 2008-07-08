@@ -26,6 +26,7 @@ public:
 	static const int    CONTYPE_GIF = 100;
 	static const int    CONTYPE_JPG = 101;
 	static const int    CONTYPE_PNG = 102;
+	static const int    CONTYPE_UNKNOWN = 999;
 
 
 	static const int	TRANENCODING_CHUNKED = 1;
@@ -108,9 +109,6 @@ public:
 	int addBuffer(const char *buf, const unsigned len);
 	int read(char *buf, const int bufsize, int &bytedread);
 
-	// 脱离下一个包， 当释放当前类时，不再释放与之相关联的包
-	HTTPPacket * detachNext();
-
 	int getContentType() { return http_header_.getContentType();}
 
 	// 将..保存到文件当中
@@ -133,8 +131,6 @@ private:
 	// 如果返回0，代表有错误发生
 	int  extractData(const char *buf, const int len);
 
-	// 如果当前包已经完成，使用下一个HTTPPacket进行相应。
-	HTTPPacket *next_http_packet_;
 	ProtocolPacket<HTTP_PACKET_SIZE> * http_data_;
 	ProtocolPacket<HTTP_PACKET_SIZE> * http_header_achieve_;
 
@@ -146,9 +142,6 @@ private:
 
 	// 分析协议头
 	int parseHeader(const char *buffer, const unsigned len);
-
-	// 获取下一个包
-	HTTPPacket * getNextPacket();
 
 	// 是否已经有头部
 	bool header_exist_;

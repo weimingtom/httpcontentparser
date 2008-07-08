@@ -12,7 +12,6 @@
 // class HTTPPacket
 HTTPPacket::HTTPPacket(void) {
 	http_data_ = NULL;
-	next_http_packet_ = NULL;
 	header_exist_ = false;
 	dataextractor_ = NULL;
 
@@ -31,19 +30,9 @@ HTTPPacket::~HTTPPacket(void) {
 		dataextractor_ = NULL;
 	}
 
-	if (NULL != next_http_packet_) {
-		delete next_http_packet_;
-		next_http_packet_ = NULL;
-	} 
-
 	if (NULL != http_data_) {
 		delete http_data_;
 		http_data_ = NULL;
-	}
-
-	if (NULL != http_header_achieve_) {
-		delete http_header_achieve_;
-		http_header_achieve_ = NULL;
 	}
 
 	// 释放原始包
@@ -67,20 +56,6 @@ unsigned HTTPPacket::getDataSize() const {
 		return http_data_->getTotalSize();
 	else
 		return 0;
-}
-
-HTTPPacket * HTTPPacket::detachNext() {
-	using namespace yanglei_utility;
-	SingleLock<CAutoCreateCS> lock(&cs_);
-	HTTPPacket * p = next_http_packet_;
-	next_http_packet_ = NULL;
-	return p;
-}
-
-HTTPPacket * HTTPPacket::getNextPacket() {
-	using namespace yanglei_utility;
-	SingleLock<CAutoCreateCS> lock(&cs_);
-	return next_http_packet_;
 }
 
 /////////////////////////////////////////////////////
@@ -162,6 +137,10 @@ int HTTPPacket::addBuffer(const char *buf, const unsigned len) {
 		// 所以必须不断的提取，知道数据结束
 		while (bytes != len) {
 			int bytes_read = extractData(&(buf[bytes]), len - bytes);
+			
+			// 如果读取为0， 代表获取了一个包
+			if (bytes_read == 0)
+				break;
 
 			// 将处理过的原始数据加入进去
 			addRawPacket(&(buf[bytes]), bytes_read);
@@ -177,8 +156,12 @@ int HTTPPacket::addBuffer(const char *buf, const unsigned len) {
 	} catch (...) {
 		char filename[1024];
 		sprintf(filename, "c:\\exp\\int%d.log", getCode());
+		achieve(filename);
+
 		std::fstream file;
 		file.open(filename, std::ios::out | std::ios::app | std::ios::binary);
+		std::string snew_line = "\r\n====================\r\n";
+		file.write(snew_line.c_str(), snew_line.length());
 		file.write(buf, len);
 		file.close();
 		DEBUG_MESSAGE("addBuffer exception...");
@@ -244,19 +227,12 @@ int HTTPPacket::extractData(const char *buf, const int len) {
 		// 那么得到的数据就是
 		assert ( addBuffer != NULL);
 		return  dataextractor_->addBuffer(buf, len);
-	} else if (isComplete() && header_exist_ == true) {
-		OutputDebugString("else if (isComplete() && header_exist_ == true)");
-		// 如果已经完成了包的接受，则创建一个新包，保存数据
-		if (next_http_packet_ == NULL)
-			next_http_packet_ = new HTTPPacket();
-		return next_http_packet_->extractData(buf, len);
 	} else if (isComplete() && header_exist_ == false) {
 		assert(false);
 		throw (0);
 		return 0;
 	}
 
-	assert(false);
 	return 0; // 其实不会到这里的...
 }
 bool HTTPPacket::testHttpHeaderPacket(const char *buf, int len) {
@@ -339,6 +315,18 @@ HTTP_RESPONSE_HEADER::~HTTP_RESPONSE_HEADER() {
 int HTTP_RESPONSE_HEADER::parseHeader(const char *header_data, const int len) {
 	char buf[HTTP_HEADER_MAX_LENGTH];
 	assert(HTTP_HEADER_MAX_LENGTH > len);
+
+	// 测试开头结尾是否是一个有效的包
+	if (strstr(header_data, "HTTP") != header_data) {
+		return 0;
+	}
+
+	// 未找到HTTP头不得结尾，应该是个错误包！！
+	const char * http_header_tail = strstr(header_data, HTTP_HEADER_TAIL);
+	if (http_header_tail == NULL) {
+		return 0;
+	}
+
 	// 复制数据
 	buf[len] = '\0';
 	memcpy(buf, header_data, len);
@@ -351,14 +339,11 @@ int HTTP_RESPONSE_HEADER::parseHeader(const char *header_data, const int len) {
 		token = strtok( NULL, seps );
 	}
 
-	// 未找到HTTP头不得结尾，应该是个错误包！！
-	const char * http_header_tail = strstr(header_data, HTTP_HEADER_TAIL);
-	if (http_header_tail == NULL) {
-		return 0;
-	}
-
-	// 如果错有的信息都没有获取到，那么应该是个假信息
-
+	// 在解析完成以后仍然有一些重要的值处于未指定状态
+	// 那么应该不是一个HTTP协议
+	//if ( NO_DESIGNATION == content_type) {
+	//	return 0;
+	//}
 
 	// 返回整个头部的大小
 	const int total_header_length = HTTP_HEADER_TAIL_LENGTH + http_header_tail - header_data;
@@ -385,7 +370,7 @@ void HTTP_RESPONSE_HEADER::parseLine(const char *linedata) {
 		}  else if (strstr(linedata, CONTYPE_HTML_NAME)) {
 			content_type = CONTYPE_HTML;
 		}  else {
-			content_type = NO_DESIGNATION;
+			content_type = CONTYPE_UNKNOWN;
 		}
 	} else if (linedata == strstr(linedata, HEADER_TRANSFER_ENCODING)) {
 		if (strstr(linedata, TRANENCODING_CHUNKED_NAME)) {
