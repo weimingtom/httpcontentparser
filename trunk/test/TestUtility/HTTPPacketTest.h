@@ -10,14 +10,15 @@ public:
 	~HTTPPacketTest(void);
 
 	CPPUNIT_TEST_SUITE(HTTPPacketTest);
+	CPPUNIT_TEST(testAddSinglePacket);
+	CPPUNIT_TEST(testSeriesPacket);
 	CPPUNIT_TEST(testNoContentChunk);
 	CPPUNIT_TEST(testNoContentPacket);
-	CPPUNIT_TEST(testSeriesPacket);
 	CPPUNIT_TEST(testHTTPHeaderParsed);
 	CPPUNIT_TEST(testChunk);
 	CPPUNIT_TEST(testWrongHeader);
 	CPPUNIT_TEST(testRawPacket);
-	CPPUNIT_TEST(testAddSinglePacket);
+	
 	CPPUNIT_TEST(testAddSeriesPacket);
 	
 	CPPUNIT_TEST_SUITE_END();
