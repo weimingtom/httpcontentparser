@@ -136,7 +136,7 @@ private:
 
 	
 	// 保存原始的包，按照接收到的顺序
-	std::deque<ProtocolPacket<HTTP_PACKET_SIZE> * > raw_packets_;
+	ProtocolPacket<HTTP_PACKET_SIZE> *  raw_packets_;
 	void addRawPacket(const char *buf, const int len);
 	void clearRawDeque();
 

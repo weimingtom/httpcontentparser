@@ -37,27 +37,87 @@ int WSPAPI WSPRecv(
 {
 	SOCK_DATA::iterator iter = g_SockData.lower_bound(s);
 	SOCK_DATA::const_iterator iterEnd = g_SockData.upper_bound(s);
-	int total_size = g_bufBegin;
+	
+	int moveSize = 0;
 	for (; iter != iterEnd; ++iter) {
 		const int bytes = iter->second.length();
-		const int bytes_written = WriteToBuffer(lpBuffers, dwBufferCount, total_size, 
+		if (moveSize + bytes <= g_bufBegin) {
+			moveSize += bytes;
+			continue;
+		}
+
+		const int bytes_written = WriteToBuffer(lpBuffers, dwBufferCount, 0, 
 			iter->second.c_str(), iter->second.length());
-		
-		total_size += bytes_written;
-		assert(bytes_written <= bytes);
+		*lpNumberOfBytesRecvd = bytes_written;
+		break;
 	}
 
-	*lpNumberOfBytesRecvd = total_size - g_bufBegin;
 	*lpErrno = 0;
 
 	// 则不影响指针
 	if (0 == ((*lpFlags) & MSG_PEEK)) {
-		g_bufBegin += total_size;
+		g_bufBegin += *lpNumberOfBytesRecvd;
 	}
 	
 	return 0;
 }
 } // namespace
+
+
+void SelectIOTest::testMulitPacket() {
+		// test case 1: 简单验证
+	{
+	string data1 = "HTTP/1.1 200 OK\r\n"
+	"Date: Thu, 24 Apr 2008 02:37:48 GMT\r\n"
+	"Accept-Ranges: bytes\r\n"
+	"Content-Length: 45\r\n"
+	"Content-Type: text/html\r\n"
+	"Connection: close\r\n\r\n"
+	"12345";
+
+	string data2 = "1234567890123456789012345678901234567890";
+
+	//初始化数据
+	resetFakeBuffer();
+	const SOCKET s = 10831;
+	g_SockData.insert(make_pair(s, data1));
+
+	// 验证数据
+	const int buf_size = 1024 * 64;
+	char buffer[buf_size];
+	WSABUF wsabuf;
+	wsabuf.buf = buffer;
+	wsabuf.len = buf_size;
+	DWORD dwNumberOfBytesRecvd;
+
+	// 初始化SelectIO
+	CSelectIO select;
+	resetFakeBuffer();
+	select.setRecv(WSPRecv);
+
+	g_SockData.insert(make_pair(s, data1));
+	fd_set readfds;
+	FD_ZERO(&readfds);
+	FD_SET(s, &readfds);
+	CPPUNIT_ASSERT( 1 == select.preselect(&readfds));
+	select.postselect(&readfds);
+	
+	CPPUNIT_ASSERT(select.prerecv(s, &wsabuf,
+		1, &dwNumberOfBytesRecvd) == 1);
+	CPPUNIT_ASSERT(dwNumberOfBytesRecvd == 0);
+	CPPUNIT_ASSERT(select.prerecv(s, &wsabuf,
+		1, &dwNumberOfBytesRecvd) == 1);
+	CPPUNIT_ASSERT(dwNumberOfBytesRecvd == 0);
+
+	g_SockData.insert(make_pair(s, data2));
+	CPPUNIT_ASSERT( 1 == select.preselect(&readfds));
+	FD_SET(s, &readfds);
+	select.postselect(&readfds);
+	CPPUNIT_ASSERT(select.prerecv(s, &wsabuf,
+		1, &dwNumberOfBytesRecvd) == 0);
+	CPPUNIT_ASSERT(dwNumberOfBytesRecvd == data2.length() + data1.length());
+	}
+}
 
 void SelectIOTest::testCopyBuffer() {
 	char buffer1[2];
@@ -196,8 +256,7 @@ void SelectIOTest::testPostSelect() {
 	fd_set readfds;
 	FD_ZERO(&readfds);
 	FD_SET(s, &readfds);
-	CPPUNIT_ASSERT( 1 == select.preselect(&readfds));
-	select.postselect(&readfds);
+	
 	// 验证数据
 	const int buf_size = 1024 * 64;
 	char buffer[buf_size];
@@ -205,13 +264,26 @@ void SelectIOTest::testPostSelect() {
 	wsabuf.buf = buffer;
 	wsabuf.len = buf_size;
 	DWORD dwNumberOfBytesRecvd;
+
+	CPPUNIT_ASSERT( 1 == select.preselect(&readfds));
+	select.postselect(&readfds);
 	CPPUNIT_ASSERT(select.prerecv(s, &wsabuf,
 		1, &dwNumberOfBytesRecvd) == 0);
+	CPPUNIT_ASSERT(dwNumberOfBytesRecvd == (data1.length()));
 
-	// 对与两个完整的包，且在一个TCP包当中可以一下写入到缓冲区当中吧
-	CPPUNIT_ASSERT(dwNumberOfBytesRecvd == (data1.length() + data2.length() + data3.length()));
+	// 在包没有完成时，应该直接返回1
+	CPPUNIT_ASSERT( 1 == select.preselect(&readfds));
+	CPPUNIT_ASSERT(select.prerecv(s, &wsabuf,
+		1, &dwNumberOfBytesRecvd) == 0);
+	CPPUNIT_ASSERT(dwNumberOfBytesRecvd == (data2.length()));
+
+	CPPUNIT_ASSERT( 0 == select.preselect(&readfds));
+	CPPUNIT_ASSERT(select.prerecv(s, &wsabuf,
+		1, &dwNumberOfBytesRecvd) == 0);
+	CPPUNIT_ASSERT(dwNumberOfBytesRecvd == (data3.length()));
 	}
 }
+
 
 void SelectIOTest::testPreSelect() {
 	CSelectIO select;
