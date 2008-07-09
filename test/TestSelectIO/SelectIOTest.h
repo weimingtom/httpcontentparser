@@ -11,6 +11,7 @@ public:
 
 public: 
 	CPPUNIT_TEST_SUITE(SelectIOTest);
+	CPPUNIT_TEST(testMulitPacket);
 	CPPUNIT_TEST(testInvalidateHTTPPacket);
 	CPPUNIT_TEST(testCopyBuffer);
 	CPPUNIT_TEST(testPreSelect);
@@ -18,6 +19,7 @@ public:
 	CPPUNIT_TEST_SUITE_END();
 
 private:
+	void testMulitPacket();
 	void testPreSelect();
 	void testInvalidateHTTPPacket();
 	void testPostSelect();

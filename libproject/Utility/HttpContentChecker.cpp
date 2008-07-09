@@ -17,7 +17,7 @@ class NoneChecker : public HttpContentChecker {
 // 这个类主要用于分析图片内容
 class ImageChecker : public HttpContentChecker {
 	virtual bool checkHTTPContent(const HTTPPacket *packet) {
-		return true;
+		return false;
 	}
 };
 

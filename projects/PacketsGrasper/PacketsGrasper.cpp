@@ -99,14 +99,9 @@ int WSPAPI WSPSelect (
 ) 
 {
 	//ODS(_T("WSPSelect ..."));
-	 ShowAllSOCKET("Begin WSPSelect ...", readfds);
 	// 直接返回，自身填入select
 	if (g_select.preselect(readfds) == 0) {
 		char buffer[1024];
-		OutputDebugString("select return directly.................................");
- 
-		ShowAllSOCKET("g_select.preselect(readfds)", readfds);
-
 		// firefox都是NULL
 		if (writefds != NULL)
 			FD_ZERO(writefds);
@@ -120,9 +115,7 @@ int WSPAPI WSPSelect (
 	int iRet = NextProcTable.lpWSPSelect(nfds, 
 				readfds, writefds, exceptfds, timeout, lpErrno); 
 
-	ShowAllSOCKET("after lpWSPSelect", readfds);
 	g_select.postselect(readfds);
-	ShowAllSOCKET("g_select.postselect(readfds);", readfds);
 	return iRet;
 }
 
@@ -139,24 +132,14 @@ int WSPAPI WSPRecv(
 )
 {
 	try {
-		DebugStringNoDres(_T("WSPRecv ..."));
-
 		if (g_select.prerecv(s, lpBuffers, dwBufferCount, lpNumberOfBytesRecvd) == 0) {
-			DebugStringNoDres("prerecv ---- return  directly  ... ");
 			return 0;
 		}
 
-		OutputDebugString("---=====lpWSPRecv=====---");
 		int iRet = NextProcTable.lpWSPRecv(s, lpBuffers, dwBufferCount
 				, lpNumberOfBytesRecvd, lpFlags, lpOverlapped
 				, lpCompletionRoutine, lpThreadId, lpErrno);
 
-		char filename[1024];
-		sprintf(filename, "c:\\recv\\%d.log", s);
-		std::fstream file;
-		file.open(filename, std::ios::out | std::ios::app | std::ios::binary);
-		file.write(lpBuffers[0].buf, *lpNumberOfBytesRecvd > lpBuffers[0].len ? lpBuffers[0].len : *lpNumberOfBytesRecvd );
-		file.close();
 		return iRet;
 	} catch (...) {
 		writeException("WSPRecv", "unknown");
@@ -177,7 +160,7 @@ SOCKET WSPAPI WSPSocket(
 	LPINT		lpErrno
 )
 {
-	ODS(_T("WSPSocket ..."));
+	// ODS(_T("WSPSocket ..."));
 	return NextProcTable.lpWSPSocket(af, type
 		, protocol, lpProtocolInfo, g, dwFlags, lpErrno);
 }
@@ -201,7 +184,7 @@ int WSPAPI WSPConnect(
 	LPINT			lpErrno
 )
 {
-	DebugStringNoDres(_T("WSPConnect ..."));
+	//DebugStringNoDres(_T("WSPConnect ..."));
 	return NextProcTable.lpWSPConnect(s, name, namelen, lpCallerData
 		, lpCalleeData, lpSQOS, lpGQOS, lpErrno);
 }
@@ -232,19 +215,6 @@ int WSPAPI WSPSend(
 	LPINT			lpErrno
 )
 {
-	char filename[1024];
-	sprintf(filename, "c:\\request\\%d_%d.log", s);
-	std::fstream file;
-	file.open(filename, std::ios::out | std::ios::app | std::ios::binary);
-
-	int send = *lpNumberOfBytesSent;
-	for (int i = 0; i < dwBufferCount; i++) {
-		int  send_t= send > lpBuffers[i].len ? lpBuffers[i].len : send;
-		file.write(lpBuffers[i].buf, send_t);
-
-		send -= send_t;
-	}
-	file.close();
 	return NextProcTable.lpWSPSend(s, lpBuffers, dwBufferCount
 		, lpNumberOfBytesSent, dwFlags, lpOverlapped
 		, lpCompletionRoutine, lpThreadId, lpErrno);
@@ -283,8 +253,6 @@ int WSPAPI WSPRecvFrom (
 	LPINT			lpErrno
 )
 {
-	ODS(_T("WSPRecvFrom ..."));
-
 	int iRet = NextProcTable.lpWSPRecvFrom(s, lpBuffers, dwBufferCount
 		, lpNumberOfBytesRecvd, lpFlags, lpFrom, lpFromlen
 		, lpOverlapped, lpCompletionRoutine, lpThreadId, lpErrno);
@@ -446,14 +414,14 @@ int WSPAPI WSPIoctl (
   DWORD			cbInBuffer,                                        
   LPVOID		lpvOutBuffer,                                     
   DWORD			cbOutBuffer,                                       
-  LPDWORD		lpcbBytesReturned,                               
+  LPDWORD		lpcbBytesReturned,                            
   LPWSAOVERLAPPED lpOverlapped,                            
   LPWSAOVERLAPPED_COMPLETION_ROUTINE lpCompletionRoutine,  
   LPWSATHREADID lpThreadId,                                
   LPINT			lpErrno                                            
 )
 {
-	ODS(_T("WSPIoctl ..."));
+	// ODS(_T("WSPIoctl ..."));
 	return NextProcTable.lpWSPIoctl(s, dwIoControlCode, lpvInBuffer
 		, cbInBuffer, lpvOutBuffer, cbOutBuffer, lpcbBytesReturned
 		, lpOverlapped, lpCompletionRoutine, lpThreadId, lpErrno);
@@ -628,7 +596,7 @@ int WSPAPI WSPStartup(
 	lpProcTable->lpWSPSendTo				= WSPSendTo;
 	lpProcTable->lpWSPRecv					= WSPRecv;
 	lpProcTable->lpWSPRecvFrom				= WSPRecvFrom;
- 
+
 	lpProcTable->lpWSPAddressToString		= WSPAddressToString;
 	lpProcTable->lpWSPAsyncSelect 			= WSPAsyncSelect;
 	lpProcTable->lpWSPBind 					= WSPBind;

@@ -259,38 +259,9 @@ void HTTPPacketTest::testRawPacket() {
 	ProtocolPacket<HTTP_PACKET_SIZE> *raw_packet1 = packet->getRawPacket();
 	int len1 = raw_packet1->read(buffer, buf_len);
 	buffer[len1+1] = '\0';
-	CPPUNIT_ASSERT(len1 == strlen(chunk1));
-	CPPUNIT_ASSERT(strcmp(chunk1, buffer));
-
-	ProtocolPacket<HTTP_PACKET_SIZE> *raw_packet2 = packet->getRawPacket();
-	int len2 = raw_packet2->read(buffer, buf_len);
-	buffer[len2+1] = '\0';
-	CPPUNIT_ASSERT(len2 == strlen(chunk2));
-	CPPUNIT_ASSERT(strcmp(chunk2, buffer));
-
-	ProtocolPacket<HTTP_PACKET_SIZE> *raw_packet3 = packet->getRawPacket();
-	int len3 = raw_packet3->read(buffer, buf_len);
-	buffer[len3+1] = '\0';
-	CPPUNIT_ASSERT(len3 == strlen(chunk3));
-	CPPUNIT_ASSERT(strcmp(chunk3, buffer));
-
-	ProtocolPacket<HTTP_PACKET_SIZE> *raw_packet4 = packet->getRawPacket();
-	int len4 = raw_packet4->read(buffer, buf_len);
-	buffer[len4+1] = '\0';
-	CPPUNIT_ASSERT(len4 == strlen(chunk4));
-	CPPUNIT_ASSERT(strcmp(chunk1, buffer));
-
-	ProtocolPacket<HTTP_PACKET_SIZE> *raw_packet5 = packet->getRawPacket();
-	int len5 = raw_packet5->read(buffer, buf_len);
-	buffer[len5+1] = '\0';
-	CPPUNIT_ASSERT(len5 == strlen(chunk5));
-	CPPUNIT_ASSERT(strcmp(chunk5, buffer));
-
-	ProtocolPacket<HTTP_PACKET_SIZE> *raw_packet6 = packet->getRawPacket();
-	int len6 = raw_packet6->read(buffer, buf_len);
-	buffer[len6+1] = '\0';
-	CPPUNIT_ASSERT(len6 == strlen(chunk6));
-	CPPUNIT_ASSERT(strcmp(chunk6, buffer));
+	const int total_length  = strlen(chunk1) + strlen(chunk2) + strlen(chunk3) +
+		strlen(chunk4) + strlen(chunk5) + strlen(chunk6);
+	CPPUNIT_ASSERT(len1 == total_length);
 	
 	delete packet;
 }

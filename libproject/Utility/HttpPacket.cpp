@@ -21,6 +21,8 @@ HTTPPacket::HTTPPacket(void) {
 
 	header_read_  = false;
 
+	raw_packets_ = NULL;
+
 	code_ = GetTickCount();
 }
 
@@ -88,39 +90,20 @@ int  HTTPPacket::achieve_header(const char * filename) {
 ///////////////////////////////////////////////
 // 一下函数对原始数据包队列进行操作
 void HTTPPacket::clearRawDeque() {
-	ProtocolPacket<HTTP_PACKET_SIZE> * packet = NULL;
-	while(raw_packets_.size() != 0) {
-		packet = raw_packets_.front();
-		raw_packets_.pop_front();
-		delete packet;
-	}
+	delete raw_packets_;
 }
 
 void HTTPPacket::addRawPacket(const char *buf, const int len) {
 	// 如果此函数分配内存失败，外层程序会处理相应异常
-	ProtocolPacket<HTTP_PACKET_SIZE> * packet = new ProtocolPacket<HTTP_PACKET_SIZE>();
-	packet->write(buf, len);
-	raw_packets_.push_back(packet);
+	if (raw_packets_ == NULL)
+		raw_packets_ = new ProtocolPacket<HTTP_PACKET_SIZE>();
+	raw_packets_->write(buf, len);
 }
 
 ProtocolPacket<HTTP_PACKET_SIZE> * HTTPPacket::getRawPacket() {
 	using namespace yanglei_utility;
 	SingleLock<CAutoCreateCS> lock(&cs_); 
-	if (raw_packets_.size() == 0)
-		return NULL;
-	else {
-		ProtocolPacket<HTTP_PACKET_SIZE> * packet = raw_packets_.front();
-		// 如果包已经读取完毕
-		// 则删除，否则返回
-		const int bytes_beenread = packet->getBytesCanRead();
-		if ( 0 == bytes_beenread) {
-			raw_packets_.pop_front();
-			delete packet;
-			return getRawPacket();
-		} else {
-			return packet;
-		}
-	}
+	return raw_packets_;
 }
 
 ////////////////////////////////////////////
@@ -187,7 +170,6 @@ int HTTPPacket::read(char *buf, const int bufsize, int &bytedread) {
 int HTTPPacket::extractData(const char *buf, const int len) {
 	// 如果包尚未完成，且不存在头部
 	if (!isComplete() && header_exist_ == false) {
-		OutputDebugString("if (!isComplete() && header_exist_ == false) ");
 		if (!testHttpHeaderPacket(buf, len)) {
 			OutputDebugString("throw exception...");
 			throw int(0);
@@ -222,7 +204,6 @@ int HTTPPacket::extractData(const char *buf, const int len) {
 
 		return bytes_dealed;
 	} else if (!isComplete() && header_exist_ == true) {
-		OutputDebugString("else if (!isComplete() && header_exist_ == true)");
 		// 如果已经得到了头部，且传入的数据不是
 		// 那么得到的数据就是
 		assert ( addBuffer != NULL);
