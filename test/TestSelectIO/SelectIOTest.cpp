@@ -64,6 +64,57 @@ int WSPAPI WSPRecv(
 } // namespace
 
 
+// 测试混合内容
+// 让一个完整的包，后面跟着一个88
+void SelectIOTest::testMax() {
+	string data1 = "HTTP/1.1 200 OK\r\n"
+	"Date: Thu, 24 Apr 2008 02:37:48 GMT\r\n"
+	"Accept-Ranges: bytes\r\n"
+	"Content-Length: 45\r\n"
+	"Content-Type: text/html\r\n"
+	"Connection: close\r\n\r\n"
+	"12345";
+
+	string data = "88";
+}
+
+void SelectIOTest::testZeroChunk() {
+	// 测试没有长度的chunk
+	string data1 = "HTTP/1.1 302 Found"
+	"Date: Thu, 10 Jul 2008 15:46:27 GMT"
+	"Server: Apache/1.3.29 (Unix) PHP/4.3.4"
+	"Cache-Control: no-cache, must-revalidate"
+	"P3P: CP=\"NOI DSP COR CURa ADMa DEVa PSAa PSDa OUR IND UNI PUR NAV\""
+	"Pragma: no-cache"
+	"Expires: -1"
+	"Connection: close"
+	"Transfer-Encoding: chunked"
+	"Content-Type: text/plain\r\n"
+	"0\r\n\r\n";
+
+	const int buf_size = 1024 * 64;
+	char buffer[buf_size];
+	WSABUF wsabuf;
+	wsabuf.buf = buffer;
+	wsabuf.len = buf_size;
+	DWORD dwNumberOfBytesRecvd;
+
+	// 初始化SelectIO
+	resetFakeBuffer();
+	const SOCKET s = 10831;
+	CSelectIO select;
+	resetFakeBuffer();
+	select.setRecv(WSPRecv);
+	g_SockData.insert(make_pair(s, data1));
+
+	fd_set readfds;
+	FD_ZERO(&readfds);
+	FD_SET(s, &readfds);
+	CPPUNIT_ASSERT( 1 == select.preselect(&readfds));
+	select.postselect(&readfds);
+	CPPUNIT_ASSERT( 0 == select.preselect(&readfds));
+
+}
 void SelectIOTest::testMulitPacket() {
 		// test case 1: 简单验证
 	{

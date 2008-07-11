@@ -6,6 +6,7 @@
 #include <ostream>
 #include <fstream>
 #include <ios>
+#include <logdebug.h>
 #include "httpdataextractor.h"
 
 //=================================================
@@ -131,6 +132,7 @@ int HTTPPacket::addBuffer(const char *buf, const unsigned len) {
 		}
 		return bytes;
 	} catch(int) {
+		WriteLog("E:\\workspace\\debuglog\\addbufferexp.log", 0, buf, len);
 		DEBUG_MESSAGE("addBuffer int exception...");
 		return 0;
 	} catch (std::bad_alloc &) {
@@ -138,15 +140,10 @@ int HTTPPacket::addBuffer(const char *buf, const unsigned len) {
 		throw; 
 	} catch (...) {
 		char filename[1024];
-		sprintf(filename, "c:\\exp\\int%d.log", getCode());
+		sprintf(filename, "E:\\workspace\\debuglog\\int%d.log", getCode());
 		achieve(filename);
 
-		std::fstream file;
-		file.open(filename, std::ios::out | std::ios::app | std::ios::binary);
-		std::string snew_line = "\r\n====================\r\n";
-		file.write(snew_line.c_str(), snew_line.length());
-		file.write(buf, len);
-		file.close();
+		WriteLog("E:\\workspace\\debuglog\\addbufferexp.log", 0, buf, len);
 		DEBUG_MESSAGE("addBuffer exception...");
 		return 0;
 	}

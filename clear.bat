@@ -57,6 +57,16 @@ del .\projects\Rulesholder\debug /q
 del .\projects\Rulesholder\release /q
 del .\projects\Rulesholder\*.ncb /q
 del .\*.ncb /q
+del .\test\TestSelectIO\debug\* /q
+del .\test\TestSelectIO\release\* /q
 
-path D:\Program Files\WinRAR
-rar a ..\net.rar ..\net 
+
+del .\lib\dnslookupd.lib /q
+del .\lib\dnslookup.lib /q
+del .\lib\logsystemd.lib /q
+del .\lib\logsystem.lib /q
+del .\lib\ThreadSyncd.lib /q
+del .\lib\ThreadSync.lib /q
+del .\lib\Utilityd.lib /q
+del .\lib\Utility.lib /q
+del .\lib\selectiod.lib /q

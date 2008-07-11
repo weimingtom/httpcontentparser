@@ -35,6 +35,7 @@
 				AdditionalDependencies="ws2_32.lib"
 				OutputFile="$(OutDir)/TestRulesManagement.exe"
 				LinkIncremental="2"
+				AdditionalLibraryDirectories="..\..\lib"
 				GenerateDebugInformation="TRUE"
 				ProgramDatabaseFile="$(OutDir)/TestRulesManagement.pdb"
 				SubSystem="1"
