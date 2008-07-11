@@ -3,8 +3,13 @@
 #include <utility\fd_set_utility.h>
 #include <utility\HttpContentChecker.h>
 #include ".\selectio.h"
+#include <logdebug.h>
 
 
+////////////////////////////////////////////////
+// 
+
+////////////////////////////////////////////////
 int getBufferTotalSize(LPWSABUF lpBuffers, DWORD dwBufferCount) {
 	int total_size = 0;
 	for (int i = 0; i < dwBufferCount; ++i) {
@@ -124,23 +129,22 @@ int CSelectIO::prerecv(SOCKET s, LPWSABUF lpBuffers,
 
 	// 获取一个
 	ProtocolPacket<HTTP_PACKET_SIZE> * raw_packet= packet->getRawPacket();
+	assert (raw_packet != NULL);
 
-
-	// 所有包都已经发送
-	if (raw_packet == NULL) {
-		// 移除包
+	if (raw_packet->getBytesCanRead() == 0) {
+		*recv_bytes = 0;
 		removeCompletedPacket(s, packet);
-		return 0;
-	} else {
-		for (int i = 0; i < dwBufferCount; ++i) {
-			const DWORD bytes = raw_packet->read(lpBuffers[i].buf, lpBuffers[i].len);
-			*recv_bytes += bytes;
-			if (bytes == 0 || raw_packet->getBytesCanRead() == 0) {
-				removeCompletedPacket(s, packet);
-			}
-		}
 	}
 
+	// 所有包都已经发送
+	for (int i = 0; i < dwBufferCount; ++i) {
+		const DWORD bytes = raw_packet->read(lpBuffers[i].buf, lpBuffers[i].len);
+		*recv_bytes += bytes;
+		if (bytes == 0 || raw_packet->getBytesCanRead() == 0) {
+			removeCompletedPacket(s, packet);
+		}
+	}
+	
 	if (*recv_bytes == 0) {
 		return 1;
 	} else {
@@ -266,6 +270,9 @@ HTTPPacket * CSelectIO::getSOCKETPacket(const SOCKET s) {
 // 返回1代表不是一个完整的包
 int CSelectIO::graspData(const SOCKET s, char *buf, const int len) {
 	try {
+		// graspData
+		WriteLog("E:\\workspace\\debuglog\\recv.log", s, buf, len);
+
 		bool completed_generated = false;
 		int total_size = 0;
 		while (total_size < len) {
@@ -285,6 +292,15 @@ int CSelectIO::graspData(const SOCKET s, char *buf, const int len) {
 				removePacket(s, sock_data);
 
 				completed_generated = true;
+
+				WriteLog("E:\\workspace\\debuglog\\recv.log", s, "\r\n================complete ==================\r\n\r\n");
+			}
+
+			// 如果添加进入的长度为0
+			// 存在一个情况，例如: 如果一个包里面包含一个完整的包，此后这个SOCK的有用于其他用途
+			// 那么后面的数据并不是一个真正的HTTP包，所以必须去掉
+			if (bytes_written == 0) {
+				break;
 			}
 		} // while
 
@@ -340,16 +356,31 @@ bool CSelectIO::needStored(const SOCKET s) {
 	// 如果以HTTP开头
 	// 可能不包含头部，呵呵
 	buf[buf_size-1] = '\0';
-	if ( buf == strstr(buf, HTTP_PACHET_HEADER)) {
+	const char * header = strstr(buf, HTTP_PACHET_HEADER);
+	if ( header == buf ) {
 		// 解析头部
 		HTTP_RESPONSE_HEADER header;
 		int result = header.parseHeader(buf, recv_bytes);
-		if (result != 0) {
-			return true;
-		} else { // 这不是一个HTTP包
+		if (result == 0) {
 			return false;
 		}
+
+		// 只处理已经知道的类型
+		if (header.getContentType() == HTTP_RESPONSE_HEADER::CONTYPE_CSS ||
+			header.getContentType() == HTTP_RESPONSE_HEADER::CONTYPE_GIF ||
+			header.getContentType() == HTTP_RESPONSE_HEADER::CONTYPE_HTML ||
+			header.getContentType() == HTTP_RESPONSE_HEADER::CONTYPE_JPG ||
+			header.getContentType() == HTTP_RESPONSE_HEADER::CONTYPE_JS ||
+			header.getContentType() == HTTP_RESPONSE_HEADER::CONTYPE_PNG) {
+				return true;
+			} else {
+				WriteLog("E:\\workspace\\debuglog\\needless.log", s, buf, recv_bytes);
+				OutputDebugString("======needless to deal with=========");
+				return false;
+			}
+
 	} else {
+		WriteLog("E:\\workspace\\debuglog\\leagle_recv.log", s, buf, recv_bytes);
 		OutputDebugString("======not begin with HTTP=========");
 		return false;
 	}
@@ -360,9 +391,6 @@ void CSelectIO::clearAllPackets() {
 	SOCK_DATA_MAP::iterator iter = _sockets_map_.begin();
 	for (; iter != _sockets_map_.end(); ++iter) {
 		if (iter->second != NULL) {
-			char buffer[1024];
-			sprintf(buffer, "c:\\%d.log", iter->first);
-			iter->second->achieve(buffer);
 			delete iter->second;
 		}
 	}

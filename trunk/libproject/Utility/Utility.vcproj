@@ -127,9 +127,6 @@ copy .\httppacket.h ..\..\include\utility
 				RelativePath=".\HttpPacket.cpp">
 			</File>
 			<File
-				RelativePath=".\SettingStore.cpp">
-			</File>
-			<File
 				RelativePath=".\stdafx.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
@@ -169,9 +166,6 @@ copy .\httppacket.h ..\..\include\utility
 			</File>
 			<File
 				RelativePath=".\HttpPacket.h">
-			</File>
-			<File
-				RelativePath=".\SettingStore.h">
 			</File>
 			<File
 				RelativePath=".\stdafx.h">

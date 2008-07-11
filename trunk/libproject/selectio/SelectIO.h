@@ -27,7 +27,7 @@ public:
 	CSelectIO();
 	~CSelectIO(void);
 
-	// 在调用selelect之前调用，如果返回0,则select函数，应该直接返回
+	// 在调用selelect之前调用，如果返回0,则select函数，应该直接返回(表示存在已经完成的包)
 	int preselect(fd_set *readfds);
 	int postselect(fd_set *readfds);
 	// 在调用的时候
