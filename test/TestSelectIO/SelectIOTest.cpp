@@ -1,6 +1,7 @@
 #include "StdAfx.h"
 #include ".\selectiotest.h"
 #include <map>
+#include <set>
 #include <string>
 using namespace std;
 
@@ -70,16 +71,50 @@ void SelectIOTest::testMax() {
 	string data1 = "HTTP/1.1 200 OK\r\n"
 	"Date: Thu, 24 Apr 2008 02:37:48 GMT\r\n"
 	"Accept-Ranges: bytes\r\n"
-	"Content-Length: 45\r\n"
+	"Content-Length: 5\r\n"
 	"Content-Type: text/html\r\n"
 	"Connection: close\r\n\r\n"
 	"12345";
 
-	string data = "88";
+	string data2 = "88";
+
+	resetFakeBuffer();
+	const SOCKET s = 10831;
+	g_SockData.insert(make_pair(s, data1));
+
+
+	// 初始化SelectIO
+	CSelectIO select;
+	select.setRecv(WSPRecv);
+	fd_set readfds;
+	FD_ZERO(&readfds);
+	FD_SET(s, &readfds);
+	
+	// 验证数据
+	const int buf_size = 1024 * 64;
+	char buffer[buf_size];
+	WSABUF wsabuf;
+	wsabuf.buf = buffer;
+	wsabuf.len = buf_size;
+	DWORD dwNumberOfBytesRecvd;
+
+	CPPUNIT_ASSERT( 1 == select.preselect(&readfds));
+	select.postselect(&readfds);
+	CPPUNIT_ASSERT( 0 == select.preselect(&readfds));
+	CPPUNIT_ASSERT(select.prerecv(s, &wsabuf,
+		1, &dwNumberOfBytesRecvd) == 0);
+	CPPUNIT_ASSERT(dwNumberOfBytesRecvd == (data1.length()));
+
+	g_SockData.insert(make_pair(s, data2));
+	// 在读数据的时候， 数据不会被截取
+	CPPUNIT_ASSERT( 1 == select.preselect(&readfds));
+	select.postselect(&readfds);
+	CPPUNIT_ASSERT(1 == readfds.fd_count);
+	CPPUNIT_ASSERT(select.prerecv(s, &wsabuf,
+		1, &dwNumberOfBytesRecvd) == 1);
 }
 
-void SelectIOTest::testConstantPackets() {
-}
+
 void SelectIOTest::testZeroChunk() {
 	// 测试没有长度的chunk
 	string data1 = "HTTP/1.1 302 Found\r\n"
@@ -104,13 +139,6 @@ void SelectIOTest::testZeroChunk() {
 	resetFakeBuffer();
 	select.setRecv(WSPRecv);
 	g_SockData.insert(make_pair(s, data1));
-
-	fd_set readfds;
-	FD_ZERO(&readfds);
-	FD_SET(s, &readfds);
-	CPPUNIT_ASSERT( 1 == select.preselect(&readfds));
-	select.postselect(&readfds);
-	CPPUNIT_ASSERT( 0 == select.preselect(&readfds));
 }
 void SelectIOTest::testMulitPacket() {
 		// test case 1: 简单验证
@@ -286,7 +314,7 @@ void SelectIOTest::testPostSelect() {
 	"Connection: close\r\n\r\n"
 	"34567";
 
-		//初始化数据
+	//初始化数据
 	resetFakeBuffer();
 	const SOCKET s = 10831;
 	g_SockData.insert(make_pair(s, data1));
@@ -330,7 +358,6 @@ void SelectIOTest::testPostSelect() {
 	}
 }
 
-
 void SelectIOTest::testPreSelect() {
 	CSelectIO select;
 	select.setRecv(WSPRecv);
@@ -343,4 +370,73 @@ void SelectIOTest::testPreSelect() {
 	FD_SET(111, &readfds);
 	FD_SET(1111, &readfds);
 	CPPUNIT_ASSERT(1 == select.preselect(&readfds));
+}
+
+void SelectIOTest::testConstantPackets() {
+	// 数据缓冲区
+	const int buf_size = 1024 * 64;
+	char buffer[buf_size];
+	WSABUF wsabuf;
+	wsabuf.buf = buffer;
+	wsabuf.len = buf_size;
+	DWORD dwNumberOfBytesRecvd;
+	fd_set readfds;
+}
+
+void SelectIOTest::testRemovePacket() {
+	// testcase
+	// 连续加入多个socket 的完整， 然后分别去除
+	// 最后测试在Packet中是否仍然存在未完成的包
+	string data1 = "HTTP/1.1 200 OK\r\n"
+	"Date: Thu, 24 Apr 2008 02:37:48 GMT\r\n"
+	"Accept-Ranges: bytes\r\n"
+	"Content-Length: 5\r\n"
+	"Content-Type: text/html\r\n"
+	"Connection: close\r\n\r\n"
+	"12345";
+
+	// 数据缓冲区
+	const int buf_size = 1024 * 64;
+	char buffer[buf_size];
+	WSABUF wsabuf;
+	wsabuf.buf = buffer;
+	wsabuf.len = buf_size;
+	DWORD dwNumberOfBytesRecvd;
+	fd_set readfds;
+
+	{
+	CSelectIO select;
+	select.setRecv(WSPRecv);
+	resetFakeBuffer();
+	set<SOCKET> socket_set;
+	// 加入一些列socket
+	set<SOCKET>::iterator iter = socket_set.begin();
+	socket_set.insert(11502);
+	socket_set.insert(5130);
+	socket_set.insert(1320);
+	socket_set.insert(4510);
+	socket_set.insert(1023);
+	socket_set.insert(104);
+	socket_set.insert(120);
+
+	// 加入数据
+	for (; iter != socket_set.end(); ++iter) {
+		g_SockData.insert(make_pair(*iter, data1));
+	}
+
+	int cnt = socket_set.size();
+	for (; iter != socket_set.end(); ++iter) {
+		CPPUNIT_ASSERT(select._sockets_map_.size() == cnt);
+		FD_ZERO(&readfds);
+		FD_SET(*iter, &readfds);
+
+		CPPUNIT_ASSERT( 1 == select.preselect(&readfds));
+		select.postselect(&readfds);
+		CPPUNIT_ASSERT(select.prerecv(*iter, &wsabuf,
+			1, &dwNumberOfBytesRecvd) == 0);
+		CPPUNIT_ASSERT(dwNumberOfBytesRecvd == (data1.length()));
+		cnt--;
+	}
+	CPPUNIT_ASSERT(select._sockets_map_.size() == 0);
+	}
 }

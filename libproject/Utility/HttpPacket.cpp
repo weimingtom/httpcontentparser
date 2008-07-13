@@ -11,6 +11,15 @@
 
 //=================================================
 // class HTTPPacket
+
+// static members
+int HTTPPacket::cur_code_ = 0;
+int HTTPPacket::generateCode() {
+	cur_code_++;
+	return cur_code_;
+}
+
+// comstructor 
 HTTPPacket::HTTPPacket(void) {
 	http_data_ = NULL;
 	header_exist_ = false;
@@ -24,7 +33,7 @@ HTTPPacket::HTTPPacket(void) {
 
 	raw_packets_ = NULL;
 
-	code_ = GetTickCount();
+	code_ = generateCode();
 }
 
 HTTPPacket::~HTTPPacket(void) {
@@ -156,6 +165,9 @@ int HTTPPacket::addBuffer(const char *buf, const unsigned len) {
 		assert(bytes <= len);
 		return bytes;
 	} catch(int) {
+		char buffer[1024];
+		sprintf(buffer, "\r\n\r\ncode : %d", getCode());
+		WriteLog("E:\\workspace\\debuglog\\bbbb.log", 0, buffer, strlen(buffer));
 		WriteLog("E:\\workspace\\debuglog\\bbbb.log", 0, buf, len);
 		DEBUG_MESSAGE("addBuffer int exception...");
 		return 0;

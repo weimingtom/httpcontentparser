@@ -21,7 +21,7 @@ typedef int WSPAPI MYWSPRECV(
 
 class HTTPPacket;
 class HTTP_RESPONSE_HEADER;
-
+class SelectIOTest;
 
 // class CheckSetting
 // 此类是一个单件类， 我们使用它来保存规则(那些类型的HTTP包学要被处理)
@@ -98,6 +98,8 @@ protected:
 
 	// 保存WSPRecv的函数指针
 	MYWSPRECV * lpWSPRecv;
+
+	friend class SelectIOTest;
 };
 
 // utility functions

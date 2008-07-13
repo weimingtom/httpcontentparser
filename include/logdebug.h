@@ -3,6 +3,11 @@
 
 #ifdef _DEBUG
 
+inline 
+void OutputDebugInfo(const char * str) {
+	OutputDebugString(str);
+}
+
 inline
 void WriteLog(const char * filename, const SOCKET s, const char * str) {
 	std::fstream file;
@@ -27,6 +32,11 @@ void WriteLog(const char *filename, const SOCKET s,  const char * data, const in
 }
 
 #else 
+
+inline 
+void OutputDebugInfo(const char * str) {
+}
+
 
 inline
 void WriteLog(const char * filename, const SOCKET s, const char * str);
