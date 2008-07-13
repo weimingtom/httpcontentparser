@@ -2,8 +2,9 @@
 #define _UTILITY_SELECTIO_H__
 
 #include <ws2spi.h>
-#include <io.h>		
+#include <io.h>
 #include <map>
+#include <set>
 #include <utility\protocolpacket.h>
 
 typedef int WSPAPI MYWSPRECV(
@@ -22,6 +23,30 @@ class HTTPPacket;
 class HTTP_RESPONSE_HEADER;
 
 
+// class CheckSetting
+// 此类是一个单件类， 我们使用它来保存规则(那些类型的HTTP包学要被处理)
+class CheckSetting {
+public:
+	static CheckSetting * getInstance() {
+		static CheckSetting setting;
+		return &setting;
+	}
+	~CheckSetting();
+
+	// 是否需要处理
+	bool needCheck(const int type);
+
+	// 添加规则
+	void addCheckedType(const int type);
+
+	// 移除removeCheckedType
+	bool removeCheckedType(const int type);
+private:
+	CheckSetting();
+	typedef std::set<int> CHECKED_TYPES;
+	CHECKED_TYPES http_types_;
+};
+
 class CSelectIO {
 public:
 	CSelectIO();
@@ -30,7 +55,11 @@ public:
 	// 在调用selelect之前调用，如果返回0,则select函数，应该直接返回(表示存在已经完成的包)
 	int preselect(fd_set *readfds);
 	int postselect(fd_set *readfds);
-	// 在调用的时候
+
+
+	// 在调用WSPRecv之前调用
+	// 如果prerecv返回0， 代表他已经放入了数据, 不需要在调用WSPRecv了
+	// 如果返回其他， 则代表我们没有已经完成的包，此时可以调用WSPRecv
 	int prerecv(SOCKET s, LPWSABUF lpBuffers, DWORD dwBufferCount, DWORD *recv_bytes);
 
 	bool checkWholePacket(HTTPPacket * packet);
@@ -38,25 +67,9 @@ public:
 	void onCloseSocket(const SOCKET s);
 
 	void setRecv(MYWSPRECV *recv);
-
-	class ContentCheckSetting {
-	public:
-		ContentCheckSetting();
-		~ContentCheckSetting(){}
-
-		bool CheckContent(HTTP_RESPONSE_HEADER * header);
-		void setCheckHTML(const bool check);
-		void setCheckXML(const bool check);
-		void setCheckImage(const bool check);
-		void setCheckImageSize(const int minsize, const int maxsize);
-	private:
-		bool checkImage_;
-		bool checkHTML_;
-		bool checkXML_;
-		int  minImageSize_, maxImageSize_;
-	};
-	ContentCheckSetting checkSetting_;
 protected:
+	// 是否需要处理
+	bool isneedToDeal(HTTP_RESPONSE_HEADER * header);
 	// 
 	bool isThereUncompletePacket(const SOCKET s);
 	//==========================================

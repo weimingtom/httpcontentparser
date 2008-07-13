@@ -10,19 +10,27 @@ public:
 	~HTTPPacketTest(void);
 
 	CPPUNIT_TEST_SUITE(HTTPPacketTest);
-	CPPUNIT_TEST(testAddSinglePacket);
-	CPPUNIT_TEST(testSeriesPacket);
-	CPPUNIT_TEST(testNoContentChunk);
+	CPPUNIT_TEST(testAdd0LengthPacket);
 	CPPUNIT_TEST(testNoContentPacket);
-	CPPUNIT_TEST(testHTTPHeaderParsed);
+	CPPUNIT_TEST(testAddSeriesPacket);
+	CPPUNIT_TEST(testSeriesPacket);
+	CPPUNIT_TEST(testNoContentHeader);
+	CPPUNIT_TEST(testZeroChunk);
 	CPPUNIT_TEST(testChunk);
+	CPPUNIT_TEST(testNoLengthSepecified);
+	CPPUNIT_TEST(testAddSinglePacket);
+	CPPUNIT_TEST(testNoContentChunk);
+	CPPUNIT_TEST(testHTTPHeaderParsed);
 	CPPUNIT_TEST(testWrongHeader);
 	CPPUNIT_TEST(testRawPacket);
 	
-	CPPUNIT_TEST(testAddSeriesPacket);
 	
 	CPPUNIT_TEST_SUITE_END();
 protected:
+	void testNoContentHeader();
+	void testAdd0LengthPacket();	// 添加0长度的包
+	void testZeroChunk();
+	void testNoLengthSepecified();
 	void testNoContentPacket();
 	void testSeriesPacket();
 	void testWrongHeader();

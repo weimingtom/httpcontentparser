@@ -66,21 +66,41 @@ private:
 	ChunkPacket(ChunkPacket &) {}
 };
 
+// 对于未指定长度的且存在内容的包
+class NoSepcifiedLength : public HttpDataExtractor {
+public:
+	NoSepcifiedLength(ProtocolPacket<HTTP_PACKET_SIZE> *data, const HTTP_RESPONSE_HEADER *);
+	~NoSepcifiedLength();
+	// 负责去掉chunk的头部和尾部，并把数据部分放入缓冲区
+	virtual int addBuffer(const char *buf, const int len);
+	virtual bool finished() const;	// chunk是否已经结束
+private:
+	int write_to_buffer(const char * buf, const int len);
+	bool finished_;
+	ProtocolPacket<HTTP_PACKET_SIZE> * data_;
+	const HTTP_RESPONSE_HEADER * http_header_;
+
+	// 如果一个IP包不包含一个完整的chunk包
+	// 这时候整个包没有全部完成.....
+	int cur_need_length_;
+
+	// 禁用
+	NoSepcifiedLength(NoSepcifiedLength &) {}
+};
 
 HttpDataExtractor * HttpDataExtractor::Create(const HTTP_RESPONSE_HEADER *header,
 								  ProtocolPacket<HTTP_PACKET_SIZE> *data) {
 	if (header->isChunk()) {
 		return (HttpDataExtractor*)new ChunkPacket(data, header);
-	} else if (header->getResponseCode() == 204 || header->getResponseCode() == 304 ||
-		1 == (int)(header->getResponseCode()/100)) {
-		// 如果是1xx 204 304, 则没有内容
+	} else if (header->existContent() == false) {
+		// 如果没有content部分
 		return (HttpDataExtractor*) new NoContent(data, header);
-	} else {
+	} else if (header->getContentLength() == HTTP_RESPONSE_HEADER::NO_DESIGNATION) {
+		return (HttpDataExtractor*)new NoSepcifiedLength(data, header);
+	}else {
 		return (HttpDataExtractor*)new FixContent(data, header);
 	}
 }
-
-
 
 //============================
 // class ChunkPacket
@@ -114,7 +134,10 @@ int ChunkPacket::write_to_buffer(const char * buf, const int len) {
 int ChunkPacket::addBuffer(const char *buf, const int len) {
 	assert(finished_ == false);
 	// 如果给出的缓冲区长度为0， 直接返回
-	if (len == 0) return 0;
+	if (len == 0) {
+		finished_ = true;
+		return 0;
+	}
 
 	int chunk_head_bytes  = 0;
 	// 首先获取长度
@@ -159,7 +182,8 @@ int FixContent::addBuffer(const char *buf, const int len) {
 
 	// 如果传入了0， 则代表已经完成了
 	if (len == 0) {
-		finished_ == 0;
+		finished_ = true;
+		return 0;
 	}
 	// 如果指定了长度
 	if (except_len != HTTP_RESPONSE_HEADER::NO_DESIGNATION) {
@@ -186,7 +210,7 @@ bool FixContent::finished() const {
 // class FixContent
 NoContent::NoContent(ProtocolPacket<HTTP_PACKET_SIZE> *data,
 	const HTTP_RESPONSE_HEADER *header) : data_(data), http_header_(header) {
-	finished_ = false;
+	finished_ = true;
 }	
 
 NoContent::~NoContent() {
@@ -197,6 +221,25 @@ bool NoContent::finished() const {
 }
 
 int NoContent::addBuffer(const char *buf, const int len) {
+	return 0;
+}
+
+//============================
+// class FixContent
+NoSepcifiedLength::NoSepcifiedLength(ProtocolPacket<HTTP_PACKET_SIZE> *data,
+	const HTTP_RESPONSE_HEADER *header) : data_(data), http_header_(header) {
+	finished_ = false;
+}	
+
+NoSepcifiedLength::~NoSepcifiedLength() {
+}
+
+bool NoSepcifiedLength::finished() const {
+	return finished_;
+}
+
+int NoSepcifiedLength::addBuffer(const char *buf, const int len) {
 	finished_ = true;
+	assert(false);
 	return 0;
 }
