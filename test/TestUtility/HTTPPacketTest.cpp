@@ -38,7 +38,6 @@ const char packet2[] = 	"HTTP/1.1 302 Found\r\n"
 "Accept-Ranges: bytes\r\n"
 "Content-Length: 234\r\n"
 "Content-Type: image/gif\r\n"
-"Age: 220737\r\n"
 "X-Cache: HIT from 168479083.sohu.com\r\n"
 "Connection: keep-alive\r\n\r\n"
 "12345678901234567890123456789012345678901234567890"
@@ -53,8 +52,6 @@ const char packet3[] = 	"HTTP/1.1 302 Found\r\n"
 "Accept-Ranges: bytes\r\n"
 "Content-Length: 62\r\n"
 "Content-Type: image/jpeg\r\n"
-"Age: 220737\r\n"
-"X-Cache: HIT from 168479083.sohu.com\r\n"
 "Connection: close\r\n\r\n"
 "12345678901234567890123456789012345678901234567890"
 "123456789012";
@@ -65,7 +62,6 @@ const char packet4[] = "HTTP/1.1 200 OK\r\n"
 "Expires: -1\r\n"
 "Content-Type: text/html; charset=UTF-8\r\n"
 "Content-Encoding: gzip\r\n"
-"Server: gws\r\n"
 "Transfer-Encoding: chunked\r\n\r\n"
 "12345678901234567890123456789012345678901234567890"
 "12345678901234567890123456789012345678901234567890"
@@ -147,6 +143,23 @@ HTTPPacketTest::HTTPPacketTest(void) {
 HTTPPacketTest::~HTTPPacketTest(void) {
 }
 
+void HTTPPacketTest::testNoLengthSepecified() {
+	//const char data1[] = "HTTP/1.1 200 OK\r\n"
+	//	"Date: Thu, 24 Apr 2008 02:37:48 GMT\r\n"
+	//	"Content-Type: image/gif\r\n"
+	//	"Age: 220737\r\n"
+	//	"Connection: keep-alive\r\n\r\n12345";
+
+	//const char data2[] = "";
+	//HTTPPacket *packet = new HTTPPacket;
+	//packet->addBuffer(data1, strlen(data1));
+	//packet->addBuffer(data2, strlen(data2));
+	//CPPUNIT_ASSERT(packet->isComplete() == true);
+	//const int len = packet->getDataSize();
+	//CPPUNIT_ASSERT(len == 5);
+	//delete packet;
+}
+
 void HTTPPacketTest::testNoContentChunk() {
 	const char complex_chunk1[] = "HTTP/1.1 200 OK\r\n"
 		"Date: Thu, 24 Apr 2008 02:37:48 GMT\r\n"
@@ -160,6 +173,7 @@ void HTTPPacketTest::testNoContentChunk() {
 		strlen(complex_chunk1)));
 
 	CPPUNIT_ASSERT(true == packet->isComplete());
+	delete packet;
 }
 void HTTPPacketTest::testNoContentPacket() {
 	const char no_content[] = "HTTP/1.0 304 Not Modified\r\n"
@@ -264,6 +278,21 @@ void HTTPPacketTest::testRawPacket() {
 	CPPUNIT_ASSERT(len1 == total_length);
 	
 	delete packet;
+}
+
+// 对于一个chunk当他只有长度为0的一个段的时候
+void HTTPPacketTest::testZeroChunk() {
+	char data1[] = "HTTP/1.1 302 Found\r\n"
+	"Date: Thu, 10 Jul 2008 15:46:27 GMT\r\n"
+	"Server: Apache/1.3.29 (Unix) PHP/4.3.4\r\n"
+	"Content-Type: text/html\r\n"
+	"Connection: close\r\n"
+	"Transfer-Encoding: chunked\r\n\r\n"
+	"0\r\n\r\n";
+
+	HTTPPacket *packet = new HTTPPacket;
+	CPPUNIT_ASSERT(strlen(data1) == packet->addBuffer(data1, strlen(data1)));
+	CPPUNIT_ASSERT(packet->isComplete() == true);
 }
 
 // 测试编码方式为chunk的HTTP包
@@ -382,6 +411,7 @@ void HTTPPacketTest::testHTTPHeaderParsed() {
 	CPPUNIT_ASSERT(header1.getConnectionState()== HTTP_RESPONSE_HEADER::CONNECT_CLOSE);
 	CPPUNIT_ASSERT(header1.getContentLength() == 682);
 	CPPUNIT_ASSERT(header1.getResponseCode() == 302);
+	CPPUNIT_ASSERT(header1.existContent() == true);
 
 	HTTP_RESPONSE_HEADER header2;
 	header2.parseHeader(packet2, strlen(packet2));
@@ -390,6 +420,7 @@ void HTTPPacketTest::testHTTPHeaderParsed() {
 	CPPUNIT_ASSERT(header2.getConnectionState()== HTTP_RESPONSE_HEADER::CONNECT_KEEP_ALIVE);
 	CPPUNIT_ASSERT(header2.getContentLength() == 234);
 	CPPUNIT_ASSERT(header2.getResponseCode() == 302);
+	CPPUNIT_ASSERT(header2.existContent() == true);
 
 	HTTP_RESPONSE_HEADER header3;
 	header3.parseHeader(packet3, strlen(packet3));
@@ -398,6 +429,7 @@ void HTTPPacketTest::testHTTPHeaderParsed() {
 	CPPUNIT_ASSERT(header3.getConnectionState()== HTTP_RESPONSE_HEADER::CONNECT_CLOSE);
 	CPPUNIT_ASSERT(header3.getContentLength() == 62);
 	CPPUNIT_ASSERT(header3.getResponseCode() == 302);
+	CPPUNIT_ASSERT(header3.existContent() == true);
 
 	HTTP_RESPONSE_HEADER header4;
 	header4.parseHeader(packet4, strlen(packet4));
@@ -405,6 +437,7 @@ void HTTPPacketTest::testHTTPHeaderParsed() {
 	CPPUNIT_ASSERT(header4.getConnectionState()== HTTP_RESPONSE_HEADER::NO_DESIGNATION);
 	CPPUNIT_ASSERT(header4.isChunk()== true);
 	CPPUNIT_ASSERT(header4.getResponseCode() == 200);
+	CPPUNIT_ASSERT(header4.existContent() == true);
 
 	HTTP_RESPONSE_HEADER header6;
 	header6.parseHeader(packet6, strlen(packet4));
@@ -412,4 +445,121 @@ void HTTPPacketTest::testHTTPHeaderParsed() {
 	CPPUNIT_ASSERT(header6.getContentLength()== 3);
 	CPPUNIT_ASSERT(header6.isChunk()== false);
 	CPPUNIT_ASSERT(header6.getResponseCode() == 200);
+	CPPUNIT_ASSERT(header6.existContent() == true);
+}
+
+// 测试没有内容的包
+// 对于 204， 304， 1**的包， 他们没有内容
+void HTTPPacketTest::testNoContentHeader() {
+	char data1[] = "HTTP/1.1 304 Found\r\n"
+	"Date: Thu, 10 Jul 2008 15:46:27 GMT\r\n"
+	"Server: Apache/1.3.29 (Unix) PHP/4.3.4\r\n"
+	"Content-Type: text/html\r\n"
+	"Connection: close\r\n\r\n";
+	HTTP_RESPONSE_HEADER header1;
+	header1.parseHeader(data1, strlen(data1));
+	CPPUNIT_ASSERT(header1.getResponseCode() == 304);
+	CPPUNIT_ASSERT(header1.existContent() == false);
+
+	char data2[] = "HTTP/1.1 204 Found\r\n"
+	"Date: Thu, 10 Jul 2008 15:46:27 GMT\r\n"
+	"Server: Apache/1.3.29 (Unix) PHP/4.3.4\r\n"
+	"Content-Type: text/html\r\n"
+	"Connection: close\r\n\r\n";
+	HTTP_RESPONSE_HEADER header2;
+	header2.parseHeader(data2, strlen(data2));
+	CPPUNIT_ASSERT(header2.getResponseCode() == 204);
+	CPPUNIT_ASSERT(header2.existContent() == false);
+
+	char data3[] = "HTTP/1.1 104 Found\r\n"
+	"Date: Thu, 10 Jul 2008 15:46:27 GMT\r\n"
+	"Server: Apache/1.3.29 (Unix) PHP/4.3.4\r\n"
+	"Content-Type: text/html\r\n"
+	"Connection: close\r\n\r\n";
+	HTTP_RESPONSE_HEADER header3;
+	header3.parseHeader(data3, strlen(data3));
+	CPPUNIT_ASSERT(header3.getResponseCode() == 104);
+	CPPUNIT_ASSERT(header3.existContent() == false);
+
+	char data4[] = "HTTP/1.1 100 Found\r\n"
+	"Date: Thu, 10 Jul 2008 15:46:27 GMT\r\n"
+	"Server: Apache/1.3.29 (Unix) PHP/4.3.4\r\n"
+	"Content-Type: text/html\r\n"
+	"Connection: close\r\n\r\n";
+	HTTP_RESPONSE_HEADER header4;
+	header4.parseHeader(data4, strlen(data4));
+	CPPUNIT_ASSERT(header4.getResponseCode() == 100);
+	CPPUNIT_ASSERT(header4.existContent() == false);
+
+	char data5[] = "HTTP/1.1 193 Found\r\n"
+	"Date: Thu, 10 Jul 2008 15:46:27 GMT\r\n"
+	"Server: Apache/1.3.29 (Unix) PHP/4.3.4\r\n"
+	"Content-Type: text/html\r\n"
+	"Connection: close\r\n\r\n";
+	HTTP_RESPONSE_HEADER header5;
+	header5.parseHeader(data5, strlen(data5));
+	CPPUNIT_ASSERT(header5.getResponseCode() == 193);
+	CPPUNIT_ASSERT(header5.existContent() == false);
+
+	char data6[] = "HTTP/1.1 293 Found\r\n"
+	"Date: Thu, 10 Jul 2008 15:46:27 GMT\r\n"
+	"Server: Apache/1.3.29 (Unix) PHP/4.3.4\r\n"
+	"Content-Type: text/html\r\n"
+	"Connection: close\r\n\r\n";
+	HTTP_RESPONSE_HEADER header6;
+	header6.parseHeader(data6, strlen(data6));
+	CPPUNIT_ASSERT(header6.getResponseCode() == 293);
+	CPPUNIT_ASSERT(header6.existContent() == true);
+}
+
+//  在一个包为结束的时候收到一个长度为0的包
+void HTTPPacketTest::testAdd0LengthPacket() {
+	{
+	// 在一个固定长度包中加一个0长度包
+	const char length_specified[] = "HTTP/1.1 302 Found\r\n"
+		"Date: Thu, 24 Apr 2008 02:37:48 GMT\r\n"
+		"Content-Length: 62\r\n"
+		"Content-Type: image/jpeg\r\n"
+		"Connection: close\r\n\r\n"
+		"123456789012";
+	HTTPPacket *packet = new HTTPPacket;
+	CPPUNIT_ASSERT(strlen(length_specified) == packet->addBuffer(length_specified, strlen(length_specified)));
+	CPPUNIT_ASSERT(packet->isComplete() == false);
+	CPPUNIT_ASSERT(0 == packet->addBuffer(length_specified, 0));
+	CPPUNIT_ASSERT(packet->isComplete() == true);
+	delete packet;
+	}
+	{
+	const char complex_chunk1[] = "HTTP/1.1 200 OK\r\n"
+		"Date: Thu, 24 Apr 2008 02:37:48 GMT\r\n"
+		"Content-Type: image/gif\r\n"
+		"Age: 220737\r\n"
+		"Transfer-Encoding: chunked\r\n"
+		"Connection: keep-alive\r\n\r\n";
+
+	const char complex_chunk2[] = "32\r\n12345678901234567890123456789012345678901234567890\r\n";
+	const char complex_chunk3[] = "32\r\n12345678901234567890123456789012345678901234567890\r\n"
+		"12C\r\n12345678901234567890123456789012345678901234567890"
+		"12345678901234567890123456789012345678901234567890"
+		"12345678901234567890123456789012345678901234567890"
+		"12345678901234567890123456789012345678901234567890";
+	const char complex_chunk4[] = "12345678901234567890123456789012345678901234567890";
+	const char complex_chunk5[] = "12345678901234567890123456789012345678901234567890\r\n0\r\n\r\n";
+	HTTPPacket *packet = new HTTPPacket;
+	CPPUNIT_ASSERT(strlen(complex_chunk1) == packet->addBuffer(complex_chunk1, strlen(complex_chunk1)));
+	CPPUNIT_ASSERT(packet->getDataSize() == 0);
+	CPPUNIT_ASSERT(packet->isComplete() == false);
+	CPPUNIT_ASSERT(strlen(complex_chunk2) == packet->addBuffer(complex_chunk2, strlen(complex_chunk2)));
+	CPPUNIT_ASSERT(packet->getDataSize() == 0x32);
+	CPPUNIT_ASSERT(packet->isComplete() == false);
+	CPPUNIT_ASSERT(strlen(complex_chunk3) == packet->addBuffer(complex_chunk3, strlen(complex_chunk3)));
+	CPPUNIT_ASSERT(packet->getDataSize() == 300);
+	CPPUNIT_ASSERT(packet->isComplete() == false);
+	CPPUNIT_ASSERT(strlen(complex_chunk4) == packet->addBuffer(complex_chunk4, strlen(complex_chunk4)));
+
+	// 增加一个长度为0的包
+	CPPUNIT_ASSERT(0 == packet->addBuffer(complex_chunk5, 0));
+	CPPUNIT_ASSERT(packet->isComplete() == true);
+	delete packet;
+	}
 }

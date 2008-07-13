@@ -28,6 +28,12 @@ HTTPPacket::HTTPPacket(void) {
 }
 
 HTTPPacket::~HTTPPacket(void) {
+	releaseResource();
+}
+
+void HTTPPacket::releaseResource() {
+	using namespace yanglei_utility;
+	SingleLock<CAutoCreateCS> lock(&cs_);
 	if (NULL != dataextractor_) {
 		delete dataextractor_;
 		dataextractor_ = NULL;
@@ -91,19 +97,27 @@ int  HTTPPacket::achieve_header(const char * filename) {
 ///////////////////////////////////////////////
 // 一下函数对原始数据包队列进行操作
 void HTTPPacket::clearRawDeque() {
-	delete raw_packets_;
+	if ( raw_packets_ != NULL)
+		delete raw_packets_;
 }
 
-void HTTPPacket::addRawPacket(const char *buf, const int len) {
-	// 如果此函数分配内存失败，外层程序会处理相应异常
+// 初始化
+void HTTPPacket::InitRawPacket() {
 	if (raw_packets_ == NULL)
 		raw_packets_ = new ProtocolPacket<HTTP_PACKET_SIZE>();
+}
+void HTTPPacket::addRawPacket(const char *buf, const int len) {
+	// 如果此函数分配内存失败，外层程序会处理相应异常
+	assert(raw_packets_ != NULL);
 	raw_packets_->write(buf, len);
 }
 
 ProtocolPacket<HTTP_PACKET_SIZE> * HTTPPacket::getRawPacket() {
 	using namespace yanglei_utility;
-	SingleLock<CAutoCreateCS> lock(&cs_); 
+	SingleLock<CAutoCreateCS> lock(&cs_);
+	if (raw_packets_ == NULL) 
+		OutputDebugString("==========1");
+	assert(raw_packets_ != NULL);
 	return raw_packets_;
 }
 
@@ -114,25 +128,35 @@ int HTTPPacket::addBuffer(const char *buf, const unsigned len) {
 	try {
 		using namespace yanglei_utility;
 		SingleLock<CAutoCreateCS> lock(&cs_);
+		
+		InitRawPacket();
 
-		int bytes = 0;
 		// 循环调用指导数据处理完成
 		// 因为chunk编码方式可能多个包存在于一个物理包当中。。
 		// 所以必须不断的提取，知道数据结束
-		while (bytes != len) {
+		int bytes = 0;
+		while (bytes <= len) {
 			int bytes_read = extractData(&(buf[bytes]), len - bytes);
-			
-			// 如果读取为0， 代表获取了一个包
-			if (bytes_read == 0)
-				break;
 
 			// 将处理过的原始数据加入进去
 			addRawPacket(&(buf[bytes]), bytes_read);
 			bytes += bytes_read;
+
+			// 如果读取为0， 代表获取了一个包
+			if (bytes_read == 0) {
+				break;
+			}
+
+			// 如果已经处理完成就不要再循环了
+			// 否则的话会影响
+			if (len == bytes) {
+				break;
+			}
 		}
+		assert(bytes <= len);
 		return bytes;
 	} catch(int) {
-		WriteLog("E:\\workspace\\debuglog\\addbufferexp.log", 0, buf, len);
+		WriteLog("E:\\workspace\\debuglog\\bbbb.log", 0, buf, len);
 		DEBUG_MESSAGE("addBuffer int exception...");
 		return 0;
 	} catch (std::bad_alloc &) {
@@ -143,7 +167,7 @@ int HTTPPacket::addBuffer(const char *buf, const unsigned len) {
 		sprintf(filename, "E:\\workspace\\debuglog\\int%d.log", getCode());
 		achieve(filename);
 
-		WriteLog("E:\\workspace\\debuglog\\addbufferexp.log", 0, buf, len);
+		WriteLog("E:\\workspace\\debuglog\\xxxx.log", 0, buf, len);
 		DEBUG_MESSAGE("addBuffer exception...");
 		return 0;
 	}
@@ -172,7 +196,7 @@ int HTTPPacket::extractData(const char *buf, const int len) {
 			throw int(0);
 			return 0; 
 		}
-
+		
 		assert (dataextractor_ == NULL);
 		assert ( len >= header_size_);
 		assert ( http_data_ == NULL);
@@ -189,13 +213,19 @@ int HTTPPacket::extractData(const char *buf, const int len) {
 		http_header_achieve_ = new ProtocolPacket<HTTP_PACKET_SIZE>();// 存储头部
 				
 		// 保存头部
-		http_header_achieve_->write(buf, header_size_);
+		const int header_written = http_header_achieve_->write(buf, header_size_);
+		assert (header_written == header_size_);
+
+		// 创建内容解析器
 		dataextractor_ = HttpDataExtractor::Create(&http_header_, http_data_);
 
-		int bytes_dealed = header_size_ +
-			dataextractor_->addBuffer(&(buf[header_size_]), len - header_size_);
+		int bytes_dealed = header_size_;
 
-		if (bytes_dealed != 0) {
+		// 如果除了头部仍然还有其他数据
+		if (len - header_size_ > 0)
+			bytes_dealed += dataextractor_->addBuffer(&(buf[header_size_]), len - header_size_);
+
+		if (header_size_ != 0) {
 			header_exist_ = true;
 		}
 
@@ -259,6 +289,7 @@ const char * HTTP_RESPONSE_HEADER::CONTYPE_HTML_NAME	="text/html";
 const char * HTTP_RESPONSE_HEADER::CONTYPE_CSS_NAME	= "text/css";
 // const int    HTTP_RESPONSE_HEADER::CONTYPE_JS = 3;
 const char * HTTP_RESPONSE_HEADER::CONTYPE_JS_NAME	= "application/x-javascript";
+const char * HTTP_RESPONSE_HEADER::CONTYPE_XML_NAME = "text/xml";
 
 
 // HTTP头部的结束符
@@ -288,7 +319,22 @@ HTTP_RESPONSE_HEADER::HTTP_RESPONSE_HEADER() {
 }
 
 HTTP_RESPONSE_HEADER::~HTTP_RESPONSE_HEADER() {
-} 
+}
+
+// 对于某些HTTP response packet, 这里存在大量的包
+// 没有内容
+bool HTTP_RESPONSE_HEADER::existContent() const {
+	const int code =  getResponseCode();
+	if (code == 204) {
+		return false;
+	} else if (code == 304) {
+		return false;
+	} else if (1 == (int)(code/100)) {
+		return false;
+	} else {
+		return true;
+	}
+}
 
 int HTTP_RESPONSE_HEADER::parseHeader(const char *header_data, const int len) {
 	char buf[HTTP_HEADER_MAX_LENGTH];
@@ -316,12 +362,6 @@ int HTTP_RESPONSE_HEADER::parseHeader(const char *header_data, const int len) {
 		parseLine(token);
 		token = strtok( NULL, seps );
 	}
-
-	// 在解析完成以后仍然有一些重要的值处于未指定状态
-	// 那么应该不是一个HTTP协议
-	//if ( NO_DESIGNATION == content_type) {
-	//	return 0;
-	//}
 
 	// 返回整个头部的大小
 	const int total_header_length = HTTP_HEADER_TAIL_LENGTH + http_header_tail - header_data;

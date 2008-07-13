@@ -26,6 +26,7 @@ public:
 	static const int    CONTYPE_GIF = 100;
 	static const int    CONTYPE_JPG = 101;
 	static const int    CONTYPE_PNG = 102;
+	static const int	CONTYPE_XML	= 200;
 	static const int    CONTYPE_UNKNOWN = 999;
 
 
@@ -40,6 +41,9 @@ public:
 	bool isChunk() const { return transfer_encoding == TRANENCODING_CHUNKED;}
 	int getConnectionState() { return connection_state;}
 	int getResponseCode() const { return response_code;}
+
+	// 是否存在内容
+	bool existContent() const ;
 private:
 	int transfer_encoding;
 	int content_type;
@@ -80,6 +84,7 @@ private:
 	static const char * CONTYPE_HTML_NAME;
 	static const char * CONTYPE_GIF_NAME;
 	static const char * CONTYPE_PNG_NAME;
+	static const char * CONTYPE_XML_NAME;
 
 	// 链接
 	static const char * CONNECTION_KEEP_ALIVE_NAME;
@@ -108,7 +113,7 @@ public:
 
 	int addBuffer(const char *buf, const unsigned len);
 	int read(char *buf, const int bufsize, int &bytedread);
-
+	
 	int getContentType() { return http_header_.getContentType();}
 
 	// 将..保存到文件当中
@@ -124,6 +129,13 @@ public:
 
 	// 用于唯一标识一个
 	int  getCode() const { return code_; }
+
+	friend bool operator == (const HTTPPacket &p1, const HTTPPacket &p2) {
+		return p1.getCode() == p2.getCode();
+	}
+
+	// 释放资源
+	void releaseResource();
 private:
 	bool testHttpHeaderPacket(const char *buf, int len);
 	// 本函数从给定数据中抽取一个数据单元，并将其加入到
@@ -137,6 +149,7 @@ private:
 	
 	// 保存原始的包，按照接收到的顺序
 	ProtocolPacket<HTTP_PACKET_SIZE> *  raw_packets_;
+	void InitRawPacket();
 	void addRawPacket(const char *buf, const int len);
 	void clearRawDeque();
 

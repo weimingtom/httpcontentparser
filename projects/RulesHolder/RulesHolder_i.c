@@ -6,7 +6,7 @@
 
 
  /* File created by MIDL compiler version 6.00.0361 */
-/* at Fri Jul 11 00:40:21 2008
+/* at Sun Jul 13 14:21:07 2008
  */
 /* Compiler settings for .\RulesHolder.idl:
     Oicf, W1, Zp8, env=Win32 (32b run)

@@ -46,42 +46,6 @@ int WriteToBuffer(LPWSABUF	lpBuffers, DWORD dwBufferCount,
   return bytes_copyed;
 }
 
-///////////////////////////////////////////////
-//
-CSelectIO::ContentCheckSetting::ContentCheckSetting() {
-	checkImage_ = false;
-	checkHTML_ = false;
-	checkXML_  = false;
-	minImageSize_ = 0;
-	maxImageSize_ = 0x8fffffff;
-}
-
-void CSelectIO::ContentCheckSetting::setCheckHTML(const bool check) {
-	checkHTML_ = check;
-}
-void CSelectIO::ContentCheckSetting::setCheckXML(const bool check) {
-	minImageSize_ = check;
-}
-void CSelectIO::ContentCheckSetting::setCheckImage(const bool check) {
-	checkImage_ = check;
-}
-void CSelectIO::ContentCheckSetting::setCheckImageSize(const int minsize, const int maxsize) {
-	minImageSize_ = minsize;
-	maxImageSize_ = maxsize;
-}
-
-bool CSelectIO::ContentCheckSetting::CheckContent(HTTP_RESPONSE_HEADER * header) {
-	switch(header->getContentType()) {
-		case HTTP_RESPONSE_HEADER::CONTYPE_GIF:
-		case HTTP_RESPONSE_HEADER::CONTYPE_JPG:
-		case HTTP_RESPONSE_HEADER::CONTYPE_PNG: 
-			return checkImage_;
-		case HTTP_RESPONSE_HEADER::CONTYPE_HTML:
-			return checkHTML_;
-		default:
-			return false;
-	}
-}
 //========================================================
 CSelectIO::CSelectIO() { 
 	lpWSPRecv = NULL;
@@ -125,11 +89,17 @@ int CSelectIO::prerecv(SOCKET s, LPWSABUF lpBuffers,
 	//if ( packet->getHeader()->getContentType() == HTTP_RESPONSE_HEADER::CONTYPE_JPG) {
 	//	removeCompletedPacket(s, packet);
 	//	return 1;
-	//} 
+	//}
 
 	// 获取一个
 	ProtocolPacket<HTTP_PACKET_SIZE> * raw_packet= packet->getRawPacket();
-	assert (raw_packet != NULL);
+	// assert (raw_packet != NULL);
+
+	if ( raw_packet== NULL) {
+		OutputDebugString("==========0");
+		packet->achieve("c:\\aaaaaaaaaaaaa.log");
+	}
+	assert(raw_packet != NULL);
 
 	if (raw_packet->getBytesCanRead() == 0) {
 		*recv_bytes = 0;
@@ -139,6 +109,8 @@ int CSelectIO::prerecv(SOCKET s, LPWSABUF lpBuffers,
 	// 所有包都已经发送
 	for (int i = 0; i < dwBufferCount; ++i) {
 		const DWORD bytes = raw_packet->read(lpBuffers[i].buf, lpBuffers[i].len);
+
+		WriteLog("E:\\workspace\\debuglog\\written.log", s, lpBuffers[i].buf, bytes);
 		*recv_bytes += bytes;
 		if (bytes == 0 || raw_packet->getBytesCanRead() == 0) {
 			removeCompletedPacket(s, packet);
@@ -159,7 +131,7 @@ int CSelectIO::prerecv(SOCKET s, LPWSABUF lpBuffers,
 int CSelectIO::preselect(fd_set *readfds) {
 	using namespace yanglei_utility;
 	SingleLock<CAutoCreateCS> lock(&cs_);
-
+ 
 	assert( lpWSPRecv != NULL);
 
 	if (readfds == NULL)
@@ -218,14 +190,12 @@ int CSelectIO::postselect(fd_set *readfds) {
 			wsabuf.buf = buffer;
 			wsabuf.len = buf_size;
 			
-			
 			const DWORD buf_count = 1;
 			INT errorno = 0;
 			DWORD bytes_recv = 0, flags = 0;
 
 			int ret = (*lpWSPRecv)(s, &wsabuf, 1, 
 				&bytes_recv, &flags, NULL, NULL, NULL, &errorno);
-
 			int completed = graspData(s, wsabuf.buf, bytes_recv);
 
 			// 在接受数据以后我学要移除socket从给定的readfds
@@ -273,36 +243,53 @@ int CSelectIO::graspData(const SOCKET s, char *buf, const int len) {
 		// graspData
 		WriteLog("E:\\workspace\\debuglog\\recv.log", s, buf, len);
 
-		bool completed_generated = false;
-		int total_size = 0;
-		while (total_size < len) {
-			HTTPPacket* sock_data  = getSOCKETPacket(s);
+		bool completed_generated = false; 
+		int total_size = 0; 
 
-			assert(sock_data->isComplete() == false);
-			const int bytes_written = sock_data->addBuffer(buf, len);
-			total_size += bytes_written;
+		HTTPPacket* sock_data  = getSOCKETPacket(s);
+		assert( sock_data != NULL);
 
-			// 如果当前包已经完成，则从map中移除，并放入到完成队列当中 
-			// 如果一些条件不符合约束，也应该放入完成队列
-			//    如：HTTP的类型， 大小等等.....
-			if (sock_data->isComplete()) { 
-				OutputDebugString("complete.....");
-				// 放入到完成队列当中
-				addCompletedPacket(s, sock_data);				
-				removePacket(s, sock_data);
+		if (len == 0) {
+			// 如果接收到了长度为0
+			OutputDebugString("==========*************** length : 0 =========================");
+			char buffer[1024];
+			sprintf(buffer, "******************* expected length: %d, actual length : %d*******************", 
+				sock_data->getHeader()->getContentLength(), sock_data->getDataSize());
+			WriteLog("E:\\workspace\\debuglog\\recv.log", s, buffer);
+			
+			// 将包表示为完整的， 
+			assert ( 0 == sock_data->addBuffer(buf, len));
+			addCompletedPacket(s, sock_data);				
+			removePacket(s, sock_data);
+			completed_generated = true;
+			WriteLog("E:\\workspace\\debuglog\\recv.log", s, "\r\n================complete 0-==================\r\n\r\n");
+		} else {
+			while (total_size < len) {
+				const int bytes_written = sock_data->addBuffer(buf, len);
+				total_size += bytes_written;
 
-				completed_generated = true;
+				// 如果当前包已经完成，则从map中移除，并放入到完成队列当中 
+				// 如果一些条件不符合约束，也应该放入完成队列
+				//    如：HTTP的类型， 大小等等.....
+				if (sock_data->isComplete()) { 
+					OutputDebugString("complete begin.....");
+					// 放入到完成队列当中
+					addCompletedPacket(s, sock_data);				
+					removePacket(s, sock_data);
+					OutputDebugString("complete after.....");
 
-				WriteLog("E:\\workspace\\debuglog\\recv.log", s, "\r\n================complete ==================\r\n\r\n");
-			}
+					completed_generated = true;
+					WriteLog("E:\\workspace\\debuglog\\recv.log", s, "\r\n================complete 1==================\r\n\r\n");
+				}
 
-			// 如果添加进入的长度为0
-			// 存在一个情况，例如: 如果一个包里面包含一个完整的包，此后这个SOCK的有用于其他用途
-			// 那么后面的数据并不是一个真正的HTTP包，所以必须去掉
-			if (bytes_written == 0) {
-				break;
-			}
-		} // while
+				// 如果添加进入的长度为0
+				// 存在一个情况，例如: 如果一个包里面包含一个完整的包，此后这个SOCK的有用于其他用途
+				// 那么后面的数据并不是一个真正的HTTP包，所以必须去掉
+				if (bytes_written == 0) {
+					break;
+				}
+			} // while
+		}
 
 		// 如果有完整的包返回0，否则返回1
 		if (completed_generated)
@@ -324,7 +311,6 @@ bool CSelectIO::isThereUncompletePacket(const SOCKET s) {
 bool CSelectIO::needStored(const SOCKET s) {
 	// SOCKET s是否包含不完整的包，如果包含则直接返回true, 否则继续向下处理
 	if (isThereUncompletePacket(s)) {
-		OutputDebugString("isThereUncompletePacket(s) == true");
 		return true;
 	}
 
@@ -365,23 +351,16 @@ bool CSelectIO::needStored(const SOCKET s) {
 			return false;
 		}
 
-		// 只处理已经知道的类型
-		if (header.getContentType() == HTTP_RESPONSE_HEADER::CONTYPE_CSS ||
-			header.getContentType() == HTTP_RESPONSE_HEADER::CONTYPE_GIF ||
-			header.getContentType() == HTTP_RESPONSE_HEADER::CONTYPE_HTML ||
-			header.getContentType() == HTTP_RESPONSE_HEADER::CONTYPE_JPG ||
-			header.getContentType() == HTTP_RESPONSE_HEADER::CONTYPE_JS ||
-			header.getContentType() == HTTP_RESPONSE_HEADER::CONTYPE_PNG) {
-				return true;
-			} else {
-				WriteLog("E:\\workspace\\debuglog\\needless.log", s, buf, recv_bytes);
-				OutputDebugString("======needless to deal with=========");
-				return false;
-			}
-
+		// 在这里进行验证，基于一个基本假设
+		// 那就是一个包里最多只包含一个HTTP
+		if (CheckSetting::getInstance()->needCheck(header.getContentType()) == true) {
+			return true;
+		} else {
+			return false;
+		}
 	} else {
-		WriteLog("E:\\workspace\\debuglog\\leagle_recv.log", s, buf, recv_bytes);
-		OutputDebugString("======not begin with HTTP=========");
+		// 如果不是以HTTP开头 
+		// 注意：在开始的时候我们已经处理了可能是一个HTTP协议部分的情况
 		return false;
 	}
 }
@@ -444,6 +423,8 @@ int CSelectIO::removePacket(const SOCKET s, HTTPPacket *p) {
 			return 1;
 		}
 	}
+
+	assert(false);
 	return 0; 
 }
 
@@ -471,4 +452,37 @@ HTTPPacket * CSelectIO::getCompletedPacket(const SOCKET s) {
 	} else {
 		return iter->second;
 	}
+}
+
+/////////////////////////////////////////
+// class CheckSetting
+CheckSetting::CheckSetting() {
+	http_types_.insert(HTTP_RESPONSE_HEADER::CONTYPE_GIF);
+	http_types_.insert(HTTP_RESPONSE_HEADER::CONTYPE_CSS);
+	http_types_.insert(HTTP_RESPONSE_HEADER::CONTYPE_HTML);
+	http_types_.insert(HTTP_RESPONSE_HEADER::CONTYPE_JPG);
+	http_types_.insert(HTTP_RESPONSE_HEADER::CONTYPE_JS);
+}
+
+CheckSetting::~CheckSetting() {
+}
+
+bool CheckSetting::removeCheckedType(const int type) {
+	CHECKED_TYPES::iterator iter = http_types_.find(type);
+	if (http_types_.end() != iter) {
+		http_types_.erase(iter);
+		return true;
+	} else {
+		return false;
+	}
+}
+
+// 是否需要处理
+bool CheckSetting::needCheck(const int type) {
+	return http_types_.end() != http_types_.find(type);
+}
+
+// 添加规则
+void CheckSetting::addCheckedType(const int type) {
+	http_types_.insert(type);
 }

@@ -22,7 +22,7 @@ void resetFakeBuffer() {
 	g_SockData.clear();
 }
 
-
+// 一次只读一个包
 int WSPAPI WSPRecv(
 	SOCKET			s,
 	LPWSABUF		lpBuffers,
@@ -78,18 +78,16 @@ void SelectIOTest::testMax() {
 	string data = "88";
 }
 
+void SelectIOTest::testConstantPackets() {
+}
 void SelectIOTest::testZeroChunk() {
 	// 测试没有长度的chunk
-	string data1 = "HTTP/1.1 302 Found"
-	"Date: Thu, 10 Jul 2008 15:46:27 GMT"
-	"Server: Apache/1.3.29 (Unix) PHP/4.3.4"
-	"Cache-Control: no-cache, must-revalidate"
-	"P3P: CP=\"NOI DSP COR CURa ADMa DEVa PSAa PSDa OUR IND UNI PUR NAV\""
-	"Pragma: no-cache"
-	"Expires: -1"
-	"Connection: close"
-	"Transfer-Encoding: chunked"
-	"Content-Type: text/plain\r\n"
+	string data1 = "HTTP/1.1 302 Found\r\n"
+	"Date: Thu, 10 Jul 2008 15:46:27 GMT\r\n"
+	"Server: Apache/1.3.29 (Unix) PHP/4.3.4\r\n"
+	"Content-Type: text/html\r\n"
+	"Connection: close\r\n"
+	"Transfer-Encoding: chunked\r\n\r\n"
 	"0\r\n\r\n";
 
 	const int buf_size = 1024 * 64;
@@ -113,7 +111,6 @@ void SelectIOTest::testZeroChunk() {
 	CPPUNIT_ASSERT( 1 == select.preselect(&readfds));
 	select.postselect(&readfds);
 	CPPUNIT_ASSERT( 0 == select.preselect(&readfds));
-
 }
 void SelectIOTest::testMulitPacket() {
 		// test case 1: 简单验证
@@ -215,8 +212,6 @@ void SelectIOTest::testInvalidateHTTPPacket() {
 	// 初始化SelectIO
 	CSelectIO select;
 	select.setRecv(WSPRecv);
-	select.checkSetting_.setCheckHTML(true);
-	select.checkSetting_.setCheckImage(true);
 	fd_set readfds;
 	FD_ZERO(&readfds);
 	FD_SET(s, &readfds);
@@ -244,8 +239,6 @@ void SelectIOTest::testPostSelect() {
 	// 初始化SelectIO
 	CSelectIO select;
 	select.setRecv(WSPRecv);
-	select.checkSetting_.setCheckHTML(true);
-	select.checkSetting_.setCheckImage(true);
 	fd_set readfds;
 	FD_ZERO(&readfds);
 	FD_SET(s, &readfds);
@@ -266,6 +259,8 @@ void SelectIOTest::testPostSelect() {
 	CPPUNIT_ASSERT(dwNumberOfBytesRecvd == 0);
 	}
 
+	// 一次传入三个包
+	// 并分别读取他们
 	{
 	string data1 = "HTTP/1.1 200 OK\r\n"
 	"Date: Thu, 24 Apr 2008 02:37:48 GMT\r\n"
@@ -281,7 +276,7 @@ void SelectIOTest::testPostSelect() {
 	"Content-Length: 5\r\n"
 	"Content-Type: text/html\r\n"
 	"Connection: close\r\n\r\n"
-	"12345";
+	"23456";
 
 	string data3 = "HTTP/1.1 200 OK\r\n"
 	"Date: Thu, 24 Apr 2008 02:37:48 GMT\r\n"
@@ -289,7 +284,7 @@ void SelectIOTest::testPostSelect() {
 	"Content-Length: 5\r\n"
 	"Content-Type: text/html\r\n"
 	"Connection: close\r\n\r\n"
-	"12345";
+	"34567";
 
 		//初始化数据
 	resetFakeBuffer();
@@ -302,8 +297,6 @@ void SelectIOTest::testPostSelect() {
 	// 初始化SelectIO
 	CSelectIO select;
 	select.setRecv(WSPRecv);
-	select.checkSetting_.setCheckHTML(true);
-	select.checkSetting_.setCheckImage(true);
 	fd_set readfds;
 	FD_ZERO(&readfds);
 	FD_SET(s, &readfds);
@@ -324,11 +317,13 @@ void SelectIOTest::testPostSelect() {
 
 	// 在包没有完成时，应该直接返回1
 	CPPUNIT_ASSERT( 1 == select.preselect(&readfds));
+	select.postselect(&readfds);
 	CPPUNIT_ASSERT(select.prerecv(s, &wsabuf,
 		1, &dwNumberOfBytesRecvd) == 0);
 	CPPUNIT_ASSERT(dwNumberOfBytesRecvd == (data2.length()));
 
-	CPPUNIT_ASSERT( 0 == select.preselect(&readfds));
+	CPPUNIT_ASSERT( 1 == select.preselect(&readfds));
+	select.postselect(&readfds);
 	CPPUNIT_ASSERT(select.prerecv(s, &wsabuf,
 		1, &dwNumberOfBytesRecvd) == 0);
 	CPPUNIT_ASSERT(dwNumberOfBytesRecvd == (data3.length()));

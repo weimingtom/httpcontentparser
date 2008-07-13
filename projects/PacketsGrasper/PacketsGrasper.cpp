@@ -522,7 +522,7 @@ BOOL WINAPI DllMain(
 )
 {
 	if(ul_reason_for_call == DLL_PROCESS_ATTACH) {
-		InitializeLog();
+		//InitializeLog();
  		GetModuleFileName(NULL, m_sProcessName, MAX_PATH);
 
 		InitializeCriticalSection(&gCriticalSection);
@@ -544,7 +544,7 @@ BOOL WINAPI DllMain(
 		}
 		LeaveCriticalSection(&gCriticalSection);
 
-		UninitializeLog();
+		//UninitializeLog();
 		ODS2(m_sProcessName,_T(" Exit ..."));
 	}
 
@@ -562,8 +562,6 @@ int WSPAPI WSPStartup(
 	LPWSPPROC_TABLE		lpProcTable
 )
 {
-	ODS(_T("==> WSPStartup..."));
-
 	TCHAR				sLibraryPath[512];
     LPWSPSTARTUP        WSPStartupFunc      = NULL;
 	HMODULE				hLibraryHandle		= NULL;
