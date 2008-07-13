@@ -16,9 +16,12 @@ class HttpDataExtractor {
 public:
 	virtual int addBuffer(const char * buf, const int len) = 0;
 	virtual bool finished() const = 0;
+	int getExtractorTypeCode();
 public:
 	static HttpDataExtractor * Create(const HTTP_RESPONSE_HEADER *,
 		ProtocolPacket<HTTP_PACKET_SIZE> *data);
+protected:
+	HttpDataExtractor() {}
 };
 
 #endif  // _UTILITY_HTTPDATAEXTRACTOR_H__

@@ -170,6 +170,8 @@ private:
 
 	// 用于唯一标识一个HTTPPacket
 	int code_;
+	static int generateCode(); // 生成一个用于唯一标识这个符号的
+	static int cur_code_;
 	yanglei_utility::CAutoCreateCS cs_;
 };
 

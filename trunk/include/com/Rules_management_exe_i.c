@@ -6,7 +6,7 @@
 
 
  /* File created by MIDL compiler version 6.00.0361 */
-/* at Sun Jul 13 14:21:03 2008
+/* at Sun Jul 13 18:07:58 2008
  */
 /* Compiler settings for .\Rules_management_exe.idl:
     Oicf, W1, Zp8, env=Win32 (32b run)

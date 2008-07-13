@@ -1,6 +1,14 @@
+
+// file httpdataextractor.cpp
+// 此文件实现了一些类能够从HTTP Response包中取出消息的类
+// 由于http包含多种传输方式，例如chunk, 还有一些包包含显示
+// 的长度， 有一些则没有。
+// 本文件中包含的类将根据各种包的不同特点将这些包中的数据
+// 提取出来.
+
 #include "stdafx.h"
 #include "httpdataextractor.h"
-
+#include <logdebug.h>
 const char * chunk_token = "\r\n";
 const int chunk_token_length = 2;	// 长度后面紧跟的长度
 const int chunk_tail_length = 2;	// \r\n的长度....
@@ -92,13 +100,18 @@ HttpDataExtractor * HttpDataExtractor::Create(const HTTP_RESPONSE_HEADER *header
 								  ProtocolPacket<HTTP_PACKET_SIZE> *data) {
 	if (header->isChunk()) {
 		return (HttpDataExtractor*)new ChunkPacket(data, header);
-	} else if (header->existContent() == false) {
-		// 如果没有content部分
+	}
+
+	// 如果没有content部分
+	if (header->existContent() == false) {
 		return (HttpDataExtractor*) new NoContent(data, header);
-	} else if (header->getContentLength() == HTTP_RESPONSE_HEADER::NO_DESIGNATION) {
-		return (HttpDataExtractor*)new NoSepcifiedLength(data, header);
-	}else {
-		return (HttpDataExtractor*)new FixContent(data, header);
+	} 
+
+	// 如果没有指定长度
+	if (header->getContentLength() == HTTP_RESPONSE_HEADER::NO_DESIGNATION) {
+		return (HttpDataExtractor*) new NoSepcifiedLength(data, header);
+	} else {
+		return (HttpDataExtractor*) new FixContent(data, header);
 	}
 }
 
@@ -195,10 +208,10 @@ int FixContent::addBuffer(const char *buf, const int len) {
 			finished_ = true;
 		return data_->write(buf, should_recv);
 	} else {
-		OutputDebugString("no length designate..........");
-		// 只有一个包的话	
-		finished_ = true;
-		return data_->write(buf, len);
+		assert(false);
+		//OutputDebugString("no length designate..........");
+		//finished_ = true;
+		//return data_->write(buf, len);
 	}
 }
 
@@ -240,6 +253,6 @@ bool NoSepcifiedLength::finished() const {
 
 int NoSepcifiedLength::addBuffer(const char *buf, const int len) {
 	finished_ = true;
-	assert(false);
+	// assert(false);
 	return 0;
 }

@@ -11,9 +11,10 @@ public:
 
 public: 
 	CPPUNIT_TEST_SUITE(SelectIOTest);
-	CPPUNIT_TEST(testPostSelect);
-	CPPUNIT_TEST(testConstantPackets);
 	CPPUNIT_TEST(testMax);
+	CPPUNIT_TEST(testConstantPackets);
+	CPPUNIT_TEST(testRemovePacket);
+	CPPUNIT_TEST(testPostSelect);
 	CPPUNIT_TEST(testZeroChunk);
 	CPPUNIT_TEST(testMulitPacket);
 	CPPUNIT_TEST(testInvalidateHTTPPacket);
@@ -22,6 +23,7 @@ public:
 	CPPUNIT_TEST_SUITE_END();
 
 private:
+	void testRemovePacket();
 	void testConstantPackets();
 	void testMax();
 	void testZeroChunk();
