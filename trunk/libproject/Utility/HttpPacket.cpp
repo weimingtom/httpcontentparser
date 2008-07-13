@@ -53,6 +53,12 @@ void HTTPPacket::releaseResource() {
 		http_data_ = NULL;
 	}
 
+	// 释放头部
+	if (NULL != http_header_achieve_) {
+		delete http_header_achieve_;
+		http_header_achieve_ = NULL;
+	}
+
 	// 释放原始包
 	clearRawDeque();
 }
