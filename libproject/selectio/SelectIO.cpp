@@ -101,7 +101,10 @@ int CSelectIO::prerecv(SOCKET s, LPWSABUF lpBuffers,
 	for (int i = 0; i < dwBufferCount; ++i) {
 		const DWORD bytes = raw_packet->read(lpBuffers[i].buf, lpBuffers[i].len);
 
-		WriteLog("E:\\workspace\\debuglog\\written.log", s, lpBuffers[i].buf, bytes);
+		//char filename[1024];
+		//sprintf(filename, "E:\\workspace\\debuglog\\written%d.log", packet->getCode());
+		//WriteRawData(filename, lpBuffers[i].buf, bytes);
+
 		*recv_bytes += bytes;
 		if (bytes == 0 || raw_packet->getBytesCanRead() == 0) {
 			removeCompletedPacket(s, packet);
@@ -219,52 +222,65 @@ bool CSelectIO::checkWholePacket(HTTPPacket * packet) {
 // 返回1代表不是一个完整的包
 int CSelectIO::graspData(const SOCKET s, char *buf, const int len) {
 	try {
-		// graspData
-		WriteLog("E:\\workspace\\debuglog\\recv.log", s, buf, len);
-
 		bool completed_generated = false; 
 		int total_size = 0; 
 
 		HTTPPacket* sock_data  = getSOCKETPacket(s);
 		assert( sock_data != NULL);
 
+		//char filename[1024];
+		//sprintf(filename, "E:\\workspace\\debuglog\\%d.log", sock_data->getCode());
+		//WriteRawData(filename, buf, len);
+
 		// 如果接收到了长度为0
 		if (len == 0) {
 			// 将包表示为完整的
-			OutputDebugInfo("finished with 0 tail");
 			assert ( 0 == sock_data->addBuffer(buf, len));
 			removePacket(s, sock_data);
 			addCompletedPacket(s, sock_data);				
 			completed_generated = true;
 
 			// 将所有接受
-			//char filename[1024];
-			//sprintf(filename, "E:\\workspace\\debuglog\\0recv%d.log", s);
-			//sock_data->achieve(filename);
+			char buffer[1024];			
+			sprintf(buffer, "%d finished with 0 tail", sock_data->getCode());
+			OutputDebugString(buffer);
+
+			//sprintf(buffer, "E:\\workspace\\debuglog\\0recv%d.log", s);
+			//sock_data->achieve(buffer);
 		} else {
 			while (total_size < len) {
-				const int bytes_written = sock_data->addBuffer(buf, len);
+				// 由于这里可能出现头部，所以在这里也应该进行头部验证啊....
+				// 但是这里是已经接收到的包，所以受到了必须将它直接送上去，不能放弃
+				const int bytes_written = sock_data->addBuffer(&(buf[total_size]), len - total_size);
 				total_size += bytes_written;
+				//char buffer[1024];
+				//sprintf(buffer, "bytes_writted %d, total_size %d, len %d, need_size %d, data size: %d",
+				//	bytes_written, total_size, len, sock_data->getDataSize(), sock_data->getDataSize());
+				//OutputDebugString(buffer);
 
 				// 如果当前包已经完成，则从map中移除，并放入到完成队列当中 
 				// 如果一些条件不符合约束，也应该放入完成队列
 				//    如：HTTP的类型， 大小等等.....
 				if (sock_data->isComplete()) { 
 					// 放入到完成队列当中
-					OutputDebugInfo("finished");
+					
 					removePacket(s, sock_data);
 					addCompletedPacket(s, sock_data);
 					completed_generated = true;
 
+					// achieve
+					char buffer[200];
+					sprintf(buffer, "%d finished=", sock_data->getCode());
+					OutputDebugString(buffer);
+
 					// 如果在这里移除了， 学要新增加一个包
+					// 如果不加这个条件或者改成<=, 那么当一个HTTP包后面紧跟着一个非HTTP包时，会出现错误
 					if (total_size < len)
 						sock_data  = getSOCKETPacket(s);
 				}
 
-				// 如果添加进入的长度为0
-				// 存在一个情况，例如: 如果一个包里面包含一个完整的包，此后这个SOCK的有用于其他用途
-				// 那么后面的数据并不是一个真正的HTTP包，所以必须去掉
 				if (bytes_written == 0) {
+					//assert(false);
 					break;
 				}
 			} // while
@@ -342,9 +358,12 @@ bool CSelectIO::needStored(const SOCKET s) {
 
 // 删除掉所有保存的临时包
 void CSelectIO::clearAllPackets() {
+	char buffer[1024];
 	SOCK_DATA_MAP::iterator iter = _sockets_map_.begin();
 	for (; iter != _sockets_map_.end(); ++iter) {
 		if (iter->second != NULL) {
+			sprintf(buffer, "E:\\workspace\\debuglog\\uncomplete\\%d.txt", iter->second->getCode());
+			iter->second->achieve(buffer);
 			delete iter->second;
 		}
 	}
@@ -451,7 +470,7 @@ HTTPPacket * CSelectIO::getCompletedPacket(const SOCKET s) {
 CheckSetting::CheckSetting() {
 	http_types_.insert(HTTP_RESPONSE_HEADER::CONTYPE_GIF);
 	http_types_.insert(HTTP_RESPONSE_HEADER::CONTYPE_CSS);
-	http_types_.insert(HTTP_RESPONSE_HEADER::CONTYPE_HTML);
+	//http_types_.insert(HTTP_RESPONSE_HEADER::CONTYPE_HTML);
 	http_types_.insert(HTTP_RESPONSE_HEADER::CONTYPE_JPG);
 	http_types_.insert(HTTP_RESPONSE_HEADER::CONTYPE_JS);
 }

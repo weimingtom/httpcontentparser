@@ -171,11 +171,11 @@ int HTTPPacket::addBuffer(const char *buf, const unsigned len) {
 		assert(bytes <= len);
 		return bytes;
 	} catch(int) {
-		char buffer[1024];
-		sprintf(buffer, "\r\n\r\ncode : %d", getCode());
-		WriteLog("E:\\workspace\\debuglog\\bbbb.log", 0, buffer, strlen(buffer));
-		WriteLog("E:\\workspace\\debuglog\\bbbb.log", 0, buf, len);
+		//WriteLog("E:\\workspace\\debuglog\\bbbb.log", 0, getCode(), buf, len);
 		DEBUG_MESSAGE("addBuffer int exception...");
+		// 如果不是一个HTTP协议，那么直接保存，并将其表示为已经完成的包
+		dataextractor_ = HttpDataExtractor::Create(NULL, NULL);
+		addRawPacket(buf, len);
 		return 0;
 	} catch (std::bad_alloc &) {
 		// 如果内存不足，交给上层程序来处理
@@ -185,7 +185,7 @@ int HTTPPacket::addBuffer(const char *buf, const unsigned len) {
 		sprintf(filename, "E:\\workspace\\debuglog\\int%d.log", getCode());
 		achieve(filename);
 
-		WriteLog("E:\\workspace\\debuglog\\xxxx.log", 0, buf, len);
+		WriteLog("E:\\workspace\\debuglog\\xxx.log", 0, getCode(), buf, len);
 		DEBUG_MESSAGE("addBuffer exception...");
 		return 0;
 	}
@@ -207,10 +207,17 @@ int HTTPPacket::read(char *buf, const int bufsize, int &bytedread) {
 }
 
 int HTTPPacket::extractData(const char *buf, const int len) {
+	//char buffer[1024];
+	//sprintf(buffer, "[code %d]is completed %s, is header_exist %s", getCode(),
+	//			isComplete() ? "true" : "false", header_exist_ ? "true" : "false");
+	//OutputDebugString(buffer);
 	// 如果包尚未完成，且不存在头部
 	if (!isComplete() && header_exist_ == false) {
 		if (!testHttpHeaderPacket(buf, len)) {
-			OutputDebugString("throw exception...");
+			char filename[1024];
+			sprintf(filename, "E:\\workspace\\debuglog\\exception\\%d.txt", getCode());
+			achieve(filename);
+			OutputDebugString("==throw exception...");
 			throw int(0);
 			return 0; 
 		}
@@ -223,8 +230,10 @@ int HTTPPacket::extractData(const char *buf, const int len) {
 
 		// 如果还没有初始化，且传入的数据是HTTP协议
 		header_size_ = parseHeader(buf, len);	// 分析头部，并返回大小
-		if (header_size_ == 0) // 可能不是一个HTTP协议
+		if (header_size_ == 0) {// 可能不是一个HTTP协议
+			OutputDebugString("throw exception...");
 			throw 0;
+		}
 
 
 		http_data_ = new ProtocolPacket<HTTP_PACKET_SIZE>(); // 存储空间
@@ -254,6 +263,7 @@ int HTTPPacket::extractData(const char *buf, const int len) {
 		assert ( addBuffer != NULL);
 		return  dataextractor_->addBuffer(buf, len);
 	} else if (isComplete() && header_exist_ == false) {
+		OutputDebugString("isComplete() && header_exist_ == false");
 		assert(false);
 		throw (0);
 		return 0;
@@ -265,6 +275,10 @@ bool HTTPPacket::testHttpHeaderPacket(const char *buf, int len) {
 	using namespace yanglei_utility;
 	SingleLock<CAutoCreateCS> lock(&cs_);
 	return http_header_.isHttpHeader(buf, len);
+}
+
+bool HTTPPacket::existHeader() const {
+	return header_size_ != 0;
 }
 
 // 分析HTTP协议头

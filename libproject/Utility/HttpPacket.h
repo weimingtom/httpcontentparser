@@ -142,6 +142,7 @@ private:
 	// 存储当中，而后返回存储单元的大小
 	// 如果返回0，代表有错误发生
 	int  extractData(const char *buf, const int len);
+	
 
 	ProtocolPacket<HTTP_PACKET_SIZE> * http_data_;
 	ProtocolPacket<HTTP_PACKET_SIZE> * http_header_achieve_;
@@ -156,8 +157,10 @@ private:
 	// 分析协议头
 	int parseHeader(const char *buffer, const unsigned len);
 
+	// 是否存在头部
+	bool existHeader() const;
 	// 是否已经有头部
-	bool header_exist_;
+	bool header_exist_;  // 此变量存在错误
 
 	// 包含重要数据
 	HTTP_RESPONSE_HEADER http_header_;
