@@ -98,6 +98,12 @@ private:
 
 HttpDataExtractor * HttpDataExtractor::Create(const HTTP_RESPONSE_HEADER *header,
 								  ProtocolPacket<HTTP_PACKET_SIZE> *data) {
+	if (header == NULL) {
+		return (HttpDataExtractor*) new NoContent(data, header);
+	}
+
+	assert (data != NULL);
+
 	if (header->isChunk()) {
 		return (HttpDataExtractor*)new ChunkPacket(data, header);
 	}
@@ -105,13 +111,18 @@ HttpDataExtractor * HttpDataExtractor::Create(const HTTP_RESPONSE_HEADER *header
 	// 如果没有content部分
 	if (header->existContent() == false) {
 		return (HttpDataExtractor*) new NoContent(data, header);
-	} 
+	}
 
 	// 如果没有指定长度
 	if (header->getContentLength() == HTTP_RESPONSE_HEADER::NO_DESIGNATION) {
 		return (HttpDataExtractor*) new NoSepcifiedLength(data, header);
 	} else {
-		return (HttpDataExtractor*) new FixContent(data, header);
+		// 如果指定了长度，且长度为0
+		if (header->getContentLength() == 0) {
+			return (HttpDataExtractor*) new NoContent(data, header);
+		} else {
+			return (HttpDataExtractor*) new FixContent(data, header);
+		}
 	}
 }
 

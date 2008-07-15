@@ -512,6 +512,18 @@ void HTTPPacketTest::testNoContentHeader() {
 	CPPUNIT_ASSERT(header6.existContent() == true);
 }
 
+void HTTPPacketTest::testZeorLengthPacket() {
+	const char data[] = "HTTP/1.1 200 OK\r\n"
+		"Content-Type: text/html; charset=UTF-8\r\n"
+		"Cache-Control: public,max-age=600\r\n"
+		"Date: Tue, 15 Jul 2008 15:06:40 GMT\r\n"
+		"Server: TrustRank Frontend\r\n"
+		"Content-Length: 0\r\n\r\n";
+	HTTPPacket *packet = new HTTPPacket;
+	CPPUNIT_ASSERT(strlen(data) == packet->addBuffer(data, strlen(data)));
+	CPPUNIT_ASSERT(packet->isComplete() == true);
+	delete packet;
+}
 //  在一个包为结束的时候收到一个长度为0的包
 void HTTPPacketTest::testAdd0LengthPacket() {
 	{
