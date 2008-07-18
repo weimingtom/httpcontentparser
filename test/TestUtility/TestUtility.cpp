@@ -5,10 +5,12 @@
 #include ".\protocolpackettest.h"
 #include ".\fdutilitytest.h"
 #include ".\httppackettest.h"
+#include ".\dnstest.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION(HTTPPacketTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(ProtocolPacketTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(FDUtilityTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(DNSTest);
 
 
 int _tmain(int argc, _TCHAR* argv[])
