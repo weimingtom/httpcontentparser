@@ -12,15 +12,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ThreadSync", "libproject\Th
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "dnslookup", "libproject\dnslookup\dnslookup.vcproj", "{388357D8-83C3-4D8D-91AD-2CF7AA920A9A}"
-	ProjectSection(ProjectDependencies) = postProject
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestDNS", "test\TestDNS\TestDNS.vcproj", "{B49EA077-2509-412F-921D-AEEFF5ADB314}"
-	ProjectSection(ProjectDependencies) = postProject
-		{388357D8-83C3-4D8D-91AD-2CF7AA920A9A} = {388357D8-83C3-4D8D-91AD-2CF7AA920A9A}
-	EndProjectSection
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PacketsGrasper", "projects\PacketsGrasper\PacketsGrasper.vcproj", "{68417A94-4F51-4C34-81CB-3C2C6D7057D5}"
 	ProjectSection(ProjectDependencies) = postProject
 		{0E786A34-69F8-45EA-A4BD-7E951A51225B} = {0E786A34-69F8-45EA-A4BD-7E951A51225B}
@@ -39,10 +30,6 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Utility", "libproject\Utility\Utility.vcproj", "{CD11D86D-3173-4945-8215-7450A0D9CB3C}"
 	ProjectSection(ProjectDependencies) = postProject
 		{EC738080-9EB3-45D7-8440-0B79B280ACD7} = {EC738080-9EB3-45D7-8440-0B79B280ACD7}
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Rules_management_exe", "projects\Rules_management_exe\Rules_management_exe.vcproj", "{ABE69A26-0192-4D07-A701-BCA003DD1E06}"
-	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestUtility", "test\TestUtility\TestUtility.vcproj", "{79E7D7DC-5A14-4D2B-8D19-47B949C13744}"
@@ -65,10 +52,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestSelectIO", "test\TestSe
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MainUI", "projects\MainUI\MainUI.vcproj", "{53CC0F7C-CF16-4AD6-91EB-BE135A677AA9}"
-	ProjectSection(ProjectDependencies) = postProject
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GuiLibStatic", "libproject\GuiLib1.5\GuiLib\GuiLibStatic.vcproj", "{69416525-7F1B-4AF2-A0DC-8D941DF7AD26}"
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
 EndProject
@@ -104,22 +87,6 @@ Global
 		{EC738080-9EB3-45D7-8440-0B79B280ACD7}.Release.Build.0 = Release|Win32
 		{EC738080-9EB3-45D7-8440-0B79B280ACD7}.Release Unicode.ActiveCfg = Release|Win32
 		{EC738080-9EB3-45D7-8440-0B79B280ACD7}.Release Unicode.Build.0 = Release|Win32
-		{388357D8-83C3-4D8D-91AD-2CF7AA920A9A}.Debug.ActiveCfg = Debug|Win32
-		{388357D8-83C3-4D8D-91AD-2CF7AA920A9A}.Debug.Build.0 = Debug|Win32
-		{388357D8-83C3-4D8D-91AD-2CF7AA920A9A}.Debug Unicode.ActiveCfg = Debug|Win32
-		{388357D8-83C3-4D8D-91AD-2CF7AA920A9A}.Debug Unicode.Build.0 = Debug|Win32
-		{388357D8-83C3-4D8D-91AD-2CF7AA920A9A}.Release.ActiveCfg = Release|Win32
-		{388357D8-83C3-4D8D-91AD-2CF7AA920A9A}.Release.Build.0 = Release|Win32
-		{388357D8-83C3-4D8D-91AD-2CF7AA920A9A}.Release Unicode.ActiveCfg = Release|Win32
-		{388357D8-83C3-4D8D-91AD-2CF7AA920A9A}.Release Unicode.Build.0 = Release|Win32
-		{B49EA077-2509-412F-921D-AEEFF5ADB314}.Debug.ActiveCfg = Debug|Win32
-		{B49EA077-2509-412F-921D-AEEFF5ADB314}.Debug.Build.0 = Debug|Win32
-		{B49EA077-2509-412F-921D-AEEFF5ADB314}.Debug Unicode.ActiveCfg = Debug|Win32
-		{B49EA077-2509-412F-921D-AEEFF5ADB314}.Debug Unicode.Build.0 = Debug|Win32
-		{B49EA077-2509-412F-921D-AEEFF5ADB314}.Release.ActiveCfg = Release|Win32
-		{B49EA077-2509-412F-921D-AEEFF5ADB314}.Release.Build.0 = Release|Win32
-		{B49EA077-2509-412F-921D-AEEFF5ADB314}.Release Unicode.ActiveCfg = Release|Win32
-		{B49EA077-2509-412F-921D-AEEFF5ADB314}.Release Unicode.Build.0 = Release|Win32
 		{68417A94-4F51-4C34-81CB-3C2C6D7057D5}.Debug.ActiveCfg = Debug|Win32
 		{68417A94-4F51-4C34-81CB-3C2C6D7057D5}.Debug.Build.0 = Debug|Win32
 		{68417A94-4F51-4C34-81CB-3C2C6D7057D5}.Debug Unicode.ActiveCfg = Debug|Win32
@@ -152,14 +119,6 @@ Global
 		{CD11D86D-3173-4945-8215-7450A0D9CB3C}.Release.Build.0 = Release|Win32
 		{CD11D86D-3173-4945-8215-7450A0D9CB3C}.Release Unicode.ActiveCfg = Release|Win32
 		{CD11D86D-3173-4945-8215-7450A0D9CB3C}.Release Unicode.Build.0 = Release|Win32
-		{ABE69A26-0192-4D07-A701-BCA003DD1E06}.Debug.ActiveCfg = Debug|Win32
-		{ABE69A26-0192-4D07-A701-BCA003DD1E06}.Debug.Build.0 = Debug|Win32
-		{ABE69A26-0192-4D07-A701-BCA003DD1E06}.Debug Unicode.ActiveCfg = Debug|Win32
-		{ABE69A26-0192-4D07-A701-BCA003DD1E06}.Debug Unicode.Build.0 = Debug|Win32
-		{ABE69A26-0192-4D07-A701-BCA003DD1E06}.Release.ActiveCfg = Release|Win32
-		{ABE69A26-0192-4D07-A701-BCA003DD1E06}.Release.Build.0 = Release|Win32
-		{ABE69A26-0192-4D07-A701-BCA003DD1E06}.Release Unicode.ActiveCfg = Release|Win32
-		{ABE69A26-0192-4D07-A701-BCA003DD1E06}.Release Unicode.Build.0 = Release|Win32
 		{79E7D7DC-5A14-4D2B-8D19-47B949C13744}.Debug.ActiveCfg = Debug|Win32
 		{79E7D7DC-5A14-4D2B-8D19-47B949C13744}.Debug.Build.0 = Debug|Win32
 		{79E7D7DC-5A14-4D2B-8D19-47B949C13744}.Debug Unicode.ActiveCfg = Debug|Win32
@@ -200,14 +159,6 @@ Global
 		{53CC0F7C-CF16-4AD6-91EB-BE135A677AA9}.Release.Build.0 = Release|Win32
 		{53CC0F7C-CF16-4AD6-91EB-BE135A677AA9}.Release Unicode.ActiveCfg = Release|Win32
 		{53CC0F7C-CF16-4AD6-91EB-BE135A677AA9}.Release Unicode.Build.0 = Release|Win32
-		{69416525-7F1B-4AF2-A0DC-8D941DF7AD26}.Debug.ActiveCfg = Debug|Win32
-		{69416525-7F1B-4AF2-A0DC-8D941DF7AD26}.Debug.Build.0 = Debug|Win32
-		{69416525-7F1B-4AF2-A0DC-8D941DF7AD26}.Debug Unicode.ActiveCfg = Debug Unicode|Win32
-		{69416525-7F1B-4AF2-A0DC-8D941DF7AD26}.Debug Unicode.Build.0 = Debug Unicode|Win32
-		{69416525-7F1B-4AF2-A0DC-8D941DF7AD26}.Release.ActiveCfg = Release|Win32
-		{69416525-7F1B-4AF2-A0DC-8D941DF7AD26}.Release.Build.0 = Release|Win32
-		{69416525-7F1B-4AF2-A0DC-8D941DF7AD26}.Release Unicode.ActiveCfg = Release Unicode|Win32
-		{69416525-7F1B-4AF2-A0DC-8D941DF7AD26}.Release Unicode.Build.0 = Release Unicode|Win32
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 	EndGlobalSection
