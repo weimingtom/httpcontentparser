@@ -9,7 +9,7 @@
 using namespace CPPUNIT_NS;
 
 class ExeRuleCheckerTest : public TestFixture {
-public: 
+public:
 	CPPUNIT_TEST_SUITE(ExeRuleCheckerTest);
 	CPPUNIT_TEST(TESTDelIP);
 	CPPUNIT_TEST(TESTCheckIP);
