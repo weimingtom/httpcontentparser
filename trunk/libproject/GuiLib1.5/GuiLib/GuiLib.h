@@ -79,10 +79,10 @@
 	// MFC shared DLL with GuiToolKit static library
 	#ifdef _DEBUG
 		#ifdef _UNICODE
-			#pragma comment(lib,"GuiTk115Staticuds.lib") 
+			#pragma comment(lib,"GuiTk115Staticud.lib") 
 			#pragma message("Automatically linking with static GuiTk115Staticuds.lib") 
 		#else
-			#pragma comment(lib,"GuiTk115Staticds.lib") 
+			#pragma comment(lib,"GuiTk115Staticd.lib") 
 			#pragma message("Automatically linking with static GuiTk115Staticds.lib") 
 		#endif
 	#else
