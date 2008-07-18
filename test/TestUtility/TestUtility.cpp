@@ -5,7 +5,7 @@
 #include ".\protocolpackettest.h"
 #include ".\fdutilitytest.h"
 #include ".\httppackettest.h"
-#include ".\dnstest.h"
+#include ".\DNSTEST.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION(HTTPPacketTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(ProtocolPacketTest);
