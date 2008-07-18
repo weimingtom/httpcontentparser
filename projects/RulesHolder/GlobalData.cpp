@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include ".\globaldata.h"
-#include ".\dns\dns.h"
+#include <utility\dns.h>
 
 #include <string>
 

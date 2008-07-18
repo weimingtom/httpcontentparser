@@ -41,9 +41,9 @@
 
 #include <comdef.h>
 #ifdef _DEBUG
-#pragma comment(lib, "dnslookupd.lib")
+#pragma comment(lib, "utilityd.lib")
 #else 
-#pragma comment(lib, "dnslookup.lib")
+#pragma comment(lib, "utility.lib")
 #endif 
 
 using namespace ATL;
