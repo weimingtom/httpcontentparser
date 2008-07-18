@@ -3,6 +3,7 @@
 	ProjectType="Visual C++"
 	Version="7.10"
 	Name="GuiLib"
+	ProjectGUID="{25085524-0499-489B-8944-27AA2134C6A0}"
 	SccProjectName=""
 	SccLocalPath=""
 	Keyword="MFCProj">
@@ -2985,10 +2986,10 @@
 				RelativePath="arrowrig.ico">
 			</File>
 			<File
-				RelativePath="res\bitmap1.bmp">
+				RelativePath="bitmap1.bmp">
 			</File>
 			<File
-				RelativePath="bitmap1.bmp">
+				RelativePath="res\bitmap1.bmp">
 			</File>
 			<File
 				RelativePath="bitmap2.bmp">
@@ -3003,16 +3004,16 @@
 				RelativePath="bitradio.bmp">
 			</File>
 			<File
-				RelativePath="res\bmp00001.bmp">
-			</File>
-			<File
 				RelativePath="bmp00001.bmp">
 			</File>
 			<File
-				RelativePath="res\DockOffice.bmp">
+				RelativePath="res\bmp00001.bmp">
 			</File>
 			<File
 				RelativePath="DockOffice.bmp">
+			</File>
+			<File
+				RelativePath="res\DockOffice.bmp">
 			</File>
 			<File
 				RelativePath="res\guiarrowdown.ico">
@@ -3051,10 +3052,10 @@
 				RelativePath="res\ico239.ico">
 			</File>
 			<File
-				RelativePath="res\icon1.ico">
+				RelativePath="icon1.ico">
 			</File>
 			<File
-				RelativePath="icon1.ico">
+				RelativePath="res\icon1.ico">
 			</File>
 			<File
 				RelativePath="idc_hand.ico">

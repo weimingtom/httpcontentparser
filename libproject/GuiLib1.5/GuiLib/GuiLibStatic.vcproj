@@ -3,6 +3,7 @@
 	ProjectType="Visual C++"
 	Version="7.10"
 	Name="GuiLibStatic"
+	ProjectGUID="{69416525-7F1B-4AF2-A0DC-8D941DF7AD26}"
 	SccProjectName=""
 	SccLocalPath=""
 	Keyword="MFCProj">
@@ -67,7 +68,7 @@
 			OutputDirectory=".\..\bin"
 			IntermediateDirectory=".\DebugStaticStatic"
 			ConfigurationType="4"
-			UseOfMFC="1"
+			UseOfMFC="2"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE"
 			CharacterSet="2">
 			<Tool
@@ -75,7 +76,7 @@
 				Optimization="0"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_GUILIB_STATIC_"
 				BasicRuntimeChecks="3"
-				RuntimeLibrary="1"
+				RuntimeLibrary="3"
 				UsePrecompiledHeader="3"
 				PrecompiledHeaderThrough="stdafx.h"
 				PrecompiledHeaderFile=".\DebugStaticStatic/GuiLibStatic.pch"
@@ -94,7 +95,9 @@
 			<Tool
 				Name="VCMIDLTool"/>
 			<Tool
-				Name="VCPostBuildEventTool"/>
+				Name="VCPostBuildEventTool"
+				CommandLine="
+copy ..\bin\GuiTk115Staticd.lib ..\..\..\lib"/>
 			<Tool
 				Name="VCPreBuildEventTool"/>
 			<Tool
