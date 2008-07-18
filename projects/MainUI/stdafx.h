@@ -40,15 +40,3 @@
 #ifndef _AFX_NO_AFXCMN_SUPPORT
 #include <afxcmn.h>			// Windows 公共控件的 MFC 支持
 #endif // _AFX_NO_AFXCMN_SUPPORT
-
-
-#define _GUILIB_STATIC_
-#include <Guilib.h>
-#include <GuiFolder.h>
-#include <GuiOutLook.h>
-#include <GuiStaticStandar.h>
-#include <GuiSplitter.h>
-#include <GuiMiniTool.h>
-#include <GuiMiniSplitter.h>
-#include <GuiCapOutBar.h>
-#include <GuiComboBoxExt.h>

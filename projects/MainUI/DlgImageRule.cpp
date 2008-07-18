@@ -21,6 +21,12 @@ CDlgImageRule::~CDlgImageRule()
 void CDlgImageRule::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
+	DDX_Control(pDX, IDC_CHK_IMAGE, m_chkImage);
+	DDX_Control(pDX, IDC_CHK_SHOWIMAGE, m_chkShowImage);
+	DDX_Control(pDX, IDC_CHK_JPEG, m_chkJPEG);
+	DDX_Control(pDX, IDC_CHK_GIF, m_chkGIF);
+	DDX_Control(pDX, IDC_CHK_BMP, m_chkBMP);
+	DDX_Control(pDX, IDC_CHK_PNG, m_chkPNG);
 }
 
 
