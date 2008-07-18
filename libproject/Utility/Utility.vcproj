@@ -43,7 +43,7 @@ copy .\settingstore.h ..\..\include\utility
 copy .\fd_set_utility.h ..\..\include\utility
 copy .\httppacket.h ..\..\include\utility
 copy .\httpcontentchecker.h ..\..\include\utility
-"/>
+copy .\dns.h ..\..\include\utility"/>
 			<Tool
 				Name="VCPreBuildEventTool"/>
 			<Tool
@@ -180,6 +180,16 @@ copy .\httppacket.h ..\..\include\utility
 			</File>
 			<File
 				RelativePath=".\syncutility.h">
+			</File>
+		</Filter>
+		<Filter
+			Name="DNS"
+			Filter="">
+			<File
+				RelativePath=".\dns.cpp">
+			</File>
+			<File
+				RelativePath=".\dns.h">
 			</File>
 		</Filter>
 		<File
