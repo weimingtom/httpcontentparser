@@ -1,8 +1,8 @@
-#ifndef _TEST_RULES_MANAGEMENT_STDAFX_H__
-#define _TEST_RULES_MANAGEMENT_STDAFX_H__
+// stdafx.h : 标准系统包含文件的包含文件，
+// 或是常用但不常更改的项目特定的包含文件
+//
 
-#define _WIN32_WINNT 0x0400
-
+#pragma once
 
 
 #include <iostream>
@@ -28,5 +28,3 @@
 #endif
 
 #pragma comment(lib, "ws2_32.lib")
-
-#endif  // _TEST_RULES_MANAGEMENT_STDAFX_H__
