@@ -1,5 +1,5 @@
 
-LIBRARY      "RulesHolderPS"
+LIBRARY      "FilterSettingPS"
 
 EXPORTS
 	DllGetClassObject       PRIVATE

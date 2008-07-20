@@ -2,8 +2,8 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="7.10"
-	Name="RulesHolderPS"
-	ProjectGUID="{C6CBD7E3-226C-4C34-ACCB-20B231BE3F6A}"
+	Name="FilterSettingPS"
+	ProjectGUID="{734F52A3-4C1A-4913-AB8A-876DA6E71CBA}"
 	Keyword="AtlPSProj">
 	<Platforms>
 		<Platform
@@ -24,7 +24,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="kernel32.lib rpcndr.lib rpcns4.lib rpcrt4.lib oleaut32.lib uuid.lib"
-				ModuleDefinitionFile="RulesHolderPS.def"/>
+				ModuleDefinitionFile="FilterSettingPS.def"/>
 			<Tool
 				Name="VCMIDLTool"/>
 			<Tool
@@ -69,7 +69,7 @@ Exit 1
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="kernel32.lib rpcndr.lib rpcns4.lib rpcrt4.lib oleaut32.lib uuid.lib"
-				ModuleDefinitionFile="RulesHolderPS.def"
+				ModuleDefinitionFile="FilterSettingPS.def"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"/>
 			<Tool
@@ -116,14 +116,14 @@ Exit 1
 				RelativePath=".\dlldata.c">
 			</File>
 			<File
-				RelativePath=".\RulesHolder_i.c">
+				RelativePath=".\FilterSetting_i.c">
 			</File>
 			<File
-				RelativePath=".\RulesHolder_p.c">
+				RelativePath=".\FilterSetting_p.c">
 			</File>
 		</Filter>
 		<File
-			RelativePath=".\RulesHolderps.def">
+			RelativePath=".\FilterSettingps.def">
 		</File>
 	</Files>
 	<Globals>

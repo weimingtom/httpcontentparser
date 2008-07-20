@@ -2,8 +2,8 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="7.10"
-	Name="RulesHolder"
-	ProjectGUID="{0EDC249E-5936-4C1C-90EB-4E51EA392DB8}"
+	Name="FilterSetting"
+	ProjectGUID="{23244EE6-33D9-4D23-8BA7-3AA7CCDAF177}"
 	Keyword="AtlProj">
 	<Platforms>
 		<Platform
@@ -21,7 +21,6 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\include"
 				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG"
 				MinimalRebuild="TRUE"
 				BasicRuntimeChecks="3"
@@ -35,12 +34,11 @@
 			<Tool
 				Name="VCLinkerTool"
 				IgnoreImportLibrary="TRUE"
-				OutputFile="$(OutDir)/RulesHolder.exe"
+				OutputFile="$(OutDir)/FilterSetting.exe"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="..\..\lib"
 				GenerateDebugInformation="TRUE"
 				SubSystem="2"
-				ImportLibrary="$(OutDir)/RulesHolder.lib"
+				ImportLibrary="$(OutDir)/FilterSetting.lib"
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
@@ -48,19 +46,15 @@
 				MkTypLibCompatible="FALSE"
 				TargetEnvironment="1"
 				GenerateStublessProxies="TRUE"
-				TypeLibraryName="$(IntDir)/RulesHolder.tlb"
-				HeaderFileName="RulesHolder.h"
+				TypeLibraryName="$(IntDir)/FilterSetting.tlb"
+				HeaderFileName="FilterSetting.h"
 				DLLDataFileName=""
-				InterfaceIdentifierFileName="RulesHolder_i.c"
-				ProxyFileName="RulesHolder_p.c"/>
+				InterfaceIdentifierFileName="FilterSetting_i.c"
+				ProxyFileName="FilterSetting_p.c"/>
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="执行注册"
-				CommandLine="&quot;$(TargetPath)&quot; /RegServer
-copy .\rulesholder.h ..\..\include\com
-copy .\RulesHolder_i.c ..\..\include\com
-copy .\Debug\rulesholder.exe ..\..\Debug
-"/>
+				CommandLine="&quot;$(TargetPath)&quot; /RegServer"/>
 			<Tool
 				Name="VCPreBuildEventTool"/>
 			<Tool
@@ -91,7 +85,6 @@ copy .\Debug\rulesholder.exe ..\..\Debug
 			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\..\include"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="3"
@@ -103,14 +96,13 @@ copy .\Debug\rulesholder.exe ..\..\Debug
 			<Tool
 				Name="VCLinkerTool"
 				IgnoreImportLibrary="TRUE"
-				OutputFile="$(OutDir)/RulesHolder.exe"
+				OutputFile="$(OutDir)/FilterSetting.exe"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="..\..\lib"
 				GenerateDebugInformation="TRUE"
 				SubSystem="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
-				ImportLibrary="$(OutDir)/RulesHolder.lib"
+				ImportLibrary="$(OutDir)/FilterSetting.lib"
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
@@ -118,11 +110,11 @@ copy .\Debug\rulesholder.exe ..\..\Debug
 				MkTypLibCompatible="FALSE"
 				TargetEnvironment="1"
 				GenerateStublessProxies="TRUE"
-				TypeLibraryName="$(IntDir)/RulesHolder.tlb"
-				HeaderFileName="RulesHolder.h"
+				TypeLibraryName="$(IntDir)/FilterSetting.tlb"
+				HeaderFileName="FilterSetting.h"
 				DLLDataFileName=""
-				InterfaceIdentifierFileName="RulesHolder_i.c"
-				ProxyFileName="RulesHolder_p.c"/>
+				InterfaceIdentifierFileName="FilterSetting_i.c"
+				ProxyFileName="FilterSetting_p.c"/>
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="执行注册"
@@ -156,16 +148,10 @@ copy .\Debug\rulesholder.exe ..\..\Debug
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
 			<File
-				RelativePath=".\RulesChecker.cpp">
+				RelativePath=".\FilterSetting.cpp">
 			</File>
 			<File
-				RelativePath=".\RulesHolder.cpp">
-			</File>
-			<File
-				RelativePath=".\RulesHolder.idl">
-			</File>
-			<File
-				RelativePath=".\RulesSetting.cpp">
+				RelativePath=".\FilterSetting.idl">
 			</File>
 			<File
 				RelativePath=".\stdafx.cpp">
@@ -191,12 +177,6 @@ copy .\Debug\rulesholder.exe ..\..\Debug
 				RelativePath=".\Resource.h">
 			</File>
 			<File
-				RelativePath=".\RulesChecker.h">
-			</File>
-			<File
-				RelativePath=".\RulesSetting.h">
-			</File>
-			<File
 				RelativePath=".\stdafx.h">
 			</File>
 		</Filter>
@@ -205,23 +185,17 @@ copy .\Debug\rulesholder.exe ..\..\Debug
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx"
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}">
 			<File
-				RelativePath=".\RulesChecker.rgs">
+				RelativePath=".\FilterSetting.rc">
 			</File>
 			<File
-				RelativePath=".\RulesHolder.rc">
-			</File>
-			<File
-				RelativePath=".\RulesHolder.rgs">
-			</File>
-			<File
-				RelativePath=".\RulesSetting.rgs">
+				RelativePath=".\FilterSetting.rgs">
 			</File>
 		</Filter>
 		<Filter
 			Name="生成的文件"
 			SourceControlFiles="FALSE">
 			<File
-				RelativePath=".\RulesHolder_i.c">
+				RelativePath=".\FilterSetting_i.c">
 				<FileConfiguration
 					Name="Debug|Win32">
 					<Tool
@@ -234,16 +208,6 @@ copy .\Debug\rulesholder.exe ..\..\Debug
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
-			</File>
-		</Filter>
-		<Filter
-			Name="rules"
-			Filter="">
-			<File
-				RelativePath=".\GlobalData.cpp">
-			</File>
-			<File
-				RelativePath=".\GlobalData.h">
 			</File>
 		</Filter>
 		<File
