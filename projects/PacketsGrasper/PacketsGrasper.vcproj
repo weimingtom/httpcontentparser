@@ -204,12 +204,6 @@
 		<Filter
 			Name="checkrules"
 			Filter="">
-			<File
-				RelativePath=".\checkrules.cpp">
-			</File>
-			<File
-				RelativePath=".\checkrules.h">
-			</File>
 		</Filter>
 		<Filter
 			Name="io"

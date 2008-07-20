@@ -21,6 +21,8 @@ public:
 	void enableDNSCheck(const bool checked);
 	void addBlackDNS(const std::string &dns);
 	void adllWhiteDNS(const std::string &dns);
+	bool removeBlackDNS(const std::string &dns_name);
+	bool removeWhiteDNS(const std::string &dns_name);
 
 	// 全局的管理
 	void enableApplications(const bool enabled);

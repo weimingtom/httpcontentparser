@@ -4,7 +4,6 @@
 #include "stdafx.h"
 #include <cppunit/extensions/HelperMacros.h>
 
-
 class SettingTest : public CPPUNIT_NS::TestFixture {
 public:
 	CPPUNIT_TEST_SUITE(SettingTest);

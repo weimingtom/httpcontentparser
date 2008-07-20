@@ -17,10 +17,11 @@
 			ConfigurationType="1"
 			UseOfATL="1"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE"
-			CharacterSet="2">
+			CharacterSet="1">
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
+				AdditionalIncludeDirectories="..\..\include"
 				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG"
 				MinimalRebuild="TRUE"
 				BasicRuntimeChecks="3"
@@ -36,6 +37,7 @@
 				IgnoreImportLibrary="TRUE"
 				OutputFile="$(OutDir)/FilterSetting.exe"
 				LinkIncremental="2"
+				AdditionalLibraryDirectories="..\..\lib"
 				GenerateDebugInformation="TRUE"
 				SubSystem="2"
 				ImportLibrary="$(OutDir)/FilterSetting.lib"
@@ -154,6 +156,9 @@
 				RelativePath=".\FilterSetting.idl">
 			</File>
 			<File
+				RelativePath=".\GlobalChecker.cpp">
+			</File>
+			<File
 				RelativePath=".\stdafx.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
@@ -174,6 +179,9 @@
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
 			<File
+				RelativePath=".\GlobalChecker.h">
+			</File>
+			<File
 				RelativePath=".\Resource.h">
 			</File>
 			<File
@@ -189,6 +197,9 @@
 			</File>
 			<File
 				RelativePath=".\FilterSetting.rgs">
+			</File>
+			<File
+				RelativePath=".\GlobalChecker.rgs">
 			</File>
 		</Filter>
 		<Filter

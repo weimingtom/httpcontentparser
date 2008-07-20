@@ -2,7 +2,8 @@
 // 或是常用但不常更改的项目特定的包含文件
 //
 
-#pragma once
+#ifndef _SETTING_STDAFX_H__
+#define _SETTING_STDAFX_H__
 
 
 #include <iostream>
@@ -19,12 +20,19 @@
 #include <windows.h>
 #include <comdef.h>
 
+#include <GlobalChecker.h>
+
 #ifdef _DEBUG
 #	pragma comment(lib, "cppunitd.lib")
 #	pragma comment(lib, "testrunnerd.lib")
+#	pragma comment(lib, "settingd.lib")
 #else 
 #	pragma comment(lib, "TestRunner.lib")
 #	pragma comment(lib, "cppunit.lib")
+#	pragma comment(lib, "setting.lib")
 #endif
 
+
 #pragma comment(lib, "ws2_32.lib")
+
+#endif  // _SETTING_STDAFX_H__
