@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "overlapped.h"
 #include "spidefines.h" 
-#include "checkrules.h" 
 #include "selectio.h"
 #include "debug.h" 
 #include ".\overlapped.h"

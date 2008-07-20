@@ -25,6 +25,23 @@ bool DNSList::isWhiteDNS(const std::string &dns_name) const {
 		return false;
 }
 
+bool DNSList::removeBlackDNS(const std::string &dns_name) {
+	DNS_SET::iterator iter = black_set_.find(dns_name);
+	if (black_set_.end() != iter) {
+		black_set_.erase(iter);
+		return true;
+	}
+	return false;
+}
+bool DNSList::removeWhiteDNS(const std::string &dns_name) {
+	DNS_SET::iterator iter = white_set_.find(dns_name);
+	if (white_set_.end() != iter) {
+		white_set_.erase(iter);
+		return true;
+	}
+	return false;
+}
+
 void DNSList::addBlackDNS(const std::string &dns_name) {
 	black_set_.insert(dns_name);
 }

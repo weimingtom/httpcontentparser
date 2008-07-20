@@ -37,7 +37,6 @@ void GlobalChecker::enableApplications(const bool enabled) {
 	global_enable_ = enabled;
 }
 
-
 // ¼ì²âDNS
 bool GlobalChecker::checkDNS(const std::string &dns){
 	assert ( dns_check_ != NULL);
@@ -55,4 +54,13 @@ void GlobalChecker::addBlackDNS(const std::string &dns){
 void GlobalChecker::adllWhiteDNS(const std::string &dns){
 	assert ( dns_list_ != NULL);
 	dns_list_->addWhiteDNS(dns);
+}
+
+bool GlobalChecker::removeBlackDNS(const std::string &dns_name) {
+	assert ( dns_list_ != NULL);
+	return dns_list_->removeBlackDNS(dns_name); 
+}
+bool GlobalChecker::removeWhiteDNS(const std::string &dns_name) {
+	assert ( dns_list_ != NULL);
+	return dns_list_->removeWhiteDNS(dns_name);
 }
