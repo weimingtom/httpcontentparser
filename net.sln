@@ -23,10 +23,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SPIInstaller", "projects\SP
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestRulesHolder", "test\TestRulesManagement\TestRulesManagement.vcproj", "{1C5D5286-B2F6-4CBB-9DE8-71CA8D2DB1BF}"
-	ProjectSection(ProjectDependencies) = postProject
-	EndProjectSection
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Utility", "libproject\Utility\Utility.vcproj", "{CD11D86D-3173-4945-8215-7450A0D9CB3C}"
 	ProjectSection(ProjectDependencies) = postProject
 		{EC738080-9EB3-45D7-8440-0B79B280ACD7} = {EC738080-9EB3-45D7-8440-0B79B280ACD7}
@@ -35,10 +31,6 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestUtility", "test\TestUtility\TestUtility.vcproj", "{79E7D7DC-5A14-4D2B-8D19-47B949C13744}"
 	ProjectSection(ProjectDependencies) = postProject
 		{CD11D86D-3173-4945-8215-7450A0D9CB3C} = {CD11D86D-3173-4945-8215-7450A0D9CB3C}
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RulesHolder", "projects\RulesHolder\RulesHolder.vcproj", "{0EDC249E-5936-4C1C-90EB-4E51EA392DB8}"
-	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "selectio", "libproject\selectio\selectio.vcproj", "{9DBE4172-DCAE-4D27-8131-7B16A30D149A}"
@@ -56,6 +48,14 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MainUI", "projects\MainUI\M
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Setting", "libproject\Setting\Setting.vcproj", "{CCEEE3B2-3B59-4DE4-B088-2093F3582E42}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FilterSetting", "projects\FilterSetting\FilterSetting.vcproj", "{23244EE6-33D9-4D23-8BA7-3AA7CCDAF177}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestSetting", "test\testSetting\testSetting.vcproj", "{401DE4AD-03DE-4A26-BDC6-F122B9054622}"
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
 EndProject
@@ -107,14 +107,6 @@ Global
 		{D02BBF90-CC5B-4AD3-B637-2B9C8A790C6E}.Release.Build.0 = Release|Win32
 		{D02BBF90-CC5B-4AD3-B637-2B9C8A790C6E}.Release Unicode.ActiveCfg = Release|Win32
 		{D02BBF90-CC5B-4AD3-B637-2B9C8A790C6E}.Release Unicode.Build.0 = Release|Win32
-		{1C5D5286-B2F6-4CBB-9DE8-71CA8D2DB1BF}.Debug.ActiveCfg = Debug|Win32
-		{1C5D5286-B2F6-4CBB-9DE8-71CA8D2DB1BF}.Debug.Build.0 = Debug|Win32
-		{1C5D5286-B2F6-4CBB-9DE8-71CA8D2DB1BF}.Debug Unicode.ActiveCfg = Debug|Win32
-		{1C5D5286-B2F6-4CBB-9DE8-71CA8D2DB1BF}.Debug Unicode.Build.0 = Debug|Win32
-		{1C5D5286-B2F6-4CBB-9DE8-71CA8D2DB1BF}.Release.ActiveCfg = Release|Win32
-		{1C5D5286-B2F6-4CBB-9DE8-71CA8D2DB1BF}.Release.Build.0 = Release|Win32
-		{1C5D5286-B2F6-4CBB-9DE8-71CA8D2DB1BF}.Release Unicode.ActiveCfg = Release|Win32
-		{1C5D5286-B2F6-4CBB-9DE8-71CA8D2DB1BF}.Release Unicode.Build.0 = Release|Win32
 		{CD11D86D-3173-4945-8215-7450A0D9CB3C}.Debug.ActiveCfg = Debug|Win32
 		{CD11D86D-3173-4945-8215-7450A0D9CB3C}.Debug.Build.0 = Debug|Win32
 		{CD11D86D-3173-4945-8215-7450A0D9CB3C}.Debug Unicode.ActiveCfg = Debug|Win32
@@ -131,14 +123,6 @@ Global
 		{79E7D7DC-5A14-4D2B-8D19-47B949C13744}.Release.Build.0 = Release|Win32
 		{79E7D7DC-5A14-4D2B-8D19-47B949C13744}.Release Unicode.ActiveCfg = Release|Win32
 		{79E7D7DC-5A14-4D2B-8D19-47B949C13744}.Release Unicode.Build.0 = Release|Win32
-		{0EDC249E-5936-4C1C-90EB-4E51EA392DB8}.Debug.ActiveCfg = Debug|Win32
-		{0EDC249E-5936-4C1C-90EB-4E51EA392DB8}.Debug.Build.0 = Debug|Win32
-		{0EDC249E-5936-4C1C-90EB-4E51EA392DB8}.Debug Unicode.ActiveCfg = Debug|Win32
-		{0EDC249E-5936-4C1C-90EB-4E51EA392DB8}.Debug Unicode.Build.0 = Debug|Win32
-		{0EDC249E-5936-4C1C-90EB-4E51EA392DB8}.Release.ActiveCfg = Release|Win32
-		{0EDC249E-5936-4C1C-90EB-4E51EA392DB8}.Release.Build.0 = Release|Win32
-		{0EDC249E-5936-4C1C-90EB-4E51EA392DB8}.Release Unicode.ActiveCfg = Release|Win32
-		{0EDC249E-5936-4C1C-90EB-4E51EA392DB8}.Release Unicode.Build.0 = Release|Win32
 		{9DBE4172-DCAE-4D27-8131-7B16A30D149A}.Debug.ActiveCfg = Debug|Win32
 		{9DBE4172-DCAE-4D27-8131-7B16A30D149A}.Debug.Build.0 = Debug|Win32
 		{9DBE4172-DCAE-4D27-8131-7B16A30D149A}.Debug Unicode.ActiveCfg = Debug|Win32
@@ -171,6 +155,22 @@ Global
 		{CCEEE3B2-3B59-4DE4-B088-2093F3582E42}.Release.Build.0 = Release|Win32
 		{CCEEE3B2-3B59-4DE4-B088-2093F3582E42}.Release Unicode.ActiveCfg = Release|Win32
 		{CCEEE3B2-3B59-4DE4-B088-2093F3582E42}.Release Unicode.Build.0 = Release|Win32
+		{23244EE6-33D9-4D23-8BA7-3AA7CCDAF177}.Debug.ActiveCfg = Debug|Win32
+		{23244EE6-33D9-4D23-8BA7-3AA7CCDAF177}.Debug.Build.0 = Debug|Win32
+		{23244EE6-33D9-4D23-8BA7-3AA7CCDAF177}.Debug Unicode.ActiveCfg = Debug|Win32
+		{23244EE6-33D9-4D23-8BA7-3AA7CCDAF177}.Debug Unicode.Build.0 = Debug|Win32
+		{23244EE6-33D9-4D23-8BA7-3AA7CCDAF177}.Release.ActiveCfg = Release|Win32
+		{23244EE6-33D9-4D23-8BA7-3AA7CCDAF177}.Release.Build.0 = Release|Win32
+		{23244EE6-33D9-4D23-8BA7-3AA7CCDAF177}.Release Unicode.ActiveCfg = Release|Win32
+		{23244EE6-33D9-4D23-8BA7-3AA7CCDAF177}.Release Unicode.Build.0 = Release|Win32
+		{401DE4AD-03DE-4A26-BDC6-F122B9054622}.Debug.ActiveCfg = Debug|Win32
+		{401DE4AD-03DE-4A26-BDC6-F122B9054622}.Debug.Build.0 = Debug|Win32
+		{401DE4AD-03DE-4A26-BDC6-F122B9054622}.Debug Unicode.ActiveCfg = Debug|Win32
+		{401DE4AD-03DE-4A26-BDC6-F122B9054622}.Debug Unicode.Build.0 = Debug|Win32
+		{401DE4AD-03DE-4A26-BDC6-F122B9054622}.Release.ActiveCfg = Release|Win32
+		{401DE4AD-03DE-4A26-BDC6-F122B9054622}.Release.Build.0 = Release|Win32
+		{401DE4AD-03DE-4A26-BDC6-F122B9054622}.Release Unicode.ActiveCfg = Release|Win32
+		{401DE4AD-03DE-4A26-BDC6-F122B9054622}.Release Unicode.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 	EndGlobalSection

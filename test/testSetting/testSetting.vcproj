@@ -2,8 +2,8 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="7.10"
-	Name="TestDNS"
-	ProjectGUID="{B49EA077-2509-412F-921D-AEEFF5ADB314}"
+	Name="TestSetting"
+	ProjectGUID="{401DE4AD-03DE-4A26-BDC6-F122B9054622}"
 	Keyword="Win32Proj">
 	<Platforms>
 		<Platform
@@ -32,11 +32,11 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				OutputFile="$(OutDir)/TestDNS.exe"
+				OutputFile="$(OutDir)/testSetting.exe"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="..\..\lib"
 				GenerateDebugInformation="TRUE"
-				ProgramDatabaseFile="$(OutDir)/TestDNS.pdb"
+				ProgramDatabaseFile="$(OutDir)/testSetting.pdb"
 				SubSystem="1"
 				TargetMachine="1"/>
 			<Tool
@@ -68,9 +68,8 @@
 			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\..\include"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
-				RuntimeLibrary="2"
+				RuntimeLibrary="4"
 				UsePrecompiledHeader="3"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="TRUE"
@@ -79,9 +78,8 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				OutputFile="$(OutDir)/TestDNS.exe"
+				OutputFile="$(OutDir)/testSetting.exe"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="..\..\lib"
 				GenerateDebugInformation="TRUE"
 				SubSystem="1"
 				OptimizeReferences="2"
@@ -117,6 +115,9 @@
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
 			<File
+				RelativePath=".\SettingTest.cpp">
+			</File>
+			<File
 				RelativePath=".\stdafx.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
@@ -132,13 +133,16 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\TestDNS.cpp">
+				RelativePath=".\testSetting.cpp">
 			</File>
 		</Filter>
 		<Filter
 			Name="Í·ÎÄ¼þ"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
+			<File
+				RelativePath=".\SettingTest.h">
+			</File>
 			<File
 				RelativePath=".\stdafx.h">
 			</File>
