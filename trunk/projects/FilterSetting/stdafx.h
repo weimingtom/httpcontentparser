@@ -39,11 +39,4 @@
 #include <atlbase.h>
 #include <atlcom.h>
 
-#include <comdef.h>
-#ifdef _DEBUG
-#pragma comment(lib, "utilityd.lib")
-#else 
-#pragma comment(lib, "utility.lib")
-#endif 
-
 using namespace ATL;

@@ -1,0 +1,18 @@
+// FilterSetting.idl : FilterSetting 的 IDL 源
+//
+
+// 此文件将由 MIDL 工具处理以
+// 产生类型库(FilterSetting.tlb)和封送处理代码。
+
+import "oaidl.idl";
+import "ocidl.idl";
+
+[
+	uuid(5B1BA4DF-89BC-4E1C-8C3D-A75EA1233764),
+	version(1.0),
+	helpstring("FilterSetting 1.0 类型库")
+]
+library FilterSettingLib
+{
+	importlib("stdole2.tlb");
+};

@@ -1,19 +1,18 @@
 //{{NO_DEPENDENCIES}}
 // Microsoft Visual C++ generated include file.
-// Used by RulesHolder.rc
+// Used by FilterSetting.rc
 //
-#define IDS_PROJNAME                    100
-#define IDR_RULESHOLDER                 101
-#define IDR_RULESCHECKER                102
-#define IDR_RULESSETTING                103
 
-// Next default values for new objects
+#define IDS_SERVICENAME					100
+#define IDR_FILTERSETTING	101
+
+// 新对象的下一些默认值
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        201
 #define _APS_NEXT_COMMAND_VALUE         32768
 #define _APS_NEXT_CONTROL_VALUE         201
-#define _APS_NEXT_SYMED_VALUE           104
+#define _APS_NEXT_SYMED_VALUE           102
 #endif
 #endif

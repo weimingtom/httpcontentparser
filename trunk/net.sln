@@ -55,6 +55,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MainUI", "projects\MainUI\M
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Setting", "libproject\Setting\Setting.vcproj", "{CCEEE3B2-3B59-4DE4-B088-2093F3582E42}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfiguration) = preSolution
 		Debug = Debug
@@ -159,6 +163,14 @@ Global
 		{53CC0F7C-CF16-4AD6-91EB-BE135A677AA9}.Release.Build.0 = Release|Win32
 		{53CC0F7C-CF16-4AD6-91EB-BE135A677AA9}.Release Unicode.ActiveCfg = Release|Win32
 		{53CC0F7C-CF16-4AD6-91EB-BE135A677AA9}.Release Unicode.Build.0 = Release|Win32
+		{CCEEE3B2-3B59-4DE4-B088-2093F3582E42}.Debug.ActiveCfg = Debug|Win32
+		{CCEEE3B2-3B59-4DE4-B088-2093F3582E42}.Debug.Build.0 = Debug|Win32
+		{CCEEE3B2-3B59-4DE4-B088-2093F3582E42}.Debug Unicode.ActiveCfg = Debug|Win32
+		{CCEEE3B2-3B59-4DE4-B088-2093F3582E42}.Debug Unicode.Build.0 = Debug|Win32
+		{CCEEE3B2-3B59-4DE4-B088-2093F3582E42}.Release.ActiveCfg = Release|Win32
+		{CCEEE3B2-3B59-4DE4-B088-2093F3582E42}.Release.Build.0 = Release|Win32
+		{CCEEE3B2-3B59-4DE4-B088-2093F3582E42}.Release Unicode.ActiveCfg = Release|Win32
+		{CCEEE3B2-3B59-4DE4-B088-2093F3582E42}.Release Unicode.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 	EndGlobalSection

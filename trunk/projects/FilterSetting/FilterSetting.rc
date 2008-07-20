@@ -1,55 +1,49 @@
-// Microsoft Visual C++ generated resource script.
+//Microsoft Visual C++ 生成的资源脚本。
 //
 #include "resource.h"
 
 #define APSTUDIO_READONLY_SYMBOLS
 /////////////////////////////////////////////////////////////////////////////
 //
-// Generated from the TEXTINCLUDE 2 resource.
+// 从 TEXTINCLUDE 2 资源生成。
 //
 #include "winres.h"
 
 /////////////////////////////////////////////////////////////////////////////
 #undef APSTUDIO_READONLY_SYMBOLS
 
-/////////////////////////////////////////////////////////////////////////////
-// 中文(中华人民共和国) resources
-
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
-#ifdef _WIN32
-LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
+LANGUAGE 4, 2
 #pragma code_page(936)
-#endif //_WIN32
-
 #ifdef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
 //
 // TEXTINCLUDE
 //
 
-1 TEXTINCLUDE 
+1 TEXTINCLUDE  
 BEGIN
     "resource.h\0"
 END
 
-2 TEXTINCLUDE 
+2 TEXTINCLUDE  
 BEGIN
     "#include ""winres.h""\r\n"
     "\0"
 END
 
-3 TEXTINCLUDE 
+3 TEXTINCLUDE  
 BEGIN
-    "1 TYPELIB ""RulesHolder.tlb""\r\n"
+    "1 TYPELIB ""FilterSetting.tlb""\r\n"
     "\0"
 END
 
 #endif    // APSTUDIO_INVOKED
 
-
+#ifndef _MAC
 /////////////////////////////////////////////////////////////////////////////
 //
-// Version
+// 版本
 //
 
 VS_VERSION_INFO VERSIONINFO
@@ -73,50 +67,43 @@ BEGIN
             VALUE "FileDescription", "TODO: <文件说明>"
             VALUE "FileVersion", "1.0.0.1"
             VALUE "LegalCopyright", "TODO: (C) <公司名>。保留所有权利。"
-            VALUE "InternalName", "RulesHolder.exe"
-            VALUE "OriginalFilename", "RulesHolder.exe"
+            VALUE "InternalName", "FilterSetting.exe"
+            VALUE "OriginalFilename", "FilterSetting.exe"
             VALUE "ProductName", "TODO: <产品名>"
             VALUE "ProductVersion", "1.0.0.1"
+            VALUE "OLESelfRegister", ""
         END
     END
     BLOCK "VarFileInfo"
     BEGIN
-        VALUE "Translation", 0x804, 936
+		VALUE "Translation", 0x0804, 936
     END
 END
 
+#endif    // !_MAC
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// REGISTRY
+// 字符串表
 //
 
-IDR_RULESHOLDER         REGISTRY                "RulesHolder.rgs"
-IDR_RULESCHECKER        REGISTRY                "RulesChecker.rgs"
-IDR_RULESSETTING        REGISTRY                "RulesSetting.rgs"
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// String Table
-//
-
-STRINGTABLE 
+STRINGTABLE  
 BEGIN
-    IDS_PROJNAME            "RulesHolder"
+	IDS_SERVICENAME					"FilterSetting"
 END
 
-#endif    // 中文(中华人民共和国) resources
-/////////////////////////////////////////////////////////////////////////////
+IDR_FILTERSETTING REGISTRY "FilterSetting.rgs"
+////////////////////////////////////////////////////////////////////////////
 
 
+#endif
 
 #ifndef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
 //
-// Generated from the TEXTINCLUDE 3 resource.
+// 从 TEXTINCLUDE 3 资源生成。
 //
-1 TYPELIB "RulesHolder.tlb"
-
+1 TYPELIB "FilterSetting.tlb"
 /////////////////////////////////////////////////////////////////////////////
-#endif    // not APSTUDIO_INVOKED
+#endif    // 不是 APSTUDIO_INVOKED
 
