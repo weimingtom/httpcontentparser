@@ -169,9 +169,6 @@ copy .\FileLogListener.h ..\..\include\logsystem
 				RelativePath=".\precomp.h">
 			</File>
 		</Filter>
-		<File
-			RelativePath=".\ReadMe.txt">
-		</File>
 	</Files>
 	<Globals>
 	</Globals>

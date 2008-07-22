@@ -13,6 +13,7 @@ public:
 // 对话框数据
 	enum { IDD = IDD_DLG_ABOUT };
 
+	virtual void OnApply();
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 支持
 

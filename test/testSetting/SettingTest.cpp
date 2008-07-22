@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include ".\settingtest.h"
-#include <GlobalChecker.h>
+#include <Globalsetting.h>
 
 using namespace CPPUNIT_NS;
 

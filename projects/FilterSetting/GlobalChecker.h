@@ -43,7 +43,14 @@ public:
 	STDMETHOD(addWhiteDNS)(BSTR dns);
 	STDMETHOD(removeBlackDNS)(BSTR blackDNS);
 	STDMETHOD(removeWhiteDNS)(BSTR whiteDNS);
+
 	STDMETHOD(enableDNSCheck)(VARIANT_BOOL enable);
+
+	STDMETHOD(showImage)(VARIANT_BOOL* showed);
+	STDMETHOD(checkImage)(int type, VARIANT_BOOL* checked);
+	STDMETHOD(enableImageCheck)(int type, VARIANT_BOOL check);
+	STDMETHOD(enableShowImage)(VARIANT_BOOL show);
+	STDMETHOD(checkDNS)(BSTR dns, VARIANT_BOOL* enabled);
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(GlobalChecker), CGlobalChecker)

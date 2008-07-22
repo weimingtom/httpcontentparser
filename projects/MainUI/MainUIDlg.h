@@ -10,7 +10,7 @@
 #include "dlgabout.h"
 #include "dlgdnsrule.h"
 #include "dlgsearchrule.h"
-
+#include ".\basedlg.h"
 
 // CMainUIDlg ¶Ô»°¿ò
 class CMainUIDlg : public CDialog
@@ -49,10 +49,11 @@ private:
 	CDlgSearchRule m_dlgSearchRule;
 	CDlgDNSRule m_dlgDnsRule;
 	CDlgAbout m_dlgAbout;
-	CDialog	*m_curDlg;
+	CBaseDlg	*m_curDlg;
 
 	CRect    m_rectRight;
 public:
 	afx_msg void OnNMClickTreeNavig(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnTvnSelchangedTreeNavig(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnBnClickedApply();
 };

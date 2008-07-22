@@ -15,27 +15,33 @@ import "ocidl.idl";
 	helpstring("IGlobalChecker 接口"),
 	pointer_default(unique)
 ]
-interface IGlobalChecker : IDispatch{
+interface IGlobalChecker : IDispatch {
 	[id(1), helpstring("method addBlackDNS")] HRESULT addBlackDNS([in] BSTR dns);
 	[id(2), helpstring("method addWhiteDNS")] HRESULT addWhiteDNS([in] BSTR dns);
 	[id(3), helpstring("method enableDNSCheck")] HRESULT enableDNSCheck([in] VARIANT_BOOL enable);
-	[id(4), helpstring("method removeBlackDNS")] HRESULT removeBlackDNS(BSTR blackDNS);
-	[id(5), helpstring("method removeWhiteDNS")] HRESULT removeWhiteDNS(BSTR whiteDNS);
+	[id(4), helpstring("method removeBlackDNS")] HRESULT removeBlackDNS([in] BSTR blackDNS);
+	[id(5), helpstring("method removeWhiteDNS")] HRESULT removeWhiteDNS([in] BSTR whiteDNS);
+	[id(6), helpstring("method showImage")] HRESULT showImage([out,retval] VARIANT_BOOL* showed);
+	[id(8), helpstring("method checkJEPG")] HRESULT checkImage([in] int type, [out,retval] VARIANT_BOOL* checked);
+	[id(10), helpstring("方法enablePNFCheck")] HRESULT enableImageCheck([in] int type, [in] VARIANT_BOOL check);
+	[id(11), helpstring("方法enableShowImage")] HRESULT enableShowImage([in] VARIANT_BOOL show);
+	[id(12), helpstring("方法checkDNS")] HRESULT checkDNS([in] BSTR dns, [out,retval] VARIANT_BOOL* enabled);
 };
+
 [
 	uuid(5B1BA4DF-89BC-4E1C-8C3D-A75EA1233764),
 	version(1.0),
 	helpstring("FilterSetting 1.0 类型库")
 ]
-library FilterSettingLib
-{
+
+library FilterSettingLib {
 	importlib("stdole2.tlb");
 	[
 		uuid(406FA387-8E48-4A60-B13B-30B7EB9E32F3),
 		helpstring("GlobalChecker Class")
 	]
-	coclass GlobalChecker
-	{
+
+	coclass GlobalChecker {
 		[default] interface IGlobalChecker;
 	};
 };

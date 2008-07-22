@@ -15,19 +15,16 @@ public:
 	~ImageCheck(void);
 
 public:
-	void enableImageCheck(const bool checked);
-	void checkPNG(const bool checked);
-	void checkJPEG(const bool checked);
-	void checkBMP(const bool checked);
 	void enableShowImage(const bool showed);
-
-	int checkImage(const std::string &dns);
-
+	void enableCheck(const int type, const bool enable);
+	bool needCheck(const int type) const;
+	bool showImage() const;
 private:
 	bool show_image_;
 	bool check_png_;
 	bool check_jpeg_;
 	bool check_bmp_;
+	bool check_gif_;
 
 	// 只有当图片位于这两个值之间的时候，
 	// 我们才对图片进行CHECK

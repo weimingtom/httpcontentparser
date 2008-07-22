@@ -34,17 +34,14 @@ public:
 	~CheckSetting();
 
 	// 是否需要处理
-	bool needCheck(const int type);
+	int needCheck(const int type);
+	bool check(HTTPPacket *packet);
 
-	// 添加规则
-	void addCheckedType(const int type);
-
-	// 移除removeCheckedType
-	bool removeCheckedType(const int type);
+	static const int CHECK_DENY = 0;
+	static const int CHECK_NEED = 1;
+	static const int CHECK_NEEDLESS = 2;
 private:
 	CheckSetting();
-	typedef std::set<int> CHECKED_TYPES;
-	CHECKED_TYPES http_types_;
 };
 
 class CSelectIO {
@@ -100,6 +97,12 @@ protected:
 	MYWSPRECV * lpWSPRecv;
 
 	friend class SelectIOTest;
+
+	// 对HTTPPacket的处理
+	int dealed_code_; // 应该如何处理，是直接扔掉还是进行进一步检测
+	static const int NO_DESIGNATE = -1;
+	static const int PASSED = 1;
+	static const int NEED_CHECK = 2;
 };
 
 // utility functions

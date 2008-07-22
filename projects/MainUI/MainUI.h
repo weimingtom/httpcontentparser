@@ -26,6 +26,7 @@ public:
 // й╣ож
 
 	DECLARE_MESSAGE_MAP()
+	virtual int ExitInstance();
 };
 
 extern CMainUIApp theApp;

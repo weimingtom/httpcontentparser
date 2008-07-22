@@ -18,6 +18,10 @@ CDlgAbout::~CDlgAbout()
 {
 }
 
+void CDlgAbout::OnApply() {
+}
+
+
 void CDlgAbout::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);

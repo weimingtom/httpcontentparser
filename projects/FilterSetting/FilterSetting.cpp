@@ -24,10 +24,12 @@ public :
 CFilterSettingModule _AtlModule;
 
 
-//
+GlobalSetting global_setting_;
+
 extern "C" int WINAPI _tWinMain(HINSTANCE /*hInstance*/, HINSTANCE /*hPrevInstance*/, 
                                 LPTSTR /*lpCmdLine*/, int nShowCmd)
 {
+	global_setting_.initialize();
     return _AtlModule.WinMain(nShowCmd);
 }
 

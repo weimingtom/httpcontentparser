@@ -20,7 +20,7 @@
 #include <windows.h>
 #include <comdef.h>
 
-#include <GlobalChecker.h>
+#include <Globalsetting.h>
 
 #ifdef _DEBUG
 #	pragma comment(lib, "cppunitd.lib")

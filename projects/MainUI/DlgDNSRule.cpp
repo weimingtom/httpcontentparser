@@ -18,6 +18,9 @@ CDlgDNSRule::~CDlgDNSRule()
 {
 }
 
+void CDlgDNSRule::OnApply() {
+}
+
 void CDlgDNSRule::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);

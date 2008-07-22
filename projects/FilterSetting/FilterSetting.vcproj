@@ -56,7 +56,9 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="Ö´ÐÐ×¢²á"
-				CommandLine="&quot;$(TargetPath)&quot; /RegServer"/>
+				CommandLine="&quot;$(TargetPath)&quot; /RegServer
+copy .\FilterSetting_i.c ..\..\include\com
+copy .\filtersetting.h ..\..\include\com"/>
 			<Tool
 				Name="VCPreBuildEventTool"/>
 			<Tool
@@ -120,7 +122,9 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="Ö´ÐÐ×¢²á"
-				CommandLine="&quot;$(TargetPath)&quot; /RegServer"/>
+				CommandLine="&quot;$(TargetPath)&quot; /RegServer
+copy .\FilterSetting_i.c ..\..\include\com
+copy .\filtersetting.h ..\..\include\com"/>
 			<Tool
 				Name="VCPreBuildEventTool"/>
 			<Tool
@@ -180,6 +184,9 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
 			<File
 				RelativePath=".\GlobalChecker.h">
+			</File>
+			<File
+				RelativePath=".\globalvariable.h">
 			</File>
 			<File
 				RelativePath=".\Resource.h">
