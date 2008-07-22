@@ -18,6 +18,8 @@ CDlgHelp::~CDlgHelp()
 {
 }
 
+void CDlgHelp::OnApply() {
+}
 void CDlgHelp::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);

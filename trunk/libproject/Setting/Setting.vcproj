@@ -23,7 +23,7 @@
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
 				MinimalRebuild="TRUE"
 				BasicRuntimeChecks="3"
-				RuntimeLibrary="5"
+				RuntimeLibrary="3"
 				UsePrecompiledHeader="3"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="TRUE"
@@ -37,8 +37,9 @@
 				Name="VCMIDLTool"/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy .\globalchecker.h ..\..\include
-copy .\debug\settingd.lib ..\..\lib"/>
+				CommandLine="copy .\globalsetting.h ..\..\include
+copy .\debug\settingd.lib ..\..\lib
+"/>
 			<Tool
 				Name="VCPreBuildEventTool"/>
 			<Tool
@@ -78,7 +79,8 @@ copy .\debug\settingd.lib ..\..\lib"/>
 			<Tool
 				Name="VCPostBuildEventTool"
 				CommandLine="copy .\globalchecker.h ..\..\include
-copy .\release\settingd.lib ..\..\lib"/>
+copy .\release\settingd.lib ..\..\lib
+"/>
 			<Tool
 				Name="VCPreBuildEventTool"/>
 			<Tool
@@ -109,7 +111,7 @@ copy .\release\settingd.lib ..\..\lib"/>
 				RelativePath=".\DNSList.cpp">
 			</File>
 			<File
-				RelativePath=".\GlobalChecker.cpp">
+				RelativePath=".\GlobalSetting.cpp">
 			</File>
 			<File
 				RelativePath=".\ImageCheck.cpp">
@@ -156,7 +158,7 @@ copy .\release\settingd.lib ..\..\lib"/>
 			Name="public"
 			Filter="">
 			<File
-				RelativePath=".\GlobalChecker.h">
+				RelativePath=".\GlobalSetting.h">
 			</File>
 		</Filter>
 		<File

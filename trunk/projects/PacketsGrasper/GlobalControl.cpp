@@ -1,6 +1,9 @@
 #include "stdafx.h"
 #include ".\globalcontrol.h"
+#include <comdef.h>
 #include <utility\HTTPPacket.h>
+#include <com\filtersetting.h>
+#include <com\filtersetting_i.c>
 
 //===============================
 // ¾²Ì¬³ÉÔ±
@@ -36,6 +39,22 @@ bool GlobalControl::checkHTTPContent(HTTPPacket *packet) {
 	return true;
 }
 
-bool GlobalControl::checkIp(unsigned int ip, short port) {
+bool checkDNS(const std::string &dns_name) {
+	try {
+		IGlobalChecker *g_globalChecker;
+
+		CoInitialize(NULL);
+		HRESULT hr = CoCreateInstance(CLSID_GlobalChecker, NULL, CLSCTX_LOCAL_SERVER, IID_IGlobalChecker, (LPVOID*)&g_globalChecker);
+		if (FAILED(hr)) {
+			return false;
+		}
+
+		VARIANT_BOOL enable;
+		g_globalChecker->checkDNS(_bstr_t(dns_name.c_str()), &enable);
+		CoUninitialize();
+
+		return enable;
+	} catch (_com_error &e) {
+	}
 	return true;
 }

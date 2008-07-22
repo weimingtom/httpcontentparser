@@ -18,6 +18,10 @@ CDlgOnlineHour::~CDlgOnlineHour()
 {
 }
 
+void CDlgOnlineHour::OnApply() {
+}
+
+
 void CDlgOnlineHour::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);

@@ -6,6 +6,7 @@ public:
 	CBaseDlg(UINT uTemplate, CWnd *pParent);
 	~CBaseDlg(void);
 
+	virtual void OnApply() = 0;
 private:
 	CBaseDlg() {}
 };

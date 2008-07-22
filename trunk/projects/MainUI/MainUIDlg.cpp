@@ -83,6 +83,7 @@ BEGIN_MESSAGE_MAP(CMainUIDlg, CDialog)
 	//}}AFX_MSG_MAP
 	ON_NOTIFY(NM_CLICK, IDC_TREE_NAVIG, OnNMClickTreeNavig)
 	ON_NOTIFY(TVN_SELCHANGED, IDC_TREE_NAVIG, OnTvnSelchangedTreeNavig)
+	ON_BN_CLICKED(IDC_APPLY, OnBnClickedApply)
 END_MESSAGE_MAP()
 
 
@@ -276,4 +277,10 @@ void CMainUIDlg::OnTvnSelchangedTreeNavig(NMHDR *pNMHDR, LRESULT *pResult)
 	setCurDlg(itemData);
 
 	*pResult = 0;
+}
+
+void CMainUIDlg::OnBnClickedApply()
+{
+	ASSERT (NULL != m_curDlg);
+	m_curDlg->OnApply();
 }

@@ -1,6 +1,8 @@
 #ifndef _PACKET_GRASPHER_GLOBALCONTROL_H__
 #define _PACKET_GRASPHER_GLOBALCONTROL_H__
 
+#include <string>
+
 // 控制整体的规则
 // 所有的内容都通过它进行检查
 
@@ -24,7 +26,7 @@ public:
 	bool checkHTTPContent(HTTPPacket *packet);
 
 	// 检查IP地址及端口号(注：如果端口号为0，则只检查IP地址)
-	bool checkIp(unsigned int ip, short port);
+	bool checkDNS(const std::string &dns_name);
 	~GlobalControl(void);
 private:
 	void Update();

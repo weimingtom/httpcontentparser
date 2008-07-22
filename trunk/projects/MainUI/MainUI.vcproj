@@ -159,6 +159,9 @@
 				RelativePath=".\BaseDlg.h">
 			</File>
 			<File
+				RelativePath=".\globalvariable.h">
+			</File>
+			<File
 				RelativePath=".\MainUI.h">
 			</File>
 			<File

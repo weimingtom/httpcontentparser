@@ -8,10 +8,10 @@ class DNSList;
 class ImageCheck;
 
 // 负责对所有包进行检测是否应该通过
-class GlobalChecker {
+class GlobalSetting {
 public:
-	GlobalChecker(void);
-	~GlobalChecker(void);
+	GlobalSetting(void);
+	~GlobalSetting(void);
 
 public:
 	bool initialize();
@@ -26,6 +26,12 @@ public:
 
 	// 全局的管理
 	void enableApplications(const bool enabled);
+
+	//
+	void enableShowImage(const bool show);
+	bool showImage() const;
+	void enableImageCheck(const int type, const bool check);
+	bool imageNeedCheck(const int type) const;
 private:
 
 	bool global_enable_; // 全局

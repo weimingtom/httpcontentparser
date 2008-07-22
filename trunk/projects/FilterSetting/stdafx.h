@@ -39,4 +39,11 @@
 #include <atlbase.h>
 #include <atlcom.h>
 
+#include <globalsetting.h>
+#ifdef _DEBUG
+#	pragma comment(lib, "settingd.lib")
+#else 
+#	pragma comment(lib, "setting.lib")
+#endif
+
 using namespace ATL;

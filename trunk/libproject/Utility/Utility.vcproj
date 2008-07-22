@@ -43,7 +43,8 @@ copy .\settingstore.h ..\..\include\utility
 copy .\fd_set_utility.h ..\..\include\utility
 copy .\httppacket.h ..\..\include\utility
 copy .\httpcontentchecker.h ..\..\include\utility
-copy .\dns.h ..\..\include\utility"/>
+copy .\dns.h ..\..\include\utility
+"/>
 			<Tool
 				Name="VCPreBuildEventTool"/>
 			<Tool
@@ -127,6 +128,9 @@ copy .\httppacket.h ..\..\include\utility
 				RelativePath=".\HttpPacket.cpp">
 			</File>
 			<File
+				RelativePath=".\HTTPRequestPacket.cpp">
+			</File>
+			<File
 				RelativePath=".\stdafx.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
@@ -171,6 +175,9 @@ copy .\httppacket.h ..\..\include\utility
 			</File>
 			<File
 				RelativePath=".\HttpPacket.h">
+			</File>
+			<File
+				RelativePath=".\HTTPRequestPacket.h">
 			</File>
 			<File
 				RelativePath=".\stdafx.h">

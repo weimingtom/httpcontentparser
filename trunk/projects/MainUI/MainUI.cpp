@@ -4,6 +4,11 @@
 #include "stdafx.h"
 #include "MainUI.h"
 #include "MainUIDlg.h"
+#include "globalvariable.h"
+#include ".\mainui.h"
+
+IGlobalChecker *g_globalChecker = NULL;
+
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -35,6 +40,12 @@ CMainUIApp theApp;
 
 BOOL CMainUIApp::InitInstance()
 {
+	CoInitialize(NULL);
+	HRESULT hr = CoCreateInstance(CLSID_GlobalChecker, NULL, CLSCTX_LOCAL_SERVER, IID_IGlobalChecker, (LPVOID*)&g_globalChecker);
+	if (FAILED(hr)) {
+		AfxMessageBox("初始化系统服务失败..");
+		return FALSE;
+	}
 	// 如果一个运行在 Windows XP 上的应用程序清单指定要
 	// 使用 ComCtl32.dll 版本 6 或更高版本来启用可视化方式，
 	//则需要 InitCommonControls()。否则，将无法创建窗口。
@@ -70,4 +81,11 @@ BOOL CMainUIApp::InitInstance()
 	// 由于对话框已关闭，所以将返回 FALSE 以便退出应用程序，
 	// 而不是启动应用程序的消息泵。
 	return FALSE;
+}
+
+int CMainUIApp::ExitInstance()
+{
+	CoUninitialize();
+
+	return CWinApp::ExitInstance();
 }

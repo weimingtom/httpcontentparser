@@ -18,6 +18,10 @@ CDlgSearchRule::~CDlgSearchRule()
 {
 }
 
+void CDlgSearchRule::OnApply() {
+}
+
+
 void CDlgSearchRule::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);

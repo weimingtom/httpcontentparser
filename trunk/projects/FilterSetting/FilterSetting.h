@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 6.00.0361 */
-/* at Sun Jul 20 16:53:24 2008
+/* at Sun Jul 20 23:49:40 2008
  */
 /* Compiler settings for .\FilterSetting.idl:
     Oicf, W1, Zp8, env=Win32 (32b run)
@@ -99,10 +99,28 @@ EXTERN_C const IID IID_IGlobalChecker;
             /* [in] */ VARIANT_BOOL enable) = 0;
         
         virtual /* [helpstring][id] */ HRESULT STDMETHODCALLTYPE removeBlackDNS( 
-            BSTR blackDNS) = 0;
+            /* [in] */ BSTR blackDNS) = 0;
         
         virtual /* [helpstring][id] */ HRESULT STDMETHODCALLTYPE removeWhiteDNS( 
-            BSTR whiteDNS) = 0;
+            /* [in] */ BSTR whiteDNS) = 0;
+        
+        virtual /* [helpstring][id] */ HRESULT STDMETHODCALLTYPE showImage( 
+            /* [retval][out] */ VARIANT_BOOL *showed) = 0;
+        
+        virtual /* [helpstring][id] */ HRESULT STDMETHODCALLTYPE checkImage( 
+            /* [in] */ int type,
+            /* [retval][out] */ VARIANT_BOOL *checked) = 0;
+        
+        virtual /* [helpstring][id] */ HRESULT STDMETHODCALLTYPE enableImageCheck( 
+            /* [in] */ int type,
+            /* [in] */ VARIANT_BOOL check) = 0;
+        
+        virtual /* [helpstring][id] */ HRESULT STDMETHODCALLTYPE enableShowImage( 
+            /* [in] */ VARIANT_BOOL show) = 0;
+        
+        virtual /* [helpstring][id] */ HRESULT STDMETHODCALLTYPE checkDNS( 
+            /* [in] */ BSTR dns,
+            /* [retval][out] */ VARIANT_BOOL *enabled) = 0;
         
     };
     
@@ -166,11 +184,34 @@ EXTERN_C const IID IID_IGlobalChecker;
         
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *removeBlackDNS )( 
             IGlobalChecker * This,
-            BSTR blackDNS);
+            /* [in] */ BSTR blackDNS);
         
         /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *removeWhiteDNS )( 
             IGlobalChecker * This,
-            BSTR whiteDNS);
+            /* [in] */ BSTR whiteDNS);
+        
+        /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *showImage )( 
+            IGlobalChecker * This,
+            /* [retval][out] */ VARIANT_BOOL *showed);
+        
+        /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *checkImage )( 
+            IGlobalChecker * This,
+            /* [in] */ int type,
+            /* [retval][out] */ VARIANT_BOOL *checked);
+        
+        /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *enableImageCheck )( 
+            IGlobalChecker * This,
+            /* [in] */ int type,
+            /* [in] */ VARIANT_BOOL check);
+        
+        /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *enableShowImage )( 
+            IGlobalChecker * This,
+            /* [in] */ VARIANT_BOOL show);
+        
+        /* [helpstring][id] */ HRESULT ( STDMETHODCALLTYPE *checkDNS )( 
+            IGlobalChecker * This,
+            /* [in] */ BSTR dns,
+            /* [retval][out] */ VARIANT_BOOL *enabled);
         
         END_INTERFACE
     } IGlobalCheckerVtbl;
@@ -223,6 +264,21 @@ EXTERN_C const IID IID_IGlobalChecker;
 #define IGlobalChecker_removeWhiteDNS(This,whiteDNS)	\
     (This)->lpVtbl -> removeWhiteDNS(This,whiteDNS)
 
+#define IGlobalChecker_showImage(This,showed)	\
+    (This)->lpVtbl -> showImage(This,showed)
+
+#define IGlobalChecker_checkImage(This,type,checked)	\
+    (This)->lpVtbl -> checkImage(This,type,checked)
+
+#define IGlobalChecker_enableImageCheck(This,type,check)	\
+    (This)->lpVtbl -> enableImageCheck(This,type,check)
+
+#define IGlobalChecker_enableShowImage(This,show)	\
+    (This)->lpVtbl -> enableShowImage(This,show)
+
+#define IGlobalChecker_checkDNS(This,dns,enabled)	\
+    (This)->lpVtbl -> checkDNS(This,dns,enabled)
+
 #endif /* COBJMACROS */
 
 
@@ -268,7 +324,7 @@ void __RPC_STUB IGlobalChecker_enableDNSCheck_Stub(
 
 /* [helpstring][id] */ HRESULT STDMETHODCALLTYPE IGlobalChecker_removeBlackDNS_Proxy( 
     IGlobalChecker * This,
-    BSTR blackDNS);
+    /* [in] */ BSTR blackDNS);
 
 
 void __RPC_STUB IGlobalChecker_removeBlackDNS_Stub(
@@ -280,10 +336,73 @@ void __RPC_STUB IGlobalChecker_removeBlackDNS_Stub(
 
 /* [helpstring][id] */ HRESULT STDMETHODCALLTYPE IGlobalChecker_removeWhiteDNS_Proxy( 
     IGlobalChecker * This,
-    BSTR whiteDNS);
+    /* [in] */ BSTR whiteDNS);
 
 
 void __RPC_STUB IGlobalChecker_removeWhiteDNS_Stub(
+    IRpcStubBuffer *This,
+    IRpcChannelBuffer *_pRpcChannelBuffer,
+    PRPC_MESSAGE _pRpcMessage,
+    DWORD *_pdwStubPhase);
+
+
+/* [helpstring][id] */ HRESULT STDMETHODCALLTYPE IGlobalChecker_showImage_Proxy( 
+    IGlobalChecker * This,
+    /* [retval][out] */ VARIANT_BOOL *showed);
+
+
+void __RPC_STUB IGlobalChecker_showImage_Stub(
+    IRpcStubBuffer *This,
+    IRpcChannelBuffer *_pRpcChannelBuffer,
+    PRPC_MESSAGE _pRpcMessage,
+    DWORD *_pdwStubPhase);
+
+
+/* [helpstring][id] */ HRESULT STDMETHODCALLTYPE IGlobalChecker_checkImage_Proxy( 
+    IGlobalChecker * This,
+    /* [in] */ int type,
+    /* [retval][out] */ VARIANT_BOOL *checked);
+
+
+void __RPC_STUB IGlobalChecker_checkImage_Stub(
+    IRpcStubBuffer *This,
+    IRpcChannelBuffer *_pRpcChannelBuffer,
+    PRPC_MESSAGE _pRpcMessage,
+    DWORD *_pdwStubPhase);
+
+
+/* [helpstring][id] */ HRESULT STDMETHODCALLTYPE IGlobalChecker_enableImageCheck_Proxy( 
+    IGlobalChecker * This,
+    /* [in] */ int type,
+    /* [in] */ VARIANT_BOOL check);
+
+
+void __RPC_STUB IGlobalChecker_enableImageCheck_Stub(
+    IRpcStubBuffer *This,
+    IRpcChannelBuffer *_pRpcChannelBuffer,
+    PRPC_MESSAGE _pRpcMessage,
+    DWORD *_pdwStubPhase);
+
+
+/* [helpstring][id] */ HRESULT STDMETHODCALLTYPE IGlobalChecker_enableShowImage_Proxy( 
+    IGlobalChecker * This,
+    /* [in] */ VARIANT_BOOL show);
+
+
+void __RPC_STUB IGlobalChecker_enableShowImage_Stub(
+    IRpcStubBuffer *This,
+    IRpcChannelBuffer *_pRpcChannelBuffer,
+    PRPC_MESSAGE _pRpcMessage,
+    DWORD *_pdwStubPhase);
+
+
+/* [helpstring][id] */ HRESULT STDMETHODCALLTYPE IGlobalChecker_checkDNS_Proxy( 
+    IGlobalChecker * This,
+    /* [in] */ BSTR dns,
+    /* [retval][out] */ VARIANT_BOOL *enabled);
+
+
+void __RPC_STUB IGlobalChecker_checkDNS_Stub(
     IRpcStubBuffer *This,
     IRpcChannelBuffer *_pRpcChannelBuffer,
     PRPC_MESSAGE _pRpcMessage,

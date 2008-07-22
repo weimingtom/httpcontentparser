@@ -14,6 +14,7 @@ public:
 // 对话框数据
 	enum { IDD = IDD_DLG_IMAGERULES };
 
+	virtual void OnApply();
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 支持
 
@@ -25,4 +26,6 @@ public:
 	CButton m_chkGIF;
 	CButton m_chkBMP;
 	CButton m_chkPNG;
+	BOOL m_bShowImage;
+	BOOL m_bCheckImage;
 };
