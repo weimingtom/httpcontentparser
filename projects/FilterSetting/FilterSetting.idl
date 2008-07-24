@@ -9,7 +9,7 @@ import "ocidl.idl";
 
 [
 	object,
-	uuid(5C1696AA-6E3E-4B97-8B0C-FEF2A21FF50F),
+	uuid(FB959601-AD50-4C1C-B21D-3B33B65B1928),
 	dual,
 	nonextensible,
 	helpstring("IGlobalChecker 接口"),
@@ -23,13 +23,13 @@ interface IGlobalChecker : IDispatch {
 	[id(5), helpstring("method removeWhiteDNS")] HRESULT removeWhiteDNS([in] BSTR whiteDNS);
 	[id(6), helpstring("method showImage")] HRESULT showImage([out,retval] VARIANT_BOOL* showed);
 	[id(8), helpstring("method checkJEPG")] HRESULT checkImage([in] int type, [out,retval] VARIANT_BOOL* checked);
-	[id(10), helpstring("方法enablePNFCheck")] HRESULT enableImageCheck([in] int type, [in] VARIANT_BOOL check);
-	[id(11), helpstring("方法enableShowImage")] HRESULT enableShowImage([in] VARIANT_BOOL show);
-	[id(12), helpstring("方法checkDNS")] HRESULT checkDNS([in] BSTR dns, [out,retval] VARIANT_BOOL* enabled);
+	[id(10), helpstring("method enablePNFCheck")] HRESULT enableImageCheck([in] int type, [in] VARIANT_BOOL check);
+	[id(11), helpstring("method enableShowImage")] HRESULT enableShowImage([in] VARIANT_BOOL show);
+	[id(12), helpstring("method checkDNS")] HRESULT checkDNS([in] BSTR dns, [out,retval] VARIANT_BOOL* enabled);
 };
 
 [
-	uuid(5B1BA4DF-89BC-4E1C-8C3D-A75EA1233764),
+	uuid(42F932B5-F5CB-4F0D-8925-1B6BE5FECD1B),
 	version(1.0),
 	helpstring("FilterSetting 1.0 类型库")
 ]
@@ -37,7 +37,7 @@ interface IGlobalChecker : IDispatch {
 library FilterSettingLib {
 	importlib("stdole2.tlb");
 	[
-		uuid(406FA387-8E48-4A60-B13B-30B7EB9E32F3),
+		uuid(C07E6DDF-B837-4C01-9AF3-FCAC1F28D555),
 		helpstring("GlobalChecker Class")
 	]
 

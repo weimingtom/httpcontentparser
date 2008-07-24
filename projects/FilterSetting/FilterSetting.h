@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 6.00.0361 */
-/* at Sun Jul 20 23:49:40 2008
+/* at Thu Jul 24 23:22:38 2008
  */
 /* Compiler settings for .\FilterSetting.idl:
     Oicf, W1, Zp8, env=Win32 (32b run)
@@ -85,7 +85,7 @@ EXTERN_C const IID IID_IGlobalChecker;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
     
-    MIDL_INTERFACE("5C1696AA-6E3E-4B97-8B0C-FEF2A21FF50F")
+    MIDL_INTERFACE("FB959601-AD50-4C1C-B21D-3B33B65B1928")
     IGlobalChecker : public IDispatch
     {
     public:
@@ -427,7 +427,7 @@ EXTERN_C const CLSID CLSID_GlobalChecker;
 
 #ifdef __cplusplus
 
-class DECLSPEC_UUID("406FA387-8E48-4A60-B13B-30B7EB9E32F3")
+class DECLSPEC_UUID("C07E6DDF-B837-4C01-9AF3-FCAC1F28D555")
 GlobalChecker;
 #endif
 #endif /* __FilterSettingLib_LIBRARY_DEFINED__ */
