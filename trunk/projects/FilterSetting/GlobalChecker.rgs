@@ -1,0 +1,24 @@
+HKCR
+{
+	FilterSetting.GlobalChecker.1 = s 'GlobalChecker Class'
+	{
+		CLSID = s '{C07E6DDF-B837-4C01-9AF3-FCAC1F28D555}'
+	}
+	FilterSetting.GlobalChecker = s 'GlobalChecker Class'
+	{
+		CLSID = s '{C07E6DDF-B837-4C01-9AF3-FCAC1F28D555}'
+		CurVer = s 'FilterSetting.GlobalChecker.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {C07E6DDF-B837-4C01-9AF3-FCAC1F28D555} = s 'GlobalChecker Class'
+		{
+			ProgID = s 'FilterSetting.GlobalChecker.1'
+			VersionIndependentProgID = s 'FilterSetting.GlobalChecker'
+			ForceRemove 'Programmable'
+			LocalServer32 = s '%MODULE%'
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{42F932B5-F5CB-4F0D-8925-1B6BE5FECD1B}'
+		}
+	}
+}
