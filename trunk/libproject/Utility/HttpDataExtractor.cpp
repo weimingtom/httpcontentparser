@@ -52,6 +52,20 @@ private:
 	bool finished_;
 };
 
+// 关闭的包
+class CloseConnectionLinkt : public HttpDataExtractor {
+	public:
+	CloseConnectionLinkt(ProtocolPacket<HTTP_PACKET_SIZE> *data, const HTTP_RESPONSE_HEADER *);
+	~CloseConnectionLinkt();
+	virtual int addBuffer(const char *buf, const int len);
+	virtual bool finished() const;
+private:
+	friend class HttpDataExtractor;
+	ProtocolPacket<HTTP_PACKET_SIZE> * data_;
+	const HTTP_RESPONSE_HEADER * http_header_;
+	bool finished_;
+};
+
 
 class ChunkPacket : public HttpDataExtractor {
 public:
@@ -108,6 +122,10 @@ HttpDataExtractor * HttpDataExtractor::Create(const HTTP_RESPONSE_HEADER *header
 		return (HttpDataExtractor*)new ChunkPacket(data, header);
 	}
 
+	if (header->getConnectionState() == HTTP_RESPONSE_HEADER::CONNECT_CLOSE) {
+		return (HttpDataExtractor*) new CloseConnectionLinkt(data, header);
+	}
+
 	// 如果没有content部分
 	if (header->existContent() == false) {
 		return (HttpDataExtractor*) new NoContent(data, header);
@@ -133,6 +151,7 @@ ChunkPacket::ChunkPacket(ProtocolPacket<HTTP_PACKET_SIZE> *data,
 	finished_ = false;
 	cur_need_length_ = 0;
 }
+
 ChunkPacket::~ChunkPacket() {
 }
 
@@ -248,11 +267,29 @@ int NoContent::addBuffer(const char *buf, const int len) {
 	return 0;
 }
 
+//===========================
+CloseConnectionLinkt::CloseConnectionLinkt(ProtocolPacket<HTTP_PACKET_SIZE> *data,
+	const HTTP_RESPONSE_HEADER *header) : data_(data), http_header_(header) {
+	finished_ = false;
+}	
+
+CloseConnectionLinkt::~CloseConnectionLinkt() {
+}
+
+bool CloseConnectionLinkt::finished() const {
+	return finished_;
+}
+
+int CloseConnectionLinkt::addBuffer(const char *buf, const int len) {
+	return len;
+}
+
+
 //============================
 // class FixContent
 NoSepcifiedLength::NoSepcifiedLength(ProtocolPacket<HTTP_PACKET_SIZE> *data,
 	const HTTP_RESPONSE_HEADER *header) : data_(data), http_header_(header) {
-	finished_ = false;
+	finished_ = true;
 }	
 
 NoSepcifiedLength::~NoSepcifiedLength() {
@@ -263,6 +300,7 @@ bool NoSepcifiedLength::finished() const {
 }
 
 int NoSepcifiedLength::addBuffer(const char *buf, const int len) {
+	assert (false);
 	finished_ = true;
 	// assert(false);
 	return 0;

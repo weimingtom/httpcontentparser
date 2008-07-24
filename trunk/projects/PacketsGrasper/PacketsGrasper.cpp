@@ -169,7 +169,11 @@ int WSPAPI WSPCloseSocket(
 	LPINT		lpErrno
 ) 
 {
-	return NextProcTable.lpWSPCloseSocket(s, lpErrno);
+	DebugStringNoDres(_T("==WSPCloseSocket ..."));
+	*lpErrno = 0;
+	g_select.onCloseSocket(s);
+	// return NextProcTable.lpWSPCloseSocket(s, lpErrno);
+	return 0;
 }
 
 int WSPAPI WSPConnect(
@@ -618,6 +622,7 @@ int WSPAPI WSPStartup(
 	lpProcTable->lpWSPStringToAddress 		= WSPStringToAddress;
 
 	g_select.setRecv(NextProcTable.lpWSPRecv);
+	g_select.setCloseSocket(NextProcTable.lpWSPCloseSocket);
 	LeaveCriticalSection(&gCriticalSection);
 	return 0;
 }

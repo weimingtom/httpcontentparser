@@ -23,6 +23,11 @@ void resetFakeBuffer() {
 	g_SockData.clear();
 }
 
+int WSPAPI myCloseSocket(
+	SOCKET		s,
+	LPINT	lpErrno) {
+	return 0;
+}
 // 一次只读一个包
 int WSPAPI WSPRecv(
 	SOCKET			s,
@@ -65,6 +70,55 @@ int WSPAPI WSPRecv(
 } // namespace
 
 
+void SelectIOTest::testCloseSocket() {
+	string data1 = "HTTP/1.1 200 OK\r\n"
+		"Date: Thu, 24 Apr 2008 02:37:48 GMT\r\n"
+		"Accept-Ranges: bytes\r\n"
+		"Content-Length: 5\r\n"
+		"Content-Type: text/html\r\n"
+		"Connection: close\r\n\r\n"
+		"12345";
+
+	resetFakeBuffer();
+	const SOCKET s = 10831;
+	g_SockData.insert(make_pair(s, data1));
+
+
+	// 初始化SelectIO
+	CSelectIO select;
+	select.setRecv(WSPRecv);
+	select.setCloseSocket(myCloseSocket);
+	fd_set readfds;
+	FD_ZERO(&readfds);
+	FD_SET(s, &readfds);
+	
+	// 验证数据
+	const int buf_size = 1024 * 64;
+	char buffer[buf_size];
+	WSABUF wsabuf;
+	wsabuf.buf = buffer;
+	wsabuf.len = buf_size;
+	DWORD dwNumberOfBytesRecvd;
+
+	FD_ZERO(&readfds);
+	FD_SET(s, &readfds);
+	CPPUNIT_ASSERT( 1 == select.preselect(&readfds));
+	select.postselect(&readfds);
+
+	FD_ZERO(&readfds);
+	FD_SET(s, &readfds);
+	CPPUNIT_ASSERT( 1 == select.preselect(&readfds));
+
+	// 调用closeSockets)
+	select.onCloseSocket(s);
+	FD_ZERO(&readfds);
+	FD_SET(s, &readfds);
+	CPPUNIT_ASSERT( 0 == select.preselect(&readfds));
+	CPPUNIT_ASSERT(select.prerecv(s, &wsabuf,
+		1, &dwNumberOfBytesRecvd) == 0);
+	CPPUNIT_ASSERT(dwNumberOfBytesRecvd == (data1.length()));
+}
+
 // 测试混合内容
 // 让一个完整的包，后面跟着一个88
 void SelectIOTest::testMax() {
@@ -73,7 +127,7 @@ void SelectIOTest::testMax() {
 	"Accept-Ranges: bytes\r\n"
 	"Content-Length: 5\r\n"
 	"Content-Type: text/html\r\n"
-	"Connection: close\r\n\r\n"
+	"Connection: keep-alive\r\n\r\n"
 	"12345";
 
 	string data2 = "88";
@@ -148,7 +202,7 @@ void SelectIOTest::testMulitPacket() {
 	"Accept-Ranges: bytes\r\n"
 	"Content-Length: 45\r\n"
 	"Content-Type: text/html\r\n"
-	"Connection: close\r\n\r\n"
+	"Connection: keep-alive\r\n\r\n"
 	"12345";
 
 	string data2 = "1234567890123456789012345678901234567890";
@@ -256,7 +310,7 @@ void SelectIOTest::testPostSelect() {
 	"Accept-Ranges: bytes\r\n"
 	"Content-Length: 5\r\n"
 	"Content-Type: text/html\r\n"
-	"Connection: close\r\n\r\n"
+	"Connection: keep-alive\r\n\r\n"
 	"12345";
 
 	//初始化数据
@@ -295,7 +349,7 @@ void SelectIOTest::testPostSelect() {
 	"Accept-Ranges: bytes\r\n"
 	"Content-Length: 5\r\n"
 	"Content-Type: text/html\r\n"
-	"Connection: close\r\n\r\n"
+	"Connection: keep-alive\r\n\r\n"
 	"12345";
 
 	string data2 = "HTTP/1.1 200 OK\r\n"
@@ -303,7 +357,7 @@ void SelectIOTest::testPostSelect() {
 	"Accept-Ranges: bytes\r\n"
 	"Content-Length: 5\r\n"
 	"Content-Type: text/html\r\n"
-	"Connection: close\r\n\r\n"
+	"Connection: keep-alive\r\n\r\n"
 	"23456";
 
 	string data3 = "HTTP/1.1 200 OK\r\n"
@@ -311,7 +365,7 @@ void SelectIOTest::testPostSelect() {
 	"Accept-Ranges: bytes\r\n"
 	"Content-Length: 5\r\n"
 	"Content-Type: text/html\r\n"
-	"Connection: close\r\n\r\n"
+	"Connection: keep-alive\r\n\r\n"
 	"34567";
 
 	//初始化数据
@@ -392,7 +446,7 @@ void SelectIOTest::testRemovePacket() {
 	"Accept-Ranges: bytes\r\n"
 	"Content-Length: 5\r\n"
 	"Content-Type: text/html\r\n"
-	"Connection: close\r\n\r\n"
+	"Connection: keep-alive\r\n\r\n"
 	"12345";
 
 	// 数据缓冲区

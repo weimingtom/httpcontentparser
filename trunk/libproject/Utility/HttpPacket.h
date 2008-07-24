@@ -29,7 +29,6 @@ public:
 	static const int	CONTYPE_XML	= 200;
 	static const int    CONTYPE_UNKNOWN = 999;
 
-
 	static const int	TRANENCODING_CHUNKED = 1;
 	static const int    CONTENCODING_GZIP = 1;
 	static const int    NO_DESIGNATION = -1;
@@ -39,7 +38,7 @@ public:
 	int getContentLength() const { return content_length;}
 	int getContentType() const { return content_type;}
 	bool isChunk() const { return transfer_encoding == TRANENCODING_CHUNKED;}
-	int getConnectionState() { return connection_state;}
+	int getConnectionState() const { return connection_state;}
 	int getResponseCode() const { return response_code;}
 
 	//  «∑Ò¥Ê‘⁄ƒ⁄»›

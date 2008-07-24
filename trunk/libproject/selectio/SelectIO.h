@@ -19,6 +19,12 @@ typedef int WSPAPI MYWSPRECV(
 	LPINT			lpErrno
 );
 
+typedef int WSPAPI MYCLOSESOCKET(
+	SOCKET		s,
+	LPINT		lpErrno
+);
+
+
 class HTTPPacket;
 class HTTP_RESPONSE_HEADER;
 class SelectIOTest;
@@ -34,14 +40,17 @@ public:
 	~CheckSetting();
 
 	// 是否需要处理
-	int needCheck(const int type);
-	bool check(HTTPPacket *packet);
+	bool needCheck(const int type);
 
-	static const int CHECK_DENY = 0;
-	static const int CHECK_NEED = 1;
-	static const int CHECK_NEEDLESS = 2;
+	// 添加规则
+	void addCheckedType(const int type);
+
+	// 移除removeCheckedType
+	bool removeCheckedType(const int type);
 private:
 	CheckSetting();
+	typedef std::set<int> CHECKED_TYPES;
+	CHECKED_TYPES http_types_;
 };
 
 class CSelectIO {
@@ -49,7 +58,7 @@ public:
 	CSelectIO();
 	~CSelectIO(void);
 
-	// 在调用selelect之前调用，如果返回0,则select函数，应该直接返回(表示存在已经完成的包)
+	// 在调用selelect之前调用，如果返回0,应该直接返回(表示存在已经完成的包)
 	int preselect(fd_set *readfds);
 	int postselect(fd_set *readfds);
 
@@ -61,8 +70,9 @@ public:
 
 	bool checkWholePacket(HTTPPacket * packet);
 
-	void onCloseSocket(const SOCKET s);
+	int onCloseSocket(const SOCKET s);
 
+	void setCloseSocket(MYCLOSESOCKET *lpWSPCloseSocket);
 	void setRecv(MYWSPRECV *recv);
 protected:
 	// 是否需要处理
@@ -95,14 +105,15 @@ protected:
 
 	// 保存WSPRecv的函数指针
 	MYWSPRECV * lpWSPRecv;
+	MYCLOSESOCKET *lpWSPCloseSocket;
 
 	friend class SelectIOTest;
 
-	// 对HTTPPacket的处理
-	int dealed_code_; // 应该如何处理，是直接扔掉还是进行进一步检测
-	static const int NO_DESIGNATE = -1;
-	static const int PASSED = 1;
-	static const int NEED_CHECK = 2;
+	// 等待关闭的
+	typedef std::set<SOCKET> SOCKET_SET;
+	SOCKET_SET wait_for_closed_;
+	void closeSocket(const SOCKET s);
+	void addCloseSocket(const SOCKET s);
 };
 
 // utility functions

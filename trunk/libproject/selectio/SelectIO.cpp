@@ -5,8 +5,7 @@
 #include ".\selectio.h"
 #include <logdebug.h>
 
-#include <com\filtersetting_i.c>
-#include <com\filtersetting.h>
+
 ////////////////////////////////////////////////
 int getBufferTotalSize(LPWSABUF lpBuffers, DWORD dwBufferCount) {
 	int total_size = 0;
@@ -47,7 +46,7 @@ int WriteToBuffer(LPWSABUF	lpBuffers, DWORD dwBufferCount,
 //========================================================
 CSelectIO::CSelectIO() { 
 	lpWSPRecv = NULL;
-	dealed_code_ = NO_DESIGNATE;
+	lpWSPCloseSocket = NULL;
 }
 
 CSelectIO::~CSelectIO(void) {
@@ -60,11 +59,39 @@ CSelectIO::~CSelectIO(void) {
 /////////////////////////////////////////////
 // public members
 
+int CSelectIO::onCloseSocket(const SOCKET s) {
+	using namespace yanglei_utility;
+	SingleLock<CAutoCreateCS> lock(&cs_); 
+
+	// 加入到已经完成的包中
+	SOCK_DATA_MAP::iterator iter = _sockets_map_.begin();
+	for (; iter != _sockets_map_.end(); ++iter) {
+		addCompletedPacket(iter->first, iter->second);
+	}
+
+	// 从_sockets_map_中移除
+	iter = _sockets_map_.lower_bound(s);
+	while (iter != _sockets_map_.end()) {
+		_sockets_map_.erase(iter);
+		iter = _sockets_map_.lower_bound(s);
+	}
+
+	addCloseSocket(s);
+	return 0;
+}
+
+void CSelectIO::setCloseSocket(MYCLOSESOCKET *lpWSPCloseSocket) {
+	assert (lpWSPCloseSocket != NULL);
+	assert (this->lpWSPCloseSocket == NULL);
+	this->lpWSPCloseSocket = lpWSPCloseSocket;
+}
+
 void CSelectIO::setRecv(MYWSPRECV *recv) { 
 	using namespace yanglei_utility;
 	SingleLock<CAutoCreateCS> lock(&cs_); 
 	lpWSPRecv = recv;
 }
+
 // 在调用WSPRecv时使用
 // 如果给定的SOCKET 不能处理则返回1 
 int CSelectIO::prerecv(SOCKET s, LPWSABUF lpBuffers, 
@@ -83,13 +110,6 @@ int CSelectIO::prerecv(SOCKET s, LPWSABUF lpBuffers,
 		return 1;
 	}
 
-	// 验证包是否合法，如果不合法, 则删除包，并填充
-	// 填充一个不可达包
-	if (false == CheckSetting::getInstance()->check(packet)) {
-		removeCompletedPacket(s, packet);
-		return 1;
-	}
-
 	// 获取一个
 	ProtocolPacket<HTTP_PACKET_SIZE> * raw_packet= packet->getRawPacket();
 	assert(raw_packet != NULL);
@@ -103,9 +123,9 @@ int CSelectIO::prerecv(SOCKET s, LPWSABUF lpBuffers,
 	for (int i = 0; i < dwBufferCount; ++i) {
 		const DWORD bytes = raw_packet->read(lpBuffers[i].buf, lpBuffers[i].len);
 
-		//char filename[1024];
-		//sprintf(filename, "E:\\workspace\\debuglog\\written%d.log", packet->getCode());
-		//WriteRawData(filename, lpBuffers[i].buf, bytes);
+		char filename[1024];
+		sprintf(filename, "E:\\workspace\\debuglog\\%d_%dw.log", packet->getCode(), s);
+		WriteRawData(filename, lpBuffers[i].buf, bytes);
 
 		*recv_bytes += bytes;
 		if (bytes == 0 || raw_packet->getBytesCanRead() == 0) {
@@ -230,9 +250,9 @@ int CSelectIO::graspData(const SOCKET s, char *buf, const int len) {
 		HTTPPacket* sock_data  = getSOCKETPacket(s);
 		assert( sock_data != NULL);
 
-		//char filename[1024];
-		//sprintf(filename, "E:\\workspace\\debuglog\\%d.log", sock_data->getCode());
-		//WriteRawData(filename, buf, len);
+		char filename[1024];
+		sprintf(filename, "E:\\workspace\\debuglog\\%d_%d.log", sock_data->getCode(), s);
+		WriteRawData(filename, buf, len);
 
 		// 如果接收到了长度为0
 		if (len == 0) {
@@ -265,11 +285,10 @@ int CSelectIO::graspData(const SOCKET s, char *buf, const int len) {
 				//    如：HTTP的类型， 大小等等.....
 				if (sock_data->isComplete()) { 
 					// 放入到完成队列当中
-					completed_generated = true;
+					
 					removePacket(s, sock_data);
-
-					if (NEED_CHECK == dealed_code_/*check*/ )
-						addCompletedPacket(s, sock_data);
+					addCompletedPacket(s, sock_data);
+					completed_generated = true;
 
 					// achieve
 					char buffer[200];
@@ -282,7 +301,7 @@ int CSelectIO::graspData(const SOCKET s, char *buf, const int len) {
 						sock_data  = getSOCKETPacket(s);
 				}
 
-				if (bytes_written == 0) {
+				if (bytes_written == 0) { 
 					//assert(false);
 					break;
 				}
@@ -302,7 +321,6 @@ int CSelectIO::graspData(const SOCKET s, char *buf, const int len) {
 bool CSelectIO::isThereUncompletePacket(const SOCKET s) {
 	return _sockets_map_.find(s) != _sockets_map_.end();
 }
-
 // 验证对应SOCKET的包是否应该被存储
 // 首先我们会查看临时保存的SOCKET当中是否存在, 如果存在则学要保存
 // 而后我们使用PEEK_MESSAGE调用recv, 查看对应的SOCKET是不是HTTP协议，
@@ -348,12 +366,10 @@ bool CSelectIO::needStored(const SOCKET s) {
 
 		// 在这里进行验证，基于一个基本假设
 		// 那就是一个包里最多只包含一个HTTP
-		if (CheckSetting::getInstance()->needCheck(header.getContentType()) == CheckSetting::CHECK_NEEDLESS) {
-			dealed_code_ = PASSED;
-			return false;
-		} else {
-			dealed_code_ = NEED_CHECK;
+		if (CheckSetting::getInstance()->needCheck(header.getContentType()) == true) {
 			return true;
+		} else {
+			return false;
 		}
 	} else {
 		// 如果不是以HTTP开头 
@@ -453,6 +469,8 @@ int CSelectIO::removeCompletedPacket(const SOCKET s, HTTPPacket *p) {
 	COMPLETED_PACKETS::const_iterator iterEnd = completed_packets_.end();
 	for (; iter != iterEnd; ++iter) {
 		if (iter->second->getCode() == p->getCode()) {
+			closesocket(iter->first);
+
 			delete p;		// **** 把这个忘了，导致内存泄漏
 			completed_packets_.erase(iter);
 			return 1;
@@ -471,67 +489,59 @@ HTTPPacket * CSelectIO::getCompletedPacket(const SOCKET s) {
 	}
 }
 
+// closesocket
+void CSelectIO::closeSocket(const SOCKET s) {
+	assert (lpWSPCloseSocket != NULL);
+	// 如果在已经完成的列表当中已经不存咋，则将他移除
+	SOCKET_SET::iterator iter = wait_for_closed_.find(s);
+	if (iter == wait_for_closed_.end())
+		return;
+
+	// 在未完成的列表中不应该出现他
+	assert (_sockets_map_.find(s) == _sockets_map_.end());
+
+	// 如果仍然有完成的包
+	if (completed_packets_.find(s) != completed_packets_.end())
+		return;
+
+	wait_for_closed_.erase(iter);
+
+	// closeSocket
+	int errorno = 0;
+	lpWSPCloseSocket(s, &errno);
+}
+
+void CSelectIO::addCloseSocket(const SOCKET s) {
+	wait_for_closed_.insert(s);
+}
+
 /////////////////////////////////////////
 // class CheckSetting
 CheckSetting::CheckSetting() {
+	http_types_.insert(HTTP_RESPONSE_HEADER::CONTYPE_GIF);
+	http_types_.insert(HTTP_RESPONSE_HEADER::CONTYPE_HTML);
+	http_types_.insert(HTTP_RESPONSE_HEADER::CONTYPE_JPG);
 }
 
 CheckSetting::~CheckSetting() {
 }
 
-bool CheckSetting::check(HTTPPacket *packet) {
-	if (needCheck(packet->getContentType()) == CHECK_NEEDLESS)
+bool CheckSetting::removeCheckedType(const int type) {
+	CHECKED_TYPES::iterator iter = http_types_.find(type);
+	if (http_types_.end() != iter) {
+		http_types_.erase(iter);
 		return true;
-	
-	IGlobalChecker *globalChecker = NULL;
-	CoInitialize(NULL);
-
-	// CREATE
-	HRESULT hr = CoCreateInstance(CLSID_GlobalChecker,
-		NULL, CLSCTX_LOCAL_SERVER, IID_IGlobalChecker, (LPVOID*)&globalChecker);
-	if (FAILED(hr)) {
-		return CHECK_DENY;
-	}
- 
-	// 是否显示
-	VARIANT_BOOL checked;
-	hr = globalChecker->showImage(&checked);
-	if (VARIANT_FALSE == checked) {
-		OutputDebugString("===not showstring===");
+	} else {
 		return false;
 	}
-	OutputDebugString("==showstring===");
-	CoUninitialize();
 }
+
 // 是否需要处理
-// 返回值
-// 0 : 代表直接不需要在检测图片内容，直接拒掉
-// 1 : 代表不需要检测图片
-// 2 : 代表需要检测图片
-int CheckSetting::needCheck(const int type) {
-	if (type != HTTP_RESPONSE_HEADER::CONTYPE_PNG && 
-		type != HTTP_RESPONSE_HEADER::CONTYPE_GIF &&
-		type != HTTP_RESPONSE_HEADER::CONTYPE_JPG) {
-		return CHECK_NEEDLESS;
-	}
-	IGlobalChecker *globalChecker = NULL;
-	CoInitialize(NULL);
+bool CheckSetting::needCheck(const int type) {
+	return http_types_.end() != http_types_.find(type);
+}
 
-	// CREATE
-	HRESULT hr = CoCreateInstance(CLSID_GlobalChecker,
-		NULL, CLSCTX_LOCAL_SERVER, IID_IGlobalChecker, (LPVOID*)&globalChecker);
-	if (FAILED(hr)) {
-		return CHECK_DENY;
-	}
- 
-	// 是否需要处理
-	VARIANT_BOOL checked;
-	hr = globalChecker->checkImage(type, &checked);
-	if (true == checked) {
-		return CHECK_NEED;
-	} else {
-		return CHECK_NEEDLESS;
-	}
-
-	CoUninitialize();
+// 添加规则
+void CheckSetting::addCheckedType(const int type) {
+	http_types_.insert(type);
 }
