@@ -10,6 +10,7 @@ public:
 	~HTTPPacketTest(void);
 
 	CPPUNIT_TEST_SUITE(HTTPPacketTest);
+	CPPUNIT_TEST(testConnectionState);
 	CPPUNIT_TEST(testZeorLengthPacket);
 	CPPUNIT_TEST(testAdd0LengthPacket);
 	CPPUNIT_TEST(testNoContentPacket);
@@ -28,6 +29,7 @@ public:
 	
 	CPPUNIT_TEST_SUITE_END();
 protected:
+	void testConnectionState();
 	void testZeorLengthPacket();
 	void testNoContentHeader();
 	void testAdd0LengthPacket();	// 添加0长度的包

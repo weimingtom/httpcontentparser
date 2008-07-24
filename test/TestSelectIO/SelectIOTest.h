@@ -11,6 +11,7 @@ public:
 
 public: 
 	CPPUNIT_TEST_SUITE(SelectIOTest);
+	CPPUNIT_TEST(testCloseSocket);
 	CPPUNIT_TEST(testMax);
 	CPPUNIT_TEST(testConstantPackets);
 	CPPUNIT_TEST(testRemovePacket);
@@ -23,6 +24,7 @@ public:
 	CPPUNIT_TEST_SUITE_END();
 
 private:
+	void testCloseSocket();
 	void testRemovePacket();
 	void testConstantPackets();
 	void testMax();

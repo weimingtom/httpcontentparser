@@ -160,41 +160,7 @@ void HTTPPacketTest::testNoLengthSepecified() {
 	//delete packet;
 }
 
-void HTTPPacketTest::testNoContentChunk() {
-	const char complex_chunk1[] = "HTTP/1.1 200 OK\r\n"
-		"Date: Thu, 24 Apr 2008 02:37:48 GMT\r\n"
-		"Content-Type: image/gif\r\n"
-		"Age: 220737\r\n"
-		"Transfer-Encoding: chunked\r\n"
-		"Connection: keep-alive\r\n\r\n0\r\n\r\n";
 
-	HTTPPacket *packet = new HTTPPacket;
-	CPPUNIT_ASSERT(strlen(complex_chunk1) == packet->addBuffer(complex_chunk1,
-		strlen(complex_chunk1)));
-
-	CPPUNIT_ASSERT(true == packet->isComplete());
-	delete packet;
-}
-void HTTPPacketTest::testNoContentPacket() {
-	const char no_content[] = "HTTP/1.0 304 Not Modified\r\n"
-							"Date: Mon, 30 Jun 2008 16:09:18 GMT\r\n"
-							"Content-Type: application/x-shockwave-flash\r\n"
-							"Expires: Mon, 30 Jun 2008 16:14:18 GMT\r\n"
-							"Last-Modified: Fri, 06 Jun 2008 04:23:13 GMT\r\n"
-							"Age: 297\r\n"
-							"X-Cache: HIT from 153-147.sina.com.cn\r\n"
-							"Connection: keep-alive\r\n\r\n";
-
-	HTTP_RESPONSE_HEADER header1;
-	header1.parseHeader(no_content, strlen(no_content));
-	CPPUNIT_ASSERT(header1.isChunk()== false);
-	CPPUNIT_ASSERT(header1.getResponseCode() == 304);
-
-	HTTPPacket *packet = new HTTPPacket;
-	packet->addBuffer(no_content, strlen(no_content));
-	CPPUNIT_ASSERT(packet->isComplete() == true);
-	delete packet;
-}
 
 void HTTPPacketTest::testSeriesPacket() {
 	const char packet1[] = 	"HTTP/1.1 200 OK\r\n"
@@ -203,21 +169,21 @@ void HTTPPacketTest::testSeriesPacket() {
 	"Content-Type: text/html\r\n"
 	"Age: 220737\r\n"
 	"X-Cache: HIT from 168479083.sohu.com\r\n"
-	"Connection: close\r\n\r\n"
+	"Connection: keep-alive\r\n\r\n"
 	"aa"
 	"HTTP/1.1 200 OK\r\n"
 	"Content-Length: 3\r\n"
 	"Content-Type: text/html\r\n"
 	"Age: 220737\r\n"
 	"X-Cache: HIT from 168479083.sohu.com\r\n"
-	"Connection: close\r\n\r\n"
+	"Connection: keep-alive\r\n\r\n"
 	"aaa"
 	"HTTP/1.1 200 OK\r\n"
 	"Date: Thu, 24 Apr 2008 02:37:48 GMT\r\n"
 	"Content-Length: 6\r\n"
 	"Content-Type: text/html\r\n"
 	"X-Cache: HIT from 168479083.sohu.com\r\n"
-	"Connection: close\r\n\r\n"
+	"Connection: keep-alive\r\n\r\n"
 	"aaaaaa";
 
 	HTTPPacket *packet = new HTTPPacket;
@@ -246,7 +212,7 @@ void HTTPPacketTest::testSeriesPacket() {
 	packet = new HTTPPacket;
 	const int bytes4 = packet->addBuffer(packet4, strlen(packet4));
 	CPPUNIT_ASSERT(bytes4 == 0);
-	CPPUNIT_ASSERT(false == packet->isComplete());
+	CPPUNIT_ASSERT(true == packet->isComplete());
 }
 
 void HTTPPacketTest::testWrongHeader() {
@@ -485,7 +451,7 @@ void HTTPPacketTest::testNoContentHeader() {
 	"Date: Thu, 10 Jul 2008 15:46:27 GMT\r\n"
 	"Server: Apache/1.3.29 (Unix) PHP/4.3.4\r\n"
 	"Content-Type: text/html\r\n"
-	"Connection: close\r\n\r\n";
+	"Connection: keep-alive\r\n\r\n";
 	HTTP_RESPONSE_HEADER header4;
 	header4.parseHeader(data4, strlen(data4));
 	CPPUNIT_ASSERT(header4.getResponseCode() == 100);
@@ -512,6 +478,7 @@ void HTTPPacketTest::testNoContentHeader() {
 	CPPUNIT_ASSERT(header6.existContent() == true);
 }
 
+// 测试长度为0的包
 void HTTPPacketTest::testZeorLengthPacket() {
 	const char data[] = "HTTP/1.1 200 OK\r\n"
 		"Content-Type: text/html; charset=UTF-8\r\n"
@@ -519,14 +486,95 @@ void HTTPPacketTest::testZeorLengthPacket() {
 		"Date: Tue, 15 Jul 2008 15:06:40 GMT\r\n"
 		"Server: TrustRank Frontend\r\n"
 		"Content-Length: 0\r\n\r\n";
+		
 	HTTPPacket *packet = new HTTPPacket;
 	CPPUNIT_ASSERT(strlen(data) == packet->addBuffer(data, strlen(data)));
 	CPPUNIT_ASSERT(packet->isComplete() == true);
 	delete packet;
 }
+
+void HTTPPacketTest::testConnectionState() {
+	const char p1[] = "HTTP/1.1 200 OK\r\n"
+		"Date: Thu, 24 Apr 2008 02:37:48 GMT\r\n"
+		"Content-Type: image/gif\r\n"
+		"Age: 220737\r\n"
+		"Transfer-Encoding: chunked\r\n"
+		"Connection: close\r\n\r\n0\r\n\r\n";
+
+	HTTPPacket *packet = new HTTPPacket;
+	CPPUNIT_ASSERT(strlen(p1) == packet->addBuffer(p1, strlen(p1)));
+	CPPUNIT_ASSERT(HTTP_RESPONSE_HEADER::CONNECT_CLOSE == packet->getHeader()->getConnectionState());
+	delete packet;
+
+	const char p2[] = "HTTP/1.1 200 OK\r\n"
+		"Date: Thu, 24 Apr 2008 02:37:48 GMT\r\n"
+		"Content-Type: image/gif\r\n"
+		"Age: 220737\r\n"
+		"Transfer-Encoding: chunked\r\n"
+		"Connection: keep-alive\r\n\r\n0\r\n\r\n";
+
+	packet = new HTTPPacket;
+	CPPUNIT_ASSERT(strlen(p2) == packet->addBuffer(p2, strlen(p2)));
+	CPPUNIT_ASSERT(HTTP_RESPONSE_HEADER::CONNECT_KEEP_ALIVE == packet->getHeader()->getConnectionState());
+	delete packet;
+}
+
+void HTTPPacketTest::testNoContentChunk() {
+	const char complex_chunk1[] = "HTTP/1.1 200 OK\r\n"
+		"Date: Thu, 24 Apr 2008 02:37:48 GMT\r\n"
+		"Content-Type: image/gif\r\n"
+		"Age: 220737\r\n"
+		"Transfer-Encoding: chunked\r\n"
+		"Connection: keep-alive\r\n\r\n0\r\n\r\n";
+
+	HTTPPacket *packet = new HTTPPacket;
+	CPPUNIT_ASSERT(strlen(complex_chunk1) == packet->addBuffer(complex_chunk1,
+		strlen(complex_chunk1)));
+	CPPUNIT_ASSERT(HTTP_RESPONSE_HEADER::CONNECT_KEEP_ALIVE == packet->getHeader()->getConnectionState());
+	CPPUNIT_ASSERT(true == packet->isComplete());
+	delete packet;
+}
+
+void HTTPPacketTest::testNoContentPacket() {
+	const char no_content[] = "HTTP/1.0 304 Not Modified\r\n"
+							"Date: Mon, 30 Jun 2008 16:09:18 GMT\r\n"
+							"Content-Type: application/x-shockwave-flash\r\n"
+							"Expires: Mon, 30 Jun 2008 16:14:18 GMT\r\n"
+							"Last-Modified: Fri, 06 Jun 2008 04:23:13 GMT\r\n"
+							"Age: 297\r\n"
+							"X-Cache: HIT from 153-147.sina.com.cn\r\n"
+							"Connection: keep-alive\r\n\r\n";
+
+	HTTP_RESPONSE_HEADER header1;
+	header1.parseHeader(no_content, strlen(no_content));
+	CPPUNIT_ASSERT(header1.isChunk()== false);
+	CPPUNIT_ASSERT(header1.getResponseCode() == 304);
+
+	HTTPPacket *packet = new HTTPPacket;
+	packet->addBuffer(no_content, strlen(no_content));
+	CPPUNIT_ASSERT(packet->isComplete() == true);
+	delete packet;
+}
+
 //  在一个包为结束的时候收到一个长度为0的包
 void HTTPPacketTest::testAdd0LengthPacket() {
 	{
+	const char length_specified[] = "HTTP/1.1 302 Found\r\n"
+		"Date: Thu, 24 Apr 2008 02:37:48 GMT\r\n"
+		"Content-Length: 62\r\n"
+		"Content-Type: image/jpeg\r\n"
+		"Connection: keep-alive\r\n\r\n"
+		"123456789012";
+	HTTPPacket *packet = new HTTPPacket;
+	CPPUNIT_ASSERT(strlen(length_specified) == packet->addBuffer(length_specified, strlen(length_specified)));
+	CPPUNIT_ASSERT(packet->isComplete() == false);
+	CPPUNIT_ASSERT(0 == packet->addBuffer(length_specified, 0));
+	CPPUNIT_ASSERT(packet->isComplete() == true);
+	delete packet;
+	}
+
+	{
+	// 对于一个closed的包， 无论何时都应该s
 	// 在一个固定长度包中加一个0长度包
 	const char length_specified[] = "HTTP/1.1 302 Found\r\n"
 		"Date: Thu, 24 Apr 2008 02:37:48 GMT\r\n"
@@ -538,9 +586,10 @@ void HTTPPacketTest::testAdd0LengthPacket() {
 	CPPUNIT_ASSERT(strlen(length_specified) == packet->addBuffer(length_specified, strlen(length_specified)));
 	CPPUNIT_ASSERT(packet->isComplete() == false);
 	CPPUNIT_ASSERT(0 == packet->addBuffer(length_specified, 0));
-	CPPUNIT_ASSERT(packet->isComplete() == true);
+	CPPUNIT_ASSERT(packet->isComplete() == false);
 	delete packet;
 	}
+
 	{
 	const char complex_chunk1[] = "HTTP/1.1 200 OK\r\n"
 		"Date: Thu, 24 Apr 2008 02:37:48 GMT\r\n"
