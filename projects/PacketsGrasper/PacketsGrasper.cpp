@@ -1,16 +1,13 @@
 #include "stdafx.h"
-#include "overlapped.h"
-#include "spidefines.h" 
 #include "selectio.h"
 #include "debug.h" 
 #include ".\overlapped.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <tchar.h>
-#include <logutility.h>
 #include <utility\fd_set_utility.h>
 #include <utility\HttpPacket.h>
-
+#include "spidefines.h"
 
 #pragma data_seg(".inidata")
 	int				m_iRefCount		= 0;
@@ -97,7 +94,7 @@ int WSPAPI WSPSelect (
   LPINT			lpErrno                         
 ) 
 {
-	//ODS(_T("WSPSelect ..."));
+	//DebugStringNoDres(_T("WSPSelect ..."));
 	// 直接返回，自身填入select
 	if (g_select.preselect(readfds) == 0) {
 		char buffer[1024];
@@ -131,9 +128,16 @@ int WSPAPI WSPRecv(
 )
 {
 	try {
+		if ((*lpFlags) & MSG_PEEK) {
+			return NextProcTable.lpWSPRecv(s, lpBuffers, dwBufferCount
+				, lpNumberOfBytesRecvd, lpFlags, lpOverlapped
+				, lpCompletionRoutine, lpThreadId, lpErrno);
+		}
+
 		if (g_select.prerecv(s, lpBuffers, dwBufferCount, lpNumberOfBytesRecvd) == 0) {
 			return 0;
 		}
+
 
 		int iRet = NextProcTable.lpWSPRecv(s, lpBuffers, dwBufferCount
 				, lpNumberOfBytesRecvd, lpFlags, lpOverlapped
@@ -159,7 +163,7 @@ SOCKET WSPAPI WSPSocket(
 	LPINT		lpErrno
 )
 {
-	// ODS(_T("WSPSocket ..."));
+	// DebugStringNoDres(_T("WSPSocket ..."));
 	return NextProcTable.lpWSPSocket(af, type
 		, protocol, lpProtocolInfo, g, dwFlags, lpErrno);
 }
@@ -169,11 +173,8 @@ int WSPAPI WSPCloseSocket(
 	LPINT		lpErrno
 ) 
 {
-	DebugStringNoDres(_T("==WSPCloseSocket ..."));
-	*lpErrno = 0;
-	g_select.onCloseSocket(s);
-	// return NextProcTable.lpWSPCloseSocket(s, lpErrno);
-	return 0;
+	DebugStringNoDres(_T("WSPCloseSocket ..."));
+	return NextProcTable.lpWSPCloseSocket(s, lpErrno);
 }
 
 int WSPAPI WSPConnect(
@@ -201,7 +202,7 @@ SOCKET WSPAPI WSPAccept(
 	LPINT			lpErrno
 )
 {
-	ODS(_T("WSPAccept ..."));
+	DebugStringNoDres(_T("WSPAccept ..."));
 	return NextProcTable.lpWSPAccept(s, addr, addrlen, lpfnCondition
 		, dwCallbackData, lpErrno);
 }
@@ -272,7 +273,7 @@ int WSPAPI WSPAddressToString (
   LPINT			lpErrno                      
 )
 {
-	ODS(_T("WSPAddressToString ..."));
+	DebugStringNoDres(_T("WSPAddressToString ..."));
 	return NextProcTable.lpWSPAddressToString(lpsaAddress
 		, dwAddressLength, lpProtocolInfo
 		, lpszAddressString, lpdwAddressStringLength, lpErrno);
@@ -286,7 +287,7 @@ int WSPAPI WSPAsyncSelect (
   LPINT			lpErrno        
 )
 {
-	ODS(_T("WSPAsyncSelect ..."));
+	DebugStringNoDres(_T("WSPAsyncSelect ..."));
 	return NextProcTable.lpWSPAsyncSelect(s, hWnd, wMsg, lEvent, lpErrno);
 }
  
@@ -297,7 +298,7 @@ int WSPAPI WSPBind (
   LPINT			lpErrno                       
 )
 {
-	ODS(_T("WSPBind ..."));
+	DebugStringNoDres(_T("WSPBind ..."));
 	return NextProcTable.lpWSPBind(s, name, namelen, lpErrno);
 }
 
@@ -305,7 +306,7 @@ int WSPAPI WSPCancelBlockingCall (
   LPINT			lpErrno  
 )
 {
-	ODS(_T("WSPCancelBlockingCall ..."));
+	DebugStringNoDres(_T("WSPCancelBlockingCall ..."));
 	return NextProcTable.lpWSPCancelBlockingCall(lpErrno);
 }
 
@@ -313,7 +314,7 @@ int WSPAPI WSPCleanup (
   LPINT			lpErrno  
 )
 {
-	ODS(_T("WSPCleanup ..."));
+	DebugStringNoDres(_T("WSPCleanup ..."));
 	return NextProcTable.lpWSPCleanup(lpErrno);
 }
  
@@ -324,7 +325,7 @@ int WSPAPI WSPDuplicateSocket (
   LPINT			lpErrno                         
 )
 {
-	ODS(_T("WSPDuplicateSocket ..."));
+	DebugStringNoDres(_T("WSPDuplicateSocket ..."));
 	return NextProcTable.lpWSPDuplicateSocket(
 		s, dwProcessId, lpProtocolInfo, lpErrno);
 }
@@ -336,7 +337,7 @@ int WSPAPI WSPEnumNetworkEvents (
   LPINT			lpErrno                         
 )
 {
-	ODS(_T("WSPEnumNetworkEvents ..."));
+	DebugStringNoDres(_T("WSPEnumNetworkEvents ..."));
 	return NextProcTable.lpWSPEnumNetworkEvents(
 		s, hEventObject, lpNetworkEvents, lpErrno);
 }
@@ -348,7 +349,7 @@ int WSPAPI WSPEventSelect (
   LPINT			lpErrno          
 )
 {
-	ODS(_T("WSPEventSelect ..."));
+	DebugStringNoDres(_T("WSPEventSelect ..."));
 	return NextProcTable.lpWSPEventSelect(
 		s, hEventObject, lNetworkEvents, lpErrno);
 }
@@ -362,7 +363,7 @@ BOOL WSPAPI WSPGetOverlappedResult (
   LPINT			lpErrno                   
 )
 {
-	ODS(_T("WSPGetOverlappedResult ..."));
+	DebugStringNoDres(_T("WSPGetOverlappedResult ..."));
 	return NextProcTable.lpWSPGetOverlappedResult(s, lpOverlapped
 		, lpcbTransfer, fWait, lpdwFlags, lpErrno);
 }
@@ -416,7 +417,7 @@ int WSPAPI WSPIoctl (
   LPVOID		lpvInBuffer,                                      
   DWORD			cbInBuffer,                                        
   LPVOID		lpvOutBuffer,                                     
-  DWORD			cbOutBuffer,                                       
+  DWORD			cbOutBuffer,                 
   LPDWORD		lpcbBytesReturned,                            
   LPWSAOVERLAPPED lpOverlapped,                            
   LPWSAOVERLAPPED_COMPLETION_ROUTINE lpCompletionRoutine,  
@@ -424,7 +425,7 @@ int WSPAPI WSPIoctl (
   LPINT			lpErrno                                            
 )
 {
-	// ODS(_T("WSPIoctl ..."));
+	// DebugStringNoDres(_T("WSPIoctl ..."));
 	return NextProcTable.lpWSPIoctl(s, dwIoControlCode, lpvInBuffer
 		, cbInBuffer, lpvOutBuffer, cbOutBuffer, lpcbBytesReturned
 		, lpOverlapped, lpCompletionRoutine, lpThreadId, lpErrno);
@@ -452,7 +453,7 @@ int WSPAPI WSPListen (
   LPINT			lpErrno  
 )
 {
-	ODS(_T("WSPListen ..."));
+	DebugStringNoDres(_T("WSPListen ..."));
 	return NextProcTable.lpWSPListen(s, backlog, lpErrno);
 }
 
@@ -462,7 +463,7 @@ int WSPAPI WSPRecvDisconnect (
   LPINT			lpErrno                       
 )
 {
-	ODS(_T("WSPRecvDisconnect ..."));
+	DebugStringNoDres(_T("WSPRecvDisconnect ..."));
 	return NextProcTable.lpWSPRecvDisconnect(s, lpInboundDisconnectData, lpErrno);
 }
 
@@ -473,7 +474,7 @@ int WSPAPI WSPSendDisconnect (
   LPINT			lpErrno                        
 )
 {
-	ODS(_T("WSPSendDisconnect ..."));
+	DebugStringNoDres(_T("WSPSendDisconnect ..."));
 	return NextProcTable.lpWSPSendDisconnect(
 		s, lpOutboundDisconnectData, lpErrno);
 }
@@ -622,7 +623,6 @@ int WSPAPI WSPStartup(
 	lpProcTable->lpWSPStringToAddress 		= WSPStringToAddress;
 
 	g_select.setRecv(NextProcTable.lpWSPRecv);
-	g_select.setCloseSocket(NextProcTable.lpWSPCloseSocket);
 	LeaveCriticalSection(&gCriticalSection);
 	return 0;
 }
