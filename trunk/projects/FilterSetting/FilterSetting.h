@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 6.00.0361 */
-/* at Thu Jul 24 23:22:38 2008
+/* at Fri Jul 25 23:04:51 2008
  */
 /* Compiler settings for .\FilterSetting.idl:
     Oicf, W1, Zp8, env=Win32 (32b run)

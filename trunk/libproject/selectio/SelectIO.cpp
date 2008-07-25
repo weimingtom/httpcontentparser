@@ -46,7 +46,6 @@ int WriteToBuffer(LPWSABUF	lpBuffers, DWORD dwBufferCount,
 //========================================================
 CSelectIO::CSelectIO() { 
 	lpWSPRecv = NULL;
-	lpWSPCloseSocket = NULL;
 }
 
 CSelectIO::~CSelectIO(void) {
@@ -59,43 +58,16 @@ CSelectIO::~CSelectIO(void) {
 /////////////////////////////////////////////
 // public members
 
-int CSelectIO::onCloseSocket(const SOCKET s) {
-	using namespace yanglei_utility;
-	SingleLock<CAutoCreateCS> lock(&cs_); 
-
-	// 加入到已经完成的包中
-	SOCK_DATA_MAP::iterator iter = _sockets_map_.begin();
-	for (; iter != _sockets_map_.end(); ++iter) {
-		addCompletedPacket(iter->first, iter->second);
-	}
-
-	// 从_sockets_map_中移除
-	iter = _sockets_map_.lower_bound(s);
-	while (iter != _sockets_map_.end()) {
-		_sockets_map_.erase(iter);
-		iter = _sockets_map_.lower_bound(s);
-	}
-
-	addCloseSocket(s);
-	return 0;
-}
-
-void CSelectIO::setCloseSocket(MYCLOSESOCKET *lpWSPCloseSocket) {
-	assert (lpWSPCloseSocket != NULL);
-	assert (this->lpWSPCloseSocket == NULL);
-	this->lpWSPCloseSocket = lpWSPCloseSocket;
-}
-
 void CSelectIO::setRecv(MYWSPRECV *recv) { 
 	using namespace yanglei_utility;
 	SingleLock<CAutoCreateCS> lock(&cs_); 
 	lpWSPRecv = recv;
 }
-
 // 在调用WSPRecv时使用
 // 如果给定的SOCKET 不能处理则返回1 
 int CSelectIO::prerecv(SOCKET s, LPWSABUF lpBuffers, 
 					   DWORD dwBufferCount, DWORD *recv_bytes) {
+						   OutputDebugString("prerecv");
     using namespace yanglei_utility;
 	SingleLock<CAutoCreateCS> lock(&cs_);
 
@@ -110,6 +82,13 @@ int CSelectIO::prerecv(SOCKET s, LPWSABUF lpBuffers,
 		return 1;
 	}
 
+	// 验证包是否合法，如果不合法, 则删除包，并填充
+	// 填充一个不可达包
+	//if ( packet->getHeader()->getContentType() == HTTP_RESPONSE_HEADER::CONTYPE_JPG) {
+	//	removeCompletedPacket(s, packet);
+	//	return 1;
+	//}
+
 	// 获取一个
 	ProtocolPacket<HTTP_PACKET_SIZE> * raw_packet= packet->getRawPacket();
 	assert(raw_packet != NULL);
@@ -119,13 +98,17 @@ int CSelectIO::prerecv(SOCKET s, LPWSABUF lpBuffers,
 		removeCompletedPacket(s, packet);
 	}
 
+	char data[1024];
+	sprintf(data, "totalbuf size: %d", TotalbufferSize);
+	OutputDebugString(data);
+
 	// 所有包都已经发送
 	for (int i = 0; i < dwBufferCount; ++i) {
 		const DWORD bytes = raw_packet->read(lpBuffers[i].buf, lpBuffers[i].len);
 
-		char filename[1024];
-		sprintf(filename, "E:\\workspace\\debuglog\\%d_%dw.log", packet->getCode(), s);
-		WriteRawData(filename, lpBuffers[i].buf, bytes);
+		//char filename[1024];
+		//sprintf(filename, "E:\\workspace\\debuglog\\%d_%dw.log", packet->getCode(), s);
+		//WriteRawData(filename, lpBuffers[i].buf, bytes);
 
 		*recv_bytes += bytes;
 		if (bytes == 0 || raw_packet->getBytesCanRead() == 0) {
@@ -147,6 +130,7 @@ int CSelectIO::prerecv(SOCKET s, LPWSABUF lpBuffers,
 int CSelectIO::preselect(fd_set *readfds) {
 	using namespace yanglei_utility;
 	SingleLock<CAutoCreateCS> lock(&cs_);
+
  
 	assert( lpWSPRecv != NULL);
 
@@ -247,12 +231,17 @@ int CSelectIO::graspData(const SOCKET s, char *buf, const int len) {
 		bool completed_generated = false; 
 		int total_size = 0; 
 
+		char buffer[1024];
+		sprintf(buffer, "grasp Data socket %d", s);
+		OutputDebugString(buffer);
+
 		HTTPPacket* sock_data  = getSOCKETPacket(s);
 		assert( sock_data != NULL);
 
-		char filename[1024];
-		sprintf(filename, "E:\\workspace\\debuglog\\%d_%d.log", sock_data->getCode(), s);
-		WriteRawData(filename, buf, len);
+		//char filename[1024];
+		//sprintf(filename, "E:\\workspace\\debuglog\\%d_%d.log", sock_data->getCode(), s);
+		//WriteRawData(filename, buf, len);
+
 
 		// 如果接收到了长度为0
 		if (len == 0) {
@@ -275,10 +264,6 @@ int CSelectIO::graspData(const SOCKET s, char *buf, const int len) {
 				// 但是这里是已经接收到的包，所以受到了必须将它直接送上去，不能放弃
 				const int bytes_written = sock_data->addBuffer(&(buf[total_size]), len - total_size);
 				total_size += bytes_written;
-				//char buffer[1024];
-				//sprintf(buffer, "bytes_writted %d, total_size %d, len %d, need_size %d, data size: %d",
-				//	bytes_written, total_size, len, sock_data->getDataSize(), sock_data->getDataSize());
-				//OutputDebugString(buffer);
 
 				// 如果当前包已经完成，则从map中移除，并放入到完成队列当中 
 				// 如果一些条件不符合约束，也应该放入完成队列
@@ -297,11 +282,12 @@ int CSelectIO::graspData(const SOCKET s, char *buf, const int len) {
 
 					// 如果在这里移除了， 学要新增加一个包
 					// 如果不加这个条件或者改成<=, 那么当一个HTTP包后面紧跟着一个非HTTP包时，会出现错误
-					if (total_size < len)
+					if (total_size < len) {
 						sock_data  = getSOCKETPacket(s);
+					}
 				}
 
-				if (bytes_written == 0) { 
+				if (bytes_written == 0) {
 					//assert(false);
 					break;
 				}
@@ -421,6 +407,37 @@ void CSelectIO::freeAllCompletedPacket() {
 	completed_packets_.clear();
 }
 
+int CSelectIO::removeCompletedPacket(const SOCKET s, HTTPPacket *p) {
+	using namespace yanglei_utility;
+	SingleLock<CAutoCreateCS> lock(&cs_);
+
+	OutputDebugString("remove complete socket");
+	COMPLETED_PACKETS::iterator iter = completed_packets_.begin();
+	COMPLETED_PACKETS::const_iterator iterEnd = completed_packets_.end();
+	for (; iter != iterEnd; ++iter) {
+		if (iter->second->getCode() == p->getCode()) {
+			delete p;		// **** 把这个忘了，导致内存泄漏
+			completed_packets_.erase(iter);
+			return 1;
+		}
+	}
+	return 0; 
+}
+
+
+// 获取与SOCKET对应第一个已经完成的包
+HTTPPacket * CSelectIO::getCompletedPacket(const SOCKET s) {
+	COMPLETED_PACKETS::iterator iter = completed_packets_.find(s);
+	if (completed_packets_.end() == iter) {
+		return NULL;
+	} else {
+		char buffer[1024];
+		sprintf(buffer, "== get socket complete : %d, code : %d", s, iter->second->getCode());
+		OutputDebugString(buffer);
+		return iter->second;
+	}
+}
+
 // 将与SOCKET对应HTTPPacket的包添加到完成队列当中
 int CSelectIO::addCompletedPacket(const SOCKET s, HTTPPacket *p) {
 	completed_packets_.insert(std::make_pair(s, p));
@@ -431,26 +448,28 @@ HTTPPacket * CSelectIO::getSOCKETPacket(const SOCKET s) {
 	SOCK_DATA_MAP::iterator iter = _sockets_map_.lower_bound(s);
 	SOCK_DATA_MAP::iterator iterEnd = _sockets_map_.upper_bound(s);
 	for (; iter != iterEnd; ++iter) {
-		if (iter->second->isComplete() == false) {
-			return iter->second;
-		} 
+		assert (iter->second->isComplete() == false);
+		return iter->second;
 	}
-
+	
 	HTTPPacket *packet = new HTTPPacket;
 	_sockets_map_.insert(std::make_pair(s, packet));
 
 	return packet;	
-} 
+}
  
 int CSelectIO::removePacket(const SOCKET s, HTTPPacket *p) {
 	using namespace yanglei_utility;
 	SingleLock<CAutoCreateCS> lock(&cs_);
 
-
 	SOCK_DATA_MAP::iterator iter = _sockets_map_.lower_bound(s);
 	SOCK_DATA_MAP::const_iterator iterEnd = _sockets_map_.upper_bound(s);
 	for (; iter != iterEnd; ++iter) {
 		if (iter->second->getCode() == p->getCode()) {
+			char buffer[1024];
+			sprintf(buffer, "== remove socket : %d, code : %d", s, p->getCode());
+			OutputDebugString(buffer);
+
 			assert(s == iter->first);
 			_sockets_map_.erase(iter);
 			return 1;
@@ -461,66 +480,14 @@ int CSelectIO::removePacket(const SOCKET s, HTTPPacket *p) {
 	return 0; 
 }
 
-int CSelectIO::removeCompletedPacket(const SOCKET s, HTTPPacket *p) {
-	using namespace yanglei_utility;
-	SingleLock<CAutoCreateCS> lock(&cs_);
-
-	COMPLETED_PACKETS::iterator iter = completed_packets_.begin();
-	COMPLETED_PACKETS::const_iterator iterEnd = completed_packets_.end();
-	for (; iter != iterEnd; ++iter) {
-		if (iter->second->getCode() == p->getCode()) {
-			closesocket(iter->first);
-
-			delete p;		// **** 把这个忘了，导致内存泄漏
-			completed_packets_.erase(iter);
-			return 1;
-		}
-	}
-	return 0; 
-}
-
-// 获取与SOCKET对应第一个已经完成的包
-HTTPPacket * CSelectIO::getCompletedPacket(const SOCKET s) {
-	COMPLETED_PACKETS::iterator iter = completed_packets_.lower_bound(s);
-	if (completed_packets_.end() == iter) {
-		return NULL;
-	} else {
-		return iter->second;
-	}
-}
-
-// closesocket
-void CSelectIO::closeSocket(const SOCKET s) {
-	assert (lpWSPCloseSocket != NULL);
-	// 如果在已经完成的列表当中已经不存咋，则将他移除
-	SOCKET_SET::iterator iter = wait_for_closed_.find(s);
-	if (iter == wait_for_closed_.end())
-		return;
-
-	// 在未完成的列表中不应该出现他
-	assert (_sockets_map_.find(s) == _sockets_map_.end());
-
-	// 如果仍然有完成的包
-	if (completed_packets_.find(s) != completed_packets_.end())
-		return;
-
-	wait_for_closed_.erase(iter);
-
-	// closeSocket
-	int errorno = 0;
-	lpWSPCloseSocket(s, &errno);
-}
-
-void CSelectIO::addCloseSocket(const SOCKET s) {
-	wait_for_closed_.insert(s);
-}
-
 /////////////////////////////////////////
 // class CheckSetting
 CheckSetting::CheckSetting() {
 	http_types_.insert(HTTP_RESPONSE_HEADER::CONTYPE_GIF);
+	// http_types_.insert(HTTP_RESPONSE_HEADER::CONTYPE_CSS);
 	http_types_.insert(HTTP_RESPONSE_HEADER::CONTYPE_HTML);
 	http_types_.insert(HTTP_RESPONSE_HEADER::CONTYPE_JPG);
+	// http_types_.insert(HTTP_RESPONSE_HEADER::CONTYPE_JS);
 }
 
 CheckSetting::~CheckSetting() {

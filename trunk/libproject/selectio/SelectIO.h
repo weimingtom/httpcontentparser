@@ -19,12 +19,6 @@ typedef int WSPAPI MYWSPRECV(
 	LPINT			lpErrno
 );
 
-typedef int WSPAPI MYCLOSESOCKET(
-	SOCKET		s,
-	LPINT		lpErrno
-);
-
-
 class HTTPPacket;
 class HTTP_RESPONSE_HEADER;
 class SelectIOTest;
@@ -58,7 +52,7 @@ public:
 	CSelectIO();
 	~CSelectIO(void);
 
-	// 在调用selelect之前调用，如果返回0,应该直接返回(表示存在已经完成的包)
+	// 在调用selelect之前调用，如果返回0,则select函数，应该直接返回(表示存在已经完成的包)
 	int preselect(fd_set *readfds);
 	int postselect(fd_set *readfds);
 
@@ -70,9 +64,8 @@ public:
 
 	bool checkWholePacket(HTTPPacket * packet);
 
-	int onCloseSocket(const SOCKET s);
+	void onCloseSocket(const SOCKET s);
 
-	void setCloseSocket(MYCLOSESOCKET *lpWSPCloseSocket);
 	void setRecv(MYWSPRECV *recv);
 protected:
 	// 是否需要处理
@@ -105,15 +98,8 @@ protected:
 
 	// 保存WSPRecv的函数指针
 	MYWSPRECV * lpWSPRecv;
-	MYCLOSESOCKET *lpWSPCloseSocket;
 
 	friend class SelectIOTest;
-
-	// 等待关闭的
-	typedef std::set<SOCKET> SOCKET_SET;
-	SOCKET_SET wait_for_closed_;
-	void closeSocket(const SOCKET s);
-	void addCloseSocket(const SOCKET s);
 };
 
 // utility functions

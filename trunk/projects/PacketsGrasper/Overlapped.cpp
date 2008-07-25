@@ -5,7 +5,7 @@
 
 #include "stdafx.h"
 #include ".\debug.h"
-#include <logutility.h>
+//#include <logutility.h>
 #include "overlapped.h"
 
 COverlapped	m_Overlapped;				// 保存重叠操作相关信息的类
