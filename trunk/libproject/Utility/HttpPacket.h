@@ -40,13 +40,14 @@ public:
 	bool isChunk() const { return transfer_encoding == TRANENCODING_CHUNKED;}
 	int getConnectionState() const { return connection_state;}
 	int getResponseCode() const { return response_code;}
+	int getContentEncoding() const { return content_encoding;}
 
 	// 是否存在内容
 	bool existContent() const ;
 private:
 	int transfer_encoding;
 	int content_type;
-	int content_encoding;
+	int content_encoding;		// 内容的编码方式如gzip
 	int content_length;
 	int connection_state;
 	int response_code;	// 返回代码，如404不可达
@@ -113,7 +114,7 @@ public:
 	int addBuffer(const char *buf, const unsigned len);
 	int read(char *buf, const int bufsize, int &bytedread);
 	
-	int getContentType() { return http_header_.getContentType();}
+	int getContentType() const { return http_header_.getContentType();}
 
 	// 将..保存到文件当中
 	int  achieve_data(const char * filename);
@@ -135,6 +136,7 @@ public:
 
 	// 释放资源
 	void releaseResource();
+	ProtocolPacket<HTTP_PACKET_SIZE> * getData() { return http_data_; }
 private:
 	bool testHttpHeaderPacket(const char *buf, int len);
 	// 本函数从给定数据中抽取一个数据单元，并将其加入到

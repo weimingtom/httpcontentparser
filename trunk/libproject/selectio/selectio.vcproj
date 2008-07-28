@@ -38,7 +38,8 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				CommandLine="copy .\selectio.h ..\..\include
-copy .\Debug\selectiod.lib ..\..\lib"/>
+copy .\Debug\selectiod.lib ..\..\lib
+"/>
 			<Tool
 				Name="VCPreBuildEventTool"/>
 			<Tool
@@ -79,7 +80,8 @@ copy .\Debug\selectiod.lib ..\..\lib"/>
 			<Tool
 				Name="VCPostBuildEventTool"
 				CommandLine="copy .\selectio.h ..\..\include
-copy .\release\selectio.lib ..\..\lib"/>
+copy .\release\selectio.lib ..\..\lib
+"/>
 			<Tool
 				Name="VCPreBuildEventTool"/>
 			<Tool
@@ -137,6 +139,16 @@ copy .\release\selectio.lib ..\..\lib"/>
 			Name="资源文件"
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx"
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}">
+		</Filter>
+		<Filter
+			Name="checker"
+			Filter="">
+			<File
+				RelativePath=".\contentFilter.cpp">
+			</File>
+			<File
+				RelativePath=".\contentFilter.h">
+			</File>
 		</Filter>
 		<File
 			RelativePath=".\ReadMe.txt">

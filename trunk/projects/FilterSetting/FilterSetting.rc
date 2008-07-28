@@ -93,6 +93,7 @@ END
 
 IDR_FILTERSETTING       REGISTRY                "FilterSetting.rgs"
 IDR_GLOBALCHECKER       REGISTRY                "GlobalChecker.rgs"
+IDR_GLOBALSETTING       REGISTRY                "GlobalSetting.rgs"
 
 /////////////////////////////////////////////////////////////////////////////
 //

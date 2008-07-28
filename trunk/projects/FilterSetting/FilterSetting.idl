@@ -16,18 +16,30 @@ import "ocidl.idl";
 	pointer_default(unique)
 ]
 interface IGlobalChecker : IDispatch {
+	[id(1), helpstring("method checkDNS")] HRESULT checkDNS([in] BSTR dns, [out,retval] VARIANT_BOOL* enabled);
+	[id(2), helpstring("method checkContent")] HRESULT checkContent([in] LONG type,
+		[in, size_is(Count)] CHAR Numbers[], LONG Count, [out,retval] VARIANT_BOOL* passed);
+	[id(3), helpstring("method  needCheck")] HRESULT needCheck([in] LONG type, [out,retval] VARIANT_BOOL* needed);
+	[id(4), helpstring("方法checkImage")] HRESULT checkImage([in] LONG type, [out,retval] LONG* action_code);
+};
+
+[
+	object,
+	uuid(EDD97AF6-A82A-4AE8-8C9A-287A298566E2),
+	dual,
+	nonextensible,
+	helpstring("IGlobalSetting 接口"),
+	pointer_default(unique)
+]
+interface IGlobalSetting : IDispatch{
 	[id(1), helpstring("method addBlackDNS")] HRESULT addBlackDNS([in] BSTR dns);
 	[id(2), helpstring("method addWhiteDNS")] HRESULT addWhiteDNS([in] BSTR dns);
 	[id(3), helpstring("method enableDNSCheck")] HRESULT enableDNSCheck([in] VARIANT_BOOL enable);
 	[id(4), helpstring("method removeBlackDNS")] HRESULT removeBlackDNS([in] BSTR blackDNS);
 	[id(5), helpstring("method removeWhiteDNS")] HRESULT removeWhiteDNS([in] BSTR whiteDNS);
-	[id(6), helpstring("method showImage")] HRESULT showImage([out,retval] VARIANT_BOOL* showed);
-	[id(8), helpstring("method checkJEPG")] HRESULT checkImage([in] int type, [out,retval] VARIANT_BOOL* checked);
-	[id(10), helpstring("method enablePNFCheck")] HRESULT enableImageCheck([in] int type, [in] VARIANT_BOOL check);
-	[id(11), helpstring("method enableShowImage")] HRESULT enableShowImage([in] VARIANT_BOOL show);
-	[id(12), helpstring("method checkDNS")] HRESULT checkDNS([in] BSTR dns, [out,retval] VARIANT_BOOL* enabled);
+	[id(6), helpstring("method enablePNFCheck")] HRESULT enableImageCheck([in] int type, [in] VARIANT_BOOL check);
+	[id(7), helpstring("method enableShowImage")] HRESULT enableShowImage([in] VARIANT_BOOL show);
 };
-
 [
 	uuid(42F932B5-F5CB-4F0D-8925-1B6BE5FECD1B),
 	version(1.0),
@@ -43,5 +55,13 @@ library FilterSettingLib {
 
 	coclass GlobalChecker {
 		[default] interface IGlobalChecker;
+	};
+	[
+		uuid(60B4C292-1B1F-46EF-8DA4-A01ED7FF4127),
+		helpstring("GlobalSetting Class")
+	]
+	coclass GlobalSetting
+	{
+		[default] interface IGlobalSetting;
 	};
 };

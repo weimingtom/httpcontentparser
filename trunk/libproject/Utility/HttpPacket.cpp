@@ -181,11 +181,7 @@ int HTTPPacket::addBuffer(const char *buf, const unsigned len) {
 		// 如果内存不足，交给上层程序来处理
 		throw; 
 	} catch (...) {
-		char filename[1024];
-		sprintf(filename, "E:\\workspace\\debuglog\\int%d.log", getCode());
-		achieve(filename);
-
-		WriteLog("E:\\workspace\\debuglog\\xxx.log", 0, getCode(), buf, len);
+		//WriteLog("E:\\workspace\\debuglog\\xxx.log", 0, getCode(), buf, len);
 		DEBUG_MESSAGE("addBuffer exception...");
 		return 0;
 	}

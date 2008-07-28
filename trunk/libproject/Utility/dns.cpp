@@ -52,7 +52,6 @@ std::string CDNS::getHostAt(const size_t index) {
 	}
 }
 
-
 size_t CDNS::getNumberOfHosts() const { 
 	return hostIps_.size(); 
 }

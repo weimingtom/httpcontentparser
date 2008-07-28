@@ -62,8 +62,6 @@ public:
 	// 如果返回其他， 则代表我们没有已经完成的包，此时可以调用WSPRecv
 	int prerecv(SOCKET s, LPWSABUF lpBuffers, DWORD dwBufferCount, DWORD *recv_bytes);
 
-	bool checkWholePacket(HTTPPacket * packet);
-
 	void onCloseSocket(const SOCKET s);
 
 	void setRecv(MYWSPRECV *recv);

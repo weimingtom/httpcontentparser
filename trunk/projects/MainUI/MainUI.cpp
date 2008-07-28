@@ -7,7 +7,7 @@
 #include "globalvariable.h"
 #include ".\mainui.h"
 
-IGlobalChecker *g_globalChecker = NULL;
+IGlobalSetting *g_globalSetting = NULL;
 
 
 #ifdef _DEBUG
@@ -41,7 +41,7 @@ CMainUIApp theApp;
 BOOL CMainUIApp::InitInstance()
 {
 	CoInitialize(NULL);
-	HRESULT hr = CoCreateInstance(CLSID_GlobalChecker, NULL, CLSCTX_LOCAL_SERVER, IID_IGlobalChecker, (LPVOID*)&g_globalChecker);
+	HRESULT hr = CoCreateInstance(CLSID_GlobalSetting, NULL, CLSCTX_LOCAL_SERVER, IID_IGlobalSetting, (LPVOID*)&g_globalSetting);
 	if (FAILED(hr)) {
 		AfxMessageBox("初始化系统服务失败..");
 		return FALSE;
@@ -67,15 +67,9 @@ BOOL CMainUIApp::InitInstance()
 	CMainUIDlg dlg;
 	m_pMainWnd = &dlg;
 	INT_PTR nResponse = dlg.DoModal();
-	if (nResponse == IDOK)
-	{
-		// TODO: 在此放置处理何时用“确定”来关闭
-		//对话框的代码
+	if (nResponse == IDOK) 	{
 	}
-	else if (nResponse == IDCANCEL)
-	{
-		// TODO: 在此放置处理何时用“取消”来关闭
-		//对话框的代码
+	else if (nResponse == IDCANCEL) 	{
 	}
 
 	// 由于对话框已关闭，所以将返回 FALSE 以便退出应用程序，

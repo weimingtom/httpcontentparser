@@ -119,9 +119,6 @@ copy .\httppacket.h ..\..\include\utility
 				RelativePath=".\FileMapping.cpp">
 			</File>
 			<File
-				RelativePath=".\HttpContentChecker.cpp">
-			</File>
-			<File
 				RelativePath=".\HttpDataExtractor.cpp">
 			</File>
 			<File
@@ -166,9 +163,6 @@ copy .\httppacket.h ..\..\include\utility
 			</File>
 			<File
 				RelativePath=".\FileMapping.h">
-			</File>
-			<File
-				RelativePath=".\HttpContentChecker.h">
 			</File>
 			<File
 				RelativePath=".\HttpDataExtractor.h">

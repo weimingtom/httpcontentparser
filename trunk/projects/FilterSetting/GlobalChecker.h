@@ -38,19 +38,10 @@ END_COM_MAP()
 	}
 
 public:
-	// Ôö¼Ó
-	STDMETHOD(addBlackDNS)(BSTR dns);
-	STDMETHOD(addWhiteDNS)(BSTR dns);
-	STDMETHOD(removeBlackDNS)(BSTR blackDNS);
-	STDMETHOD(removeWhiteDNS)(BSTR whiteDNS);
-
-	STDMETHOD(enableDNSCheck)(VARIANT_BOOL enable);
-
-	STDMETHOD(showImage)(VARIANT_BOOL* showed);
-	STDMETHOD(checkImage)(int type, VARIANT_BOOL* checked);
-	STDMETHOD(enableImageCheck)(int type, VARIANT_BOOL check);
-	STDMETHOD(enableShowImage)(VARIANT_BOOL show);
 	STDMETHOD(checkDNS)(BSTR dns, VARIANT_BOOL* enabled);
+	STDMETHOD(checkContent)(LONG type, CHAR data[ ], LONG num, VARIANT_BOOL* passed);
+	STDMETHOD(needCheck)(LONG type, VARIANT_BOOL* needed);
+	STDMETHOD(checkImage)(LONG type, LONG* action_code);
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(GlobalChecker), CGlobalChecker)

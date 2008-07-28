@@ -58,7 +58,8 @@
 				Description="执行注册"
 				CommandLine="&quot;$(TargetPath)&quot; /RegServer
 copy .\FilterSetting_i.c ..\..\include\com
-copy .\filtersetting.h ..\..\include\com"/>
+copy .\filtersetting.h ..\..\include\com
+"/>
 			<Tool
 				Name="VCPreBuildEventTool"/>
 			<Tool
@@ -124,7 +125,8 @@ copy .\filtersetting.h ..\..\include\com"/>
 				Description="执行注册"
 				CommandLine="&quot;$(TargetPath)&quot; /RegServer
 copy .\FilterSetting_i.c ..\..\include\com
-copy .\filtersetting.h ..\..\include\com"/>
+copy .\filtersetting.h ..\..\include\com
+"/>
 			<Tool
 				Name="VCPreBuildEventTool"/>
 			<Tool
@@ -160,9 +162,6 @@ copy .\filtersetting.h ..\..\include\com"/>
 				RelativePath=".\FilterSetting.idl">
 			</File>
 			<File
-				RelativePath=".\GlobalChecker.cpp">
-			</File>
-			<File
 				RelativePath=".\stdafx.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
@@ -182,9 +181,6 @@ copy .\filtersetting.h ..\..\include\com"/>
 			Name="头文件"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
-			<File
-				RelativePath=".\GlobalChecker.h">
-			</File>
 			<File
 				RelativePath=".\globalvariable.h">
 			</File>
@@ -208,6 +204,9 @@ copy .\filtersetting.h ..\..\include\com"/>
 			<File
 				RelativePath=".\GlobalChecker.rgs">
 			</File>
+			<File
+				RelativePath=".\GlobalSetting.rgs">
+			</File>
 		</Filter>
 		<Filter
 			Name="生成的文件"
@@ -226,6 +225,26 @@ copy .\filtersetting.h ..\..\include\com"/>
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
+			</File>
+		</Filter>
+		<Filter
+			Name="setting"
+			Filter="">
+			<File
+				RelativePath=".\GlobalSetting.cpp">
+			</File>
+			<File
+				RelativePath=".\GlobalSetting.h">
+			</File>
+		</Filter>
+		<Filter
+			Name="checker"
+			Filter="">
+			<File
+				RelativePath=".\GlobalChecker.cpp">
+			</File>
+			<File
+				RelativePath=".\GlobalChecker.h">
 			</File>
 		</Filter>
 		<File
