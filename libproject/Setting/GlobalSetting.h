@@ -5,9 +5,11 @@
 
 class DNSCheck;
 class DNSList;
-class ImageCheck;
+class ImageSetting;
 
+// class GlobalSetting
 // 负责对所有包进行检测是否应该通过
+// 这个类在COM组件中是哟个
 class GlobalSetting {
 public:
 	GlobalSetting(void);
@@ -37,7 +39,7 @@ private:
 	bool global_enable_; // 全局
 
 	DNSCheck	*dns_check_;
-	ImageCheck  *image_check_;
+	ImageSetting  *image_check_;
 	DNSList		* dns_list_;
 };
 

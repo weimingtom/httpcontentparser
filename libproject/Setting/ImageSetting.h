@@ -6,13 +6,13 @@
 
 class DNSList;
 
-// ImageCheck只检测"检测图片的规则， 对图片内容规则的检测
+// ImageSetting只检测"检测图片的规则， 对图片内容规则的检测
 // 我们直接放到SPI当中进行“
 // 这样可以避免数据的传输
-class ImageCheck {
+class ImageSetting {
 public:
-	ImageCheck(const DNSList *dns_list);
-	~ImageCheck(void);
+	ImageSetting(const DNSList *dns_list);
+	~ImageSetting(void);
 
 public:
 	void enableShowImage(const bool showed);
@@ -31,7 +31,7 @@ private:
 	int max_size_, min_size_;
 
 	const DNSList *dns_list_;
-	ImageCheck(void);
+	ImageSetting(void);
 };
 
 #endif  // _SETTING_IMAGE_CHECK_H__

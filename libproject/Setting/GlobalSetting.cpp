@@ -2,7 +2,7 @@
 #include ".\globalsetting.h"
 #include ".\dnscheck.h"
 #include ".\dnslist.h"
-#include ".\imagecheck.h"
+#include ".\imagesetting.h"
 
 #include <assert.h>
 
@@ -26,7 +26,7 @@ bool GlobalSetting::initialize() {
 	dns_check_ = &dnschecker;
 
 	assert ( image_check_ == NULL);
-	static ImageCheck imagechecker(dns_list_);
+	static ImageSetting imagechecker(dns_list_);
 	image_check_ = &imagechecker;
 
 	return false;

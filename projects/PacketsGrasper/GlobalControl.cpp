@@ -5,6 +5,15 @@
 #include <com\filtersetting.h>
 #include <com\filtersetting_i.c>
 
+// class COMinititalize
+// 可以使COM在一个函数范围内进行自动销毁
+class COMinititalize {
+public:
+	COMinititalize() {CoInitialize(NULL);}
+	~COMinititalize() {CoUninitialize();}
+};
+
+
 //===============================
 // 静态成员
 GlobalControl * GlobalControl::pInstance_ = NULL;
@@ -32,10 +41,37 @@ void GlobalControl::Update() {
 }
 
 bool GlobalControl::checkHTTPHeader(HTTP_RESPONSE_HEADER *header) {
+	try {
+		IGlobalSetting *g_globalChecker;
+
+		CoInitialize(NULL);
+		HRESULT hr = CoCreateInstance(CLSID_GlobalSetting, NULL, CLSCTX_LOCAL_SERVER, IID_IGlobalSetting, (LPVOID*)&g_globalChecker);
+		if (FAILED(hr)) {
+			return false;
+		}
+
+		CoUninitialize();
+
+	} catch (_com_error &e) {
+		CoUninitialize();
+	}
 	return true;
 }
 
 bool GlobalControl::checkHTTPContent(HTTPPacket *packet) {
+	try {
+		IGlobalChecker *g_globalChecker;
+
+		CoInitialize(NULL);
+		HRESULT hr = CoCreateInstance(CLSID_GlobalChecker, NULL, CLSCTX_LOCAL_SERVER, IID_IGlobalChecker, (LPVOID*)&g_globalChecker);
+		if (FAILED(hr)) {
+			return false;
+		}
+
+		CoUninitialize();
+	} catch (_com_error &e) {
+		CoUninitialize();
+	}
 	return true;
 }
 
@@ -55,6 +91,7 @@ bool checkDNS(const std::string &dns_name) {
 
 		return enable;
 	} catch (_com_error &e) {
+		CoUninitialize();
 	}
 	return true;
 }

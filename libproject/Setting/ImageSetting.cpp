@@ -1,16 +1,16 @@
 #include "StdAfx.h"
-#include ".\imagecheck.h"
+#include ".\imagesetting.h"
 #include ".\dnslist.h"
 #include <assert.h>
 #include <windows.h>
 #include <utility/httppacket.h>
 
 
-ImageCheck::ImageCheck(void) {
+ImageSetting::ImageSetting(void) {
 	assert(false);
 }
 
-ImageCheck::ImageCheck(const DNSList *dns_list) : dns_list_(dns_list) {
+ImageSetting::ImageSetting(const DNSList *dns_list) : dns_list_(dns_list) {
 	show_image_ = true;
 	check_png_ = true;
 	check_jpeg_ = true;
@@ -19,19 +19,19 @@ ImageCheck::ImageCheck(const DNSList *dns_list) : dns_list_(dns_list) {
 	
 }
 
-ImageCheck::~ImageCheck(void) {
+ImageSetting::~ImageSetting(void) {
 }
 
 //  «∑Ò”¶∏√ºÏ≤‚Õº∆¨
-void ImageCheck::enableShowImage(const bool showed) {
+void ImageSetting::enableShowImage(const bool showed) {
 	show_image_ = showed;
 }
 
-bool ImageCheck::showImage() const {
+bool ImageSetting::showImage() const {
 	return show_image_;
 }
 
-bool ImageCheck::needCheck(const int type) const {
+bool ImageSetting::needCheck(const int type) const {
 	switch (type) {
 		//case HTTP_RESPONSE_HEADER::CO:
 		//	check_bmp_ = enable;
@@ -46,9 +46,10 @@ bool ImageCheck::needCheck(const int type) const {
 			assert(false);
 			break;
 	}
+	return false;
 }
 
-void ImageCheck::enableCheck(const int type, const bool enable) {
+void ImageSetting::enableCheck(const int type, const bool enable) {
 	switch (type) {
 		//case HTTP_RESPONSE_HEADER::CO:
 		//	check_bmp_ = enable;

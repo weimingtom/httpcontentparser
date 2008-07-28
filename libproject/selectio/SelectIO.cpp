@@ -1,7 +1,6 @@
 #include "StdAfx.h"
 #include <utility\HTTPPacket.h>
 #include <utility\fd_set_utility.h>
-#include <utility\HttpContentChecker.h>
 #include ".\selectio.h"
 #include <logdebug.h>
 
@@ -84,10 +83,12 @@ int CSelectIO::prerecv(SOCKET s, LPWSABUF lpBuffers,
 
 	// 验证包是否合法，如果不合法, 则删除包，并填充
 	// 填充一个不可达包
-	//if ( packet->getHeader()->getContentType() == HTTP_RESPONSE_HEADER::CONTYPE_JPG) {
-	//	removeCompletedPacket(s, packet);
-	//	return 1;
-	//}
+	if ( packet->getHeader()->getContentType() == HTTP_RESPONSE_HEADER::CONTYPE_JPG ||
+		packet->getHeader()->getContentType() == HTTP_RESPONSE_HEADER::CONTYPE_PNG ||
+		packet->getHeader()->getContentType() == HTTP_RESPONSE_HEADER::CONTYPE_GIF) {
+		removeCompletedPacket(s, packet);
+		return 1;
+	}
 
 	// 获取一个
 	ProtocolPacket<HTTP_PACKET_SIZE> * raw_packet= packet->getRawPacket();
@@ -214,12 +215,6 @@ int CSelectIO::postselect(fd_set *readfds) {
 	return 0;
 }
 
-/////////////////////////////////////////////
-// 检查包是否符合规则
-bool CSelectIO::checkWholePacket(HTTPPacket * packet) {
-	HttpContentChecker * checker = HttpContentChecker::getChecker(packet->getHeader());
-	return checker->checkHTTPContent(packet);
-}
 /////////////////////////////////////////////
 // 处理正在接受的IO
 

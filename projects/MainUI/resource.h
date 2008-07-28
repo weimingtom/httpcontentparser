@@ -14,7 +14,8 @@
 #define IDD_DLG_DNS_RULE                134
 #define IDD_DLG_SEARCH_RULE             135
 #define IDD_DLG_CONTENT                 136
-
+#define IDD_DIALOG1                     137
+#define IDD_DLG_BLACKWORD               137
 #define IDC_TREE_NAVIG                  1000
 #define IDS_TREE_ROOT                   1001
 #define IDS_TREE_DNS_RULE               1002
@@ -39,7 +40,6 @@
 #define IDC_CHK_SHOWIMAGE               1009
 #define IDS_DNS_BLACK_LIST              1009
 #define IDS_DNS_WHITE_LIST              1010
-
 #define IDC_EDIT1                       4011
 #define IDC_EDIT2                       4012
 #define IDC_POSITION_LEFT               8001
@@ -49,7 +49,7 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        132
+#define _APS_NEXT_RESOURCE_VALUE        138
 #define _APS_NEXT_COMMAND_VALUE         32771
 #define _APS_NEXT_CONTROL_VALUE         1014
 #define _APS_NEXT_SYMED_VALUE           101

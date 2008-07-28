@@ -37,13 +37,13 @@ void CDlgImageRule::DoDataExchange(CDataExchange* pDX)
 void CDlgImageRule::OnApply() {
 	UpdateData(TRUE);
 
-	ASSERT (g_globalChecker != NULL);
+	ASSERT (g_globalSetting != NULL);
 
-	g_globalChecker->enableShowImage(m_bShowImage == true ? VARIANT_TRUE : VARIANT_FALSE);
+	g_globalSetting->enableShowImage(m_bShowImage == true ? VARIANT_TRUE : VARIANT_FALSE);
 
-	g_globalChecker->enableImageCheck(HTTP_RESPONSE_HEADER::CONTYPE_GIF, m_bCheckImage == true ? VARIANT_TRUE : VARIANT_FALSE);
-	g_globalChecker->enableImageCheck(HTTP_RESPONSE_HEADER::CONTYPE_JPG, m_bCheckImage == true ? VARIANT_TRUE : VARIANT_FALSE);
-	g_globalChecker->enableImageCheck(HTTP_RESPONSE_HEADER::CONTYPE_PNG, m_bCheckImage == true ? VARIANT_TRUE : VARIANT_FALSE);
+	g_globalSetting->enableImageCheck(HTTP_RESPONSE_HEADER::CONTYPE_GIF, m_bCheckImage == true ? VARIANT_TRUE : VARIANT_FALSE);
+	g_globalSetting->enableImageCheck(HTTP_RESPONSE_HEADER::CONTYPE_JPG, m_bCheckImage == true ? VARIANT_TRUE : VARIANT_FALSE);
+	g_globalSetting->enableImageCheck(HTTP_RESPONSE_HEADER::CONTYPE_PNG, m_bCheckImage == true ? VARIANT_TRUE : VARIANT_FALSE);
 }
 BEGIN_MESSAGE_MAP(CDlgImageRule, CDialog)
 END_MESSAGE_MAP()
