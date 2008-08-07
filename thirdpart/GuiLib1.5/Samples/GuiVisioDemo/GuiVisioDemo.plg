@@ -1,0 +1,39 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: GuiVisioDemo - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\DOCUME~1\fcampos\LOCALS~1\Temp\RSPB5.tmp" with contents
+[
+/nologo /MD /W3 /GX /O2 /I "..\..\GuiLib" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /Fp"Release/GuiVisioDemo.pch" /Yu"stdafx.h" /Fo"Release/" /Fd"Release/" /FD /c 
+"C:\Proyectos\GuiLib1.5\Samples\GuiVisioDemo\MainFrm.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\fcampos\LOCALS~1\Temp\RSPB5.tmp" 
+Creating temporary file "C:\DOCUME~1\fcampos\LOCALS~1\Temp\RSPB6.tmp" with contents
+[
+/nologo /subsystem:windows /incremental:no /pdb:"..\..\bin/GuiVisioDemo.pdb" /machine:I386 /out:"..\..\bin/GuiVisioDemo.exe" /libpath:"..\..\bin" 
+.\Release\GuiFolderVisio.obj
+.\Release\GuiVisioDemo.obj
+.\Release\GuiVisioDemoDoc.obj
+.\Release\GuiVisioDemoView.obj
+.\Release\MainFrm.obj
+.\Release\StdAfx.obj
+.\Release\GuiVisioDemo.res
+\Proyectos\GuiLib1.5\bin\GuiTk115.lib
+]
+Creating command line "link.exe @C:\DOCUME~1\fcampos\LOCALS~1\Temp\RSPB6.tmp"
+<h3>Output Window</h3>
+Compiling...
+MainFrm.cpp
+Linking...
+
+
+
+<h3>Results</h3>
+GuiVisioDemo.exe - 0 error(s), 0 warning(s)
+</pre>
+</body>
+</html>

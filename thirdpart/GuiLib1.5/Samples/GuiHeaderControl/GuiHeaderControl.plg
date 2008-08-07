@@ -1,0 +1,28 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: GuiHeaderControl - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\DOCUME~1\fcampos\LOCALS~1\Temp\RSPA2.tmp" with contents
+[
+/nologo /subsystem:windows /incremental:no /pdb:"..\..\bin/GuiHeaderControl.pdb" /machine:I386 /out:"..\..\bin/GuiHeaderControl.exe" /libpath:"..\..\bin" 
+.\Release\GuiHeaderControl.obj
+.\Release\GuiHeaderControlDlg.obj
+.\Release\StdAfx.obj
+.\Release\GuiHeaderControl.res
+\Proyectos\GuiLib1.5\bin\GuiTk115.lib
+]
+Creating command line "link.exe @C:\DOCUME~1\fcampos\LOCALS~1\Temp\RSPA2.tmp"
+<h3>Output Window</h3>
+Linking...
+
+
+
+<h3>Results</h3>
+GuiHeaderControl.exe - 0 error(s), 0 warning(s)
+</pre>
+</body>
+</html>

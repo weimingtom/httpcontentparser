@@ -43,26 +43,6 @@ END_MESSAGE_MAP()
 
 
 // CMainUIDlg 对话框
-
-namespace {
-enum {
-	INDEX_IMAGE_RULE,
-	INDEX_DNS_RULE,
-	INDEX_SEARCH_RULE,
-	INDEX_ONLINE_HOUR,
-	INDEX_HELP,
-	INDEX_ABOUT
-};
-const DWORD INDEX[] = {
-	INDEX_IMAGE_RULE,
-	INDEX_DNS_RULE,
-	INDEX_SEARCH_RULE,
-	INDEX_ONLINE_HOUR,
-	INDEX_HELP,
-	INDEX_ABOUT
-};
-};
-
 CMainUIDlg::CMainUIDlg(CWnd* pParent /*=NULL*/)
 	: CDialog(CMainUIDlg::IDD, pParent)
 {
@@ -87,6 +67,7 @@ BEGIN_MESSAGE_MAP(CMainUIDlg, CDialog)
 END_MESSAGE_MAP()
 
 
+
 void CMainUIDlg::InitTreeNodes() {
 	// m_treeNavigation.DeleteAllItems();
 
@@ -96,34 +77,23 @@ void CMainUIDlg::InitTreeNodes() {
 	HTREEITEM hRoot = m_treeNavigation.InsertItem(strRoot, TVI_ROOT, TVI_LAST);
 	m_treeNavigation.SetItemData(hRoot, -1);
 
+	setRulesDlg();
 
 	HTREEITEM hItem;
 	CString strItem;
-	// 注意顺序有关系的
-	strItem.LoadString(IDS_TREE_IMAGE_RULE);
-	hItem = m_treeNavigation.InsertItem(strItem, hRoot);
-	m_treeNavigation.SetItemData(hItem, INDEX_IMAGE_RULE);
-	m_treeNavigation.SelectItem(hItem);
-
-	strItem.LoadString(IDS_TREE_DNS_RULE); 
-	hItem = m_treeNavigation.InsertItem(strItem, hRoot);
-	m_treeNavigation.SetItemData(hItem, INDEX_DNS_RULE);
-
-	strItem.LoadString(IDS_TREE_SEARCH_RULE); 
-	hItem = m_treeNavigation.InsertItem(strItem, hRoot);
-	m_treeNavigation.SetItemData(hItem, INDEX_SEARCH_RULE);
+	// 规则对话框
 
 	strItem.LoadString(IDS_TREE_ONLINE_HOUR);
 	hItem = m_treeNavigation.InsertItem(strItem, hRoot);
-	m_treeNavigation.SetItemData(hItem, INDEX_ONLINE_HOUR);
+	m_treeNavigation.SetItemData(hItem, IDS_TREE_ONLINE_HOUR);
 
 	strItem.LoadString(IDS_TREE_HELP);
 	hItem = m_treeNavigation.InsertItem(strItem, hRoot);
-	m_treeNavigation.SetItemData(hItem, INDEX_HELP);
+	m_treeNavigation.SetItemData(hItem, IDS_TREE_HELP);
 
 	strItem.LoadString(IDS_TREE_ABOUT);
 	hItem = m_treeNavigation.InsertItem(strItem, hRoot);
-	m_treeNavigation.SetItemData(hItem, INDEX_ABOUT);
+	m_treeNavigation.SetItemData(hItem, IDS_TREE_ABOUT);
 
 
 	m_treeNavigation.Expand(hRoot, TVE_EXPAND);
@@ -135,7 +105,9 @@ void CMainUIDlg::showDlg() {
 	pWndLeft->GetWindowRect(&rect);
 	ScreenToClient(&rect);
 	m_curDlg->SetWindowPos(&wndTop, rect.left, rect.top, rect.Width(), rect.Height(), SWP_SHOWWINDOW);
+	m_curDlg->OnShow();
 }
+
 void CMainUIDlg::initDlgs() {
 	m_dlgImageRules.Create(CDlgImageRule::IDD, this);
 	m_dlgHelp.Create(CDlgHelp::IDD, this);
@@ -143,9 +115,33 @@ void CMainUIDlg::initDlgs() {
 	m_dlgSearchRule.Create(CDlgSearchRule::IDD, this);
 	m_dlgDnsRule.Create(CDlgDNSRule::IDD, this);
 	m_dlgAbout.Create(CDlgAbout::IDD, this);
-
-	m_curDlg = &m_dlgImageRules;
+	m_lev1Rules.Create(CLev1DlgRules::IDD, this);
+	m_curDlg = &m_lev1Rules;
 	showDlg();
+}
+
+void CMainUIDlg::setRulesDlg() {
+	CString strItem;
+	strItem.LoadString(IDS_TREE_LEV1_RULES);
+	HTREEITEM hItemRules = m_treeNavigation.InsertItem(strItem, m_treeNavigation.GetRootItem());
+	m_treeNavigation.SetItemData(hItemRules, IDS_TREE_LEV1_RULES);
+
+	HTREEITEM hItem;
+	strItem.LoadString(IDS_TREE_IMAGE_RULE);
+	hItem = m_treeNavigation.InsertItem(strItem, hItemRules);
+	m_treeNavigation.SetItemData(hItem, IDS_TREE_IMAGE_RULE);
+	
+
+	strItem.LoadString(IDS_TREE_DNS_RULE); 
+	hItem = m_treeNavigation.InsertItem(strItem, hItemRules);
+	m_treeNavigation.SetItemData(hItem, IDS_TREE_DNS_RULE);
+	setCurDlg(IDS_TREE_DNS_RULE);
+
+	strItem.LoadString(IDS_TREE_SEARCH_RULE); 
+	hItem = m_treeNavigation.InsertItem(strItem, hItemRules);
+	m_treeNavigation.SetItemData(hItem, IDS_TREE_SEARCH_RULE);
+
+	m_treeNavigation.SelectItem(hItemRules);
 }
 void CMainUIDlg::setCurDlg(const DWORD item) {
 	if (item == -1)  // 如果是根节点
@@ -154,28 +150,35 @@ void CMainUIDlg::setCurDlg(const DWORD item) {
 	ASSERT (m_curDlg != NULL);
 	m_curDlg->ShowWindow(SW_HIDE);
 	switch (item) {
-		case INDEX_IMAGE_RULE:
+		case IDS_TREE_LEV1_RULES:
+			m_curDlg = &m_lev1Rules;
+			break;
+		case IDS_TREE_IMAGE_RULE:
 			m_curDlg = &m_dlgImageRules;
 			break;
-		case INDEX_DNS_RULE:
+		case IDS_TREE_DNS_RULE:
 			m_curDlg = &m_dlgDnsRule;
 			break;
-		case INDEX_SEARCH_RULE:
+		case IDS_TREE_SEARCH_RULE:
 			m_curDlg = &m_dlgSearchRule;
 			break;
-		case INDEX_ONLINE_HOUR:
+		case IDS_TREE_ONLINE_HOUR:
 			m_curDlg = &m_dlgOnlineHour;
 			break;
-		case INDEX_HELP:
+		case IDS_TREE_HELP:
 			m_curDlg = &m_dlgHelp;
 			break;
-		case INDEX_ABOUT:
+		case IDS_TREE_ABOUT:
 			m_curDlg = &m_dlgAbout;
 			break;
 		default:
 			ASSERT(false);
 			break;
 	}
+	CString strItem;
+	strItem.LoadString(item);
+	GetDlgItem(IDC_RIGHT_TITLE)->SetWindowText(strItem);
+
 	showDlg();
 }
 // CMainUIDlg 消息处理程序
@@ -189,8 +192,10 @@ void CMainUIDlg::OnNMClickTreeNavig(NMHDR *pNMHDR, LRESULT *pResult)
 BOOL CMainUIDlg::OnInitDialog()
 {
 	CDialog::OnInitDialog();
+	
 
-	// 将\“关于...\”菜单项添加到系统菜单中。
+	// 设置字体
+	setControlsFonts();
 
 	// IDM_ABOUTBOX 必须在系统命令范围内。
 	ASSERT((IDM_ABOUTBOX & 0xFFF0) == IDM_ABOUTBOX);
@@ -219,6 +224,22 @@ BOOL CMainUIDlg::OnInitDialog()
 	return TRUE;  // 除非设置了控件的焦点，否则返回 TRUE
 }
 
+void CMainUIDlg::setControlsFonts() {
+	LOGFONT lf;  
+	memset(&lf, 0, sizeof(LOGFONT));
+	lf.lfHeight = 14; 
+	lf.lfWeight = FW_LIGHT;
+	strcpy(lf.lfFaceName, "宋体");
+	m_fontTree.CreateFontIndirect(&lf); 
+	GetDlgItem(IDC_TREE_NAVIG)->SetFont(&m_fontTree);
+
+	memset(&lf, 0, sizeof(LOGFONT));
+	strcpy(lf.lfFaceName, "宋体");
+	lf.lfWeight = FW_BOLD;
+	lf.lfHeight = 18;
+	m_fontTitle.CreateFontIndirect(&lf); 
+	GetDlgItem(IDC_RIGHT_TITLE)->SetFont(&m_fontTitle);
+}
 void CMainUIDlg::OnSysCommand(UINT nID, LPARAM lParam)
 {
 	if ((nID & 0xFFF0) == IDM_ABOUTBOX)

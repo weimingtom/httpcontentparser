@@ -1,0 +1,32 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: CGuiAccess - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\DOCUME~1\fcampos\LOCALS~1\Temp\RSP8E.tmp" with contents
+[
+/nologo /subsystem:windows /incremental:no /pdb:"..\..\bin/CGuiAccess.pdb" /machine:I386 /out:"..\..\bin/CGuiAccess.exe" /libpath:"..\..\bin" 
+.\Release\CGuiAccess.obj
+.\Release\CGuiAccessDoc.obj
+.\Release\CGuiAccessView.obj
+.\Release\DialSplitter.obj
+.\Release\GuiServerExplorer.obj
+.\Release\MainFrm.obj
+.\Release\StdAfx.obj
+.\Release\CGuiAccess.res
+\Proyectos\GuiLib1.5\bin\GuiTk115.lib
+]
+Creating command line "link.exe @C:\DOCUME~1\fcampos\LOCALS~1\Temp\RSP8E.tmp"
+<h3>Output Window</h3>
+Linking...
+
+
+
+<h3>Results</h3>
+CGuiAccess.exe - 0 error(s), 0 warning(s)
+</pre>
+</body>
+</html>

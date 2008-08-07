@@ -21,6 +21,8 @@ CDlgAbout::~CDlgAbout()
 void CDlgAbout::OnApply() {
 }
 
+void CDlgAbout::OnShow() {
+}
 
 void CDlgAbout::DoDataExchange(CDataExchange* pDX)
 {

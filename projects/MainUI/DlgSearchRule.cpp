@@ -21,10 +21,14 @@ CDlgSearchRule::~CDlgSearchRule()
 void CDlgSearchRule::OnApply() {
 }
 
+void CDlgSearchRule::OnShow() {
+}
+
 
 void CDlgSearchRule::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
+	DDX_Control(pDX, IDC_SEARCH_LIST, ListBox);
 }
 
 
