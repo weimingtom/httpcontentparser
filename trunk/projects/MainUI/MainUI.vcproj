@@ -133,9 +133,6 @@
 				RelativePath=".\MainUI.cpp">
 			</File>
 			<File
-				RelativePath=".\MainUIDlg.cpp">
-			</File>
-			<File
 				RelativePath=".\stdafx.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
@@ -165,9 +162,6 @@
 				RelativePath=".\MainUI.h">
 			</File>
 			<File
-				RelativePath=".\MainUIDlg.h">
-			</File>
-			<File
 				RelativePath=".\Resource.h">
 			</File>
 			<File
@@ -186,6 +180,9 @@
 			</File>
 			<File
 				RelativePath=".\res\MainUI.rc2">
+			</File>
+			<File
+				RelativePath=".\res\optionmarks.bmp">
 			</File>
 		</Filter>
 		<Filter
@@ -226,6 +223,26 @@
 			</File>
 			<File
 				RelativePath=".\DlgSearchRule.h">
+			</File>
+		</Filter>
+		<Filter
+			Name="maindlg"
+			Filter="">
+			<File
+				RelativePath=".\MainUIDlg.cpp">
+			</File>
+			<File
+				RelativePath=".\MainUIDlg.h">
+			</File>
+		</Filter>
+		<Filter
+			Name="ruledlg"
+			Filter="">
+			<File
+				RelativePath=".\Lev1DlgRules.cpp">
+			</File>
+			<File
+				RelativePath=".\Lev1DlgRules.h">
 			</File>
 		</Filter>
 		<File

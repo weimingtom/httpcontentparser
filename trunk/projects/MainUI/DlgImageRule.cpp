@@ -6,6 +6,7 @@
 #include "DlgImageRule.h"
 #include "globalvariable.h"
 #include <utility\HTTPPacket.h>
+#include ".\dlgimagerule.h"
 
 // CDlgImageRule 对话框
 
@@ -32,6 +33,13 @@ void CDlgImageRule::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_CHK_PNG, m_chkPNG);
 	DDX_Check(pDX, IDC_CHK_SHOWIMAGE, m_bShowImage);
 	DDX_Check(pDX, IDC_CHK_IMAGE, m_bCheckImage);
+	DDX_Control(pDX, IDC_STA_IMAGE_CHECK, m_staImageCheck);
+	DDX_Control(pDX, IDC_STA_IMAGETYPE, m_staImageType);
+	DDX_Control(pDX, IDC_STA_IMAGESIZE, m_staImageSize);
+	DDX_Control(pDX, IDC_EDIT2, m_editImageScale);
+}
+
+void CDlgImageRule::OnShow() {
 }
 
 void CDlgImageRule::OnApply() {
@@ -50,3 +58,14 @@ END_MESSAGE_MAP()
 
 
 // CDlgImageRule 消息处理程序
+
+BOOL CDlgImageRule::OnInitDialog() 
+{
+	CBaseDlg::OnInitDialog();
+	
+	m_chkImage.SetWindowText(" Check Image");
+	m_chkShowImage.SetWindowText(" Show Image");
+	m_editImageScale.SetMask("Low Bound:#### ---- ####:Upper Bound","Low Bound:____ ---- ____:Upper Bound",CGuiEdit::MASK_FREEMASK);
+	return TRUE;
+	// 异常: OCX 属性页应返回 FALSE
+}

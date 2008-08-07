@@ -10,6 +10,7 @@
 #include "dlgabout.h"
 #include "dlgdnsrule.h"
 #include "dlgsearchrule.h"
+#include "Lev1DlgRules.h"
 #include ".\basedlg.h"
 
 // CMainUIDlg 对话框
@@ -35,6 +36,9 @@ protected:
 	afx_msg void OnPaint();
 	afx_msg HCURSOR OnQueryDragIcon();
 	DECLARE_MESSAGE_MAP()
+
+	void setControlsFonts();
+	void setRulesDlg();
 private:
 	CTreeCtrl m_treeNavigation;
 	void InitTreeNodes();		// 初始化树的节点
@@ -50,8 +54,13 @@ private:
 	CDlgDNSRule m_dlgDnsRule;
 	CDlgAbout m_dlgAbout;
 	CBaseDlg	*m_curDlg;
+	CLev1DlgRules m_lev1Rules;
 
 	CRect    m_rectRight;
+
+	// fonts
+	CFont	m_fontTree;
+	CFont	m_fontTitle;
 public:
 	afx_msg void OnNMClickTreeNavig(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnTvnSelchangedTreeNavig(NMHDR *pNMHDR, LRESULT *pResult);

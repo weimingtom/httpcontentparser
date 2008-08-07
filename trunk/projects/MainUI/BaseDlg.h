@@ -7,6 +7,7 @@ public:
 	~CBaseDlg(void);
 
 	virtual void OnApply() = 0;
+	virtual void OnShow() = 0;
 private:
 	CBaseDlg() {}
 };

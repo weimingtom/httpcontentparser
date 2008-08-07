@@ -1,5 +1,7 @@
 #pragma once
 #include ".\basedlg.h"
+#include <Guilib1.5\GuiListEdit.h>
+#include <Guilib1.5\GuiDropDownEdit.h>
 
 // CDlgSearchRule 对话框
 
@@ -15,8 +17,10 @@ public:
 	enum { IDD = IDD_DLG_SEARCH_RULE };
 
 	virtual void OnApply();
+	virtual void OnShow();
 protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 支持
+	CGuiListEdit ListBox;
 
+	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 支持
 	DECLARE_MESSAGE_MAP()
 };

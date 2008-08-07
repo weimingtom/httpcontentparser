@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "MainUI.h"
 #include "DlgHelp.h"
+#include ".\dlghelp.h"
 
 
 // CHelpDlg 对话框
@@ -20,6 +21,10 @@ CDlgHelp::~CDlgHelp()
 
 void CDlgHelp::OnApply() {
 }
+
+void CDlgHelp::OnShow() {
+}
+
 void CDlgHelp::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
@@ -31,3 +36,11 @@ END_MESSAGE_MAP()
 
 
 // CDlgHelp 消息处理程序
+
+BOOL CDlgHelp::OnInitDialog()
+{
+	CBaseDlg::OnInitDialog();
+
+	return TRUE;  // return TRUE unless you set the focus to a control
+	// 异常: OCX 属性页应返回 FALSE
+}

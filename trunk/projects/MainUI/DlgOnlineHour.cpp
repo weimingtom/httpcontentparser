@@ -21,6 +21,9 @@ CDlgOnlineHour::~CDlgOnlineHour()
 void CDlgOnlineHour::OnApply() {
 }
 
+void CDlgOnlineHour::OnShow() {
+}
+
 
 void CDlgOnlineHour::DoDataExchange(CDataExchange* pDX)
 {
