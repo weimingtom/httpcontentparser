@@ -27,6 +27,7 @@
 #include "GuiContainer.h"
 #include "GuiMiniTool.h"
 #include "GuiNormalButton.h"
+#include "validate.h"
 
 class GUILIBDLLEXPORT CGuiListEdit : public CStatic
 {
@@ -42,15 +43,18 @@ private:
 	BOOL			m_bChange;
 public:
 	void Delete();
-	void Insert();
+	void Insert(CString &str=CString(""));
+	void Edit();
 	void Up();
 	void Down();
+
 	void SetStyle(Border border);
 	CString GetText(int nItem);
 	void AddItem(CString m_szCad);
 	int GetNumItem();
 	CGuiNormalButton m_toolBtn;
 	CListCtrl* GetListCtrl();
+	void EditItem(const int nItem, const CString &itemText);
 public:
 	CGuiListEdit();
 	virtual ~CGuiListEdit();
@@ -59,12 +63,18 @@ protected:
 	DECLARE_MESSAGE_MAP()
 	virtual void PreSubclassWindow();
 public:
+	afx_msg void OnInsert();
 	afx_msg void OnPaint();
+	
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg void OnEndlabeleditList(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnClickList(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnBeginlabeleditList(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnItemChanged(NMHDR *pNMHDR, LRESULT *pResult);
+protected:
+	ValidateData * validator_;
+	bool validate(const CString &str) const;
 };
 
 
