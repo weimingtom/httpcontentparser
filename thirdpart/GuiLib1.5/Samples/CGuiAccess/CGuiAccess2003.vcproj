@@ -2,8 +2,8 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="7.10"
-	Name="GuiAdoTest"
-	ProjectGUID="{BAC84E31-EEE2-4C9D-8C07-218850F2D6E5}"
+	Name="CGuiAccess"
+	ProjectGUID="{5E91771F-8279-4492-B613-3BBEF46DD8D5}"
 	SccProjectName=""
 	SccLocalPath=""
 	Keyword="MFCProj">
@@ -31,7 +31,7 @@
 				EnableFunctionLevelLinking="TRUE"
 				UsePrecompiledHeader="3"
 				PrecompiledHeaderThrough="stdafx.h"
-				PrecompiledHeaderFile=".\Release/GuiAdoTest.pch"
+				PrecompiledHeaderFile=".\Release/CGuiAccess.pch"
 				AssemblerListingLocation=".\Release/"
 				ObjectFile=".\Release/"
 				ProgramDataBaseFileName=".\Release/"
@@ -42,11 +42,11 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				OutputFile=".\..\..\bin/GuiAdoTest.exe"
+				OutputFile=".\..\..\bin/CGuiAccess.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="..\..\bin"
-				ProgramDatabaseFile=".\..\..\bin/GuiAdoTest.pdb"
+				ProgramDatabaseFile=".\..\..\bin/CGuiAccess.pdb"
 				SubSystem="2"
 				TargetMachine="1"/>
 			<Tool
@@ -55,7 +55,7 @@
 				MkTypLibCompatible="TRUE"
 				SuppressStartupBanner="TRUE"
 				TargetEnvironment="1"
-				TypeLibraryName=".\..\..\bin/GuiAdoTest.tlb"
+				TypeLibraryName=".\..\..\bin/CGuiAccess.tlb"
 				HeaderFileName=""/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
@@ -66,7 +66,7 @@
 			<Tool
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="NDEBUG"
-				Culture="1033"/>
+				Culture="9226"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
@@ -95,7 +95,7 @@
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="3"
 				PrecompiledHeaderThrough="stdafx.h"
-				PrecompiledHeaderFile=".\Debug/GuiAdoTest.pch"
+				PrecompiledHeaderFile=".\Debug/CGuiAccess.pch"
 				AssemblerListingLocation=".\Debug/"
 				ObjectFile=".\Debug/"
 				ProgramDataBaseFileName=".\Debug/"
@@ -108,12 +108,12 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				OutputFile=".\..\..\bin/GuiAdoTest.exe"
+				OutputFile="..\..\bin/CGuiAccessD.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="..\..\bin"
 				GenerateDebugInformation="TRUE"
-				ProgramDatabaseFile=".\..\..\bin/GuiAdoTest.pdb"
+				ProgramDatabaseFile=".\..\..\bin/CGuiAccessD.pdb"
 				SubSystem="2"
 				TargetMachine="1"/>
 			<Tool
@@ -122,7 +122,7 @@
 				MkTypLibCompatible="TRUE"
 				SuppressStartupBanner="TRUE"
 				TargetEnvironment="1"
-				TypeLibraryName=".\..\..\bin/GuiAdoTest.tlb"
+				TypeLibraryName=".\..\..\bin/CGuiAccess.tlb"
 				HeaderFileName=""/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
@@ -133,7 +133,7 @@
 			<Tool
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="_DEBUG"
-				Culture="1033"/>
+				Culture="9226"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
@@ -153,7 +153,7 @@
 			Name="Source Files"
 			Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat">
 			<File
-				RelativePath="GuiAdoTest.cpp">
+				RelativePath="CGuiAccess.cpp">
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
@@ -174,10 +174,94 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="GuiAdoTest.rc">
+				RelativePath="CGuiAccess.rc">
 			</File>
 			<File
-				RelativePath="GuiAdoTestDlg.cpp">
+				RelativePath="CGuiAccessDoc.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+						BasicRuntimeChecks="3"
+						BrowseInformation="1"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="CGuiAccessView.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+						BasicRuntimeChecks="3"
+						BrowseInformation="1"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="DialSplitter.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+						BasicRuntimeChecks="3"
+						BrowseInformation="1"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="GuiServerExplorer.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+						BasicRuntimeChecks="3"
+						BrowseInformation="1"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="MainFrm.cpp">
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
@@ -225,10 +309,22 @@
 			Name="Header Files"
 			Filter="h;hpp;hxx;hm;inl">
 			<File
-				RelativePath="GuiAdoTest.h">
+				RelativePath="CGuiAccess.h">
 			</File>
 			<File
-				RelativePath="GuiAdoTestDlg.h">
+				RelativePath="CGuiAccessDoc.h">
+			</File>
+			<File
+				RelativePath="CGuiAccessView.h">
+			</File>
+			<File
+				RelativePath="DialSplitter.h">
+			</File>
+			<File
+				RelativePath="GuiServerExplorer.h">
+			</File>
+			<File
+				RelativePath="MainFrm.h">
 			</File>
 			<File
 				RelativePath="Resource.h">
@@ -241,10 +337,19 @@
 			Name="Resource Files"
 			Filter="ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe">
 			<File
-				RelativePath="res\GuiAdoTest.ico">
+				RelativePath="res\bitmap1.bmp">
 			</File>
 			<File
-				RelativePath="res\GuiAdoTest.rc2">
+				RelativePath="res\CGuiAccess.ico">
+			</File>
+			<File
+				RelativePath="res\CGuiAccess.rc2">
+			</File>
+			<File
+				RelativePath="res\CGuiAccessDoc.ico">
+			</File>
+			<File
+				RelativePath="res\Toolbar.bmp">
 			</File>
 		</Filter>
 		<File

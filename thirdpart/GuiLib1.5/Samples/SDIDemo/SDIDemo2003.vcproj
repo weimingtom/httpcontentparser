@@ -1,146 +1,91 @@
 <?xml version="1.0" encoding="gb2312"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9.00"
+	Version="7.10"
 	Name="SDIDemo"
-	ProjectGUID="{FFCB63CE-5BDC-4427-BCCF-1DA6CFAC927E}"
-	Keyword="MFCProj"
-	TargetFrameworkVersion="131072"
-	>
+	ProjectGUID="{36B635D4-B0F0-4130-9F94-3A1CFF178FFE}"
+	SccProjectName=""
+	SccLocalPath=""
+	Keyword="MFCProj">
 	<Platforms>
 		<Platform
-			Name="Win32"
-		/>
+			Name="Win32"/>
 	</Platforms>
-	<ToolFiles>
-	</ToolFiles>
 	<Configurations>
 		<Configuration
 			Name="Release|Win32"
 			OutputDirectory=".\..\..\bin"
 			IntermediateDirectory=".\Release"
 			ConfigurationType="1"
-			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
 			UseOfMFC="2"
-			ATLMinimizesCRunTimeLibraryUsage="false"
-			CharacterSet="2"
-			>
-			<Tool
-				Name="VCPreBuildEventTool"
-			/>
-			<Tool
-				Name="VCCustomBuildTool"
-			/>
-			<Tool
-				Name="VCXMLDataGeneratorTool"
-			/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"
-			/>
-			<Tool
-				Name="VCMIDLTool"
-				PreprocessorDefinitions="NDEBUG"
-				MkTypLibCompatible="true"
-				SuppressStartupBanner="true"
-				TargetEnvironment="1"
-				TypeLibraryName=".\..\..\bin/SDIDemo.tlb"
-				HeaderFileName=""
-			/>
+			ATLMinimizesCRunTimeLibraryUsage="FALSE"
+			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				InlineFunctionExpansion="1"
 				AdditionalIncludeDirectories="..\..\GuiLib"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS"
-				StringPooling="true"
+				StringPooling="TRUE"
 				RuntimeLibrary="2"
-				EnableFunctionLevelLinking="true"
-				UsePrecompiledHeader="2"
+				EnableFunctionLevelLinking="TRUE"
+				UsePrecompiledHeader="3"
 				PrecompiledHeaderThrough="stdafx.h"
 				PrecompiledHeaderFile=".\Release/SDIDemo.pch"
 				AssemblerListingLocation=".\Release/"
 				ObjectFile=".\Release/"
 				ProgramDataBaseFileName=".\Release/"
 				WarningLevel="3"
-				SuppressStartupBanner="true"
-				CompileAs="0"
-			/>
+				SuppressStartupBanner="TRUE"
+				CompileAs="0"/>
 			<Tool
-				Name="VCManagedResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="NDEBUG"
-				Culture="1033"
-			/>
-			<Tool
-				Name="VCPreLinkEventTool"
-			/>
+				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
 				OutputFile=".\..\..\bin/SDIDemo.exe"
 				LinkIncremental="1"
-				SuppressStartupBanner="true"
+				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="..\bin,..\..\bin"
 				ProgramDatabaseFile=".\..\..\bin/SDIDemo.pdb"
 				SubSystem="2"
-				RandomizedBaseAddress="1"
-				DataExecutionPrevention="0"
-				TargetMachine="1"
-			/>
+				TargetMachine="1"/>
 			<Tool
-				Name="VCALinkTool"
-			/>
+				Name="VCMIDLTool"
+				PreprocessorDefinitions="NDEBUG"
+				MkTypLibCompatible="TRUE"
+				SuppressStartupBanner="TRUE"
+				TargetEnvironment="1"
+				TypeLibraryName=".\..\..\bin/SDIDemo.tlb"
+				HeaderFileName=""/>
 			<Tool
-				Name="VCManifestTool"
-			/>
+				Name="VCPostBuildEventTool"/>
 			<Tool
-				Name="VCXDCMakeTool"
-			/>
+				Name="VCPreBuildEventTool"/>
 			<Tool
-				Name="VCBscMakeTool"
-			/>
+				Name="VCPreLinkEventTool"/>
 			<Tool
-				Name="VCFxCopTool"
-			/>
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="NDEBUG"
+				Culture="1033"/>
 			<Tool
-				Name="VCAppVerifierTool"
-			/>
+				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
-				Name="VCPostBuildEventTool"
-			/>
+				Name="VCXMLDataGeneratorTool"/>
+			<Tool
+				Name="VCWebDeploymentTool"/>
+			<Tool
+				Name="VCManagedWrapperGeneratorTool"/>
+			<Tool
+				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
 		</Configuration>
 		<Configuration
 			Name="Debug|Win32"
 			OutputDirectory=".\..\..\bin"
 			IntermediateDirectory=".\Debug"
 			ConfigurationType="1"
-			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
 			UseOfMFC="2"
-			ATLMinimizesCRunTimeLibraryUsage="false"
-			CharacterSet="2"
-			>
-			<Tool
-				Name="VCPreBuildEventTool"
-			/>
-			<Tool
-				Name="VCCustomBuildTool"
-			/>
-			<Tool
-				Name="VCXMLDataGeneratorTool"
-			/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"
-			/>
-			<Tool
-				Name="VCMIDLTool"
-				PreprocessorDefinitions="_DEBUG"
-				MkTypLibCompatible="true"
-				SuppressStartupBanner="true"
-				TargetEnvironment="1"
-				TypeLibraryName=".\..\..\bin/SDIDemo.tlb"
-				HeaderFileName=""
-			/>
+			ATLMinimizesCRunTimeLibraryUsage="FALSE"
+			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
@@ -148,62 +93,56 @@
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
-				UsePrecompiledHeader="2"
+				UsePrecompiledHeader="3"
 				PrecompiledHeaderThrough="stdafx.h"
 				PrecompiledHeaderFile=".\Debug/SDIDemo.pch"
 				AssemblerListingLocation=".\Debug/"
 				ObjectFile=".\Debug/"
 				ProgramDataBaseFileName=".\Debug/"
 				WarningLevel="3"
-				SuppressStartupBanner="true"
+				SuppressStartupBanner="TRUE"
 				DebugInformationFormat="4"
-				CompileAs="0"
-			/>
+				CompileAs="0"/>
 			<Tool
-				Name="VCManagedResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="_DEBUG"
-				Culture="1033"
-			/>
-			<Tool
-				Name="VCPreLinkEventTool"
-			/>
+				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
 				OutputFile="..\..\bin/SDIDemoD.exe"
 				LinkIncremental="1"
-				SuppressStartupBanner="true"
+				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="..\..\bin"
-				GenerateDebugInformation="true"
+				GenerateDebugInformation="TRUE"
 				ProgramDatabaseFile=".\..\..\bin/SDIDemoD.pdb"
 				SubSystem="2"
-				RandomizedBaseAddress="1"
-				DataExecutionPrevention="0"
-				TargetMachine="1"
-			/>
+				TargetMachine="1"/>
 			<Tool
-				Name="VCALinkTool"
-			/>
+				Name="VCMIDLTool"
+				PreprocessorDefinitions="_DEBUG"
+				MkTypLibCompatible="TRUE"
+				SuppressStartupBanner="TRUE"
+				TargetEnvironment="1"
+				TypeLibraryName=".\..\..\bin/SDIDemo.tlb"
+				HeaderFileName=""/>
 			<Tool
-				Name="VCManifestTool"
-			/>
+				Name="VCPostBuildEventTool"/>
 			<Tool
-				Name="VCXDCMakeTool"
-			/>
+				Name="VCPreBuildEventTool"/>
 			<Tool
-				Name="VCBscMakeTool"
-			/>
+				Name="VCPreLinkEventTool"/>
 			<Tool
-				Name="VCFxCopTool"
-			/>
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="_DEBUG"
+				Culture="1033"/>
 			<Tool
-				Name="VCAppVerifierTool"
-			/>
+				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
-				Name="VCPostBuildEventTool"
-			/>
+				Name="VCXMLDataGeneratorTool"/>
+			<Tool
+				Name="VCWebDeploymentTool"/>
+			<Tool
+				Name="VCManagedWrapperGeneratorTool"/>
+			<Tool
+				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
 		</Configuration>
 	</Configurations>
 	<References>
@@ -211,222 +150,176 @@
 	<Files>
 		<Filter
 			Name="Source Files"
-			Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
-			>
+			Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat">
 			<File
-				RelativePath="GuiServerExplorer.cpp"
-				>
+				RelativePath="GuiServerExplorer.cpp">
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="MainFrm.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="SDIDemo.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="SDIDemo.rc">
+			</File>
+			<File
+				RelativePath="SDIDemoDoc.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="SDIDemoView.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="2"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						Optimization="0"
+						AdditionalIncludeDirectories=""
+						PreprocessorDefinitions=""
+						BasicRuntimeChecks="3"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="StdAfx.cpp">
+				<FileConfiguration
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
 						AdditionalIncludeDirectories=""
 						PreprocessorDefinitions=""
-					/>
+						UsePrecompiledHeader="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						AdditionalIncludeDirectories=""
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="MainFrm.cpp"
-				>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="2"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-						BasicRuntimeChecks="3"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="SDIDemo.cpp"
-				>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="2"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-						BasicRuntimeChecks="3"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="SDIDemo.rc"
-				>
-			</File>
-			<File
-				RelativePath="SDIDemoDoc.cpp"
-				>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="2"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-						BasicRuntimeChecks="3"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="SDIDemoView.cpp"
-				>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="2"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-						BasicRuntimeChecks="3"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="StdAfx.cpp"
-				>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="2"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-						UsePrecompiledHeader="1"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-						BasicRuntimeChecks="3"
-						UsePrecompiledHeader="1"
-					/>
+						UsePrecompiledHeader="1"/>
 				</FileConfiguration>
 			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
-			Filter="h;hpp;hxx;hm;inl"
-			>
+			Filter="h;hpp;hxx;hm;inl">
 			<File
-				RelativePath="GuiServerExplorer.h"
-				>
+				RelativePath="GuiServerExplorer.h">
 			</File>
 			<File
-				RelativePath="MainFrm.h"
-				>
+				RelativePath="MainFrm.h">
 			</File>
 			<File
-				RelativePath="Resource.h"
-				>
+				RelativePath="Resource.h">
 			</File>
 			<File
-				RelativePath="SDIDemo.h"
-				>
+				RelativePath="SDIDemo.h">
 			</File>
 			<File
-				RelativePath="SDIDemoDoc.h"
-				>
+				RelativePath="SDIDemoDoc.h">
 			</File>
 			<File
-				RelativePath="SDIDemoView.h"
-				>
+				RelativePath="SDIDemoView.h">
 			</File>
 			<File
-				RelativePath="StdAfx.h"
-				>
+				RelativePath="StdAfx.h">
 			</File>
 		</Filter>
 		<Filter
 			Name="Resource Files"
-			Filter="ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"
-			>
+			Filter="ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe">
 			<File
-				RelativePath="res\SDIDemo.ico"
-				>
+				RelativePath="res\SDIDemo.ico">
 			</File>
 			<File
-				RelativePath="res\SDIDemo.rc2"
-				>
+				RelativePath="res\SDIDemo.rc2">
 			</File>
 			<File
-				RelativePath="res\SDIDemoDoc.ico"
-				>
+				RelativePath="res\SDIDemoDoc.ico">
 			</File>
 			<File
-				RelativePath="res\Toolbar.bmp"
-				>
+				RelativePath="res\Toolbar.bmp">
 			</File>
 		</Filter>
 		<File
-			RelativePath="ReadMe.txt"
-			>
+			RelativePath="ReadMe.txt">
 		</File>
 	</Files>
 	<Globals>

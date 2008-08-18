@@ -43,6 +43,8 @@ CGuiListEdit::CGuiListEdit()
 {
 	m_border=STYLEFRAME;
 	m_clrface=GuiDrawLayer::GetRGBColorFace();
+
+	validator_ = NULL;
 }
 
 CGuiListEdit::~CGuiListEdit()
@@ -52,7 +54,7 @@ CGuiListEdit::~CGuiListEdit()
 
 BEGIN_MESSAGE_MAP(CGuiListEdit, CStatic)
 	ON_COMMAND(LST_DELETE,Delete)
-	ON_COMMAND(LST_INSERT,Insert)
+	ON_COMMAND(LST_INSERT,OnInsert)
 	ON_COMMAND(LST_UP,Up)
 	ON_COMMAND(LST_DOWN,Down)
 	ON_WM_PAINT()
@@ -60,11 +62,15 @@ BEGIN_MESSAGE_MAP(CGuiListEdit, CStatic)
 	ON_WM_SIZE()
 	ON_NOTIFY(LVN_ENDLABELEDIT, LST_LIST, OnEndlabeleditList)
 	ON_NOTIFY(NM_DBLCLK, LST_LIST, OnClickList)
-	ON_NOTIFY(LVN_BEGINLABELEDIT, LST_LIST, OnBeginlabeleditList)
-	
 END_MESSAGE_MAP()
 
-
+bool CGuiListEdit::validate(const CString &str) const {
+	if (validator_) {
+		return validator_->validate((LPCTSTR)str);
+	} else {
+		return true;
+	}
+}
 
 // CGuiListEdit message handlers
 void CGuiListEdit::Delete()
@@ -72,6 +78,35 @@ void CGuiListEdit::Delete()
 	//solo nos interesa el seleccionado actualmente
 	int nItem=m_list->GetNextItem(-1,LVNI_SELECTED);
 	m_list->DeleteItem(nItem);
+}
+
+void CGuiListEdit::Insert(CString &itemText)
+{
+	CRect rc;
+	m_list->SetFocus();
+	int nItem=m_list->GetItemCount();
+	nItem=m_list->InsertItem(nItem,_T(""));
+	EditItem(nItem, CString(""));
+}
+
+void CGuiListEdit::Edit() {
+	CRect rc;
+	m_list->SetFocus();
+	const int nItem=m_list->GetNextItem(-1,LVNI_SELECTED);
+	CString itemText = GetText(nItem);
+	EditItem(nItem, itemText);
+}
+
+void CGuiListEdit::EditItem(const int nItem, const CString &itemText) {
+	CRect rc;
+	m_list->SetItemData (nItem, 0);
+    m_list->GetItemRect(0,&rc,LVIS_SELECTED | LVIS_FOCUSED);
+	CEdit* mEdit=m_list->EditLabel(nItem);
+	mEdit->SetWindowText(itemText);
+	CSize szBtn=m_toolBtn.GetSizeButton();
+	mEdit->SetWindowPos (NULL, -1, -1,
+		rc.Width () - 10, rc.Height (),
+		SWP_NOMOVE | SWP_NOZORDER | SWP_NOACTIVATE);
 }
 
 void CGuiListEdit::OnBeginlabeleditList(NMHDR *pNMHDR, LRESULT *pResult)
@@ -95,6 +130,9 @@ int CGuiListEdit::GetNumItem()
 	return m_list->GetItemCount();
 }
 
+void CGuiListEdit::OnInsert() {
+	Insert(CString(""));
+}
 
 void CGuiListEdit::AddItem(CString m_szCad)
 {
@@ -103,29 +141,14 @@ void CGuiListEdit::AddItem(CString m_szCad)
 	m_list->SetItemData (nItem, 0);
 }
 
-
-
 void CGuiListEdit::OnClickList(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	int nActual=m_list->GetNextItem(-1,LVNI_SELECTED);
-	if (nActual == -1) 
+	if (nActual == -1) {
 		Insert();
-
-}
-void CGuiListEdit::Insert()
-{
-	CRect rc;
-	m_list->SetFocus();
-	int nItem=m_list->GetItemCount();
-	nItem=m_list->InsertItem(nItem,_T(""));
-	m_list->SetItemData (nItem, 0);
-    m_list->GetItemRect(0,&rc,LVIS_SELECTED | LVIS_FOCUSED);
-	CEdit* mEdit=m_list->EditLabel(nItem);
-	CSize szBtn=m_toolBtn.GetSizeButton();
-	mEdit->SetWindowPos (NULL, -1, -1,
-		rc.Width () - 10, rc.Height (),
-		SWP_NOMOVE | SWP_NOZORDER | SWP_NOACTIVATE);
-	
+	} else {
+		Edit();
+	}
 }
 
 void CGuiListEdit::OnEndlabeleditList(NMHDR* pNMHDR, LRESULT* pResult) 
@@ -133,14 +156,14 @@ void CGuiListEdit::OnEndlabeleditList(NMHDR* pNMHDR, LRESULT* pResult)
 	LV_DISPINFO* pDispInfo = (LV_DISPINFO*)pNMHDR;
 	// TODO: Add your control notification handler code here
 	LV_ITEM* pItem = &((LV_DISPINFO*)pNMHDR)->item;
-	CString m_sz=pItem->pszText;
-	if (!m_sz.IsEmpty())
-		m_list->SetItemText(pItem->iItem,0,m_sz);
+	CString itemText=pItem->pszText;
+	if (itemText.GetLength() == 0)
+		Delete();
+	if (!itemText.IsEmpty())
+		m_list->SetItemText(pItem->iItem,0,itemText);
 
 	*pResult = 0;
 }
-
-
 
 void CGuiListEdit::Up()
 {
@@ -173,7 +196,6 @@ void CGuiListEdit::Down()
 								LVIS_SELECTED | LVIS_FOCUSED);
 	}
 	m_list->SetFocus();
-
 }
 
 
@@ -251,8 +273,6 @@ int CGuiListEdit::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if (CStatic::OnCreate(lpCreateStruct) == -1)
 		return -1;
-	
-	// TODO:  Add your specialized creation code here
 
 	return 0;
 }

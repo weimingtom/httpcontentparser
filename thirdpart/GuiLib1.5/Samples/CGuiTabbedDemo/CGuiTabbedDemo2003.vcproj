@@ -1,51 +1,25 @@
 <?xml version="1.0" encoding="gb2312"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9.00"
+	Version="7.10"
 	Name="CGuiTabbedDemo"
-	ProjectGUID="{83D27285-60B2-40BD-8603-BEE8E0BC6898}"
-	Keyword="MFCProj"
-	TargetFrameworkVersion="131072"
-	>
+	ProjectGUID="{787383C8-2C9A-4809-BE1C-0A4F5ADB371A}"
+	SccProjectName=""
+	SccLocalPath=""
+	Keyword="MFCProj">
 	<Platforms>
 		<Platform
-			Name="Win32"
-		/>
+			Name="Win32"/>
 	</Platforms>
-	<ToolFiles>
-	</ToolFiles>
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
 			OutputDirectory=".\..\..\bin"
 			IntermediateDirectory=".\Debug"
 			ConfigurationType="1"
-			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
 			UseOfMFC="2"
-			ATLMinimizesCRunTimeLibraryUsage="false"
-			CharacterSet="2"
-			>
-			<Tool
-				Name="VCPreBuildEventTool"
-			/>
-			<Tool
-				Name="VCCustomBuildTool"
-			/>
-			<Tool
-				Name="VCXMLDataGeneratorTool"
-			/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"
-			/>
-			<Tool
-				Name="VCMIDLTool"
-				PreprocessorDefinitions="_DEBUG"
-				MkTypLibCompatible="true"
-				SuppressStartupBanner="true"
-				TargetEnvironment="1"
-				TypeLibraryName=".\..\..\bin/CGuiTabbedDemo.tlb"
-				HeaderFileName=""
-			/>
+			ATLMinimizesCRunTimeLibraryUsage="FALSE"
+			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
@@ -53,7 +27,7 @@
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
-				UsePrecompiledHeader="2"
+				UsePrecompiledHeader="3"
 				PrecompiledHeaderThrough="stdafx.h"
 				PrecompiledHeaderFile=".\Debug/CGuiTabbedDemo.pch"
 				AssemblerListingLocation=".\Debug/"
@@ -61,150 +35,115 @@
 				ProgramDataBaseFileName=".\Debug/"
 				BrowseInformation="1"
 				WarningLevel="3"
-				SuppressStartupBanner="true"
+				SuppressStartupBanner="TRUE"
 				DebugInformationFormat="4"
-				CompileAs="0"
-			/>
+				CompileAs="0"/>
 			<Tool
-				Name="VCManagedResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="_DEBUG"
-				Culture="9226"
-			/>
-			<Tool
-				Name="VCPreLinkEventTool"
-			/>
+				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
 				OutputFile="..\..\bin/CGuiTabbedDemoD.exe"
 				LinkIncremental="1"
-				SuppressStartupBanner="true"
+				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="..\..\bin"
-				GenerateDebugInformation="true"
+				GenerateDebugInformation="TRUE"
 				ProgramDatabaseFile=".\..\..\bin/CGuiTabbedDemoD.pdb"
 				SubSystem="2"
-				RandomizedBaseAddress="1"
-				DataExecutionPrevention="0"
-				TargetMachine="1"
-			/>
+				TargetMachine="1"/>
 			<Tool
-				Name="VCALinkTool"
-			/>
+				Name="VCMIDLTool"
+				PreprocessorDefinitions="_DEBUG"
+				MkTypLibCompatible="TRUE"
+				SuppressStartupBanner="TRUE"
+				TargetEnvironment="1"
+				TypeLibraryName=".\..\..\bin/CGuiTabbedDemo.tlb"
+				HeaderFileName=""/>
 			<Tool
-				Name="VCManifestTool"
-			/>
+				Name="VCPostBuildEventTool"/>
 			<Tool
-				Name="VCXDCMakeTool"
-			/>
+				Name="VCPreBuildEventTool"/>
 			<Tool
-				Name="VCBscMakeTool"
-			/>
+				Name="VCPreLinkEventTool"/>
 			<Tool
-				Name="VCFxCopTool"
-			/>
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="_DEBUG"
+				Culture="9226"/>
 			<Tool
-				Name="VCAppVerifierTool"
-			/>
+				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
-				Name="VCPostBuildEventTool"
-			/>
+				Name="VCXMLDataGeneratorTool"/>
+			<Tool
+				Name="VCWebDeploymentTool"/>
+			<Tool
+				Name="VCManagedWrapperGeneratorTool"/>
+			<Tool
+				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
 			OutputDirectory=".\..\..\bin"
 			IntermediateDirectory=".\Release"
 			ConfigurationType="1"
-			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
 			UseOfMFC="2"
-			ATLMinimizesCRunTimeLibraryUsage="false"
-			CharacterSet="2"
-			>
-			<Tool
-				Name="VCPreBuildEventTool"
-			/>
-			<Tool
-				Name="VCCustomBuildTool"
-			/>
-			<Tool
-				Name="VCXMLDataGeneratorTool"
-			/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"
-			/>
-			<Tool
-				Name="VCMIDLTool"
-				PreprocessorDefinitions="NDEBUG"
-				MkTypLibCompatible="true"
-				SuppressStartupBanner="true"
-				TargetEnvironment="1"
-				TypeLibraryName=".\..\..\bin/CGuiTabbedDemo.tlb"
-				HeaderFileName=""
-			/>
+			ATLMinimizesCRunTimeLibraryUsage="FALSE"
+			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				InlineFunctionExpansion="1"
 				AdditionalIncludeDirectories="..\..\GuiLib"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS"
-				StringPooling="true"
+				StringPooling="TRUE"
 				RuntimeLibrary="2"
-				EnableFunctionLevelLinking="true"
-				UsePrecompiledHeader="2"
+				EnableFunctionLevelLinking="TRUE"
+				UsePrecompiledHeader="3"
 				PrecompiledHeaderThrough="stdafx.h"
 				PrecompiledHeaderFile=".\Release/CGuiTabbedDemo.pch"
 				AssemblerListingLocation=".\Release/"
 				ObjectFile=".\Release/"
 				ProgramDataBaseFileName=".\Release/"
 				WarningLevel="3"
-				SuppressStartupBanner="true"
-				CompileAs="0"
-			/>
+				SuppressStartupBanner="TRUE"
+				CompileAs="0"/>
 			<Tool
-				Name="VCManagedResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="NDEBUG"
-				Culture="9226"
-			/>
-			<Tool
-				Name="VCPreLinkEventTool"
-			/>
+				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
 				OutputFile=".\..\..\bin/CGuiTabbedDemo.exe"
 				LinkIncremental="1"
-				SuppressStartupBanner="true"
+				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="..\..\bin"
 				ProgramDatabaseFile=".\..\..\bin/CGuiTabbedDemo.pdb"
 				SubSystem="2"
-				RandomizedBaseAddress="1"
-				DataExecutionPrevention="0"
-				TargetMachine="1"
-			/>
+				TargetMachine="1"/>
 			<Tool
-				Name="VCALinkTool"
-			/>
+				Name="VCMIDLTool"
+				PreprocessorDefinitions="NDEBUG"
+				MkTypLibCompatible="TRUE"
+				SuppressStartupBanner="TRUE"
+				TargetEnvironment="1"
+				TypeLibraryName=".\..\..\bin/CGuiTabbedDemo.tlb"
+				HeaderFileName=""/>
 			<Tool
-				Name="VCManifestTool"
-			/>
+				Name="VCPostBuildEventTool"/>
 			<Tool
-				Name="VCXDCMakeTool"
-			/>
+				Name="VCPreBuildEventTool"/>
 			<Tool
-				Name="VCBscMakeTool"
-			/>
+				Name="VCPreLinkEventTool"/>
 			<Tool
-				Name="VCFxCopTool"
-			/>
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="NDEBUG"
+				Culture="9226"/>
 			<Tool
-				Name="VCAppVerifierTool"
-			/>
+				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
-				Name="VCPostBuildEventTool"
-			/>
+				Name="VCXMLDataGeneratorTool"/>
+			<Tool
+				Name="VCWebDeploymentTool"/>
+			<Tool
+				Name="VCManagedWrapperGeneratorTool"/>
+			<Tool
+				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
 		</Configuration>
 	</Configurations>
 	<References>
@@ -212,148 +151,119 @@
 	<Files>
 		<Filter
 			Name="Source Files"
-			Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
-			>
+			Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat">
 			<File
-				RelativePath="CGuiTabbedDemo.cpp"
-				>
+				RelativePath="CGuiTabbedDemo.cpp">
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						AdditionalIncludeDirectories=""
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
+						PreprocessorDefinitions=""/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="CGuiTabbedDemo.rc"
-				>
+				RelativePath="CGuiTabbedDemo.rc">
 			</File>
 			<File
-				RelativePath="CGuiTabbedDemoDoc.cpp"
-				>
+				RelativePath="CGuiTabbedDemoDoc.cpp">
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						AdditionalIncludeDirectories=""
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
+						PreprocessorDefinitions=""/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="CGuiTabbedDemoView.cpp"
-				>
+				RelativePath="CGuiTabbedDemoView.cpp">
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						AdditionalIncludeDirectories=""
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
+						PreprocessorDefinitions=""/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="ChildFrm.cpp"
-				>
+				RelativePath="ChildFrm.cpp">
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						AdditionalIncludeDirectories=""
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
+						PreprocessorDefinitions=""/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="MainFrm.cpp"
-				>
+				RelativePath="MainFrm.cpp">
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						AdditionalIncludeDirectories=""
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
 						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
+						PreprocessorDefinitions=""/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="StdAfx.cpp"
-				>
+				RelativePath="StdAfx.cpp">
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
@@ -361,79 +271,62 @@
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
 						UsePrecompiledHeader="1"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
 						AdditionalIncludeDirectories=""
 						PreprocessorDefinitions=""
-						UsePrecompiledHeader="1"
-					/>
+						UsePrecompiledHeader="1"/>
 				</FileConfiguration>
 			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
-			Filter="h;hpp;hxx;hm;inl"
-			>
+			Filter="h;hpp;hxx;hm;inl">
 			<File
-				RelativePath="CGuiTabbedDemo.h"
-				>
+				RelativePath="CGuiTabbedDemo.h">
 			</File>
 			<File
-				RelativePath="CGuiTabbedDemoDoc.h"
-				>
+				RelativePath="CGuiTabbedDemoDoc.h">
 			</File>
 			<File
-				RelativePath="CGuiTabbedDemoView.h"
-				>
+				RelativePath="CGuiTabbedDemoView.h">
 			</File>
 			<File
-				RelativePath="ChildFrm.h"
-				>
+				RelativePath="ChildFrm.h">
 			</File>
 			<File
-				RelativePath="MainFrm.h"
-				>
+				RelativePath="MainFrm.h">
 			</File>
 			<File
-				RelativePath="Resource.h"
-				>
+				RelativePath="Resource.h">
 			</File>
 			<File
-				RelativePath="StdAfx.h"
-				>
+				RelativePath="StdAfx.h">
 			</File>
 		</Filter>
 		<Filter
 			Name="Resource Files"
-			Filter="ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"
-			>
+			Filter="ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe">
 			<File
-				RelativePath="res\CGuiTabbedDemo.ico"
-				>
+				RelativePath="res\CGuiTabbedDemo.ico">
 			</File>
 			<File
-				RelativePath="res\CGuiTabbedDemo.rc2"
-				>
+				RelativePath="res\CGuiTabbedDemo.rc2">
 			</File>
 			<File
-				RelativePath="res\CGuiTabbedDemoDoc.ico"
-				>
+				RelativePath="res\CGuiTabbedDemoDoc.ico">
 			</File>
 			<File
-				RelativePath="res\Toolbar.bmp"
-				>
+				RelativePath="res\Toolbar.bmp">
 			</File>
 		</Filter>
 		<File
-			RelativePath="ReadMe.txt"
-			>
+			RelativePath="ReadMe.txt">
 		</File>
 	</Files>
 	<Globals>

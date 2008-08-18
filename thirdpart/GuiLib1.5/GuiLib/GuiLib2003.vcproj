@@ -1,58 +1,32 @@
 <?xml version="1.0" encoding="gb2312"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9.00"
+	Version="7.10"
 	Name="GuiLib"
-	ProjectGUID="{E1ECC3F7-47A0-42A5-B976-D7B4C1E62C74}"
-	Keyword="MFCProj"
-	TargetFrameworkVersion="131072"
-	>
+	ProjectGUID="{FB82A80C-85BD-4F44-9C9F-7440E1AAF39C}"
+	SccProjectName=""
+	SccLocalPath=""
+	Keyword="MFCProj">
 	<Platforms>
 		<Platform
-			Name="Win32"
-		/>
+			Name="Win32"/>
 	</Platforms>
-	<ToolFiles>
-	</ToolFiles>
 	<Configurations>
 		<Configuration
 			Name="Debug Unicode|Win32"
 			OutputDirectory=".\..\bin"
 			IntermediateDirectory=".\DebugU"
 			ConfigurationType="2"
-			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
 			UseOfMFC="2"
-			ATLMinimizesCRunTimeLibraryUsage="false"
-			CharacterSet="1"
-			>
-			<Tool
-				Name="VCPreBuildEventTool"
-			/>
-			<Tool
-				Name="VCCustomBuildTool"
-			/>
-			<Tool
-				Name="VCXMLDataGeneratorTool"
-			/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"
-			/>
-			<Tool
-				Name="VCMIDLTool"
-				PreprocessorDefinitions="_DEBUG"
-				MkTypLibCompatible="true"
-				SuppressStartupBanner="true"
-				TargetEnvironment="1"
-				TypeLibraryName=".\..\bin/GuiLib.tlb"
-				HeaderFileName=""
-			/>
+			ATLMinimizesCRunTimeLibraryUsage="FALSE"
+			CharacterSet="1">
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_MBCS;_AFXEXT;GUILIB_EXPORTS"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
-				UsePrecompiledHeader="2"
+				UsePrecompiledHeader="3"
 				PrecompiledHeaderThrough="stdafx.h"
 				PrecompiledHeaderFile=".\DebugU/GuiLib.pch"
 				AssemblerListingLocation=".\DebugU/"
@@ -60,95 +34,66 @@
 				ProgramDataBaseFileName=".\DebugU/"
 				BrowseInformation="1"
 				WarningLevel="3"
-				SuppressStartupBanner="true"
-				DebugInformationFormat="4"
-			/>
+				SuppressStartupBanner="TRUE"
+				DebugInformationFormat="4"/>
 			<Tool
-				Name="VCManagedResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="_DEBUG"
-				Culture="1033"
-			/>
-			<Tool
-				Name="VCPreLinkEventTool"
-			/>
+				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
 				OutputFile="..\bin\GuiTk114ud.dll"
 				LinkIncremental="1"
-				SuppressStartupBanner="true"
-				GenerateDebugInformation="true"
+				SuppressStartupBanner="TRUE"
+				GenerateDebugInformation="TRUE"
 				ProgramDatabaseFile=".\..\bin/GuiTk114ud.pdb"
 				SubSystem="2"
-				RandomizedBaseAddress="1"
-				DataExecutionPrevention="0"
 				ImportLibrary=".\..\bin/GuiTk114ud.lib"
-				TargetMachine="1"
-			/>
+				TargetMachine="1"/>
 			<Tool
-				Name="VCALinkTool"
-			/>
+				Name="VCMIDLTool"
+				PreprocessorDefinitions="_DEBUG"
+				MkTypLibCompatible="TRUE"
+				SuppressStartupBanner="TRUE"
+				TargetEnvironment="1"
+				TypeLibraryName=".\..\bin/GuiLib.tlb"
+				HeaderFileName=""/>
 			<Tool
-				Name="VCManifestTool"
-			/>
+				Name="VCPostBuildEventTool"/>
 			<Tool
-				Name="VCXDCMakeTool"
-			/>
+				Name="VCPreBuildEventTool"/>
 			<Tool
-				Name="VCBscMakeTool"
-			/>
+				Name="VCPreLinkEventTool"/>
 			<Tool
-				Name="VCFxCopTool"
-			/>
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="_DEBUG"
+				Culture="1033"/>
 			<Tool
-				Name="VCAppVerifierTool"
-			/>
+				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
-				Name="VCPostBuildEventTool"
-			/>
+				Name="VCXMLDataGeneratorTool"/>
+			<Tool
+				Name="VCWebDeploymentTool"/>
+			<Tool
+				Name="VCManagedWrapperGeneratorTool"/>
+			<Tool
+				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
 		</Configuration>
 		<Configuration
 			Name="Release Unicode|Win32"
 			OutputDirectory=".\..\bin"
 			IntermediateDirectory=".\ReleaseU"
 			ConfigurationType="2"
-			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
 			UseOfMFC="2"
-			ATLMinimizesCRunTimeLibraryUsage="false"
-			CharacterSet="1"
-			>
-			<Tool
-				Name="VCPreBuildEventTool"
-			/>
-			<Tool
-				Name="VCCustomBuildTool"
-			/>
-			<Tool
-				Name="VCXMLDataGeneratorTool"
-			/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"
-			/>
-			<Tool
-				Name="VCMIDLTool"
-				PreprocessorDefinitions="NDEBUG"
-				MkTypLibCompatible="true"
-				SuppressStartupBanner="true"
-				TargetEnvironment="1"
-				TypeLibraryName=".\..\bin/GuiLib.tlb"
-				HeaderFileName=""
-			/>
+			ATLMinimizesCRunTimeLibraryUsage="FALSE"
+			CharacterSet="1">
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				InlineFunctionExpansion="1"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_MBCS;_AFXEXT;GUILIB_EXPORTS"
-				StringPooling="true"
+				StringPooling="TRUE"
 				RuntimeLibrary="2"
-				EnableFunctionLevelLinking="true"
-				UsePrecompiledHeader="2"
+				EnableFunctionLevelLinking="TRUE"
+				UsePrecompiledHeader="3"
 				PrecompiledHeaderThrough="stdafx.h"
 				PrecompiledHeaderFile=".\ReleaseU/GuiLib.pch"
 				AssemblerListingLocation=".\ReleaseU/"
@@ -157,91 +102,62 @@
 				BrowseInformation="1"
 				BrowseInformationFile=".\ReleaseU/"
 				WarningLevel="3"
-				SuppressStartupBanner="true"
-			/>
+				SuppressStartupBanner="TRUE"/>
 			<Tool
-				Name="VCManagedResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="NDEBUG"
-				Culture="1033"
-			/>
-			<Tool
-				Name="VCPreLinkEventTool"
-			/>
+				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
 				OutputFile="..\bin\GuiTk114u.dll"
 				LinkIncremental="1"
-				SuppressStartupBanner="true"
+				SuppressStartupBanner="TRUE"
 				ProgramDatabaseFile=".\..\bin/GuiTk114u.pdb"
 				SubSystem="2"
-				RandomizedBaseAddress="1"
-				DataExecutionPrevention="0"
 				ImportLibrary=".\..\bin/GuiTk114u.lib"
-				TargetMachine="1"
-			/>
+				TargetMachine="1"/>
 			<Tool
-				Name="VCALinkTool"
-			/>
+				Name="VCMIDLTool"
+				PreprocessorDefinitions="NDEBUG"
+				MkTypLibCompatible="TRUE"
+				SuppressStartupBanner="TRUE"
+				TargetEnvironment="1"
+				TypeLibraryName=".\..\bin/GuiLib.tlb"
+				HeaderFileName=""/>
 			<Tool
-				Name="VCManifestTool"
-			/>
+				Name="VCPostBuildEventTool"/>
 			<Tool
-				Name="VCXDCMakeTool"
-			/>
+				Name="VCPreBuildEventTool"/>
 			<Tool
-				Name="VCBscMakeTool"
-			/>
+				Name="VCPreLinkEventTool"/>
 			<Tool
-				Name="VCFxCopTool"
-			/>
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="NDEBUG"
+				Culture="1033"/>
 			<Tool
-				Name="VCAppVerifierTool"
-			/>
+				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
-				Name="VCPostBuildEventTool"
-			/>
+				Name="VCXMLDataGeneratorTool"/>
+			<Tool
+				Name="VCWebDeploymentTool"/>
+			<Tool
+				Name="VCManagedWrapperGeneratorTool"/>
+			<Tool
+				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
 		</Configuration>
 		<Configuration
 			Name="Debug|Win32"
 			OutputDirectory=".\..\bin"
 			IntermediateDirectory=".\Debug"
 			ConfigurationType="2"
-			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
 			UseOfMFC="2"
-			ATLMinimizesCRunTimeLibraryUsage="false"
-			CharacterSet="2"
-			>
-			<Tool
-				Name="VCPreBuildEventTool"
-			/>
-			<Tool
-				Name="VCCustomBuildTool"
-			/>
-			<Tool
-				Name="VCXMLDataGeneratorTool"
-			/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"
-			/>
-			<Tool
-				Name="VCMIDLTool"
-				PreprocessorDefinitions="_DEBUG"
-				MkTypLibCompatible="true"
-				SuppressStartupBanner="true"
-				TargetEnvironment="1"
-				TypeLibraryName=".\..\bin/GuiLib.tlb"
-				HeaderFileName=""
-			/>
+			ATLMinimizesCRunTimeLibraryUsage="FALSE"
+			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_AFXEXT;GUILIB_EXPORTS"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
-				UsePrecompiledHeader="2"
+				UsePrecompiledHeader="3"
 				PrecompiledHeaderThrough="stdafx.h"
 				PrecompiledHeaderFile=".\Debug/GuiLib.pch"
 				AssemblerListingLocation=".\Debug/"
@@ -249,149 +165,124 @@
 				ProgramDataBaseFileName=".\Debug/"
 				BrowseInformation="1"
 				WarningLevel="3"
-				SuppressStartupBanner="true"
-				DebugInformationFormat="4"
-			/>
+				SuppressStartupBanner="TRUE"
+				DebugInformationFormat="4"/>
 			<Tool
-				Name="VCManagedResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="_DEBUG"
-				Culture="1033"
-			/>
-			<Tool
-				Name="VCPreLinkEventTool"
-			/>
+				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
 				OutputFile="..\bin\GuiTk115d.dll"
 				LinkIncremental="1"
-				SuppressStartupBanner="true"
-				GenerateDebugInformation="true"
+				SuppressStartupBanner="TRUE"
+				GenerateDebugInformation="TRUE"
 				ProgramDatabaseFile=".\..\bin/GuiTk115d.pdb"
 				SubSystem="2"
-				RandomizedBaseAddress="1"
-				DataExecutionPrevention="0"
 				ImportLibrary=".\..\bin/GuiTk115d.lib"
-				TargetMachine="1"
-			/>
+				TargetMachine="1"/>
 			<Tool
-				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCManifestTool"
-			/>
-			<Tool
-				Name="VCXDCMakeTool"
-			/>
-			<Tool
-				Name="VCBscMakeTool"
-			/>
-			<Tool
-				Name="VCFxCopTool"
-			/>
-			<Tool
-				Name="VCAppVerifierTool"
-			/>
+				Name="VCMIDLTool"
+				PreprocessorDefinitions="_DEBUG"
+				MkTypLibCompatible="TRUE"
+				SuppressStartupBanner="TRUE"
+				TargetEnvironment="1"
+				TypeLibraryName=".\..\bin/GuiLib.tlb"
+				HeaderFileName=""/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy .\*.h  ..\..\..\include\GuiLib1.5&#x0D;&#x0A;copy ..\bin\GuiTk115d.dll ..\..\..\debug&#x0D;&#x0A;copy ..\bin\GuiTk115d.lib ..\..\..\lib&#x0D;&#x0A;copy ..\bin\GuiTk115d.pdb ..\..\..\lib&#x0D;&#x0A;&#x0D;&#x0A;"
-			/>
+				CommandLine="copy .\*.h  ..\..\..\include\GuiLib1.5
+copy ..\bin\GuiTk115d.dll ..\..\..\debug
+copy ..\bin\GuiTk115d.lib ..\..\..\lib
+copy ..\bin\GuiTk115d.pdb ..\..\..\lib
+
+"/>
+			<Tool
+				Name="VCPreBuildEventTool"/>
+			<Tool
+				Name="VCPreLinkEventTool"/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="_DEBUG"
+				Culture="1033"/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"/>
+			<Tool
+				Name="VCWebDeploymentTool"/>
+			<Tool
+				Name="VCManagedWrapperGeneratorTool"/>
+			<Tool
+				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
 			OutputDirectory=".\..\bin"
 			IntermediateDirectory=".\Release"
 			ConfigurationType="2"
-			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
 			UseOfMFC="2"
-			ATLMinimizesCRunTimeLibraryUsage="false"
-			CharacterSet="2"
-			>
-			<Tool
-				Name="VCPreBuildEventTool"
-			/>
-			<Tool
-				Name="VCCustomBuildTool"
-			/>
-			<Tool
-				Name="VCXMLDataGeneratorTool"
-			/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"
-			/>
-			<Tool
-				Name="VCMIDLTool"
-				PreprocessorDefinitions="NDEBUG"
-				MkTypLibCompatible="true"
-				SuppressStartupBanner="true"
-				TargetEnvironment="1"
-				TypeLibraryName=".\..\bin/GuiLib.tlb"
-				HeaderFileName=""
-			/>
+			ATLMinimizesCRunTimeLibraryUsage="FALSE"
+			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				InlineFunctionExpansion="1"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_AFXEXT;GUILIB_EXPORTS"
-				StringPooling="true"
+				StringPooling="TRUE"
 				RuntimeLibrary="2"
-				EnableFunctionLevelLinking="true"
-				UsePrecompiledHeader="2"
+				EnableFunctionLevelLinking="TRUE"
+				UsePrecompiledHeader="3"
 				PrecompiledHeaderThrough="stdafx.h"
 				PrecompiledHeaderFile=".\Release/GuiLib.pch"
 				AssemblerListingLocation=".\Release/"
 				ObjectFile=".\Release/"
 				ProgramDataBaseFileName=".\Release/"
 				WarningLevel="3"
-				SuppressStartupBanner="true"
-			/>
+				SuppressStartupBanner="TRUE"/>
 			<Tool
-				Name="VCManagedResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="NDEBUG"
-				Culture="1033"
-			/>
-			<Tool
-				Name="VCPreLinkEventTool"
-			/>
+				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
 				OutputFile="..\bin\GuiTk115.dll"
 				LinkIncremental="1"
-				SuppressStartupBanner="true"
+				SuppressStartupBanner="TRUE"
 				ProgramDatabaseFile=".\..\bin/GuiTk115.pdb"
 				SubSystem="2"
-				RandomizedBaseAddress="1"
-				DataExecutionPrevention="0"
 				ImportLibrary=".\..\bin/GuiTk115.lib"
-				TargetMachine="1"
-			/>
+				TargetMachine="1"/>
 			<Tool
-				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCManifestTool"
-			/>
-			<Tool
-				Name="VCXDCMakeTool"
-			/>
-			<Tool
-				Name="VCBscMakeTool"
-			/>
-			<Tool
-				Name="VCFxCopTool"
-			/>
-			<Tool
-				Name="VCAppVerifierTool"
-			/>
+				Name="VCMIDLTool"
+				PreprocessorDefinitions="NDEBUG"
+				MkTypLibCompatible="TRUE"
+				SuppressStartupBanner="TRUE"
+				TargetEnvironment="1"
+				TypeLibraryName=".\..\bin/GuiLib.tlb"
+				HeaderFileName=""/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy .\*.h ..\..\include\GuiLib1.5&#x0D;&#x0A;copy ..\bin\GuiTk115.dll ..\..\..\release&#x0D;&#x0A;copy ..\bin\GuiTk115.lib ..\..\..\lib&#x0D;&#x0A;copy ..\bin\GuiTk115.pdb ..\..\..\lib&#x0D;&#x0A;copy ..\bin\GuiTk115Static.lib ..\..\..\lib&#x0D;&#x0A;"
-			/>
+				CommandLine="copy .\*.h ..\..\include\GuiLib1.5
+copy ..\bin\GuiTk115.dll ..\..\..\release
+copy ..\bin\GuiTk115.lib ..\..\..\lib
+copy ..\bin\GuiTk115.pdb ..\..\..\lib
+copy ..\bin\GuiTk115Static.lib ..\..\..\lib
+"/>
+			<Tool
+				Name="VCPreBuildEventTool"/>
+			<Tool
+				Name="VCPreLinkEventTool"/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="NDEBUG"
+				Culture="1033"/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"/>
+			<Tool
+				Name="VCWebDeploymentTool"/>
+			<Tool
+				Name="VCManagedWrapperGeneratorTool"/>
+			<Tool
+				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
 		</Configuration>
 	</Configurations>
 	<References>
@@ -399,3518 +290,2794 @@
 	<Files>
 		<Filter
 			Name="Source Files"
-			Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
-			>
+			Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat">
 			<File
-				RelativePath="CoolMenu.cpp"
-				>
+				RelativePath="CoolMenu.cpp">
 				<FileConfiguration
-					Name="Debug Unicode|Win32"
-					>
+					Name="Debug Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_WINDLL;_AFXDLL;_MBCS;_AFXEXT;_UNICODE;GUILIB_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release Unicode|Win32"
-					>
+					Name="Release Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
 						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_WINDLL;_AFXDLL;_UNICODE;_MBCS;_AFXEXT;GUILIB_EXPORTS;$(NoInherit)"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
+						PreprocessorDefinitions=""/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="GuiADODB.cpp"
-				>
+				RelativePath="GuiADODB.cpp">
 				<FileConfiguration
-					Name="Debug Unicode|Win32"
-					>
+					Name="Debug Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_WINDLL;_AFXDLL;_MBCS;_AFXEXT;_UNICODE;GUILIB_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release Unicode|Win32"
-					>
+					Name="Release Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
 						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_WINDLL;_AFXDLL;_UNICODE;_MBCS;_AFXEXT;GUILIB_EXPORTS;$(NoInherit)"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
+						PreprocessorDefinitions=""/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="GuiButton.cpp"
-				>
+				RelativePath="GuiButton.cpp">
 				<FileConfiguration
-					Name="Debug Unicode|Win32"
-					>
+					Name="Debug Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_WINDLL;_AFXDLL;_MBCS;_AFXEXT;_UNICODE;GUILIB_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release Unicode|Win32"
-					>
+					Name="Release Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
 						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_WINDLL;_AFXDLL;_UNICODE;_MBCS;_AFXEXT;GUILIB_EXPORTS;$(NoInherit)"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
+						PreprocessorDefinitions=""/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="GuiButtonDoc.cpp"
-				>
+				RelativePath="GuiButtonDoc.cpp">
 				<FileConfiguration
-					Name="Debug Unicode|Win32"
-					>
+					Name="Debug Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_WINDLL;_AFXDLL;_MBCS;_AFXEXT;_UNICODE;GUILIB_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release Unicode|Win32"
-					>
+					Name="Release Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
 						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_WINDLL;_AFXDLL;_UNICODE;_MBCS;_AFXEXT;GUILIB_EXPORTS;$(NoInherit)"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
+						PreprocessorDefinitions=""/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="GuiButtonTimer.cpp"
-				>
+				RelativePath="GuiButtonTimer.cpp">
 				<FileConfiguration
-					Name="Debug Unicode|Win32"
-					>
+					Name="Debug Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_WINDLL;_AFXDLL;_MBCS;_AFXEXT;_UNICODE;GUILIB_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release Unicode|Win32"
-					>
+					Name="Release Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
 						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_WINDLL;_AFXDLL;_UNICODE;_MBCS;_AFXEXT;GUILIB_EXPORTS;$(NoInherit)"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
+						PreprocessorDefinitions=""/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="GuiCapOutBar.cpp"
-				>
+				RelativePath="GuiCapOutBar.cpp">
 				<FileConfiguration
-					Name="Debug Unicode|Win32"
-					>
+					Name="Debug Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_WINDLL;_AFXDLL;_MBCS;_AFXEXT;_UNICODE;GUILIB_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release Unicode|Win32"
-					>
+					Name="Release Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
 						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_WINDLL;_AFXDLL;_UNICODE;_MBCS;_AFXEXT;GUILIB_EXPORTS;$(NoInherit)"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
+						PreprocessorDefinitions=""/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="GuicheckBox.cpp"
-				>
+				RelativePath="GuicheckBox.cpp">
 				<FileConfiguration
-					Name="Debug Unicode|Win32"
-					>
+					Name="Debug Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_WINDLL;_AFXDLL;_MBCS;_AFXEXT;_UNICODE;GUILIB_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release Unicode|Win32"
-					>
+					Name="Release Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
 						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_WINDLL;_AFXDLL;_UNICODE;_MBCS;_AFXEXT;GUILIB_EXPORTS;$(NoInherit)"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
+						PreprocessorDefinitions=""/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="GuiComboBoxExt.cpp"
-				>
+				RelativePath="GuiComboBoxExt.cpp">
 				<FileConfiguration
-					Name="Debug Unicode|Win32"
-					>
+					Name="Debug Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_WINDLL;_AFXDLL;_MBCS;_AFXEXT;_UNICODE;GUILIB_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release Unicode|Win32"
-					>
+					Name="Release Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
 						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_WINDLL;_AFXDLL;_UNICODE;_MBCS;_AFXEXT;GUILIB_EXPORTS;$(NoInherit)"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
+						PreprocessorDefinitions=""/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="GuiComboFont.cpp"
-				>
+				RelativePath="GuiComboFont.cpp">
 				<FileConfiguration
-					Name="Debug Unicode|Win32"
-					>
+					Name="Debug Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_WINDLL;_AFXDLL;_MBCS;_AFXEXT;_UNICODE;GUILIB_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release Unicode|Win32"
-					>
+					Name="Release Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
 						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_WINDLL;_AFXDLL;_UNICODE;_MBCS;_AFXEXT;GUILIB_EXPORTS;$(NoInherit)"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
+						PreprocessorDefinitions=""/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="GuiContainer.cpp"
-				>
+				RelativePath="GuiContainer.cpp">
 				<FileConfiguration
-					Name="Debug Unicode|Win32"
-					>
+					Name="Debug Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_WINDLL;_AFXDLL;_MBCS;_AFXEXT;_UNICODE;GUILIB_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release Unicode|Win32"
-					>
+					Name="Release Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
 						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_WINDLL;_AFXDLL;_UNICODE;_MBCS;_AFXEXT;GUILIB_EXPORTS;$(NoInherit)"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
+						PreprocessorDefinitions=""/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="GuiControlBar.cpp"
-				>
+				RelativePath="GuiControlBar.cpp">
 				<FileConfiguration
-					Name="Debug Unicode|Win32"
-					>
+					Name="Debug Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_WINDLL;_AFXDLL;_MBCS;_AFXEXT;_UNICODE;GUILIB_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release Unicode|Win32"
-					>
+					Name="Release Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
 						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_WINDLL;_AFXDLL;_UNICODE;_MBCS;_AFXEXT;GUILIB_EXPORTS;$(NoInherit)"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
+						PreprocessorDefinitions=""/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="GuiDocBarExten.cpp"
-				>
+				RelativePath="GuiDocBarExten.cpp">
 				<FileConfiguration
-					Name="Debug Unicode|Win32"
-					>
+					Name="Debug Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_WINDLL;_AFXDLL;_MBCS;_AFXEXT;_UNICODE;GUILIB_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release Unicode|Win32"
-					>
+					Name="Release Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
 						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_WINDLL;_AFXDLL;_UNICODE;_MBCS;_AFXEXT;GUILIB_EXPORTS;$(NoInherit)"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
+						PreprocessorDefinitions=""/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="GuiDocBarExtenEx.cpp"
-				>
+				RelativePath="GuiDocBarExtenEx.cpp">
 				<FileConfiguration
-					Name="Debug Unicode|Win32"
-					>
+					Name="Debug Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_WINDLL;_AFXDLL;_MBCS;_AFXEXT;_UNICODE;GUILIB_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release Unicode|Win32"
-					>
+					Name="Release Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
 						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_WINDLL;_AFXDLL;_UNICODE;_MBCS;_AFXEXT;GUILIB_EXPORTS;$(NoInherit)"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
+						PreprocessorDefinitions=""/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="GuiDockContext.cpp"
-				>
+				RelativePath="GuiDockContext.cpp">
 				<FileConfiguration
-					Name="Debug Unicode|Win32"
-					>
+					Name="Debug Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_WINDLL;_AFXDLL;_MBCS;_AFXEXT;_UNICODE;GUILIB_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release Unicode|Win32"
-					>
+					Name="Release Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
 						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_WINDLL;_AFXDLL;_UNICODE;_MBCS;_AFXEXT;GUILIB_EXPORTS;$(NoInherit)"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
+						PreprocessorDefinitions=""/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="GuiDockToolBar.cpp"
-				>
+				RelativePath="GuiDockToolBar.cpp">
 				<FileConfiguration
-					Name="Debug Unicode|Win32"
-					>
+					Name="Debug Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_WINDLL;_AFXDLL;_MBCS;_AFXEXT;_UNICODE;GUILIB_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release Unicode|Win32"
-					>
+					Name="Release Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
 						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_WINDLL;_AFXDLL;_UNICODE;_MBCS;_AFXEXT;GUILIB_EXPORTS;$(NoInherit)"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
+						PreprocessorDefinitions=""/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="GuiDockToolBarEx.cpp"
-				>
+				RelativePath="GuiDockToolBarEx.cpp">
 				<FileConfiguration
-					Name="Debug Unicode|Win32"
-					>
+					Name="Debug Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_WINDLL;_AFXDLL;_MBCS;_AFXEXT;_UNICODE;GUILIB_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release Unicode|Win32"
-					>
+					Name="Release Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
 						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_WINDLL;_AFXDLL;_UNICODE;_MBCS;_AFXEXT;GUILIB_EXPORTS;$(NoInherit)"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
+						PreprocessorDefinitions=""/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="GuiDocSpecial.cpp"
-				>
+				RelativePath="GuiDocSpecial.cpp">
 				<FileConfiguration
-					Name="Debug Unicode|Win32"
-					>
+					Name="Debug Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_WINDLL;_AFXDLL;_MBCS;_AFXEXT;_UNICODE;GUILIB_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release Unicode|Win32"
-					>
+					Name="Release Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
 						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_WINDLL;_AFXDLL;_UNICODE;_MBCS;_AFXEXT;GUILIB_EXPORTS;$(NoInherit)"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
+						PreprocessorDefinitions=""/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="GuiDrawLayer.cpp"
-				>
+				RelativePath="GuiDrawLayer.cpp">
 				<FileConfiguration
-					Name="Debug Unicode|Win32"
-					>
+					Name="Debug Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_WINDLL;_AFXDLL;_MBCS;_AFXEXT;_UNICODE;GUILIB_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release Unicode|Win32"
-					>
+					Name="Release Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
 						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_WINDLL;_AFXDLL;_UNICODE;_MBCS;_AFXEXT;GUILIB_EXPORTS;$(NoInherit)"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
+						PreprocessorDefinitions=""/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="GuiDropDownEdit.cpp"
-				>
+				RelativePath="GuiDropDownEdit.cpp">
 				<FileConfiguration
-					Name="Debug Unicode|Win32"
-					>
+					Name="Debug Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_WINDLL;_AFXDLL;_MBCS;_AFXEXT;_UNICODE;GUILIB_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release Unicode|Win32"
-					>
+					Name="Release Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
 						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_WINDLL;_AFXDLL;_UNICODE;_MBCS;_AFXEXT;GUILIB_EXPORTS;$(NoInherit)"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
+						PreprocessorDefinitions=""/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="GuiEdit.cpp"
-				>
+				RelativePath="GuiEdit.cpp">
 				<FileConfiguration
-					Name="Debug Unicode|Win32"
-					>
+					Name="Debug Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_WINDLL;_AFXDLL;_MBCS;_AFXEXT;_UNICODE;GUILIB_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release Unicode|Win32"
-					>
+					Name="Release Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
 						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_WINDLL;_AFXDLL;_UNICODE;_MBCS;_AFXEXT;GUILIB_EXPORTS;$(NoInherit)"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
+						PreprocessorDefinitions=""/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="GuiFDir.cpp"
-				>
+				RelativePath="GuiFDir.cpp">
 				<FileConfiguration
-					Name="Debug Unicode|Win32"
-					>
+					Name="Debug Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_WINDLL;_AFXDLL;_MBCS;_AFXEXT;_UNICODE;GUILIB_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release Unicode|Win32"
-					>
+					Name="Release Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
 						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_WINDLL;_AFXDLL;_UNICODE;_MBCS;_AFXEXT;GUILIB_EXPORTS;$(NoInherit)"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
+						PreprocessorDefinitions=""/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="GuiFile.cpp"
-				>
+				RelativePath="GuiFile.cpp">
 				<FileConfiguration
-					Name="Debug Unicode|Win32"
-					>
+					Name="Debug Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_WINDLL;_AFXDLL;_MBCS;_AFXEXT;_UNICODE;GUILIB_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release Unicode|Win32"
-					>
+					Name="Release Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
 						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_WINDLL;_AFXDLL;_UNICODE;_MBCS;_AFXEXT;GUILIB_EXPORTS;$(NoInherit)"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
+						PreprocessorDefinitions=""/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="GuiFolder.cpp"
-				>
+				RelativePath="GuiFolder.cpp">
 				<FileConfiguration
-					Name="Debug Unicode|Win32"
-					>
+					Name="Debug Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_WINDLL;_AFXDLL;_MBCS;_AFXEXT;_UNICODE;GUILIB_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release Unicode|Win32"
-					>
+					Name="Release Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
 						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_WINDLL;_AFXDLL;_UNICODE;_MBCS;_AFXEXT;GUILIB_EXPORTS;$(NoInherit)"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
+						PreprocessorDefinitions=""/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="GuiFolderFlat.cpp"
-				>
+				RelativePath="GuiFolderFlat.cpp">
 				<FileConfiguration
-					Name="Debug Unicode|Win32"
-					>
+					Name="Debug Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_WINDLL;_AFXDLL;_MBCS;_AFXEXT;_UNICODE;GUILIB_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release Unicode|Win32"
-					>
+					Name="Release Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
 						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_WINDLL;_AFXDLL;_UNICODE;_MBCS;_AFXEXT;GUILIB_EXPORTS;$(NoInherit)"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
+						PreprocessorDefinitions=""/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="GuiFrameWnd.cpp"
-				>
+				RelativePath="GuiFrameWnd.cpp">
 				<FileConfiguration
-					Name="Debug Unicode|Win32"
-					>
+					Name="Debug Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_WINDLL;_AFXDLL;_MBCS;_AFXEXT;_UNICODE;GUILIB_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release Unicode|Win32"
-					>
+					Name="Release Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
 						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_WINDLL;_AFXDLL;_UNICODE;_MBCS;_AFXEXT;GUILIB_EXPORTS;$(NoInherit)"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
+						PreprocessorDefinitions=""/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="GuiGroupBox.cpp"
-				>
+				RelativePath="GuiGroupBox.cpp">
 				<FileConfiguration
-					Name="Debug Unicode|Win32"
-					>
+					Name="Debug Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_WINDLL;_AFXDLL;_MBCS;_AFXEXT;_UNICODE;GUILIB_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release Unicode|Win32"
-					>
+					Name="Release Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
 						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_WINDLL;_AFXDLL;_UNICODE;_MBCS;_AFXEXT;GUILIB_EXPORTS;$(NoInherit)"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
+						PreprocessorDefinitions=""/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="GuiHeaderCtrl.cpp"
-				>
+				RelativePath="GuiHeaderCtrl.cpp">
 				<FileConfiguration
-					Name="Debug Unicode|Win32"
-					>
+					Name="Debug Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_WINDLL;_AFXDLL;_MBCS;_AFXEXT;_UNICODE;GUILIB_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release Unicode|Win32"
-					>
+					Name="Release Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
 						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_WINDLL;_AFXDLL;_UNICODE;_MBCS;_AFXEXT;GUILIB_EXPORTS;$(NoInherit)"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
+						PreprocessorDefinitions=""/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="GuiImageLinkButton.cpp"
-				>
+				RelativePath="GuiImageLinkButton.cpp">
 				<FileConfiguration
-					Name="Debug Unicode|Win32"
-					>
+					Name="Debug Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_WINDLL;_AFXDLL;_MBCS;_AFXEXT;_UNICODE;GUILIB_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release Unicode|Win32"
-					>
+					Name="Release Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
 						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_WINDLL;_AFXDLL;_UNICODE;_MBCS;_AFXEXT;GUILIB_EXPORTS;$(NoInherit)"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
+						PreprocessorDefinitions=""/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="GuiLabelButton.cpp"
-				>
+				RelativePath="GuiLabelButton.cpp">
 				<FileConfiguration
-					Name="Debug Unicode|Win32"
-					>
+					Name="Debug Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_WINDLL;_AFXDLL;_MBCS;_AFXEXT;_UNICODE;GUILIB_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release Unicode|Win32"
-					>
+					Name="Release Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
 						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_WINDLL;_AFXDLL;_UNICODE;_MBCS;_AFXEXT;GUILIB_EXPORTS;$(NoInherit)"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
+						PreprocessorDefinitions=""/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="GuiLib.cpp"
-				>
+				RelativePath="GuiLib.cpp">
 				<FileConfiguration
-					Name="Debug Unicode|Win32"
-					>
+					Name="Debug Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_WINDLL;_AFXDLL;_MBCS;_AFXEXT;_UNICODE;GUILIB_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release Unicode|Win32"
-					>
+					Name="Release Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
 						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_WINDLL;_AFXDLL;_UNICODE;_MBCS;_AFXEXT;GUILIB_EXPORTS;$(NoInherit)"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
+						PreprocessorDefinitions=""/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="GuiLib.rc"
-				>
+				RelativePath="GuiLib.rc">
 				<FileConfiguration
-					Name="Debug Unicode|Win32"
-					>
+					Name="Debug Unicode|Win32">
 					<Tool
 						Name="VCResourceCompilerTool"
-						PreprocessorDefinitions="_DEBUG;_AFXDLL;$(NoInherit)"
-					/>
+						PreprocessorDefinitions="_DEBUG;_AFXDLL;$(NoInherit)"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release Unicode|Win32"
-					>
+					Name="Release Unicode|Win32">
 					<Tool
 						Name="VCResourceCompilerTool"
-						PreprocessorDefinitions="NDEBUG;_AFXDLL;$(NoInherit)"
-					/>
+						PreprocessorDefinitions="NDEBUG;_AFXDLL;$(NoInherit)"/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="GuiLinkButton.cpp"
-				>
+				RelativePath="GuiLinkButton.cpp">
 				<FileConfiguration
-					Name="Debug Unicode|Win32"
-					>
+					Name="Debug Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_WINDLL;_AFXDLL;_MBCS;_AFXEXT;_UNICODE;GUILIB_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release Unicode|Win32"
-					>
+					Name="Release Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
 						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_WINDLL;_AFXDLL;_UNICODE;_MBCS;_AFXEXT;GUILIB_EXPORTS;$(NoInherit)"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
+						PreprocessorDefinitions=""/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="GuiListEdit.cpp"
-				>
+				RelativePath="GuiListEdit.cpp">
 				<FileConfiguration
-					Name="Debug Unicode|Win32"
-					>
+					Name="Debug Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_WINDLL;_AFXDLL;_MBCS;_AFXEXT;_UNICODE;GUILIB_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release Unicode|Win32"
-					>
+					Name="Release Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
 						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_WINDLL;_AFXDLL;_UNICODE;_MBCS;_AFXEXT;GUILIB_EXPORTS;$(NoInherit)"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
+						PreprocessorDefinitions=""/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="GuiMDIFrame.cpp"
-				>
+				RelativePath="GuiMDIFrame.cpp">
 				<FileConfiguration
-					Name="Debug Unicode|Win32"
-					>
+					Name="Debug Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_WINDLL;_AFXDLL;_MBCS;_AFXEXT;_UNICODE;GUILIB_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release Unicode|Win32"
-					>
+					Name="Release Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
 						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_WINDLL;_AFXDLL;_UNICODE;_MBCS;_AFXEXT;GUILIB_EXPORTS;$(NoInherit)"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
+						PreprocessorDefinitions=""/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="GuiMDITabbed.cpp"
-				>
+				RelativePath="GuiMDITabbed.cpp">
 				<FileConfiguration
-					Name="Debug Unicode|Win32"
-					>
+					Name="Debug Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_WINDLL;_AFXDLL;_MBCS;_AFXEXT;_UNICODE;GUILIB_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release Unicode|Win32"
-					>
+					Name="Release Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
 						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_WINDLL;_AFXDLL;_UNICODE;_MBCS;_AFXEXT;GUILIB_EXPORTS;$(NoInherit)"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
+						PreprocessorDefinitions=""/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="GuiMDIWindowsDlg.cpp"
-				>
+				RelativePath="GuiMDIWindowsDlg.cpp">
 				<FileConfiguration
-					Name="Debug Unicode|Win32"
-					>
+					Name="Debug Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_WINDLL;_AFXDLL;_MBCS;_AFXEXT;_UNICODE;GUILIB_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release Unicode|Win32"
-					>
+					Name="Release Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
 						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_WINDLL;_AFXDLL;_UNICODE;_MBCS;_AFXEXT;GUILIB_EXPORTS;$(NoInherit)"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
+						PreprocessorDefinitions=""/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="GuiMiniFrame.cpp"
-				>
+				RelativePath="GuiMiniFrame.cpp">
 				<FileConfiguration
-					Name="Debug Unicode|Win32"
-					>
+					Name="Debug Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_WINDLL;_AFXDLL;_MBCS;_AFXEXT;_UNICODE;GUILIB_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release Unicode|Win32"
-					>
+					Name="Release Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
 						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_WINDLL;_AFXDLL;_UNICODE;_MBCS;_AFXEXT;GUILIB_EXPORTS;$(NoInherit)"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
+						PreprocessorDefinitions=""/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="GuiMiniFrameWnd.cpp"
-				>
+				RelativePath="GuiMiniFrameWnd.cpp">
 				<FileConfiguration
-					Name="Debug Unicode|Win32"
-					>
+					Name="Debug Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_WINDLL;_AFXDLL;_MBCS;_AFXEXT;_UNICODE;GUILIB_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release Unicode|Win32"
-					>
+					Name="Release Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
 						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_WINDLL;_AFXDLL;_UNICODE;_MBCS;_AFXEXT;GUILIB_EXPORTS;$(NoInherit)"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
+						PreprocessorDefinitions=""/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="GuiMiniSplitter.cpp"
-				>
+				RelativePath="GuiMiniSplitter.cpp">
 				<FileConfiguration
-					Name="Debug Unicode|Win32"
-					>
+					Name="Debug Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_WINDLL;_AFXDLL;_MBCS;_AFXEXT;_UNICODE;GUILIB_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release Unicode|Win32"
-					>
+					Name="Release Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
 						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_WINDLL;_AFXDLL;_UNICODE;_MBCS;_AFXEXT;GUILIB_EXPORTS;$(NoInherit)"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
+						PreprocessorDefinitions=""/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="GuiMiniTool.cpp"
-				>
+				RelativePath="GuiMiniTool.cpp">
 				<FileConfiguration
-					Name="Debug Unicode|Win32"
-					>
+					Name="Debug Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_WINDLL;_AFXDLL;_MBCS;_AFXEXT;_UNICODE;GUILIB_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release Unicode|Win32"
-					>
+					Name="Release Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
 						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_WINDLL;_AFXDLL;_UNICODE;_MBCS;_AFXEXT;GUILIB_EXPORTS;$(NoInherit)"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
+						PreprocessorDefinitions=""/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="GuiNormalButton.cpp"
-				>
+				RelativePath="GuiNormalButton.cpp">
 				<FileConfiguration
-					Name="Debug Unicode|Win32"
-					>
+					Name="Debug Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_WINDLL;_AFXDLL;_MBCS;_AFXEXT;_UNICODE;GUILIB_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release Unicode|Win32"
-					>
+					Name="Release Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
 						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_WINDLL;_AFXDLL;_UNICODE;_MBCS;_AFXEXT;GUILIB_EXPORTS;$(NoInherit)"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
+						PreprocessorDefinitions=""/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="GuiOfficeBar.cpp"
-				>
+				RelativePath="GuiOfficeBar.cpp">
 				<FileConfiguration
-					Name="Debug Unicode|Win32"
-					>
+					Name="Debug Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_WINDLL;_AFXDLL;_MBCS;_AFXEXT;_UNICODE;GUILIB_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release Unicode|Win32"
-					>
+					Name="Release Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
 						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_WINDLL;_AFXDLL;_UNICODE;_MBCS;_AFXEXT;GUILIB_EXPORTS;$(NoInherit)"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
+						PreprocessorDefinitions=""/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="GuiOutLook.cpp"
-				>
+				RelativePath="GuiOutLook.cpp">
 				<FileConfiguration
-					Name="Debug Unicode|Win32"
-					>
+					Name="Debug Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_WINDLL;_AFXDLL;_MBCS;_AFXEXT;_UNICODE;GUILIB_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release Unicode|Win32"
-					>
+					Name="Release Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
 						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_WINDLL;_AFXDLL;_UNICODE;_MBCS;_AFXEXT;GUILIB_EXPORTS;$(NoInherit)"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
+						PreprocessorDefinitions=""/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="GuiOutLookView.cpp"
-				>
+				RelativePath="GuiOutLookView.cpp">
 				<FileConfiguration
-					Name="Debug Unicode|Win32"
-					>
+					Name="Debug Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_WINDLL;_AFXDLL;_MBCS;_AFXEXT;_UNICODE;GUILIB_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release Unicode|Win32"
-					>
+					Name="Release Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
 						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_WINDLL;_AFXDLL;_UNICODE;_MBCS;_AFXEXT;GUILIB_EXPORTS;$(NoInherit)"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
+						PreprocessorDefinitions=""/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="GuiPanelAccess.cpp"
-				>
+				RelativePath="GuiPanelAccess.cpp">
 				<FileConfiguration
-					Name="Debug Unicode|Win32"
-					>
+					Name="Debug Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_WINDLL;_AFXDLL;_MBCS;_AFXEXT;_UNICODE;GUILIB_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release Unicode|Win32"
-					>
+					Name="Release Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
 						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_WINDLL;_AFXDLL;_UNICODE;_MBCS;_AFXEXT;GUILIB_EXPORTS;$(NoInherit)"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
+						PreprocessorDefinitions=""/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="GuiPanelWnd.cpp"
-				>
+				RelativePath="GuiPanelWnd.cpp">
 				<FileConfiguration
-					Name="Debug Unicode|Win32"
-					>
+					Name="Debug Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_WINDLL;_AFXDLL;_MBCS;_AFXEXT;_UNICODE;GUILIB_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release Unicode|Win32"
-					>
+					Name="Release Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
 						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_WINDLL;_AFXDLL;_UNICODE;_MBCS;_AFXEXT;GUILIB_EXPORTS;$(NoInherit)"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
+						PreprocessorDefinitions=""/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="GuiPowerPointView.cpp"
-				>
+				RelativePath="GuiPowerPointView.cpp">
 				<FileConfiguration
-					Name="Debug Unicode|Win32"
-					>
+					Name="Debug Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_WINDLL;_AFXDLL;_MBCS;_AFXEXT;_UNICODE;GUILIB_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release Unicode|Win32"
-					>
+					Name="Release Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
 						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_WINDLL;_AFXDLL;_UNICODE;_MBCS;_AFXEXT;GUILIB_EXPORTS;$(NoInherit)"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
+						PreprocessorDefinitions=""/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="GuiRadioButton.cpp"
-				>
+				RelativePath="GuiRadioButton.cpp">
 				<FileConfiguration
-					Name="Debug Unicode|Win32"
-					>
+					Name="Debug Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_WINDLL;_AFXDLL;_MBCS;_AFXEXT;_UNICODE;GUILIB_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release Unicode|Win32"
-					>
+					Name="Release Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
 						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_WINDLL;_AFXDLL;_UNICODE;_MBCS;_AFXEXT;GUILIB_EXPORTS;$(NoInherit)"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
+						PreprocessorDefinitions=""/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="GuiSliderCtrl.cpp"
-				>
+				RelativePath="GuiSliderCtrl.cpp">
 				<FileConfiguration
-					Name="Debug Unicode|Win32"
-					>
+					Name="Debug Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_WINDLL;_AFXDLL;_MBCS;_AFXEXT;_UNICODE;GUILIB_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release Unicode|Win32"
-					>
+					Name="Release Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
 						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_WINDLL;_AFXDLL;_UNICODE;_MBCS;_AFXEXT;GUILIB_EXPORTS;$(NoInherit)"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
+						PreprocessorDefinitions=""/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="GuiSplitter.cpp"
-				>
+				RelativePath="GuiSplitter.cpp">
 				<FileConfiguration
-					Name="Debug Unicode|Win32"
-					>
+					Name="Debug Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_WINDLL;_AFXDLL;_MBCS;_AFXEXT;_UNICODE;GUILIB_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release Unicode|Win32"
-					>
+					Name="Release Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
 						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_WINDLL;_AFXDLL;_UNICODE;_MBCS;_AFXEXT;GUILIB_EXPORTS;$(NoInherit)"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
+						PreprocessorDefinitions=""/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="GuiSplitterWnd.cpp"
-				>
+				RelativePath="GuiSplitterWnd.cpp">
 				<FileConfiguration
-					Name="Debug Unicode|Win32"
-					>
+					Name="Debug Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_WINDLL;_AFXDLL;_MBCS;_AFXEXT;_UNICODE;GUILIB_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release Unicode|Win32"
-					>
+					Name="Release Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
 						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_WINDLL;_AFXDLL;_UNICODE;_MBCS;_AFXEXT;GUILIB_EXPORTS;$(NoInherit)"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
+						PreprocessorDefinitions=""/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="GuiStaticStandar.cpp"
-				>
+				RelativePath="GuiStaticStandar.cpp">
 				<FileConfiguration
-					Name="Debug Unicode|Win32"
-					>
+					Name="Debug Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_WINDLL;_AFXDLL;_MBCS;_AFXEXT;_UNICODE;GUILIB_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release Unicode|Win32"
-					>
+					Name="Release Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
 						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_WINDLL;_AFXDLL;_UNICODE;_MBCS;_AFXEXT;GUILIB_EXPORTS;$(NoInherit)"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
+						PreprocessorDefinitions=""/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="GuiStatusBar.cpp"
-				>
+				RelativePath="GuiStatusBar.cpp">
 				<FileConfiguration
-					Name="Debug Unicode|Win32"
-					>
+					Name="Debug Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_WINDLL;_AFXDLL;_MBCS;_AFXEXT;_UNICODE;GUILIB_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release Unicode|Win32"
-					>
+					Name="Release Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
 						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_WINDLL;_AFXDLL;_UNICODE;_MBCS;_AFXEXT;GUILIB_EXPORTS;$(NoInherit)"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
+						PreprocessorDefinitions=""/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="GuiSysTray.cpp"
-				>
+				RelativePath="GuiSysTray.cpp">
 				<FileConfiguration
-					Name="Debug Unicode|Win32"
-					>
+					Name="Debug Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_WINDLL;_AFXDLL;_MBCS;_AFXEXT;_UNICODE;GUILIB_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release Unicode|Win32"
-					>
+					Name="Release Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
 						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_WINDLL;_AFXDLL;_UNICODE;_MBCS;_AFXEXT;GUILIB_EXPORTS;$(NoInherit)"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
+						PreprocessorDefinitions=""/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="GuiTabbed.cpp"
-				>
+				RelativePath="GuiTabbed.cpp">
 				<FileConfiguration
-					Name="Debug Unicode|Win32"
-					>
+					Name="Debug Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_WINDLL;_AFXDLL;_MBCS;_AFXEXT;_UNICODE;GUILIB_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release Unicode|Win32"
-					>
+					Name="Release Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
 						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_WINDLL;_AFXDLL;_UNICODE;_MBCS;_AFXEXT;GUILIB_EXPORTS;$(NoInherit)"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
+						PreprocessorDefinitions=""/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="GuiTabPowerPoint.cpp"
-				>
+				RelativePath="GuiTabPowerPoint.cpp">
 				<FileConfiguration
-					Name="Debug Unicode|Win32"
-					>
+					Name="Debug Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_WINDLL;_AFXDLL;_MBCS;_AFXEXT;_UNICODE;GUILIB_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release Unicode|Win32"
-					>
+					Name="Release Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
 						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_WINDLL;_AFXDLL;_UNICODE;_MBCS;_AFXEXT;GUILIB_EXPORTS;$(NoInherit)"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
+						PreprocessorDefinitions=""/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="GuiTabWnd.cpp"
-				>
+				RelativePath="GuiTabWnd.cpp">
 				<FileConfiguration
-					Name="Debug Unicode|Win32"
-					>
+					Name="Debug Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_WINDLL;_AFXDLL;_MBCS;_AFXEXT;_UNICODE;GUILIB_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release Unicode|Win32"
-					>
+					Name="Release Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
 						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_WINDLL;_AFXDLL;_UNICODE;_MBCS;_AFXEXT;GUILIB_EXPORTS;$(NoInherit)"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
+						PreprocessorDefinitions=""/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="GuiToolBarWnd.cpp"
-				>
+				RelativePath="GuiToolBarWnd.cpp">
 				<FileConfiguration
-					Name="Debug Unicode|Win32"
-					>
+					Name="Debug Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_WINDLL;_AFXDLL;_MBCS;_AFXEXT;_UNICODE;GUILIB_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release Unicode|Win32"
-					>
+					Name="Release Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
 						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_WINDLL;_AFXDLL;_UNICODE;_MBCS;_AFXEXT;GUILIB_EXPORTS;$(NoInherit)"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
+						PreprocessorDefinitions=""/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="GuiToolButton.cpp"
-				>
+				RelativePath="GuiToolButton.cpp">
 				<FileConfiguration
-					Name="Debug Unicode|Win32"
-					>
+					Name="Debug Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_WINDLL;_AFXDLL;_MBCS;_AFXEXT;_UNICODE;GUILIB_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release Unicode|Win32"
-					>
+					Name="Release Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
 						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_WINDLL;_AFXDLL;_UNICODE;_MBCS;_AFXEXT;GUILIB_EXPORTS;$(NoInherit)"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
+						PreprocessorDefinitions=""/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="GuiView.cpp"
-				>
+				RelativePath="GuiView.cpp">
 				<FileConfiguration
-					Name="Debug Unicode|Win32"
-					>
+					Name="Debug Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_WINDLL;_AFXDLL;_MBCS;_AFXEXT;_UNICODE;GUILIB_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release Unicode|Win32"
-					>
+					Name="Release Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
 						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_WINDLL;_AFXDLL;_UNICODE;_MBCS;_AFXEXT;GUILIB_EXPORTS;$(NoInherit)"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
+						PreprocessorDefinitions=""/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="GuiViewWorkTab.cpp"
-				>
+				RelativePath="GuiViewWorkTab.cpp">
 				<FileConfiguration
-					Name="Debug Unicode|Win32"
-					>
+					Name="Debug Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_WINDLL;_AFXDLL;_MBCS;_AFXEXT;_UNICODE;GUILIB_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release Unicode|Win32"
-					>
+					Name="Release Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
 						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_WINDLL;_AFXDLL;_UNICODE;_MBCS;_AFXEXT;GUILIB_EXPORTS;$(NoInherit)"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
+						PreprocessorDefinitions=""/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="GuiVisioFolder.cpp"
-				>
+				RelativePath="GuiVisioFolder.cpp">
 				<FileConfiguration
-					Name="Debug Unicode|Win32"
-					>
+					Name="Debug Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_WINDLL;_AFXDLL;_MBCS;_AFXEXT;_UNICODE;GUILIB_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release Unicode|Win32"
-					>
+					Name="Release Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
 						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_WINDLL;_AFXDLL;_UNICODE;_MBCS;_AFXEXT;GUILIB_EXPORTS;$(NoInherit)"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
+						PreprocessorDefinitions=""/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="GuiWorkPanel.cpp"
-				>
+				RelativePath="GuiWorkPanel.cpp">
 				<FileConfiguration
-					Name="Debug Unicode|Win32"
-					>
+					Name="Debug Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_WINDLL;_AFXDLL;_MBCS;_AFXEXT;_UNICODE;GUILIB_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release Unicode|Win32"
-					>
+					Name="Release Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
 						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_WINDLL;_AFXDLL;_UNICODE;_MBCS;_AFXEXT;GUILIB_EXPORTS;$(NoInherit)"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
+						PreprocessorDefinitions=""/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="GuiWorkTab.cpp"
-				>
+				RelativePath="GuiWorkTab.cpp">
 				<FileConfiguration
-					Name="Debug Unicode|Win32"
-					>
+					Name="Debug Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_WINDLL;_AFXDLL;_MBCS;_AFXEXT;_UNICODE;GUILIB_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release Unicode|Win32"
-					>
+					Name="Release Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
 						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_WINDLL;_AFXDLL;_UNICODE;_MBCS;_AFXEXT;GUILIB_EXPORTS;$(NoInherit)"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
+						PreprocessorDefinitions=""/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="MenuBar.cpp"
-				>
+				RelativePath="MenuBar.cpp">
 				<FileConfiguration
-					Name="Debug Unicode|Win32"
-					>
+					Name="Debug Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_WINDLL;_AFXDLL;_MBCS;_AFXEXT;_UNICODE;GUILIB_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release Unicode|Win32"
-					>
+					Name="Release Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
 						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_WINDLL;_AFXDLL;_UNICODE;_MBCS;_AFXEXT;GUILIB_EXPORTS;$(NoInherit)"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
+						PreprocessorDefinitions=""/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="NewMenu.cpp"
-				>
+				RelativePath="NewMenu.cpp">
 				<FileConfiguration
-					Name="Debug Unicode|Win32"
-					>
+					Name="Debug Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_WINDLL;_AFXDLL;_MBCS;_AFXEXT;_UNICODE;GUILIB_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release Unicode|Win32"
-					>
+					Name="Release Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
 						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_WINDLL;_AFXDLL;_UNICODE;_MBCS;_AFXEXT;GUILIB_EXPORTS;$(NoInherit)"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
+						PreprocessorDefinitions=""/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="StdAfx.cpp"
-				>
+				RelativePath="StdAfx.cpp">
 				<FileConfiguration
-					Name="Debug Unicode|Win32"
-					>
+					Name="Debug Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_WINDLL;_AFXDLL;_MBCS;_AFXEXT;_UNICODE;GUILIB_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"
 						UsePrecompiledHeader="1"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release Unicode|Win32"
-					>
+					Name="Release Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
 						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_WINDLL;_AFXDLL;_UNICODE;_MBCS;_AFXEXT;GUILIB_EXPORTS;$(NoInherit)"
 						UsePrecompiledHeader="1"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
 						UsePrecompiledHeader="1"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
 						PreprocessorDefinitions=""
-						UsePrecompiledHeader="1"
-					/>
+						UsePrecompiledHeader="1"/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="Subclass.cpp"
-				>
+				RelativePath="Subclass.cpp">
 				<FileConfiguration
-					Name="Debug Unicode|Win32"
-					>
+					Name="Debug Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_WINDLL;_AFXDLL;_MBCS;_AFXEXT;_UNICODE;GUILIB_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release Unicode|Win32"
-					>
+					Name="Release Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
 						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_WINDLL;_AFXDLL;_UNICODE;_MBCS;_AFXEXT;GUILIB_EXPORTS;$(NoInherit)"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
+						PreprocessorDefinitions=""/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="VisualStylesXP.cpp"
-				>
+				RelativePath="VisualStylesXP.cpp">
 				<FileConfiguration
-					Name="Debug Unicode|Win32"
-					>
+					Name="Debug Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_WINDLL;_AFXDLL;_MBCS;_AFXEXT;_UNICODE;GUILIB_EXPORTS;$(NoInherit)"
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release Unicode|Win32"
-					>
+					Name="Release Unicode|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
 						PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_WINDLL;_AFXDLL;_UNICODE;_MBCS;_AFXEXT;GUILIB_EXPORTS;$(NoInherit)"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="0"
 						PreprocessorDefinitions=""
 						BasicRuntimeChecks="3"
-						BrowseInformation="1"
-					/>
+						BrowseInformation="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
+						PreprocessorDefinitions=""/>
 				</FileConfiguration>
 			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
-			Filter="h;hpp;hxx;hm;inl"
-			>
+			Filter="h;hpp;hxx;hm;inl">
 			<File
-				RelativePath="CBaseTab.h"
-				>
+				RelativePath="CBaseTab.h">
 			</File>
 			<File
-				RelativePath="CGuiEditView.h"
-				>
+				RelativePath="CGuiEditView.h">
 			</File>
 			<File
-				RelativePath="CoolMenu.h"
-				>
+				RelativePath="CoolMenu.h">
 			</File>
 			<File
-				RelativePath="GuiADODB.h"
-				>
+				RelativePath="GuiADODB.h">
 			</File>
 			<File
-				RelativePath="GuiBaseTab.h"
-				>
+				RelativePath="GuiBaseTab.h">
 			</File>
 			<File
-				RelativePath="GuiButton.h"
-				>
+				RelativePath="GuiButton.h">
 			</File>
 			<File
-				RelativePath="GuiButtonDoc.h"
-				>
+				RelativePath="GuiButtonDoc.h">
 			</File>
 			<File
-				RelativePath="GuiButtonTimer.h"
-				>
+				RelativePath="GuiButtonTimer.h">
 			</File>
 			<File
-				RelativePath="GuiCapOutBar.h"
-				>
+				RelativePath="GuiCapOutBar.h">
 			</File>
 			<File
-				RelativePath="GuicheckBox.h"
-				>
+				RelativePath="GuicheckBox.h">
 			</File>
 			<File
-				RelativePath="GuiColors.h"
-				>
+				RelativePath="GuiColors.h">
 			</File>
 			<File
-				RelativePath="GuiComboBoxExt.h"
-				>
+				RelativePath="GuiComboBoxExt.h">
 			</File>
 			<File
-				RelativePath="GuiComboFont.h"
-				>
+				RelativePath="GuiComboFont.h">
 			</File>
 			<File
-				RelativePath="GuiContainer.h"
-				>
+				RelativePath="GuiContainer.h">
 			</File>
 			<File
-				RelativePath="GuiControlBar.h"
-				>
+				RelativePath="GuiControlBar.h">
 			</File>
 			<File
-				RelativePath="GuiDocBarExten.h"
-				>
+				RelativePath="GuiDocBarExten.h">
 			</File>
 			<File
-				RelativePath="GuiDocBarExtenEx.h"
-				>
+				RelativePath="GuiDocBarExtenEx.h">
 			</File>
 			<File
-				RelativePath="GuiDockBar.h"
-				>
+				RelativePath="GuiDockBar.h">
 			</File>
 			<File
-				RelativePath="GuiDockContext.h"
-				>
+				RelativePath="GuiDockContext.h">
 			</File>
 			<File
-				RelativePath="GuiDockToolBar.h"
-				>
+				RelativePath="GuiDockToolBar.h">
 			</File>
 			<File
-				RelativePath="GuiDockToolBarEx.h"
-				>
+				RelativePath="GuiDockToolBarEx.h">
 			</File>
 			<File
-				RelativePath="GuiDocSpecial.h"
-				>
+				RelativePath="GuiDocSpecial.h">
 			</File>
 			<File
-				RelativePath="GuiDrawLayer.h"
-				>
+				RelativePath="GuiDrawLayer.h">
 			</File>
 			<File
-				RelativePath="GuiDropDownEdit.h"
-				>
+				RelativePath="GuiDropDownEdit.h">
 			</File>
 			<File
-				RelativePath="GuiEdit.h"
-				>
+				RelativePath="GuiEdit.h">
 			</File>
 			<File
-				RelativePath="GuiFDir.h"
-				>
+				RelativePath="GuiFDir.h">
 			</File>
 			<File
-				RelativePath="GuiFile.h"
-				>
+				RelativePath="GuiFile.h">
 			</File>
 			<File
-				RelativePath="GuiFolder.h"
-				>
+				RelativePath="GuiFolder.h">
 			</File>
 			<File
-				RelativePath="GuiFolderFlat.h"
-				>
+				RelativePath="GuiFolderFlat.h">
 			</File>
 			<File
-				RelativePath="GuiFrameWnd.h"
-				>
+				RelativePath="GuiFrameWnd.h">
 			</File>
 			<File
-				RelativePath="GuiGridLayout.h"
-				>
+				RelativePath="GuiGridLayout.h">
 			</File>
 			<File
-				RelativePath="GuiGroupBox.h"
-				>
+				RelativePath="GuiGroupBox.h">
 			</File>
 			<File
-				RelativePath="GuiHeaderCtrl.h"
-				>
+				RelativePath="GuiHeaderCtrl.h">
 			</File>
 			<File
-				RelativePath="GuiImageLinkButton.h"
-				>
+				RelativePath="GuiImageLinkButton.h">
 			</File>
 			<File
-				RelativePath="GuiLabelButton.h"
-				>
+				RelativePath="GuiLabelButton.h">
 			</File>
 			<File
-				RelativePath="GuiLib.h"
-				>
+				RelativePath="GuiLib.h">
 			</File>
 			<File
-				RelativePath="GuiLibRes.h"
-				>
+				RelativePath="GuiLibRes.h">
 			</File>
 			<File
-				RelativePath="GuiLinkButton.h"
-				>
+				RelativePath="GuiLinkButton.h">
 			</File>
 			<File
-				RelativePath="GuiListEdit.h"
-				>
+				RelativePath="GuiListEdit.h">
 			</File>
 			<File
-				RelativePath="GuiMDIFrame.h"
-				>
+				RelativePath="GuiMDIFrame.h">
 			</File>
 			<File
-				RelativePath="GuiMDITabbed.h"
-				>
+				RelativePath="GuiMDITabbed.h">
 			</File>
 			<File
-				RelativePath="GuiMDIWindowsDlg.h"
-				>
+				RelativePath="GuiMDIWindowsDlg.h">
 			</File>
 			<File
-				RelativePath="GuiMiniFrame.h"
-				>
+				RelativePath="GuiMiniFrame.h">
 			</File>
 			<File
-				RelativePath="GuiMiniFrameWnd.h"
-				>
+				RelativePath="GuiMiniFrameWnd.h">
 			</File>
 			<File
-				RelativePath="GuiMiniSplitter.h"
-				>
+				RelativePath="GuiMiniSplitter.h">
 			</File>
 			<File
-				RelativePath="GuiMiniTool.h"
-				>
+				RelativePath="GuiMiniTool.h">
 			</File>
 			<File
-				RelativePath="GuiNormalButton.h"
-				>
+				RelativePath="GuiNormalButton.h">
 			</File>
 			<File
-				RelativePath="GuiOfficeBar.h"
-				>
+				RelativePath="GuiOfficeBar.h">
 			</File>
 			<File
-				RelativePath="GuiOutLook.h"
-				>
+				RelativePath="GuiOutLook.h">
 			</File>
 			<File
-				RelativePath="GuiOutLookView.h"
-				>
+				RelativePath="GuiOutLookView.h">
 			</File>
 			<File
-				RelativePath="GuiPanelAccess.h"
-				>
+				RelativePath="GuiPanelAccess.h">
 			</File>
 			<File
-				RelativePath="GuiPanelWnd.h"
-				>
+				RelativePath="GuiPanelWnd.h">
 			</File>
 			<File
-				RelativePath="GuiPowerPointView.h"
-				>
+				RelativePath="GuiPowerPointView.h">
 			</File>
 			<File
-				RelativePath="GuiRadioButton.h"
-				>
+				RelativePath="GuiRadioButton.h">
 			</File>
 			<File
-				RelativePath="GuiSliderCtrl.h"
-				>
+				RelativePath="GuiSliderCtrl.h">
 			</File>
 			<File
-				RelativePath="GuiSplitter.h"
-				>
+				RelativePath="GuiSplitter.h">
 			</File>
 			<File
-				RelativePath="GuiSplitterWnd.h"
-				>
+				RelativePath="GuiSplitterWnd.h">
 			</File>
 			<File
-				RelativePath="GuiStaticStandar.h"
-				>
+				RelativePath="GuiStaticStandar.h">
 			</File>
 			<File
-				RelativePath="GuiStatusBar.h"
-				>
+				RelativePath="GuiStatusBar.h">
 			</File>
 			<File
-				RelativePath="GuiSysTray.h"
-				>
+				RelativePath="GuiSysTray.h">
 			</File>
 			<File
-				RelativePath="GuiTabbed.h"
-				>
+				RelativePath="GuiTabbed.h">
 			</File>
 			<File
-				RelativePath="GuiTabPowerPoint.h"
-				>
+				RelativePath="GuiTabPowerPoint.h">
 			</File>
 			<File
-				RelativePath="GuiTabWnd.h"
-				>
+				RelativePath="GuiTabWnd.h">
 			</File>
 			<File
-				RelativePath="GuiToolBarWnd.h"
-				>
+				RelativePath="GuiToolBarWnd.h">
 			</File>
 			<File
-				RelativePath="GuiToolButton.h"
-				>
+				RelativePath="GuiToolButton.h">
 			</File>
 			<File
-				RelativePath="GuiView.h"
-				>
+				RelativePath="GuiView.h">
 			</File>
 			<File
-				RelativePath="GuiViewWorkTab.h"
-				>
+				RelativePath="GuiViewWorkTab.h">
 			</File>
 			<File
-				RelativePath="GuiVisioFolder.h"
-				>
+				RelativePath="GuiVisioFolder.h">
 			</File>
 			<File
-				RelativePath="GuiWorkPanel.h"
-				>
+				RelativePath="GuiWorkPanel.h">
 			</File>
 			<File
-				RelativePath="GuiWorkTab.h"
-				>
+				RelativePath="GuiWorkTab.h">
 			</File>
 			<File
-				RelativePath="MenuBar.h"
-				>
+				RelativePath="MenuBar.h">
 			</File>
 			<File
-				RelativePath="NewMenu.h"
-				>
+				RelativePath="NewMenu.h">
 			</File>
 			<File
-				RelativePath="StdAfx.h"
-				>
+				RelativePath="StdAfx.h">
 			</File>
 			<File
-				RelativePath="Subclass.h"
-				>
+				RelativePath="Subclass.h">
 			</File>
 			<File
-				RelativePath=".\validate.h"
-				>
+				RelativePath=".\validate.h">
 			</File>
 			<File
-				RelativePath="VisualStylesXP.h"
-				>
+				RelativePath="VisualStylesXP.h">
 			</File>
 		</Filter>
 		<Filter
 			Name="Resource Files"
-			Filter="ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"
-			>
+			Filter="ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe">
 			<File
-				RelativePath="arrowdow.ico"
-				>
+				RelativePath="arrowdow.ico">
 			</File>
 			<File
-				RelativePath="arrowrig.ico"
-				>
+				RelativePath="arrowrig.ico">
 			</File>
 			<File
-				RelativePath="res\bitmap1.bmp"
-				>
+				RelativePath="bitmap1.bmp">
 			</File>
 			<File
-				RelativePath="bitmap1.bmp"
-				>
+				RelativePath="res\bitmap1.bmp">
 			</File>
 			<File
-				RelativePath="bitmap2.bmp"
-				>
+				RelativePath="bitmap2.bmp">
 			</File>
 			<File
-				RelativePath="bitmap3.bmp"
-				>
+				RelativePath="bitmap3.bmp">
 			</File>
 			<File
-				RelativePath="bitmap4.bmp"
-				>
+				RelativePath="bitmap4.bmp">
 			</File>
 			<File
-				RelativePath="bitradio.bmp"
-				>
+				RelativePath="bitradio.bmp">
 			</File>
 			<File
-				RelativePath="res\bmp00001.bmp"
-				>
+				RelativePath="bmp00001.bmp">
 			</File>
 			<File
-				RelativePath="bmp00001.bmp"
-				>
+				RelativePath="res\bmp00001.bmp">
 			</File>
 			<File
-				RelativePath="res\DockOffice.bmp"
-				>
+				RelativePath="DockOffice.bmp">
 			</File>
 			<File
-				RelativePath="DockOffice.bmp"
-				>
+				RelativePath="res\DockOffice.bmp">
 			</File>
 			<File
-				RelativePath="res\guiarrowdown.ico"
-				>
+				RelativePath="res\guiarrowdown.ico">
 			</File>
 			<File
-				RelativePath="res\guiarrowright.ico"
-				>
+				RelativePath="res\guiarrowright.ico">
 			</File>
 			<File
-				RelativePath="res\GuiDefault.bmp"
-				>
+				RelativePath="res\GuiDefault.bmp">
 			</File>
 			<File
-				RelativePath="res\guidockbar.bmp"
-				>
+				RelativePath="res\guidockbar.bmp">
 			</File>
 			<File
-				RelativePath="res\guidockoffice.bmp"
-				>
+				RelativePath="res\guidockoffice.bmp">
 			</File>
 			<File
-				RelativePath="res\GuiLib.rc2"
-				>
+				RelativePath="res\GuiLib.rc2">
 			</File>
 			<File
-				RelativePath="res\guimdiicons.bmp"
-				>
+				RelativePath="res\guimdiicons.bmp">
 			</File>
 			<File
-				RelativePath="ico00001.ico"
-				>
+				RelativePath="ico00001.ico">
 			</File>
 			<File
-				RelativePath="res\ico00001.ico"
-				>
+				RelativePath="res\ico00001.ico">
 			</File>
 			<File
-				RelativePath="ico00002.ico"
-				>
+				RelativePath="ico00002.ico">
 			</File>
 			<File
-				RelativePath="res\ico238.ico"
-				>
+				RelativePath="res\ico238.ico">
 			</File>
 			<File
-				RelativePath="res\ico239.ico"
-				>
+				RelativePath="res\ico239.ico">
 			</File>
 			<File
-				RelativePath="res\icon1.ico"
-				>
+				RelativePath="icon1.ico">
 			</File>
 			<File
-				RelativePath="icon1.ico"
-				>
+				RelativePath="res\icon1.ico">
 			</File>
 			<File
-				RelativePath="idc_hand.ico"
-				>
+				RelativePath="idc_hand.ico">
 			</File>
 		</Filter>
 		<File
-			RelativePath="ReadMe.txt"
-			>
+			RelativePath="ReadMe.txt">
 		</File>
 	</Files>
 	<Globals>
