@@ -23,7 +23,7 @@ public:
 	CDlgImageRule(CWnd* pParent = NULL);   // 标准构造函数
 	virtual ~CDlgImageRule();
 
-// 对话框数据
+// 对话框数据 
 	enum { IDD = IDD_DLG_IMAGERULES };
 
 	virtual void OnApply();

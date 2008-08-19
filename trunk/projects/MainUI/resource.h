@@ -5,11 +5,16 @@
 #define IDM_ABOUTBOX                    0x0010
 #define IDD_ABOUTBOX                    100
 #define IDS_ABOUTBOX                    101
+#define IDC_TRAY_MENU                   101
 #define IDD_MAINUI_DIALOG               102
 #define IDS_TREE_LEV1_RULES             102
 #define IDS_COMMENT_DNS                 103
 #define IDS_COMMENT_IMAGE               104
 #define IDS_COMMENT_TEXT                105
+#define IDS_TREE_OPTIONS                106
+#define IDS_TREE_EYECARE                107
+#define IDS_TRAYMENU_SHOWUI             108
+#define IDS_TRAYMENU_HIDEUI             109
 #define IDR_MAINFRAME                   128
 #define IDD_DLG_HELP                    129
 #define IDD_DLG_ABOUT                   130
@@ -21,6 +26,10 @@
 #define IDD_DLG_BLACKWORD               137
 #define IDD_LEV1_RULE                   138
 #define IDB_BITMAP_CHECKMARK            139
+#define IDD_DLG_TEXT                    140
+#define IDD_DLG_OPTION                  141
+#define IDD_DLG_TOOLS                   142
+#define IDD_DLG_EYECARE                 144
 #define IDC_TREE_NAVIG                  1000
 #define IDS_TREE_ROOT                   1001
 #define IDS_TREE_DNS_RULE               1002
@@ -33,6 +42,7 @@
 #define IDC_STALIST                     1005
 #define IDC_CHK_GIF                     1005
 #define IDS_TREE_CONTENT_RULE           1005
+#define IDC_CANCEL                      1005
 #define IDC_APPLY                       1006
 #define IDC_LIST1                       1006
 #define IDC_CHK_PNG                     1006
@@ -54,18 +64,44 @@
 #define IDC_STA_IMAGE_CHECK             1022
 #define IDC_STA_IMAGESIZE               1023
 #define IDC_STA_COMMENT                 1024
+#define IDC_CHECK1                      1025
+#define IDC_CHK_TIMECTRL                1025
+#define IDC_STA_SYSTEM                  1027
+#define IDC_STA_OTHERS                  1028
+#define IDC_CHK_AUTOLOAD                1029
+#define IDC_STA_CELLS                   1030
+#define IDC_OK                          1031
 #define IDC_EDIT1                       4011
 #define IDC_EDIT2                       4012
+#define IDC_WND_HELLO                   5000
+#define IDC_CELL_BEGIN                  5500
 #define IDC_POSITION_LEFT               8001
 #define IDC_POSITION_RIGHT              8002
+#define IDC_MENU_SYSTRAY                32000
+#define IDC_MENU_TRAY                   32000
+#define ID_Menu                         32771
+#define ID_MAIN                         32772
+#define ID_MAIN_WEBSITES                32774
+#define ID_MAIN_EXIT                    32775
+#define ID_WEBSITES_WWW                 32777
+#define ID__HELLO                       32778
+#define ID__HELLO2                      32779
+#define ID_TRAYMENU_SWITCH              32780
+#define ID_POPUP_A1                     32781
+#define ID_POPUP_A2                     32782
+#define ID_TRAYMENU_MAINUI              32784
+#define ID_Menu32785                    32785
+#define ID__FFFFFFFFFFFFFFFFFFFFFFFFFFF 32786
+#define ID__WEBSITES                    32787
+#define ID_WEBSITES_WWW32788            32788
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        140
-#define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1025
+#define _APS_NEXT_RESOURCE_VALUE        147
+#define _APS_NEXT_COMMAND_VALUE         32791
+#define _APS_NEXT_CONTROL_VALUE         1033
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

@@ -22,4 +22,7 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	virtual BOOL OnInitDialog();
+	afx_msg void OnLbnKillfocusList1();
+	afx_msg void OnLbnSelcancelList1();
+	afx_msg void OnLbnSelchangeList1();
 };

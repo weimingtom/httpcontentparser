@@ -74,7 +74,7 @@ IDR_MAINFRAME           ICON                    "res\\MainUI.ico"
 IDD_ABOUTBOX DIALOGEX 0, 0, 235, 55
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | 
     WS_SYSMENU
-CAPTION "关于 MainUI"
+CAPTION " "
 FONT 9, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     ICON            IDR_MAINFRAME,IDC_STATIC,11,17,20,20
@@ -83,26 +83,27 @@ BEGIN
     DEFPUSHBUTTON   "确定",IDOK,178,7,50,16,WS_GROUP
 END
 
-IDD_MAINUI_DIALOG DIALOGEX 0, 0, 338, 269
-STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_VISIBLE | 
+IDD_MAINUI_DIALOG DIALOGEX 0, 0, 424, 271
+STYLE DS_SETFONT | DS_MODALFRAME | WS_MINIMIZEBOX | WS_POPUP | WS_VISIBLE | 
     WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_APPWINDOW
 CAPTION "MainUI"
-FONT 9, "MS Shell Dlg", 0, 0, 0x1
+FONT 8, "Microsoft Sans Serif", 400, 0, 0x0
 BEGIN
     CONTROL         "",IDC_POSITION_LEFT,"Static",SS_BLACKFRAME | NOT 
-                    WS_VISIBLE,7,7,87,255
-    CONTROL         "",IDC_STATIC,"Static",SS_BLACKFRAME,100,7,231,232
-    PUSHBUTTON      "OK",IDC_BUTTON1,198,248,40,14,BS_FLAT
-    PUSHBUTTON      "Cancel",IDC_BUTTON2,247,248,36,14,BS_FLAT
-    PUSHBUTTON      "Apply",IDC_APPLY,291,248,40,14,BS_FLAT
-    LTEXT           "Title",IDC_RIGHT_TITLE,114,19,56,11
-    CONTROL         "",IDC_POSITION_RIGHT,"Static",SS_BLACKFRAME | NOT 
-                    WS_VISIBLE,107,43,222,194
-    CONTROL         "",IDC_STATIC,"Static",SS_BLACKFRAME,110,32,214,1
+                    WS_VISIBLE,7,7,87,257
+    CONTROL         "",IDC_STATIC,"Static",SS_BLACKFRAME,149,7,268,232
+    CONTROL         "OK",IDC_OK,"Button",BS_OWNERDRAW | WS_TABSTOP,268,250,
+                    40,14
+    PUSHBUTTON      "Cancel",IDC_CANCEL,325,250,36,14,BS_FLAT
+    PUSHBUTTON      "Apply",IDC_APPLY,377,250,40,14,BS_FLAT
+    LTEXT           "Title",IDC_RIGHT_TITLE,165,18,56,11
+    CONTROL         "",IDC_STATIC,"Static",SS_BLACKFRAME,161,31,244,1
     CONTROL         "",IDC_TREE_NAVIG,"SysTreeView32",TVS_HASBUTTONS | 
                     TVS_HASLINES | TVS_NOSCROLL | WS_BORDER | WS_TABSTOP,7,7,
-                    87,255,WS_EX_STATICEDGE
+                    87,257,WS_EX_STATICEDGE
+    CONTROL         "",IDC_POSITION_RIGHT,"Static",SS_BLACKFRAME | NOT 
+                    WS_VISIBLE,156,40,254,194
 END
 
 IDD_DLG_HELP DIALOGEX 0, 0, 266, 177
@@ -110,6 +111,8 @@ STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
     GROUPBOX        "静态",IDC_STATIC,7,7,252,163
+    LISTBOX         IDC_LIST1,169,60,90,110,LBS_SORT | LBS_NOINTEGRALHEIGHT | 
+                    WS_VSCROLL | WS_TABSTOP
 END
 
 IDD_DLG_ABOUT DIALOGEX 0, 0, 222, 195
@@ -124,7 +127,7 @@ STYLE DS_SETFONT | WS_CHILD | WS_SYSMENU
 FONT 8, "Microsoft Sans Serif", 400, 0, 0x0
 BEGIN
     GROUPBOX        "Image Type",IDC_STA_IMAGETYPE,7,62,170,58,BS_FLAT
-    CONTROL         " JPEG",IDC_CHK_JPEG,"Button",BS_AUTOCHECKBOX | 
+    CONTROL         " 图片JPEG",IDC_CHK_JPEG,"Button",BS_AUTOCHECKBOX | 
                     WS_TABSTOP,23,81,51,10
     CONTROL         " BMP",IDC_CHK_BMP,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
                     24,97,62,10
@@ -141,30 +144,44 @@ BEGIN
     EDITTEXT        IDC_EDIT2,16,149,149,14,ES_CENTER | ES_AUTOHSCROLL
 END
 
-IDD_DLG_ONLINE_RULE DIALOGEX 0, 0, 266, 177
+IDD_DLG_ONLINE_RULE DIALOGEX 0, 0, 283, 192
 STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
+    LTEXT           "",IDC_STA_CELLS,26,7,225,121,NOT WS_VISIBLE
+    LTEXT           "Mon.",IDC_STATIC,7,23,17,8
+    LTEXT           "Tues",IDC_STATIC,7,38,16,8
+    LTEXT           "Wed.",IDC_STATIC,7,53,18,8
+    LTEXT           "Thurs.",IDC_STATIC,7,68,22,8
+    LTEXT           "Fri.",IDC_STATIC,7,82,12,8
+    LTEXT           "Sat.",IDC_STATIC,7,98,15,8
+    LTEXT           "Sun.",IDC_STATIC,7,113,15,8
+    LTEXT           "00:00",IDC_STATIC,22,7,20,8
+    LTEXT           "24:00",IDC_STATIC,231,7,20,8
+    CONTROL         "Time Control",IDC_CHK_TIMECTRL,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,107,145,64,10
+    LTEXT           "12:00",IDC_STATIC,126,7,20,8
 END
 
-IDD_DLG_DNS_RULE DIALOGEX 0, 0, 218, 194
+IDD_DLG_DNS_RULE DIALOGEX 0, 0, 250, 200
 STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
-    LTEXT           "静态",IDC_DNS_LIST,7,7,204,180
+    LTEXT           "静态",IDC_DNS_LIST,7,7,236,186
 END
 
-IDD_DLG_SEARCH_RULE DIALOGEX 0, 0, 218, 194
+IDD_DLG_SEARCH_RULE DIALOGEX 0, 0, 250, 200
 STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
-    LTEXT           "静态",IDC_SEARCH_LIST,7,7,204,180
+    LTEXT           "静态",IDC_SEARCH_LIST,7,7,236,186
 END
 
-IDD_DLG_CONTENT DIALOGEX 0, 0, 266, 177
+IDD_DLG_CONTENT DIALOGEX 0, 0, 250, 200
 STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
+    LTEXT           "静态",IDC_STA_CELLS,34,30,209,163,NOT WS_VISIBLE
 END
 
 IDD_DLG_BLACKWORD DIALOGEX 0, 0, 293, 195
@@ -184,6 +201,35 @@ BEGIN
     GROUPBOX        "说明",IDC_STA_COMMENT,7,7,248,185
     EDITTEXT        IDC_COMMENT,18,25,228,151,ES_MULTILINE | ES_READONLY | 
                     NOT WS_BORDER,WS_EX_STATICEDGE
+END
+
+IDD_DLG_TEXT DIALOGEX 0, 0, 250, 172
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+END
+
+IDD_DLG_OPTION DIALOGEX 0, 0, 250, 194
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CONTROL         "开机自动启动",IDC_CHK_AUTOLOAD,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,43,28,66,10
+    GROUPBOX        "系统设置",IDC_STA_SYSTEM,7,7,225,52
+    GROUPBOX        "其它",IDC_STA_OTHERS,12,86,223,94
+END
+
+IDD_DLG_TOOLS DIALOGEX 0, 0, 210, 143
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_POPUP | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+END
+
+IDD_DLG_EYECARE DIALOGEX 0, 0, 250, 201
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    GROUPBOX        "Eyecare",IDC_STATIC,7,7,236,187
 END
 
 
@@ -245,9 +291,9 @@ BEGIN
     IDD_MAINUI_DIALOG, DIALOG
     BEGIN
         LEFTMARGIN, 7
-        RIGHTMARGIN, 331
+        RIGHTMARGIN, 417
         TOPMARGIN, 7
-        BOTTOMMARGIN, 262
+        BOTTOMMARGIN, 264
     END
 
     IDD_DLG_HELP, DIALOG
@@ -277,33 +323,33 @@ BEGIN
     IDD_DLG_ONLINE_RULE, DIALOG
     BEGIN
         LEFTMARGIN, 7
-        RIGHTMARGIN, 259
+        RIGHTMARGIN, 276
         TOPMARGIN, 7
-        BOTTOMMARGIN, 170
+        BOTTOMMARGIN, 185
     END
 
     IDD_DLG_DNS_RULE, DIALOG
     BEGIN
         LEFTMARGIN, 7
-        RIGHTMARGIN, 211
+        RIGHTMARGIN, 243
         TOPMARGIN, 7
-        BOTTOMMARGIN, 187
+        BOTTOMMARGIN, 193
     END
 
     IDD_DLG_SEARCH_RULE, DIALOG
     BEGIN
         LEFTMARGIN, 7
-        RIGHTMARGIN, 211
+        RIGHTMARGIN, 243
         TOPMARGIN, 7
-        BOTTOMMARGIN, 187
+        BOTTOMMARGIN, 193
     END
 
     IDD_DLG_CONTENT, DIALOG
     BEGIN
         LEFTMARGIN, 7
-        RIGHTMARGIN, 259
+        RIGHTMARGIN, 243
         TOPMARGIN, 7
-        BOTTOMMARGIN, 170
+        BOTTOMMARGIN, 193
     END
 
     IDD_DLG_BLACKWORD, DIALOG
@@ -321,6 +367,38 @@ BEGIN
         TOPMARGIN, 7
         BOTTOMMARGIN, 192
     END
+
+    IDD_DLG_TEXT, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 243
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 165
+    END
+
+    IDD_DLG_OPTION, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 243
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 187
+    END
+
+    IDD_DLG_TOOLS, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 203
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 136
+    END
+
+    IDD_DLG_EYECARE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 243
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 194
+    END
 END
 #endif    // APSTUDIO_INVOKED
 
@@ -331,6 +409,39 @@ END
 //
 
 IDB_BITMAP_CHECKMARK    BITMAP                  "res\\optionmarks.bmp"
+#endif    // 中文(中华人民共和国) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// 英语(美国) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDC_MENU_TRAY MENU 
+BEGIN
+    POPUP "Main"
+    BEGIN
+        MENUITEM "Switch User",                 ID_TRAYMENU_SWITCH
+        MENUITEM "Show Main UI",                ID_TRAYMENU_MAINUI
+        POPUP "Websites"
+        BEGIN
+            MENUITEM "www.sina.com",                ID_WEBSITES_WWW32788
+        END
+        MENUITEM SEPARATOR
+        MENUITEM "Exit",                        ID_MAIN_EXIT
+    END
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -339,32 +450,36 @@ IDB_BITMAP_CHECKMARK    BITMAP                  "res\\optionmarks.bmp"
 
 STRINGTABLE 
 BEGIN
-    IDS_ABOUTBOX            "关于 MainUI(&A)..."
-    IDS_TREE_LEV1_RULES     "规则"
-    IDS_COMMENT_DNS         "DNS规则\r\n    阻止用户访问一些已知的不健康网站\r\n"
-    IDS_COMMENT_IMAGE       "图像规则\r\n    可以检查图片，并组织黄色图片的显示\r\n"
-    IDS_COMMENT_TEXT        "文本规则\r\n    通过对文本的检测确定网站是否是黄色网站\r\n"
+    IDS_ABOUTBOX            "About "
+    IDS_TREE_LEV1_RULES     "Content Rules"
+    IDS_COMMENT_DNS         "DNS1??ò\r\n    ×è?1ó??§·??êò?D?ò??aμ?2????μí???\r\n"
+    IDS_COMMENT_IMAGE       "í???1??ò\r\n    ?éò??ì2éí???￡?2￠×é?ˉ??é?í???μ???ê?\r\n"
+    IDS_COMMENT_TEXT        "??±?1??ò\r\n    í¨1y????±?μ??ì2aè·?¨í???ê?·?ê???é?í???\r\n"
+    IDS_TREE_OPTIONS        "Options"
+    IDS_TREE_EYECARE        "Eyecare"
+    IDS_TRAYMENU_SHOWUI     "Show Main Dialog"
+    IDS_TRAYMENU_HIDEUI     "Hide Main Dialog"
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_TREE_ROOT           "根节点"
-    IDS_TREE_DNS_RULE       "DNS规则"
-    IDS_TREE_IMAGE_RULE     "图像规则"
-    IDS_TREE_SEARCH_RULE    "搜索规则"
-    IDS_TREE_CONTENT_RULE   "内容过滤"
-    IDS_TREE_ONLINE_HOUR    "上网时间"
-    IDS_TREE_HELP           "帮助"
+    IDS_TREE_ROOT           "Main UI"
+    IDS_TREE_DNS_RULE       "DNS Black List"
+    IDS_TREE_IMAGE_RULE     "Image Content"
+    IDS_TREE_SEARCH_RULE    "Black Search Word"
+    IDS_TREE_CONTENT_RULE   "Text Content"
+    IDS_TREE_ONLINE_HOUR    "Time"
+    IDS_TREE_HELP           "Help"
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_TREE_ABOUT          "关于"
-    IDS_DNS_BLACK_LIST      "DNS黑名单"
-    IDS_DNS_WHITE_LIST      "DNS白名单"
+    IDS_TREE_ABOUT          "About"
+    IDS_DNS_BLACK_LIST      "DNS Black List"
+    IDS_DNS_WHITE_LIST      "DNS White List"
 END
 
-#endif    // 中文(中华人民共和国) resources
+#endif    // 英语(美国) resources
 /////////////////////////////////////////////////////////////////////////////
 
 
