@@ -2979,13 +2979,13 @@ copy ..\bin\GuiTk115Static.lib ..\..\..\lib
 				RelativePath="NewMenu.h">
 			</File>
 			<File
+				RelativePath=".\OnTextChanged.h">
+			</File>
+			<File
 				RelativePath="StdAfx.h">
 			</File>
 			<File
 				RelativePath="Subclass.h">
-			</File>
-			<File
-				RelativePath=".\validate.h">
 			</File>
 			<File
 				RelativePath="VisualStylesXP.h">
@@ -3001,10 +3001,10 @@ copy ..\bin\GuiTk115Static.lib ..\..\..\lib
 				RelativePath="arrowrig.ico">
 			</File>
 			<File
-				RelativePath="bitmap1.bmp">
+				RelativePath="res\bitmap1.bmp">
 			</File>
 			<File
-				RelativePath="res\bitmap1.bmp">
+				RelativePath="bitmap1.bmp">
 			</File>
 			<File
 				RelativePath="bitmap2.bmp">
@@ -3019,16 +3019,16 @@ copy ..\bin\GuiTk115Static.lib ..\..\..\lib
 				RelativePath="bitradio.bmp">
 			</File>
 			<File
-				RelativePath="bmp00001.bmp">
-			</File>
-			<File
 				RelativePath="res\bmp00001.bmp">
 			</File>
 			<File
-				RelativePath="DockOffice.bmp">
+				RelativePath="bmp00001.bmp">
 			</File>
 			<File
 				RelativePath="res\DockOffice.bmp">
+			</File>
+			<File
+				RelativePath="DockOffice.bmp">
 			</File>
 			<File
 				RelativePath="res\guiarrowdown.ico">
@@ -3067,10 +3067,10 @@ copy ..\bin\GuiTk115Static.lib ..\..\..\lib
 				RelativePath="res\ico239.ico">
 			</File>
 			<File
-				RelativePath="icon1.ico">
+				RelativePath="res\icon1.ico">
 			</File>
 			<File
-				RelativePath="res\icon1.ico">
+				RelativePath="icon1.ico">
 			</File>
 			<File
 				RelativePath="idc_hand.ico">

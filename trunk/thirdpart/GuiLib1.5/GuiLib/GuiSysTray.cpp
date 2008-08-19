@@ -79,14 +79,15 @@ BOOL CGuiSysTray::Add(UINT uID,UINT uCallBackMessage, HICON hIcon, LPCTSTR lpszT
   tnid.uFlags = NIF_ICON | NIF_TIP | NIF_MESSAGE;
   tnid.uCallbackMessage = uCallBackMessage;
   tnid.hIcon = hIcon;
-  _tcsncpy(tnid.szTip,lpszTip,sizeof(tnid.szTip)-1);
+
+  _tcscpy(tnid.szTip,lpszTip);
   return (Shell_NotifyIcon(NIM_ADD, &tnid));
 }
 
 BOOL CGuiSysTray::Update(UINT uID, HICON hIcon, LPCTSTR lpszTip)
 {
   tnid.hIcon = hIcon;
-  _tcsncpy(tnid.szTip,lpszTip,sizeof(tnid.szTip)-1);
+  _tcscpy(tnid.szTip,lpszTip);
   return (Shell_NotifyIcon(NIM_MODIFY, &tnid));
 }
 
@@ -110,7 +111,7 @@ BOOL CGuiSysTray::SetIcon(LPCTSTR lpszIcon)
 BOOL CGuiSysTray::SetTips(LPCTSTR lpszTip)
 {
   tnid.uFlags |= NIF_TIP;	
-  _tcsncpy(tnid.szTip,lpszTip,sizeof(tnid.szTip)-1);
+  _tcscpy(tnid.szTip,lpszTip);
   return (Shell_NotifyIcon(NIM_MODIFY, &tnid));
 }
 
@@ -134,7 +135,7 @@ BOOL CGuiSysTray::Create(CWnd* pParentWnd, UINT nID,UINT uCallBackMessage, HICON
 	if(Add(nID,uCallBackMessage,hIcon,lpszTip))
 		return TRUE;
 	else
-	return TRUE;
+		return TRUE;
 }
 
 void CGuiSysTray::SetSysMenu(CMenu* pMenu)
