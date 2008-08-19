@@ -27,7 +27,8 @@
 #include "GuiContainer.h"
 #include "GuiMiniTool.h"
 #include "GuiNormalButton.h"
-#include "validate.h"
+
+class OnTextChanged;
 
 class GUILIBDLLEXPORT CGuiListEdit : public CStatic
 {
@@ -50,11 +51,19 @@ public:
 
 	void SetStyle(Border border);
 	CString GetText(int nItem);
-	void AddItem(CString m_szCad);
+	bool AddItem(CString m_szCad);
 	int GetNumItem();
 	CGuiNormalButton m_toolBtn;
 	CListCtrl* GetListCtrl();
 	void EditItem(const int nItem, const CString &itemText);
+
+protected:
+	void OnDelete(const CString &str);
+	void OnBeginEdit(const CString &strOld);
+	bool OnEndEdit(const CString &strNew);
+	bool OnAdd(const CString &str);
+
+	OnTextChanged * onchanged_;
 public:
 	CGuiListEdit();
 	virtual ~CGuiListEdit();
@@ -72,9 +81,6 @@ public:
 	afx_msg void OnClickList(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnBeginlabeleditList(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnItemChanged(NMHDR *pNMHDR, LRESULT *pResult);
-protected:
-	ValidateData * validator_;
-	bool validate(const CString &str) const;
 };
 
 

@@ -22,6 +22,7 @@
 
 #include "stdafx.h"
 #include "GuiListEdit.h"
+#include "OnTextChanged.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -43,8 +44,7 @@ CGuiListEdit::CGuiListEdit()
 {
 	m_border=STYLEFRAME;
 	m_clrface=GuiDrawLayer::GetRGBColorFace();
-
-	validator_ = NULL;
+	onchanged_ = NULL;
 }
 
 CGuiListEdit::~CGuiListEdit()
@@ -64,22 +64,16 @@ BEGIN_MESSAGE_MAP(CGuiListEdit, CStatic)
 	ON_NOTIFY(NM_DBLCLK, LST_LIST, OnClickList)
 END_MESSAGE_MAP()
 
-bool CGuiListEdit::validate(const CString &str) const {
-	if (validator_) {
-		return validator_->validate((LPCTSTR)str);
-	} else {
-		return true;
-	}
-}
-
 // CGuiListEdit message handlers
 void CGuiListEdit::Delete()
 {
 	//solo nos interesa el seleccionado actualmente
-	int nItem=m_list->GetNextItem(-1,LVNI_SELECTED);
+	const int nItem=m_list->GetNextItem(-1,LVNI_SELECTED);
+	OnDelete(GetText(nItem)); // 当被删除时调用，子类可重载
 	m_list->DeleteItem(nItem);
 }
 
+//当用户点击New时，回被调用
 void CGuiListEdit::Insert(CString &itemText)
 {
 	CRect rc;
@@ -94,9 +88,11 @@ void CGuiListEdit::Edit() {
 	m_list->SetFocus();
 	const int nItem=m_list->GetNextItem(-1,LVNI_SELECTED);
 	CString itemText = GetText(nItem);
+	OnBeginEdit(itemText);
 	EditItem(nItem, itemText);
 }
 
+// 在对应的Items上显示Edit Control, 并显示相应文字以供修改
 void CGuiListEdit::EditItem(const int nItem, const CString &itemText) {
 	CRect rc;
 	m_list->SetItemData (nItem, 0);
@@ -134,15 +130,20 @@ void CGuiListEdit::OnInsert() {
 	Insert(CString(""));
 }
 
-void CGuiListEdit::AddItem(CString m_szCad)
-{
-	int nItem=m_list->GetItemCount();
-	nItem=m_list->InsertItem(nItem,m_szCad);
-	m_list->SetItemData (nItem, 0);
+bool CGuiListEdit::AddItem(CString szCad) {
+	// 首先判断添加啊的内容是否合法
+	if (OnAdd(szCad)) {
+		int nItem=m_list->GetItemCount();
+		nItem=m_list->InsertItem(nItem,szCad);
+		m_list->SetItemData (nItem, 0);
+		return true;
+	} else {
+		// ASSERT(false);
+		return false;
+	}
 }
 
-void CGuiListEdit::OnClickList(NMHDR* pNMHDR, LRESULT* pResult)
-{
+void CGuiListEdit::OnClickList(NMHDR* pNMHDR, LRESULT* pResult) {
 	int nActual=m_list->GetNextItem(-1,LVNI_SELECTED);
 	if (nActual == -1) {
 		Insert();
@@ -151,6 +152,7 @@ void CGuiListEdit::OnClickList(NMHDR* pNMHDR, LRESULT* pResult)
 	}
 }
 
+// 在用户结束编辑以后
 void CGuiListEdit::OnEndlabeleditList(NMHDR* pNMHDR, LRESULT* pResult) 
 {
 	LV_DISPINFO* pDispInfo = (LV_DISPINFO*)pNMHDR;
@@ -159,7 +161,7 @@ void CGuiListEdit::OnEndlabeleditList(NMHDR* pNMHDR, LRESULT* pResult)
 	CString itemText=pItem->pszText;
 	if (itemText.GetLength() == 0)
 		Delete();
-	if (!itemText.IsEmpty())
+	if (!itemText.IsEmpty() && OnEndEdit(itemText))
 		m_list->SetItemText(pItem->iItem,0,itemText);
 
 	*pResult = 0;
@@ -294,4 +296,30 @@ void CGuiListEdit::OnSize(UINT nType, int cx, int cy)
 CListCtrl* CGuiListEdit::GetListCtrl()
 {
 	return m_list;
+} 
+
+
+//==================================================
+void CGuiListEdit::OnDelete(const CString &str) {
+	if (onchanged_ != NULL)
+		onchanged_->OnAdd(str);
+}
+
+void CGuiListEdit::OnBeginEdit(const CString &strOld) {
+	if (onchanged_ != NULL)
+		onchanged_->OnBeginEdit(strOld);
+}
+
+bool CGuiListEdit::OnEndEdit(const CString &strNew) {
+	if (onchanged_ != NULL)
+		return onchanged_->OnEndEdit(strNew);
+	else
+		return true;
+}
+
+bool CGuiListEdit::OnAdd(const CString &str) {
+	if (onchanged_ != NULL)
+		return onchanged_->OnAdd(str);
+	else
+		return true;
 } 
