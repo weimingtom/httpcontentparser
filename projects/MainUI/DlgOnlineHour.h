@@ -1,6 +1,9 @@
 #pragma once
 
 #include ".\basedlg.h"
+#include ".\Cells.h"
+#include "afxwin.h"
+#include <Guilib1.5\GuiCheckBox.h>
 // CDlgOnlineHour 对话框
 
 class CDlgOnlineHour : public CBaseDlg
@@ -16,8 +19,13 @@ public:
 
 	virtual void OnApply();
 	virtual void OnShow();
+
+	CCells cells;
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 支持
 
 	DECLARE_MESSAGE_MAP()
+public:
+	virtual BOOL OnInitDialog();
+	CGuiCheckBox m_chkTimeCtrl;
 };

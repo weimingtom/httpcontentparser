@@ -11,7 +11,14 @@
 #include "dlgdnsrule.h"
 #include "dlgsearchrule.h"
 #include "Lev1DlgRules.h"
+#include "DlgOptions.h"
+#include "DlgEyecare.h"
 #include ".\basedlg.h"
+#include "afxwin.h"
+
+#include <Guilib1.5\GuiButton.h>
+#include <Guilib1.5\GuisysTray.h>
+#include <Guilib1.5\NewMenu.h>
 
 // CMainUIDlg 对话框
 class CMainUIDlg : public CDialog
@@ -46,7 +53,13 @@ private:
 	void setCurDlg(const DWORD item);
 	void initDlgs();
 	void showDlg();
+
+	// 设置System Tray Menu;
+	void setupTrayMenu();
+
 	// dlgs
+	CDlgEyecare	m_dlgEyecare;
+	CDlgOptions m_dlgOptions;
 	CDlgImageRule m_dlgImageRules;
 	CDlgHelp	m_dlgHelp;
 	CDlgOnlineHour m_dlgOnlineHour;
@@ -61,8 +74,23 @@ private:
 	// fonts
 	CFont	m_fontTree;
 	CFont	m_fontTitle;
-public:
+
+	// system Tray
+	CGuiSysTray		m_sysTray;
+	CMenu			m_trayMenu;
+
+	//
+	BOOL	m_bShowed; // 当前界面是否显示
+protected:
 	afx_msg void OnNMClickTreeNavig(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnTvnSelchangedTreeNavig(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnBnClickedApply();
+	CGuiButton m_btnOk;
+	CGuiButton m_btnCancel;
+	CGuiButton m_btnApply;
+public:
+	afx_msg void OnTraymenuSwitch();
+	afx_msg void OnTraymenuMainui();
+	afx_msg void OnMainExit();
+	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 };

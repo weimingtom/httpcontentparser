@@ -52,7 +52,7 @@
 			<Tool
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="_DEBUG"
-				Culture="2052"
+				Culture="1033"
 				AdditionalIncludeDirectories="$(IntDir)"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
@@ -201,6 +201,12 @@
 				RelativePath=".\DlgDNSRule.h">
 			</File>
 			<File
+				RelativePath=".\DlgEyecare.cpp">
+			</File>
+			<File
+				RelativePath=".\DlgEyecare.h">
+			</File>
+			<File
 				RelativePath=".\DlgHelp.cpp">
 			</File>
 			<File
@@ -217,6 +223,12 @@
 			</File>
 			<File
 				RelativePath=".\DlgOnlineHour.h">
+			</File>
+			<File
+				RelativePath=".\DlgOptions.cpp">
+			</File>
+			<File
+				RelativePath=".\DlgOptions.h">
 			</File>
 			<File
 				RelativePath=".\DlgSearchRule.cpp">
@@ -243,6 +255,28 @@
 			</File>
 			<File
 				RelativePath=".\Lev1DlgRules.h">
+			</File>
+		</Filter>
+		<Filter
+			Name="selfUI"
+			Filter="">
+			<File
+				RelativePath=".\Cells.cpp">
+			</File>
+			<File
+				RelativePath=".\Cells.h">
+			</File>
+			<File
+				RelativePath=".\ContentList.cpp">
+			</File>
+			<File
+				RelativePath=".\ContentList.h">
+			</File>
+			<File
+				RelativePath=".\FrameButton.cpp">
+			</File>
+			<File
+				RelativePath=".\FrameButton.h">
 			</File>
 		</Filter>
 		<File

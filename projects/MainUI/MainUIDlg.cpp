@@ -10,6 +10,8 @@
 #define new DEBUG_NEW
 #endif
 
+#define CALLMESSAGE WM_USER + 0x10
+
 
 // 用于应用程序“关于”菜单项的 CAboutDlg 对话框
 
@@ -48,12 +50,16 @@ CMainUIDlg::CMainUIDlg(CWnd* pParent /*=NULL*/)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 	m_curDlg = NULL;
+	m_bShowed = TRUE;
 }
 
 void CMainUIDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_TREE_NAVIG, m_treeNavigation);
+	DDX_Control(pDX, IDC_OK, m_btnOk);
+	DDX_Control(pDX, IDC_CANCEL, m_btnCancel);
+	DDX_Control(pDX, IDC_APPLY, m_btnApply);
 }
 
 BEGIN_MESSAGE_MAP(CMainUIDlg, CDialog)
@@ -64,9 +70,11 @@ BEGIN_MESSAGE_MAP(CMainUIDlg, CDialog)
 	ON_NOTIFY(NM_CLICK, IDC_TREE_NAVIG, OnNMClickTreeNavig)
 	ON_NOTIFY(TVN_SELCHANGED, IDC_TREE_NAVIG, OnTvnSelchangedTreeNavig)
 	ON_BN_CLICKED(IDC_APPLY, OnBnClickedApply)
+	ON_COMMAND(ID_TRAYMENU_SWITCH, OnTraymenuSwitch)
+	ON_COMMAND(ID_TRAYMENU_MAINUI, OnTraymenuMainui)
+	ON_COMMAND(ID_MAIN_EXIT, OnMainExit)
+	ON_WM_CREATE()
 END_MESSAGE_MAP()
-
-
 
 void CMainUIDlg::InitTreeNodes() {
 	// m_treeNavigation.DeleteAllItems();
@@ -86,6 +94,14 @@ void CMainUIDlg::InitTreeNodes() {
 	strItem.LoadString(IDS_TREE_ONLINE_HOUR);
 	hItem = m_treeNavigation.InsertItem(strItem, hRoot);
 	m_treeNavigation.SetItemData(hItem, IDS_TREE_ONLINE_HOUR);
+
+	strItem.LoadString(IDS_TREE_EYECARE);
+	hItem = m_treeNavigation.InsertItem(strItem, hRoot);
+	m_treeNavigation.SetItemData(hItem, IDS_TREE_EYECARE);
+
+	strItem.LoadString(IDS_TREE_OPTIONS);
+	hItem = m_treeNavigation.InsertItem(strItem, hRoot);
+	m_treeNavigation.SetItemData(hItem, IDS_TREE_OPTIONS);
 
 	strItem.LoadString(IDS_TREE_HELP);
 	hItem = m_treeNavigation.InsertItem(strItem, hRoot);
@@ -116,7 +132,10 @@ void CMainUIDlg::initDlgs() {
 	m_dlgDnsRule.Create(CDlgDNSRule::IDD, this);
 	m_dlgAbout.Create(CDlgAbout::IDD, this);
 	m_lev1Rules.Create(CLev1DlgRules::IDD, this);
+	m_dlgOptions.Create(CDlgOptions::IDD, this);
+	m_dlgEyecare.Create(CDlgEyecare::IDD, this);
 	m_curDlg = &m_lev1Rules;
+	
 	showDlg();
 }
 
@@ -143,6 +162,7 @@ void CMainUIDlg::setRulesDlg() {
 
 	m_treeNavigation.SelectItem(hItemRules);
 }
+
 void CMainUIDlg::setCurDlg(const DWORD item) {
 	if (item == -1)  // 如果是根节点
 		return;
@@ -150,6 +170,9 @@ void CMainUIDlg::setCurDlg(const DWORD item) {
 	ASSERT (m_curDlg != NULL);
 	m_curDlg->ShowWindow(SW_HIDE);
 	switch (item) {
+		case IDS_TREE_EYECARE:
+			m_curDlg = &m_dlgEyecare;
+			break;
 		case IDS_TREE_LEV1_RULES:
 			m_curDlg = &m_lev1Rules;
 			break;
@@ -171,6 +194,9 @@ void CMainUIDlg::setCurDlg(const DWORD item) {
 		case IDS_TREE_ABOUT:
 			m_curDlg = &m_dlgAbout;
 			break;
+		case IDS_TREE_OPTIONS:
+			m_curDlg = &m_dlgOptions;
+			break;
 		default:
 			ASSERT(false);
 			break;
@@ -187,6 +213,14 @@ void CMainUIDlg::OnNMClickTreeNavig(NMHDR *pNMHDR, LRESULT *pResult)
 {
 	// 获取当前选中的项
 	*pResult = 0;
+}
+
+void CMainUIDlg::setupTrayMenu() {
+	// system Tray
+	m_trayMenu.LoadMenu(IDC_MENU_SYSTRAY);
+	// m_trayMenu.StyleDispl(CNewMenu::STYLE_ORIGINAL);
+	m_sysTray.Create(this,10200, CALLMESSAGE, AfxGetApp()->LoadIcon(IDR_MAINFRAME),_T("Hola"));
+	m_sysTray.SetSysMenu(&m_trayMenu);
 }
 
 BOOL CMainUIDlg::OnInitDialog()
@@ -220,6 +254,14 @@ BOOL CMainUIDlg::OnInitDialog()
 
 	initDlgs();
 	InitTreeNodes();
+
+	//
+	m_btnOk.SetStyleBorder(CGuiButton::STYLEXP);
+	m_btnOk.SetCaption("OK");
+	m_btnCancel.SetStyleBorder(CGuiButton::STYLEXP);
+	m_btnCancel.SetCaption("Cancel");
+	m_btnApply.SetStyleBorder(CGuiButton::STYLEXP);
+	m_btnApply.SetCaption("Apply");
 	
 	return TRUE;  // 除非设置了控件的焦点，否则返回 TRUE
 }
@@ -242,13 +284,13 @@ void CMainUIDlg::setControlsFonts() {
 }
 void CMainUIDlg::OnSysCommand(UINT nID, LPARAM lParam)
 {
-	if ((nID & 0xFFF0) == IDM_ABOUTBOX)
-	{
+	if ((nID & 0xFFF0) == IDM_ABOUTBOX) {
 		CAboutDlg dlgAbout;
 		dlgAbout.DoModal();
-	}
-	else
-	{
+	} else if (nID == SC_MINIMIZE) {
+		ShowWindow(SW_HIDE);
+		m_bShowed = FALSE;
+	} else {
 		CDialog::OnSysCommand(nID, lParam);
 	}
 }
@@ -259,8 +301,7 @@ void CMainUIDlg::OnSysCommand(UINT nID, LPARAM lParam)
 
 void CMainUIDlg::OnPaint() 
 {
-	if (IsIconic())
-	{
+	if (IsIconic()) {
 		CPaintDC dc(this); // 用于绘制的设备上下文
 
 		SendMessage(WM_ICONERASEBKGND, reinterpret_cast<WPARAM>(dc.GetSafeHdc()), 0);
@@ -275,9 +316,7 @@ void CMainUIDlg::OnPaint()
 
 		// 绘制图标
 		dc.DrawIcon(x, y, m_hIcon);
-	}
-	else
-	{
+	} else {
 		CDialog::OnPaint();
 	}
 }
@@ -304,4 +343,35 @@ void CMainUIDlg::OnBnClickedApply()
 {
 	ASSERT (NULL != m_curDlg);
 	m_curDlg->OnApply();
+}
+
+void CMainUIDlg::OnTraymenuSwitch() {
+}
+
+void CMainUIDlg::OnTraymenuMainui() {
+	CString strMenuItem;
+	if (m_bShowed) {
+		strMenuItem.LoadString(IDS_TRAYMENU_HIDEUI);
+		ShowWindow(SW_HIDE);
+		m_bShowed = FALSE;
+	} else {
+		strMenuItem.LoadString(IDS_TRAYMENU_SHOWUI);
+		ShowWindow(SW_SHOW);
+		m_bShowed = TRUE;
+	}
+
+	m_trayMenu.ModifyMenu(ID_TRAYMENU_MAINUI, MF_BYCOMMAND, MF_STRING, strMenuItem);
+}
+
+void CMainUIDlg::OnMainExit() {
+	CDialog::OnSysCommand(SC_CLOSE, 0);
+}
+
+int CMainUIDlg::OnCreate(LPCREATESTRUCT lpCreateStruct)
+{
+	if (CDialog::OnCreate(lpCreateStruct) == -1)
+		return -1;
+
+	setupTrayMenu();
+	return 0;
 }
