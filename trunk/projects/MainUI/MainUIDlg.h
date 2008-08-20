@@ -13,8 +13,10 @@
 #include "Lev1DlgRules.h"
 #include "DlgOptions.h"
 #include "DlgEyecare.h"
+#include "DlgWhiteDNSList.h"
 #include ".\basedlg.h"
 #include "afxwin.h"
+
 
 #include <Guilib1.5\GuiButton.h>
 #include <Guilib1.5\GuisysTray.h>
@@ -65,10 +67,12 @@ private:
 	CDlgOnlineHour m_dlgOnlineHour;
 	CDlgSearchRule m_dlgSearchRule;
 	CDlgDNSRule m_dlgDnsRule;
+	CDlgWhiteDNSList m_dlgWhiteDNS;
 	CDlgAbout m_dlgAbout;
 	CBaseDlg	*m_curDlg;
 	CLev1DlgRules m_lev1Rules;
 
+	// ср╡Ю
 	CRect    m_rectRight;
 
 	// fonts

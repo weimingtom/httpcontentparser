@@ -12,7 +12,7 @@ import "ocidl.idl";
 	uuid(FB959601-AD50-4C1C-B21D-3B33B65B1928),
 	dual,
 	nonextensible,
-	helpstring("IGlobalChecker 接口"),
+	helpstring("IGlobalChecker Interface"),
 	pointer_default(unique)
 ]
 interface IGlobalChecker : IDispatch {
@@ -20,7 +20,8 @@ interface IGlobalChecker : IDispatch {
 	[id(2), helpstring("method checkContent")] HRESULT checkContent([in] LONG type,
 		[in, size_is(Count)] CHAR Numbers[], LONG Count, [out,retval] VARIANT_BOOL* passed);
 	[id(3), helpstring("method  needCheck")] HRESULT needCheck([in] LONG type, [out,retval] VARIANT_BOOL* needed);
-	[id(4), helpstring("方法checkImage")] HRESULT checkImage([in] LONG type, [out,retval] LONG* action_code);
+	[id(4), helpstring("method checkImage")] HRESULT checkImage([in] LONG type, [out,retval] LONG* action_code);
+	[id(5), helpstring("方法checkIP")] HRESULT checkIP([in] BSTR ipAddress, [out,retval] VARIANT_BOOL* enabled);
 };
 
 [
@@ -28,7 +29,7 @@ interface IGlobalChecker : IDispatch {
 	uuid(EDD97AF6-A82A-4AE8-8C9A-287A298566E2),
 	dual,
 	nonextensible,
-	helpstring("IGlobalSetting 接口"),
+	helpstring("IGlobalSetting Interface"),
 	pointer_default(unique)
 ]
 interface IGlobalSetting : IDispatch{
@@ -41,9 +42,19 @@ interface IGlobalSetting : IDispatch{
 	[id(7), helpstring("method enableShowImage")] HRESULT enableShowImage([in] VARIANT_BOOL show);
 };
 [
+	object,
+	uuid(EB9690EC-B4C8-4693-929B-D45C98FD5894),
+	dual,
+	nonextensible,
+	helpstring("IAuthorize 接口"),
+	pointer_default(unique)
+]
+interface IAuthorize : IDispatch{
+};
+[
 	uuid(42F932B5-F5CB-4F0D-8925-1B6BE5FECD1B),
 	version(1.0),
-	helpstring("FilterSetting 1.0 类型库")
+	helpstring("FilterSetting 1.0 ClassLibrary")
 ]
 
 library FilterSettingLib {
@@ -63,5 +74,13 @@ library FilterSettingLib {
 	coclass GlobalSetting
 	{
 		[default] interface IGlobalSetting;
+	};
+	[
+		uuid(20A0E336-ABED-456D-A000-E6B110A86F3B),
+		helpstring("Authorize Class")
+	]
+	coclass Authorize
+	{
+		[default] interface IAuthorize;
 	};
 };

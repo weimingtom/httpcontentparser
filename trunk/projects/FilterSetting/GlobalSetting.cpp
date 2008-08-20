@@ -25,6 +25,8 @@ STDMETHODIMP CGlobalSetting::InterfaceSupportsErrorInfo(REFIID riid)
 }
 
 STDMETHODIMP CGlobalSetting::addBlackDNS(BSTR dns) {
+	OutputDebugString(_T("*****==========="));
+	OutputDebugString(_bstr_t(dns));
 	global_setting_.addBlackDNS(std::string((char*)_bstr_t(dns)));
 	return S_OK;
 }

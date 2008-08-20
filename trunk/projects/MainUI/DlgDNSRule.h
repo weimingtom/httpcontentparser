@@ -1,8 +1,11 @@
 #pragma once
 
 #include ".\basedlg.h"
+#include "ContentList.h"
 #include <Guilib1.5\GuiListEdit.h>
 #include <Guilib1.5\GuiDropDownEdit.h>
+#include <Guilib1.5\GuiCheckBox.h>
+#include "afxwin.h"
 
 // CDlgDNSRule 对话框
 
@@ -22,9 +25,11 @@ public:
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 支持
 
+	CGuiCheckBox m_chkEnableDNS;
 	CGuiListEdit ListBox;
-
+	RulesList  rules;
 	DECLARE_MESSAGE_MAP()
 public:
 	virtual BOOL OnInitDialog();
+	
 };

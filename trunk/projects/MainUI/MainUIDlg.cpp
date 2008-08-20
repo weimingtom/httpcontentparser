@@ -74,6 +74,8 @@ BEGIN_MESSAGE_MAP(CMainUIDlg, CDialog)
 	ON_COMMAND(ID_TRAYMENU_MAINUI, OnTraymenuMainui)
 	ON_COMMAND(ID_MAIN_EXIT, OnMainExit)
 	ON_WM_CREATE()
+	ON_WM_KEYDOWN()
+	ON_WM_CONTEXTMENU()
 END_MESSAGE_MAP()
 
 void CMainUIDlg::InitTreeNodes() {
@@ -134,6 +136,7 @@ void CMainUIDlg::initDlgs() {
 	m_lev1Rules.Create(CLev1DlgRules::IDD, this);
 	m_dlgOptions.Create(CDlgOptions::IDD, this);
 	m_dlgEyecare.Create(CDlgEyecare::IDD, this);
+	m_dlgWhiteDNS.Create(CDlgWhiteDNSList::IDD, this);
 	m_curDlg = &m_lev1Rules;
 	
 	showDlg();
@@ -149,6 +152,10 @@ void CMainUIDlg::setRulesDlg() {
 	strItem.LoadString(IDS_TREE_IMAGE_RULE);
 	hItem = m_treeNavigation.InsertItem(strItem, hItemRules);
 	m_treeNavigation.SetItemData(hItem, IDS_TREE_IMAGE_RULE);
+
+	strItem.LoadString(IDS_DNS_WHITE_LIST); 
+	hItem = m_treeNavigation.InsertItem(strItem, hItemRules);
+	m_treeNavigation.SetItemData(hItem, IDS_DNS_WHITE_LIST);
 	
 
 	strItem.LoadString(IDS_TREE_DNS_RULE); 
@@ -178,6 +185,9 @@ void CMainUIDlg::setCurDlg(const DWORD item) {
 			break;
 		case IDS_TREE_IMAGE_RULE:
 			m_curDlg = &m_dlgImageRules;
+			break;
+		case IDS_DNS_WHITE_LIST:
+			m_curDlg = &m_dlgWhiteDNS;
 			break;
 		case IDS_TREE_DNS_RULE:
 			m_curDlg = &m_dlgDnsRule;
@@ -346,6 +356,8 @@ void CMainUIDlg::OnBnClickedApply()
 }
 
 void CMainUIDlg::OnTraymenuSwitch() {
+	int a = 0;
+	AfxMessageBox("Hello");
 }
 
 void CMainUIDlg::OnTraymenuMainui() {
@@ -360,7 +372,7 @@ void CMainUIDlg::OnTraymenuMainui() {
 		m_bShowed = TRUE;
 	}
 
-	m_trayMenu.ModifyMenu(ID_TRAYMENU_MAINUI, MF_BYCOMMAND, MF_STRING, strMenuItem);
+	//m_trayMenu.ModifyMenu(ID_TRAYMENU_MAINUI, MF_BYCOMMAND, MF_STRING, strMenuItem);
 }
 
 void CMainUIDlg::OnMainExit() {

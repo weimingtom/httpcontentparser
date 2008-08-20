@@ -4,7 +4,7 @@
 #include "stdafx.h"
 #include "MainUI.h"
 #include "DlgSearchRule.h"
-
+#include "globalvariable.h"
 
 // CDlgSearchRule 对话框
 
@@ -19,9 +19,15 @@ CDlgSearchRule::~CDlgSearchRule()
 }
 
 void CDlgSearchRule::OnApply() {
+	// DNS CHECK是否可用
+	ASSERT(g_globalSetting != NULL);
+	g_globalSetting->enableDNSCheck((m_chkEnableSearchChk.GetCheck() == BST_CHECKED));
 }
 
 void CDlgSearchRule::OnShow() {
+	ListBox.SetFocus();
+	ListBox.ShowWindow(SW_SHOW);
+	ListBox.UpdateWindow();
 }
 
 
@@ -29,6 +35,7 @@ void CDlgSearchRule::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_SEARCH_LIST, ListBox);
+	DDX_Control(pDX, IDC_CHK_ENABLE_SEARCH, m_chkEnableSearchChk);
 }
 
 

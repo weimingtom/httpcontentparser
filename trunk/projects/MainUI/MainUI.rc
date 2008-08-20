@@ -93,15 +93,15 @@ BEGIN
     CONTROL         "",IDC_POSITION_LEFT,"Static",SS_BLACKFRAME | NOT 
                     WS_VISIBLE,7,7,87,257
     CONTROL         "",IDC_STATIC,"Static",SS_BLACKFRAME,149,7,268,232
-    CONTROL         "OK",IDC_OK,"Button",BS_OWNERDRAW | WS_TABSTOP,268,250,
+    CONTROL         "OK",IDC_OK,"Button",BS_OWNERDRAW | WS_TABSTOP,260,250,
                     40,14
-    PUSHBUTTON      "Cancel",IDC_CANCEL,325,250,36,14,BS_FLAT
-    PUSHBUTTON      "Apply",IDC_APPLY,377,250,40,14,BS_FLAT
-    LTEXT           "Title",IDC_RIGHT_TITLE,165,18,56,11
+    PUSHBUTTON      "Cancel",IDC_CANCEL,318,250,40,14,BS_FLAT
+    PUSHBUTTON      "Apply",IDC_APPLY,376,250,40,14,BS_FLAT
+    LTEXT           "Title",IDC_RIGHT_TITLE,165,18,237,11
     CONTROL         "",IDC_STATIC,"Static",SS_BLACKFRAME,161,31,244,1
     CONTROL         "",IDC_TREE_NAVIG,"SysTreeView32",TVS_HASBUTTONS | 
                     TVS_HASLINES | TVS_NOSCROLL | WS_BORDER | WS_TABSTOP,7,7,
-                    87,257,WS_EX_STATICEDGE
+                    136,257,WS_EX_STATICEDGE
     CONTROL         "",IDC_POSITION_RIGHT,"Static",SS_BLACKFRAME | NOT 
                     WS_VISIBLE,156,40,254,194
 END
@@ -122,59 +122,22 @@ BEGIN
     LTEXT           "静态",IDC_STATIC,7,7,208,181,WS_BORDER
 END
 
-IDD_DLG_IMAGERULES DIALOGEX 0, 0, 257, 199
-STYLE DS_SETFONT | WS_CHILD | WS_SYSMENU
-FONT 8, "Microsoft Sans Serif", 400, 0, 0x0
-BEGIN
-    GROUPBOX        "Image Type",IDC_STA_IMAGETYPE,7,62,170,58,BS_FLAT
-    CONTROL         " 图片JPEG",IDC_CHK_JPEG,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,23,81,51,10
-    CONTROL         " BMP",IDC_CHK_BMP,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
-                    24,97,62,10
-    CONTROL         " GIF",IDC_CHK_GIF,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
-                    99,82,69,10
-    CONTROL         " PNG",IDC_CHK_PNG,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
-                    98,97,72,10
-    GROUPBOX        "Image Size",IDC_STA_IMAGESIZE,7,127,169,54,BS_FLAT
-    CONTROL         "",IDC_CHK_IMAGE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
-                    19,30,54,8
-    GROUPBOX        "Image Check",IDC_STA_IMAGE_CHECK,7,14,170,37,BS_FLAT
-    CONTROL         " Show Image",IDC_CHK_SHOWIMAGE,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,101,30,65,10
-    EDITTEXT        IDC_EDIT2,16,149,149,14,ES_CENTER | ES_AUTOHSCROLL
-END
-
-IDD_DLG_ONLINE_RULE DIALOGEX 0, 0, 283, 192
-STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
-FONT 8, "MS Shell Dlg", 400, 0, 0x1
-BEGIN
-    LTEXT           "",IDC_STA_CELLS,26,7,225,121,NOT WS_VISIBLE
-    LTEXT           "Mon.",IDC_STATIC,7,23,17,8
-    LTEXT           "Tues",IDC_STATIC,7,38,16,8
-    LTEXT           "Wed.",IDC_STATIC,7,53,18,8
-    LTEXT           "Thurs.",IDC_STATIC,7,68,22,8
-    LTEXT           "Fri.",IDC_STATIC,7,82,12,8
-    LTEXT           "Sat.",IDC_STATIC,7,98,15,8
-    LTEXT           "Sun.",IDC_STATIC,7,113,15,8
-    LTEXT           "00:00",IDC_STATIC,22,7,20,8
-    LTEXT           "24:00",IDC_STATIC,231,7,20,8
-    CONTROL         "Time Control",IDC_CHK_TIMECTRL,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,107,145,64,10
-    LTEXT           "12:00",IDC_STATIC,126,7,20,8
-END
-
 IDD_DLG_DNS_RULE DIALOGEX 0, 0, 250, 200
 STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
-    LTEXT           "静态",IDC_DNS_LIST,7,7,236,186
+    LTEXT           "静态",IDC_DNS_LIST,7,25,236,158
+    CONTROL         "Enable DNS Check",IDC_CHK_ENABLE_DNS,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,7,7,114,10
 END
 
 IDD_DLG_SEARCH_RULE DIALOGEX 0, 0, 250, 200
 STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
-    LTEXT           "静态",IDC_SEARCH_LIST,7,7,236,186
+    LTEXT           "静态",IDC_SEARCH_LIST,7,25,236,158
+    CONTROL         "Enable Search Check",IDC_CHK_ENABLE_SEARCH,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,7,7,114,10
 END
 
 IDD_DLG_CONTENT DIALOGEX 0, 0, 250, 200
@@ -215,8 +178,14 @@ FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
     CONTROL         "开机自动启动",IDC_CHK_AUTOLOAD,"Button",BS_AUTOCHECKBOX | 
                     WS_TABSTOP,43,28,66,10
-    GROUPBOX        "系统设置",IDC_STA_SYSTEM,7,7,225,52
-    GROUPBOX        "其它",IDC_STA_OTHERS,12,86,223,94
+    GROUPBOX        "System",IDC_STA_SYSTEM,7,7,225,52
+    GROUPBOX        "Hot Keys",IDC_STA_OTHERS,7,68,223,59
+    LTEXT           "Show Dialog:",IDC_STATIC,17,89,42,8
+    LTEXT           "Switch User",IDC_STATIC,17,106,38,8
+    CONTROL         "",IDC_HOTKEY1,"msctls_hotkey32",WS_BORDER | WS_TABSTOP,
+                    69,86,80,14
+    CONTROL         "",IDC_HOTKEY2,"msctls_hotkey32",WS_BORDER | WS_TABSTOP,
+                    69,102,80,14
 END
 
 IDD_DLG_TOOLS DIALOGEX 0, 0, 210, 143
@@ -230,6 +199,12 @@ STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
     GROUPBOX        "Eyecare",IDC_STATIC,7,7,236,187
+END
+
+IDD_LEV1_TIME_RULE DIALOGEX 0, 0, 281, 198
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_POPUP | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
 END
 
 
@@ -312,22 +287,6 @@ BEGIN
         BOTTOMMARGIN, 188
     END
 
-    IDD_DLG_IMAGERULES, DIALOG
-    BEGIN
-        LEFTMARGIN, 7
-        RIGHTMARGIN, 250
-        TOPMARGIN, 7
-        BOTTOMMARGIN, 192
-    END
-
-    IDD_DLG_ONLINE_RULE, DIALOG
-    BEGIN
-        LEFTMARGIN, 7
-        RIGHTMARGIN, 276
-        TOPMARGIN, 7
-        BOTTOMMARGIN, 185
-    END
-
     IDD_DLG_DNS_RULE, DIALOG
     BEGIN
         LEFTMARGIN, 7
@@ -399,6 +358,14 @@ BEGIN
         TOPMARGIN, 7
         BOTTOMMARGIN, 194
     END
+
+    IDD_LEV1_TIME_RULE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 274
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 191
+    END
 END
 #endif    // APSTUDIO_INVOKED
 
@@ -424,6 +391,97 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 
 /////////////////////////////////////////////////////////////////////////////
 //
+// Dialog
+//
+
+IDD_DLG_IMAGERULES DIALOGEX 0, 0, 257, 199
+STYLE DS_SETFONT | WS_CHILD | WS_SYSMENU
+FONT 8, "Microsoft Sans Serif", 400, 0, 0x0
+BEGIN
+    GROUPBOX        "Image Type",IDC_STA_IMAGETYPE,7,62,170,58,BS_FLAT
+    CONTROL         " ??JPEG",IDC_CHK_JPEG,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,23,81,51,10
+    CONTROL         " BMP",IDC_CHK_BMP,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    24,97,62,10
+    CONTROL         " GIF",IDC_CHK_GIF,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    99,82,69,10
+    CONTROL         " PNG",IDC_CHK_PNG,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    98,97,72,10
+    GROUPBOX        "Image Size",IDC_STA_IMAGESIZE,7,127,169,54,BS_FLAT
+    CONTROL         "",IDC_CHK_IMAGE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    19,30,54,8
+    GROUPBOX        "Image Check",IDC_STA_IMAGE_CHECK,7,14,170,37,BS_FLAT
+    CONTROL         " Show Image",IDC_CHK_SHOWIMAGE,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,101,30,65,10
+    EDITTEXT        IDC_EDIT2,16,149,149,14,ES_CENTER | ES_AUTOHSCROLL
+END
+
+IDD_DLG_DNS_WHITELIST DIALOGEX 0, 0, 250, 199
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CONTROL         "Enable White DNS List",IDC_CHK_WHITE_DNSLIST,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,7,7,130,10
+    LTEXT           "static",IDC_STA_WHIE_DNSLIST,7,26,236,159
+END
+
+IDD_DLG_ONLINE_RULE DIALOGEX 0, 0, 283, 192
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    LTEXT           "",IDC_STA_CELLS,26,7,225,121,NOT WS_VISIBLE
+    LTEXT           "Mon.",IDC_STATIC,7,23,17,8
+    LTEXT           "Tues",IDC_STATIC,7,38,16,8
+    LTEXT           "Wed.",IDC_STATIC,7,53,18,8
+    LTEXT           "Thurs.",IDC_STATIC,7,68,22,8
+    LTEXT           "Fri.",IDC_STATIC,7,82,12,8
+    LTEXT           "Sat.",IDC_STATIC,7,98,15,8
+    LTEXT           "Sun.",IDC_STATIC,7,113,15,8
+    LTEXT           "00:00",IDC_STATIC,22,7,20,8
+    LTEXT           "24:00",IDC_STATIC,231,7,20,8
+    CONTROL         "Time Control",IDC_CHK_TIMECTRL,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,107,145,64,10
+    LTEXT           "12:00",IDC_STATIC,126,7,20,8
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO 
+BEGIN
+    IDD_DLG_IMAGERULES, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 250
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 192
+    END
+
+    IDD_DLG_DNS_WHITELIST, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 243
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 192
+    END
+
+    IDD_DLG_ONLINE_RULE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 276
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 185
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
 // Menu
 //
 
@@ -432,11 +490,16 @@ BEGIN
     POPUP "Main"
     BEGIN
         MENUITEM "Switch User",                 ID_TRAYMENU_SWITCH
-        MENUITEM "Show Main UI",                ID_TRAYMENU_MAINUI
+        POPUP "Tools"
+        BEGIN
+            MENUITEM "Web History",                 ID_TOOLS_WEBHISTORY
+            MENUITEM "Desktop Image",               ID_TOOLS_DESKTOPIMAGE
+        END
         POPUP "Websites"
         BEGIN
             MENUITEM "www.sina.com",                ID_WEBSITES_WWW32788
         END
+        MENUITEM "Option",                      ID_TRAYMENU_MAINUI
         MENUITEM SEPARATOR
         MENUITEM "Exit",                        ID_MAIN_EXIT
     END

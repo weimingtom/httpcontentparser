@@ -12,3 +12,9 @@
 #include <vector>
 
 #pragma comment(lib, "zlib.lib")
+
+#ifdef _DEBUG
+#	pragma comment(lib, "utilityd.lib")
+#else
+#	pragma comment(lib, "utility.lib")
+#endif

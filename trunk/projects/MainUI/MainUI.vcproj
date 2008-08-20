@@ -44,7 +44,8 @@
 				PreprocessorDefinitions="_DEBUG"
 				MkTypLibCompatible="FALSE"/>
 			<Tool
-				Name="VCPostBuildEventTool"/>
+				Name="VCPostBuildEventTool"
+				CommandLine="copy .\Debug\MainUI.exe ..\..\debug"/>
 			<Tool
 				Name="VCPreBuildEventTool"/>
 			<Tool
@@ -74,6 +75,7 @@
 			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
+				AdditionalIncludeDirectories="..\..\include"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG"
 				MinimalRebuild="FALSE"
 				RuntimeLibrary="2"
@@ -87,6 +89,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				LinkIncremental="1"
+				AdditionalLibraryDirectories="..\..\lib"
 				GenerateDebugInformation="TRUE"
 				SubSystem="2"
 				OptimizeReferences="2"
@@ -123,14 +126,14 @@
 	</References>
 	<Files>
 		<Filter
-			Name="源文件"
+			Name="auto"
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
 			<File
-				RelativePath=".\BaseDlg.cpp">
+				RelativePath=".\DlgWhiteDNSList.cpp">
 			</File>
 			<File
-				RelativePath=".\MainUI.cpp">
+				RelativePath=".\Resource.h">
 			</File>
 			<File
 				RelativePath=".\stdafx.cpp">
@@ -147,25 +150,28 @@
 						UsePrecompiledHeader="1"/>
 				</FileConfiguration>
 			</File>
+			<File
+				RelativePath=".\stdafx.h">
+			</File>
 		</Filter>
 		<Filter
 			Name="头文件"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
 			<File
+				RelativePath=".\BaseDlg.cpp">
+			</File>
+			<File
 				RelativePath=".\BaseDlg.h">
 			</File>
 			<File
-				RelativePath=".\globalvariable.h">
+				RelativePath=".\DlgWhiteDNSList.h">
+			</File>
+			<File
+				RelativePath=".\MainUI.cpp">
 			</File>
 			<File
 				RelativePath=".\MainUI.h">
-			</File>
-			<File
-				RelativePath=".\Resource.h">
-			</File>
-			<File
-				RelativePath=".\stdafx.h">
 			</File>
 		</Filter>
 		<Filter
@@ -279,6 +285,17 @@
 				RelativePath=".\FrameButton.h">
 			</File>
 		</Filter>
+		<Filter
+			Name="global"
+			Filter="">
+			<File
+				RelativePath=".\globalvariable.h">
+			</File>
+		</Filter>
+		<File
+			RelativePath=".\DlgWhiteDNSList.htm"
+			DeploymentContent="TRUE">
+		</File>
 		<File
 			RelativePath=".\res\MainUI.manifest">
 		</File>

@@ -196,6 +196,9 @@ copy .\filtersetting.h ..\..\include\com
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx"
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}">
 			<File
+				RelativePath=".\Authorize.rgs">
+			</File>
+			<File
 				RelativePath=".\FilterSetting.rc">
 			</File>
 			<File

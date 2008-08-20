@@ -44,4 +44,5 @@
 
 #pragma comment(lib, "GuiTk115d.lib")
 #include <Guilib1.5\Guilib.h>
+#include <afxdhtml.h>
 

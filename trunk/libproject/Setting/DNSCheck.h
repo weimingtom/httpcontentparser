@@ -11,6 +11,7 @@ public:
 	DNSCheck(const DNSList *);
 	~DNSCheck(void);
 
+	bool checkIP(const std::string &ip);
 	bool checkDNS(const std::string &dns_name);
 	void enableDNSCheck(const bool checked);
 protected:
@@ -20,5 +21,7 @@ protected:
 	bool dns_check_;
 	DNSCheck();
 };
+
+
 
 #endif  // _SETTING_DNS_CHECK_H__

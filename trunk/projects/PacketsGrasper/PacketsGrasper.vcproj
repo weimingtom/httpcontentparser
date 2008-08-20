@@ -199,6 +199,12 @@
 			Name="checkrules"
 			Filter="">
 			<File
+				RelativePath=".\checkURL.cpp">
+			</File>
+			<File
+				RelativePath=".\checkURL.h">
+			</File>
+			<File
 				RelativePath=".\GlobalControl.cpp">
 			</File>
 			<File
