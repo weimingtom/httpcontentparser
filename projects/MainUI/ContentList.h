@@ -16,7 +16,6 @@ public:
 	virtual bool OnEndEdit(const CString &strNew);
 	virtual bool OnAdd(const CString &str);
 
-
 	// 应用
 	void OnApply();
 
@@ -28,8 +27,9 @@ protected:
 	CString m_strOld;
 
 	typedef std::set<std::string> STRING_SET;
-	STRING_SET DNSSet;
 	STRING_SET addedDNS;
 	STRING_SET removedDNS;
+
+	STRING_SET currentDNS; // 当前列表中的所有DNS
 };
 

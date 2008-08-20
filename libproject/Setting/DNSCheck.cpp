@@ -14,8 +14,15 @@ DNSCheck::DNSCheck(void) {
 DNSCheck::~DNSCheck(void) {
 }
 
-bool DNSCheck::checkDNS(const std::string &dns_name) {
-	if (needCheck() == true && dns_list_->isBlackDNS(dns_name))
+bool DNSCheck::checkIP(const std::string &ip) {
+	if (needCheck() == true && dns_list_->isBlackIP(ip))
+		return false;
+	else
+		return true;
+}
+
+bool DNSCheck::checkDNS(const std::string &ip) {
+	if (needCheck() == true && dns_list_->isBlackDNS(ip))
 		return false;
 	else
 		return true;

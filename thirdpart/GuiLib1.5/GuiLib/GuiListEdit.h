@@ -57,6 +57,8 @@ public:
 	CListCtrl* GetListCtrl();
 	void EditItem(const int nItem, const CString &itemText);
 
+	//  设置在规则改变是，处理的指针
+	void setOnTextChanged(OnTextChanged *onchanged) {onchanged_ = onchanged;}
 protected:
 	void OnDelete(const CString &str);
 	void OnBeginEdit(const CString &strOld);

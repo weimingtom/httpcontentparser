@@ -15,6 +15,7 @@
 #define IDS_TREE_EYECARE                107
 #define IDS_TRAYMENU_SHOWUI             108
 #define IDS_TRAYMENU_HIDEUI             109
+#define IDR_HTML_DLGWHITEDNSLIST        110
 #define IDR_MAINFRAME                   128
 #define IDD_DLG_HELP                    129
 #define IDD_DLG_ABOUT                   130
@@ -30,6 +31,9 @@
 #define IDD_DLG_OPTION                  141
 #define IDD_DLG_TOOLS                   142
 #define IDD_DLG_EYECARE                 144
+#define IDD_LEV1_TIME_RULE              147
+#define IDD_DIALOG1                     149
+#define IDD_DLG_DNS_WHITELIST           149
 #define IDC_TREE_NAVIG                  1000
 #define IDS_TREE_ROOT                   1001
 #define IDS_TREE_DNS_RULE               1002
@@ -66,11 +70,17 @@
 #define IDC_STA_COMMENT                 1024
 #define IDC_CHECK1                      1025
 #define IDC_CHK_TIMECTRL                1025
+#define IDC_CHK_WHITE_DNSLIST           1025
 #define IDC_STA_SYSTEM                  1027
 #define IDC_STA_OTHERS                  1028
 #define IDC_CHK_AUTOLOAD                1029
 #define IDC_STA_CELLS                   1030
 #define IDC_OK                          1031
+#define IDC_HOTKEY1                     1033
+#define IDC_HOTKEY2                     1034
+#define IDC_CHK_ENABLE_DNS              1034
+#define IDC_CHK_ENABLE_SEARCH           1035
+#define IDC_STA_WHIE_DNSLIST            1039
 #define IDC_EDIT1                       4011
 #define IDC_EDIT2                       4012
 #define IDC_WND_HELLO                   5000
@@ -94,14 +104,17 @@
 #define ID__FFFFFFFFFFFFFFFFFFFFFFFFFFF 32786
 #define ID__WEBSITES                    32787
 #define ID_WEBSITES_WWW32788            32788
+#define ID_MAIN_TOOLS                   32791
+#define ID_TOOLS_WEBHISTORY             32792
+#define ID_TOOLS_DESKTOPIMAGE           32793
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        147
-#define _APS_NEXT_COMMAND_VALUE         32791
-#define _APS_NEXT_CONTROL_VALUE         1033
-#define _APS_NEXT_SYMED_VALUE           101
+#define _APS_NEXT_RESOURCE_VALUE        150
+#define _APS_NEXT_COMMAND_VALUE         32794
+#define _APS_NEXT_CONTROL_VALUE         1040
+#define _APS_NEXT_SYMED_VALUE           111
 #endif
 #endif

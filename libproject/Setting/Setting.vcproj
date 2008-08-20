@@ -63,6 +63,7 @@ copy .\debug\settingd.lib ..\..\lib
 			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
+				AdditionalIncludeDirectories="..\..\include"
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB"
 				RuntimeLibrary="4"
 				UsePrecompiledHeader="3"
@@ -107,14 +108,14 @@ copy .\release\settingd.lib ..\..\lib
 			<File
 				RelativePath=".\DNSList.cpp">
 			</File>
+			<File
+				RelativePath=".\DNSList.h">
+			</File>
 		</Filter>
 		<Filter
 			Name="Í·ÎÄ¼þ"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
-			<File
-				RelativePath=".\DNSList.h">
-			</File>
 		</Filter>
 		<Filter
 			Name="precomp"

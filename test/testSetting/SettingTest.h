@@ -7,11 +7,15 @@
 class SettingTest : public CPPUNIT_NS::TestFixture {
 public:
 	CPPUNIT_TEST_SUITE(SettingTest);
+	CPPUNIT_TEST(CheckBlackDNSTest);
+	CPPUNIT_TEST(CheckIPTest);
 	CPPUNIT_TEST_SUITE_END();
 public:
 	virtual void setUp();
 	virtual void tearDown();
 protected:
+	void CheckBlackDNSTest();
+	void CheckIPTest();
 };
 
 #endif  // _TEST_SETTING_SETTING_TEST_H__

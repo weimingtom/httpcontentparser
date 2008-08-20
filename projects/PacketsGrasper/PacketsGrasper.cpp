@@ -1,7 +1,10 @@
 #include "stdafx.h"
 #include "selectio.h"
 #include "debug.h" 
+#include "checkURL.h"
 #include ".\overlapped.h"
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <tchar.h>
@@ -219,9 +222,23 @@ int WSPAPI WSPSend(
 	LPINT			lpErrno
 )
 {
-	return NextProcTable.lpWSPSend(s, lpBuffers, dwBufferCount
-		, lpNumberOfBytesSent, dwFlags, lpOverlapped
-		, lpCompletionRoutine, lpThreadId, lpErrno);
+	// 根据socket获取IP地址
+	sockaddr_in addr;
+	memset(&addr, 0, sizeof(sockaddr_in));
+	int len = sizeof(addr);
+	getpeername(s, (sockaddr*)&addr, &len);
+
+	OutputDebugString("aaaaaaaa===============================");
+
+	// 检查IP是否正常，如果可以则通过，否则直接返回错误
+	if (checkIP(inet_ntoa(addr.sin_addr))){
+		return NextProcTable.lpWSPSend(s, lpBuffers, dwBufferCount
+			, lpNumberOfBytesSent, dwFlags, lpOverlapped
+			, lpCompletionRoutine, lpThreadId, lpErrno);
+	} else {
+		*lpErrno = WSAETIMEDOUT;
+		return SOCKET_ERROR;
+	}
 }
  
 int WSPAPI WSPSendTo(
@@ -238,9 +255,21 @@ int WSPAPI WSPSendTo(
 	LPINT			lpErrno
 )
 {
-	return NextProcTable.lpWSPSendTo(s, lpBuffers, dwBufferCount
-		, lpNumberOfBytesSent, dwFlags, lpTo, iTolen, lpOverlapped
-		, lpCompletionRoutine, lpThreadId, lpErrno);
+	// 根据socket获取IP地址
+	sockaddr_in addr;
+	memset(&addr, 0, sizeof(sockaddr_in));
+	int len = sizeof(addr);
+	getpeername(s, (sockaddr*)&addr, &len);
+
+	// 检查IP是否正常，如果可以则通过，否则直接返回错误
+	if (checkIP(inet_ntoa(addr.sin_addr))){
+		return NextProcTable.lpWSPSendTo(s, lpBuffers, dwBufferCount
+			, lpNumberOfBytesSent, dwFlags, lpTo, iTolen, lpOverlapped
+			, lpCompletionRoutine, lpThreadId, lpErrno);
+	} else {
+		*lpErrno = WSAETIMEDOUT;
+		return SOCKET_ERROR;
+	}
 }
 
 int WSPAPI WSPRecvFrom (

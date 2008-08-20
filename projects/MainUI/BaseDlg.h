@@ -8,6 +8,7 @@ public:
 
 	virtual void OnApply() = 0;
 	virtual void OnShow() = 0;
+	void OnOK() {}
 private:
 	CBaseDlg() {}
 };

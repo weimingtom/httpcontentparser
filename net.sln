@@ -64,6 +64,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestSetting", "test\testSet
 		{CCEEE3B2-3B59-4DE4-B088-2093F3582E42} = {CCEEE3B2-3B59-4DE4-B088-2093F3582E42}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestFilterSetting", "test\TestFilterSetting\TestFilterSetting.vcproj", "{78D777F3-0C50-4903-A4DB-F7F9CB9D191C}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfiguration) = preSolution
 		Debug = Debug
@@ -176,6 +180,14 @@ Global
 		{401DE4AD-03DE-4A26-BDC6-F122B9054622}.Release.Build.0 = Release|Win32
 		{401DE4AD-03DE-4A26-BDC6-F122B9054622}.Release Unicode.ActiveCfg = Release|Win32
 		{401DE4AD-03DE-4A26-BDC6-F122B9054622}.Release Unicode.Build.0 = Release|Win32
+		{78D777F3-0C50-4903-A4DB-F7F9CB9D191C}.Debug.ActiveCfg = Debug|Win32
+		{78D777F3-0C50-4903-A4DB-F7F9CB9D191C}.Debug.Build.0 = Debug|Win32
+		{78D777F3-0C50-4903-A4DB-F7F9CB9D191C}.Debug Unicode.ActiveCfg = Debug|Win32
+		{78D777F3-0C50-4903-A4DB-F7F9CB9D191C}.Debug Unicode.Build.0 = Debug|Win32
+		{78D777F3-0C50-4903-A4DB-F7F9CB9D191C}.Release.ActiveCfg = Release|Win32
+		{78D777F3-0C50-4903-A4DB-F7F9CB9D191C}.Release.Build.0 = Release|Win32
+		{78D777F3-0C50-4903-A4DB-F7F9CB9D191C}.Release Unicode.ActiveCfg = Release|Win32
+		{78D777F3-0C50-4903-A4DB-F7F9CB9D191C}.Release Unicode.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 	EndGlobalSection

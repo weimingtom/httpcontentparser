@@ -77,3 +77,8 @@ STDMETHODIMP CGlobalChecker::checkImage(LONG type, LONG* action_code) {
 	}
 	return S_OK;
 }
+
+STDMETHODIMP CGlobalChecker::checkIP(BSTR ipAddress, VARIANT_BOOL* enabled) {
+	*enabled = global_setting_.checkIP((char*)_bstr_t(ipAddress));
+	return S_OK;
+}

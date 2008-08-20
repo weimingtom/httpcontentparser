@@ -20,14 +20,14 @@ public:
 
 	// 对DNS的CHECK
 	bool checkDNS(const std::string &dns);
+	bool checkIP(const std::string &ipAddress);
+
 	void enableDNSCheck(const bool checked);
+
 	void addBlackDNS(const std::string &dns);
 	void adllWhiteDNS(const std::string &dns);
 	bool removeBlackDNS(const std::string &dns_name);
 	bool removeWhiteDNS(const std::string &dns_name);
-
-	// 全局的管理
-	void enableApplications(const bool enabled);
 
 	//
 	void enableShowImage(const bool show);
@@ -41,6 +41,9 @@ private:
 	DNSCheck	*dns_check_;
 	ImageSetting  *image_check_;
 	DNSList		* dns_list_;
+
+	// 当前用户
+	
 };
 
 

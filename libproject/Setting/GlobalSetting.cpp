@@ -9,6 +9,7 @@
 GlobalSetting::GlobalSetting(void) {
 	dns_check_ = NULL;
 	dns_list_ = NULL;
+	image_check_ = NULL;
 }
 
 GlobalSetting::~GlobalSetting(void) {
@@ -32,21 +33,24 @@ bool GlobalSetting::initialize() {
 	return false;
 }
 
-// 全局的管理
-void GlobalSetting::enableApplications(const bool enabled) {
-	global_enable_ = enabled;
-}
-
 // 检测DNS
 bool GlobalSetting::checkDNS(const std::string &dns){
 	assert ( dns_check_ != NULL);
 	return dns_check_->checkDNS(dns);
 }
+bool GlobalSetting::checkIP(const std::string &ip){
+	assert ( dns_check_ != NULL);
+	return dns_check_->checkIP(ip);
+}
+
+// 是DNS检测 "可用"或"不可用"
 void GlobalSetting::enableDNSCheck(const bool checked){
 	assert ( dns_check_ != NULL);
+	dns_check_->enableDNSCheck(checked);
 }
 
 // DNSlist
+// 添加删除DNS
 void GlobalSetting::addBlackDNS(const std::string &dns){
 	assert ( dns_list_ != NULL);
 	dns_list_->addBlackDNS(dns);

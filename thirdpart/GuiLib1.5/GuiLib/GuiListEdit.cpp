@@ -302,7 +302,7 @@ CListCtrl* CGuiListEdit::GetListCtrl()
 //==================================================
 void CGuiListEdit::OnDelete(const CString &str) {
 	if (onchanged_ != NULL)
-		onchanged_->OnAdd(str);
+		onchanged_->OnDelete(str);
 }
 
 void CGuiListEdit::OnBeginEdit(const CString &strOld) {

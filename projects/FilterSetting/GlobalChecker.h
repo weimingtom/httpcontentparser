@@ -42,6 +42,7 @@ public:
 	STDMETHOD(checkContent)(LONG type, CHAR data[ ], LONG num, VARIANT_BOOL* passed);
 	STDMETHOD(needCheck)(LONG type, VARIANT_BOOL* needed);
 	STDMETHOD(checkImage)(LONG type, LONG* action_code);
+	STDMETHOD(checkIP)(BSTR ipAddress, VARIANT_BOOL* enabled);
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(GlobalChecker), CGlobalChecker)
