@@ -1,0 +1,24 @@
+HKCR
+{
+	FilterSetting.Authorize.1 = s 'Authorize Class'
+	{
+		CLSID = s '{20A0E336-ABED-456D-A000-E6B110A86F3B}'
+	}
+	FilterSetting.Authorize = s 'Authorize Class'
+	{
+		CLSID = s '{20A0E336-ABED-456D-A000-E6B110A86F3B}'
+		CurVer = s 'FilterSetting.Authorize.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {20A0E336-ABED-456D-A000-E6B110A86F3B} = s 'Authorize Class'
+		{
+			ProgID = s 'FilterSetting.Authorize.1'
+			VersionIndependentProgID = s 'FilterSetting.Authorize'
+			ForceRemove 'Programmable'
+			LocalServer32 = s '%MODULE%'
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{42F932B5-F5CB-4F0D-8925-1B6BE5FECD1B}'
+		}
+	}
+}
