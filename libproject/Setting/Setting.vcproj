@@ -39,7 +39,8 @@
 				Name="VCPostBuildEventTool"
 				CommandLine="copy .\globalsetting.h ..\..\include
 copy .\debug\settingd.lib ..\..\lib
-"/>
+copy .\authorize.h ..\..\include
+copy .\eyecaresetting.h ..\..\include"/>
 			<Tool
 				Name="VCPreBuildEventTool"/>
 			<Tool
@@ -81,7 +82,8 @@ copy .\debug\settingd.lib ..\..\lib
 				Name="VCPostBuildEventTool"
 				CommandLine="copy .\globalchecker.h ..\..\include
 copy .\release\settingd.lib ..\..\lib
-"/>
+copy .\authorize.h ..\..\include
+copy .\eyecaresetting.h ..\..\include"/>
 			<Tool
 				Name="VCPreBuildEventTool"/>
 			<Tool
@@ -106,9 +108,6 @@ copy .\release\settingd.lib ..\..\lib
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
 			<File
-				RelativePath=".\Authorize.cpp">
-			</File>
-			<File
 				RelativePath=".\DNSList.cpp">
 			</File>
 			<File
@@ -119,13 +118,16 @@ copy .\release\settingd.lib ..\..\lib
 			Name="Í·ÎÄ¼þ"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
-			<File
-				RelativePath=".\Authorize.h">
-			</File>
 		</Filter>
 		<Filter
 			Name="Authorize"
 			Filter="">
+			<File
+				RelativePath=".\Authorize.cpp">
+			</File>
+			<File
+				RelativePath=".\Authorize.h">
+			</File>
 		</Filter>
 		<Filter
 			Name="public"

@@ -118,6 +118,9 @@
 				RelativePath=".\FilterSettingTest.cpp">
 			</File>
 			<File
+				RelativePath=".\IAuthorizeTest.cpp">
+			</File>
+			<File
 				RelativePath=".\stdafx.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
@@ -142,6 +145,9 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
 			<File
 				RelativePath=".\FilterSettingTest.h">
+			</File>
+			<File
+				RelativePath=".\IAuthorizeTest.h">
 			</File>
 			<File
 				RelativePath=".\stdafx.h">

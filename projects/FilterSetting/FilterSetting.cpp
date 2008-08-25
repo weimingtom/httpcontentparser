@@ -2,7 +2,10 @@
 
 #include "stdafx.h"
 #include "resource.h"
+#include "globalvariable.h"
 #include "FilterSetting.h"
+#include <passwordtype.h>
+#include <string>
 
 class CFilterSettingModule : public CAtlServiceModuleT< CFilterSettingModule, IDS_SERVICENAME >
 {
@@ -23,13 +26,14 @@ public :
 
 CFilterSettingModule _AtlModule;
 
-
+Authorize g_authorize;
 GlobalSetting global_setting_;
 
 extern "C" int WINAPI _tWinMain(HINSTANCE /*hInstance*/, HINSTANCE /*hPrevInstance*/, 
                                 LPTSTR /*lpCmdLine*/, int nShowCmd)
 {
 	global_setting_.initialize();
+	g_authorize.setNewPassword("123", PASSWORD_SU);
     return _AtlModule.WinMain(nShowCmd);
 }
 

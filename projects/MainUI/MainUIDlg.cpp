@@ -5,6 +5,8 @@
 #include "MainUI.h"
 #include "MainUIDlg.h"
 #include ".\mainuidlg.h"
+#include ".\dlgchangepassword.h"
+#include ".\dlgcheckpassword.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -71,12 +73,14 @@ BEGIN_MESSAGE_MAP(CMainUIDlg, CDialog)
 	ON_NOTIFY(NM_CLICK, IDC_TREE_NAVIG, OnNMClickTreeNavig)
 	ON_NOTIFY(TVN_SELCHANGED, IDC_TREE_NAVIG, OnTvnSelchangedTreeNavig)
 	ON_BN_CLICKED(IDC_APPLY, OnBnClickedApply)
-	ON_COMMAND(ID_TRAYMENU_SWITCH, OnTraymenuSwitch)
-	ON_COMMAND(ID_TRAYMENU_MAINUI, OnTraymenuMainui)
-	ON_COMMAND(ID_MAIN_EXIT, OnMainExit)
 	ON_WM_CREATE()
 	ON_WM_KEYDOWN()
 	ON_WM_CONTEXTMENU()
+	ON_COMMAND(ID_MAIN_CHANGEPASSWORD, OnMainChangepassword)
+	ON_COMMAND(ID_TRAYMENU_MAINUI, OnTraymenuMainui)
+	ON_COMMAND(ID_MAIN_EXIT, OnMainExit)
+	ON_COMMAND(ID_MAIN_PARENTS, OnMainParents)
+	ON_COMMAND(ID_MAIN_CHILDREN, OnMainChildren)
 END_MESSAGE_MAP()
 
 void CMainUIDlg::InitTreeNodes() {
@@ -356,10 +360,6 @@ void CMainUIDlg::OnBnClickedApply()
 	m_curDlg->OnApply();
 }
 
-void CMainUIDlg::OnTraymenuSwitch() {
-	int a = 0;
-	AfxMessageBox("Hello");
-}
 
 void CMainUIDlg::OnTraymenuMainui() {
 	CString strMenuItem;
@@ -387,4 +387,25 @@ int CMainUIDlg::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	setupTrayMenu();
 	return 0;
+}
+
+void CMainUIDlg::OnMainChangepassword()
+{
+	CDlgChangePassword dlg;
+	dlg.DoModal();
+}
+
+void CMainUIDlg::OnMainParents()
+{
+	m_trayMenu.CheckMenuItem(ID_MAIN_PARENTS, TRUE);
+	m_trayMenu.CheckMenuItem(ID_MAIN_CHILDREN, FALSE);
+	CDlgCheckPassword dlg;
+	if (IDOK == dlg.DoModal()) {
+	}
+}
+
+void CMainUIDlg::OnMainChildren()
+{
+	m_trayMenu.CheckMenuItem(ID_MAIN_PARENTS, FALSE);
+	m_trayMenu.CheckMenuItem(ID_MAIN_CHILDREN, TRUE);
 }

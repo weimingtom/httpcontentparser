@@ -150,6 +150,12 @@
 			Name="TEST"
 			Filter="">
 			<File
+				RelativePath=".\AuthorizeTest.cpp">
+			</File>
+			<File
+				RelativePath=".\AuthorizeTest.h">
+			</File>
+			<File
 				RelativePath=".\SettingTest.cpp">
 			</File>
 			<File
