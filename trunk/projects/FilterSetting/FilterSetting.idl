@@ -21,7 +21,7 @@ interface IGlobalChecker : IDispatch {
 		[in, size_is(Count)] CHAR Numbers[], LONG Count, [out,retval] VARIANT_BOOL* passed);
 	[id(3), helpstring("method  needCheck")] HRESULT needCheck([in] LONG type, [out,retval] VARIANT_BOOL* needed);
 	[id(4), helpstring("method checkImage")] HRESULT checkImage([in] LONG type, [out,retval] LONG* action_code);
-	[id(5), helpstring("方法checkIP")] HRESULT checkIP([in] BSTR ipAddress, [out,retval] VARIANT_BOOL* enabled);
+	[id(5), helpstring("Method checkIP")] HRESULT checkIP([in] BSTR ipAddress, [out,retval] VARIANT_BOOL* enabled);
 };
 
 [
@@ -46,10 +46,29 @@ interface IGlobalSetting : IDispatch{
 	uuid(EB9690EC-B4C8-4693-929B-D45C98FD5894),
 	dual,
 	nonextensible,
-	helpstring("IAuthorize 接口"),
+	helpstring("IAuthorize Interface"),
 	pointer_default(unique)
 ]
 interface IAuthorize : IDispatch{
+	[id(1), helpstring("Method checkPassword")] HRESULT checkPassword([in] BSTR password, [out,retval] VARIANT_BOOL* bSuccess);
+};
+[
+	object,
+	uuid(A6CAAAA4-0F78-47DD-8DF1-EAE712C24889),
+	dual,
+	nonextensible,
+	helpstring("IEyecare Interface"),
+	pointer_default(unique)
+]
+interface IEyecare : IDispatch{
+	[id(1), helpstring("Method setPassword")] HRESULT setPassword([in] BSTR password);
+	[id(2), helpstring("Method setRestTime")] HRESULT setRestTime(void);
+	[id(3), helpstring("Method setEntertainmentTime")] HRESULT setEntertainmentTime([in] LONG mintues);
+	[id(5), helpstring("Method getRestTime")] HRESULT getRestTime([out,retval] LONG* mintues);
+	[id(6), helpstring("Method getEntertainmentTime")] HRESULT getEntertainmentTime([out,retval] LONG* minutes);
+	[id(7), helpstring("Method getTimeLeft")] HRESULT getTimeLeft([out,retval] LONG* minutes);
+	[id(8), helpstring("Method getState")] HRESULT getState([out,retval] LONG* state);
+	[id(9), helpstring("Method swithToEntertainment")] HRESULT swithToEntertainment([in] BSTR password);
 };
 [
 	uuid(42F932B5-F5CB-4F0D-8925-1B6BE5FECD1B),
@@ -82,5 +101,13 @@ library FilterSettingLib {
 	coclass Authorize
 	{
 		[default] interface IAuthorize;
+	};
+	[
+		uuid(E81DB199-CB22-4EB4-BF79-A5CCA673AF01),
+		helpstring("Eyecare Class")
+	]
+	coclass Eyecare
+	{
+		[default] interface IEyecare;
 	};
 };

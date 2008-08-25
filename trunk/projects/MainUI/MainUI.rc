@@ -92,16 +92,16 @@ FONT 8, "Microsoft Sans Serif", 400, 0, 0x0
 BEGIN
     CONTROL         "",IDC_POSITION_LEFT,"Static",SS_BLACKFRAME | NOT 
                     WS_VISIBLE,7,7,87,257
-    CONTROL         "",IDC_STATIC,"Static",SS_BLACKFRAME,149,7,268,232
-    CONTROL         "OK",IDC_OK,"Button",BS_OWNERDRAW | WS_TABSTOP,260,250,
-                    40,14
-    PUSHBUTTON      "Cancel",IDC_CANCEL,318,250,40,14,BS_FLAT
-    PUSHBUTTON      "Apply",IDC_APPLY,376,250,40,14,BS_FLAT
+    CONTROL         "",IDC_STA_FRAME,"Static",SS_BLACKFRAME,149,7,268,257
+    CONTROL         "OK",IDC_OK,"Button",BS_OWNERDRAW | WS_TABSTOP,243,243,
+                    49,14
+    PUSHBUTTON      "Cancel",IDC_CANCEL,302,243,49,14
+    PUSHBUTTON      "Apply",IDC_APPLY,359,243,49,14
     LTEXT           "Title",IDC_RIGHT_TITLE,165,18,237,11
     CONTROL         "",IDC_STATIC,"Static",SS_BLACKFRAME,161,31,244,1
     CONTROL         "",IDC_TREE_NAVIG,"SysTreeView32",TVS_HASBUTTONS | 
-                    TVS_HASLINES | TVS_NOSCROLL | WS_BORDER | WS_TABSTOP,7,7,
-                    136,257,WS_EX_STATICEDGE
+                    TVS_HASLINES | TVS_NOSCROLL | WS_TABSTOP,7,7,136,257,
+                    WS_EX_STATICEDGE
     CONTROL         "",IDC_POSITION_RIGHT,"Static",SS_BLACKFRAME | NOT 
                     WS_VISIBLE,156,40,254,194
 END
@@ -157,12 +157,12 @@ BEGIN
                     WS_VSCROLL | WS_TABSTOP
 END
 
-IDD_LEV1_RULE DIALOGEX 0, 0, 262, 199
+IDD_LEV1_RULE DIALOGEX 0, 0, 250, 197
 STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
-    GROUPBOX        "说明",IDC_STA_COMMENT,7,7,248,185
-    EDITTEXT        IDC_COMMENT,18,25,228,151,ES_MULTILINE | ES_READONLY | 
+    GROUPBOX        "",IDC_STA_COMMENT,7,7,236,183
+    EDITTEXT        IDC_COMMENT,18,25,212,151,ES_MULTILINE | ES_READONLY | 
                     NOT WS_BORDER,WS_EX_STATICEDGE
 END
 
@@ -177,18 +177,23 @@ STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
     CONTROL         "开机自动启动",IDC_CHK_AUTOLOAD,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,43,28,66,10
-    GROUPBOX        "System",IDC_STA_SYSTEM,7,7,225,52
-    GROUPBOX        "Hot Keys",IDC_STA_OTHERS,7,68,223,59
-    LTEXT           "Show Dialog:",IDC_STATIC,17,89,42,8
-    LTEXT           "Switch User",IDC_STATIC,17,106,38,8
+                    WS_TABSTOP,45,25,66,10
+    GROUPBOX        "System",IDC_STA_SYSTEM,7,7,225,43
+    GROUPBOX        "Hot Keys",IDC_STA_OTHERS,7,58,223,59
+    LTEXT           "Show Dialog:",IDC_STATIC,17,79,42,8
+    LTEXT           "Switch User",IDC_STATIC,17,95,38,8
     CONTROL         "",IDC_HOTKEY1,"msctls_hotkey32",WS_BORDER | WS_TABSTOP,
-                    69,86,80,14
+                    69,76,80,14
     CONTROL         "",IDC_HOTKEY2,"msctls_hotkey32",WS_BORDER | WS_TABSTOP,
-                    69,102,80,14
+                    69,92,80,14
+    GROUPBOX        "Others",IDC_STA_OTHERS2,7,128,223,59
+    CONTROL         "Record Web History",IDC_CHECK1,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,41,145,111,10
+    CONTROL         "Enable Imgage Record",IDC_CHECK2,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,41,164,111,10
 END
 
-IDD_DLG_TOOLS DIALOGEX 0, 0, 210, 143
+IDD_DLG_TOOLS DIALOGEX 0, 0, 283, 201
 STYLE DS_SETFONT | DS_FIXEDSYS | WS_POPUP | WS_SYSMENU
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
@@ -198,7 +203,25 @@ IDD_DLG_EYECARE DIALOGEX 0, 0, 250, 201
 STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
-    GROUPBOX        "Eyecare",IDC_STATIC,7,7,236,187
+    LTEXT           "Entertainment",IDC_STATIC,40,31,46,8
+    EDITTEXT        IDC_EDT_ENTERTIME,95,28,81,14,ES_AUTOHSCROLL | ES_NUMBER
+    CONTROL         "",IDC_SPIN1,"msctls_updown32",UDS_ALIGNRIGHT | 
+                    UDS_AUTOBUDDY | UDS_ARROWKEYS,177,29,11,14
+    LTEXT           "Rest Time",IDC_STATIC,53,55,32,8
+    EDITTEXT        IDC_EDT_RESTTIME,95,51,81,14,ES_AUTOHSCROLL | ES_NUMBER
+    CONTROL         "",IDC_SPIN2,"msctls_updown32",UDS_ALIGNRIGHT | 
+                    UDS_AUTOBUDDY | UDS_ARROWKEYS,177,52,11,14
+    GROUPBOX        "Time Setting",IDC_STA_EYECARE_TIME,7,7,236,78
+    GROUPBOX        "Password",IDC_STA_PASSWORD,7,101,236,93
+    CONTROL         " Use Admin Password",IDC_CHK_USE_SUPWD,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,37,119,109,10
+    EDITTEXT        IDC_EDIT_PWD,77,135,88,14,ES_PASSWORD | ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDT_PWD_RETRY,78,156,87,14,ES_PASSWORD | 
+                    ES_AUTOHSCROLL
+    PUSHBUTTON      "Set",IDC_BTN_SETPWD,182,156,50,14
+    PUSHBUTTON      "Reset",IDC_BTN_RESET,182,135,50,14
+    LTEXT           "Password",IDC_STATIC,36,138,32,8
+    LTEXT           "Re-type",IDC_STATIC,36,158,27,8
 END
 
 IDD_LEV1_TIME_RULE DIALOGEX 0, 0, 281, 198
@@ -322,9 +345,9 @@ BEGIN
     IDD_LEV1_RULE, DIALOG
     BEGIN
         LEFTMARGIN, 7
-        RIGHTMARGIN, 255
+        RIGHTMARGIN, 243
         TOPMARGIN, 7
-        BOTTOMMARGIN, 192
+        BOTTOMMARGIN, 190
     END
 
     IDD_DLG_TEXT, DIALOG
@@ -346,9 +369,9 @@ BEGIN
     IDD_DLG_TOOLS, DIALOG
     BEGIN
         LEFTMARGIN, 7
-        RIGHTMARGIN, 203
+        RIGHTMARGIN, 276
         TOPMARGIN, 7
-        BOTTOMMARGIN, 136
+        BOTTOMMARGIN, 194
     END
 
     IDD_DLG_EYECARE, DIALOG
@@ -489,17 +512,16 @@ IDC_MENU_TRAY MENU
 BEGIN
     POPUP "Main"
     BEGIN
-        MENUITEM "Switch User",                 ID_TRAYMENU_SWITCH
-        POPUP "Tools"
-        BEGIN
-            MENUITEM "Web History",                 ID_TOOLS_WEBHISTORY
-            MENUITEM "Desktop Image",               ID_TOOLS_DESKTOPIMAGE
-        END
         POPUP "Websites"
         BEGIN
             MENUITEM "www.sina.com",                ID_WEBSITES_WWW32788
         END
+        MENUITEM "Web History",                 ID_TOOLS_WEBHISTORY
+        MENUITEM "Desktop Image",               ID_TOOLS_DESKTOPIMAGE
         MENUITEM "Option",                      ID_TRAYMENU_MAINUI
+        MENUITEM SEPARATOR
+        MENUITEM "Children",                    ID_MAIN_CHILDREN, CHECKED
+        MENUITEM "Parents",                     ID_TRAYMENU_SWITCH
         MENUITEM SEPARATOR
         MENUITEM "Exit",                        ID_MAIN_EXIT
     END

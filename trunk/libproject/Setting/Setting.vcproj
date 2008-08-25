@@ -106,6 +106,9 @@ copy .\release\settingd.lib ..\..\lib
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
 			<File
+				RelativePath=".\Authorize.cpp">
+			</File>
+			<File
 				RelativePath=".\DNSList.cpp">
 			</File>
 			<File
@@ -116,29 +119,13 @@ copy .\release\settingd.lib ..\..\lib
 			Name="Í·ÎÄ¼þ"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
+			<File
+				RelativePath=".\Authorize.h">
+			</File>
 		</Filter>
 		<Filter
-			Name="precomp"
-			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx"
-			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}">
-			<File
-				RelativePath=".\stdafx.cpp">
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath=".\stdafx.h">
-			</File>
+			Name="Authorize"
+			Filter="">
 		</Filter>
 		<Filter
 			Name="public"
@@ -174,6 +161,39 @@ copy .\release\settingd.lib ..\..\lib
 			</File>
 			<File
 				RelativePath=".\ImageSetting.h">
+			</File>
+		</Filter>
+		<Filter
+			Name="EyecareSetting"
+			Filter="">
+			<File
+				RelativePath=".\EyecareSetting.cpp">
+			</File>
+			<File
+				RelativePath=".\EyecareSetting.h">
+			</File>
+		</Filter>
+		<Filter
+			Name="precomp"
+			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx"
+			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}">
+			<File
+				RelativePath=".\stdafx.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\stdafx.h">
 			</File>
 		</Filter>
 		<File

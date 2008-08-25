@@ -15,8 +15,7 @@ class ATL_NO_VTABLE CAuthorize :
 	public IDispatchImpl<IAuthorize, &IID_IAuthorize, &LIBID_FilterSettingLib, /*wMajor =*/ 1, /*wMinor =*/ 0>
 {
 public:
-	CAuthorize()
-	{
+	CAuthorize() {
 	}
 
 DECLARE_REGISTRY_RESOURCEID(IDR_AUTHORIZE)
@@ -33,17 +32,16 @@ END_COM_MAP()
 
 	DECLARE_PROTECT_FINAL_CONSTRUCT()
 
-	HRESULT FinalConstruct()
-	{
+	HRESULT FinalConstruct() {
 		return S_OK;
 	}
 	
-	void FinalRelease() 
-	{
+	void FinalRelease() {
 	}
 
 public:
 
+	STDMETHOD(checkPassword)(BSTR password, VARIANT_BOOL* bSuccess);
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(Authorize), CAuthorize)

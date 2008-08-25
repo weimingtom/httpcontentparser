@@ -52,7 +52,7 @@ bool GlobalControl::checkHTTPHeader(HTTP_RESPONSE_HEADER *header) {
 
 		CoUninitialize();
 
-	} catch (_com_error &e) {
+	} catch (_com_error&) {
 		CoUninitialize();
 	}
 	return true;
@@ -69,7 +69,7 @@ bool GlobalControl::checkHTTPContent(HTTPPacket *packet) {
 		}
 
 		CoUninitialize();
-	} catch (_com_error &e) {
+	} catch (_com_error &) {
 		CoUninitialize();
 	}
 	return true;
@@ -90,7 +90,7 @@ bool checkDNS(const std::string &dns_name) {
 		CoUninitialize();
 
 		return enable;
-	} catch (_com_error &e) {
+	} catch (_com_error&) {
 		CoUninitialize();
 	}
 	return true;

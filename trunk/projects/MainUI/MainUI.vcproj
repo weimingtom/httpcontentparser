@@ -293,10 +293,6 @@
 			</File>
 		</Filter>
 		<File
-			RelativePath=".\DlgWhiteDNSList.htm"
-			DeploymentContent="TRUE">
-		</File>
-		<File
 			RelativePath=".\res\MainUI.manifest">
 		</File>
 		<File

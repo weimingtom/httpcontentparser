@@ -1,24 +1,24 @@
 /****************************************************************************
- *																			*		 
- *								GuiToolKit  								*	
- *							 (MFC extension)								*			 
- * Created by Francisco Campos G. www.beyondata.com fcampos@beyondata.com	*
- *--------------------------------------------------------------------------*		   
- *																			*
- * This program is free software;so you are free to use it any of your		*
- * applications (Freeware, Shareware, Commercial),but leave this header		*
- * intact.																	*
- *																			*
- * These files are provided "as is" without warranty of any kind.			*
- *																			*
- *			       GuiToolKit is forever FREE CODE !!!!!					*
- *																			*
- *--------------------------------------------------------------------------*
- * Created by: Francisco Campos G.											*
- * Bug Fixes and improvements : (Add your name)								*
- * -Francisco Campos														*				
- * -Ernesto Garcia															*	
- ****************************************************************************/
+*																			*		 
+*								GuiToolKit  								*	
+*							 (MFC extension)								*			 
+* Created by Francisco Campos G. www.beyondata.com fcampos@beyondata.com	*
+*--------------------------------------------------------------------------*		   
+*																			*
+* This program is free software;so you are free to use it any of your		*
+* applications (Freeware, Shareware, Commercial),but leave this header		*
+* intact.																	*
+*																			*
+* These files are provided "as is" without warranty of any kind.			*
+*																			*
+*			       GuiToolKit is forever FREE CODE !!!!!					*
+*																			*
+*--------------------------------------------------------------------------*
+* Created by: Francisco Campos G.											*
+* Bug Fixes and improvements : (Add your name)								*
+* -Francisco Campos														*				
+* -Ernesto Garcia															*	
+****************************************************************************/
 
 #include "stdafx.h"
 #include "GuiLib.h"
@@ -46,7 +46,7 @@ CGuiSysTray::CGuiSysTray()
 
 CGuiSysTray::~CGuiSysTray()
 {
-    Del();
+	Del();
 }
 
 
@@ -75,32 +75,34 @@ void CGuiSysTray::StopAnimation()
 
 BOOL CGuiSysTray::Add(UINT uID,UINT uCallBackMessage, HICON hIcon, LPCTSTR lpszTip)
 {
-  tnid.uID = uID;
-  tnid.uFlags = NIF_ICON | NIF_TIP | NIF_MESSAGE;
-  tnid.uCallbackMessage = uCallBackMessage;
-  tnid.hIcon = hIcon;
+	tnid.uID = uID;
+	tnid.uFlags = NIF_ICON | NIF_TIP | NIF_MESSAGE;
+	tnid.uCallbackMessage = uCallBackMessage;
+	tnid.hIcon = hIcon;
 
-  _tcscpy(tnid.szTip,lpszTip);
-  return (Shell_NotifyIcon(NIM_ADD, &tnid));
+	ASSERT(_tcslen(lpszTip) < sizeof(tnid.szTip));
+	_tcscpy(tnid.szTip,lpszTip);
+	return (Shell_NotifyIcon(NIM_ADD, &tnid));
 }
 
 BOOL CGuiSysTray::Update(UINT uID, HICON hIcon, LPCTSTR lpszTip)
 {
-  tnid.hIcon = hIcon;
-  _tcscpy(tnid.szTip,lpszTip);
-  return (Shell_NotifyIcon(NIM_MODIFY, &tnid));
+	ASSERT(_tcslen(lpszTip) < sizeof(tnid.szTip));
+	tnid.hIcon = hIcon;
+	_tcscpy(tnid.szTip,lpszTip);
+	return (Shell_NotifyIcon(NIM_MODIFY, &tnid));
 }
 
 BOOL CGuiSysTray::Del()
 {
-  return(Shell_NotifyIcon(NIM_DELETE, &tnid));
+	return(Shell_NotifyIcon(NIM_DELETE, &tnid));
 }
 
 BOOL CGuiSysTray::SetIcon(HICON hIcon)
 {
-  tnid.hIcon = hIcon;
-  tnid.uFlags |= NIF_ICON;
-  return (Shell_NotifyIcon(NIM_MODIFY, &tnid));
+	tnid.hIcon = hIcon;
+	tnid.uFlags |= NIF_ICON;
+	return (Shell_NotifyIcon(NIM_MODIFY, &tnid));
 }
 
 BOOL CGuiSysTray::SetIcon(LPCTSTR lpszIcon)
@@ -110,9 +112,10 @@ BOOL CGuiSysTray::SetIcon(LPCTSTR lpszIcon)
 
 BOOL CGuiSysTray::SetTips(LPCTSTR lpszTip)
 {
-  tnid.uFlags |= NIF_TIP;	
-  _tcscpy(tnid.szTip,lpszTip);
-  return (Shell_NotifyIcon(NIM_MODIFY, &tnid));
+	ASSERT(_tcslen(lpszTip) < sizeof(tnid.szTip));
+	tnid.uFlags |= NIF_TIP;	
+	_tcscpy(tnid.szTip,lpszTip);
+	return (Shell_NotifyIcon(NIM_MODIFY, &tnid));
 }
 
 void CGuiSysTray::SetImageList(UINT nBitmapID, int cx, int nGrow, COLORREF crMask)
@@ -146,22 +149,22 @@ void CGuiSysTray::SetSysMenu(CMenu* pMenu)
 
 LRESULT CGuiSysTray::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 {
-    if (message== tnid.uCallbackMessage)
-    { 
-        if (LOWORD(lParam) == WM_RBUTTONUP)
-       {
-            if(m_pMenu == NULL) return FALSE;
-           CPoint pt;
-          GetCursorPos(&pt);
-           m_pMenu->GetSubMenu(0)->TrackPopupMenu(0, pt.x, pt.y, GetParent(), NULL);
-        }
-        //ERNESTO -> This portion of code was outside the if (message== tnid.uCallbackMessage), so it was never reached and double-click was never sent.
-        else if (LOWORD(lParam) == WM_LBUTTONDBLCLK) 
-            GetParent()->SendMessage(WM_LBUTTONDBLCLK,0, 0);
-    }
-    else
-        return CWnd::WindowProc(message, wParam, lParam);
-    return TRUE;
+	if (message== tnid.uCallbackMessage)
+	{ 
+		if (LOWORD(lParam) == WM_RBUTTONUP)
+		{
+			if(m_pMenu == NULL) return FALSE;
+			CPoint pt;
+			GetCursorPos(&pt);
+			m_pMenu->GetSubMenu(0)->TrackPopupMenu(0, pt.x, pt.y, GetParent(), NULL);
+		}
+		//ERNESTO -> This portion of code was outside the if (message== tnid.uCallbackMessage), so it was never reached and double-click was never sent.
+		else if (LOWORD(lParam) == WM_LBUTTONDBLCLK) 
+			GetParent()->SendMessage(WM_LBUTTONDBLCLK,0, 0);
+	}
+	else
+		return CWnd::WindowProc(message, wParam, lParam);
+	return TRUE;
 }
 
 
