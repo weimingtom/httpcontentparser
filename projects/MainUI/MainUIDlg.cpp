@@ -60,6 +60,7 @@ void CMainUIDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_OK, m_btnOk);
 	DDX_Control(pDX, IDC_CANCEL, m_btnCancel);
 	DDX_Control(pDX, IDC_APPLY, m_btnApply);
+	DDX_Control(pDX, IDC_STA_FRAME, m_staFunFrame);
 }
 
 BEGIN_MESSAGE_MAP(CMainUIDlg, CDialog)
@@ -228,7 +229,7 @@ void CMainUIDlg::OnNMClickTreeNavig(NMHDR *pNMHDR, LRESULT *pResult)
 void CMainUIDlg::setupTrayMenu() {
 	// system Tray
 	m_trayMenu.LoadMenu(IDC_MENU_SYSTRAY);
-	// m_trayMenu.StyleDispl(CNewMenu::STYLE_ORIGINAL);
+//	m_trayMenu.StyleDispl(CNewMenu::STYLE_ORIGINAL);
 	m_sysTray.Create(this,10200, CALLMESSAGE, AfxGetApp()->LoadIcon(IDR_MAINFRAME),_T("Hola"));
 	m_sysTray.SetSysMenu(&m_trayMenu);
 }

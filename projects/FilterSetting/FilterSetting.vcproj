@@ -159,6 +159,9 @@ copy .\filtersetting.h ..\..\include\com
 				RelativePath=".\Authorize.cpp">
 			</File>
 			<File
+				RelativePath=".\Eyecare.cpp">
+			</File>
+			<File
 				RelativePath=".\FilterSetting.cpp">
 			</File>
 			<File
@@ -188,6 +191,9 @@ copy .\filtersetting.h ..\..\include\com
 				RelativePath=".\Authorize.h">
 			</File>
 			<File
+				RelativePath=".\Eyecare.h">
+			</File>
+			<File
 				RelativePath=".\globalvariable.h">
 			</File>
 			<File
@@ -203,6 +209,9 @@ copy .\filtersetting.h ..\..\include\com
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}">
 			<File
 				RelativePath=".\Authorize.rgs">
+			</File>
+			<File
+				RelativePath=".\Eyecare.rgs">
 			</File>
 			<File
 				RelativePath=".\FilterSetting.rc">

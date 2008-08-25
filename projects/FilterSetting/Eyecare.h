@@ -1,0 +1,56 @@
+// Eyecare.h : CEyecare 的声明
+
+#pragma once
+#include "resource.h"       // 主符号
+
+#include "FilterSetting.h"
+
+
+// CEyecare
+
+class ATL_NO_VTABLE CEyecare : 
+	public CComObjectRootEx<CComSingleThreadModel>,
+	public CComCoClass<CEyecare, &CLSID_Eyecare>,
+	public ISupportErrorInfo,
+	public IDispatchImpl<IEyecare, &IID_IEyecare, &LIBID_FilterSettingLib, /*wMajor =*/ 1, /*wMinor =*/ 0>
+{
+public:
+	CEyecare()
+	{
+	}
+
+DECLARE_REGISTRY_RESOURCEID(IDR_EYECARE)
+
+
+BEGIN_COM_MAP(CEyecare)
+	COM_INTERFACE_ENTRY(IEyecare)
+	COM_INTERFACE_ENTRY(IDispatch)
+	COM_INTERFACE_ENTRY(ISupportErrorInfo)
+END_COM_MAP()
+
+// ISupportsErrorInfo
+	STDMETHOD(InterfaceSupportsErrorInfo)(REFIID riid);
+
+	DECLARE_PROTECT_FINAL_CONSTRUCT()
+
+	HRESULT FinalConstruct()
+	{
+		return S_OK;
+	}
+	
+	void FinalRelease() 
+	{
+	}
+
+public:
+	STDMETHOD(setPassword)(BSTR password);			// 设置密码， 如果设置空密码， 则为使用系统管理员密码
+	STDMETHOD(setRestTime)(void);					// 设置休息时间的长度
+	STDMETHOD(setEntertainmentTime)(LONG mintues);	// 设置娱乐事件的长度
+	STDMETHOD(getRestTime)(LONG* mintues);			// 获取休息时间的长度
+	STDMETHOD(getEntertainmentTime)(LONG* minutes);	// 获取娱乐事件的长度
+	STDMETHOD(getTimeLeft)(LONG* minutes);			// 状态切换的剩余时间
+	STDMETHOD(getState)(LONG* state);				// 获取状态
+	STDMETHOD(swithToEntertainment)(BSTR password); // 切换到娱乐状体
+};
+
+OBJECT_ENTRY_AUTO(__uuidof(Eyecare), CEyecare)

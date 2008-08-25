@@ -17,7 +17,7 @@
 #include ".\basedlg.h"
 #include "afxwin.h"
 
-
+#include <Guilib1.5\GuiGroupBox.h>
 #include <Guilib1.5\GuiButton.h>
 #include <Guilib1.5\GuisysTray.h>
 #include <Guilib1.5\NewMenu.h>
@@ -79,19 +79,22 @@ private:
 	CFont	m_fontTree;
 	CFont	m_fontTitle;
 
+	// controls
 	// system Tray
 	CGuiSysTray		m_sysTray;
-	CMenu			m_trayMenu;
-
+	CMenu		m_trayMenu;
+	
+	CGuiGroupBox m_staFunFrame;
+	CGuiButton m_btnOk;
+	CGuiButton m_btnCancel;
+	CGuiButton m_btnApply;
 	//
 	BOOL	m_bShowed; // 当前界面是否显示
 protected:
 	afx_msg void OnNMClickTreeNavig(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnTvnSelchangedTreeNavig(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnBnClickedApply();
-	CGuiButton m_btnOk;
-	CGuiButton m_btnCancel;
-	CGuiButton m_btnApply;
+	
 public:
 	afx_msg void OnTraymenuSwitch();
 	afx_msg void OnTraymenuMainui();

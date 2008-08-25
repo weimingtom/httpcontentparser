@@ -6,6 +6,7 @@
 #define IDD_ABOUTBOX                    100
 #define IDS_ABOUTBOX                    101
 #define IDC_TRAY_MENU                   101
+#define IDC_STA_PASSWORD                101
 #define IDD_MAINUI_DIALOG               102
 #define IDS_TREE_LEV1_RULES             102
 #define IDS_COMMENT_DNS                 103
@@ -47,6 +48,7 @@
 #define IDC_CHK_GIF                     1005
 #define IDS_TREE_CONTENT_RULE           1005
 #define IDC_CANCEL                      1005
+#define IDC_BTN_RESET                   1005
 #define IDC_APPLY                       1006
 #define IDC_LIST1                       1006
 #define IDC_CHK_PNG                     1006
@@ -71,16 +73,28 @@
 #define IDC_CHECK1                      1025
 #define IDC_CHK_TIMECTRL                1025
 #define IDC_CHK_WHITE_DNSLIST           1025
+#define IDC_CHECK2                      1026
 #define IDC_STA_SYSTEM                  1027
 #define IDC_STA_OTHERS                  1028
 #define IDC_CHK_AUTOLOAD                1029
 #define IDC_STA_CELLS                   1030
+#define IDC_STA_OTHERS2                 1030
 #define IDC_OK                          1031
 #define IDC_HOTKEY1                     1033
 #define IDC_HOTKEY2                     1034
 #define IDC_CHK_ENABLE_DNS              1034
 #define IDC_CHK_ENABLE_SEARCH           1035
 #define IDC_STA_WHIE_DNSLIST            1039
+#define IDC_STA_FRAME                   1040
+#define IDC_SPIN1                       1042
+#define IDC_SPIN2                       1043
+#define IDC_STA_EYECARE_TIME            1046
+#define IDC_EDIT_PWD                    1048
+#define IDC_EDT_PWD_RETRY               1049
+#define IDC_BTN_SETPWD                  1050
+#define IDC_CHK_USE_SUPWD               1051
+#define IDC_EDT_ENTERTIME               1052
+#define IDC_EDT_RESTTIME                1053
 #define IDC_EDIT1                       4011
 #define IDC_EDIT2                       4012
 #define IDC_WND_HELLO                   5000
@@ -107,14 +121,15 @@
 #define ID_MAIN_TOOLS                   32791
 #define ID_TOOLS_WEBHISTORY             32792
 #define ID_TOOLS_DESKTOPIMAGE           32793
+#define ID_MAIN_CHILDREN                32794
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        150
-#define _APS_NEXT_COMMAND_VALUE         32794
-#define _APS_NEXT_CONTROL_VALUE         1040
+#define _APS_NEXT_COMMAND_VALUE         32795
+#define _APS_NEXT_CONTROL_VALUE         1054
 #define _APS_NEXT_SYMED_VALUE           111
 #endif
 #endif
