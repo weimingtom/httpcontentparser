@@ -96,8 +96,10 @@ protected:
 	afx_msg void OnBnClickedApply();
 	
 public:
-	afx_msg void OnTraymenuSwitch();
 	afx_msg void OnTraymenuMainui();
 	afx_msg void OnMainExit();
-	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+	afx_msg int  OnCreate(LPCREATESTRUCT lpCreateStruct);
+	afx_msg void OnMainChangepassword();
+	afx_msg void OnMainParents();
+	afx_msg void OnMainChildren();
 };

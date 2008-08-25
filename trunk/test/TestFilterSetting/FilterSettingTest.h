@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _TEST_FILTER_SETTING_FILTERSETTINGTEST_H__
+#define _TEST_FILTER_SETTING_FILTERSETTINGTEST_H__
 
 #include <cppunit/extensions/HelperMacros.h>
 
@@ -18,3 +19,5 @@ public:
 	FilterSettingTest(void);
 	~FilterSettingTest(void);
 };
+
+#endif  // _TEST_FILTER_SETTING_FILTERSETTINGTEST_H__

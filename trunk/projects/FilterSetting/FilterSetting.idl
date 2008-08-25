@@ -51,6 +51,7 @@ interface IGlobalSetting : IDispatch{
 ]
 interface IAuthorize : IDispatch{
 	[id(1), helpstring("Method checkPassword")] HRESULT checkPassword([in] BSTR password, [out,retval] VARIANT_BOOL* bSuccess);
+	[id(2), helpstring("·½·¨setPassword")] HRESULT changePassword([in] BSTR password, [in] BSTR oldPassword, [out,retval] VARIANT_BOOL* bSuccess);
 };
 [
 	object,

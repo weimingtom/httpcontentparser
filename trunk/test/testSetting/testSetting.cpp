@@ -3,8 +3,10 @@
 
 #include "stdafx.h"
 #include ".\settingtest.h"
+#include ".\authorizetest.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION(SettingTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(AuthorizeTest);
 
 int _tmain(int argc, _TCHAR* argv[]) {
 	 // Create the event manager and test controller

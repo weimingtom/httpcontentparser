@@ -3,8 +3,11 @@
 
 #include "stdafx.h"
 #include ".\filtersettingtest.h"
+#include ".\iauthorizetest.h"
+
 
 CPPUNIT_TEST_SUITE_REGISTRATION(FilterSettingTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(IAuthorizeTest);
 
 int _tmain(int argc, _TCHAR* argv[])
 {

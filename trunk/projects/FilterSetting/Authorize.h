@@ -4,7 +4,7 @@
 #include "resource.h"       // Ö÷·ûºÅ
 
 #include "FilterSetting.h"
-
+#include "globalvariable.h"
 
 // CAuthorize
 
@@ -40,8 +40,8 @@ END_COM_MAP()
 	}
 
 public:
-
 	STDMETHOD(checkPassword)(BSTR password, VARIANT_BOOL* bSuccess);
+	STDMETHOD(changePassword)(BSTR password, BSTR oldPassword, VARIANT_BOOL* bSuccess);
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(Authorize), CAuthorize)
