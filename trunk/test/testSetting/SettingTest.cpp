@@ -60,7 +60,7 @@ void SettingTest::CheckIPTest() {
 	globalsetting.addBlackDNS(dns_name);
 
 
-	const string ip1 = "71.5.7.191", ip2 = "18.29.38.17";// ip2为其他ip
+	const string ip1 = "202.108.33.32", ip2 = "18.29.38.17";// ip2为其他ip
 	CPPUNIT_ASSERT(false == globalsetting.checkIP(ip1));
 	CPPUNIT_ASSERT(true == globalsetting.checkIP(ip2));
 

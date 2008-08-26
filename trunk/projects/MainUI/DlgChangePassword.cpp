@@ -98,7 +98,7 @@ BOOL CDlgChangePassword::OnInitDialog()
 void CDlgChangePassword::OnBnClickedOk()
 {
 	try {
-		UpdateData(FALSE);
+		UpdateData(TRUE);
 		if (validate() == false) {
 			resetFileds();
 			AfxMessageBox("The Two password are not same!");
@@ -116,7 +116,7 @@ void CDlgChangePassword::OnBnClickedOk()
 			}
 
 			VARIANT_BOOL changed;
-			authorize->changePassword(_bstr_t(m_strOrgin), _bstr_t(m_strNew), &changed);
+			authorize->changePassword(_bstr_t(m_strNew), _bstr_t(m_strOrgin), &changed);
 			authorize->Release();
 
 			if (changed == false) {
