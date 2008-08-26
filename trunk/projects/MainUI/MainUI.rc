@@ -179,14 +179,14 @@ BEGIN
     CONTROL         "开机自动启动",IDC_CHK_AUTOLOAD,"Button",BS_AUTOCHECKBOX | 
                     WS_TABSTOP,45,25,66,10
     GROUPBOX        "System",IDC_STA_SYSTEM,7,7,225,43
-    GROUPBOX        "Hot Keys",IDC_STA_OTHERS,7,58,223,59
+    GROUPBOX        "Others",IDC_STA_OTHERS,7,128,223,59
     LTEXT           "Show Dialog:",IDC_STATIC,17,79,42,8
     LTEXT           "Switch User",IDC_STATIC,17,95,38,8
     CONTROL         "",IDC_HOTKEY1,"msctls_hotkey32",WS_BORDER | WS_TABSTOP,
                     69,76,80,14
     CONTROL         "",IDC_HOTKEY2,"msctls_hotkey32",WS_BORDER | WS_TABSTOP,
                     69,92,80,14
-    GROUPBOX        "Others",IDC_STA_OTHERS2,7,128,223,59
+    GROUPBOX        "Hotkeys",IDC_STA_HOTKEY,7,58,223,59
     CONTROL         "Record Web History",IDC_CHECK1,"Button",BS_AUTOCHECKBOX | 
                     WS_TABSTOP,41,145,111,10
     CONTROL         "Enable Imgage Record",IDC_CHECK2,"Button",

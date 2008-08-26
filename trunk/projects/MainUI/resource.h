@@ -82,6 +82,7 @@
 #define IDC_CHK_AUTOLOAD                1029
 #define IDC_STA_CELLS                   1030
 #define IDC_STA_OTHERS2                 1030
+#define IDC_STA_HOTKEY                  1030
 #define IDC_OK                          1031
 #define IDC_HOTKEY1                     1033
 #define IDC_HOTKEY2                     1034
