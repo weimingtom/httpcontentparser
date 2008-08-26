@@ -4,9 +4,14 @@
 #include "Eyecare.h"
 #include ".\eyecare.h"
 
+#include "FilterSetting.h"
+#include "globalvariable.h"
 
+#include <eyecaresetting.h>
 // CEyecare
 
+CEyecare::CEyecare() : eyecare_setting_(&g_authorize){
+}
 STDMETHODIMP CEyecare::InterfaceSupportsErrorInfo(REFIID riid)
 {
 	static const IID* arr[] = 
@@ -22,43 +27,47 @@ STDMETHODIMP CEyecare::InterfaceSupportsErrorInfo(REFIID riid)
 	return S_FALSE;
 }
 
-STDMETHODIMP CEyecare::setPassword(BSTR password)
-{
+STDMETHODIMP CEyecare::setPassword(BSTR password) {
+	// eyecare_setting_.setPassword(_bstr_t(password)); 
 	return S_OK;
 }
 
-STDMETHODIMP CEyecare::setRestTime(void)
-{
+STDMETHODIMP CEyecare::setRestTime(LONG mintues) {
+	eyecare_setting_.setRestTime(mintues);
 	return S_OK;
 }
 
-STDMETHODIMP CEyecare::setEntertainmentTime(LONG mintues)
-{
+STDMETHODIMP CEyecare::setEntertainmentTime(LONG mintues) {
+	eyecare_setting_.setEntertainTime(mintues);
 	return S_OK;
 }
 
-
-STDMETHODIMP CEyecare::getRestTime(LONG* mintues)
-{
+STDMETHODIMP CEyecare::getRestTime(LONG* minutes) {
+	*minutes = eyecare_setting_.getRestTime();
 	return S_OK;
 }
 
-STDMETHODIMP CEyecare::getEntertainmentTime(LONG* minutes)
-{
+STDMETHODIMP CEyecare::getEntertainmentTime(LONG* minutes) {
+	*minutes = eyecare_setting_.getEntertainTime();
 	return S_OK;
 }
 
-STDMETHODIMP CEyecare::getTimeLeft(LONG* minutes)
-{
+STDMETHODIMP CEyecare::getTimeLeft(LONG* minutes) {
+	*minutes = eyecare_setting_.getRemainTime();
 	return S_OK;
 }
 
-STDMETHODIMP CEyecare::getState(LONG* state)
-{
+STDMETHODIMP CEyecare::getState(LONG* state) {
+	*state = eyecare_setting_.getState();
 	return S_OK;
 }
 
-STDMETHODIMP CEyecare::swithToEntertainment(BSTR password)
-{
+STDMETHODIMP CEyecare::swithToEntertainment(BSTR password, VARIANT_BOOL *bSuccess) {
+	*bSuccess = eyecare_setting_.switchState((char*)_bstr_t(password));
+	return S_OK;
+}
+
+STDMETHODIMP CEyecare::trySwitch(LONG* state) {
+	*state = eyecare_setting_.trySwitch();
 	return S_OK;
 }

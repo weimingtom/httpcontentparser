@@ -39,7 +39,7 @@ void AuthorizeTest::TestCheckPassword() {
 
 	CPPUNIT_ASSERT( true == authorize.checkPassword(password2, type2));
 	CPPUNIT_ASSERT( false == authorize.setPassword(newpassword2, fakepassword2, type2));
-	CPPUNIT_ASSERT( true == authorize.setPassword(newpassword2, password1, type2));
+	CPPUNIT_ASSERT( true == authorize.setPassword(newpassword2, password2, type2));
 	CPPUNIT_ASSERT( false == authorize.checkPassword(password2, type2));
 	CPPUNIT_ASSERT( false == authorize.checkPassword(fakepassword2, type2));
 	CPPUNIT_ASSERT( true == authorize.checkPassword(newpassword2, type2));

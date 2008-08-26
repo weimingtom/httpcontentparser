@@ -3,9 +3,15 @@
 
 #include "stdafx.h"
 #include "resource.h"
+#include <com\FilterSetting_i.c>
+#include <com\FilterSetting.h>
+#include <comdef.h>
 
 #define MAX_LOADSTRING 100
 #define WM_MY_SHOWDIALOG (WM_USER + 0x0001)
+
+#define ID_TIMER   1
+#define TIME_SPAN  300
 
 // Global Variables:
 HINSTANCE hInst;								// current instance
@@ -52,6 +58,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
                      LPTSTR    lpCmdLine,
                      int       nCmdShow)
 {
+	CoInitialize(NULL);
 	UNREFERENCED_PARAMETER(hPrevInstance);
 	UNREFERENCED_PARAMETER(lpCmdLine);
 
@@ -75,6 +82,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 		DispatchMessage(&msg);	
 	}
 
+	CoUninitialize();
 	return (int) msg.wParam;
 }
 
@@ -121,19 +129,48 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    return TRUE;
 }
 
+BOOL CheckPassword(LPCTSTR password) {
+	try {
+		VARIANT_BOOL passed = FALSE;
+		IAuthorize *authorize = NULL;
+		HRESULT hr = CoCreateInstance(CLSID_Authorize, NULL, CLSCTX_LOCAL_SERVER, IID_IAuthorize, (LPVOID*)&authorize);
+		if (FAILED(hr)) {
+			return FALSE;
+		}
+
+		authorize->checkPassword(_bstr_t(password), &passed);
+		authorize->Release();
+
+		return passed;
+	} catch (_com_error &) {
+		return FALSE;
+	}
+}
 
 LRESULT CALLBACK InputPasswordDlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
+	TCHAR szBuffer[MAX_PATH];
+	HICON hIcon = NULL;
+	HINSTANCE hInstance;
 	switch (message)
 	{
+	case WM_CREATE:
+		hInstance = (HINSTANCE)GetWindowLong(hDlg, GWL_HINSTANCE);
+		hIcon = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_EYECARE));
+		SendMessage(hDlg, WM_SETICON, TRUE,  (WPARAM)hIcon);
+		SendMessage(hDlg, WM_SETICON, FALSE, (WPARAM)hIcon);
 	case WM_INITDIALOG:
 		return TRUE;
-
 	// ÑéÖ¤´úÂë
 	case WM_COMMAND:
+		GetDlgItemText(hDlg, IDC_PASSWORD, szBuffer, MAX_PATH);
 		if (LOWORD(wParam) == IDOK) {
-			EndDialog(hDlg, LOWORD(wParam));
-			return TRUE;
+			if (CheckPassword(szBuffer)) {
+				EndDialog(hDlg, LOWORD(wParam));
+				return TRUE;
+			} else {
+				MessageBox(hDlg, "Wrong Password!", "Error", MB_OK | MB_ICONERROR);
+			}
 		}
 		break;
 	}
@@ -149,7 +186,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	switch (message)
 	{
 	case WM_CREATE:
-		// Ð¶ÔØHOOK
+		break;
+	case WM_TIMER:
+		SetTimer(hWnd, ID_TIMER, TIME_SPAN, NULL);
 		break;
 	case WM_SIZE:
 		PostMessage(hWnd,WM_MY_SHOWDIALOG , 0, 0);
@@ -166,6 +205,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		EndPaint(hWnd, &ps);
 		break;
 	case WM_DESTROY:
+		KillTimer(hWnd, ID_TIMER);
 		PostQuitMessage(0);
 		break;
 	default:

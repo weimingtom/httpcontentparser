@@ -156,6 +156,12 @@
 				RelativePath=".\AuthorizeTest.h">
 			</File>
 			<File
+				RelativePath=".\EyecareTest.cpp">
+			</File>
+			<File
+				RelativePath=".\EyecareTest.h">
+			</File>
+			<File
 				RelativePath=".\SettingTest.cpp">
 			</File>
 			<File

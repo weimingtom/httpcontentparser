@@ -2,9 +2,9 @@
 
 #pragma once
 #include "resource.h"       // 主符号
-
 #include "FilterSetting.h"
 
+#include <eyecaresetting.h>
 
 // CEyecare
 
@@ -15,10 +15,7 @@ class ATL_NO_VTABLE CEyecare :
 	public IDispatchImpl<IEyecare, &IID_IEyecare, &LIBID_FilterSettingLib, /*wMajor =*/ 1, /*wMinor =*/ 0>
 {
 public:
-	CEyecare()
-	{
-	}
-
+	CEyecare();
 DECLARE_REGISTRY_RESOURCEID(IDR_EYECARE)
 
 
@@ -41,16 +38,19 @@ END_COM_MAP()
 	void FinalRelease() 
 	{
 	}
+private:
+	EyecareSetting eyecare_setting_;
 
 public:
 	STDMETHOD(setPassword)(BSTR password);			// 设置密码， 如果设置空密码， 则为使用系统管理员密码
-	STDMETHOD(setRestTime)(void);					// 设置休息时间的长度
+	STDMETHOD(setRestTime)(LONG mintues);			// 设置休息时间的长度
 	STDMETHOD(setEntertainmentTime)(LONG mintues);	// 设置娱乐事件的长度
 	STDMETHOD(getRestTime)(LONG* mintues);			// 获取休息时间的长度
 	STDMETHOD(getEntertainmentTime)(LONG* minutes);	// 获取娱乐事件的长度
 	STDMETHOD(getTimeLeft)(LONG* minutes);			// 状态切换的剩余时间
 	STDMETHOD(getState)(LONG* state);				// 获取状态
-	STDMETHOD(swithToEntertainment)(BSTR password); // 切换到娱乐状体
+	STDMETHOD(swithToEntertainment)(BSTR password, VARIANT_BOOL *bSuccess); // 切换到娱乐状体
+	STDMETHOD(trySwitch)(LONG* state);
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(Eyecare), CEyecare)

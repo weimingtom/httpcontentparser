@@ -23,10 +23,10 @@ bool Authorize::setNewPassword(const std::string &password, const int type) {
 		return false;
 	}
 }
+
 bool Authorize::checkPassword(const std::string &password, const int type) {
 	PASSWORD_MAP::iterator iter = password_set_.find(type);
 	assert (iter != password_set_.end());
-
 	if (iter->second == password) {
 		return true;
 	} else {

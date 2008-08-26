@@ -4,8 +4,10 @@
 #include "stdafx.h"
 #include ".\settingtest.h"
 #include ".\authorizetest.h"
+#include ".\eyecaretest.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION(SettingTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(EyecareTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(AuthorizeTest);
 
 int _tmain(int argc, _TCHAR* argv[]) {

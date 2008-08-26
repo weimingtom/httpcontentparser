@@ -51,7 +51,7 @@ interface IGlobalSetting : IDispatch{
 ]
 interface IAuthorize : IDispatch{
 	[id(1), helpstring("Method checkPassword")] HRESULT checkPassword([in] BSTR password, [out,retval] VARIANT_BOOL* bSuccess);
-	[id(2), helpstring("方法setPassword")] HRESULT changePassword([in] BSTR password, [in] BSTR oldPassword, [out,retval] VARIANT_BOOL* bSuccess);
+	[id(2), helpstring("Method setPassword")] HRESULT changePassword([in] BSTR password, [in] BSTR oldPassword, [out,retval] VARIANT_BOOL* bSuccess);
 };
 [
 	object,
@@ -63,13 +63,14 @@ interface IAuthorize : IDispatch{
 ]
 interface IEyecare : IDispatch{
 	[id(1), helpstring("Method setPassword")] HRESULT setPassword([in] BSTR password);
-	[id(2), helpstring("Method setRestTime")] HRESULT setRestTime(void);
+	[id(2), helpstring("Method setRestTime")] HRESULT setRestTime([in] LONG mintues);
 	[id(3), helpstring("Method setEntertainmentTime")] HRESULT setEntertainmentTime([in] LONG mintues);
 	[id(5), helpstring("Method getRestTime")] HRESULT getRestTime([out,retval] LONG* mintues);
 	[id(6), helpstring("Method getEntertainmentTime")] HRESULT getEntertainmentTime([out,retval] LONG* minutes);
 	[id(7), helpstring("Method getTimeLeft")] HRESULT getTimeLeft([out,retval] LONG* minutes);
 	[id(8), helpstring("Method getState")] HRESULT getState([out,retval] LONG* state);
-	[id(9), helpstring("Method swithToEntertainment")] HRESULT swithToEntertainment([in] BSTR password);
+	[id(9), helpstring("Method swithToEntertainment")] HRESULT swithToEntertainment([in] BSTR password,  [out,retval] VARIANT_BOOL* bSuccess);
+	[id(10), helpstring("方法trySwitch")] HRESULT trySwitch([out,retval] LONG* state);
 };
 [
 	uuid(42F932B5-F5CB-4F0D-8925-1B6BE5FECD1B),
