@@ -24,6 +24,7 @@ void CDlgOptions::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_CHK_AUTOLOAD, m_chkAutoLoad);
 	DDX_Control(pDX, IDC_STA_SYSTEM, m_staSystemOption);
 	DDX_Control(pDX, IDC_STA_OTHERS, m_staOthers);
+	DDX_Control(pDX, IDC_STA_HOTKEY, m_staHotkey);
 }
 
 

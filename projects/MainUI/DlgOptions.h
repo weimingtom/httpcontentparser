@@ -37,4 +37,5 @@ public:
 	CGuiCheckBox m_chkAutoLoad;
 	CGuiGroupBox m_staSystemOption;
 	CGuiGroupBox m_staOthers;
+	CGuiGroupBox m_staHotkey;
 };
