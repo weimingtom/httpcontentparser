@@ -66,11 +66,24 @@ interface IEyecare : IDispatch{
 	[id(2), helpstring("Method setRestTime")] HRESULT setRestTime([in] LONG mintues);
 	[id(3), helpstring("Method setEntertainmentTime")] HRESULT setEntertainmentTime([in] LONG mintues);
 	[id(5), helpstring("Method getRestTime")] HRESULT getRestTime([out,retval] LONG* mintues);
-	[id(6), helpstring("Method getEntertainmentTime")] HRESULT getEntertainmentTime([out,retval] LONG* minutes);
-	[id(7), helpstring("Method getTimeLeft")] HRESULT getTimeLeft([out,retval] LONG* minutes);
+	[id(6), helpstring("Method getEntertainmentTime")] HRESULT getEntertainmentTime([out,retval] LONG* second);
+	[id(7), helpstring("Method getTimeLeft")] HRESULT getTimeLeft([out,retval] LONG* second);
 	[id(8), helpstring("Method getState")] HRESULT getState([out,retval] LONG* state);
 	[id(9), helpstring("Method swithToEntertainment")] HRESULT swithToEntertainment([in] BSTR password,  [out,retval] VARIANT_BOOL* bSuccess);
-	[id(10), helpstring("方法trySwitch")] HRESULT trySwitch([out,retval] LONG* state);
+	[id(10), helpstring("Method trySwitch")] HRESULT trySwitch([out,retval] LONG* state);
+	[id(11), helpstring("方法LockScreen")] HRESULT LockScreen(void);
+};
+[
+	object,
+	uuid(00A9583E-A2E7-4EB4-AF45-6FFC8BEDC701),
+	dual,
+	nonextensible,
+	helpstring("IAppSetting 接口"),
+	pointer_default(unique)
+]
+interface IAppSetting : IDispatch{
+	[id(1), helpstring("方法setHotkey")] HRESULT setHotkey([in] USHORT wVirtualKeyCode, [in] USHORT wModifiers, [in] LONG type);
+	[id(2), helpstring("方法setScreenSaverTimespan")] HRESULT setScreenSaverTimespan([in] LONG seconds);
 };
 [
 	uuid(42F932B5-F5CB-4F0D-8925-1B6BE5FECD1B),
@@ -111,5 +124,13 @@ library FilterSettingLib {
 	coclass Eyecare
 	{
 		[default] interface IEyecare;
+	};
+	[
+		uuid(40B3A4B6-7DC1-4DE0-BDC3-8D519F0AD7B6),
+		helpstring("AppSetting Class")
+	]
+	coclass AppSetting
+	{
+		[default] interface IAppSetting;
 	};
 };

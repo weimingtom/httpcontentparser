@@ -96,6 +96,7 @@ IDR_GLOBALCHECKER       REGISTRY                "GlobalChecker.rgs"
 IDR_GLOBALSETTING       REGISTRY                "GlobalSetting.rgs"
 IDR_AUTHORIZE           REGISTRY                "Authorize.rgs"
 IDR_EYECARE             REGISTRY                "Eyecare.rgs"
+IDR_APPSETTING          REGISTRY                "AppSetting.rgs"
 
 /////////////////////////////////////////////////////////////////////////////
 //

@@ -4,6 +4,7 @@
 #include "resource.h"
 #include "globalvariable.h"
 #include "FilterSetting.h"
+#include ".\servthread.h"
 #include <passwordtype.h>
 #include <string>
 
@@ -33,6 +34,8 @@ extern "C" int WINAPI _tWinMain(HINSTANCE /*hInstance*/, HINSTANCE /*hPrevInstan
                                 LPTSTR /*lpCmdLine*/, int nShowCmd)
 {
 	global_setting_.initialize();
+	ServThread::getInstance(); // 开启服务线程
+
 	g_authorize.setNewPassword("123", PASSWORD_SU);
     return _AtlModule.WinMain(nShowCmd);
 }

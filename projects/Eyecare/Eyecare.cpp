@@ -11,7 +11,9 @@
 #define WM_MY_SHOWDIALOG (WM_USER + 0x0001)
 
 #define ID_TIMER   1
-#define TIME_SPAN  300
+#define TIME_SPAN  1000
+
+IEyecare *pEyeCare = NULL;
 
 // Global Variables:
 HINSTANCE hInst;								// current instance
@@ -61,6 +63,9 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 	CoInitialize(NULL);
 	UNREFERENCED_PARAMETER(hPrevInstance);
 	UNREFERENCED_PARAMETER(lpCmdLine);
+
+	// 创建
+	CoCreateInstance(CLSID_Eyecare, NULL, CLSCTX_ALL, IID_IEyecare, (LPVOID*)&pEyeCare);
 
  	// TODO: Place code here.
 	MSG msg;
@@ -149,32 +154,65 @@ BOOL CheckPassword(LPCTSTR password) {
 
 LRESULT CALLBACK InputPasswordDlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	TCHAR szBuffer[MAX_PATH];
-	HICON hIcon = NULL;
-	HINSTANCE hInstance;
-	switch (message)
-	{
-	case WM_CREATE:
-		hInstance = (HINSTANCE)GetWindowLong(hDlg, GWL_HINSTANCE);
-		hIcon = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_EYECARE));
-		SendMessage(hDlg, WM_SETICON, TRUE,  (WPARAM)hIcon);
-		SendMessage(hDlg, WM_SETICON, FALSE, (WPARAM)hIcon);
-	case WM_INITDIALOG:
-		return TRUE;
-	// 验证代码
-	case WM_COMMAND:
-		GetDlgItemText(hDlg, IDC_PASSWORD, szBuffer, MAX_PATH);
-		if (LOWORD(wParam) == IDOK) {
-			if (CheckPassword(szBuffer)) {
-				EndDialog(hDlg, LOWORD(wParam));
-				return TRUE;
-			} else {
-				MessageBox(hDlg, "Wrong Password!", "Error", MB_OK | MB_ICONERROR);
+	try {
+		TCHAR szBuffer[MAX_PATH];
+		LONG state;
+		LONG seconds;
+		switch (message)
+		{
+		case WM_TIMER:
+			try {
+				_tcscpy(szBuffer, "Login System");
+				pEyeCare->getTimeLeft(&seconds);
+				if (seconds > 60) {
+					_stprintf(szBuffer, "Login System - rest time : %d min", (int)(seconds/60));
+				} else if (seconds > 0){
+					_stprintf(szBuffer, "Login System - rest time : less than one min");
+				} else {
+					pEyeCare->trySwitch(&state);
+					EndDialog(hDlg, 0);
+				}
+
+				SetWindowText(hDlg, szBuffer);
+			} catch (...) {
+				CoCreateInstance(CLSID_Eyecare, NULL, CLSCTX_ALL, IID_IEyecare, (LPVOID*)&pEyeCare);
 			}
+			break;
+		case WM_KILLFOCUS:
+			SetFocus(hDlg);
+			break;
+		case WM_INITDIALOG:
+			try {
+				_tcscpy(szBuffer, "Login System");
+				pEyeCare->getTimeLeft(&seconds);
+			}
+			catch (...) {
+				CoCreateInstance(CLSID_Eyecare, NULL, CLSCTX_ALL, IID_IEyecare, (LPVOID*)&pEyeCare);
+			}
+
+			SetWindowText(hDlg, szBuffer);
+			SetTimer(hDlg, ID_TIMER, TIME_SPAN, NULL);
+			return TRUE;
+		// 验证代码
+		case WM_COMMAND:
+			GetDlgItemText(hDlg, IDC_PASSWORD, szBuffer, MAX_PATH);
+			if (LOWORD(wParam) == IDOK) {
+				if (CheckPassword(szBuffer)) {
+					EndDialog(hDlg, LOWORD(wParam));
+					return TRUE;
+				} else {
+					MessageBox(hDlg, "Wrong Password!", "Error", MB_OK | MB_ICONERROR);
+				}
+			}
+			break;
+		case WM_DESTROY:
+			KillTimer(hDlg, ID_TIMER);
+			break;
 		}
-		break;
+		return FALSE;
+	} catch (...) {
+		return FALSE;
 	}
-	return FALSE;
 }
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
@@ -186,9 +224,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	switch (message)
 	{
 	case WM_CREATE:
-		break;
-	case WM_TIMER:
-		SetTimer(hWnd, ID_TIMER, TIME_SPAN, NULL);
 		break;
 	case WM_SIZE:
 		PostMessage(hWnd,WM_MY_SHOWDIALOG , 0, 0);
@@ -205,7 +240,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		EndPaint(hWnd, &ps);
 		break;
 	case WM_DESTROY:
-		KillTimer(hWnd, ID_TIMER);
 		PostQuitMessage(0);
 		break;
 	default:

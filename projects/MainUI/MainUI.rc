@@ -182,10 +182,10 @@ BEGIN
     GROUPBOX        "Others",IDC_STA_OTHERS,7,128,223,59
     LTEXT           "Show Dialog:",IDC_STATIC,17,79,42,8
     LTEXT           "Switch User",IDC_STATIC,17,95,38,8
-    CONTROL         "",IDC_HOTKEY1,"msctls_hotkey32",WS_BORDER | WS_TABSTOP,
-                    69,76,80,14
-    CONTROL         "",IDC_HOTKEY2,"msctls_hotkey32",WS_BORDER | WS_TABSTOP,
-                    69,92,80,14
+    CONTROL         "",IDC_HOTKEY_SHOWDLG,"msctls_hotkey32",WS_BORDER | 
+                    WS_TABSTOP,69,76,80,14
+    CONTROL         "",IDC_HOTKEY_SWITCHUSR,"msctls_hotkey32",WS_BORDER | 
+                    WS_TABSTOP,69,92,80,14
     GROUPBOX        "Hotkeys",IDC_STA_HOTKEY,7,58,223,59
     CONTROL         "Record Web History",IDC_CHECK1,"Button",BS_AUTOCHECKBOX | 
                     WS_TABSTOP,41,145,111,10
@@ -193,10 +193,24 @@ BEGIN
                     BS_AUTOCHECKBOX | WS_TABSTOP,41,164,111,10
 END
 
-IDD_DLG_TOOLS DIALOGEX 0, 0, 283, 201
-STYLE DS_SETFONT | DS_FIXEDSYS | WS_POPUP | WS_SYSMENU
+IDD_DLG_TOOLS DIALOGEX 0, 0, 250, 200
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
+    GROUPBOX        "Screen Saver",IDC_STA_IMAGE_SAVE,7,7,236,51
+    GROUPBOX        "Web content",IDC_STA_WEBCONTENT,7,71,236,57
+    CONTROL         "",IDC_SLIDER1,"msctls_trackbar32",TBS_BOTH | WS_TABSTOP,
+                    77,25,148,19
+    LTEXT           "Time Span",IDC_STATIC,30,33,34,8
+    CONTROL         "Save porn Image",IDC_CHECK1,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,28,90,88,10
+    CONTROL         "Save porn Web Page",IDC_CHECK2,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,28,108,88,10
+    CONTROL         "Save Website List",IDC_CHECK3,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,143,89,88,10
+    GROUPBOX        "Program History",IDC_STA_PROGRAMHISTORY,7,138,236,55
+    CONTROL         "Save Program History",IDC_CHECK4,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,29,163,88,10
 END
 
 IDD_DLG_EYECARE DIALOGEX 0, 0, 250, 201
@@ -205,12 +219,14 @@ FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
     LTEXT           "Entertainment",IDC_STATIC,40,31,46,8
     EDITTEXT        IDC_EDT_ENTERTIME,95,28,81,14,ES_AUTOHSCROLL | ES_NUMBER
-    CONTROL         "",IDC_SPIN1,"msctls_updown32",UDS_ALIGNRIGHT | 
-                    UDS_AUTOBUDDY | UDS_ARROWKEYS,177,29,11,14
+    CONTROL         "",IDC_SPIN1,"msctls_updown32",UDS_SETBUDDYINT | 
+                    UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS,177,29,11,
+                    14
     LTEXT           "Rest Time",IDC_STATIC,53,55,32,8
     EDITTEXT        IDC_EDT_RESTTIME,95,51,81,14,ES_AUTOHSCROLL | ES_NUMBER
-    CONTROL         "",IDC_SPIN2,"msctls_updown32",UDS_ALIGNRIGHT | 
-                    UDS_AUTOBUDDY | UDS_ARROWKEYS,177,52,11,14
+    CONTROL         "",IDC_SPIN2,"msctls_updown32",UDS_SETBUDDYINT | 
+                    UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS,177,52,11,
+                    14
     GROUPBOX        "Time Setting",IDC_STA_EYECARE_TIME,7,7,236,78
     GROUPBOX        "Password",IDC_STA_PASSWORD,7,101,236,93
     CONTROL         " Use Admin Password",IDC_CHK_USE_SUPWD,"Button",
@@ -257,6 +273,16 @@ BEGIN
     EDITTEXT        IDC_EDT_PASSWORD,52,18,86,14,ES_PASSWORD | 
                     ES_AUTOHSCROLL
     LTEXT           "Password",IDC_STATIC,7,20,38,8
+END
+
+IDD_TOOLS DIALOGEX 0, 0, 186, 95
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | 
+    WS_SYSMENU
+CAPTION "Dialog"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "确定",IDOK,129,7,50,14
+    PUSHBUTTON      "取消",IDCANCEL,129,24,50,14
 END
 
 
@@ -398,9 +424,9 @@ BEGIN
     IDD_DLG_TOOLS, DIALOG
     BEGIN
         LEFTMARGIN, 7
-        RIGHTMARGIN, 276
+        RIGHTMARGIN, 243
         TOPMARGIN, 7
-        BOTTOMMARGIN, 194
+        BOTTOMMARGIN, 193
     END
 
     IDD_DLG_EYECARE, DIALOG
@@ -434,6 +460,14 @@ BEGIN
         RIGHTMARGIN, 138
         TOPMARGIN, 7
         BOTTOMMARGIN, 63
+    END
+
+    IDD_TOOLS, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 179
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 88
     END
 END
 #endif    // APSTUDIO_INVOKED
@@ -491,7 +525,7 @@ FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
     CONTROL         "Enable White DNS List",IDC_CHK_WHITE_DNSLIST,"Button",
                     BS_AUTOCHECKBOX | WS_TABSTOP,7,7,130,10
-    LTEXT           "static",IDC_STA_WHIE_DNSLIST,7,26,236,159
+    LTEXT           "static",IDC_STA_WHIE_DNSLIST,7,25,236,159
 END
 
 IDD_DLG_ONLINE_RULE DIALOGEX 0, 0, 283, 192
@@ -563,8 +597,10 @@ BEGIN
             MENUITEM "www.sina.com",                ID_WEBSITES_WWW32788
         END
         MENUITEM "Web History",                 ID_TOOLS_WEBHISTORY
-        MENUITEM "Change Password",             ID_MAIN_CHANGEPASSWORD
         MENUITEM "Desktop Image",               ID_TOOLS_DESKTOPIMAGE
+        MENUITEM "Lock Computer",               ID_MAIN_LOCKCOMPUTER
+        MENUITEM SEPARATOR
+        MENUITEM "Change Password",             ID_MAIN_CHANGEPASSWORD
         MENUITEM "Option",                      ID_TRAYMENU_MAINUI
         MENUITEM SEPARATOR
         MENUITEM "Children",                    ID_MAIN_CHILDREN, CHECKED
@@ -591,6 +627,7 @@ BEGIN
     IDS_TREE_EYECARE        "Eyecare"
     IDS_TRAYMENU_SHOWUI     "Show Main Dialog"
     IDS_TRAYMENU_HIDEUI     "Hide Main Dialog"
+    IDS_TREE_TOOLSETTING    "Tools Setting"
 END
 
 STRINGTABLE 

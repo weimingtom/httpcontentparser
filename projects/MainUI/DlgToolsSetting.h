@@ -1,7 +1,7 @@
 #pragma once
+#include "afxwin.h"
 
 #include ".\basedlg.h"
-#include "afxwin.h"
 #include <Guilib1.5\GuiCheckBox.h>
 #include <Guilib1.5\GuiComboBoxExt.h>
 #include <Guilib1.5\GuiLinkButton.h>
@@ -12,20 +12,19 @@
 #include <Guilib1.5\GuiGroupBox.h>
 #include <Guilib1.5\GuiRadioButton.h>
 #include <Guilib1.5\GuiComboFont.h>
-#include "afxcmn.h"
 
-// CDlgOptions 对话框
+// CDlgToolsSetting 对话框
 
-class CDlgOptions : public CBaseDlg
+class CDlgToolsSetting : public CBaseDlg
 {
-	DECLARE_DYNAMIC(CDlgOptions)
+	DECLARE_DYNAMIC(CDlgToolsSetting)
 
 public:
-	CDlgOptions(CWnd* pParent = NULL);   // 标准构造函数
-	virtual ~CDlgOptions();
+	CDlgToolsSetting(CWnd* pParent = NULL);   // 标准构造函数
+	virtual ~CDlgToolsSetting();
 
 // 对话框数据
-	enum { IDD = IDD_DLG_OPTION };
+	enum { IDD = IDD_DLG_TOOLS };
 
 	virtual void OnApply();
 	virtual void OnShow();
@@ -35,10 +34,8 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 public:
-	CGuiCheckBox m_chkAutoLoad;
-	CGuiGroupBox m_staSystemOption;
-	CGuiGroupBox m_staOthers;
-	CGuiGroupBox m_staHotkey;
-	CHotKeyCtrl m_hotKeyShowDlg;
-	CHotKeyCtrl m_hotkeySwitchUser;
+	CGuiGroupBox m_staScreenSaver;
+	CGuiGroupBox m_staWebContent;
+	CGuiGroupBox m_staProgramHistory;
+	virtual BOOL OnInitDialog();
 };

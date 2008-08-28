@@ -43,4 +43,6 @@ protected:
 public:
 	afx_msg void OnBnClickedChkUseSupwd();	
 	afx_msg void OnBnClickedBtnReset();
+	int m_nEntertainTime;
+	int m_nRestTime;
 };

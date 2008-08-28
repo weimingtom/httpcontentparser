@@ -156,6 +156,9 @@ copy .\filtersetting.h ..\..\include\com
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
 			<File
+				RelativePath=".\AppSetting.cpp">
+			</File>
+			<File
 				RelativePath=".\Authorize.cpp">
 			</File>
 			<File
@@ -185,6 +188,9 @@ copy .\filtersetting.h ..\..\include\com
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
 			<File
+				RelativePath=".\AppSetting.h">
+			</File>
+			<File
 				RelativePath=".\Authorize.h">
 			</File>
 			<File
@@ -201,6 +207,9 @@ copy .\filtersetting.h ..\..\include\com
 			Name="资源文件"
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx"
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}">
+			<File
+				RelativePath=".\AppSetting.rgs">
+			</File>
 			<File
 				RelativePath=".\Authorize.rgs">
 			</File>
@@ -219,6 +228,16 @@ copy .\filtersetting.h ..\..\include\com
 			<File
 				RelativePath=".\GlobalSetting.rgs">
 			</File>
+			<Filter
+				Name="servThread"
+				Filter="">
+				<File
+					RelativePath=".\ServThread.cpp">
+				</File>
+				<File
+					RelativePath=".\ServThread.h">
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="生成的文件"

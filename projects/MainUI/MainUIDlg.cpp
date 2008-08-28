@@ -8,6 +8,7 @@
 #include ".\dlgchangepassword.h"
 #include ".\dlgcheckpassword.h"
 
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -75,12 +76,17 @@ BEGIN_MESSAGE_MAP(CMainUIDlg, CDialog)
 	ON_BN_CLICKED(IDC_APPLY, OnBnClickedApply)
 	ON_WM_CREATE()
 	ON_WM_KEYDOWN()
+	ON_MESSAGE(WM_HOTKEY, OnHotKey)
 	ON_WM_CONTEXTMENU()
 	ON_COMMAND(ID_MAIN_CHANGEPASSWORD, OnMainChangepassword)
 	ON_COMMAND(ID_TRAYMENU_MAINUI, OnTraymenuMainui)
 	ON_COMMAND(ID_MAIN_EXIT, OnMainExit)
 	ON_COMMAND(ID_MAIN_PARENTS, OnMainParents)
 	ON_COMMAND(ID_MAIN_CHILDREN, OnMainChildren)
+	ON_BN_CLICKED(IDC_OK, OnBnClickedOk)
+	ON_BN_CLICKED(IDC_CANCEL, OnBnClickedCancel)
+	ON_COMMAND(ID_TOOLS_DESKTOPIMAGE, OnToolsDesktopimage)
+	ON_COMMAND(ID_TOOLS_WEBHISTORY, OnToolsWebhistory)
 END_MESSAGE_MAP()
 
 void CMainUIDlg::InitTreeNodes() {
@@ -105,6 +111,10 @@ void CMainUIDlg::InitTreeNodes() {
 	strItem.LoadString(IDS_TREE_EYECARE);
 	hItem = m_treeNavigation.InsertItem(strItem, hRoot);
 	m_treeNavigation.SetItemData(hItem, IDS_TREE_EYECARE);
+
+	strItem.LoadString(IDS_TREE_TOOLSETTING);
+	hItem = m_treeNavigation.InsertItem(strItem, hRoot);
+	m_treeNavigation.SetItemData(hItem, IDS_TREE_TOOLSETTING);
 
 	strItem.LoadString(IDS_TREE_OPTIONS);
 	hItem = m_treeNavigation.InsertItem(strItem, hRoot);
@@ -142,6 +152,7 @@ void CMainUIDlg::initDlgs() {
 	m_dlgOptions.Create(CDlgOptions::IDD, this);
 	m_dlgEyecare.Create(CDlgEyecare::IDD, this);
 	m_dlgWhiteDNS.Create(CDlgWhiteDNSList::IDD, this);
+	m_dlgToolSetting.Create(CDlgToolsSetting::IDD, this);
 	m_curDlg = &m_lev1Rules;
 	
 	showDlg();
@@ -205,6 +216,9 @@ void CMainUIDlg::setCurDlg(const DWORD item) {
 			break;
 		case IDS_TREE_HELP:
 			m_curDlg = &m_dlgHelp;
+			break;
+		case IDS_TREE_TOOLSETTING:
+			m_curDlg = &m_dlgToolSetting;
 			break;
 		case IDS_TREE_ABOUT:
 			m_curDlg = &m_dlgAbout;
@@ -372,12 +386,10 @@ void CMainUIDlg::OnTraymenuMainui() {
 		ShowWindow(SW_SHOW);
 		m_bShowed = TRUE;
 	}
-
-	//m_trayMenu.ModifyMenu(ID_TRAYMENU_MAINUI, MF_BYCOMMAND, MF_STRING, strMenuItem);
 }
 
 void CMainUIDlg::OnMainExit() {
-	CDialog::OnSysCommand(SC_CLOSE, 0);
+	EndDialog(IDOK);
 }
 
 int CMainUIDlg::OnCreate(LPCREATESTRUCT lpCreateStruct)
@@ -404,8 +416,32 @@ void CMainUIDlg::OnMainParents()
 	}
 }
 
+LRESULT CMainUIDlg::OnHotKey(WPARAM wParam, LPARAM lParam) {
+	return -1;
+}
+
 void CMainUIDlg::OnMainChildren()
 {
 	m_trayMenu.CheckMenuItem(ID_MAIN_PARENTS, FALSE);
 	m_trayMenu.CheckMenuItem(ID_MAIN_CHILDREN, TRUE);
+}
+
+void CMainUIDlg::OnBnClickedOk()
+{
+	ASSERT (NULL != m_curDlg);
+	m_curDlg->OnApply();
+	ShowWindow(SW_HIDE);
+}
+
+void CMainUIDlg::OnBnClickedCancel()
+{
+	ShowWindow(SW_HIDE);
+}
+
+// 弹出工具窗口
+// 直接运行程序即刻，程序应该能够自己验证密码
+void CMainUIDlg::OnToolsDesktopimage() {
+}
+
+void CMainUIDlg::OnToolsWebhistory() {
 }

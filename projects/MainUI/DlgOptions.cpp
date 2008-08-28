@@ -25,6 +25,8 @@ void CDlgOptions::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_STA_SYSTEM, m_staSystemOption);
 	DDX_Control(pDX, IDC_STA_OTHERS, m_staOthers);
 	DDX_Control(pDX, IDC_STA_HOTKEY, m_staHotkey);
+	DDX_Control(pDX, IDC_HOTKEY_SHOWDLG, m_hotKeyShowDlg);
+	DDX_Control(pDX, IDC_HOTKEY_SWITCHUSR, m_hotkeySwitchUser);
 }
 
 

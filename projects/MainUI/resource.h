@@ -17,6 +17,7 @@
 #define IDS_TRAYMENU_SHOWUI             108
 #define IDS_TRAYMENU_HIDEUI             109
 #define IDR_HTML_DLGWHITEDNSLIST        110
+#define IDS_TREE_TOOLSETTING            110
 #define IDR_HTML_DLGCHANGEPASSWORD      111
 #define IDR_MAINFRAME                   128
 #define IDD_DLG_HELP                    129
@@ -38,6 +39,7 @@
 #define IDD_DLG_DNS_WHITELIST           149
 #define IDD_CHANGE_PASSWORD             150
 #define IDD_DLG_CHKPASSWORD             151
+#define IDD_TOOLS                       152
 #define IDC_TREE_NAVIG                  1000
 #define IDS_TREE_ROOT                   1001
 #define IDS_TREE_DNS_RULE               1002
@@ -78,15 +80,19 @@
 #define IDC_CHK_WHITE_DNSLIST           1025
 #define IDC_CHECK2                      1026
 #define IDC_STA_SYSTEM                  1027
+#define IDC_CHECK3                      1027
 #define IDC_STA_OTHERS                  1028
 #define IDC_CHK_AUTOLOAD                1029
+#define IDC_CHECK4                      1029
 #define IDC_STA_CELLS                   1030
 #define IDC_STA_OTHERS2                 1030
 #define IDC_STA_HOTKEY                  1030
 #define IDC_OK                          1031
 #define IDC_HOTKEY1                     1033
+#define IDC_HOTKEY_SHOWDLG              1033
 #define IDC_HOTKEY2                     1034
 #define IDC_CHK_ENABLE_DNS              1034
+#define IDC_HOTKEY_SWITCHUSR            1034
 #define IDC_CHK_ENABLE_SEARCH           1035
 #define IDC_STA_WHIE_DNSLIST            1039
 #define IDC_STA_FRAME                   1040
@@ -102,6 +108,10 @@
 #define IDC_EDT_ORGIN                   1054
 #define IDC_EDT_NEW                     1055
 #define IDC_EDT_PASSWORD                1056
+#define IDC_SLIDER1                     1057
+#define IDC_STA_PROGRAMHISTORY          1062
+#define IDC_STA_WEBCONTENT              1063
+#define IDC_STA_IMAGE_SAVE              1064
 #define IDC_EDIT1                       4011
 #define IDC_EDIT2                       4012
 #define IDC_EDT_RETRY                   4013
@@ -131,14 +141,15 @@
 #define ID_MAIN_CHILDREN                32794
 #define ID_MAIN_CHANGEPASSWORD          32795
 #define ID_MAIN_PARENTS                 32797
+#define ID_MAIN_LOCKCOMPUTER            32798
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        152
-#define _APS_NEXT_COMMAND_VALUE         32798
-#define _APS_NEXT_CONTROL_VALUE         1057
+#define _APS_NEXT_RESOURCE_VALUE        153
+#define _APS_NEXT_COMMAND_VALUE         32799
+#define _APS_NEXT_CONTROL_VALUE         1065
 #define _APS_NEXT_SYMED_VALUE           112
 #endif
 #endif
