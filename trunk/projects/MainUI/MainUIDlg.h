@@ -16,6 +16,7 @@
 #include "DlgWhiteDNSList.h"
 #include ".\basedlg.h"
 #include "afxwin.h"
+#include ".\dlgtoolssetting.h"
 
 #include <Guilib1.5\GuiGroupBox.h>
 #include <Guilib1.5\GuiButton.h>
@@ -71,6 +72,7 @@ private:
 	CDlgAbout m_dlgAbout;
 	CBaseDlg	*m_curDlg;
 	CLev1DlgRules m_lev1Rules;
+	CDlgToolsSetting m_dlgToolSetting;
 
 	// 右侧
 	CRect    m_rectRight;
@@ -88,18 +90,23 @@ private:
 	CGuiButton m_btnOk;
 	CGuiButton m_btnCancel;
 	CGuiButton m_btnApply;
+
+	CImageList image_list_;
 	//
 	BOOL	m_bShowed; // 当前界面是否显示
 protected:
 	afx_msg void OnNMClickTreeNavig(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnTvnSelchangedTreeNavig(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnBnClickedApply();
-	
-public:
 	afx_msg void OnTraymenuMainui();
 	afx_msg void OnMainExit();
 	afx_msg int  OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnMainChangepassword();
 	afx_msg void OnMainParents();
 	afx_msg void OnMainChildren();
+	afx_msg LRESULT OnHotKey(WPARAM wParam, LPARAM lParam);
+	afx_msg void OnBnClickedOk();
+	afx_msg void OnBnClickedCancel();
+	afx_msg void OnToolsDesktopimage();
+	afx_msg void OnToolsWebhistory();
 };

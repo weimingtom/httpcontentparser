@@ -130,6 +130,9 @@
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
 			<File
+				RelativePath=".\DlgToolsSetting.cpp">
+			</File>
+			<File
 				RelativePath=".\DlgWhiteDNSList.cpp">
 			</File>
 			<File
@@ -163,9 +166,6 @@
 			</File>
 			<File
 				RelativePath=".\BaseDlg.h">
-			</File>
-			<File
-				RelativePath=".\DlgWhiteDNSList.h">
 			</File>
 			<File
 				RelativePath=".\MainUI.cpp">
@@ -241,6 +241,12 @@
 			</File>
 			<File
 				RelativePath=".\DlgSearchRule.h">
+			</File>
+			<File
+				RelativePath=".\DlgToolsSetting.h">
+			</File>
+			<File
+				RelativePath=".\DlgWhiteDNSList.h">
 			</File>
 			<Filter
 				Name="popup"

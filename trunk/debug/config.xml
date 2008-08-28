@@ -1,0 +1,40 @@
+<config>
+	<authorize>
+		<password username="su" password="/">
+	</authorize>
+	
+	<!--上网每周时间-->
+	<onlinetime>
+		<time datatime="mon-0-1">true</time>
+	</onlinetime>
+	
+	<!--URL White List-->
+	<whiteurl>
+		<url>www.sina.com</url>
+	</whiteurl>
+	
+	<!--BLACK URL List-->
+	<blackurl>
+		<url></url>
+	</blackurl>
+	
+	<!--Image Check-->
+	<imagecheck>
+		<check imagetype="bmp">true</check>
+		<check imagetype="jpg">true</check>
+		<check imagetype="gif">true</check>
+		<boudard low="" hight="" />
+	</imagecheck>
+	
+	<!--Application Setting-->
+	<appsetting>
+		<rules>
+			<rule type="imagecheck" value="true"/>
+			<rule type="whiteurlcheck" value="true"/>
+			<rule type="blackurlcheck" value="true"/>
+		</rules>
+		<setting>
+			<app type="autoload" value="true"></app>
+		</setting>
+	</appsetting>
+</config>

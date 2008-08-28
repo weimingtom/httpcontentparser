@@ -11,6 +11,7 @@
 // CEyecare
 
 CEyecare::CEyecare() : eyecare_setting_(&g_authorize){
+	eyecare_setting_.initialize();
 }
 STDMETHODIMP CEyecare::InterfaceSupportsErrorInfo(REFIID riid)
 {
@@ -42,18 +43,18 @@ STDMETHODIMP CEyecare::setEntertainmentTime(LONG mintues) {
 	return S_OK;
 }
 
-STDMETHODIMP CEyecare::getRestTime(LONG* minutes) {
-	*minutes = eyecare_setting_.getRestTime();
+STDMETHODIMP CEyecare::getRestTime(LONG* second) {
+	*second = eyecare_setting_.getRestTime();
 	return S_OK;
 }
 
-STDMETHODIMP CEyecare::getEntertainmentTime(LONG* minutes) {
-	*minutes = eyecare_setting_.getEntertainTime();
+STDMETHODIMP CEyecare::getEntertainmentTime(LONG* second) {
+	*second = eyecare_setting_.getEntertainTime();
 	return S_OK;
 }
 
-STDMETHODIMP CEyecare::getTimeLeft(LONG* minutes) {
-	*minutes = eyecare_setting_.getRemainTime();
+STDMETHODIMP CEyecare::getTimeLeft(LONG* second) {
+	*second = eyecare_setting_.getRemainTime();
 	return S_OK;
 }
 
@@ -69,5 +70,10 @@ STDMETHODIMP CEyecare::swithToEntertainment(BSTR password, VARIANT_BOOL *bSucces
 
 STDMETHODIMP CEyecare::trySwitch(LONG* state) {
 	*state = eyecare_setting_.trySwitch();
+	return S_OK;
+}
+
+STDMETHODIMP CEyecare::LockScreen(void) {
+	eyecare_setting_.ForceLockWnd();
 	return S_OK;
 }

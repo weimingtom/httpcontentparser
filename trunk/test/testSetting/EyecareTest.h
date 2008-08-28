@@ -9,11 +9,13 @@ public:
 	CPPUNIT_TEST_SUITE(EyecareTest);
 	CPPUNIT_TEST(TestPassword);
 	CPPUNIT_TEST(TestSwitchState);
+	CPPUNIT_TEST(TestTimeSetting);
 	CPPUNIT_TEST_SUITE_END();
 
 private:	
 	void TestPassword();
 	void TestSwitchState();
+	void TestTimeSetting();
 public:
 	EyecareTest(void);
 	~EyecareTest(void);

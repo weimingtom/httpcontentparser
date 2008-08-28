@@ -46,11 +46,12 @@ public:
 	STDMETHOD(setRestTime)(LONG mintues);			// 设置休息时间的长度
 	STDMETHOD(setEntertainmentTime)(LONG mintues);	// 设置娱乐事件的长度
 	STDMETHOD(getRestTime)(LONG* mintues);			// 获取休息时间的长度
-	STDMETHOD(getEntertainmentTime)(LONG* minutes);	// 获取娱乐事件的长度
-	STDMETHOD(getTimeLeft)(LONG* minutes);			// 状态切换的剩余时间
+	STDMETHOD(getEntertainmentTime)(LONG* second);	// 获取娱乐事件的长度
+	STDMETHOD(getTimeLeft)(LONG* second);			// 状态切换的剩余时间
 	STDMETHOD(getState)(LONG* state);				// 获取状态
 	STDMETHOD(swithToEntertainment)(BSTR password, VARIANT_BOOL *bSuccess); // 切换到娱乐状体
 	STDMETHOD(trySwitch)(LONG* state);
+	STDMETHOD(LockScreen)(void);
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(Eyecare), CEyecare)

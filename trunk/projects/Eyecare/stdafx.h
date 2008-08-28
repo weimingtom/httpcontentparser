@@ -12,6 +12,7 @@
 #include <windows.h>
 // C 运行时头文件
 #include <stdlib.h>
+#include <stdio.h>
 #include <malloc.h>
 #include <memory.h>
 #include <tchar.h>

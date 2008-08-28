@@ -5,7 +5,9 @@
 #include "MainUI.h"
 #include "DlgEyecare.h"
 #include ".\dlgeyecare.h"
-
+#include <com\FilterSetting_i.c>
+#include <com\FilterSetting.h>
+#include <comdef.h>
 
 // CDlgEyecare ¶Ô»°¿ò
 
@@ -14,6 +16,8 @@ CDlgEyecare::CDlgEyecare(CWnd* pParent /*=NULL*/)
 	: CBaseDlg(CDlgEyecare::IDD, pParent)
 	, m_strRetryPwd(_T(""))
 	, m_strPassword(_T(""))
+	, m_nEntertainTime(0)
+	, m_nRestTime(0)
 {
 }
 
@@ -38,11 +42,24 @@ void CDlgEyecare::DoDataExchange(CDataExchange* pDX)
 	//==============================================
 	DDX_Text(pDX, IDC_EDT_PWD_RETRY, m_strRetryPwd);
 	DDX_Text(pDX, IDC_EDIT_PWD, m_strPassword);
+	DDX_Text(pDX, IDC_EDT_ENTERTIME, m_nEntertainTime);
+	DDX_Text(pDX, IDC_EDT_RESTTIME, m_nRestTime);
 }
 
 
 void CDlgEyecare::OnApply() {
+	try {
+		UpdateData(TRUE);
+		IEyecare *pEyeCare = NULL;
+		CoCreateInstance(CLSID_Eyecare, NULL, CLSCTX_ALL, IID_IEyecare, (LPVOID*)&pEyeCare);
+		pEyeCare->setEntertainmentTime(m_nEntertainTime);
+		pEyeCare->setRestTime(m_nRestTime);
+		pEyeCare->Release();
+	} catch (_com_error&) {
+		// AfxMessageBox("");
+	}
 }
+
 void CDlgEyecare::OnShow() {
 }
 
