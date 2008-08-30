@@ -3,6 +3,7 @@
 
 #include "stdafx.h"
 #include "resource.h"
+#include <windowtitle.h>
 #include <com\FilterSetting_i.c>
 #include <com\FilterSetting.h>
 #include <comdef.h>
@@ -18,7 +19,6 @@ IEyecare *pEyeCare = NULL;
 // Global Variables:
 HINSTANCE hInst;								// current instance
 TCHAR szTitle[MAX_LOADSTRING];					// The title bar text
-TCHAR szWindowClass[MAX_LOADSTRING];			// the main window class name
 
 // Forward declarations of functions included in this code module:
 ATOM				MyRegisterClass(HINSTANCE hInstance);
@@ -70,8 +70,6 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
  	// TODO: Place code here.
 	MSG msg;
 	// Initialize global strings
-	LoadString(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
-	LoadString(hInstance, IDC_EYECARE, szWindowClass, MAX_LOADSTRING);
 	MyRegisterClass(hInstance);
 
 	// Perform application initialization:
@@ -107,7 +105,7 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 	wcex.hCursor		= LoadCursor(NULL, IDC_ARROW);
 	wcex.hbrBackground	= ::CreateSolidBrush(RGB(58, 110, 165));
 	wcex.lpszMenuName	= NULL;
-	wcex.lpszClassName	= szWindowClass;
+	wcex.lpszClassName	= EYECARE_MAIN_WND_CLASS;
 	wcex.hIconSm		= LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
 
 	return RegisterClassEx(&wcex);
@@ -120,7 +118,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    hInst = hInstance; // Store instance handle in our global variable
 
    DWORD dwStyle = WS_VISIBLE | WS_OVERLAPPED;
-   hWnd = CreateWindowEx(WS_EX_TOPMOST, szWindowClass, szTitle, WS_VISIBLE | WS_MAXIMIZE |WS_POPUP,
+   hWnd = CreateWindowEx(WS_EX_TOPMOST, EYECARE_MAIN_WND_CLASS, EYECARE_MAIN_WND_TITLE, WS_VISIBLE | WS_MAXIMIZE |WS_POPUP,
       CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, NULL, NULL, hInstance, NULL);
 
    if (!hWnd)

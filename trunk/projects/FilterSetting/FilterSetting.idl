@@ -71,34 +71,34 @@ interface IEyecare : IDispatch{
 	[id(8), helpstring("Method getState")] HRESULT getState([out,retval] LONG* state);
 	[id(9), helpstring("Method swithToEntertainment")] HRESULT swithToEntertainment([in] BSTR password,  [out,retval] VARIANT_BOOL* bSuccess);
 	[id(10), helpstring("Method trySwitch")] HRESULT trySwitch([out,retval] LONG* state);
-	[id(11), helpstring("方法LockScreen")] HRESULT LockScreen(void);
+	[id(11), helpstring("Method LockScreen")] HRESULT LockScreen(void);
 };
 [
 	object,
 	uuid(00A9583E-A2E7-4EB4-AF45-6FFC8BEDC701),
 	dual,
 	nonextensible,
-	helpstring("IAppSetting 接口"),
+	helpstring("IAppSetting  Interface"),
 	pointer_default(unique)
 ]
 interface IAppSetting : IDispatch{
-	[id(1), helpstring("方法setHotkey")] HRESULT setHotkey([in] USHORT wVirtualKeyCode, [in] USHORT wModifiers, [in] LONG type, [out,retval] VARIANT_BOOL* bSuccess);
-	[id(2), helpstring("方法setScreenSaverTimespan")] HRESULT setScreenSaverTimespan([in] LONG seconds);
+	[id(1), helpstring("Method setHotkey")] HRESULT setHotkey([in] USHORT wVirtualKeyCode, [in] USHORT wModifiers, [in] LONG type, [out,retval] VARIANT_BOOL* bSuccess);
+	[id(2), helpstring("Method setScreenSaverTimespan")] HRESULT setScreenSaverTimespan([in] LONG seconds);
 };
 [
 	object,
 	uuid(AE3AA2A0-D840-4301-932D-ED450D797CA7),
 	dual,
 	nonextensible,
-	helpstring("IScreenSave 接口"),
+	helpstring("IScreenSave  Interface"),
 	pointer_default(unique)
 ]
 interface IScreenSave : IDispatch{
-	[id(1), helpstring("方法enableScreenSave")] HRESULT enableScreenSave([in] VARIANT_BOOL enabled);
-	[id(2), helpstring("方法setTimeSpan")] HRESULT setTimeSpan([in] LONG seconds);
-	[id(3), helpstring("方法isEnabled")] HRESULT isEnabled([out,retval] VARIANT_BOOL* enabled);
-	[id(4), helpstring("方法ClearCache")] HRESULT ClearCache(void);
-	[id(5), helpstring("方法setAutoClearTimespan")] HRESULT setAutoClearTimespan([in] LONG seconds);
+	[id(1), helpstring("Method enableScreenSave")] HRESULT enableScreenSave([in] VARIANT_BOOL enabled);
+	[id(2), helpstring("Method setTimeSpan")] HRESULT setTimeSpan([in] LONG seconds);
+	[id(3), helpstring("Method isEnabled")] HRESULT isEnabled([out,retval] VARIANT_BOOL* enabled);
+	[id(4), helpstring("Method ClearCache")] HRESULT ClearCache(void);
+	[id(5), helpstring("Method setAutoClearTimespan")] HRESULT setAutoClearTimespan([in] LONG seconds);
 };
 [
 	uuid(42F932B5-F5CB-4F0D-8925-1B6BE5FECD1B),

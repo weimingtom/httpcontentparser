@@ -7,6 +7,7 @@
 #define IDS_ABOUTBOX                    101
 #define IDC_TRAY_MENU                   101
 #define IDC_STA_PASSWORD                101
+#define IDC_STA_FUNCTION                101
 #define IDD_MAINUI_DIALOG               102
 #define IDS_TREE_LEV1_RULES             102
 #define IDS_COMMENT_DNS                 103
@@ -19,6 +20,8 @@
 #define IDR_HTML_DLGWHITEDNSLIST        110
 #define IDS_TREE_TOOLSETTING            110
 #define IDR_HTML_DLGCHANGEPASSWORD      111
+#define IDS_TREE_LEV1_TOOLS             111
+#define IDS_TREE_SCREEN_SAVE            112
 #define IDR_MAINFRAME                   128
 #define IDD_DLG_HELP                    129
 #define IDD_DLG_ABOUT                   130
@@ -40,6 +43,10 @@
 #define IDD_CHANGE_PASSWORD             150
 #define IDD_DLG_CHKPASSWORD             151
 #define IDD_TOOLS                       152
+#define IDD_LEV1_TOOLS                  153
+#define IDD_TEMPLATE                    154
+#define IDD_DLG_SCREEN_SAVER            155
+#define IDD_DLG_WEB_HISTORY             156
 #define IDC_TREE_NAVIG                  1000
 #define IDS_TREE_ROOT                   1001
 #define IDS_TREE_DNS_RULE               1002
@@ -112,6 +119,9 @@
 #define IDC_STA_PROGRAMHISTORY          1062
 #define IDC_STA_WEBCONTENT              1063
 #define IDC_STA_IMAGE_SAVE              1064
+#define IDC_BTN_CLEAR                   1065
+#define IDC_STA_TIMESPAN                1066
+#define IDC_STA_AUTOCLEAR               1067
 #define IDC_EDIT1                       4011
 #define IDC_EDIT2                       4012
 #define IDC_EDT_RETRY                   4013
@@ -147,9 +157,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        153
+#define _APS_NEXT_RESOURCE_VALUE        155
 #define _APS_NEXT_COMMAND_VALUE         32799
-#define _APS_NEXT_CONTROL_VALUE         1065
+#define _APS_NEXT_CONTROL_VALUE         1068
 #define _APS_NEXT_SYMED_VALUE           112
 #endif
 #endif

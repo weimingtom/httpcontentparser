@@ -130,10 +130,16 @@
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
 			<File
+				RelativePath=".\DlgScreenSaver.cpp">
+			</File>
+			<File
 				RelativePath=".\DlgToolsSetting.cpp">
 			</File>
 			<File
 				RelativePath=".\DlgWhiteDNSList.cpp">
+			</File>
+			<File
+				RelativePath=".\Lev1DlgTools.cpp">
 			</File>
 			<File
 				RelativePath=".\Resource.h">
@@ -166,6 +172,12 @@
 			</File>
 			<File
 				RelativePath=".\BaseDlg.h">
+			</File>
+			<File
+				RelativePath=".\DlgScreenSaver.h">
+			</File>
+			<File
+				RelativePath=".\Lev1DlgTools.h">
 			</File>
 			<File
 				RelativePath=".\MainUI.cpp">
@@ -274,16 +286,16 @@
 					RelativePath=".\MainUIDlg.h">
 				</File>
 			</Filter>
-		</Filter>
-		<Filter
-			Name="ruledlg"
-			Filter="">
-			<File
-				RelativePath=".\Lev1DlgRules.cpp">
-			</File>
-			<File
-				RelativePath=".\Lev1DlgRules.h">
-			</File>
+			<Filter
+				Name="ruledlg"
+				Filter="">
+				<File
+					RelativePath=".\Lev1DlgRules.cpp">
+				</File>
+				<File
+					RelativePath=".\Lev1DlgRules.h">
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="selfUI"

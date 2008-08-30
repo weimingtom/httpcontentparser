@@ -7,6 +7,7 @@
 #include ".\mainuidlg.h"
 #include ".\dlgchangepassword.h"
 #include ".\dlgcheckpassword.h"
+
 #include <hotkey.h>
 
 #ifdef _DEBUG
@@ -100,6 +101,8 @@ void CMainUIDlg::InitTreeNodes() {
 
 	setRulesDlg();
 
+	setToolsDlg();
+
 	HTREEITEM hItem;
 	CString strItem;
 	// 规则对话框
@@ -107,14 +110,6 @@ void CMainUIDlg::InitTreeNodes() {
 	strItem.LoadString(IDS_TREE_ONLINE_HOUR);
 	hItem = m_treeNavigation.InsertItem(strItem, hRoot);
 	m_treeNavigation.SetItemData(hItem, IDS_TREE_ONLINE_HOUR);
-
-	strItem.LoadString(IDS_TREE_EYECARE);
-	hItem = m_treeNavigation.InsertItem(strItem, hRoot);
-	m_treeNavigation.SetItemData(hItem, IDS_TREE_EYECARE);
-
-	strItem.LoadString(IDS_TREE_TOOLSETTING);
-	hItem = m_treeNavigation.InsertItem(strItem, hRoot);
-	m_treeNavigation.SetItemData(hItem, IDS_TREE_TOOLSETTING);
 
 	strItem.LoadString(IDS_TREE_OPTIONS);
 	hItem = m_treeNavigation.InsertItem(strItem, hRoot);
@@ -153,9 +148,31 @@ void CMainUIDlg::initDlgs() {
 	m_dlgEyecare.Create(CDlgEyecare::IDD, this);
 	m_dlgWhiteDNS.Create(CDlgWhiteDNSList::IDD, this);
 	m_dlgToolSetting.Create(CDlgToolsSetting::IDD, this);
+	m_lev1Tools.Create(CLev1DlgTools::IDD, this);
+	m_dlgScreenSaver.Create(CDlgScreenSaver::IDD, this);
 	m_curDlg = &m_lev1Rules;
 	
 	showDlg();
+}
+
+void CMainUIDlg::setToolsDlg() {
+	CString strItem;
+	strItem.LoadString(IDS_TREE_LEV1_TOOLS);
+	HTREEITEM hItemTools = m_treeNavigation.InsertItem(strItem, m_treeNavigation.GetRootItem());
+	m_treeNavigation.SetItemData(hItemTools, IDS_TREE_LEV1_RULES);
+
+	HTREEITEM hItem;
+	strItem.LoadString(IDS_TREE_EYECARE);
+	hItem = m_treeNavigation.InsertItem(strItem, hItemTools);
+	m_treeNavigation.SetItemData(hItem, IDS_TREE_EYECARE);
+
+	strItem.LoadString(IDS_TREE_TOOLSETTING);
+	hItem = m_treeNavigation.InsertItem(strItem, hItemTools);
+	m_treeNavigation.SetItemData(hItem, IDS_TREE_TOOLSETTING);
+
+	strItem.LoadString(IDS_TREE_SCREEN_SAVE);
+	hItem = m_treeNavigation.InsertItem(strItem, hItemTools);
+	m_treeNavigation.SetItemData(hItem, IDS_TREE_SCREEN_SAVE);
 }
 
 void CMainUIDlg::setRulesDlg() {
@@ -194,37 +211,43 @@ void CMainUIDlg::setCurDlg(const DWORD item) {
 	m_curDlg->ShowWindow(SW_HIDE);
 	switch (item) {
 		case IDS_TREE_EYECARE:
-			m_curDlg = &m_dlgEyecare;
+			ChangeCurDlg(&m_dlgEyecare);
 			break;
 		case IDS_TREE_LEV1_RULES:
-			m_curDlg = &m_lev1Rules;
+			ChangeCurDlg(&m_lev1Rules);
 			break;
 		case IDS_TREE_IMAGE_RULE:
-			m_curDlg = &m_dlgImageRules;
+			ChangeCurDlg(&m_dlgImageRules);
 			break;
 		case IDS_DNS_WHITE_LIST:
-			m_curDlg = &m_dlgWhiteDNS;
+			ChangeCurDlg(&m_dlgWhiteDNS);
 			break;
 		case IDS_TREE_DNS_RULE:
-			m_curDlg = &m_dlgDnsRule;
+			ChangeCurDlg(&m_dlgDnsRule);
 			break;
 		case IDS_TREE_SEARCH_RULE:
-			m_curDlg = &m_dlgSearchRule;
+			ChangeCurDlg(&m_dlgSearchRule);
 			break;
 		case IDS_TREE_ONLINE_HOUR:
-			m_curDlg = &m_dlgOnlineHour;
+			ChangeCurDlg(&m_dlgOnlineHour);
 			break;
 		case IDS_TREE_HELP:
-			m_curDlg = &m_dlgHelp;
+			ChangeCurDlg(&m_dlgHelp);
 			break;
 		case IDS_TREE_TOOLSETTING:
-			m_curDlg = &m_dlgToolSetting;
+			ChangeCurDlg(&m_dlgToolSetting);
 			break;
 		case IDS_TREE_ABOUT:
-			m_curDlg = &m_dlgAbout;
+			ChangeCurDlg(&m_dlgAbout);
 			break;
 		case IDS_TREE_OPTIONS:
-			m_curDlg = &m_dlgOptions;
+			ChangeCurDlg(&m_dlgOptions);
+			break;
+		case IDS_TREE_LEV1_TOOLS:
+			ChangeCurDlg(&m_lev1Tools);
+			break;
+		case IDS_TREE_SCREEN_SAVE:
+			ChangeCurDlg(&m_dlgScreenSaver);
 			break;
 		default:
 			ASSERT(false);
@@ -283,6 +306,7 @@ BOOL CMainUIDlg::OnInitDialog()
 
 	initDlgs();
 	InitTreeNodes();
+	
 
 	//
 	m_btnOk.SetStyleBorder(CGuiButton::STYLEXP);
@@ -453,4 +477,10 @@ void CMainUIDlg::OnToolsDesktopimage() {
 }
 
 void CMainUIDlg::OnToolsWebhistory() {
+}
+
+void CMainUIDlg::ChangeCurDlg(CBaseDlg *dlg) {
+	if (m_curDlg != dlg) {
+		m_curDlg = dlg;
+	}
 }
