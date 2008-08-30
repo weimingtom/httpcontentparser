@@ -82,8 +82,23 @@ interface IEyecare : IDispatch{
 	pointer_default(unique)
 ]
 interface IAppSetting : IDispatch{
-	[id(1), helpstring("方法setHotkey")] HRESULT setHotkey([in] USHORT wVirtualKeyCode, [in] USHORT wModifiers, [in] LONG type);
+	[id(1), helpstring("方法setHotkey")] HRESULT setHotkey([in] USHORT wVirtualKeyCode, [in] USHORT wModifiers, [in] LONG type, [out,retval] VARIANT_BOOL* bSuccess);
 	[id(2), helpstring("方法setScreenSaverTimespan")] HRESULT setScreenSaverTimespan([in] LONG seconds);
+};
+[
+	object,
+	uuid(AE3AA2A0-D840-4301-932D-ED450D797CA7),
+	dual,
+	nonextensible,
+	helpstring("IScreenSave 接口"),
+	pointer_default(unique)
+]
+interface IScreenSave : IDispatch{
+	[id(1), helpstring("方法enableScreenSave")] HRESULT enableScreenSave([in] VARIANT_BOOL enabled);
+	[id(2), helpstring("方法setTimeSpan")] HRESULT setTimeSpan([in] LONG seconds);
+	[id(3), helpstring("方法isEnabled")] HRESULT isEnabled([out,retval] VARIANT_BOOL* enabled);
+	[id(4), helpstring("方法ClearCache")] HRESULT ClearCache(void);
+	[id(5), helpstring("方法setAutoClearTimespan")] HRESULT setAutoClearTimespan([in] LONG seconds);
 };
 [
 	uuid(42F932B5-F5CB-4F0D-8925-1B6BE5FECD1B),
@@ -132,5 +147,13 @@ library FilterSettingLib {
 	coclass AppSetting
 	{
 		[default] interface IAppSetting;
+	};
+	[
+		uuid(6CCC382B-10BC-4F2F-AC82-E79EC9CDA172),
+		helpstring("ScreenSave Class")
+	]
+	coclass ScreenSave
+	{
+		[default] interface IScreenSave;
 	};
 };

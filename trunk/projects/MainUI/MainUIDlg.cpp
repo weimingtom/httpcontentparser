@@ -7,7 +7,7 @@
 #include ".\mainuidlg.h"
 #include ".\dlgchangepassword.h"
 #include ".\dlgcheckpassword.h"
-
+#include <hotkey.h>
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -417,6 +417,15 @@ void CMainUIDlg::OnMainParents()
 }
 
 LRESULT CMainUIDlg::OnHotKey(WPARAM wParam, LPARAM lParam) {
+	int id = (int)wParam;
+	if (id == HOTKEY_ID_POPUP_MAIN) {
+		AfxGetMainWnd()->ShowWindow(SW_SHOW);
+	} else if (id == HOTKEY_ID_SWITCH_USER) {
+		CDlgCheckPassword dlg;
+		if (IDOK == dlg.DoModal()) {
+		}
+	}
+
 	return -1;
 }
 
