@@ -285,6 +285,43 @@ BEGIN
     PUSHBUTTON      "取消",IDCANCEL,129,24,50,14
 END
 
+IDD_LEV1_TOOLS DIALOGEX 0, 0, 250, 202
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+END
+
+IDD_TEMPLATE DIALOGEX 0, 0, 250, 200
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+END
+
+IDD_DLG_SCREEN_SAVER DIALOGEX 0, 0, 250, 200
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    PUSHBUTTON      "Clear",IDC_BTN_CLEAR,181,162,50,14
+    LTEXT           "",IDC_STATIC,29,89,8,8
+    CONTROL         "",IDC_SLIDER1,"msctls_trackbar32",TBS_BOTH | 
+                    TBS_NOTICKS | WS_TABSTOP,84,86,121,15
+    CONTROL         "Enable Screen Saver",IDC_CHECK1,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,21,26,82,10
+    GROUPBOX        "Function",IDC_STA_FUNCTION,7,7,236,47
+    GROUPBOX        "Timesspan",IDC_STA_TIMESPAN,7,66,236,57
+    GROUPBOX        "Auto Clear",IDC_STA_AUTOCLEAR,7,140,236,53
+    CONTROL         "Enable Auto Clear",IDC_CHECK2,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,142,25,73,10
+    LTEXT           "静态",IDC_STATIC,24,90,17,8
+    LTEXT           "静态",IDC_STATIC,22,161,17,8
+END
+
+IDD_DLG_WEB_HISTORY DIALOGEX 0, 0, 250, 200
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -469,6 +506,38 @@ BEGIN
         TOPMARGIN, 7
         BOTTOMMARGIN, 88
     END
+
+    IDD_LEV1_TOOLS, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 243
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 195
+    END
+
+    IDD_TEMPLATE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 243
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 193
+    END
+
+    IDD_DLG_SCREEN_SAVER, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 243
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 193
+    END
+
+    IDD_DLG_WEB_HISTORY, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 243
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 193
+    END
 END
 #endif    // APSTUDIO_INVOKED
 
@@ -628,6 +697,7 @@ BEGIN
     IDS_TRAYMENU_SHOWUI     "Show Main Dialog"
     IDS_TRAYMENU_HIDEUI     "Hide Main Dialog"
     IDS_TREE_TOOLSETTING    "Tools Setting"
+    IDS_TREE_LEV1_TOOLS     "Tools Setting"
 END
 
 STRINGTABLE 
@@ -646,6 +716,11 @@ BEGIN
     IDS_TREE_ABOUT          "About"
     IDS_DNS_BLACK_LIST      "DNS Black List"
     IDS_DNS_WHITE_LIST      "DNS White List"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_TREE_SCREEN_SAVE    "Screen"
 END
 
 #endif    // 英语(美国) resources

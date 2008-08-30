@@ -14,6 +14,8 @@
 #include "DlgOptions.h"
 #include "DlgEyecare.h"
 #include "DlgWhiteDNSList.h"
+#include "DlgScreenSaver.h"
+#include "Lev1DlgTools.h"
 #include ".\basedlg.h"
 #include "afxwin.h"
 #include ".\dlgtoolssetting.h"
@@ -49,6 +51,7 @@ protected:
 
 	void setControlsFonts();
 	void setRulesDlg();
+	void setToolsDlg();
 private:
 	CTreeCtrl m_treeNavigation;
 	void InitTreeNodes();		// 初始化树的节点
@@ -56,6 +59,9 @@ private:
 	void setCurDlg(const DWORD item);
 	void initDlgs();
 	void showDlg();
+
+	//
+	void ChangeCurDlg(CBaseDlg *dlg);
 
 	// 设置System Tray Menu;
 	void setupTrayMenu();
@@ -67,10 +73,13 @@ private:
 	CDlgHelp	m_dlgHelp;
 	CDlgOnlineHour m_dlgOnlineHour;
 	CDlgSearchRule m_dlgSearchRule;
+	CDlgScreenSaver m_dlgScreenSaver;
 	CDlgDNSRule m_dlgDnsRule;
 	CDlgWhiteDNSList m_dlgWhiteDNS;
 	CDlgAbout m_dlgAbout;
 	CBaseDlg	*m_curDlg;
+
+	CLev1DlgTools m_lev1Tools;
 	CLev1DlgRules m_lev1Rules;
 	CDlgToolsSetting m_dlgToolSetting;
 
