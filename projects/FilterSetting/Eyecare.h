@@ -38,8 +38,6 @@ END_COM_MAP()
 	void FinalRelease() 
 	{
 	}
-private:
-	EyecareSetting eyecare_setting_;
 
 public:
 	STDMETHOD(setPassword)(BSTR password);			// 设置密码， 如果设置空密码， 则为使用系统管理员密码

@@ -32,7 +32,7 @@ public:
 
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV Ö§³Ö
-
+	virtual BOOL OnInitDialog();
 	DECLARE_MESSAGE_MAP()
 public:
 	CGuiCheckBox m_chkAutoLoad;
@@ -41,4 +41,8 @@ public:
 	CGuiGroupBox m_staHotkey;
 	CHotKeyCtrl m_hotKeyShowDlg;
 	CHotKeyCtrl m_hotkeySwitchUser;
+	
+
+protected:
+	void setHotKey();
 };

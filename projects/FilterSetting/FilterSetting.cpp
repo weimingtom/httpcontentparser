@@ -5,8 +5,10 @@
 #include "globalvariable.h"
 #include "FilterSetting.h"
 #include ".\servthread.h"
+#include "sysutility.h"
 #include <passwordtype.h>
 #include <string>
+#include <screensaver.h>
 
 class CFilterSettingModule : public CAtlServiceModuleT< CFilterSettingModule, IDS_SERVICENAME >
 {
@@ -26,13 +28,20 @@ public :
 };
 
 CFilterSettingModule _AtlModule;
-
+ScreenSaver g_screenSaver;
 Authorize g_authorize;
 GlobalSetting global_setting_;
+EyecareSetting g_Eyecare_setting_;
+HINSTANCE g_hInstance;
 
-extern "C" int WINAPI _tWinMain(HINSTANCE /*hInstance*/, HINSTANCE /*hPrevInstance*/, 
+extern "C" int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, 
                                 LPTSTR /*lpCmdLine*/, int nShowCmd)
 {
+
+	SaveScreen(hInstance);
+	g_Eyecare_setting_.initialize(&g_authorize);
+	g_hInstance = hInstance;
+	g_screenSaver.initialize();
 	global_setting_.initialize();
 	ServThread::getInstance(); // 开启服务线程
 

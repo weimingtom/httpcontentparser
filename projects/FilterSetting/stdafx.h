@@ -42,8 +42,10 @@
 #include <globalsetting.h>
 #ifdef _DEBUG
 #	pragma comment(lib, "settingd.lib")
+#	pragma comment(lib, "sysutilityd.lib")
 #else 
 #	pragma comment(lib, "setting.lib")
+#	pragma comment(lib, "sysutility.lib")
 #endif
 
 using namespace ATL;

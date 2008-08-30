@@ -3,6 +3,9 @@
 #include "stdafx.h"
 #include "AppSetting.h"
 #include ".\appsetting.h"
+#include ".\servthread.h"
+#include <hotkey.h>
+#include <assert.h>
 
 
 // CAppSetting
@@ -22,16 +25,12 @@ STDMETHODIMP CAppSetting::InterfaceSupportsErrorInfo(REFIID riid)
 	return S_FALSE;
 }
 
-STDMETHODIMP CAppSetting::setHotkey(USHORT wVirtualKeyCode, USHORT wModifiers, LONG type)
-{
-	// TODO: 在此添加实现代码
-
+STDMETHODIMP CAppSetting::setHotkey(USHORT wVirtualKeyCode, USHORT wModifiers, LONG type, VARIANT_BOOL* bSuccess) {
+	*bSuccess = ServThread::getInstance()->setHotKey(wVirtualKeyCode, wModifiers, type);
 	return S_OK;
 }
 
-STDMETHODIMP CAppSetting::setScreenSaverTimespan(LONG seconds)
-{
-	// TODO: 在此添加实现代码
+STDMETHODIMP CAppSetting::setScreenSaverTimespan(LONG seconds) {
 
 	return S_OK;
 }

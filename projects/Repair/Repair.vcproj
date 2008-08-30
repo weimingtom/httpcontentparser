@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="7.10"
-	Name="FilterSetting"
-	ProjectGUID="{23244EE6-33D9-4D23-8BA7-3AA7CCDAF177}"
-	Keyword="AtlProj">
+	Name="Repair"
+	ProjectGUID="{EFEF1557-82DB-4A74-A5C4-A215AE1FE1C9}"
+	Keyword="MFCProj">
 	<Platforms>
 		<Platform
 			Name="Win32"/>
@@ -15,17 +15,16 @@
 			OutputDirectory="Debug"
 			IntermediateDirectory="Debug"
 			ConfigurationType="1"
-			UseOfATL="1"
-			ATLMinimizesCRunTimeLibraryUsage="FALSE"
-			CharacterSet="1">
+			UseOfMFC="2"
+			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\include"
 				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG"
 				MinimalRebuild="TRUE"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
+				TreatWChar_tAsBuiltInType="TRUE"
 				UsePrecompiledHeader="3"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="TRUE"
@@ -34,33 +33,16 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				IgnoreImportLibrary="TRUE"
-				OutputFile="$(OutDir)/FilterSetting.exe"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="..\..\lib"
 				GenerateDebugInformation="TRUE"
 				SubSystem="2"
-				ImportLibrary="$(OutDir)/FilterSetting.lib"
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="_DEBUG"
-				MkTypLibCompatible="FALSE"
-				TargetEnvironment="1"
-				GenerateStublessProxies="TRUE"
-				TypeLibraryName="$(IntDir)/FilterSetting.tlb"
-				HeaderFileName="FilterSetting.h"
-				DLLDataFileName=""
-				InterfaceIdentifierFileName="FilterSetting_i.c"
-				ProxyFileName="FilterSetting_p.c"/>
+				MkTypLibCompatible="FALSE"/>
 			<Tool
-				Name="VCPostBuildEventTool"
-				Description="执行注册"
-				CommandLine="copy .\FilterSetting_i.c ..\..\include\com
-copy .\filtersetting.h ..\..\include\com
-copy .\Debug\FilterSetting.exe ..\..\debug
-..\..\Debug\FilterSetting.exe /RegServer
-"/>
+				Name="VCPostBuildEventTool"/>
 			<Tool
 				Name="VCPreBuildEventTool"/>
 			<Tool
@@ -86,13 +68,14 @@ copy .\Debug\FilterSetting.exe ..\..\debug
 			OutputDirectory="Release"
 			IntermediateDirectory="Release"
 			ConfigurationType="1"
-			UseOfATL="1"
-			ATLMinimizesCRunTimeLibraryUsage="FALSE"
+			UseOfMFC="2"
 			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG"
+				MinimalRebuild="FALSE"
 				RuntimeLibrary="2"
+				TreatWChar_tAsBuiltInType="TRUE"
 				UsePrecompiledHeader="3"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="TRUE"
@@ -101,33 +84,18 @@ copy .\Debug\FilterSetting.exe ..\..\debug
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				IgnoreImportLibrary="TRUE"
-				OutputFile="$(OutDir)/FilterSetting.exe"
 				LinkIncremental="1"
 				GenerateDebugInformation="TRUE"
 				SubSystem="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
-				ImportLibrary="$(OutDir)/FilterSetting.lib"
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="NDEBUG"
-				MkTypLibCompatible="FALSE"
-				TargetEnvironment="1"
-				GenerateStublessProxies="TRUE"
-				TypeLibraryName="$(IntDir)/FilterSetting.tlb"
-				HeaderFileName="FilterSetting.h"
-				DLLDataFileName=""
-				InterfaceIdentifierFileName="FilterSetting_i.c"
-				ProxyFileName="FilterSetting_p.c"/>
+				MkTypLibCompatible="FALSE"/>
 			<Tool
-				Name="VCPostBuildEventTool"
-				Description="执行注册"
-				CommandLine="&quot;$(TargetPath)&quot; /RegServer
-copy .\FilterSetting_i.c ..\..\include\com
-copy .\filtersetting.h ..\..\include\com
-"/>
+				Name="VCPostBuildEventTool"/>
 			<Tool
 				Name="VCPreBuildEventTool"/>
 			<Tool
@@ -157,19 +125,10 @@ copy .\filtersetting.h ..\..\include\com
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
 			<File
-				RelativePath=".\AppSetting.cpp">
+				RelativePath=".\Repair.cpp">
 			</File>
 			<File
-				RelativePath=".\Authorize.cpp">
-			</File>
-			<File
-				RelativePath=".\FilterSetting.cpp">
-			</File>
-			<File
-				RelativePath=".\FilterSetting.idl">
-			</File>
-			<File
-				RelativePath=".\ScreenSave.cpp">
+				RelativePath=".\RepairDlg.cpp">
 			</File>
 			<File
 				RelativePath=".\stdafx.cpp">
@@ -192,19 +151,13 @@ copy .\filtersetting.h ..\..\include\com
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
 			<File
-				RelativePath=".\AppSetting.h">
+				RelativePath=".\Repair.h">
 			</File>
 			<File
-				RelativePath=".\Authorize.h">
-			</File>
-			<File
-				RelativePath=".\globalvariable.h">
+				RelativePath=".\RepairDlg.h">
 			</File>
 			<File
 				RelativePath=".\Resource.h">
-			</File>
-			<File
-				RelativePath=".\ScreenSave.h">
 			</File>
 			<File
 				RelativePath=".\stdafx.h">
@@ -215,95 +168,20 @@ copy .\filtersetting.h ..\..\include\com
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx"
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}">
 			<File
-				RelativePath=".\AppSetting.rgs">
+				RelativePath=".\res\Repair.ico">
 			</File>
 			<File
-				RelativePath=".\Authorize.rgs">
+				RelativePath=".\Repair.rc">
 			</File>
 			<File
-				RelativePath=".\Eyecare.rgs">
+				RelativePath=".\res\Repair.rc2">
 			</File>
-			<File
-				RelativePath=".\FilterSetting.rc">
-			</File>
-			<File
-				RelativePath=".\FilterSetting.rgs">
-			</File>
-			<File
-				RelativePath=".\GlobalChecker.rgs">
-			</File>
-			<File
-				RelativePath=".\GlobalSetting.rgs">
-			</File>
-			<File
-				RelativePath=".\ScreenSave.rgs">
-			</File>
-		</Filter>
-		<Filter
-			Name="生成的文件"
-			SourceControlFiles="FALSE">
-			<File
-				RelativePath=".\FilterSetting_i.c">
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"/>
-				</FileConfiguration>
-			</File>
-		</Filter>
-		<Filter
-			Name="setting"
-			Filter="">
-			<File
-				RelativePath=".\GlobalSetting.cpp">
-			</File>
-			<File
-				RelativePath=".\GlobalSetting.h">
-			</File>
-		</Filter>
-		<Filter
-			Name="checker"
-			Filter="">
-			<File
-				RelativePath=".\GlobalChecker.cpp">
-			</File>
-			<File
-				RelativePath=".\GlobalChecker.h">
-			</File>
-		</Filter>
-		<Filter
-			Name="Eyecare"
-			Filter="">
-			<File
-				RelativePath=".\Eyecare.cpp">
-			</File>
-			<File
-				RelativePath=".\Eyecare.h">
-			</File>
-		</Filter>
-		<Filter
-			Name="servThread"
-			Filter="">
-			<File
-				RelativePath=".\ServThread.cpp">
-			</File>
-			<File
-				RelativePath=".\ServThread.h">
-			</File>
-		</Filter>
-		<Filter
-			Name="ScreenSaver"
-			Filter="">
 		</Filter>
 		<File
 			RelativePath=".\ReadMe.txt">
+		</File>
+		<File
+			RelativePath=".\res\Repair.manifest">
 		</File>
 	</Files>
 	<Globals>

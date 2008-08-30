@@ -20,8 +20,8 @@ void EyecareTest::TestTimeSetting() {
 	CPPUNIT_ASSERT(authorize.setNewPassword(supassword, PASSWORD_SU));
 	CPPUNIT_ASSERT(authorize.setNewPassword(eyecarePassword, PASSWORD_EYECARE));
 
-	EyecareSetting setting(&authorize);
-	setting.initialize();
+	EyecareSetting setting;
+	setting.initialize(&authorize);
 
 	setting.setEntertainTime(60);
 	setting.setRestTime(60);
@@ -37,8 +37,8 @@ void EyecareTest::TestPassword() {
 	CPPUNIT_ASSERT(authorize.setNewPassword(supassword, PASSWORD_SU));
 	CPPUNIT_ASSERT(authorize.setNewPassword(eyecarePassword, PASSWORD_EYECARE));
 
-	EyecareSetting setting(&authorize);
-	setting.initialize();
+	EyecareSetting setting;
+	setting.initialize(&authorize);
 
 	// 使用错误的密码转换， 状态不会改变
 	CPPUNIT_ASSERT (setting.getState() == EyecareSetting::EYECARE_TIME);

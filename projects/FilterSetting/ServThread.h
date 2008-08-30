@@ -13,7 +13,7 @@ private:
 	static ServThread *pInstance;
 public:
 	HANDLE getThreadHandle()  { return hThread_;}
-	void   setHotKey(WORD vKey, WORD key, int type);
+	int   setHotKey(WORD vKey, WORD key, int type);
 private:
 	void startServer();
 	static DWORD TreadProc(LPVOID param);
@@ -21,6 +21,17 @@ private:
 
 	DWORD dwThreadId_;
 	HANDLE hThread_;
+	HWND  hwnd_;
+
+	DWORD m_tickAutoSave;	// 自动保存屏幕的时间间隔
+	DWORD m_tickEyecare;	// 启动保护眼睛的时间间隔
+
+	// hotkey ids;
+	void initialize();
+	int hotkeyid_switchuser_;
+	int hotkeyid_showdlg_;
+
+	friend LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 };
 
 #endif  // _FILTER_SETTING_H__
