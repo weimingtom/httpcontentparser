@@ -1,0 +1,24 @@
+HKCR
+{
+	FilterSetting.WebHistoryRecorder.1 = s 'WebHistoryRecorder Class'
+	{
+		CLSID = s '{69E64239-C5EA-4B59-B114-05D8D2FA424E}'
+	}
+	FilterSetting.WebHistoryRecorder = s 'WebHistoryRecorder Class'
+	{
+		CLSID = s '{69E64239-C5EA-4B59-B114-05D8D2FA424E}'
+		CurVer = s 'FilterSetting.WebHistoryRecorder.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {69E64239-C5EA-4B59-B114-05D8D2FA424E} = s 'WebHistoryRecorder Class'
+		{
+			ProgID = s 'FilterSetting.WebHistoryRecorder.1'
+			VersionIndependentProgID = s 'FilterSetting.WebHistoryRecorder'
+			ForceRemove 'Programmable'
+			LocalServer32 = s '%MODULE%'
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{42F932B5-F5CB-4F0D-8925-1B6BE5FECD1B}'
+		}
+	}
+}

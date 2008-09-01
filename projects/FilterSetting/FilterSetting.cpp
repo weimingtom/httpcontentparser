@@ -9,6 +9,7 @@
 #include <passwordtype.h>
 #include <string>
 #include <screensaver.h>
+#include <webhistoryrecordersetting.h>
 
 class CFilterSettingModule : public CAtlServiceModuleT< CFilterSettingModule, IDS_SERVICENAME >
 {
@@ -33,18 +34,26 @@ Authorize g_authorize;
 GlobalSetting global_setting_;
 EyecareSetting g_Eyecare_setting_;
 HINSTANCE g_hInstance;
+WebHistoryRecorderSetting g_webhistoryRecordSetting_;
 
 extern "C" int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, 
                                 LPTSTR /*lpCmdLine*/, int nShowCmd)
 {
-
-	SaveScreen(hInstance);
-	g_Eyecare_setting_.initialize(&g_authorize);
 	g_hInstance = hInstance;
-	g_screenSaver.initialize();
-	global_setting_.initialize();
-	ServThread::getInstance(); // 开启服务线程
 
+	global_setting_.initialize();
+
+	g_Eyecare_setting_.initialize(&g_authorize);
+	
+	// 初始化屏幕记录
+	g_screenSaver.initialize();
+
+	// 初始化记录网页的设置
+	g_webhistoryRecordSetting_.initialize();
+
+	 // 开启服务线程
+	ServThread::getInstance();
+	
 	g_authorize.setNewPassword("123", PASSWORD_SU);
     return _AtlModule.WinMain(nShowCmd);
 }

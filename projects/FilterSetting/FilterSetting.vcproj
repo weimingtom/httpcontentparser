@@ -186,6 +186,9 @@ copy .\filtersetting.h ..\..\include\com
 						UsePrecompiledHeader="1"/>
 				</FileConfiguration>
 			</File>
+			<File
+				RelativePath=".\WebHistoryRecorder.cpp">
+			</File>
 		</Filter>
 		<Filter
 			Name="Í·ÎÄ¼þ"
@@ -208,6 +211,9 @@ copy .\filtersetting.h ..\..\include\com
 			</File>
 			<File
 				RelativePath=".\stdafx.h">
+			</File>
+			<File
+				RelativePath=".\WebHistoryRecorder.h">
 			</File>
 		</Filter>
 		<Filter
@@ -237,6 +243,9 @@ copy .\filtersetting.h ..\..\include\com
 			</File>
 			<File
 				RelativePath=".\ScreenSave.rgs">
+			</File>
+			<File
+				RelativePath=".\WebHistoryRecorder.rgs">
 			</File>
 		</Filter>
 		<Filter
