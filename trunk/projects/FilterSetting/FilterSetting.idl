@@ -101,6 +101,29 @@ interface IScreenSave : IDispatch{
 	[id(5), helpstring("Method setAutoClearTimespan")] HRESULT setAutoClearTimespan([in] LONG seconds);
 };
 [
+	object,
+	uuid(DF30A4AB-53EE-474B-9EF1-9A147904F85B),
+	dual,
+	nonextensible,
+	helpstring("IWebHistoryRecorder 接口"),
+	pointer_default(unique)
+]
+interface IWebHistoryRecorder : IDispatch{
+	[propget, id(3), helpstring("属性 RecordPronURL")] HRESULT RecordPronPages([out, retval] VARIANT_BOOL* pVal);
+	[propput, id(3), helpstring("属性 RecordPronURL")] HRESULT RecordPronPages([in] VARIANT_BOOL newVal);
+	[propget, id(6), helpstring("属性 RecordAllURL")] HRESULT RecordAllPages([out, retval] VARIANT_BOOL* pVal);
+	[propput, id(6), helpstring("属性 RecordAllURL")] HRESULT RecordAllPages([in] VARIANT_BOOL newVal);
+	[propget, id(4), helpstring("属性 RecordPornImage")] HRESULT RecordPornImage([out, retval] VARIANT_BOOL* pVal);
+	[propput, id(4), helpstring("属性 RecordPornImage")] HRESULT RecordPornImage([in] VARIANT_BOOL newVal);
+	[propget, id(5), helpstring("属性 RecordAllImage")] HRESULT RecordAllImage([out, retval] VARIANT_BOOL* pVal);
+	[propput, id(5), helpstring("属性 RecordAllImage")] HRESULT RecordAllImage([in] VARIANT_BOOL newVal);
+
+	[propget, id(7), helpstring("属性 recordPornWebsite")] HRESULT recordPornWebsite([out, retval] VARIANT_BOOL* pVal);
+	[propput, id(7), helpstring("属性 recordPornWebsite")] HRESULT recordPornWebsite([in] VARIANT_BOOL newVal);
+	[propget, id(8), helpstring("属性 recordAllWebsite")] HRESULT recordAllWebsite([out, retval] VARIANT_BOOL* pVal);
+	[propput, id(8), helpstring("属性 recordAllWebsite")] HRESULT recordAllWebsite([in] VARIANT_BOOL newVal);
+};
+[
 	uuid(42F932B5-F5CB-4F0D-8925-1B6BE5FECD1B),
 	version(1.0),
 	helpstring("FilterSetting 1.0 ClassLibrary")
@@ -155,5 +178,13 @@ library FilterSettingLib {
 	coclass ScreenSave
 	{
 		[default] interface IScreenSave;
+	};
+	[
+		uuid(69E64239-C5EA-4B59-B114-05D8D2FA424E),
+		helpstring("WebHistoryRecorder Class")
+	]
+	coclass WebHistoryRecorder
+	{
+		[default] interface IWebHistoryRecorder;
 	};
 };
