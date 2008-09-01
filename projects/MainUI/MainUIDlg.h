@@ -15,10 +15,10 @@
 #include "DlgEyecare.h"
 #include "DlgWhiteDNSList.h"
 #include "DlgScreenSaver.h"
+#include "DlgWebHistory.h"
 #include "Lev1DlgTools.h"
 #include ".\basedlg.h"
 #include "afxwin.h"
-#include ".\dlgtoolssetting.h"
 
 #include <Guilib1.5\GuiGroupBox.h>
 #include <Guilib1.5\GuiButton.h>
@@ -77,11 +77,11 @@ private:
 	CDlgDNSRule m_dlgDnsRule;
 	CDlgWhiteDNSList m_dlgWhiteDNS;
 	CDlgAbout m_dlgAbout;
+	CDlgWebHistory m_dlgWebHistory;
 	CBaseDlg	*m_curDlg;
 
 	CLev1DlgTools m_lev1Tools;
 	CLev1DlgRules m_lev1Rules;
-	CDlgToolsSetting m_dlgToolSetting;
 
 	// ср╡Ю
 	CRect    m_rectRight;
