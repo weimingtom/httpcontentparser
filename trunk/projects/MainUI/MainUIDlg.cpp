@@ -147,9 +147,9 @@ void CMainUIDlg::initDlgs() {
 	m_dlgOptions.Create(CDlgOptions::IDD, this);
 	m_dlgEyecare.Create(CDlgEyecare::IDD, this);
 	m_dlgWhiteDNS.Create(CDlgWhiteDNSList::IDD, this);
-	m_dlgToolSetting.Create(CDlgToolsSetting::IDD, this);
 	m_lev1Tools.Create(CLev1DlgTools::IDD, this);
 	m_dlgScreenSaver.Create(CDlgScreenSaver::IDD, this);
+	m_dlgWebHistory.Create(CDlgWebHistory::IDD, this);
 	m_curDlg = &m_lev1Rules;
 	
 	showDlg();
@@ -166,13 +166,13 @@ void CMainUIDlg::setToolsDlg() {
 	hItem = m_treeNavigation.InsertItem(strItem, hItemTools);
 	m_treeNavigation.SetItemData(hItem, IDS_TREE_EYECARE);
 
-	strItem.LoadString(IDS_TREE_TOOLSETTING);
-	hItem = m_treeNavigation.InsertItem(strItem, hItemTools);
-	m_treeNavigation.SetItemData(hItem, IDS_TREE_TOOLSETTING);
-
 	strItem.LoadString(IDS_TREE_SCREEN_SAVE);
 	hItem = m_treeNavigation.InsertItem(strItem, hItemTools);
 	m_treeNavigation.SetItemData(hItem, IDS_TREE_SCREEN_SAVE);
+
+	strItem.LoadString(IDS_TREE_WEB_HISTORY);
+	hItem = m_treeNavigation.InsertItem(strItem, hItemTools);
+	m_treeNavigation.SetItemData(hItem, IDS_TREE_WEB_HISTORY);
 }
 
 void CMainUIDlg::setRulesDlg() {
@@ -234,9 +234,6 @@ void CMainUIDlg::setCurDlg(const DWORD item) {
 		case IDS_TREE_HELP:
 			ChangeCurDlg(&m_dlgHelp);
 			break;
-		case IDS_TREE_TOOLSETTING:
-			ChangeCurDlg(&m_dlgToolSetting);
-			break;
 		case IDS_TREE_ABOUT:
 			ChangeCurDlg(&m_dlgAbout);
 			break;
@@ -248,6 +245,9 @@ void CMainUIDlg::setCurDlg(const DWORD item) {
 			break;
 		case IDS_TREE_SCREEN_SAVE:
 			ChangeCurDlg(&m_dlgScreenSaver);
+			break;
+		case IDS_TREE_WEB_HISTORY:
+			ChangeCurDlg(&m_dlgWebHistory);
 			break;
 		default:
 			ASSERT(false);

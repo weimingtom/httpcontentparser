@@ -22,6 +22,7 @@
 #define IDR_HTML_DLGCHANGEPASSWORD      111
 #define IDS_TREE_LEV1_TOOLS             111
 #define IDS_TREE_SCREEN_SAVE            112
+#define IDS_TREE_WEB_HISTORY            113
 #define IDR_MAINFRAME                   128
 #define IDD_DLG_HELP                    129
 #define IDD_DLG_ABOUT                   130
@@ -47,6 +48,7 @@
 #define IDD_TEMPLATE                    154
 #define IDD_DLG_SCREEN_SAVER            155
 #define IDD_DLG_WEB_HISTORY             156
+#define IDD_TEMPLATE1                   157
 #define IDC_TREE_NAVIG                  1000
 #define IDS_TREE_ROOT                   1001
 #define IDS_TREE_DNS_RULE               1002
@@ -61,10 +63,12 @@
 #define IDS_TREE_CONTENT_RULE           1005
 #define IDC_CANCEL                      1005
 #define IDC_BTN_RESET                   1005
+#define IDC_BTN_HISTORY                 1005
 #define IDC_APPLY                       1006
 #define IDC_LIST1                       1006
 #define IDC_CHK_PNG                     1006
 #define IDS_TREE_ONLINE_HOUR            1006
+#define IDC_BTN_EXPORT_WEBSITES         1006
 #define IDC_BUTTON3                     1007
 #define IDS_TREE_HELP                   1007
 #define IDC_BUTTON4                     1008
@@ -89,11 +93,13 @@
 #define IDC_STA_SYSTEM                  1027
 #define IDC_CHECK3                      1027
 #define IDC_STA_OTHERS                  1028
+#define IDC_CHK_ALL_IMAGE               1028
 #define IDC_CHK_AUTOLOAD                1029
 #define IDC_CHECK4                      1029
 #define IDC_STA_CELLS                   1030
 #define IDC_STA_OTHERS2                 1030
 #define IDC_STA_HOTKEY                  1030
+#define IDC_CHK_ALLWEBSITES             1030
 #define IDC_OK                          1031
 #define IDC_HOTKEY1                     1033
 #define IDC_HOTKEY_SHOWDLG              1033
@@ -122,6 +128,14 @@
 #define IDC_BTN_CLEAR                   1065
 #define IDC_STA_TIMESPAN                1066
 #define IDC_STA_AUTOCLEAR               1067
+#define IDC_STA_TYPES                   1069
+#define IDC_STA_HISTORY                 1070
+#define IDC_STA_TOOLS                   1071
+#define IDC_BUN_CLEAR_CACHE             1072
+#define IDC_CHK_PRON_IMAGE              1073
+#define IDC_CHK_PORN_PAGE               1074
+#define IDC_CHK_PORN_WEBSITES           1075
+#define IDC_CHK_ALLPAGES                1076
 #define IDC_EDIT1                       4011
 #define IDC_EDIT2                       4012
 #define IDC_EDT_RETRY                   4013
@@ -159,7 +173,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        155
 #define _APS_NEXT_COMMAND_VALUE         32799
-#define _APS_NEXT_CONTROL_VALUE         1068
+#define _APS_NEXT_CONTROL_VALUE         1077
 #define _APS_NEXT_SYMED_VALUE           112
 #endif
 #endif

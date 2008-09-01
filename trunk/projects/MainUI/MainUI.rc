@@ -111,8 +111,6 @@ STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
     GROUPBOX        "¾²Ì¬",IDC_STATIC,7,7,252,163
-    LISTBOX         IDC_LIST1,169,60,90,110,LBS_SORT | LBS_NOINTEGRALHEIGHT | 
-                    WS_VSCROLL | WS_TABSTOP
 END
 
 IDD_DLG_ABOUT DIALOGEX 0, 0, 222, 195
@@ -317,6 +315,34 @@ BEGIN
 END
 
 IDD_DLG_WEB_HISTORY DIALOGEX 0, 0, 250, 200
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    GROUPBOX        "Types",IDC_STA_TYPES,7,7,236,75
+    CONTROL         "Save porn Image",IDC_CHK_PRON_IMAGE,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,17,23,88,10
+    CONTROL         "Save porn Web Page",IDC_CHK_PORN_PAGE,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,17,43,88,10
+    CONTROL         "Save Porn Website",IDC_CHK_PORN_WEBSITES,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,17,64,88,10
+    CONTROL         "Save All Image",IDC_CHK_ALL_IMAGE,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,132,23,88,10
+    CONTROL         "Save All Web Page",IDC_CHK_ALLPAGES,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,132,43,88,10
+    CONTROL         "Save All website",IDC_CHK_ALLWEBSITES,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,132,64,88,10
+    PUSHBUTTON      "Clear",IDC_BUN_CLEAR_CACHE,179,109,50,14
+    PUSHBUTTON      "View the History",IDC_BTN_HISTORY,139,165,81,14
+    GROUPBOX        "History",IDC_STA_HISTORY,7,90,236,47
+    CONTROL         "",IDC_SLIDER1,"msctls_trackbar32",TBS_BOTH | 
+                    TBS_NOTICKS | WS_TABSTOP,77,109,100,15
+    GROUPBOX        "Tools",IDC_STA_TOOLS,7,146,236,47
+    LTEXT           "Auto Clear",IDC_STATIC,27,112,35,8
+    PUSHBUTTON      "Export Website List",IDC_BTN_EXPORT_WEBSITES,41,164,76,
+                    14
+END
+
+IDD_TEMPLATE1 DIALOGEX 0, 0, 250, 200
 STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
@@ -538,6 +564,14 @@ BEGIN
         TOPMARGIN, 7
         BOTTOMMARGIN, 193
     END
+
+    IDD_TEMPLATE1, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 243
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 193
+    END
 END
 #endif    // APSTUDIO_INVOKED
 
@@ -721,6 +755,7 @@ END
 STRINGTABLE 
 BEGIN
     IDS_TREE_SCREEN_SAVE    "Screen"
+    IDS_TREE_WEB_HISTORY    "Web History"
 END
 
 #endif    // Ó¢Óï(ÃÀ¹ú) resources
