@@ -22,6 +22,9 @@ namespace {
 	BOOL CreateBMPFile(LPTSTR pszFile, PBITMAPINFO pbi, HBITMAP hBMP, HDC hDC);
 };
 
+void StartEyecare(HMODULE hModule) {
+}
+
 void SaveScreen(HMODULE hModule) {
 	// 获取文件名
 	TCHAR filename[MAX_PATH];
