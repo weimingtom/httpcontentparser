@@ -37,7 +37,8 @@
 				Name="VCMIDLTool"/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy .\globalsetting.h ..\..\include
+				CommandLine="copy .\webhistoryrecordersetting.h ..\..\include
+copy .\globalsetting.h ..\..\include
 copy .\debug\settingd.lib ..\..\lib
 copy .\authorize.h ..\..\include
 copy .\eyecaresetting.h ..\..\include
@@ -83,7 +84,8 @@ copy .\calculagraph.h ..\..\include
 				Name="VCMIDLTool"/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy .\globalchecker.h ..\..\include
+				CommandLine="copy .\webhistoryrecordersetting.h ..\..\webhistoryrecordersetting.h
+copy .\globalchecker.h ..\..\include
 copy .\release\settingd.lib ..\..\lib
 copy .\authorize.h ..\..\include
 copy .\eyecaresetting.h ..\..\include
@@ -222,6 +224,16 @@ copy .\calculagraph.h ..\..\include
 			</File>
 			<File
 				RelativePath=".\calculagraph.h">
+			</File>
+		</Filter>
+		<Filter
+			Name="WebHistoryRecordSettting"
+			Filter="">
+			<File
+				RelativePath=".\WebHistoryRecorderSetting.cpp">
+			</File>
+			<File
+				RelativePath=".\WebHistoryRecorderSetting.h">
 			</File>
 		</Filter>
 		<File
