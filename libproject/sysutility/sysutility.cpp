@@ -15,14 +15,25 @@ void RegisterServiceProcess() {
 }
 
 namespace {
-	DWORD GetScreenSaveDir(TCHAR *moduleDir, const int len, HMODULE hModule);
+	
+	DWORD GetScreenRecordDir(TCHAR *moduleDir, const int len, HMODULE hModule);	//
+	DWORD GetImageRecordDir(TCHAR *moduleDir, const int len, HMODULE hModule);	// 保存图像的目录
 	DWORD GenerateImageFile(TCHAR *file, const int len, HMODULE hModule);	// 自动生成文件名
 	void GetScreen(TCHAR* filename);
 	BOOL CreateBitmapInfoStruct(HBITMAP hBmp,PBITMAPINFO& pbmi);
 	BOOL CreateBMPFile(LPTSTR pszFile, PBITMAPINFO pbi, HBITMAP hBMP, HDC hDC);
+
+	DWORD GetHistoryRecordDir(TCHAR *moduleDir, const int len, HMODULE hModule);
+	DWORD GetSoftwareDir(TCHAR *dir, const int len, HMODULE hModule);			// 获取软件所在的目录
+	DWORD GetPornImageRecordDir(TCHAR *moduleDir, const int len, HMODULE hModule);
+	DWORD GetNormalImageRecordDir(TCHAR *moduleDir, const int len, HMODULE hModule);
 };
 
+
 void StartEyecare(HMODULE hModule) {
+	TCHAR filename[MAX_PATH];
+	GetSoftwareDir(filename, MAX_PATH, hModule);
+	WinExec(filename, SW_MAXIMIZE);
 }
 
 void SaveScreen(HMODULE hModule) {
@@ -33,11 +44,18 @@ void SaveScreen(HMODULE hModule) {
 	GetScreen(filename);
 }
 
+void ClearHistory(HMODULE hModule) {
+	TCHAR dir[MAX_PATH], arg1 [MAX_PATH];
+	GetHistoryRecordDir(dir, MAX_PATH, hModule);
+	_sntprintf(arg1, MAX_PATH , "%s*", dir);
+	_execlp("del", arg1, "/q");
+}
+
 void ClearScreen(HMODULE hModule) {
 	TCHAR dir[MAX_PATH], arg1 [MAX_PATH];
-	GetScreenSaveDir(dir, MAX_PATH, hModule);
-	_sntprintf(arg1, MAX_PATH , "%d//*", dir);
-	_execlp("del", arg1, "\q");
+	GetScreenRecordDir(dir, MAX_PATH, hModule);
+	_sntprintf(arg1, MAX_PATH , "%s*", dir);
+	_execlp("del", arg1, "/q");
 }
 
 
@@ -45,24 +63,62 @@ void ClearScreen(HMODULE hModule) {
 // utility functions
 
 namespace {
-	
-DWORD GetScreenSaveDir(TCHAR *screendir, const int len, HMODULE hModule) {
-	TCHAR moduleName[MAX_PATH], driver[MAX_PATH], dir[MAX_PATH], moduleDir[MAX_PATH];
+
+// 获取软件所在目录
+DWORD GetSoftwareDir(TCHAR *softDir, const int len, HMODULE hModule) {
+	TCHAR moduleName[MAX_PATH], driver[MAX_PATH], dir[MAX_PATH];
 	DWORD length = GetModuleFileName(hModule, moduleName, MAX_PATH);
-
 	_tsplitpath(moduleName, driver, dir, NULL, NULL);
-	_sntprintf(moduleDir, MAX_PATH, "%s%s", driver, dir);
+	_sntprintf(softDir, len, "%s%s", driver, dir);
+	return (DWORD)_tcslen(softDir);
+}
 
-	_sntprintf(screendir, MAX_PATH, TEXT("%s%s\\"), moduleDir,TEXT("Screen"));
+// 保存屏幕截图的目录
+DWORD GetScreenRecordDir(TCHAR *screendir, const int len, HMODULE hModule) {
+	TCHAR moduleDir[MAX_PATH];
+	GetSoftwareDir(moduleDir, len, hModule);
+	_sntprintf(screendir, MAX_PATH, TEXT("%s%s\\"), moduleDir,TEXT("Screen\\"));
 	if (_tchdir(screendir) == -1)
 		_tmkdir(screendir);
 
-	return _tcslen(screendir);
+	return (DWORD)_tcslen(screendir);
+}
+
+// 获取保存历史的
+DWORD GetHistoryRecordDir(TCHAR *historyDir, const int len, HMODULE hModule) {
+	TCHAR moduleDir[MAX_PATH];
+	GetSoftwareDir(moduleDir, len, hModule);
+	_sntprintf(historyDir, MAX_PATH, TEXT("%s%s\\"), moduleDir,TEXT("History\\"));
+	if (_tchdir(historyDir) == -1)
+		_tmkdir(historyDir);
+
+	return (DWORD)_tcslen(historyDir);
+}
+
+// 获取保存目录的路径
+DWORD GetPornImageRecordDir(TCHAR *pornImage, const int len, HMODULE hModule) {
+	TCHAR moduleDir[MAX_PATH];
+	GetSoftwareDir(moduleDir, len, hModule);
+	_sntprintf(pornImage, MAX_PATH, TEXT("%s%s\\"), moduleDir,TEXT("History\\images\\porn\\"));
+	if (_tchdir(pornImage) == -1)
+		_tmkdir(pornImage);
+
+	return (DWORD)_tcslen(pornImage);
+}
+
+DWORD GetNormalImageRecordDir(TCHAR *normalImage, const int len, HMODULE hModule) {
+	TCHAR moduleDir[MAX_PATH];
+	GetSoftwareDir(moduleDir, len, hModule);
+	_sntprintf(normalImage, MAX_PATH, TEXT("%s%s\\"), moduleDir,TEXT("History\\images\\normal\\"));
+	if (_tchdir(normalImage) == -1)
+		_tmkdir(normalImage);
+
+	return (DWORD)_tcslen(normalImage);
 }
 
 DWORD GenerateImageFile(TCHAR *fullpath, const int len, HMODULE hModule) {
 	TCHAR dir[MAX_PATH];
-	GetScreenSaveDir(dir, MAX_PATH, hModule);
+	GetScreenRecordDir(dir, MAX_PATH, hModule);
 
 	// 获取时间
 	SYSTEMTIME time;
@@ -72,7 +128,7 @@ DWORD GenerateImageFile(TCHAR *fullpath, const int len, HMODULE hModule) {
 
 	// 获取到目录
 	_sntprintf(fullpath, MAX_PATH, TEXT("%s%s"), dir, filename);
-	return _tcslen(fullpath);
+	return (DWORD)_tcslen(fullpath);
 }
 
 

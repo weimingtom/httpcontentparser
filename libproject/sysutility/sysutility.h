@@ -10,4 +10,8 @@ void ClearScreen(HMODULE hModule);
 
 // 启动眼睛保护程序
 void StartEyecare(HMODULE hModule);
+
+// 清空所有
+void ClearHistory(HMODULE hModule);
+
 #endif  // _FILTER_SETTING_SYS_UTILITY_H__
