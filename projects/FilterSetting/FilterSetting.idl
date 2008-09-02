@@ -118,10 +118,10 @@ interface IWebHistoryRecorder : IDispatch{
 	[propget, id(5), helpstring("属性 RecordAllImage")] HRESULT RecordAllImage([out, retval] VARIANT_BOOL* pVal);
 	[propput, id(5), helpstring("属性 RecordAllImage")] HRESULT RecordAllImage([in] VARIANT_BOOL newVal);
 
-	[propget, id(7), helpstring("属性 recordPornWebsite")] HRESULT recordPornWebsite([out, retval] VARIANT_BOOL* pVal);
-	[propput, id(7), helpstring("属性 recordPornWebsite")] HRESULT recordPornWebsite([in] VARIANT_BOOL newVal);
-	[propget, id(8), helpstring("属性 recordAllWebsite")] HRESULT recordAllWebsite([out, retval] VARIANT_BOOL* pVal);
-	[propput, id(8), helpstring("属性 recordAllWebsite")] HRESULT recordAllWebsite([in] VARIANT_BOOL newVal);
+	[propget, id(7), helpstring("属性 recordPornWebsite")] HRESULT RecordPornWebsite([out, retval] VARIANT_BOOL* pVal);
+	[propput, id(7), helpstring("属性 recordPornWebsite")] HRESULT RecordPornWebsite([in] VARIANT_BOOL newVal);
+	[propget, id(8), helpstring("属性 recordAllWebsite")] HRESULT RecordAllWebsite([out, retval] VARIANT_BOOL* pVal);
+	[propput, id(8), helpstring("属性 recordAllWebsite")] HRESULT RecordAllWebsite([in] VARIANT_BOOL newVal);
 };
 [
 	uuid(42F932B5-F5CB-4F0D-8925-1B6BE5FECD1B),

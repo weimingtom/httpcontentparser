@@ -81,25 +81,25 @@ STDMETHODIMP CWebHistoryRecorder::put_RecordAllImage(VARIANT_BOOL newVal)
 // Websites
 
 
-STDMETHODIMP CWebHistoryRecorder::get_recordPornWebsite(VARIANT_BOOL* pVal)
+STDMETHODIMP CWebHistoryRecorder::get_RecordPornWebsite(VARIANT_BOOL* pVal)
 {
 	*pVal = g_webhistoryRecordSetting_.recordPornWebsite();
 	return S_OK;
 }
 
-STDMETHODIMP CWebHistoryRecorder::put_recordPornWebsite(VARIANT_BOOL newVal)
+STDMETHODIMP CWebHistoryRecorder::put_RecordPornWebsite(VARIANT_BOOL newVal)
 {
 	g_webhistoryRecordSetting_.recordPornWebsite(newVal);
 	return S_OK;
 }
 
-STDMETHODIMP CWebHistoryRecorder::get_recordAllWebsite(VARIANT_BOOL* pVal)
+STDMETHODIMP CWebHistoryRecorder::get_RecordAllWebsite(VARIANT_BOOL* pVal)
 {
 	*pVal = g_webhistoryRecordSetting_.recordWebsite();
 	return S_OK;
 }
 
-STDMETHODIMP CWebHistoryRecorder::put_recordAllWebsite(VARIANT_BOOL newVal)
+STDMETHODIMP CWebHistoryRecorder::put_RecordAllWebsite(VARIANT_BOOL newVal)
 {
 	g_webhistoryRecordSetting_.recordWebsite(newVal);
 	return S_OK;

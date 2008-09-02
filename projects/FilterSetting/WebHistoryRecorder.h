@@ -53,10 +53,10 @@ public:
 	STDMETHOD(get_RecordAllImage)(VARIANT_BOOL* pVal);
 	STDMETHOD(put_RecordAllImage)(VARIANT_BOOL newVal);
 
-	STDMETHOD(get_recordPornWebsite)(VARIANT_BOOL* pVal);
-	STDMETHOD(put_recordPornWebsite)(VARIANT_BOOL newVal);
-	STDMETHOD(get_recordAllWebsite)(VARIANT_BOOL* pVal);
-	STDMETHOD(put_recordAllWebsite)(VARIANT_BOOL newVal);
+	STDMETHOD(get_RecordPornWebsite)(VARIANT_BOOL* pVal);
+	STDMETHOD(put_RecordPornWebsite)(VARIANT_BOOL newVal);
+	STDMETHOD(get_RecordAllWebsite)(VARIANT_BOOL* pVal);
+	STDMETHOD(put_RecordAllWebsite)(VARIANT_BOOL newVal);
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(WebHistoryRecorder), CWebHistoryRecorder)
