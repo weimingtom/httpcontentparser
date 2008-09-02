@@ -4,6 +4,7 @@
 #include <comdef.h>
 #include "calculagraph.h"
 
+
 class Authorize;
 
 
@@ -13,7 +14,7 @@ public:
 	~EyecareSetting(void);
 
 	enum {
-		ENTERTAINMENT_TIME,
+		ENTERTAINMENT_TIME = 0,
 		EYECARE_TIME
 	};
 
@@ -24,33 +25,31 @@ public:
 
 	bool setPasswordType(const int type);
 
-	// 设置休息时间和娱乐事件
-	void setEntertainTime(const int minutes);
-	void setRestTime(const int minutes);
 
 	// 获取剩余时间
-	int getRemainTime() const;
-	int getState() const {return state_;}// 获取目前的状态
+	int getRemainTime() const { return calculagraph_.getRemainTime();}
+	int getState() const {return calculagraph_.getCurrentState();}// 获取目前的状态
 
-	int getEntertainTime() const;
-	int getRestTime() const;
+	// 设置休息时间和娱乐事件
+	void setEntertainTime(const int seconds) { calculagraph_.setTimespan(seconds, ENTERTAINMENT_TIME);}
+	void setRestTime(const int seconds) { calculagraph_.setTimespan(seconds, EYECARE_TIME);}
+	int getEntertainTime() const  { return calculagraph_.getTimespan(ENTERTAINMENT_TIME);}
+	int getRestTime() const { return calculagraph_.getTimespan(EYECARE_TIME);}
 
-	int trySwitch(); // 尝试切换状态，如果时间已经达标则自动切换，否则不改变
+	bool trySwitch(); // 尝试切换状态，如果时间已经达标则自动切换，否则不改变
 	int switchState(const std::string &password); // 切换状态
 
-	int ForceLockWnd(); // 强制关闭屏幕
+	int ForceLockWnd(); // 强制关闭屏幕, 此时只有输入密码才可进入
 
 	// 从配置文件中读取设置信息
 	void loadSetting();
-	void initialize(Authorize *authorize);
+	void initialize(Authorize *authorize, int state);
 private:
-	int changeState(const int current);
 	bool checkPassword(const std::string &password);
 
-	int entertain_time_;
-	int rest_time_;
-	int new_state_begin_; // 新状态的开始时间
-	int state_;
+	void setState(int state) { calculagraph_.forceSwitch(state);}
+
+	MultiCalculagraph<2> calculagraph_; // 用于两个计时器
 
 	// 这里需要保存密码
 

@@ -20,6 +20,7 @@ bool Calculagraph::trySwitch() {
 	}
 }
 
+
 // …Ë÷√
 void Calculagraph::setTimespan(const DWORD seconds) {
 	time_span_ = seconds * 1000 + 5;

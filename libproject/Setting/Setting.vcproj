@@ -128,16 +128,6 @@ copy .\calculagraph.h ..\..\include
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
 		</Filter>
 		<Filter
-			Name="Authorize"
-			Filter="">
-			<File
-				RelativePath=".\Authorize.cpp">
-			</File>
-			<File
-				RelativePath=".\Authorize.h">
-			</File>
-		</Filter>
-		<Filter
 			Name="public"
 			Filter="">
 			<File
@@ -146,6 +136,16 @@ copy .\calculagraph.h ..\..\include
 			<File
 				RelativePath=".\GlobalSetting.h">
 			</File>
+			<Filter
+				Name="Authorize"
+				Filter="">
+				<File
+					RelativePath=".\Authorize.cpp">
+				</File>
+				<File
+					RelativePath=".\Authorize.h">
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="setting"
