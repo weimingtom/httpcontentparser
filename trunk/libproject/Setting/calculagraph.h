@@ -38,8 +38,12 @@ public:
 	void initialize(int type) { setCurrentState(type);}
 
 	int  getCurrentState() const { return state_; }
+	int  getRemainTime() const { return (getCurrentTimespan() - getCurrentTimeEscape());}
 	void setTimespan(const DWORD seconds, const int type);
 	DWORD getTimespan(const int type) const;
+
+	// 强制改变状态
+	int  forceSwitch(int type);
 private:
 	void setCurrentState(const int type);
 	void  Reset(const int type);
@@ -53,6 +57,14 @@ private:
 template<int STATE_NUM>
 int MultiCalculagraph<STATE_NUM>::getNextState() {
 	return (state_ + 1) % STATE_NUM;
+}
+
+// 强制改变状态
+template<int STATE_NUM>
+int  MultiCalculagraph<STATE_NUM>::forceSwitch(int type) {
+	setCurrentState(type);
+	Reset(type);
+	return 0;
 }
 // 设置当前状态
 template<int STATE_NUM>
