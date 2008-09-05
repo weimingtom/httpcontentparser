@@ -6,7 +6,11 @@
 #include ".\fdutilitytest.h"
 #include ".\httppackettest.h"
 #include ".\DNSTEST.h"
+#include ".\httprequestpackettest.h"
+#include ".\strutilitytest.h"
 
+CPPUNIT_TEST_SUITE_REGISTRATION(StrUtilityTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(HttpRequestPacketTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(HTTPPacketTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(ProtocolPacketTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(FDUtilityTest);

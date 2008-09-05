@@ -127,6 +127,9 @@
 				RelativePath=".\HTTPPacketTest.cpp">
 			</File>
 			<File
+				RelativePath=".\HttpRequestPacketTest.cpp">
+			</File>
+			<File
 				RelativePath=".\ProtocolPacketTest.cpp">
 			</File>
 			<File
@@ -143,6 +146,9 @@
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="1"/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\StrUtilityTest.cpp">
 			</File>
 			<File
 				RelativePath=".\TestUtility.cpp">
@@ -162,10 +168,16 @@
 				RelativePath=".\HTTPPacketTest.h">
 			</File>
 			<File
+				RelativePath=".\HttpRequestPacketTest.h">
+			</File>
+			<File
 				RelativePath=".\ProtocolPacketTest.h">
 			</File>
 			<File
 				RelativePath=".\stdafx.h">
+			</File>
+			<File
+				RelativePath=".\StrUtilityTest.h">
 			</File>
 		</Filter>
 		<Filter
