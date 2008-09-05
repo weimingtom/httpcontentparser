@@ -12,6 +12,8 @@ void trim_left(TCHAR * str, const TCHAR* trimed);
 void trim_right(TCHAR * str, const TCHAR* trimed);
 void trim(TCHAR * str, const TCHAR* trimed);
 
+char *strnstr(char *src, char *des, const int len);
+
 
 // 使用token分割字符床，并将分割的字符串保存在vec当中
 // 调用此函数时，不能再使用strtok
