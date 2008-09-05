@@ -9,7 +9,7 @@ StrUtilityTest::StrUtilityTest(void) {
 StrUtilityTest::~StrUtilityTest(void) {
 }
 
-
+// 
 void StrUtilityTest::Teststrnstr() {
 	{
 	char *str1  = "bbba", *str2 = "a";
