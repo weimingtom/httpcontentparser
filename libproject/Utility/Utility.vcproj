@@ -39,12 +39,11 @@
 				Name="VCPostBuildEventTool"
 				CommandLine="copy .\Debug\utilityd.lib ..\..\lib
 copy .\Filemapping.h ..\..\include\utility
-copy .\settingstore.h ..\..\include\utility
 copy .\fd_set_utility.h ..\..\include\utility
 copy .\httppacket.h ..\..\include\utility
-copy .\httpcontentchecker.h ..\..\include\utility
 copy .\dns.h ..\..\include\utility
-"/>
+copy .\httprequestpacket.h ..\..\include\utility
+copy .\strutility.h ..\..\include\utility"/>
 			<Tool
 				Name="VCPreBuildEventTool"/>
 			<Tool

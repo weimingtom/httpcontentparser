@@ -36,6 +36,35 @@ void trim(TCHAR * str, TCHAR * trimed) {
 }
 
 
+char *strnstr(char *src, char *des, const int len) {
+	const int buf_size = 1024 * 24;
+	try {
+		if (buf_size > len + 1) {
+			char buffer[buf_size] = {0};
+			memcpy(buffer, src, len);
+			char *p =  strstr(buffer, des);
+
+			// 如果返回 NULL, 否则计算偏移量
+			if (p ==  NULL) return NULL;
+			else {
+				return (src + (p - buffer));
+			}
+		} else {
+			char * buffer = new char[len + 1];
+			memcpy(buffer, src, len);
+			char *p =  strstr(buffer, des);
+
+			// 如果返回 NULL, 否则计算偏移量
+			if (p ==  NULL) return NULL;
+			else {
+				return (src + (p - buffer));
+			}
+		}
+	} catch(...) {
+		return NULL;
+	}
+}
+
 //void splitstring_token(TCHAR *str, const TCHAR *seps,
 //				 std::vector<std::string> &vec, bool remove_spes) {
 //	char * token = _tcstok(str, seps);
