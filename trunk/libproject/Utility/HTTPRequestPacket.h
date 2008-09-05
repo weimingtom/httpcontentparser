@@ -9,12 +9,15 @@ public:
 	HTTPRequestPacket(void);
 	~HTTPRequestPacket(void);
 public:
-	int parsePacket(const char * buf, const int len);
+	int parsePacket(char * buf, const int len);
 
 	int getHost(char *buffer, const int len);
 	int getReferer(char *buffer, const int len);
 	int getUserAgent(char *buffer, const int len);
 private:
+
+	void reset();
+
 	char host_[HTTP_REQUEST_ITEM_MAX_LENGTH];
 	char referer_[HTTP_REQUEST_ITEM_MAX_LENGTH];
 	char useagent_[HTTP_REQUEST_ITEM_MAX_LENGTH];
