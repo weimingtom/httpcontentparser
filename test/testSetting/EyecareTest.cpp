@@ -114,7 +114,6 @@ void EyecareTest::TextForceSwitch() {
 	CPPUNIT_ASSERT (setting.getState() == EyecareSetting::EYECARE_TIME);
 	CPPUNIT_ASSERT (setting.trySwitch() == false);
 
-
 	//  π”√√‹¬Î Õ∑≈
 	CPPUNIT_ASSERT (setting.switchState("123") == EyecareSetting::ENTERTAINMENT_TIME);
 	Sleep(1000 * (restTime+1));
@@ -122,6 +121,5 @@ void EyecareTest::TextForceSwitch() {
 	CPPUNIT_ASSERT (setting.getState() == EyecareSetting::EYECARE_TIME);
 	Sleep(1000 * (entertain+1));
 	CPPUNIT_ASSERT (setting.trySwitch() == true);
-	CPPUNIT_ASSERT (setting.getState() == EyecareSetting::ENTERTAINMENT_TIME);
-	
+	CPPUNIT_ASSERT (setting.getState() == EyecareSetting::ENTERTAINMENT_TIME);	
 }
