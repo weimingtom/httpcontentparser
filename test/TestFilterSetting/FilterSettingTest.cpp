@@ -4,21 +4,21 @@
 #include <com\FilterSetting.h>
 #include <comdef.h>
 
-bool checkIP(const std::string &ipAddress) {
+bool checkDNS(const std::string &ipAddress) {
 	try {
 		CoInitialize(NULL);
 		_VARIANT_BOOL passed;
 
 		// create Instance
-		IGlobalChecker *globalChecker = NULL;
-		HRESULT hr = CoCreateInstance(CLSID_GlobalChecker, NULL, CLSCTX_LOCAL_SERVER, IID_IGlobalChecker, (LPVOID*)&globalChecker);
+		IDNSSetting *dnssetting = NULL;
+		HRESULT hr = CoCreateInstance(CLSID_DNSSetting, NULL, CLSCTX_LOCAL_SERVER, IID_IDNSSetting, (LPVOID*)&dnssetting);
 		if (FAILED(hr)) {
 			return FALSE;
 		}
 
 		VARIANT_BOOL enabled;
-		globalChecker->checkIP(_bstr_t(ipAddress.c_str()), &enabled);
-		globalChecker->Release();
+		dnssetting->checkDNS(_bstr_t(ipAddress.c_str()), &enabled);
+		dnssetting->Release();
 		CoUninitialize();
 
 		return enabled;
@@ -29,22 +29,24 @@ bool checkIP(const std::string &ipAddress) {
 
 void FilterSettingTest::addBlackDNS() {
 	CoInitialize(NULL);
-	IGlobalSetting *globalSetting = NULL;
-	HRESULT hr = CoCreateInstance(CLSID_GlobalSetting, NULL, CLSCTX_LOCAL_SERVER, IID_IGlobalSetting, (LPVOID*)&globalSetting);
+	IDNSSetting *dnssetting = NULL;
+	HRESULT hr = CoCreateInstance(CLSID_DNSSetting, NULL, CLSCTX_LOCAL_SERVER, IID_IDNSSetting, (LPVOID*)&dnssetting);
 	if (FAILED(hr)) {
 		CPPUNIT_ASSERT(false);
 	}
 
-	globalSetting->enableDNSCheck(true);
-	globalSetting->addBlackDNS(_bstr_t("www.sina.com"));
-	bool passed  = checkIP("71.5.7.191");
+		dnssetting->enableBlackDNSCheck(true);
+	dnssetting->enableWhiteDNSCheck(true);
+	dnssetting->addBlackDNS(_bstr_t("sina.com"));
+	bool passed  = checkDNS("sina.com");
 	CPPUNIT_ASSERT(passed == false);
 
-	globalSetting->enableDNSCheck(true);
-	passed  = checkIP("71.5.7.191");
+	dnssetting->enableBlackDNSCheck(true);
+	dnssetting->enableWhiteDNSCheck(true);
+	passed  = checkDNS("sina.com");
 	CPPUNIT_ASSERT(passed == false);
 
-	globalSetting->Release();
+	dnssetting->Release();
 	CoUninitialize();
 }
 
