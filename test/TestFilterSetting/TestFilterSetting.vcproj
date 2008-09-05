@@ -44,7 +44,8 @@
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
-				Name="VCPreBuildEventTool"/>
+				Name="VCPreBuildEventTool"
+				CommandLine="copy .\Debug\TestFilterSetting.exe ..\..\testoutput"/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
 			<Tool
