@@ -91,8 +91,7 @@ bool ImageChecker::check(HTTPPacket *packet) {
 
 //===============================
 // class HTMLChecker
-HTMLChecker::HTMLChecker(GlobalSetting *globalSetting) {
-	globalSetting_ = globalSetting;
+HTMLChecker::HTMLChecker() {
 }
 
 bool HTMLChecker::check(HTTPPacket *packet) {

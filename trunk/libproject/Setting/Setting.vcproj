@@ -38,12 +38,12 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				CommandLine="copy .\webhistoryrecordersetting.h ..\..\include
-copy .\globalsetting.h ..\..\include
 copy .\debug\settingd.lib ..\..\lib
 copy .\authorize.h ..\..\include
 copy .\eyecaresetting.h ..\..\include
 copy .\screensaver.h ..\..\include
 copy .\calculagraph.h ..\..\include
+copy .\DNSSetting.h ..\..\include
 "/>
 			<Tool
 				Name="VCPreBuildEventTool"/>
@@ -115,63 +115,11 @@ copy .\calculagraph.h ..\..\include
 			Name="源文件"
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
-			<File
-				RelativePath=".\DNSList.cpp">
-			</File>
-			<File
-				RelativePath=".\DNSList.h">
-			</File>
 		</Filter>
 		<Filter
 			Name="头文件"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
-		</Filter>
-		<Filter
-			Name="public"
-			Filter="">
-			<File
-				RelativePath=".\ContentCheck.h">
-			</File>
-			<File
-				RelativePath=".\GlobalSetting.h">
-			</File>
-			<Filter
-				Name="Authorize"
-				Filter="">
-				<File
-					RelativePath=".\Authorize.cpp">
-				</File>
-				<File
-					RelativePath=".\Authorize.h">
-				</File>
-			</Filter>
-		</Filter>
-		<Filter
-			Name="setting"
-			Filter="">
-			<File
-				RelativePath=".\GlobalSetting.cpp">
-			</File>
-			<File
-				RelativePath=".\ImageSetting.cpp">
-			</File>
-		</Filter>
-		<Filter
-			Name="checker"
-			Filter="">
-			<File
-				RelativePath=".\ContentCheck.cpp">
-			</File>
-			<File
-				RelativePath=".\DNSCheck.cpp">
-			</File>
-			<File
-				RelativePath=".\DNSCheck.h">
-			</File>
-			<File
-				RelativePath=".\ImageSetting.h">
-			</File>
 		</Filter>
 		<Filter
 			Name="EyecareSetting"
@@ -234,6 +182,26 @@ copy .\calculagraph.h ..\..\include
 			</File>
 			<File
 				RelativePath=".\WebHistoryRecorderSetting.h">
+			</File>
+		</Filter>
+		<Filter
+			Name="dnssetting"
+			Filter="">
+			<File
+				RelativePath=".\DNSSetting.cpp">
+			</File>
+			<File
+				RelativePath=".\DNSSetting.h">
+			</File>
+		</Filter>
+		<Filter
+			Name="Authorize"
+			Filter="">
+			<File
+				RelativePath=".\Authorize.cpp">
+			</File>
+			<File
+				RelativePath=".\Authorize.h">
 			</File>
 		</Filter>
 		<File
