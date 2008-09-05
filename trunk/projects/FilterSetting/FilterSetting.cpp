@@ -29,9 +29,15 @@ public :
 };
 
 CFilterSettingModule _AtlModule;
-ScreenSaver g_screenSaver;
-Authorize g_authorize;
-GlobalSetting global_setting_;
+
+// DNS Rules
+DNSSetting g_dnssetting;
+DNSList g_black_dns_list;
+DNSList g_white_dns_list;
+
+
+ScreenSaver g_screenSaver;			// 用于屏幕保存
+Authorize g_authorize;				// 用于验证密码
 EyecareSetting g_Eyecare_setting_;
 HINSTANCE g_hInstance;
 WebHistoryRecorderSetting g_webhistoryRecordSetting_;
@@ -41,9 +47,11 @@ extern "C" int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/
 {
 	g_hInstance = hInstance;
 
-	global_setting_.initialize();
+	g_dnssetting.initialize(&g_black_dns_list, &g_white_dns_list);
 
-	g_Eyecare_setting_.initialize(&g_authorize);
+	// 还应该在上
+	// TO DO
+	g_Eyecare_setting_.initialize(&g_authorize, EyecareSetting::ENTERTAINMENT_TIME);
 	
 	// 初始化屏幕记录
 	g_screenSaver.initialize();

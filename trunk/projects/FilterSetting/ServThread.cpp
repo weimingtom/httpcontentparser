@@ -112,9 +112,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 			return 0;
 
 		case WM_TIMER: 
+			// 自动保存屏幕
 			if (g_screenSaver.shouldSave()) {
 				SaveScreen(g_hInstance);
 			}
+
+			// 自动开启
 			break;
 		case WM_REGISTER_HOTKEY: 
 			// 如何进行错误处理

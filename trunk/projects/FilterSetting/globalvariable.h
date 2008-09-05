@@ -6,8 +6,12 @@
 #include <screensaver.h>
 #include <eyecaresetting.h>
 #include <webhistoryrecordersetting.h>
+#include <dnssetting.h>
 
-extern GlobalSetting global_setting_;
+extern DNSSetting g_dnssetting;
+extern DNSList g_black_dns_list;
+extern DNSList g_white_dns_list;
+
 extern Authorize g_authorize;
 extern ScreenSaver g_screenSaver;
 extern HINSTANCE g_hInstance;

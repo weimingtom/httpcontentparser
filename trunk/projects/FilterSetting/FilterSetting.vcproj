@@ -160,16 +160,10 @@ copy .\filtersetting.h ..\..\include\com
 				RelativePath=".\AppSetting.cpp">
 			</File>
 			<File
-				RelativePath=".\Authorize.cpp">
-			</File>
-			<File
 				RelativePath=".\FilterSetting.cpp">
 			</File>
 			<File
 				RelativePath=".\FilterSetting.idl">
-			</File>
-			<File
-				RelativePath=".\ScreenSave.cpp">
 			</File>
 			<File
 				RelativePath=".\stdafx.cpp">
@@ -186,9 +180,6 @@ copy .\filtersetting.h ..\..\include\com
 						UsePrecompiledHeader="1"/>
 				</FileConfiguration>
 			</File>
-			<File
-				RelativePath=".\WebHistoryRecorder.cpp">
-			</File>
 		</Filter>
 		<Filter
 			Name="Í·ÎÄ¼þ"
@@ -198,22 +189,13 @@ copy .\filtersetting.h ..\..\include\com
 				RelativePath=".\AppSetting.h">
 			</File>
 			<File
-				RelativePath=".\Authorize.h">
-			</File>
-			<File
 				RelativePath=".\globalvariable.h">
 			</File>
 			<File
 				RelativePath=".\Resource.h">
 			</File>
 			<File
-				RelativePath=".\ScreenSave.h">
-			</File>
-			<File
 				RelativePath=".\stdafx.h">
-			</File>
-			<File
-				RelativePath=".\WebHistoryRecorder.h">
 			</File>
 		</Filter>
 		<Filter
@@ -224,28 +206,10 @@ copy .\filtersetting.h ..\..\include\com
 				RelativePath=".\AppSetting.rgs">
 			</File>
 			<File
-				RelativePath=".\Authorize.rgs">
-			</File>
-			<File
-				RelativePath=".\Eyecare.rgs">
-			</File>
-			<File
 				RelativePath=".\FilterSetting.rc">
 			</File>
 			<File
 				RelativePath=".\FilterSetting.rgs">
-			</File>
-			<File
-				RelativePath=".\GlobalChecker.rgs">
-			</File>
-			<File
-				RelativePath=".\GlobalSetting.rgs">
-			</File>
-			<File
-				RelativePath=".\ScreenSave.rgs">
-			</File>
-			<File
-				RelativePath=".\WebHistoryRecorder.rgs">
 			</File>
 		</Filter>
 		<Filter
@@ -270,22 +234,6 @@ copy .\filtersetting.h ..\..\include\com
 		<Filter
 			Name="setting"
 			Filter="">
-			<File
-				RelativePath=".\GlobalSetting.cpp">
-			</File>
-			<File
-				RelativePath=".\GlobalSetting.h">
-			</File>
-		</Filter>
-		<Filter
-			Name="checker"
-			Filter="">
-			<File
-				RelativePath=".\GlobalChecker.cpp">
-			</File>
-			<File
-				RelativePath=".\GlobalChecker.h">
-			</File>
 		</Filter>
 		<Filter
 			Name="Eyecare"
@@ -295,6 +243,9 @@ copy .\filtersetting.h ..\..\include\com
 			</File>
 			<File
 				RelativePath=".\Eyecare.h">
+			</File>
+			<File
+				RelativePath=".\Eyecare.rgs">
 			</File>
 		</Filter>
 		<Filter
@@ -310,6 +261,54 @@ copy .\filtersetting.h ..\..\include\com
 		<Filter
 			Name="ScreenSaver"
 			Filter="">
+			<File
+				RelativePath=".\ScreenSave.cpp">
+			</File>
+			<File
+				RelativePath=".\ScreenSave.h">
+			</File>
+			<File
+				RelativePath=".\ScreenSave.rgs">
+			</File>
+		</Filter>
+		<Filter
+			Name="DNS"
+			Filter="">
+			<File
+				RelativePath=".\DNSSetting.cpp">
+			</File>
+			<File
+				RelativePath=".\DNSSetting.h">
+			</File>
+			<File
+				RelativePath=".\DNSSetting.rgs">
+			</File>
+		</Filter>
+		<Filter
+			Name="WebHistory"
+			Filter="">
+			<File
+				RelativePath=".\WebHistoryRecorder.cpp">
+			</File>
+			<File
+				RelativePath=".\WebHistoryRecorder.h">
+			</File>
+			<File
+				RelativePath=".\WebHistoryRecorder.rgs">
+			</File>
+		</Filter>
+		<Filter
+			Name="Authorize"
+			Filter="">
+			<File
+				RelativePath=".\Authorize.cpp">
+			</File>
+			<File
+				RelativePath=".\Authorize.h">
+			</File>
+			<File
+				RelativePath=".\Authorize.rgs">
+			</File>
 		</Filter>
 		<File
 			RelativePath=".\ReadMe.txt">

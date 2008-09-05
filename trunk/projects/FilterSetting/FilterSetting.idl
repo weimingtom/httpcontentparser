@@ -9,40 +9,6 @@ import "ocidl.idl";
 
 [
 	object,
-	uuid(FB959601-AD50-4C1C-B21D-3B33B65B1928),
-	dual,
-	nonextensible,
-	helpstring("IGlobalChecker Interface"),
-	pointer_default(unique)
-]
-interface IGlobalChecker : IDispatch {
-	[id(1), helpstring("method checkDNS")] HRESULT checkDNS([in] BSTR dns, [out,retval] VARIANT_BOOL* enabled);
-	[id(2), helpstring("method checkContent")] HRESULT checkContent([in] LONG type,
-		[in, size_is(Count)] CHAR Numbers[], LONG Count, [out,retval] VARIANT_BOOL* passed);
-	[id(3), helpstring("method  needCheck")] HRESULT needCheck([in] LONG type, [out,retval] VARIANT_BOOL* needed);
-	[id(4), helpstring("method checkImage")] HRESULT checkImage([in] LONG type, [out,retval] LONG* action_code);
-	[id(5), helpstring("Method checkIP")] HRESULT checkIP([in] BSTR ipAddress, [out,retval] VARIANT_BOOL* enabled);
-};
-
-[
-	object,
-	uuid(EDD97AF6-A82A-4AE8-8C9A-287A298566E2),
-	dual,
-	nonextensible,
-	helpstring("IGlobalSetting Interface"),
-	pointer_default(unique)
-]
-interface IGlobalSetting : IDispatch{
-	[id(1), helpstring("method addBlackDNS")] HRESULT addBlackDNS([in] BSTR dns);
-	[id(2), helpstring("method addWhiteDNS")] HRESULT addWhiteDNS([in] BSTR dns);
-	[id(3), helpstring("method enableDNSCheck")] HRESULT enableDNSCheck([in] VARIANT_BOOL enable);
-	[id(4), helpstring("method removeBlackDNS")] HRESULT removeBlackDNS([in] BSTR blackDNS);
-	[id(5), helpstring("method removeWhiteDNS")] HRESULT removeWhiteDNS([in] BSTR whiteDNS);
-	[id(6), helpstring("method enablePNFCheck")] HRESULT enableImageCheck([in] int type, [in] VARIANT_BOOL check);
-	[id(7), helpstring("method enableShowImage")] HRESULT enableShowImage([in] VARIANT_BOOL show);
-};
-[
-	object,
 	uuid(EB9690EC-B4C8-4693-929B-D45C98FD5894),
 	dual,
 	nonextensible,
@@ -124,6 +90,23 @@ interface IWebHistoryRecorder : IDispatch{
 	[propput, id(8), helpstring(" Ù–‘ recordAllWebsite")] HRESULT RecordAllWebsite([in] VARIANT_BOOL newVal);
 };
 [
+	object,
+	uuid(01B7967C-C4EF-4B1C-9815-B01567AD2D34),
+	dual,
+	nonextensible,
+	helpstring("IDNSSetting Interface"),
+	pointer_default(unique)
+]
+interface IDNSSetting : IDispatch{
+	[id(1), helpstring("method addBlackDNS")] HRESULT addBlackDNS([in] BSTR dns);
+	[id(2), helpstring("method addWhiteDNS")] HRESULT addWhiteDNS([in] BSTR dns);
+	[id(4), helpstring("method removeBlackDNS")] HRESULT removeBlackDNS([in] BSTR blackDNS);
+	[id(5), helpstring("method removeWhiteDNS")] HRESULT removeWhiteDNS([in] BSTR whiteDNS);
+	[id(10), helpstring("method enableWhiteDNSCheck")] HRESULT enableWhiteDNSCheck([in] VARIANT_BOOL enable);
+	[id(11), helpstring("method enableBlackDNSCheck")] HRESULT enableBlackDNSCheck([in] VARIANT_BOOL enable);
+	[id(12), helpstring("method checkDNS")] HRESULT checkDNS([in] BSTR dns_name, [out,retval] VARIANT_BOOL* passed);
+};
+[
 	uuid(42F932B5-F5CB-4F0D-8925-1B6BE5FECD1B),
 	version(1.0),
 	helpstring("FilterSetting 1.0 ClassLibrary")
@@ -131,22 +114,7 @@ interface IWebHistoryRecorder : IDispatch{
 
 library FilterSettingLib {
 	importlib("stdole2.tlb");
-	[
-		uuid(C07E6DDF-B837-4C01-9AF3-FCAC1F28D555),
-		helpstring("GlobalChecker Class")
-	]
 
-	coclass GlobalChecker {
-		[default] interface IGlobalChecker;
-	};
-	[
-		uuid(60B4C292-1B1F-46EF-8DA4-A01ED7FF4127),
-		helpstring("GlobalSetting Class")
-	]
-	coclass GlobalSetting
-	{
-		[default] interface IGlobalSetting;
-	};
 	[
 		uuid(20A0E336-ABED-456D-A000-E6B110A86F3B),
 		helpstring("Authorize Class")
@@ -186,5 +154,13 @@ library FilterSettingLib {
 	coclass WebHistoryRecorder
 	{
 		[default] interface IWebHistoryRecorder;
+	};
+	[
+		uuid(E6CE8506-DB48-4D91-96AD-851DAB87207C),
+		helpstring("DNSSetting Class")
+	]
+	coclass DNSSetting
+	{
+		[default] interface IDNSSetting;
 	};
 };
