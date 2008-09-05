@@ -44,7 +44,8 @@
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
-				Name="VCPreBuildEventTool"/>
+				Name="VCPreBuildEventTool"
+				CommandLine="copy .\Debug\testSetting..\..\testoutput\"/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
 			<Tool
