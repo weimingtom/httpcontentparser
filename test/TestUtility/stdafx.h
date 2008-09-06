@@ -15,6 +15,7 @@
 #include <cppunit\TestResultCollector.h>
 #include <cppunit\BriefTestProgressListener.h>
 #include <cppunit\CompilerOutputter.h> 
+#include <winsock2.h>
 #include <objbase.h>
 #include <windows.h>
 #include <comdef.h>
