@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "checkurl.h"
+#include "CheckUtility.h"
 #include "debug.h"
 
 #include <com\FilterSetting_i.c>
@@ -29,10 +29,6 @@ bool checkDNS(const char * dns_name) {
 		dnsSetting->checkDNS(_bstr_t(dns_name), &enabled);
 		dnsSetting->Release();
 		CoUninitialize(); 
-
-		char buffer[1024];
-		sprintf(buffer, "check dns %s %s", dns_name, enabled==true? "true" : "false");
-		OutputDebugString(buffer);
 
 		return enabled;
 	} catch (_com_error &) {
