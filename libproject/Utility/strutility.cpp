@@ -36,7 +36,7 @@ void trim(TCHAR * str, TCHAR * trimed) {
 }
 
 
-char *strnstr(char *src, char *des, const int len) {
+const char *strnstr(const char *src, const char *des, const int len) {
 	const int buf_size = 1024 * 24;
 	try {
 		if (buf_size > len + 1) {
@@ -64,6 +64,7 @@ char *strnstr(char *src, char *des, const int len) {
 		return NULL;
 	}
 }
+
 
 //void splitstring_token(TCHAR *str, const TCHAR *seps,
 //				 std::vector<std::string> &vec, bool remove_spes) {
