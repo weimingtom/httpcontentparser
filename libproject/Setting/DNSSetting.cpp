@@ -29,6 +29,11 @@ bool DNSSetting::initialize(DNSList *black_dns_list, DNSList *white_dns_list) {
 	return false;
 }
 
+int DNSSetting::fuzzeCheckDNS(const std::string &dns) {
+	assert (dns_check_ != NULL);
+	return dns_check_->fuzzeCheckDNS(dns);
+}
+
 // 检测DNS
 int DNSSetting::checkDNS(const std::string &dns){
 	assert ( dns_check_ != NULL);
@@ -94,6 +99,19 @@ DNSCheck::DNSCheck(void) {
 DNSCheck::~DNSCheck(void) {
 }
 
+int DNSCheck::fuzzeCheckDNS(const std::string &dns_name) {
+	assert(black_dns_list_ != NULL);
+	assert(white_dns_list_ != NULL);
+
+	if (true == white_dns_list_->fuzzeCheckDNS(dns_name)) {	// 如果在白名单中
+		return IN_WHITE_LIST;
+	} else if (true == black_dns_list_->fuzzeCheckDNS(dns_name)) {	// 如果在黑名单中
+		return IN_BLACK_LIST;
+	} else {	// 如果不在黑名单中
+		return NOT_SEPCIFIED;
+	}
+}
+
 int DNSCheck::checkDNS(const std::string &dns_name) {
 	assert(black_dns_list_ != NULL);
 	assert(white_dns_list_ != NULL);
@@ -137,6 +155,17 @@ bool DNSList::checkDNS(const std::string &dns_name) const {
 	}
 }
 
+// 查看dns_name是否有一个是包含它的
+bool DNSList::fuzzeCheckDNS(const std::string &dns_name) const {
+	DNS_SET::const_iterator iter = dns_set_.begin();
+	for (; iter != dns_set_.end(); ++iter) {
+		if (dns_name.find(*iter) != -1) {
+			return true;
+		}
+	}
+
+	return false;
+}
 
 //=====================================
 // 从DNS中移除
