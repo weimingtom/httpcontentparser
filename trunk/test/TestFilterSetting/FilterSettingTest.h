@@ -6,15 +6,16 @@
 class FilterSettingTest : public CPPUNIT_NS::TestFixture {
 public:
 	CPPUNIT_TEST_SUITE(FilterSettingTest);
-	CPPUNIT_TEST(addBlackDNS);
+	CPPUNIT_TEST(TestaddBlackDNS);
+	CPPUNIT_TEST(TestcheckDNS);
 	CPPUNIT_TEST_SUITE_END();
 public:
 	virtual void setUp();
 	virtual void tearDown();
 
 protected:
-	void addBlackDNS();
-
+	void TestcheckDNS();
+	void TestaddBlackDNS();
 public:
 	FilterSettingTest(void);
 	~FilterSettingTest(void);
