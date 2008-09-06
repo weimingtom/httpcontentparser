@@ -141,7 +141,7 @@ void CMainUIDlg::initDlgs() {
 	m_dlgHelp.Create(CDlgHelp::IDD, this);
 	m_dlgOnlineHour.Create(CDlgOnlineHour::IDD, this);
 	m_dlgSearchRule.Create(CDlgSearchRule::IDD, this);
-	m_dlgDnsRule.Create(CDlgDNSRule::IDD, this);
+	m_dlgDnsRule.Create(CDlgBlackDNSList::IDD, this);
 	m_dlgAbout.Create(CDlgAbout::IDD, this);
 	m_lev1Rules.Create(CLev1DlgRules::IDD, this);
 	m_dlgOptions.Create(CDlgOptions::IDD, this);

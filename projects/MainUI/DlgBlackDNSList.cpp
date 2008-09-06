@@ -3,24 +3,24 @@
 
 #include "stdafx.h"
 #include "MainUI.h"
-#include "DlgDNSRule.h"
-#include ".\dlgdnsrule.h"
+#include "DlgBlackDNSList.h"
+#include "DlgBlackDNSList.h"
 #include "ContentList.h"
 #include "globalvariable.h"
 
-// CDlgDNSRule 对话框
+// CDlgBlackDNSList 对话框
 
-IMPLEMENT_DYNAMIC(CDlgDNSRule, CDialog)
-CDlgDNSRule::CDlgDNSRule(CWnd* pParent /*=NULL*/)
-	: CBaseDlg(CDlgDNSRule::IDD, pParent)
+IMPLEMENT_DYNAMIC(CDlgBlackDNSList, CDialog)
+CDlgBlackDNSList::CDlgBlackDNSList(CWnd* pParent /*=NULL*/)
+	: CBaseDlg(CDlgBlackDNSList::IDD, pParent)
 {
 }
 
-CDlgDNSRule::~CDlgDNSRule()
+CDlgBlackDNSList::~CDlgBlackDNSList()
 {
 }
 
-void CDlgDNSRule::OnApply() {
+void CDlgBlackDNSList::OnApply() {
 	rules.OnApply();
 
 	// DNS CHECK是否可用
@@ -28,13 +28,13 @@ void CDlgDNSRule::OnApply() {
 	g_dnssetting->enableBlackDNSCheck((m_chkEnableDNS.GetCheck() == BST_CHECKED));
 }
 
-void CDlgDNSRule::OnShow() {
+void CDlgBlackDNSList::OnShow() {
 	ListBox.SetFocus();
 	ListBox.ShowWindow(SW_SHOW);
 	ListBox.UpdateWindow();
 }
 
-void CDlgDNSRule::DoDataExchange(CDataExchange* pDX)
+void CDlgBlackDNSList::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_DNS_LIST, ListBox);
@@ -42,13 +42,13 @@ void CDlgDNSRule::DoDataExchange(CDataExchange* pDX)
 }
 
 
-BEGIN_MESSAGE_MAP(CDlgDNSRule, CDialog)
+BEGIN_MESSAGE_MAP(CDlgBlackDNSList, CDialog)
 END_MESSAGE_MAP()
 
 
-// CDlgDNSRule 消息处理程序
+// CDlgBlackDNSList 消息处理程序
 
-BOOL CDlgDNSRule::OnInitDialog()
+BOOL CDlgBlackDNSList::OnInitDialog()
 {
 	CBaseDlg::OnInitDialog();
 	ListBox.setOnTextChanged(&rules);

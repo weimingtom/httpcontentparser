@@ -195,10 +195,10 @@
 				RelativePath=".\DlgAbout.h">
 			</File>
 			<File
-				RelativePath=".\DlgDNSRule.cpp">
+				RelativePath=".\DlgBlackDNSList.cpp">
 			</File>
 			<File
-				RelativePath=".\DlgDNSRule.h">
+				RelativePath=".\DlgBlackDNSList.h">
 			</File>
 			<File
 				RelativePath=".\DlgEyecare.cpp">
