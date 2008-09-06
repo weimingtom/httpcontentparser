@@ -42,10 +42,10 @@
 			<Tool
 				Name="VCMIDLTool"/>
 			<Tool
-				Name="VCPostBuildEventTool"/>
-			<Tool
-				Name="VCPreBuildEventTool"
+				Name="VCPostBuildEventTool"
 				CommandLine="copy .\Debug\TestSetting.exe ..\..\testoutput"/>
+			<Tool
+				Name="VCPreBuildEventTool"/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
 			<Tool

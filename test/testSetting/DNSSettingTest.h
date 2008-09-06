@@ -13,9 +13,11 @@ public:
 public:
 	CPPUNIT_TEST_SUITE(DNSSettingTest);
 	CPPUNIT_TEST(testCheck);
+	CPPUNIT_TEST(testFuzzeCheck);
 	CPPUNIT_TEST_SUITE_END();
 protected:
 	void testCheck();
+	void testFuzzeCheck();
 };
 
 #endif  // _TEST_SETTING_DNSSETTINGTEST_H__
