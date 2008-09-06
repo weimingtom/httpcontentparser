@@ -196,13 +196,13 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="checkrules"
+			Name="checker"
 			Filter="">
 			<File
-				RelativePath=".\checkURL.cpp">
+				RelativePath=".\CheckUtility.cpp">
 			</File>
 			<File
-				RelativePath=".\checkURL.h">
+				RelativePath=".\CheckUtility.h">
 			</File>
 		</Filter>
 		<Filter
