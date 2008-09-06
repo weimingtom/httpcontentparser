@@ -30,6 +30,7 @@ private:
 	const static char * HTTP_REQUEST_HOST;
 	const static char * HTTP_REQUEST_REFERER;
 	const static char * HTTP_REQUEST_OPER_GET;
+	const static char * HTTP_REQUEST_OPER_POST;
 	const static char * HTTP_REQUEST_USER_AGENT;		// ´ú±íä¯ÀÀÆ÷
 };
 

@@ -7,6 +7,7 @@ const char * HTTPRequestPacket::HTTP_REQUEST_HOST = "Host: ";
 const char * HTTPRequestPacket::HTTP_REQUEST_REFERER = "Referer: ";
 const char * HTTPRequestPacket::HTTP_REQUEST_USER_AGENT = "User-Agent: ";
 const char * HTTPRequestPacket::HTTP_REQUEST_OPER_GET = "GET";
+const char * HTTPRequestPacket::HTTP_REQUEST_OPER_POST = "POST";
 
 
 //===============================================
@@ -38,7 +39,6 @@ void HTTPRequestPacket::reset() {
 // 专门针对
 int HTTPRequestPacket::parsePacket(WSABUF * wsabuf, const int count) {
 	char buffer[HTTP_REQUEST_PACKET_MAX] = {0};
-	
 	int cur = 0;
 	for (int i = 0; i < count ; ++i) {
 		memcpy(&(buffer[cur]), wsabuf[i].buf, wsabuf[i].len);
@@ -51,7 +51,7 @@ int HTTPRequestPacket::parsePacket(WSABUF * wsabuf, const int count) {
 int HTTPRequestPacket::parsePacket(char * buf, const int len) {
 	using namespace strutility;
 
-	const char * HTTP_REQUEST_NEW_LINE = "\r\r\n";
+	const char * HTTP_REQUEST_NEW_LINE = "\r\n";
 	const int  HTTP_REQUEST_NEW_LINE_LENGTH = strlen(HTTP_REQUEST_NEW_LINE);
 	//reset buffer
 	reset();
@@ -59,7 +59,6 @@ int HTTPRequestPacket::parsePacket(char * buf, const int len) {
 	int cnt = 0;
 	const char *p = buf;
 	const char *next = strnstr(p, HTTP_REQUEST_NEW_LINE, HTTP_REQUEST_ITEM_MAX_LENGTH);
-
 
 	// 注意p-buf < len, 保证等整个处理完之后，及时退出
 	while (next != NULL) {
@@ -77,6 +76,8 @@ int HTTPRequestPacket::parsePacket(char * buf, const int len) {
 		} else if (strstr(p, HTTP_REQUEST_USER_AGENT) == p) {
 			const int tab_length = strlen(HTTP_REQUEST_USER_AGENT);
 			strncpy(useagent_, p + tab_length, getWrittenCount(next-p-tab_length));
+			cnt++;
+		} else if (strstr(p, HTTP_REQUEST_OPER_POST) == p) {
 			cnt++;
 		} else {
 		}
