@@ -35,43 +35,11 @@ bool ContentFilter::checkHTTPContent(HTTPPacket *packet) {
 }
 
 bool ContentFilter::needCheck(const int type) {
-	try {
-		AutoInitInScale com_init();
-		IGlobalChecker * checker;
-		HRESULT hr = CoCreateInstance(CLSID_GlobalChecker,
-			NULL, CLSCTX_LOCAL_SERVER, IID_IGlobalChecker, (LPVOID*)&checker);
-		if (FAILED(hr)) {
-			// 如果创建失败，所有的程序都需要被检查， 并且所有的包都将被丢弃
-			return true;
-		}
-		
-		VARIANT_BOOL needed;
-		hr = checker->needCheck(type, &needed);
-		return needed;
-	} catch (_com_error &e) {
-		return false;
-	}
 	return false;
 }
 
 // private member
 bool ContentFilter::checkText(const int type, char * buf, const int len) {
-	try {
-		AutoInitInScale com_init();
-		IGlobalChecker * checker;
-		HRESULT hr = CoCreateInstance(CLSID_GlobalChecker,
-			NULL, CLSCTX_LOCAL_SERVER, IID_IGlobalChecker, (LPVOID*)&checker);
-		if (FAILED(hr)) {
-			// 如果创建失败，所有的程序都需要被检查， 并且所有的包都将被丢弃
-			return true;
-		}
-		
-		VARIANT_BOOL needed;
-		hr = checker->checkContent(type, buf, len, &needed);
-		return needed;
-	} catch (_com_error &e) {
-		return false;
-	}
 	return false;
 }
 
