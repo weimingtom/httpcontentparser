@@ -1,9 +1,17 @@
+// file : DNSSetting.h
+// 这个文件包含三个类， 他们是DNSList, DNSCheck DNSSetting
+// DNSList 负责保存DNS的列表
+// DNSCheck 提供了黑白名单查询的支持
+// DNSSetting 则使用Bridge的方式，对提供的DNS的check服务
+
 #ifndef _SETTING_DNSSETTING_CHECKER_H__
 #define _SETTING_DNSSETTING_CHECKER_H__
 
 #include <set>
 #include <map>
 #include <string>
+
+// 目前我们使用的机制有些适应性不高，我们需要增加cache机制。
 
 
 class DNSList {
@@ -13,6 +21,7 @@ public:
 
 public:
 	bool checkDNS(const std::string &dns_name) const;
+	bool fuzzeCheckDNS(const std::string &dns_name) const;
 
 	// 添加删除DNS
 	void addDNS(const std::string &dns_name);
@@ -37,6 +46,7 @@ public:
 		NOT_SEPCIFIED
 	};
 
+	int fuzzeCheckDNS(const std::string &dns_name);
 	int checkDNS(const std::string &dns_name);
 	void enableBlackDNSCheck(const bool checked);
 	void enableWhiteDNSCheck(const bool checked);
@@ -60,6 +70,7 @@ public:
 
 	// 对DNS的CHECK
 	int checkDNS(const std::string &dns);
+	int fuzzeCheckDNS(const std::string &dns);
 
 	void enableWhiteDNSCheck(const bool checked);
 	void enableBlackDNSCheck(const bool checked);
@@ -68,7 +79,6 @@ public:
 	bool addWhiteDNS(const std::string &dns);
 	bool removeBlackDNS(const std::string &dns_name);
 	bool removeWhiteDNS(const std::string &dns_name);
-
 private:
 	DNSCheck	* dns_check_;
 	DNSList		* black_dns_list_;
