@@ -34,6 +34,7 @@
 #define IDD_DLG_IMAGERULES              132
 #define IDD_DLG_ONLINE_RULE             133
 #define IDD_DLG_DNS_RULE                134
+#define IDD_DLG_DNS_BLACKLIST           134
 #define IDD_DLG_SEARCH_RULE             135
 #define IDD_DLG_CONTENT                 136
 #define IDD_DLG_BLACKWORD               137

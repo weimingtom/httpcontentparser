@@ -5,7 +5,7 @@
 #include "MainUI.h"
 #include "DlgWhiteDNSList.h"
 #include ".\dlgwhitednslist.h"
-
+#include "globalvariable.h"
 
 // CDlgWhiteDNSList ¶Ô»°¿ò
 
@@ -27,7 +27,11 @@ void CDlgWhiteDNSList::DoDataExchange(CDataExchange* pDX)
 }
 
 void CDlgWhiteDNSList::OnApply() {
+	rules.OnApply();
+	ASSERT(g_dnssetting != NULL);
+	g_dnssetting->enableWhiteDNSCheck((m_chkWhiteDNSList.GetCheck() == BST_CHECKED));
 }
+
 void CDlgWhiteDNSList::OnShow() {
 	ListBox.SetFocus();
 	ListBox.ShowWindow(SW_SHOW);

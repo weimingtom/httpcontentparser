@@ -7,15 +7,15 @@
 #include <Guilib1.5\GuiCheckBox.h>
 #include "afxwin.h"
 
-// CDlgDNSRule 对话框
+// CDlgBlackDNSList 对话框
 
-class CDlgDNSRule : public CBaseDlg
+class CDlgBlackDNSList : public CBaseDlg
 {
-	DECLARE_DYNAMIC(CDlgDNSRule)
+	DECLARE_DYNAMIC(CDlgBlackDNSList)
 
 public:
-	CDlgDNSRule(CWnd* pParent = NULL);   // 标准构造函数
-	virtual ~CDlgDNSRule();
+	CDlgBlackDNSList(CWnd* pParent = NULL);   // 标准构造函数
+	virtual ~CDlgBlackDNSList();
 
 // 对话框数据
 	enum { IDD = IDD_DLG_DNS_RULE };
