@@ -242,6 +242,7 @@ int FixContent::addBuffer(const char *buf, const int len) {
 		//OutputDebugString("no length designate..........");
 		//finished_ = true;
 		//return data_->write(buf, len);
+		return 0;
 	}
 }
 

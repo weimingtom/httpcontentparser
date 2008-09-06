@@ -2,6 +2,7 @@
 #define _UTILITY_HTTP_REQUEST_PACKET_H__
 
 #define HTTP_REQUEST_ITEM_MAX_LENGTH 1024
+#define HTTP_REQUEST_PACKET_MAX		 (1024 * 64)
 
 // 解析HTTP请求的头部
 class HTTPRequestPacket {
@@ -10,12 +11,12 @@ public:
 	~HTTPRequestPacket(void);
 public:
 	int parsePacket(char * buf, const int len);
+	int parsePacket(WSABUF * buf, const int count);
 
 	int getHost(char *buffer, const int len);
 	int getReferer(char *buffer, const int len);
 	int getUserAgent(char *buffer, const int len);
 private:
-
 	void reset();
 
 	char host_[HTTP_REQUEST_ITEM_MAX_LENGTH];

@@ -35,19 +35,34 @@ void HTTPRequestPacket::reset() {
 	memset(useagent_, 0, sizeof(useagent_));
 }
 
+// 专门针对
+int HTTPRequestPacket::parsePacket(WSABUF * wsabuf, const int count) {
+	char buffer[HTTP_REQUEST_PACKET_MAX] = {0};
+	
+	int cur = 0;
+	for (int i = 0; i < count ; ++i) {
+		memcpy(&(buffer[cur]), wsabuf[i].buf, wsabuf[i].len);
+		cur += wsabuf[i].len;
+	}
+
+	return parsePacket(buffer, cur);
+}
+
 int HTTPRequestPacket::parsePacket(char * buf, const int len) {
 	using namespace strutility;
 
+	const char * HTTP_REQUEST_NEW_LINE = "\r\r\n";
+	const int  HTTP_REQUEST_NEW_LINE_LENGTH = strlen(HTTP_REQUEST_NEW_LINE);
 	//reset buffer
 	reset();
 
 	int cnt = 0;
-	char *p = buf;
-	char *next = strnstr(p, "\r\n", HTTP_REQUEST_ITEM_MAX_LENGTH);
+	const char *p = buf;
+	const char *next = strnstr(p, HTTP_REQUEST_NEW_LINE, HTTP_REQUEST_ITEM_MAX_LENGTH);
 
 
 	// 注意p-buf < len, 保证等整个处理完之后，及时退出
-	while (NULL != p && p - buf < len) {
+	while (next != NULL) {
 		if (strstr(p, HTTP_REQUEST_HOST) == p) {
 			const int tab_length = strlen(HTTP_REQUEST_HOST);
 			strncpy(host_, p + tab_length, getWrittenCount(next-p-tab_length));
@@ -66,9 +81,9 @@ int HTTPRequestPacket::parsePacket(char * buf, const int len) {
 		} else {
 		}
 		
-		next += 2; // 移动两个位置
+		next += HTTP_REQUEST_NEW_LINE_LENGTH; // 移动两个位置
 		p = next;
-		next = strnstr(p, "\r\n", HTTP_REQUEST_ITEM_MAX_LENGTH);
+		next = strnstr(p, HTTP_REQUEST_NEW_LINE, HTTP_REQUEST_ITEM_MAX_LENGTH);
 	}
 
 	return cnt;
