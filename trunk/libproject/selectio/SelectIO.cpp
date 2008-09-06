@@ -66,7 +66,6 @@ void CSelectIO::setRecv(MYWSPRECV *recv) {
 // 如果给定的SOCKET 不能处理则返回1 
 int CSelectIO::prerecv(SOCKET s, LPWSABUF lpBuffers, 
 					   DWORD dwBufferCount, DWORD *recv_bytes) {
-						   OutputDebugString("prerecv");
     using namespace yanglei_utility;
 	SingleLock<CAutoCreateCS> lock(&cs_);
 
@@ -99,9 +98,9 @@ int CSelectIO::prerecv(SOCKET s, LPWSABUF lpBuffers,
 		removeCompletedPacket(s, packet);
 	}
 
-	char data[1024];
-	sprintf(data, "totalbuf size: %d", TotalbufferSize);
-	OutputDebugString(data);
+	//char data[1024];
+	//sprintf(data, "totalbuf size: %d", TotalbufferSize);
+	//OutputDebugString(data);
 
 	// 所有包都已经发送
 	for (int i = 0; i < dwBufferCount; ++i) {
@@ -226,9 +225,9 @@ int CSelectIO::graspData(const SOCKET s, char *buf, const int len) {
 		bool completed_generated = false; 
 		int total_size = 0; 
 
-		char buffer[1024];
-		sprintf(buffer, "grasp Data socket %d", s);
-		OutputDebugString(buffer);
+		//char buffer[1024];
+		//sprintf(buffer, "grasp Data socket %d", s);
+		//OutputDebugString(buffer);
 
 		HTTPPacket* sock_data  = getSOCKETPacket(s);
 		assert( sock_data != NULL);
@@ -247,9 +246,9 @@ int CSelectIO::graspData(const SOCKET s, char *buf, const int len) {
 			completed_generated = true;
 
 			// 将所有接受
-			char buffer[1024];			
-			sprintf(buffer, "%d finished with 0 tail", sock_data->getCode());
-			OutputDebugString(buffer);
+			//char buffer[1024];			
+			//sprintf(buffer, "%d finished with 0 tail", sock_data->getCode());
+			//OutputDebugString(buffer);
 
 			//sprintf(buffer, "E:\\workspace\\debuglog\\0recv%d.log", s);
 			//sock_data->achieve(buffer);
@@ -271,9 +270,9 @@ int CSelectIO::graspData(const SOCKET s, char *buf, const int len) {
 					completed_generated = true;
 
 					// achieve
-					char buffer[200];
-					sprintf(buffer, "%d finished=", sock_data->getCode());
-					OutputDebugString(buffer);
+					//char buffer[200];
+					//sprintf(buffer, "%d finished=", sock_data->getCode());
+					//OutputDebugString(buffer);
 
 					// 如果在这里移除了， 学要新增加一个包
 					// 如果不加这个条件或者改成<=, 那么当一个HTTP包后面紧跟着一个非HTTP包时，会出现错误
@@ -406,7 +405,7 @@ int CSelectIO::removeCompletedPacket(const SOCKET s, HTTPPacket *p) {
 	using namespace yanglei_utility;
 	SingleLock<CAutoCreateCS> lock(&cs_);
 
-	OutputDebugString("remove complete socket");
+	// OutputDebugString("remove complete socket");
 	COMPLETED_PACKETS::iterator iter = completed_packets_.begin();
 	COMPLETED_PACKETS::const_iterator iterEnd = completed_packets_.end();
 	for (; iter != iterEnd; ++iter) {
@@ -426,9 +425,9 @@ HTTPPacket * CSelectIO::getCompletedPacket(const SOCKET s) {
 	if (completed_packets_.end() == iter) {
 		return NULL;
 	} else {
-		char buffer[1024];
-		sprintf(buffer, "== get socket complete : %d, code : %d", s, iter->second->getCode());
-		OutputDebugString(buffer);
+		//char buffer[1024];
+		//sprintf(buffer, "== get socket complete : %d, code : %d", s, iter->second->getCode());
+		//OutputDebugString(buffer);
 		return iter->second;
 	}
 }
@@ -461,9 +460,9 @@ int CSelectIO::removePacket(const SOCKET s, HTTPPacket *p) {
 	SOCK_DATA_MAP::const_iterator iterEnd = _sockets_map_.upper_bound(s);
 	for (; iter != iterEnd; ++iter) {
 		if (iter->second->getCode() == p->getCode()) {
-			char buffer[1024];
-			sprintf(buffer, "== remove socket : %d, code : %d", s, p->getCode());
-			OutputDebugString(buffer);
+			//char buffer[1024];
+			//sprintf(buffer, "== remove socket : %d, code : %d", s, p->getCode());
+			//OutputDebugString(buffer);
 
 			assert(s == iter->first);
 			_sockets_map_.erase(iter);
