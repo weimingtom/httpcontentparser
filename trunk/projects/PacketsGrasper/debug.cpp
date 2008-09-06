@@ -269,7 +269,7 @@ void DumpBuf(WSABUF *buf, const int count, const std::string &filename) {
 	try {
 		// 打开文件
 		fstream out;
-		out.open(filename.c_str(), std::ios::out | std::ios::app);
+		out.open(filename.c_str(), std::ios::out | std::ios::app | std::ios::binary);
 
 		// 写入缓冲区
 		assert (buf != NULL);
@@ -292,7 +292,7 @@ void DumpToFile(const char * buf, const int len, const std::string &filename) {
 
 	try {
 		fstream out;
-		out.open(filename.c_str(), std::ios::out | std::ios::app);
+		out.open(filename.c_str(), std::ios::out | std::ios::app | std::ios::binary);
 		out.write(buf, len);
 		out.clear();
 	} catch(exception&) {
