@@ -7,7 +7,7 @@
 #include "globalvariable.h"
 #include ".\mainui.h"
 
-IGlobalSetting *g_globalSetting = NULL;
+IDNSSetting *g_dnssetting = NULL;
 
 
 #ifdef _DEBUG
@@ -41,7 +41,7 @@ CMainUIApp theApp;
 BOOL CMainUIApp::InitInstance()
 {
 	CoInitialize(NULL);
-	HRESULT hr = CoCreateInstance(CLSID_GlobalSetting, NULL, CLSCTX_LOCAL_SERVER, IID_IGlobalSetting, (LPVOID*)&g_globalSetting);
+	HRESULT hr = CoCreateInstance(CLSID_DNSSetting, NULL, CLSCTX_LOCAL_SERVER, IID_IDNSSetting, (LPVOID*)&g_dnssetting);
 	if (FAILED(hr)) {
 		AfxMessageBox("初始化系统服务失败..");
 		return FALSE;

@@ -24,8 +24,8 @@ void CDlgDNSRule::OnApply() {
 	rules.OnApply();
 
 	// DNS CHECKÊÇ·ñ¿ÉÓÃ
-	ASSERT(g_globalSetting != NULL);
-	g_globalSetting->enableDNSCheck((m_chkEnableDNS.GetCheck() == BST_CHECKED));
+	ASSERT(g_dnssetting != NULL);
+	g_dnssetting->enableBlackDNSCheck((m_chkEnableDNS.GetCheck() == BST_CHECKED));
 }
 
 void CDlgDNSRule::OnShow() {

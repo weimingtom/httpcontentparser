@@ -79,7 +79,7 @@ void RulesList::OnApply() {
 		TRACE("remove ");
 		TRACE(iterDel->c_str());
 		TRACE("\n");
-		g_globalSetting->removeBlackDNS(_bstr_t(iterDel->c_str()));
+		g_dnssetting->removeBlackDNS(_bstr_t(iterDel->c_str()));
 	}
 	removedDNS.clear();
 
@@ -88,7 +88,7 @@ void RulesList::OnApply() {
 		TRACE("Add ");
 		TRACE(iterAdd->c_str());
 		TRACE("\n");
-		g_globalSetting->addBlackDNS(_bstr_t(iterAdd->c_str()));
+		g_dnssetting->addBlackDNS(_bstr_t(iterAdd->c_str()));
 	}
 	addedDNS.clear();
 }

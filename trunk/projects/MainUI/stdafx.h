@@ -42,7 +42,15 @@
 #endif // _AFX_NO_AFXCMN_SUPPORT
 
 
-#pragma comment(lib, "GuiTk115d.lib")
+
 #include <Guilib1.5\Guilib.h>
 #include <afxdhtml.h>
+
+#ifdef _DEBUG
+#pragma comment(lib, "sysutilityd.lib")
+#pragma comment(lib, "GuiTk115d.lib")
+#else
+#pragma comment(lib, "sysutility.lib")
+#pragma comment(lib, "GuiTk115.lib")
+#endif 
 

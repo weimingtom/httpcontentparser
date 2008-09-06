@@ -20,8 +20,8 @@ CDlgSearchRule::~CDlgSearchRule()
 
 void CDlgSearchRule::OnApply() {
 	// DNS CHECKÊÇ·ñ¿ÉÓÃ
-	ASSERT(g_globalSetting != NULL);
-	g_globalSetting->enableDNSCheck((m_chkEnableSearchChk.GetCheck() == BST_CHECKED));
+//	ASSERT(g_globalSetting != NULL);
+// 	g_dnssetting->enableDNSCheck((m_chkEnableSearchChk.GetCheck() == BST_CHECKED));
 }
 
 void CDlgSearchRule::OnShow() {

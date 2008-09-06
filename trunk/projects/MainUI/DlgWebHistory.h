@@ -26,11 +26,25 @@ protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV Ö§³Ö
 
 	DECLARE_MESSAGE_MAP()
+
+	void ChangeRecordType();
 public:
-	CButton m_btnExportWebSiteList;
-	CButton m_btnViewtheHistory;
-	CButton m_btnClearCache;
+	afx_msg void OnBnClickedBunClearCache();
+	virtual BOOL OnInitDialog();
+	afx_msg void OnBnClickedBtnExportWebsites();
+
+	CGuiButton m_btnExportWebSiteList;
+	CGuiButton m_btnViewtheHistory;
+	CGuiButton m_btnClearCache;
 	CGuiGroupBox m_staTools;
 	CGuiGroupBox m_staHistory;
 	CGuiGroupBox m_staTypes;
+
+	// constrols
+	BOOL m_bPornImage;
+	BOOL m_bPornPage;
+	BOOL m_bPornWebsite;
+	BOOL m_bAllImage;
+	BOOL m_bAllPages;
+	BOOL m_bAllWebsite;
 };

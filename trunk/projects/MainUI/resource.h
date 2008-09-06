@@ -23,6 +23,11 @@
 #define IDS_TREE_LEV1_TOOLS             111
 #define IDS_TREE_SCREEN_SAVE            112
 #define IDS_TREE_WEB_HISTORY            113
+#define IDS_WEB_HISTORY_CLEAR           114
+#define IDS_WEB_HISTORY_VIEW_HISTORY    115
+#define IDS_WEB_HISTORY_EXPORT_WEBSITE_LIST 116
+#define IDS_WEB_HISTORY_FILEDLG_DEFAULT 117
+#define IDS_WEB_HISTORY_FILEDLG_EXT     118
 #define IDR_MAINFRAME                   128
 #define IDD_DLG_HELP                    129
 #define IDD_DLG_ABOUT                   130
