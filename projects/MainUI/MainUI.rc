@@ -319,9 +319,9 @@ STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
     GROUPBOX        "Types",IDC_STA_TYPES,7,7,236,75
-    CONTROL         "Save porn Image",IDC_CHK_PRON_IMAGE,"Button",
+    CONTROL         "Save Porn Image",IDC_CHK_PRON_IMAGE,"Button",
                     BS_AUTOCHECKBOX | WS_TABSTOP,17,23,88,10
-    CONTROL         "Save porn Web Page",IDC_CHK_PORN_PAGE,"Button",
+    CONTROL         "Save Porn Web Page",IDC_CHK_PORN_PAGE,"Button",
                     BS_AUTOCHECKBOX | WS_TABSTOP,17,43,88,10
     CONTROL         "Save Porn Website",IDC_CHK_PORN_WEBSITES,"Button",
                     BS_AUTOCHECKBOX | WS_TABSTOP,17,64,88,10
@@ -331,14 +331,14 @@ BEGIN
                     BS_AUTOCHECKBOX | WS_TABSTOP,132,43,88,10
     CONTROL         "Save All website",IDC_CHK_ALLWEBSITES,"Button",
                     BS_AUTOCHECKBOX | WS_TABSTOP,132,64,88,10
-    PUSHBUTTON      "Clear",IDC_BUN_CLEAR_CACHE,179,109,50,14
-    PUSHBUTTON      "View the History",IDC_BTN_HISTORY,139,165,81,14
+    PUSHBUTTON      "Clear",IDC_BUN_CLEAR_CACHE,180,109,50,14
+    PUSHBUTTON      "View the History",IDC_BTN_HISTORY,124,164,92,14
     GROUPBOX        "History",IDC_STA_HISTORY,7,90,236,47
     CONTROL         "",IDC_SLIDER1,"msctls_trackbar32",TBS_BOTH | 
-                    TBS_NOTICKS | WS_TABSTOP,77,109,100,15
+                    TBS_NOTICKS | WS_TABSTOP,61,109,109,15
     GROUPBOX        "Tools",IDC_STA_TOOLS,7,146,236,47
-    LTEXT           "Auto Clear",IDC_STATIC,27,112,35,8
-    PUSHBUTTON      "Export Website List",IDC_BTN_EXPORT_WEBSITES,41,164,76,
+    LTEXT           "Auto Clear",IDC_STATIC,17,112,35,8
+    PUSHBUTTON      "Export Website List",IDC_BTN_EXPORT_WEBSITES,23,164,85,
                     14
 END
 
@@ -756,6 +756,12 @@ STRINGTABLE
 BEGIN
     IDS_TREE_SCREEN_SAVE    "Screen"
     IDS_TREE_WEB_HISTORY    "Web History"
+    IDS_WEB_HISTORY_CLEAR   "Clear"
+    IDS_WEB_HISTORY_VIEW_HISTORY "View the Website History"
+    IDS_WEB_HISTORY_EXPORT_WEBSITE_LIST "Export the website List"
+    IDS_WEB_HISTORY_FILEDLG_DEFAULT "Websites"
+    IDS_WEB_HISTORY_FILEDLG_EXT 
+                            "TXT files (*.txt)|*.txt|All Files (*.*)|*.*||"
 END
 
 #endif    // Ó¢Óï(ÃÀ¹ú) resources
