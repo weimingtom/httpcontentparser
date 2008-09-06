@@ -1,36 +1,61 @@
 #include "stdafx.h"
 #include "checkurl.h"
+#include "debug.h"
 
 #include <com\FilterSetting_i.c>
 #include <com\FilterSetting.h>
+#include <utility\httprequestpacket.h>
 #include <string>
 #include <comdef.h>
 using namespace std;
 
-bool checkIP(const std::string &ipAddress) {
+#define DEFINE_FILE "c:\\dump.log"
+
+bool checkDNS(const char * dns_name) {
 	try {
 		CoInitialize(NULL);
 		_VARIANT_BOOL passed;
 
 		// create Instance
-		IGlobalChecker *globalChecker = NULL;
-		HRESULT hr = CoCreateInstance(CLSID_GlobalChecker, NULL, CLSCTX_LOCAL_SERVER, IID_IGlobalChecker, (LPVOID*)&globalChecker);
+		IDNSSetting *dnsSetting = NULL;
+		HRESULT hr = CoCreateInstance(CLSID_DNSSetting, NULL, CLSCTX_LOCAL_SERVER, IID_IDNSSetting, (LPVOID*)&dnsSetting);
 		if (FAILED(hr)) {
 			AfxMessageBox("初始化系统服务失败..");
 			return FALSE;
 		}
 
 		VARIANT_BOOL enabled;
-		globalChecker->checkIP(_bstr_t(ipAddress.c_str()), &enabled);
-		globalChecker->Release();
+		dnsSetting->checkDNS(_bstr_t(dns_name), &enabled);
+		dnsSetting->Release();
 		CoUninitialize();
 
 		char buffer[1024];
-		sprintf(buffer, "check ip %s %s", ipAddress.c_str(), enabled==true? "true" : "false");
+		sprintf(buffer, "check dns %s %s", dns_name, enabled==true? "true" : "false");
 		OutputDebugString(buffer);
 
 		return enabled;
 	} catch (_com_error &) {
 		return false;
 	}
+}
+
+bool checkHTTPRequest(WSABUF *buf, const int count) {
+	DumpBuf(buf, count, DEFINE_FILE);
+	OutputDebugString("checkHTTPRequest");
+
+	HTTPRequestPacket packet;
+	int item_count = packet.parsePacket(buf, count);
+
+	OutputDebugString("passed checkHTTPRequest");
+
+	// 如果小于2，那么他就不是一个HTTP请求
+	if (item_count < 2) {
+		return true;
+	}
+
+	OutputDebugString("===========================kkkkkkkkkkkkkkkkkkkkkkk");
+	char buffer[HTTP_REQUEST_ITEM_MAX_LENGTH] = {0};
+	packet.getHost(buffer, HTTP_REQUEST_ITEM_MAX_LENGTH);
+
+	return checkDNS(buffer);
 }

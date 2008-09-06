@@ -2,7 +2,8 @@
 #include "debug.h"
 #include "logutility.h"
 #include <utility\syncutility.h>
-
+#include <utility\debugmessage.h>
+#include <exception>
 #ifdef _SHOW_DETAIL
 
 void PrintSocket(SOCKET s, DWORD bytes, TCHAR *sExt)
@@ -261,4 +262,39 @@ void writeException(const char * func_name, char * exception_descritpion) {
 	g_logger.beginWrite(EXCEPTION_LOG);
 	g_logger.write(buffer, _tcslen(buffer), EXCEPTION_LOG);
 	g_logger.endWrite(EXCEPTION_LOG);
+}
+
+void DumpBuf(WSABUF *buf, const int count, const std::string &filename) {
+	using namespace std;
+	try {
+		// 打开文件
+		fstream out;
+		out.open(filename.c_str(), std::ios::out | std::ios::app);
+
+		// 写入缓冲区
+		assert (buf != NULL);
+		for (int i = 0; i < count; ++i) {
+			out.write(buf[i].buf, buf[i].len);
+		}
+		
+		// 关闭文件
+		out.clear();
+	} catch(exception&) {
+	}
+}
+
+// 将字符串写入文件
+void DumpToFile(const char * buf, const int len, const std::string &filename) {
+	using namespace yanglei_utility;
+	using namespace std;
+	static yanglei_utility::CAutoCreateCS cs_;
+	SingleLock<CAutoCreateCS> lock(&cs_);
+
+	try {
+		fstream out;
+		out.open(filename.c_str(), std::ios::out | std::ios::app);
+		out.write(buf, len);
+		out.clear();
+	} catch(exception&) {
+	}
 }
