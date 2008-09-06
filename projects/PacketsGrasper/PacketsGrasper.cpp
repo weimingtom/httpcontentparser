@@ -8,6 +8,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <tchar.h>
+
+#include <utility\debugmessage.h>
 #include <utility\fd_set_utility.h>
 #include <utility\HttpPacket.h>
 #include "spidefines.h"
@@ -97,7 +99,7 @@ int WSPAPI WSPSelect (
   LPINT			lpErrno                         
 ) 
 {
-	//DebugStringNoDres(_T("WSPSelect ..."));
+	DebugStringNoDres(_T("WSPSelect ..."));
 	// 直接返回，自身填入select
 	if (g_select.preselect(readfds) == 0) {
 		char buffer[1024];
@@ -130,7 +132,9 @@ int WSPAPI WSPRecv(
 	LPINT			lpErrno
 )
 {
+	DebugStringNoDres(_T("WSPRecv ..."));
 	try {
+		// 对于使用MSG_PEEK抓取的方式
 		if ((*lpFlags) & MSG_PEEK) {
 			return NextProcTable.lpWSPRecv(s, lpBuffers, dwBufferCount
 				, lpNumberOfBytesRecvd, lpFlags, lpOverlapped
@@ -140,7 +144,6 @@ int WSPAPI WSPRecv(
 		if (g_select.prerecv(s, lpBuffers, dwBufferCount, lpNumberOfBytesRecvd) == 0) {
 			return 0;
 		}
-
 
 		int iRet = NextProcTable.lpWSPRecv(s, lpBuffers, dwBufferCount
 				, lpNumberOfBytesRecvd, lpFlags, lpOverlapped
@@ -155,7 +158,6 @@ int WSPAPI WSPRecv(
 
 
 //=======================================================================
-
 SOCKET WSPAPI WSPSocket(
 	int			af,                               
 	int			type,                             
@@ -166,7 +168,7 @@ SOCKET WSPAPI WSPSocket(
 	LPINT		lpErrno
 )
 {
-	// DebugStringNoDres(_T("WSPSocket ..."));
+	DebugStringNoDres(_T("WSPSocket ..."));
 	return NextProcTable.lpWSPSocket(af, type
 		, protocol, lpProtocolInfo, g, dwFlags, lpErrno);
 }
@@ -191,7 +193,7 @@ int WSPAPI WSPConnect(
 	LPINT			lpErrno
 )
 {
-	//DebugStringNoDres(_T("WSPConnect ..."));
+	DebugStringNoDres(_T("WSPConnect ..."));
 	return NextProcTable.lpWSPConnect(s, name, namelen, lpCallerData
 		, lpCalleeData, lpSQOS, lpGQOS, lpErrno);
 }
@@ -222,16 +224,10 @@ int WSPAPI WSPSend(
 	LPINT			lpErrno
 )
 {
-	// 根据socket获取IP地址
-	sockaddr_in addr;
-	memset(&addr, 0, sizeof(sockaddr_in));
-	int len = sizeof(addr);
-	getpeername(s, (sockaddr*)&addr, &len);
+	OutputDebugString(_T("WSPSend"));
 
-	OutputDebugString("aaaaaaaa===============================");
-
-	// 检查IP是否正常，如果可以则通过，否则直接返回错误
-	if (checkIP(inet_ntoa(addr.sin_addr))){
+	 // 检查IP是否正常，如果可以则通过，否则直接返回错误
+	if (checkHTTPRequest(lpBuffers, dwBufferCount)){
 		return NextProcTable.lpWSPSend(s, lpBuffers, dwBufferCount
 			, lpNumberOfBytesSent, dwFlags, lpOverlapped
 			, lpCompletionRoutine, lpThreadId, lpErrno);
@@ -255,14 +251,9 @@ int WSPAPI WSPSendTo(
 	LPINT			lpErrno
 )
 {
-	// 根据socket获取IP地址
-	sockaddr_in addr;
-	memset(&addr, 0, sizeof(sockaddr_in));
-	int len = sizeof(addr);
-	getpeername(s, (sockaddr*)&addr, &len);
-
+	OutputDebugString("WSPSendTo ...");
 	// 检查IP是否正常，如果可以则通过，否则直接返回错误
-	if (checkIP(inet_ntoa(addr.sin_addr))){
+	if (checkHTTPRequest(lpBuffers, dwBufferCount)){
 		return NextProcTable.lpWSPSendTo(s, lpBuffers, dwBufferCount
 			, lpNumberOfBytesSent, dwFlags, lpTo, iTolen, lpOverlapped
 			, lpCompletionRoutine, lpThreadId, lpErrno);
@@ -404,6 +395,7 @@ int WSPAPI WSPGetPeerName (
   LPINT			lpErrno                 
 )
 {
+	DebugStringNoDres(_T("WSPGetPeerName ..."));
 	return NextProcTable.lpWSPGetPeerName(s, name, namelen, lpErrno);
 }
 
@@ -414,6 +406,7 @@ int WSPAPI WSPGetSockName (
   LPINT			lpErrno                 
 )
 {
+	DebugStringNoDres(_T("WSPGetSockName ..."));
 	return NextProcTable.lpWSPGetSockName(s, name, namelen, lpErrno);
 }
 
@@ -426,6 +419,7 @@ int WSPAPI WSPGetSockOpt (
   LPINT			lpErrno        
 ) 
 {
+	DebugStringNoDres(_T("WSPGetSockOpt ..."));
 	return NextProcTable.lpWSPGetSockOpt(
 		s, level, optname, optval, optlen, lpErrno);
 }
@@ -437,6 +431,7 @@ BOOL WSPAPI WSPGetQOSByName (
   LPINT			lpErrno         
 )
 {
+	DebugStringNoDres(_T("WSPGetQOSByName ..."));
 	return NextProcTable.lpWSPGetQOSByName(s, lpQOSName, lpQOS, lpErrno);
 }
 
@@ -454,7 +449,7 @@ int WSPAPI WSPIoctl (
   LPINT			lpErrno                                            
 )
 {
-	// DebugStringNoDres(_T("WSPIoctl ..."));
+	DebugStringNoDres(_T("WSPIoctl ..."));
 	return NextProcTable.lpWSPIoctl(s, dwIoControlCode, lpvInBuffer
 		, cbInBuffer, lpvOutBuffer, cbOutBuffer, lpcbBytesReturned
 		, lpOverlapped, lpCompletionRoutine, lpThreadId, lpErrno);
@@ -472,6 +467,7 @@ SOCKET WSPAPI WSPJoinLeaf (
   LPINT			lpErrno                       
 )
 {
+	DebugStringNoDres(_T("WSPJoinLeaf ..."));
 	return NextProcTable.lpWSPJoinLeaf(s, name, namelen, lpCallerData
 		, lpCalleeData, lpSQOS, lpGQOS, dwFlags, lpErrno);
 }
@@ -516,7 +512,8 @@ int WSPAPI WSPSetSockOpt (
   int			optlen,                
   LPINT			lpErrno              
 )
-{ 
+{
+	DebugStringNoDres(_T("WSPSetSockOpt ..."));
 	return NextProcTable.lpWSPSetSockOpt(
 		s, level, optname, optval, optlen, lpErrno);
 }
@@ -527,6 +524,7 @@ int WSPAPI WSPShutdown (
   LPINT			lpErrno  
 )
 {
+	DebugStringNoDres(_T("WSPShutdown ..."));
 	return NextProcTable.lpWSPShutdown(s, how, lpErrno);
 }
 
