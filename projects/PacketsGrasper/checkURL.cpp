@@ -5,6 +5,7 @@
 #include <com\FilterSetting_i.c>
 #include <com\FilterSetting.h>
 #include <utility\httprequestpacket.h>
+#include <utility\debugmessage.h>
 #include <string>
 #include <comdef.h>
 using namespace std;
@@ -27,7 +28,7 @@ bool checkDNS(const char * dns_name) {
 		VARIANT_BOOL enabled;
 		dnsSetting->checkDNS(_bstr_t(dns_name), &enabled);
 		dnsSetting->Release();
-		CoUninitialize();
+		CoUninitialize(); 
 
 		char buffer[1024];
 		sprintf(buffer, "check dns %s %s", dns_name, enabled==true? "true" : "false");
@@ -46,16 +47,16 @@ bool checkHTTPRequest(WSABUF *buf, const int count) {
 	HTTPRequestPacket packet;
 	int item_count = packet.parsePacket(buf, count);
 
-	OutputDebugString("passed checkHTTPRequest");
-
 	// 如果小于2，那么他就不是一个HTTP请求
-	if (item_count < 2) {
+	if (item_count < 2) {	
 		return true;
 	}
-
-	OutputDebugString("===========================kkkkkkkkkkkkkkkkkkkkkkk");
+	
+	
 	char buffer[HTTP_REQUEST_ITEM_MAX_LENGTH] = {0};
 	packet.getHost(buffer, HTTP_REQUEST_ITEM_MAX_LENGTH);
-
+	
+	
+	ODS2(" === HOST : ", buffer);
 	return checkDNS(buffer);
 }
