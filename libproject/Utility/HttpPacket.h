@@ -4,6 +4,7 @@
 #include <utility\protocolpacket.h>
 #include "syncutility.h"
 #include <deque>
+#include <webcontenttype.h>
 
 #define HTTP_PACKET_SIZE (1024)
 
@@ -20,15 +21,6 @@ public:
 	int parseHeader(const char *line, const int len);
 	bool isHttpHeader(const char *line, const int len);
 public:
-	static const int    CONTYPE_HTML = 1;
-	static const int    CONTYPE_CSS = 2;
-	static const int    CONTYPE_JS = 3;
-	static const int    CONTYPE_GIF = 100;
-	static const int    CONTYPE_JPG = 101;
-	static const int    CONTYPE_PNG = 102;
-	static const int	CONTYPE_XML	= 200;
-	static const int    CONTYPE_UNKNOWN = 999;
-
 	static const int	TRANENCODING_CHUNKED = 1;
 	static const int    CONTENCODING_GZIP = 1;
 	static const int    NO_DESIGNATION = -1;

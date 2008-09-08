@@ -1,9 +1,10 @@
 #include "StdAfx.h"
+#include ".\selectio.h"
+#include "httpcontentcheck.h"
+
+#include <logdebug.h>
 #include <utility\HTTPPacket.h>
 #include <utility\fd_set_utility.h>
-#include ".\selectio.h"
-#include <logdebug.h>
-
 
 ////////////////////////////////////////////////
 int getBufferTotalSize(LPWSABUF lpBuffers, DWORD dwBufferCount) {
@@ -82,9 +83,9 @@ int CSelectIO::prerecv(SOCKET s, LPWSABUF lpBuffers,
 
 	// 验证包是否合法，如果不合法, 则删除包，并填充
 	// 填充一个不可达包
-	if ( packet->getHeader()->getContentType() == HTTP_RESPONSE_HEADER::CONTYPE_JPG ||
-		packet->getHeader()->getContentType() == HTTP_RESPONSE_HEADER::CONTYPE_PNG ||
-		packet->getHeader()->getContentType() == HTTP_RESPONSE_HEADER::CONTYPE_GIF) {
+	if ( packet->getHeader()->getContentType() == CONTYPE_JPG ||
+		packet->getHeader()->getContentType() == CONTYPE_PNG ||
+		packet->getHeader()->getContentType() == CONTYPE_GIF) {
 		removeCompletedPacket(s, packet);
 		return 1;
 	}
@@ -343,14 +344,10 @@ bool CSelectIO::needStored(const SOCKET s) {
 		if (result == 0) {
 			return false;
 		}
-
-		// 在这里进行验证，基于一个基本假设
-		// 那就是一个包里最多只包含一个HTTP
-		if (CheckSetting::getInstance()->needCheck(header.getContentType()) == true) {
-			return true;
-		} else {
-			return false;
-		}
+		
+		// TODO: you can add code here to check content.
+		// if you return false, the packet will be dropped.
+		return true;
 	} else {
 		// 如果不是以HTTP开头 
 		// 注意：在开始的时候我们已经处理了可能是一个HTTP协议部分的情况
@@ -472,37 +469,4 @@ int CSelectIO::removePacket(const SOCKET s, HTTPPacket *p) {
 
 	assert(false);
 	return 0; 
-}
-
-/////////////////////////////////////////
-// class CheckSetting
-CheckSetting::CheckSetting() {
-	http_types_.insert(HTTP_RESPONSE_HEADER::CONTYPE_GIF);
-	// http_types_.insert(HTTP_RESPONSE_HEADER::CONTYPE_CSS);
-	http_types_.insert(HTTP_RESPONSE_HEADER::CONTYPE_HTML);
-	http_types_.insert(HTTP_RESPONSE_HEADER::CONTYPE_JPG);
-	// http_types_.insert(HTTP_RESPONSE_HEADER::CONTYPE_JS);
-}
-
-CheckSetting::~CheckSetting() {
-}
-
-bool CheckSetting::removeCheckedType(const int type) {
-	CHECKED_TYPES::iterator iter = http_types_.find(type);
-	if (http_types_.end() != iter) {
-		http_types_.erase(iter);
-		return true;
-	} else {
-		return false;
-	}
-}
-
-// 是否需要处理
-bool CheckSetting::needCheck(const int type) {
-	return http_types_.end() != http_types_.find(type);
-}
-
-// 添加规则
-void CheckSetting::addCheckedType(const int type) {
-	http_types_.insert(type);
 }

@@ -58,6 +58,6 @@ STDMETHODIMP CDNSSetting::enableBlackDNSCheck(VARIANT_BOOL enable) {
 }
 STDMETHODIMP CDNSSetting::checkDNS(BSTR dns_name, VARIANT_BOOL* passed)
 {
-	*passed = g_dnssetting.checkDNS((char*)_bstr_t(dns_name));
+	*passed = g_dnssetting.fuzzeCheckDNS((char*)_bstr_t(dns_name));
 	return S_OK;
 }

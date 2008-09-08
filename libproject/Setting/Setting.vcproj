@@ -204,6 +204,16 @@ copy .\calculagraph.h ..\..\include
 				RelativePath=".\Authorize.h">
 			</File>
 		</Filter>
+		<Filter
+			Name="image"
+			Filter="">
+			<File
+				RelativePath=".\ImageCheckSetting.cpp">
+			</File>
+			<File
+				RelativePath=".\ImageCheckSetting.h">
+			</File>
+		</Filter>
 		<File
 			RelativePath=".\ReadMe.txt">
 		</File>
