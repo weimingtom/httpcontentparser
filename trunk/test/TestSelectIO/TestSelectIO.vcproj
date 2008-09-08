@@ -43,7 +43,7 @@
 				Name="VCMIDLTool"/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy .\Debug\TestSelectIO.exe..\..\testoutput"/>
+				CommandLine="copy .\Debug\TestSelectIO.exe ..\..\testoutput"/>
 			<Tool
 				Name="VCPreBuildEventTool"/>
 			<Tool
