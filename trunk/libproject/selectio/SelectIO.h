@@ -23,29 +23,6 @@ class HTTPPacket;
 class HTTP_RESPONSE_HEADER;
 class SelectIOTest;
 
-// class CheckSetting
-// 此类是一个单件类， 我们使用它来保存规则(那些类型的HTTP包学要被处理)
-class CheckSetting {
-public:
-	static CheckSetting * getInstance() {
-		static CheckSetting setting;
-		return &setting;
-	}
-	~CheckSetting();
-
-	// 是否需要处理
-	bool needCheck(const int type);
-
-	// 添加规则
-	void addCheckedType(const int type);
-
-	// 移除removeCheckedType
-	bool removeCheckedType(const int type);
-private:
-	CheckSetting();
-	typedef std::set<int> CHECKED_TYPES;
-	CHECKED_TYPES http_types_;
-};
 
 class CSelectIO {
 public:

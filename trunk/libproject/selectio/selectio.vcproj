@@ -141,13 +141,13 @@ copy .\release\selectio.lib ..\..\lib
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}">
 		</Filter>
 		<Filter
-			Name="checker"
+			Name="check"
 			Filter="">
 			<File
-				RelativePath=".\contentFilter.cpp">
+				RelativePath=".\httpcontentcheck.cpp">
 			</File>
 			<File
-				RelativePath=".\contentFilter.h">
+				RelativePath=".\httpcontentcheck.h">
 			</File>
 		</Filter>
 		<File

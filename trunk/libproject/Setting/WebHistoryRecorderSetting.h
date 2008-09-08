@@ -10,10 +10,10 @@ public:
 	// properties
 	bool recordPages() const			{ return recordPage_;}
 	bool recordPornPages() const		{ return recordPornPage_;}
-	bool recordPornImage() const	{ return recordImage_;}
-	bool recordAllImage() const		{ return recordPornImage_;}
-	bool recordWebsite() const		{ return recordWebsite_;}
-	bool recordPornWebsite() const	{ return recordPornWebsite_;}
+	bool recordPornImage() const		{ return recordImage_;}
+	bool recordAllImage() const			{ return recordPornImage_;}
+	bool recordWebsite() const			{ return recordWebsite_;}
+	bool recordPornWebsite() const		{ return recordPornWebsite_;}
 
 	void recordPages(const bool enable)		{ recordPage_ = enable;}
 	void recordPornPages(const bool enable)	{ recordPornPage_ = enable;}
