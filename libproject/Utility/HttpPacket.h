@@ -28,7 +28,7 @@ public:
 	static const int	CONNECT_KEEP_ALIVE = 2;
 
 	int getContentLength() const { return content_length;}
-	int getContentType() const { return content_type;}
+	unsigned getContentType() const { return content_type;}
 	bool isChunk() const { return transfer_encoding == TRANENCODING_CHUNKED;}
 	int getConnectionState() const { return connection_state;}
 	int getResponseCode() const { return response_code;}
@@ -38,7 +38,7 @@ public:
 	bool existContent() const ;
 private:
 	int transfer_encoding;
-	int content_type;
+	unsigned content_type;
 	int content_encoding;		// 内容的编码方式如gzip
 	int content_length;
 	int connection_state;
@@ -103,10 +103,10 @@ public:
 	unsigned getDataSize() const;
 	unsigned getHeaderSize() const;
 
-	int addBuffer(const char *buf, const unsigned len);
+	int addBuffer(const char *buf, const int len);
 	int read(char *buf, const int bufsize, int &bytedread);
 	
-	int getContentType() const { return http_header_.getContentType();}
+	unsigned getContentType() const { return http_header_.getContentType();}
 
 	// 将..保存到文件当中
 	int  achieve_data(const char * filename);

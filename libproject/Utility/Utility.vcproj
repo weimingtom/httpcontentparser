@@ -43,7 +43,8 @@ copy .\fd_set_utility.h ..\..\include\utility
 copy .\httppacket.h ..\..\include\utility
 copy .\dns.h ..\..\include\utility
 copy .\httprequestpacket.h ..\..\include\utility
-copy .\strutility.h ..\..\include\utility"/>
+copy .\strutility.h ..\..\include\utility
+"/>
 			<Tool
 				Name="VCPreBuildEventTool"/>
 			<Tool
@@ -147,11 +148,6 @@ copy .\httppacket.h ..\..\include\utility
 			<File
 				RelativePath=".\syncutility.cpp">
 			</File>
-		</Filter>
-		<Filter
-			Name="资源文件"
-			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx"
-			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}">
 		</Filter>
 		<Filter
 			Name="头文件"
