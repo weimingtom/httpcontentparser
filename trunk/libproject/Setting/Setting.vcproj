@@ -44,6 +44,7 @@ copy .\eyecaresetting.h ..\..\include
 copy .\screensaver.h ..\..\include
 copy .\calculagraph.h ..\..\include
 copy .\DNSSetting.h ..\..\include
+copy .\contentchecksetting.h ..\..\include
 "/>
 			<Tool
 				Name="VCPreBuildEventTool"/>
@@ -205,13 +206,13 @@ copy .\calculagraph.h ..\..\include
 			</File>
 		</Filter>
 		<Filter
-			Name="image"
+			Name="content"
 			Filter="">
 			<File
-				RelativePath=".\ImageCheckSetting.cpp">
+				RelativePath=".\contentCheckSetting.cpp">
 			</File>
 			<File
-				RelativePath=".\ImageCheckSetting.h">
+				RelativePath=".\contentCheckSetting.h">
 			</File>
 		</Filter>
 		<File
