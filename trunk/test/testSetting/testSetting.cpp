@@ -6,7 +6,9 @@
 #include ".\authorizetest.h"
 #include ".\eyecaretest.h"
 #include ".\calculargraphtest.h"
+#include ".\contentsettingtest.h"
 
+CPPUNIT_TEST_SUITE_REGISTRATION(ContentSettingTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(DNSSettingTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(EyecareTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(CalculargraphTest);
