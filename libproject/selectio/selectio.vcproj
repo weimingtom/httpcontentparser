@@ -117,6 +117,9 @@ copy .\release\selectio.lib ..\..\lib
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
 			<File
+				RelativePath=".\BufferCallCOM.h">
+			</File>
+			<File
 				RelativePath=".\stdafx.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
@@ -150,9 +153,6 @@ copy .\release\selectio.lib ..\..\lib
 				RelativePath=".\httpcontentcheck.h">
 			</File>
 		</Filter>
-		<File
-			RelativePath=".\ReadMe.txt">
-		</File>
 	</Files>
 	<Globals>
 	</Globals>
