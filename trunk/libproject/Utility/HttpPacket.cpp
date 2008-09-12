@@ -139,7 +139,7 @@ ProtocolPacket<HTTP_PACKET_SIZE> * HTTPPacket::getRawPacket() {
 ////////////////////////////////////////////
 // 验证HTTP包，并将其加入到保重
 // 如果返回0, 则表示不是HTTP包
-int HTTPPacket::addBuffer(const char *buf, const unsigned len) {
+int HTTPPacket::addBuffer(const char *buf, const int len) {
 	try {
 		using namespace yanglei_utility;
 		SingleLock<CAutoCreateCS> lock(&cs_);

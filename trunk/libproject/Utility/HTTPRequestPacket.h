@@ -27,6 +27,7 @@ private:
 	int getWrittenCount(int length) const {
 		return (HTTP_REQUEST_ITEM_MAX_LENGTH > length) ? length : HTTP_REQUEST_ITEM_MAX_LENGTH;
 	}
+
 	const static char * HTTP_REQUEST_HOST;
 	const static char * HTTP_REQUEST_REFERER;
 	const static char * HTTP_REQUEST_OPER_GET;
