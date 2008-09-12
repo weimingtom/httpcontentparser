@@ -19,7 +19,7 @@ inline
 void WriteLog(const char * filename, const SOCKET s, const char * str) {
 	std::fstream file;
 	file.open(filename, std::ios::out | std::ios::app | std::ios::binary);
-	file.write(str, strlen(str));
+	file.write(str, static_cast<std::streamsize>(strlen(str)));
 	file.close();
 }
 
@@ -31,10 +31,10 @@ void WriteLog(const char *filename, const SOCKET s,  const int identity, const c
 
 	// 收到日期
 	sprintf(buffer, "\r\n===========[%d : %d==========]\r\n", s, identity);
-	file.write(buffer, strlen(buffer));
+	file.write(buffer, static_cast<std::streamsize>(strlen(buffer)));
 	file.write(data, len);
 	sprintf(buffer, "\r\nlength : %d\r\n", len);
-	file.write(buffer, strlen(buffer));
+	file.write(buffer, static_cast<std::streamsize>(strlen(buffer)));
 	file.close();
 }
 
@@ -46,10 +46,10 @@ void WriteLog(const char *filename, const SOCKET s,  const char * data, const in
 
 	// 收到日期
 	sprintf(buffer, "\r\n===========[%d : %d==========]\r\n", s, GetTickCount());
-	file.write(buffer, strlen(buffer));
+	file.write(buffer, static_cast<std::streamsize>(strlen(buffer)));
 	file.write(data, len);
 	sprintf(buffer, "\r\nlength : %d\r\n", len);
-	file.write(buffer, strlen(buffer));
+	file.write(buffer, static_cast<std::streamsize>(strlen(buffer)));
 	file.close();
 }
 
