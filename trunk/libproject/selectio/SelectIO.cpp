@@ -9,7 +9,7 @@
 ////////////////////////////////////////////////
 int getBufferTotalSize(LPWSABUF lpBuffers, DWORD dwBufferCount) {
 	int total_size = 0;
-	for (int i = 0; i < dwBufferCount; ++i) {
+	for (int i = 0; i < static_cast<int>(dwBufferCount); ++i) {
 		total_size += lpBuffers[i].len;
 	}
 
@@ -19,8 +19,8 @@ int getBufferTotalSize(LPWSABUF lpBuffers, DWORD dwBufferCount) {
 int WriteToBuffer(LPWSABUF	lpBuffers, DWORD dwBufferCount, 
 				  const int begin, const char * data, const int len) {
   int address = 0;
-  for (int i = 0; i < dwBufferCount; ++i) {
-	  if (lpBuffers[i].len + address > begin)
+  for (int i = 0; i < static_cast<int>(dwBufferCount); ++i) {
+	  if (static_cast<int>(lpBuffers[i].len + address) > begin)
 		  break;
 	  address += lpBuffers[i].len;
   }
@@ -32,8 +32,8 @@ int WriteToBuffer(LPWSABUF	lpBuffers, DWORD dwBufferCount,
   address = begin - address; 
   // 开始拷贝
   int bytes_copyed = 0;
-  for (; i < dwBufferCount; ++i) {
-	  const int copyed = len - bytes_copyed > lpBuffers[i].len - address ? 
+  for (; i < static_cast<int>(dwBufferCount); ++i) {
+	  const int copyed = len - bytes_copyed > static_cast<int>(lpBuffers[i].len - address) ? 
 		  lpBuffers[i].len - address : len - bytes_copyed;
 	  memcpy(&(lpBuffers[i].buf[address]), &(data[bytes_copyed]), copyed);
 	  address = 0;
@@ -104,7 +104,7 @@ int CSelectIO::prerecv(SOCKET s, LPWSABUF lpBuffers,
 	//OutputDebugString(data);
 
 	// 所有包都已经发送
-	for (int i = 0; i < dwBufferCount; ++i) {
+	for (int i = 0; i < static_cast<int>(dwBufferCount); ++i) {
 		const DWORD bytes = raw_packet->read(lpBuffers[i].buf, lpBuffers[i].len);
 
 		//char filename[1024];
@@ -149,8 +149,8 @@ int CSelectIO::preselect(fd_set *readfds) {
 
 	// 如果SOCKET同时存在于complete_readfds和readfds时
 	// 我们将这样的socket放入到new_readfds;
-	for (int i = 0; i < complete_readfds.fd_count; ++i) {
-		for (int j = 0; j < readfds->fd_count; ++j) {
+	for (int i = 0; i < static_cast<int>(complete_readfds.fd_count); ++i) {
+		for (int j = 0; j < static_cast<int>(readfds->fd_count); ++j) {
 			if (readfds->fd_array[j] == complete_readfds.fd_array[i]) {
 				FD_SET(readfds->fd_array[j], &new_readfds);
 			}
@@ -181,7 +181,7 @@ int CSelectIO::postselect(fd_set *readfds) {
 	fd_set need_to_remove;
 	FD_ZERO(&need_to_remove);
 
-	for (int i = 0; i < readfds->fd_count; ++i) {
+	for (int i = 0; i < static_cast<int>(readfds->fd_count); ++i) {
 		// 如果需要处理
 		const SOCKET s = readfds->fd_array[i];
 		if (true == needStored(s)) {
