@@ -8,7 +8,6 @@
 #include "dlgonlinehour.h"
 #include "dlghelp.h"
 #include "dlgabout.h"
-#include "dlgdnsrule.h"
 #include "dlgsearchrule.h"
 #include "Lev1DlgRules.h"
 #include "DlgOptions.h"
@@ -16,6 +15,7 @@
 #include "DlgWhiteDNSList.h"
 #include "DlgScreenSaver.h"
 #include "DlgWebHistory.h"
+#include "DlgBlackDNSList.h"
 #include "Lev1DlgTools.h"
 #include ".\basedlg.h"
 #include "afxwin.h"
@@ -118,4 +118,6 @@ protected:
 	afx_msg void OnBnClickedCancel();
 	afx_msg void OnToolsDesktopimage();
 	afx_msg void OnToolsWebhistory();
+	virtual void OnOK();
+	virtual void OnCancel();
 };
