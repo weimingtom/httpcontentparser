@@ -7,15 +7,7 @@
 
 
 
-typedef DWORD (WINAPI *RSP)(DWORD dwProcessId,DWORD dwType);
-void RegisterServiceProcess() {
-	HMODULE m_hKernel = ::GetModuleHandle(TEXT("Kernel32.DLL"));
-	RSP m_rsp = (RSP)::GetProcAddress(m_hKernel, ("RegisterServiceProcessW"));
-	m_rsp(::GetCurrentProcessId(),1);
-}
-
 namespace {
-	
 	DWORD GetScreenRecordDir(TCHAR *moduleDir, const int len, HMODULE hModule);	//
 	DWORD GetImageRecordDir(TCHAR *moduleDir, const int len, HMODULE hModule);	// 保存图像的目录
 	DWORD GenerateImageFile(TCHAR *file, const int len, HMODULE hModule);	// 自动生成文件名
@@ -58,6 +50,12 @@ void ClearScreen(HMODULE hModule) {
 	_execlp("del", arg1, "/q");
 }
 
+char* GetFileNameDir(const TCHAR *filename, TCHAR *directory, const int len) {
+	TCHAR dir[MAX_PATH], driver[MAX_PATH];
+	_tsplitpath(filename, driver, dir, NULL, NULL);
+	_sntprintf(directory, len, "%s\\%s", driver, dir);
+	return directory;
+}
 
 //////////////////////////////////////////////////
 // utility functions
@@ -155,8 +153,7 @@ void GetScreen(TCHAR* filename) {
 	}
 }
 
-BOOL CreateBitmapInfoStruct(HBITMAP hBmp,PBITMAPINFO& pbmi)
-{ 
+BOOL CreateBitmapInfoStruct(HBITMAP hBmp,PBITMAPINFO& pbmi) { 
 	BITMAP bmp; 
 	//PBITMAPINFO pbmi; 
 	WORD    cClrBits; 
@@ -222,8 +219,7 @@ BOOL CreateBitmapInfoStruct(HBITMAP hBmp,PBITMAPINFO& pbmi)
 } 
 
 BOOL CreateBMPFile(LPTSTR pszFile, PBITMAPINFO pbi, 
-				   HBITMAP hBMP, HDC hDC) 
-{ 
+				   HBITMAP hBMP, HDC hDC) { 
 	HANDLE hf;                 // file handle 
 	BITMAPFILEHEADER hdr;       // bitmap file-header 
 	PBITMAPINFOHEADER pbih;     // bitmap info-header 
@@ -242,8 +238,7 @@ BOOL CreateBMPFile(LPTSTR pszFile, PBITMAPINFO pbi,
 	// Retrieve the color table (RGBQUAD array) and the bits 
 	// (array of palette indices) from the DIB. 
 	if (!GetDIBits(hDC, hBMP, 0, (WORD) pbih->biHeight, lpBits, pbi, 
-		DIB_RGB_COLORS)) 
-	{
+		DIB_RGB_COLORS)) {
 		return FALSE;
 	}
 
