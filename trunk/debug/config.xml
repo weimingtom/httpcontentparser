@@ -1,40 +1,76 @@
+<?xml version="1.0" encoding="utf-8" ?> 
 <config>
-	<authorize>
-		<password username="su" password="/">
-	</authorize>
-	
-	<!--上网每周时间-->
-	<onlinetime>
-		<time datatime="mon-0-1">true</time>
-	</onlinetime>
-	
-	<!--URL White List-->
-	<whiteurl>
-		<url>www.sina.com</url>
-	</whiteurl>
-	
-	<!--BLACK URL List-->
-	<blackurl>
-		<url></url>
-	</blackurl>
-	
-	<!--Image Check-->
-	<imagecheck>
-		<check imagetype="bmp">true</check>
-		<check imagetype="jpg">true</check>
-		<check imagetype="gif">true</check>
-		<boudard low="" hight="" />
-	</imagecheck>
+	<rules>
+		<!--on line time -->
+		<rule name="onlinetime" enable="true">
+			<blocktime>1-1</blocktime>
+			<blocktime>2-23</blocktime>
+			<blocktime>2-21</blocktime>
+		</rule>
+		
+		<!--URL White List-->
+		<rule name="whiteurl" enable="true">
+			<url>www.yahoo.com</url>
+			<url>www.sohu.com</url>
+		</rule>
+		
+		<!--BLACK URL List-->
+		<rule name="blackurl" enable="true">
+			<url>www.google.com</url>
+			<url>www.baidu.com</url>
+		</rule>
+		
+		<!-- Search Black Words-->
+		<rule name="search" enalbe="true">
+			<searchengine>
+				<engine name="google" enable="true"/>
+				<engine name="yahoo"  enable="true"/>
+				<engine name="baidu"  enable="true"/>
+			</searchengine>
+			<blackwords>
+				<word></word>
+			</blackwords>
+		</rule>
+		
+		<!--Image Check-->
+		<rule name="imagecheck">
+			<check imagetype="bmp" enable="true"/>
+			<check imagetype="jpg" enable="true"/>
+			<check imagetype="gif" enable="true"/>
+			<check imagetype="png" enable="true"/>
+			<boudard low="" hight="" />
+		</rule>
+		
+		<rule name="textrule">
+			<check language="eng" enable="true"/>
+		</rule>
+	</rules>
 	
 	<!--Application Setting-->
 	<appsetting>
-		<rules>
-			<rule type="imagecheck" value="true"/>
-			<rule type="whiteurlcheck" value="true"/>
-			<rule type="blackurlcheck" value="true"/>
-		</rules>
-		<setting>
-			<app type="autoload" value="true"></app>
-		</setting>
+		<authorize>
+			<password username="su" password=""/>
+		</authorize>
+				
+		<!-- eyecasre -->
+		<eyecare enable="true">
+			<time name="rest">45</time>
+			<time name="entertain">45</time>
+		</eyecare>
+		
+		<webhistory>
+			<content type="all images"   enable="true"/>
+			<content type="all website"  enable="true"/>
+			<content type="all webpage"  enable="true"/>
+			<content type="porn images"  enable="true"/>
+			<content type="porn website" enable="true"/>
+			<content type="porn webpage" enable="true"/>
+			<autoclear time="" enable="true"></autoclear>
+		</webhistory>
+		
+		<!-- system configuration-->
+		<syssetting>
+			<app type="autoload" enable="true"></app>
+		</syssetting>
 	</appsetting>
 </config>
