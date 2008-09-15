@@ -484,3 +484,10 @@ void CMainUIDlg::ChangeCurDlg(CBaseDlg *dlg) {
 		m_curDlg = dlg;
 	}
 }
+void CMainUIDlg::OnOK() {
+	ShowWindow(SW_HIDE);
+}
+
+void CMainUIDlg::OnCancel() {
+	ShowWindow(SW_HIDE);
+}
