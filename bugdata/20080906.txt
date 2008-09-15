@@ -1,0 +1,4 @@
+1. 点击QQ聊天窗口上的“礼物”按钮，会出现assert(false);
+e:\workspace\httpcontent\libpro\httpdata..tor.cpp
+Line 304
+flase
