@@ -8,7 +8,9 @@
 #include ".\DNSTEST.h"
 #include ".\httprequestpackettest.h"
 #include ".\strutilitytest.h"
+#include ".\webcontenttest.h"
 
+CPPUNIT_TEST_SUITE_REGISTRATION(WebContentTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(StrUtilityTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(HttpRequestPacketTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(HTTPPacketTest);
