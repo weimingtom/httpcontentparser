@@ -3,32 +3,20 @@
 
 class HTTPPacket;
 
-// 此包负责所有的图片处理
-// 首先检测是图片是否是黄色图片
-// 而后根据用户设置保存图片内容
-class ImageHandler {
+
+class HTTPContentHander {
 public:
-	ImageHandler();
-	~ImageHandler();
+	HTTPContentHander();
+	~HTTPContentHander();
 
-	// 更具HTTPPacket 处理他
-	void handle(HTTPPacket *packet);
+	// 处理内容
+	bool checkContent(HTTPPacket *packet);
 private:
-	
-	// 保存图片内容
-	void saveContent(HTTPPacket * packet);
-};
-
-// 与图片类词， 此类主要处理文字内容
-// 并根据用户设定保存网页
-class TextContentHander {
-public:
-	TextContentHander();
-	~TextContentHander();
-
-	int handle(HTTPPacket *packet);
-private:
-	bool isTextPacket(HTTPPacket *packet);
+	// 处理文字和图片
+	bool checkImage(HTTPPacket *packet);
+	bool checkText(HTTPPacket *packet);
+	int saveImage(HTTPPacket *packet, const bool porn);
+	int saveText(HTTPPacket * packet, const bool porn);
 };
 
 
