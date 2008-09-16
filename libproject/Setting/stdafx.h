@@ -15,6 +15,12 @@
 
 #ifdef _DEBUG
 #	pragma comment(lib, "utilityd.lib")
+#	pragma comment(lib, "sysutilityd.lib")
+#	pragma comment(lib, "tinyxmld_STL.lib")
+
 #else
 #	pragma comment(lib, "utility.lib")
+#	pragma comment(lib, "sysutility.lib")
+#	pragma comment(lib, "tinyxml_STL.lib")
 #endif
+
