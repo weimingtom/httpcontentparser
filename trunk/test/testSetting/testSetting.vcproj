@@ -122,6 +122,9 @@
 				RelativePath=".\contentSettingTest.cpp">
 			</File>
 			<File
+				RelativePath=".\SearchRuleTest.cpp">
+			</File>
+			<File
 				RelativePath=".\stdafx.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
@@ -152,6 +155,9 @@
 			</File>
 			<File
 				RelativePath=".\resource.h">
+			</File>
+			<File
+				RelativePath=".\SearchRuleTest.h">
 			</File>
 			<File
 				RelativePath=".\stdafx.h">
