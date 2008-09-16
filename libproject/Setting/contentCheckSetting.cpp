@@ -19,5 +19,8 @@ void ContentCheckSetting::enableCheck(const bool checked, const unsigned type) {
 }
 
 bool ContentCheckSetting::needCheck(const unsigned type) const {
-	return content_type_ & type;
+	if( content_type_ & type )
+		return true;
+	else
+		return false;
 }
