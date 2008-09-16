@@ -8,7 +8,9 @@
 #include ".\calculargraphtest.h"
 #include ".\contentsettingtest.h"
 #include ".\configreadertest.h"
+#include ".\searchruletest.h"
 
+CPPUNIT_TEST_SUITE_REGISTRATION(SearchRuleTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(ConfigReaderTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(ContentSettingTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(DNSSettingTest);
