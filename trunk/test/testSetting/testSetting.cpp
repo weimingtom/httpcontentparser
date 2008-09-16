@@ -9,7 +9,9 @@
 #include ".\contentsettingtest.h"
 #include ".\configreadertest.h"
 #include ".\searchruletest.h"
+#include ".\onlinehoursettingtest.h"
 
+CPPUNIT_TEST_SUITE_REGISTRATION(OnlineHourSettingTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(SearchRuleTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(ConfigReaderTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(ContentSettingTest);
