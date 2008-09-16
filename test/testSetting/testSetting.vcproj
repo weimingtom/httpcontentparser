@@ -122,6 +122,9 @@
 				RelativePath=".\contentSettingTest.cpp">
 			</File>
 			<File
+				RelativePath=".\OnlineHourSettingTest.cpp">
+			</File>
+			<File
 				RelativePath=".\SearchRuleTest.cpp">
 			</File>
 			<File
@@ -152,6 +155,9 @@
 			</File>
 			<File
 				RelativePath=".\contentSettingTest.h">
+			</File>
+			<File
+				RelativePath=".\OnlineHourSettingTest.h">
 			</File>
 			<File
 				RelativePath=".\resource.h">
