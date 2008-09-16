@@ -7,17 +7,21 @@
 // this object will buffer the operation.
 // we call the COM object throught this class
 // so that we can reduce much operation inter-process.
+
+// the class is unber the obligiation of check the 
+// packet content and check whether the packet should
+// be saved or not.
 template <int BUFFER_COUNT = 10>
-class BufferImageCOMObject {
+class BufferCOMObjectCaller {
 public:
-	BufferImageCOMObject() {
+	BufferCOMObjectCaller() {
 	}
 
-	~BufferImageCOMObject() {
+	~BufferCOMObjectCaller() {
 	}
 
-	// 是否应该check Image content
-	bool checkImage(const unsigned type) {
+	// 是否应该包内容
+	bool shoudCheckContent(const unsigned type) {
 		if (save_porn_cnt_ < BUFFER_COUNT) {
 			return type & checktype_;
 		} else {
@@ -25,7 +29,11 @@ public:
 		}
 	}
 
-	// 保存图片
+	bool shouldSave(const int type) {
+		return true;
+	}
+
+	// 保存
 	bool saveImage(const bool porned) {
 		if (porned == true) {
 			if (save_all_cnt < BUFFER_COUNT) {
@@ -53,7 +61,7 @@ private:
 	unsigned  checktype_;
 private:
 	// call COM
-	bool checkImagedirect(const bool type) {
+	bool shoudCheckContent(const bool type) {
 		VARIANT_BOOL result;
 		CoInitialize(NULL);
 		try {
@@ -88,7 +96,7 @@ private:
 					record->Release();
 					return true;
 				} else {
-					return false;
+					return false;s
 				}
 			}
 		} catch (_com_error &e) {

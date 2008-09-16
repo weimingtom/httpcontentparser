@@ -24,6 +24,10 @@ class HTTP_RESPONSE_HEADER;
 class SelectIOTest;
 
 
+// buffer count
+#define BUFFER_COM_ALL_COUNT 10
+
+
 class CSelectIO {
 public:
 	CSelectIO();
@@ -75,6 +79,10 @@ protected:
 	MYWSPRECV * lpWSPRecv;
 
 	friend class SelectIOTest;
+
+// 检查包的的内容
+	bool checkPacket(HTTPPacket *packet);
+	void savePacket(HTTPPacket *packet);
 };
 
 // utility functions

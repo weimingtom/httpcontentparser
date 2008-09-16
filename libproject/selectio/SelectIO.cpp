@@ -1,10 +1,11 @@
 #include "StdAfx.h"
 #include ".\selectio.h"
 #include "httpcontentcheck.h"
-
+#include "buffercallCOM.h"
 #include <logdebug.h>
 #include <utility\HTTPPacket.h>
 #include <utility\fd_set_utility.h>
+
 
 ////////////////////////////////////////////////
 int getBufferTotalSize(LPWSABUF lpBuffers, DWORD dwBufferCount) {
@@ -81,14 +82,16 @@ int CSelectIO::prerecv(SOCKET s, LPWSABUF lpBuffers,
 		return 1;
 	}
 
-	// 验证包是否合法，如果不合法, 则删除包，并填充
-	// 填充一个不可达包
-	if ( packet->getHeader()->getContentType() == CONTYPE_JPG ||
-		packet->getHeader()->getContentType() == CONTYPE_PNG ||
-		packet->getHeader()->getContentType() == CONTYPE_GIF) {
+	// 检查内容
+	// 如果检查失败
+	if (false == checkPacket(packet)) {
 		removeCompletedPacket(s, packet);
 		return 1;
 	}
+
+	// 保存包的内容
+	savePacket(packet);
+	
 
 	// 获取一个
 	ProtocolPacket<HTTP_PACKET_SIZE> * raw_packet= packet->getRawPacket();
@@ -469,4 +472,21 @@ int CSelectIO::removePacket(const SOCKET s, HTTPPacket *p) {
 
 	assert(false);
 	return 0; 
+}
+
+
+namespace {
+	BufferCOMObjectCaller<BUFFER_COM_ALL_COUNT> bufferCOMCaller;
+};
+
+void CSelectIO::savePacket(HTTPPacket *packet) {
+	// bufferCOMCaller
+}
+
+// 此函数负责检查包的内容
+// 1. 检查这个包是否来自白名单中的网站
+// 2. 分析包的类型, 并确定该包是否应该被检查
+// 3. 分析不包的内容
+bool CSelectIO::checkPacket(HTTPPacket *packet) {
+	return true;
 }
