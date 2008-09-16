@@ -46,7 +46,9 @@ copy .\calculagraph.h ..\..\include
 copy .\DNSSetting.h ..\..\include
 copy .\contentchecksetting.h ..\..\include
 copy .\XMLconfiguration.h ..\..\include
-copy .\SearchRule.h ..\..\include"/>
+copy .\SearchRule.h ..\..\include
+copy .\onlinehoursetting.h ..\..\include
+"/>
 			<Tool
 				Name="VCPreBuildEventTool"/>
 			<Tool
@@ -95,7 +97,8 @@ copy .\calculagraph.h ..\..\include
 copy .\DNSSetting.h ..\..\include
 copy .\contentchecksetting.h ..\..\include
 copy .\XMLconfiguration.h ..\..\include
-copy .\SearchRule.h ..\..\include"/>
+copy .\SearchRule.h ..\..\include
+"/>
 			<Tool
 				Name="VCPreBuildEventTool"/>
 			<Tool
@@ -120,6 +123,9 @@ copy .\SearchRule.h ..\..\include"/>
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
 			<File
+				RelativePath=".\OnlineHourSetting.cpp">
+			</File>
+			<File
 				RelativePath=".\SearchRule.cpp">
 			</File>
 			<File
@@ -130,6 +136,9 @@ copy .\SearchRule.h ..\..\include"/>
 			Name="Í·ÎÄ¼þ"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
+			<File
+				RelativePath=".\OnlineHourSetting.h">
+			</File>
 		</Filter>
 		<Filter
 			Name="EyecareSetting"
