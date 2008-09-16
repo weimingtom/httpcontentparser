@@ -4,6 +4,7 @@
 #include <direct.h>
 #include <conio.h>
 #include <process.h>
+#include <assert.h>
 
 
 
@@ -20,6 +21,7 @@ namespace {
 	DWORD GetPornImageRecordDir(TCHAR *moduleDir, const int len, HMODULE hModule);
 	DWORD GetNormalImageRecordDir(TCHAR *moduleDir, const int len, HMODULE hModule);
 };
+
 
 
 void StartEyecare(HMODULE hModule) {
@@ -39,24 +41,66 @@ void SaveScreen(HMODULE hModule) {
 void ClearHistory(HMODULE hModule) {
 	TCHAR dir[MAX_PATH], arg1 [MAX_PATH];
 	GetHistoryRecordDir(dir, MAX_PATH, hModule);
-	_sntprintf(arg1, MAX_PATH , "%s*", dir);
-	_execlp("del", arg1, "/q");
+	_sntprintf(arg1, MAX_PATH , TEXT("%s*"), dir);
+	_execlp("del", arg1, TEXT("/q"));
 }
 
 void ClearScreen(HMODULE hModule) {
 	TCHAR dir[MAX_PATH], arg1 [MAX_PATH];
 	GetScreenRecordDir(dir, MAX_PATH, hModule);
-	_sntprintf(arg1, MAX_PATH , "%s*", dir);
-	_execlp("del", arg1, "/q");
+	_sntprintf(arg1, MAX_PATH , TEXT("%s*"), dir);
+	_execlp(TEXT("del"), arg1, TEXT("/q"));
 }
 
-char* GetFileNameDir(const TCHAR *filename, TCHAR *directory, const int len) {
+const TCHAR* GetFileNameDir(TCHAR *filename, TCHAR *directory, const unsigned len) {
 	TCHAR dir[MAX_PATH], driver[MAX_PATH];
 	_tsplitpath(filename, driver, dir, NULL, NULL);
-	_sntprintf(directory, len, "%s\\%s", driver, dir);
+	_sntprintf(directory, len, TEXT("%s\\%s"), driver, dir);
 	return directory;
 }
 
+// 获取安装目录
+const TCHAR *GetInstallDir(TCHAR *directory, const unsigned len) {
+	assert (directory != NULL);
+	GetCurrentDirectory(len, directory);
+	return directory;
+}
+
+const TCHAR * GetPornTextDirectory(TCHAR * filename, const unsigned len) {
+	assert (filename != NULL);
+
+	TCHAR install_dir[MAX_PATH];
+	GetInstallDir(install_dir, MAX_PATH);
+	_sntprintf(filename, MAX_PATH, TEXT("%s\\%s"), install_dir, TEXT("History\\text\\porn\\"));
+	return filename;
+}
+
+const TCHAR * GetTextDirectory(TCHAR * filename, const unsigned len) {
+	assert (filename != NULL);
+
+	TCHAR install_dir[MAX_PATH];
+	GetInstallDir(install_dir, MAX_PATH);
+	_sntprintf(filename, MAX_PATH, TEXT("%s\\%s"), install_dir, TEXT("History\\text\\normal\\"));
+	return filename;
+}
+
+const TCHAR * GetPornImageDirectory(TCHAR *filename, const unsigned len) {
+	assert (filename != NULL);
+
+	TCHAR install_dir[MAX_PATH];
+	GetInstallDir(install_dir, MAX_PATH);
+	_sntprintf(filename, MAX_PATH, TEXT("%s\\%s"), install_dir, TEXT("History\\images\\normal\\"));
+	return filename;
+}
+
+const TCHAR * GetImageDirectory(TCHAR * filename, const unsigned len) {
+	assert (filename != NULL);
+
+	TCHAR install_dir[MAX_PATH];
+	GetInstallDir(install_dir, MAX_PATH);
+	_sntprintf(filename, MAX_PATH, TEXT("%s\\%s"), install_dir, TEXT("History\\images\\normal\\"));
+	return filename;
+}
 //////////////////////////////////////////////////
 // utility functions
 
