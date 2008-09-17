@@ -24,6 +24,12 @@ STDMETHODIMP CWebHistoryRecorder::InterfaceSupportsErrorInfo(REFIID riid)
 	return S_FALSE;
 }
 
+namespace {
+const bool convert(const VARIANT_BOOL vb) {
+	if (VARIANT_TRUE == vb) return true;
+	else return false;
+}
+};
 //===============================================
 // Pages
 STDMETHODIMP CWebHistoryRecorder::get_RecordPronPages(VARIANT_BOOL* pVal)
@@ -34,19 +40,19 @@ STDMETHODIMP CWebHistoryRecorder::get_RecordPronPages(VARIANT_BOOL* pVal)
 
 STDMETHODIMP CWebHistoryRecorder::put_RecordPronPages(VARIANT_BOOL newVal)
 {
-	g_webhistoryRecordSetting_.recordPornPages(newVal);
+	g_webhistoryRecordSetting_.recordPornPages(convert(newVal));
 	return S_OK;
 }
 
 STDMETHODIMP CWebHistoryRecorder::get_RecordAllPages(VARIANT_BOOL* pVal)
 {
-	*pVal = g_webhistoryRecordSetting_.recordPages();
+	*pVal = g_webhistoryRecordSetting_.recordAllPages();
 	return S_OK;
 }
 
 STDMETHODIMP CWebHistoryRecorder::put_RecordAllPages(VARIANT_BOOL newVal)
 {
-	g_webhistoryRecordSetting_.recordPages(newVal);
+	g_webhistoryRecordSetting_.recordAllPages(convert(newVal));
 	return S_OK;
 }
 
@@ -60,7 +66,7 @@ STDMETHODIMP CWebHistoryRecorder::get_RecordPornImage(VARIANT_BOOL* pVal)
 
 STDMETHODIMP CWebHistoryRecorder::put_RecordPornImage(VARIANT_BOOL newVal)
 {
-	g_webhistoryRecordSetting_.recordPornImage(newVal);
+	g_webhistoryRecordSetting_.recordPornImage(convert(newVal));
 	return S_OK;
 }
 
@@ -72,7 +78,7 @@ STDMETHODIMP CWebHistoryRecorder::get_RecordAllImage(VARIANT_BOOL* pVal)
 
 STDMETHODIMP CWebHistoryRecorder::put_RecordAllImage(VARIANT_BOOL newVal)
 {
-	g_webhistoryRecordSetting_.recordAllImage(newVal);
+	g_webhistoryRecordSetting_.recordAllImage(convert(newVal));
 	return S_OK;
 }
 
@@ -89,18 +95,18 @@ STDMETHODIMP CWebHistoryRecorder::get_RecordPornWebsite(VARIANT_BOOL* pVal)
 
 STDMETHODIMP CWebHistoryRecorder::put_RecordPornWebsite(VARIANT_BOOL newVal)
 {
-	g_webhistoryRecordSetting_.recordPornWebsite(newVal);
+	g_webhistoryRecordSetting_.recordPornWebsite(convert(newVal));
 	return S_OK;
 }
 
 STDMETHODIMP CWebHistoryRecorder::get_RecordAllWebsite(VARIANT_BOOL* pVal)
 {
-	*pVal = g_webhistoryRecordSetting_.recordWebsite();
+	*pVal = g_webhistoryRecordSetting_.recordAllWebsite();
 	return S_OK;
 }
 
 STDMETHODIMP CWebHistoryRecorder::put_RecordAllWebsite(VARIANT_BOOL newVal)
 {
-	g_webhistoryRecordSetting_.recordWebsite(newVal);
+	g_webhistoryRecordSetting_.recordAllWebsite(convert(newVal));
 	return S_OK;
 }
