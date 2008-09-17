@@ -5,7 +5,7 @@
 #include "globalvariable.h"
 #include <webhistoryrecordersetting.h>
 #include ".\webhistoryrecorder.h"
-
+#include ".\utility.h"
 
 // CWebHistoryRecorder
 
@@ -24,12 +24,7 @@ STDMETHODIMP CWebHistoryRecorder::InterfaceSupportsErrorInfo(REFIID riid)
 	return S_FALSE;
 }
 
-namespace {
-const bool convert(const VARIANT_BOOL vb) {
-	if (VARIANT_TRUE == vb) return true;
-	else return false;
-}
-};
+
 //===============================================
 // Pages
 STDMETHODIMP CWebHistoryRecorder::get_RecordPronPages(VARIANT_BOOL* pVal)
