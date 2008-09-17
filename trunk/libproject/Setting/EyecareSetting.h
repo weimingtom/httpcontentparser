@@ -6,8 +6,10 @@
 
 
 class Authorize;
+class XMLConfiguration;
 
-
+// TODO : we must add sate store function
+// TODO : 
 class EyecareSetting {
 public:
 	EyecareSetting();
@@ -19,6 +21,10 @@ public:
 	};
 
 public:
+	// 是否可用
+	bool isEnable() const { return enabled_;}
+	void Enable(const bool enable) {enabled_ = enable;}
+
 	// 验证密码
 	bool setPassword(const std::string &password, 
 		const std::string& orgin_password);
@@ -48,6 +54,7 @@ private:
 	bool checkPassword(const std::string &password);
 
 	void setState(int state) { calculagraph_.forceSwitch(state);}
+	void setLeftTime(int timeleft) {}
 
 	MultiCalculagraph<2> calculagraph_; // 用于两个计时器
 
@@ -59,6 +66,10 @@ private:
 	int password_type;
 
 	bool force_locked_;
+
+	friend class XMLConfiguration;
+private:
+	bool enabled_;
 };
 
 #endif  // _SETTING_EYECARE_SETTING_H__
