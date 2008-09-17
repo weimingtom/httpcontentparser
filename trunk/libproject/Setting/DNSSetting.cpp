@@ -14,6 +14,7 @@ DNSSetting::DNSSetting() {
 DNSSetting::~DNSSetting(void) {
 }
 
+
 // ³õÊ¼»¯
 bool DNSSetting::initialize(DNSList *black_dns_list, DNSList *white_dns_list) {
 	assert ( black_dns_list_ == NULL);
@@ -136,7 +137,9 @@ void DNSCheck::enableWhiteDNSCheck(const bool checked) {
 //=================================================================
 // class DNSCheck
 DNSList::DNSList(void) {
-		enable_check_ = true;
+	enable_check_ = true;
+
+	enumerator_ = NULL;
 }
 
 DNSList::~DNSList(void) {
@@ -180,4 +183,14 @@ bool DNSList::removeDNS(const std::string &dns_name) {
 
 void DNSList::addDNS(const std::string &dns_name) {
 	dns_set_.insert(dns_name);
+}
+
+
+void DNSList::beginEnum() {
+	assert (NULL != enumerator_);
+
+	DNS_SET::const_iterator iter = dns_set_.begin();
+	for (; iter != dns_set_.end(); ++iter) {
+		enumerator_->EnumDNS(*iter);
+	}
 }
