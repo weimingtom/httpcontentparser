@@ -15,9 +15,6 @@ public:
 	bool setNewPassword(const std::string &password, const int type);
 	bool setPassword(const std::string &password, const std::string &oldword, const int type);
 	bool checkPassword(const std::string &password, const int type);
-
-	void savePassword(std::string &filename);
-	void loadPassword(std::string &filename);
 private:
 	// …Ë÷√
 	std::map<int, std::string> password_;
