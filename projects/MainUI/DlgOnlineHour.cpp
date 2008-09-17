@@ -19,6 +19,10 @@ CDlgOnlineHour::~CDlgOnlineHour()
 {
 }
 
+void CDlgOnlineHour::OnRestore() {
+
+}
+
 void CDlgOnlineHour::OnApply() {
 }
 

@@ -39,6 +39,10 @@ void CDlgImageRule::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_EDIT2, m_editImageScale);
 }
 
+void CDlgImageRule::OnRestore() {
+
+}
+
 void CDlgImageRule::OnShow() {
 }
 

@@ -26,6 +26,10 @@ void CDlgScreenSaver::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_STA_AUTOCLEAR, m_staAutoClear);
 }
 
+void CDlgScreenSaver::OnRestore() {
+
+}
+
 void CDlgScreenSaver::OnApply() {
 }
 void CDlgScreenSaver::OnShow() {

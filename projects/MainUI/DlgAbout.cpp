@@ -18,6 +18,9 @@ CDlgAbout::~CDlgAbout()
 {
 }
 
+void CDlgAbout::OnRestore() {
+}
+
 void CDlgAbout::OnApply() {
 }
 

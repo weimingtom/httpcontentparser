@@ -19,6 +19,11 @@ CDlgHelp::~CDlgHelp()
 {
 }
 
+
+void CDlgHelp::OnRestore() {
+
+}
+
 void CDlgHelp::OnApply() {
 }
 

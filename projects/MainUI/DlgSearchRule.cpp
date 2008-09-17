@@ -18,6 +18,10 @@ CDlgSearchRule::~CDlgSearchRule()
 {
 }
 
+void CDlgSearchRule::OnRestore() {
+
+}
+
 void CDlgSearchRule::OnApply() {
 	// DNS CHECK «∑Òø…”√
 //	ASSERT(g_globalSetting != NULL);
