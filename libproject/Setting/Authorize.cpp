@@ -8,11 +8,6 @@ Authorize::Authorize(void) {
 Authorize::~Authorize(void) {
 }
 
-void Authorize::savePassword(std::string &filename) {
-}
-
-void Authorize::loadPassword(std::string &filename) {
-}
 
 bool Authorize::setNewPassword(const std::string &password, const int type) {
 	assert(password_set_.find(type) == password_set_.end());
