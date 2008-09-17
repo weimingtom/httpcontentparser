@@ -63,6 +63,11 @@ void CDlgOptions::setHotKey() {
 	}
 }
 
+void CDlgOptions::OnRestore() {
+
+}
+
+
 void CDlgOptions::OnApply() {
 	setHotKey();
 }

@@ -26,6 +26,10 @@ void CDlgWhiteDNSList::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_STA_WHIE_DNSLIST, ListBox);
 }
 
+void CDlgWhiteDNSList::OnRestore() {
+
+}
+
 void CDlgWhiteDNSList::OnApply() {
 	rules.OnApply();
 	ASSERT(g_dnssetting != NULL);

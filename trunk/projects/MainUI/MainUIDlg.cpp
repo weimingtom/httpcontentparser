@@ -387,7 +387,13 @@ void CMainUIDlg::OnTvnSelchangedTreeNavig(NMHDR *pNMHDR, LRESULT *pResult)
 
 	// HTREEITEM hItem = m_treeNavigation.GetSelectedItem();
 	DWORD itemData = m_treeNavigation.GetItemData(pNMTreeView->itemNew.hItem);
-	setCurDlg(itemData);
+
+	// 首先调用
+	if (m_curDlg->BeforeChange() == 1) {
+		setCurDlg(itemData);
+	} else {
+		m_curDlg->OnRestore();
+	}
 
 	*pResult = 0;
 }

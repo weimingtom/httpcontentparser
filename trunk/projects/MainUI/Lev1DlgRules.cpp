@@ -31,6 +31,9 @@ void CLev1DlgRules::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(CLev1DlgRules, CDialog)
 END_MESSAGE_MAP()
 
+void CLev1DlgRules::OnRestore() {
+}
+
 void CLev1DlgRules::OnApply() {
 }
 

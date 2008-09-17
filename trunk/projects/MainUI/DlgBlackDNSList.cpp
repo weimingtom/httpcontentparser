@@ -18,6 +18,9 @@ CDlgBlackDNSList::CDlgBlackDNSList(CWnd* pParent /*=NULL*/)
 CDlgBlackDNSList::~CDlgBlackDNSList()
 {
 }
+void CDlgBlackDNSList::OnRestore() {
+
+}
 
 void CDlgBlackDNSList::OnApply() {
 	rules.OnApply();

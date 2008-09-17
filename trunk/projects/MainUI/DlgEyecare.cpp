@@ -47,6 +47,10 @@ void CDlgEyecare::DoDataExchange(CDataExchange* pDX)
 }
 
 
+void CDlgEyecare::OnRestore() {
+
+}
+
 void CDlgEyecare::OnApply() {
 	try {
 		UpdateData(TRUE);

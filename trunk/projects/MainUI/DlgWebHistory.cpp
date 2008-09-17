@@ -61,6 +61,10 @@ void CDlgWebHistory::ChangeRecordType() {
 	}
 }
 
+void CDlgWebHistory::OnRestore() {
+
+}
+
 void CDlgWebHistory::OnApply() {
 	ChangeRecordType();
 }
