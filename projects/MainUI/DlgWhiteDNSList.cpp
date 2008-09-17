@@ -42,6 +42,18 @@ void CDlgWhiteDNSList::OnShow() {
 	ListBox.UpdateWindow();
 }
 
+void CDlgWhiteDNSList::initializeData() {
+	white_url_set.addDNS("google");
+	white_url_set.setEnumerator((DNSEnumerator*)this);
+	white_url_set.beginEnum();
+
+	m_chkWhiteDNSList.m_bCheckBtn = white_url_set.needChecked();
+}
+
+int CDlgWhiteDNSList::EnumDNS(const std::string &dns) {
+	ListBox.AddItem(dns.c_str());
+	return 0;
+}
 BEGIN_MESSAGE_MAP(CDlgWhiteDNSList, CDialog)
 END_MESSAGE_MAP()
 
@@ -52,5 +64,8 @@ BOOL CDlgWhiteDNSList::OnInitDialog()
 {
 	CBaseDlg::OnInitDialog();
 	ListBox.setOnTextChanged(&rules);
+
+	initializeData();
+
 	return TRUE;  // return TRUE unless you set the focus to a control
 }

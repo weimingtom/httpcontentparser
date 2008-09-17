@@ -2,6 +2,7 @@
 
 #include ".\basedlg.h"
 #include "ContentList.h"
+#include <DNSSetting.h>
 #include <Guilib1.5\GuiListEdit.h>
 #include <Guilib1.5\GuiDropDownEdit.h>
 #include <Guilib1.5\GuiCheckBox.h>
@@ -9,8 +10,7 @@
 
 // CDlgBlackDNSList 对话框
 
-class CDlgBlackDNSList : public CBaseDlg
-{
+class CDlgBlackDNSList : public CBaseDlg, DNSEnumerator {
 	DECLARE_DYNAMIC(CDlgBlackDNSList)
 
 public:
@@ -30,6 +30,12 @@ protected:
 	CGuiListEdit ListBox;
 	RulesList  rules;
 	DECLARE_MESSAGE_MAP()
+
+	// 保存白名单
+	DNSList black_url_set;
+
+	void initializeData();
+	virtual int EnumDNS(const std::string &dns) ;  // member of DNSEnumerator
 public:
 	virtual BOOL OnInitDialog();
 	

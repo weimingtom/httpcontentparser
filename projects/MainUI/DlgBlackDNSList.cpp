@@ -43,6 +43,16 @@ void CDlgBlackDNSList::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_CHK_ENABLE_DNS, m_chkEnableDNS);
 }
 
+void CDlgBlackDNSList::initializeData() {
+	black_url_set.setEnumerator((DNSEnumerator*)this);
+	black_url_set.beginEnum();
+	m_chkEnableDNS.m_bCheckBtn = black_url_set.needChecked();
+}
+
+int CDlgBlackDNSList::EnumDNS(const std::string &dns) {
+	ListBox.AddItem(dns.c_str());
+	return 0;
+}
 
 BEGIN_MESSAGE_MAP(CDlgBlackDNSList, CDialog)
 END_MESSAGE_MAP()
@@ -54,5 +64,8 @@ BOOL CDlgBlackDNSList::OnInitDialog()
 {
 	CBaseDlg::OnInitDialog();
 	ListBox.setOnTextChanged(&rules);
+
+	initializeData();
+
 	return TRUE;  // return TRUE unless you set the focus to a control
 }
