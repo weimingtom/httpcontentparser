@@ -49,23 +49,23 @@
 	<!--Application Setting-->
 	<appsetting>
 		<authorize>
-			<password username="su" password=""/>
+			<user username="su" password=""/>
 		</authorize>
 				
 		<!-- eyecasre -->
-		<eyecare enable="true">
-			<time name="rest">45</time>
-			<time name="entertain">45</time>
+		<eyecare enable="true" state="rest" timeleft="32" >
+			<time name="rest" timespan="45"/>
+			<time name="entertain" timespan="45"/>
 		</eyecare>
 		
-		<webhistory>
-			<content type="all images"   enable="true"/>
-			<content type="all website"  enable="true"/>
-			<content type="all webpage"  enable="true"/>
-			<content type="porn images"  enable="true"/>
-			<content type="porn website" enable="true"/>
-			<content type="porn webpage" enable="true"/>
-			<autoclear time="" enable="true"></autoclear>
+		<webhistory enable="true">
+			<content type="all_images"   enable="true"/>
+			<content type="all_website"  enable="true"/>
+			<content type="all_webpage"  enable="true"/>
+			<content type="porn_images"  enable="true"/>
+			<content type="porn_website" enable="true"/>
+			<content type="porn_webpage" enable="true"/>
+			<autoclear time="" enable="true"/>
 		</webhistory>
 		
 		<!-- system configuration-->
