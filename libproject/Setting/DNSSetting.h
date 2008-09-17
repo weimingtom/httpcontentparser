@@ -13,6 +13,10 @@
 
 // 目前我们使用的机制有些适应性不高，我们需要增加cache机制。
 
+class DNSEnumerator {
+public:
+	virtual int EnumDNS(const std::string &dns) = 0;
+};
 
 class DNSList {
 public:
@@ -28,11 +32,20 @@ public:
 	bool removeDNS(const std::string &dns_name);
 
 	void enableCheck(const bool checked) { enable_check_ = checked;}
-protected:
 	bool needChecked() const { return enable_check_ ;}
+
+	// enumerate
+	void setEnumerator(DNSEnumerator *enumerator) {
+		enumerator_ = enumerator;
+	}
+	void beginEnum();
+protected:
 	typedef std::set<std::string> DNS_SET;
 	DNS_SET dns_set_;
 	bool enable_check_;
+
+	// enum
+	DNSEnumerator *enumerator_;
 };
 
 // 检测
