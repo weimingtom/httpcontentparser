@@ -9,8 +9,7 @@
 #include <Guilib1.5\GuiDropDownEdit.h>
 #include <Guilib1.5\GuiCheckBox.h>
 
-class CDlgWhiteDNSList : public CBaseDlg
-{
+class CDlgWhiteDNSList : public CBaseDlg, DNSEnumerator {
 	DECLARE_DYNAMIC(CDlgWhiteDNSList)
 
 public:
@@ -35,6 +34,9 @@ protected:
 
 	// ±£´æ°×Ãûµ¥
 	DNSList white_url_set;
+
+	void initializeData();
+	virtual int EnumDNS(const std::string &dns) ;  // member of DNSEnumerator
 public:
 	virtual BOOL OnInitDialog();
 };
