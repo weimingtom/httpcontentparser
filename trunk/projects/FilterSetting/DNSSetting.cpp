@@ -7,6 +7,7 @@
 #include <comdef.h>
 #include <utility\HTTPPacket.h>
 #include ".\dnssetting.h"
+#include ".\utility.h"
 
 // CDNSSetting
 
@@ -48,12 +49,12 @@ STDMETHODIMP CDNSSetting::removeWhiteDNS(BSTR whiteDNS) {
 
 // check DNS
 STDMETHODIMP CDNSSetting::enableWhiteDNSCheck(VARIANT_BOOL enable) {
-	g_dnssetting.enableWhiteDNSCheck(enable);
+	g_dnssetting.enableWhiteDNSCheck(convert(enable));
 	return S_OK;
 }
 
 STDMETHODIMP CDNSSetting::enableBlackDNSCheck(VARIANT_BOOL enable) {
-	g_dnssetting.enableBlackDNSCheck(enable);
+	g_dnssetting.enableBlackDNSCheck(convert(enable));
 	return S_OK;
 }
 STDMETHODIMP CDNSSetting::checkDNS(BSTR dns_name, VARIANT_BOOL* passed)
