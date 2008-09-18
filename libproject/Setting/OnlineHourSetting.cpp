@@ -12,8 +12,8 @@ OnlineHourSetting::~OnlineHourSetting(void) {
 //===============================================
 // 
 bool OnlineHourSetting::getHour(const DWORD full) {
-	assert(HIWORD(full) < 7);
-	assert(LOWORD(full) <24);
+	assert(LOWORD(full) < 7);
+	assert(HIWORD(full) <24);
 
 	if (isEnabled() == false) {
 		return true;
@@ -32,8 +32,8 @@ bool OnlineHourSetting::getHour(const DWORD day, const DWORD hour) {
 }
 
 void OnlineHourSetting::setHour(const DWORD full, const bool allow_access) {
-	assert(HIWORD(full) < 7);
-	assert(LOWORD(full) <24);
+	assert(LOWORD(full) < 7);
+	assert(HIWORD(full) <24);
 	if (allow_access == false) {
 		online_hour_.insert(full);
 	} else {
