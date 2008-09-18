@@ -1,10 +1,10 @@
 // ScreenSave.cpp : CScreenSave µÄÊµÏÖ
 
 #include "stdafx.h"
-#include "ScreenSave.h"
 #include ".\screensave.h"
 #include "globalvariable.h"
 #include <sysutility.h>
+#include ".\utility.h"
 
 // CScreenSave
 
@@ -24,7 +24,7 @@ STDMETHODIMP CScreenSave::InterfaceSupportsErrorInfo(REFIID riid)
 }
 
 STDMETHODIMP CScreenSave::enableScreenSave(VARIANT_BOOL enabled) {
-	g_screenSaver.enableSave(enabled);
+	g_screenSaver.enableSave(convert(enabled));
 	return S_OK;
 }
 
