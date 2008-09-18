@@ -11,12 +11,12 @@ public:
 public:
 	CPPUNIT_TEST_SUITE(SearchRuleTest);
 	CPPUNIT_TEST(TestSeachRuleSetting);
-	CPPUNIT_TEST(TestSeachRuleCheck);
+	CPPUNIT_TEST(TestSeachEnabled);
 	CPPUNIT_TEST_SUITE_END();
 
 protected:
 	void TestSeachRuleSetting();
-	void TestSeachRuleCheck();
+	void TestSeachEnabled();
 };
 
 #endif  // _TEST_SETTING_SEARCHRULETEST_H__
