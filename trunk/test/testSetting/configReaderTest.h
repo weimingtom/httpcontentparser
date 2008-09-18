@@ -10,10 +10,12 @@ public:
 public:
 	CPPUNIT_TEST_SUITE(ConfigReaderTest);
 	CPPUNIT_TEST(TestReadFromFile);
+	CPPUNIT_TEST(TestSaveFile);
 	CPPUNIT_TEST_SUITE_END();
 
 protected:
 	void TestReadFromFile();
+	void TestSaveFile();
 };
 
 #endif  // _TEST_SETTING_CONFIGREADERTEST_H__
