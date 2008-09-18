@@ -23,6 +23,10 @@ public:
 	bool check(const std::string &host_name, const std::string &search_word) const;
 
 	bool shouldCheck(const std::string &search_host) const;
+
+	// enabled?
+	bool isEnabled() const { return enabled_;}
+	void enable(const bool enable) {enabled_ = enable;}
 protected:
 	typedef std::set<std::string> WORD_SET;
 	WORD_SET word_set_;
@@ -31,6 +35,9 @@ protected:
 	SEARCH_HOST search_host_;
 
 	bool checkWord(const std::string &word) const;
+
+	// 整个功能是否可用
+	bool enabled_;
 };
 
 #endif  // _SETTING_SEARCHRULE_H__
