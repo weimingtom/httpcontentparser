@@ -138,8 +138,6 @@ void DNSCheck::enableWhiteDNSCheck(const bool checked) {
 // class DNSCheck
 DNSList::DNSList(void) {
 	enable_check_ = true;
-
-	enumerator_ = NULL;
 }
 
 DNSList::~DNSList(void) {
@@ -186,11 +184,11 @@ void DNSList::addDNS(const std::string &dns_name) {
 }
 
 
-void DNSList::beginEnum() {
-	assert (NULL != enumerator_);
+void DNSList::beginEnum(DNSEnumerator *enumerator) {
+	assert (NULL != enumerator);
 
 	DNS_SET::const_iterator iter = dns_set_.begin();
 	for (; iter != dns_set_.end(); ++iter) {
-		enumerator_->EnumDNS(*iter);
+		enumerator->EnumDNS(*iter);
 	}
 }
