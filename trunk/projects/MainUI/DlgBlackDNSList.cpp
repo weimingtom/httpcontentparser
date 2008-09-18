@@ -44,8 +44,7 @@ void CDlgBlackDNSList::DoDataExchange(CDataExchange* pDX)
 }
 
 void CDlgBlackDNSList::initializeData() {
-	black_url_set.setEnumerator((DNSEnumerator*)this);
-	black_url_set.beginEnum();
+	black_url_set.beginEnum((DNSEnumerator*)this);
 	m_chkEnableDNS.m_bCheckBtn = black_url_set.needChecked();
 }
 

@@ -44,8 +44,7 @@ void CDlgWhiteDNSList::OnShow() {
 
 void CDlgWhiteDNSList::initializeData() {
 	white_url_set.addDNS("google");
-	white_url_set.setEnumerator((DNSEnumerator*)this);
-	white_url_set.beginEnum();
+	white_url_set.beginEnum((DNSEnumerator*)this);
 
 	m_chkWhiteDNSList.m_bCheckBtn = white_url_set.needChecked();
 }
