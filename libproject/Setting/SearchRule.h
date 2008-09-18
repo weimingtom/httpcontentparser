@@ -4,6 +4,7 @@
 #include <string>
 #include <set>
 #include <map>
+#include <Enumerate.h>
 
 // 用来记录Search Rule的实现
 class SearchRule {
@@ -27,6 +28,10 @@ public:
 	// enabled?
 	bool isEnabled() const { return enabled_;}
 	void enable(const bool enable) {enabled_ = enable;}
+
+	// enumerate
+	void enumBlackWord(Enumerator1<std::string> * enumerator);
+	void enumSearchEngine(Enumerator2<std::string, bool> *enumerator);
 protected:
 	typedef std::set<std::string> WORD_SET;
 	WORD_SET word_set_;
