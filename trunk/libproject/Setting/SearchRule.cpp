@@ -1,5 +1,6 @@
 #include "StdAfx.h"
 #include ".\SearchRule.h"
+#include <assert.h>
 
 SearchRule::SearchRule(void) {
 	enabled_ = true;
@@ -42,6 +43,22 @@ bool SearchRule::shouldCheck(const std::string &search_host) const {
 	}
 }
 
+//========================================================
+// enumerator
+void SearchRule::enumBlackWord(Enumerator1<std::string> * enumerator) {
+	assert (NULL != enumerator);
+	WORD_SET::const_iterator iter = word_set_.begin();
+	for (; iter != word_set_.end(); ++iter) {
+		enumerator->Enum(*iter);
+	}
+}
+void SearchRule::enumSearchEngine(Enumerator2<std::string, bool> *enumerator) {
+	assert (NULL != enumerator);
+	SEARCH_HOST::const_iterator iter = search_host_.begin();
+	for (; iter != search_host_.end(); ++iter) {
+		enumerator->Enum(iter->first, iter->second);
+	}
+}
 //=========================================================
 // private members
 // ºÏ≤‚word «∑Ò∫œ∑®
