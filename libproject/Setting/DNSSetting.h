@@ -35,17 +35,11 @@ public:
 	bool needChecked() const { return enable_check_ ;}
 
 	// enumerate
-	void setEnumerator(DNSEnumerator *enumerator) {
-		enumerator_ = enumerator;
-	}
-	void beginEnum();
+	void beginEnum(DNSEnumerator *enumerator);
 protected:
 	typedef std::set<std::string> DNS_SET;
 	DNS_SET dns_set_;
 	bool enable_check_;
-
-	// enum
-	DNSEnumerator *enumerator_;
 };
 
 // ¼ì²â
