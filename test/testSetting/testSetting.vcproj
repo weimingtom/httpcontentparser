@@ -116,18 +116,6 @@
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
 			<File
-				RelativePath=".\configReaderTest.cpp">
-			</File>
-			<File
-				RelativePath=".\contentSettingTest.cpp">
-			</File>
-			<File
-				RelativePath=".\OnlineHourSettingTest.cpp">
-			</File>
-			<File
-				RelativePath=".\SearchRuleTest.cpp">
-			</File>
-			<File
 				RelativePath=".\stdafx.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
@@ -151,19 +139,7 @@
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
 			<File
-				RelativePath=".\configReaderTest.h">
-			</File>
-			<File
-				RelativePath=".\contentSettingTest.h">
-			</File>
-			<File
-				RelativePath=".\OnlineHourSettingTest.h">
-			</File>
-			<File
 				RelativePath=".\resource.h">
-			</File>
-			<File
-				RelativePath=".\SearchRuleTest.h">
 			</File>
 			<File
 				RelativePath=".\stdafx.h">
@@ -193,6 +169,18 @@
 				RelativePath=".\calculargraphTest.h">
 			</File>
 			<File
+				RelativePath=".\configReaderTest.cpp">
+			</File>
+			<File
+				RelativePath=".\configReaderTest.h">
+			</File>
+			<File
+				RelativePath=".\contentSettingTest.cpp">
+			</File>
+			<File
+				RelativePath=".\contentSettingTest.h">
+			</File>
+			<File
 				RelativePath=".\DNSSettingTest.cpp">
 			</File>
 			<File
@@ -203,6 +191,18 @@
 			</File>
 			<File
 				RelativePath=".\EyecareTest.h">
+			</File>
+			<File
+				RelativePath=".\OnlineHourSettingTest.cpp">
+			</File>
+			<File
+				RelativePath=".\OnlineHourSettingTest.h">
+			</File>
+			<File
+				RelativePath=".\SearchRuleTest.cpp">
+			</File>
+			<File
+				RelativePath=".\SearchRuleTest.h">
 			</File>
 		</Filter>
 		<File

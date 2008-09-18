@@ -17,3 +17,8 @@ void ConfigReaderTest::TestReadFromFile() {
 	XMLConfiguration config;
 	config.initialize();
 }
+
+void ConfigReaderTest::TestSaveFile() {
+	XMLConfiguration config;
+	config.save();
+}
