@@ -16,7 +16,7 @@ public:
 	ContentCheckSetting(void);
 	~ContentCheckSetting(void);
 public:
-	void enableCheck(const bool checked, const unsigned type);
+	void enableCheck(const unsigned type, const bool checked);
 
 	// 此函数会根据网站及图片类型进行判断
 	// 如果网站在白名单之内，就不会检测了
