@@ -5,7 +5,7 @@
 #include "globalvariable.h"
 #include <webhistoryrecordersetting.h>
 #include ".\webhistoryrecorder.h"
-#include ".\utility.h"
+#include <typeconvert.h>
 
 // CWebHistoryRecorder
 

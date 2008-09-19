@@ -4,7 +4,7 @@
 #include ".\screensave.h"
 #include "globalvariable.h"
 #include <sysutility.h>
-#include ".\utility.h"
+#include <typeconvert.h>
 
 // CScreenSave
 

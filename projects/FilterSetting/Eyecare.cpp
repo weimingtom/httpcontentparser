@@ -32,23 +32,23 @@ STDMETHODIMP CEyecare::setPassword(BSTR password) {
 	return S_OK;
 }
 
-STDMETHODIMP CEyecare::setRestTime(LONG mintues) {
-	g_Eyecare_setting_.setRestTime(mintues);
+STDMETHODIMP CEyecare::setEyecareTime(LONG mintues) {
+	g_Eyecare_setting_.setEyecareTime(mintues);
 	return S_OK;
 }
 
-STDMETHODIMP CEyecare::setEntertainmentTime(LONG mintues) {
-	g_Eyecare_setting_.setEntertainTime(mintues);
+STDMETHODIMP CEyecare::setEnterTime(LONG mintues) {
+	g_Eyecare_setting_.setEnterTime(mintues);
 	return S_OK;
 }
 
-STDMETHODIMP CEyecare::getRestTime(LONG* second) {
-	*second = g_Eyecare_setting_.getRestTime();
+STDMETHODIMP CEyecare::getEyecareTime(LONG* second) {
+	*second = g_Eyecare_setting_.getEyecareTime();
 	return S_OK;
 }
 
-STDMETHODIMP CEyecare::getEntertainmentTime(LONG* second) {
-	*second = g_Eyecare_setting_.getEntertainTime();
+STDMETHODIMP CEyecare::getEnterTime(LONG* second) {
+	*second = g_Eyecare_setting_.getEnterTime();
 	return S_OK;
 }
 

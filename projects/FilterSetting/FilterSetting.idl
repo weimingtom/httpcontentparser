@@ -29,10 +29,10 @@ interface IAuthorize : IDispatch{
 ]
 interface IEyecare : IDispatch{
 	[id(1), helpstring("Method setPassword")] HRESULT setPassword([in] BSTR password);
-	[id(2), helpstring("Method setRestTime")] HRESULT setRestTime([in] LONG mintues);
-	[id(3), helpstring("Method setEntertainmentTime")] HRESULT setEntertainmentTime([in] LONG mintues);
-	[id(5), helpstring("Method getRestTime")] HRESULT getRestTime([out,retval] LONG* mintues);
-	[id(6), helpstring("Method getEntertainmentTime")] HRESULT getEntertainmentTime([out,retval] LONG* second);
+	[id(2), helpstring("Method setEyecareTime")] HRESULT setEyecareTime([in] LONG mintues);
+	[id(3), helpstring("Method setEnterTime")] HRESULT setEnterTime([in] LONG mintues);
+	[id(5), helpstring("Method getEyecareTime")] HRESULT getEyecareTime([out,retval] LONG* mintues);
+	[id(6), helpstring("Method getEnterTime")] HRESULT getEnterTime([out,retval] LONG* second);
 	[id(7), helpstring("Method getTimeLeft")] HRESULT getTimeLeft([out,retval] LONG* second);
 	[id(8), helpstring("Method getState")] HRESULT getState([out,retval] LONG* state);
 	[id(9), helpstring("Method swithToEntertainment")] HRESULT swithToEntertainment([in] BSTR password,  [out,retval] VARIANT_BOOL* bSuccess);
