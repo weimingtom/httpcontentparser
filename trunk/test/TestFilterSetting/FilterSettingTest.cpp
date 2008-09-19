@@ -3,6 +3,7 @@
 #include <com\FilterSetting_i.c>
 #include <com\FilterSetting.h>
 #include <comdef.h>
+#include <typeconvert.h>
 
 bool checkDNS(const char *dns_name) {
 	try {
@@ -21,7 +22,7 @@ bool checkDNS(const char *dns_name) {
 		dnssetting->Release();
 		CoUninitialize();
 
-		return enabled;
+		return convert(enabled);
 	} catch (_com_error &) {
 		return false;
 	}

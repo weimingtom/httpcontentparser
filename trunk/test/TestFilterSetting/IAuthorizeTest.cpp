@@ -4,6 +4,7 @@
 #include <com\FilterSetting.h>
 #include <passwordtype.h>
 #include <comdef.h>
+#include <typeconvert.h>
 
 IAuthorizeTest::IAuthorizeTest(void) {
 }
@@ -30,20 +31,20 @@ void IAuthorizeTest::testCheckPassword() {
 		_bstr_t wrong_password = "8382";
 		_bstr_t new_password = "234";
 		authorize->checkPassword(last_password, &corrected);
-		CPPUNIT_ASSERT(true == corrected);
+		CPPUNIT_ASSERT(true == convert(corrected));
 
 		authorize->checkPassword(wrong_password, &corrected);
-		CPPUNIT_ASSERT(false == corrected);
+		CPPUNIT_ASSERT(false == convert(corrected));
 
 		authorize->checkPassword(new_password, &corrected);
-		CPPUNIT_ASSERT(false == corrected);
+		CPPUNIT_ASSERT(false == convert(corrected));
 
 
 		authorize->changePassword(new_password, wrong_password, &corrected);
-		CPPUNIT_ASSERT(false == corrected);
+		CPPUNIT_ASSERT(false == convert(corrected));
 
 		authorize->changePassword(new_password, last_password, &corrected);
-		CPPUNIT_ASSERT(true == corrected);
+		CPPUNIT_ASSERT(true == convert(corrected));
 		
 		authorize->Release();
 		CoUninitialize();
