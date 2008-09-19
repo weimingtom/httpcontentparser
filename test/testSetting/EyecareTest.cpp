@@ -23,8 +23,8 @@ void EyecareTest::TestTimeSetting() {
 	EyecareSetting setting;
 	setting.initialize(&authorize, EyecareSetting::ENTERT_TIME);
 
-	setting.setEntertainTime(60);
-	setting.setRestTime(60);
+	setting.setEnterTime(60);
+	setting.setEyecareTime(60);
 	
 	int a = setting.getRemainTime();
 	CPPUNIT_ASSERT(setting.getRemainTime() > 0);
@@ -62,8 +62,8 @@ void EyecareTest::TestSwitchState() {
 
 	EyecareSetting setting;
 	setting.initialize(&authorize, EyecareSetting::ENTERT_TIME);
-	setting.setRestTime(2);
-	setting.setEntertainTime(5);
+	setting.setEyecareTime(2);
+	setting.setEnterTime(5);
 
 	// 正常切换
 	CPPUNIT_ASSERT (setting.getState() == EyecareSetting::ENTERT_TIME);
@@ -88,8 +88,8 @@ void EyecareTest::TextForceSwitch() {
 	const int entertain = 1;
 	EyecareSetting setting;
 	setting.initialize(&authorize, EyecareSetting::ENTERT_TIME);
-	setting.setRestTime(restTime);
-	setting.setEntertainTime(entertain);
+	setting.setEyecareTime(restTime);
+	setting.setEnterTime(entertain);
 	setting.setPasswordType(PASSWORD_SU);
 
 	// 正常切换
