@@ -16,7 +16,8 @@
 
 //=====================================================
 // constructor and deconstructor
-XMLConfiguration::XMLConfiguration(void) {
+XMLConfiguration::XMLConfiguration() {
+	defaultSetting();
 }
 
 XMLConfiguration::~XMLConfiguration(void) {
@@ -53,34 +54,80 @@ const char * Eyecare_state(const int state) {
 		return CONFIG_APPSET_EYECARE_EYECARE;
 	}
 }
+
+const char * UserType(const int user_type) {
+	if ( user_type == PASSWORD_SU) {
+		return CONFIG_APPSET_AUTHORIZE_USERTYPE_SU;
+	} else {
+		assert (false);
+		return CONFIG_APPSET_AUTHORIZE_USERTYPE_OTHER;
+	}
+}
 };
 
+void XMLConfiguration::defaultSetting() {
+	getEyecareSetting()->initialize(getAuthorize(),  EyecareSetting::ENTERT_TIME);
+}
 
 ///////////////////////////////////////////////////////////////////////////////////
 // 保存规则
+
+namespace {
+// class DNSEnumerator
+class EnumUsersInfo : public Enumerator2<std::string, int> {
+public:
+	virtual int Enum(const std::string &password, const int type) {
+		TiXmlElement * url_node = new TiXmlElement(CONFIG_APPSET_AUTHORIZE_USER);
+		url_node->SetAttribute(CONFIG_APPSET_AUTHORIZE_NAME, UserType(type));
+		url_node->SetAttribute(CONFIG_APPSET_AUTHORIZE_PASSWORD, password);
+
+
+		rule_root_->LinkEndChild(url_node);
+		return 0;
+	}
+public:
+	EnumUsersInfo(TiXmlElement * rule_root) {
+		rule_root_ = rule_root;
+		assert (rule_root_ != NULL);
+	}
+private:
+	TiXmlElement *rule_root_;
+};
+};
+
+int XMLConfiguration::saveAuthorize(TiXmlElement *app_root) {
+	TiXmlElement * author_root = new TiXmlElement(CONFIG_ITEM_APPSET_AUTHORIZE);
+	
+	getAuthorize()->EnumUsers(&EnumUsersInfo(author_root));
+	app_root->LinkEndChild(author_root);
+	return 0;
+}
+
+//////////////////////////////////////////////////////////
+// 保存
 int XMLConfiguration::saveEyecare(TiXmlElement *app_root) {
-	TiXmlElement * eyecare_root = new TiXmlElement( CONFIG_ITEM_APPSET_EYECARE );
-	eyecare_root->SetAttribute(CONFIG_CONST_ENABLE, enabledFromBool(eye_care.isEnable()));
-	eyecare_root->SetAttribute(CONFIG_APPSET_EYECARE_STATE, Eyecare_state(eye_care.getState()));
+	TiXmlElement * eyecare_root = new TiXmlElement( CONFIG_ITEM_APPSET_EYECARE);
+	eyecare_root->SetAttribute(CONFIG_CONST_ENABLE, enabledFromBool(getEyecareSetting()->isEnable()));
+	eyecare_root->SetAttribute(CONFIG_APPSET_EYECARE_STATE, Eyecare_state(getEyecareSetting()->getState()));
 
 	// 设置剩余时间
 	TCHAR buffer[1024];
-	_sntprintf(buffer, 1024, "%d", eye_care.getRemainTime());
+	_sntprintf(buffer, 1024, "%d", getEyecareSetting()->getRemainTime());
 	eyecare_root->SetAttribute(CONFIG_APPSET_EYECARE_TIMELEFT, buffer);
 
 	// 设置娱乐事件
-	TiXmlElement * enter_time = new TiXmlElement( CONFIG_APPSET_EYECARE_TIME );
+	TiXmlElement * enter_time = new TiXmlElement(CONFIG_APPSET_EYECARE_TIME);
 	enter_time->SetAttribute(CONFIG_CONST_NAME, CONFIG_APPSET_EYECARE_ENTER);
 
-	_sntprintf(buffer, 1024, "%d", eye_care.getEnterTime());	// 设置娱乐时间间隔
+	_sntprintf(buffer, 1024, "%d", getEyecareSetting()->getEnterTime());	// 设置娱乐时间间隔
 	enter_time->SetAttribute(CONFIG_APPSET_EYECARE_TIMESPAN, buffer);
 	eyecare_root->LinkEndChild(enter_time);
 
 	// 设置休息时间
-	TiXmlElement * eyecare_time = new TiXmlElement( CONFIG_APPSET_EYECARE_TIME );
+	TiXmlElement * eyecare_time = new TiXmlElement(CONFIG_APPSET_EYECARE_TIME);
 	eyecare_time->SetAttribute(CONFIG_CONST_NAME, CONFIG_APPSET_EYECARE_EYECARE);
 
-	_sntprintf(buffer, 1024, "%d", eye_care.getEyecareTime());
+	_sntprintf(buffer, 1024, "%d", getEyecareSetting()->getEyecareTime());
 	eyecare_time->SetAttribute(CONFIG_APPSET_EYECARE_TIMESPAN, buffer);
 	eyecare_root->LinkEndChild(eyecare_time);
 
@@ -89,39 +136,39 @@ int XMLConfiguration::saveEyecare(TiXmlElement *app_root) {
 }
 
 int XMLConfiguration::saveWebHistory(TiXmlElement * app_root) {
-	TiXmlElement * webhistory_root = new TiXmlElement( CONFIG_ITEM_APPSET_WEBHISTORY ); 
-	webhistory_root->SetAttribute(CONFIG_CONST_NAME,  enabledFromBool(web_history.isEnable()));
+	TiXmlElement * webhistory_root = new TiXmlElement(CONFIG_ITEM_APPSET_WEBHISTORY); 
+	webhistory_root->SetAttribute(CONFIG_CONST_NAME,  enabledFromBool(getWebHistoryRecordSetting()->isEnable()));
 
 	// All Images
-	TiXmlElement * allimage = new TiXmlElement( CONFIG_APPSET_WEBHISTORY_CONTENT ); 
+	TiXmlElement * allimage = new TiXmlElement(CONFIG_APPSET_WEBHISTORY_CONTENT); 
 	allimage->SetAttribute(CONFIG_CONST_TYPPE, CONFIG_APPSET_WEBHISTORY_ALL_IMAGE);
-	allimage->SetAttribute(CONFIG_CONST_NAME, enabledFromBool(web_history.recordAllImage()));
+	allimage->SetAttribute(CONFIG_CONST_NAME, enabledFromBool(getWebHistoryRecordSetting()->recordAllImage()));
 	webhistory_root->LinkEndChild(allimage);
 
-	TiXmlElement * allpages = new TiXmlElement( CONFIG_APPSET_WEBHISTORY_CONTENT ); 
+	TiXmlElement * allpages = new TiXmlElement(CONFIG_APPSET_WEBHISTORY_CONTENT); 
 	allpages->SetAttribute(CONFIG_CONST_TYPPE, CONFIG_APPSET_WEBHISTORY_ALL_WEBPAGE);
-	allpages->SetAttribute(CONFIG_CONST_NAME, enabledFromBool(web_history.recordAllPages()));
+	allpages->SetAttribute(CONFIG_CONST_NAME, enabledFromBool(getWebHistoryRecordSetting()->recordAllPages()));
 	webhistory_root->LinkEndChild(allpages);
 
-	TiXmlElement * allwebsite = new TiXmlElement( CONFIG_APPSET_WEBHISTORY_CONTENT ); 
+	TiXmlElement * allwebsite = new TiXmlElement(CONFIG_APPSET_WEBHISTORY_CONTENT); 
 	allwebsite->SetAttribute(CONFIG_CONST_TYPPE, CONFIG_APPSET_WEBHISTORY_ALL_WEBSITE);
-	allwebsite->SetAttribute(CONFIG_CONST_NAME, enabledFromBool(web_history.recordAllWebsite()));
+	allwebsite->SetAttribute(CONFIG_CONST_NAME, enabledFromBool(getWebHistoryRecordSetting()->recordAllWebsite()));
 	webhistory_root->LinkEndChild(allwebsite);
 
 	// Porn
 	TiXmlElement * porn_Iimage = new TiXmlElement( CONFIG_APPSET_WEBHISTORY_CONTENT ); 
 	porn_Iimage->SetAttribute(CONFIG_CONST_TYPPE, CONFIG_APPSET_WEBHISTORY_PORN_IMAGE);
-	porn_Iimage->SetAttribute(CONFIG_CONST_NAME, enabledFromBool(web_history.recordPornImage()));
+	porn_Iimage->SetAttribute(CONFIG_CONST_NAME, enabledFromBool(getWebHistoryRecordSetting()->recordPornImage()));
 	webhistory_root->LinkEndChild(porn_Iimage);
 
 	TiXmlElement * porn_pages = new TiXmlElement( CONFIG_APPSET_WEBHISTORY_CONTENT ); 
 	porn_pages->SetAttribute(CONFIG_CONST_TYPPE, CONFIG_APPSET_WEBHISTORY_PORN_WEBPAGE);
-	porn_pages->SetAttribute(CONFIG_CONST_NAME, enabledFromBool(web_history.recordPornPages()));
+	porn_pages->SetAttribute(CONFIG_CONST_NAME, enabledFromBool(getWebHistoryRecordSetting()->recordPornPages()));
 	webhistory_root->LinkEndChild(porn_pages);
 
 	TiXmlElement * porn_website = new TiXmlElement( CONFIG_APPSET_WEBHISTORY_CONTENT ); 
 	porn_website->SetAttribute(CONFIG_CONST_TYPPE, CONFIG_APPSET_WEBHISTORY_PORN_WEBSITE);
-	porn_website->SetAttribute(CONFIG_CONST_NAME, enabledFromBool(web_history.recordPornWebsite()));
+	porn_website->SetAttribute(CONFIG_CONST_NAME, enabledFromBool(getWebHistoryRecordSetting()->recordPornWebsite()));
 	webhistory_root->LinkEndChild(porn_website);
 
 	app_root->LinkEndChild(webhistory_root);
@@ -133,6 +180,7 @@ int XMLConfiguration::saveAppSetting(TiXmlElement * root) {
 	
 	saveWebHistory(appsetting_root);
 	saveEyecare(appsetting_root);
+	saveAuthorize(appsetting_root);
 	root->LinkEndChild(appsetting_root);
 	return 0;
 }
@@ -198,9 +246,9 @@ int XMLConfiguration::saveWhiteURL(TiXmlElement *root) {
 
 	// 设置属性
 	rule_root->SetAttribute(CONFIG_CONST_NAME, CONFIG_NODE_NAME_WHITEURL);
-	rule_root->SetAttribute(CONFIG_CONST_ENABLE, enabledFromBool(white_url_set.needChecked()));
+	rule_root->SetAttribute(CONFIG_CONST_ENABLE, enabledFromBool(getWhiteURLSet()->needChecked()));
 	// 添加URL
-	white_url_set.beginEnum(&DNSEnum(rule_root));
+	getWhiteURLSet()->beginEnum(&DNSEnum(rule_root));
 	root->LinkEndChild(rule_root);
 	return 0;
 }
@@ -210,10 +258,10 @@ int XMLConfiguration::saveBlackURL(TiXmlElement *root) {
 
 	// 设置属性
 	rule_root->SetAttribute(CONFIG_CONST_NAME, CONFIG_NODE_NAME_BLACKURL);
-	rule_root->SetAttribute(CONFIG_CONST_ENABLE, enabledFromBool(black_url_set.needChecked()));
+	rule_root->SetAttribute(CONFIG_CONST_ENABLE, enabledFromBool(getBlackURLSet()->needChecked()));
 
 	// 添加URL
-	black_url_set.beginEnum(&DNSEnum(rule_root));
+	getBlackURLSet()->beginEnum(&DNSEnum(rule_root));
 	root->LinkEndChild(rule_root);
 	return 0;
 }
@@ -253,9 +301,9 @@ int XMLConfiguration::saveOnlineHour(TiXmlElement *root) {
 
 	// 设置属性
 	rule_root->SetAttribute(CONFIG_CONST_NAME, CONFIG_NODE_NAME_ONLINETIME);
-	rule_root->SetAttribute(CONFIG_CONST_ENABLE, enabledFromBool(online_setting.isEnabled()));
+	rule_root->SetAttribute(CONFIG_CONST_ENABLE, enabledFromBool(getOnlineSetting()->isEnabled()));
 
-	online_setting.enumBlockHour(&EnumOnlineHour(rule_root));
+	getOnlineSetting()->enumBlockHour(&EnumOnlineHour(rule_root));
 	
 	root->LinkEndChild(rule_root);
 	return 0;
@@ -272,25 +320,25 @@ int XMLConfiguration::saveImageRule(TiXmlElement *root) {
 	// jgp
 	TiXmlElement *item_jpg = new TiXmlElement(CONFIG_NODE_IMAGE_CHECK_ITEM);
 	item_jpg->SetAttribute(CONFIG_NODE_IMAGETYPE, CONFIG_NODE_IMAGETYPE_JPG);
-	item_jpg->SetAttribute(CONFIG_CONST_ENABLE, enabledFromBool(content_check_.needCheck(IMAGE_TYPE_JPEG)));
+	item_jpg->SetAttribute(CONFIG_CONST_ENABLE, enabledFromBool(getContentCheckSetting()->needCheck(IMAGE_TYPE_JPEG)));
 	rule_root->LinkEndChild(item_jpg);
 
 	// bmp
 	TiXmlElement *item_bmp = new TiXmlElement(CONFIG_NODE_IMAGE_CHECK_ITEM);
 	item_bmp->SetAttribute(CONFIG_NODE_IMAGETYPE, CONFIG_NODE_IMAGETYPE_BMP);
-	item_bmp->SetAttribute(CONFIG_CONST_ENABLE, enabledFromBool(content_check_.needCheck(IMAGE_TYPE_BMP)));
+	item_bmp->SetAttribute(CONFIG_CONST_ENABLE, enabledFromBool(getContentCheckSetting()->needCheck(IMAGE_TYPE_BMP)));
 	rule_root->LinkEndChild(item_bmp);
 
 	// gif
 	TiXmlElement *item_gif = new TiXmlElement(CONFIG_NODE_IMAGE_CHECK_ITEM);
 	item_gif->SetAttribute(CONFIG_NODE_IMAGETYPE, CONFIG_NODE_IMAGETYPE_GIF);
-	item_gif->SetAttribute(CONFIG_CONST_ENABLE, enabledFromBool(content_check_.needCheck(IMAGE_TYPE_GIF)));
+	item_gif->SetAttribute(CONFIG_CONST_ENABLE, enabledFromBool(getContentCheckSetting()->needCheck(IMAGE_TYPE_GIF)));
 	rule_root->LinkEndChild(item_gif);
 
 	// png
 	TiXmlElement *item_png = new TiXmlElement(CONFIG_NODE_IMAGE_CHECK_ITEM);
 	item_png->SetAttribute(CONFIG_NODE_IMAGETYPE, CONFIG_NODE_IMAGETYPE_PNG);
-	item_png->SetAttribute(CONFIG_CONST_ENABLE, enabledFromBool(content_check_.needCheck(IMAGE_TYPE_PNG)));
+	item_png->SetAttribute(CONFIG_CONST_ENABLE, enabledFromBool(getContentCheckSetting()->needCheck(IMAGE_TYPE_PNG)));
 	rule_root->LinkEndChild(item_png);
 
 	root->LinkEndChild(rule_root);
@@ -341,15 +389,15 @@ int XMLConfiguration::saveSearchRule(TiXmlElement *root) {
 
 	// 设置属性
 	rule_root->SetAttribute(CONFIG_CONST_NAME, CONFIG_NODE_NAME_SEARCH);
-	rule_root->SetAttribute(CONFIG_CONST_ENABLE, enabledFromBool(search_rule.isEnabled()));
+	rule_root->SetAttribute(CONFIG_CONST_ENABLE, enabledFromBool(getSearchRule()->isEnabled()));
 
 	// 设置black word
 	TiXmlElement * blackword = new TiXmlElement(CONFIG_NODE_BLACK_SEARCHWORD);
-	search_rule.enumBlackWord(&EnumBlackWord(blackword));
+	getSearchRule()->enumBlackWord(&EnumBlackWord(blackword));
 	rule_root->LinkEndChild(blackword);
 
 	TiXmlElement *search_engine = new TiXmlElement(CONFIG_NODE_SEARCH_ENGINES);
-	search_rule.enumSearchEngine(&EnumSearchEngine(search_engine));
+	getSearchRule()->enumSearchEngine(&EnumSearchEngine(search_engine));
 	rule_root->LinkEndChild(search_engine);
 
 	root->LinkEndChild(rule_root);
@@ -393,19 +441,19 @@ int XMLConfiguration::parseAppSet(TiXmlNode *appset_root) {
 // Eyecare
 int XMLConfiguration::enableEyecareSetting(const TCHAR *enable) {
 	const bool enabled = enabledFromString(enable);
-	eye_care.Enable(enabled);
+	getEyecareSetting()->Enable(enabled);
 	return 0;
 }
 
 int XMLConfiguration::setEyecareState(const TCHAR *state, const TCHAR *timeleft) {
 	long lt = _tcstol(timeleft, NULL, 10);
 	if (0 == _tcscmp(state, CONFIG_APPSET_EYECARE_EYECARE)) {
-		eye_care.setState(EyecareSetting::EYECARE_TIME);
-		eye_care.setLeftTime(lt);
+		getEyecareSetting()->setState(EyecareSetting::EYECARE_TIME);
+		getEyecareSetting()->setLeftTime(lt);
 	} else if (0 == _tcscmp(state, CONFIG_APPSET_EYECARE_ENTER)) {
 		// 设置状体
-		eye_care.setState(EyecareSetting::ENTERT_TIME);
-		eye_care.setLeftTime(lt);
+		getEyecareSetting()->setState(EyecareSetting::ENTERT_TIME);
+		getEyecareSetting()->setLeftTime(lt);
 	}
 	return 0;
 }
@@ -413,9 +461,9 @@ int XMLConfiguration::setEyecareState(const TCHAR *state, const TCHAR *timeleft)
 int XMLConfiguration::setEyecareSetting(const TCHAR *type, const TCHAR *timespan) {
 	long lt = _tcstol(timespan, NULL, 10);
 	if (0 == _tcscmp(type, CONFIG_APPSET_EYECARE_EYECARE)) {
-		eye_care.setEyecareTime(lt);
+		getEyecareSetting()->setEyecareTime(lt);
 	} else if (0 == _tcscmp(type, CONFIG_APPSET_EYECARE_ENTER)) {
-		eye_care.setEnterTime(lt);
+		getEyecareSetting()->setEnterTime(lt);
 	}
 
 	return 0;
@@ -451,17 +499,17 @@ int XMLConfiguration::enableWebHistoryRecord(const TCHAR *enable) {
 int XMLConfiguration::setWebHistoryRecord(const TCHAR *type, const TCHAR *enable) {
 	const bool enabled = enabledFromString(enable);
 	if (0 == _tcscmp(type, CONFIG_APPSET_WEBHISTORY_PORN_WEBPAGE)) {
-		web_history.recordPornPages(enabled);
+		getWebHistoryRecordSetting()->recordPornPages(enabled);
 	} else if (0 == _tcscmp(type, CONFIG_APPSET_WEBHISTORY_ALL_WEBPAGE)) {
-		web_history.recordAllPages(enabled);
+		getWebHistoryRecordSetting()->recordAllPages(enabled);
 	} else if (0 == _tcscmp(type, CONFIG_APPSET_WEBHISTORY_ALL_IMAGE)) {
-		web_history.recordAllImage(enabled);
+		getWebHistoryRecordSetting()->recordAllImage(enabled);
 	} else if (0 == _tcscmp(type, CONFIG_APPSET_WEBHISTORY_PORN_IMAGE)) {
-		web_history.recordPornImage(enabled);
+		getWebHistoryRecordSetting()->recordPornImage(enabled);
 	} else if (0 == _tcscmp(type, CONFIG_APPSET_WEBHISTORY_ALL_WEBSITE)) {
-		web_history.recordAllWebsite(enabled);
+		getWebHistoryRecordSetting()->recordAllWebsite(enabled);
 	} else if (0 == _tcscmp(type, CONFIG_APPSET_WEBHISTORY_PORN_WEBSITE)) {
-		web_history.recordPornWebsite(enabled);
+		getWebHistoryRecordSetting()->recordPornWebsite(enabled);
 	} else {
 	}
 	return 0;
@@ -489,7 +537,7 @@ int XMLConfiguration::getWebHistoryRecorder(TiXmlElement *ele) {
 // Authorize
 int XMLConfiguration::addUser(const TCHAR *username, const TCHAR *password) {
 	if ( 0 == _tcscmp(username, CONFIG_APPSET_AUTHORIZE_USERTYPE_SU)) {
-		authorize.setNewPassword(password, PASSWORD_SU);
+		getAuthorize()->setSuPassword(password);
 	}
 	return 0;
 }
@@ -520,7 +568,7 @@ int XMLConfiguration::getSystemSetting(TiXmlElement * ele) {
 // 白名单是否可用
 int XMLConfiguration::enableWhiteURL(const TCHAR *enable) {
 	const bool checked = enabledFromString(enable);
-	white_url_set.enableCheck(checked);
+	getWhiteURLSet()->enableCheck(checked);
 	return 0;
 }
 
@@ -529,7 +577,7 @@ int XMLConfiguration::addWhiteURL(const TCHAR *URL) {
 	if (NULL == URL)
 		return -1;
 
-	white_url_set.addDNS(URL);
+	getWhiteURLSet()->addDNS(URL);
 	return 0;
 }
 
@@ -554,7 +602,7 @@ int XMLConfiguration::getWhiteURL(TiXmlElement * rule_root) {
 // 黑名单是否可用
 int XMLConfiguration::enableBlackURL(const TCHAR *enable) {
 	const bool checked = enabledFromString(enable);
-	black_url_set.enableCheck(checked);
+	getBlackURLSet()->enableCheck(checked);
 	return 0;
 }
 
@@ -563,7 +611,7 @@ int XMLConfiguration::addBlackURL(const TCHAR *URL) {
 	if (NULL == URL)
 		return -1;
 
-	black_url_set.addDNS(URL);
+	getBlackURLSet()->addDNS(URL);
 	return 0;
 }
 
@@ -589,15 +637,15 @@ int XMLConfiguration::getBlackURL(TiXmlElement * rule_root) {
 // Search Rules
 int XMLConfiguration::setSearchEngineCheck(const TCHAR *search_engine, const TCHAR *enable) {
 	const bool enabled = enabledFromString(enable);
-	search_rule.addSearchHost(search_engine);
-	search_rule.enableCheck(search_engine, enabled);
+	getSearchRule()->addSearchHost(search_engine);
+	getSearchRule()->enableCheck(search_engine, enabled);
 	return 0;
 }
 int XMLConfiguration::addBlackSearchWord(const TCHAR *word) {
 	if (NULL == word)
 		return -1;
 
-	search_rule.addBlackSearchWord(word);
+	getSearchRule()->addBlackSearchWord(word);
 	return 0;
 }
 
@@ -664,7 +712,7 @@ int XMLConfiguration::onlineBlocktime(const TCHAR *time) {
 	assert (p1 == p2);
 	int hour = _tcstol(p1 + 1, NULL, 10);
 	
-	online_setting.setHour(day, hour, false);
+	getOnlineSetting()->setHour(day, hour, false);
 	return 0;
 }
 
@@ -676,7 +724,7 @@ int XMLConfiguration::getOnlinetime(TiXmlElement * rule_root) {
 	if (ele != NULL) {
 		enabled = enabledFromString(ele->Attribute(CONFIG_CONST_NAME));
 	}
-	online_setting.enableOnlineHour(enabled);
+	getOnlineSetting()->enableOnlineHour(enabled);
 
 	// 获取不可上网的时间
 	TiXmlNode * node = rule_root->FirstChild();
@@ -698,13 +746,13 @@ int XMLConfiguration::setImageCheck(const TCHAR *imagetype, const TCHAR *enable)
 		return -1;
 
 	if (0 == _tcscmp(imagetype, CONFIG_NODE_IMAGETYPE_JPG)) {
-		content_check_.enableCheck(IMAGE_TYPE_JPEG, enabledFromString(enable));
+		getContentCheckSetting()->enableCheck(IMAGE_TYPE_JPEG, enabledFromString(enable));
 	} else if (0 == _tcscmp(imagetype, CONFIG_NODE_IMAGETYPE_BMP)) {
-		content_check_.enableCheck(IMAGE_TYPE_BMP, enabledFromString(enable));
+		getContentCheckSetting()->enableCheck(IMAGE_TYPE_BMP, enabledFromString(enable));
 	} else if (0 == _tcscmp(imagetype, CONFIG_NODE_IMAGETYPE_GIF)) {
-		content_check_.enableCheck(IMAGE_TYPE_GIF, enabledFromString(enable));
+		getContentCheckSetting()->enableCheck(IMAGE_TYPE_GIF, enabledFromString(enable));
 	} else if (0 == _tcscmp(imagetype, CONFIG_NODE_IMAGETYPE_PNG)) {
-		content_check_.enableCheck(IMAGE_TYPE_PNG, enabledFromString(enable));
+		getContentCheckSetting()->enableCheck(IMAGE_TYPE_PNG, enabledFromString(enable));
 	} else {
 		assert (false);
 		return -1;
@@ -805,8 +853,9 @@ int XMLConfiguration::readDefaultConfig() {
 }
 
 TCHAR * XMLConfiguration::getConfigFilePath(TCHAR *buffer, const int bufsize) {
-	TCHAR directory[MAX_PATH];
-	GetCurrentDirectory(MAX_PATH, directory);
+	TCHAR filename[MAX_PATH], directory[MAX_PATH];
+	GetModuleFileName((HMODULE)hInstance_, filename, MAX_PATH);
+	GetFileNameDir(filename, directory, MAX_PATH);
 	_sntprintf(buffer, bufsize, "%s\\%s", directory, CONFIG_FILE_NAME);
 	return buffer;
 }

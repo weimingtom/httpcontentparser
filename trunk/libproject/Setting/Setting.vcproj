@@ -36,11 +36,11 @@
 			<Tool
 				Name="VCMIDLTool"/>
 			<Tool
-				Name="VCPostBuildEventTool"/>
+				Name="VCPostBuildEventTool"
+				CommandLine="copy .\debug\settingd.lib ..\..\lib"/>
 			<Tool
 				Name="VCPreBuildEventTool"
 				CommandLine="copy .\webhistoryrecordersetting.h ..\..\include
-copy .\debug\settingd.lib ..\..\lib
 copy .\authorize.h ..\..\include
 copy .\eyecaresetting.h ..\..\include
 copy .\screensaver.h ..\..\include
@@ -87,11 +87,11 @@ copy .\onlinehoursetting.h ..\..\include
 			<Tool
 				Name="VCMIDLTool"/>
 			<Tool
-				Name="VCPostBuildEventTool"/>
+				Name="VCPostBuildEventTool"
+				CommandLine="copy .\release\setting.lib ..\..\lib"/>
 			<Tool
 				Name="VCPreBuildEventTool"
 				CommandLine="copy .\webhistoryrecordersetting.h ..\..\include
-copy .\debug\settingd.lib ..\..\lib
 copy .\authorize.h ..\..\include
 copy .\eyecaresetting.h ..\..\include
 copy .\screensaver.h ..\..\include
@@ -196,6 +196,9 @@ copy .\onlinehoursetting.h ..\..\include
 			Name="dnssetting"
 			Filter="">
 			<File
+				RelativePath=".\Authorize.h">
+			</File>
+			<File
 				RelativePath=".\DNSSetting.cpp">
 			</File>
 			<File
@@ -207,9 +210,6 @@ copy .\onlinehoursetting.h ..\..\include
 			Filter="">
 			<File
 				RelativePath=".\Authorize.cpp">
-			</File>
-			<File
-				RelativePath=".\Authorize.h">
 			</File>
 		</Filter>
 		<Filter

@@ -24,62 +24,64 @@
 // |                 XMLConfiguration                   |
 // |____________________________________________________|
 
-#define CONFIG_FILE_NAME			TEXT("config.xml")
+#define CONFIG_FILE_NAME					TEXT("config.xml")
 
-#define CONFIG_ROOT_VALUE			TEXT("config")
-#define CONFIG_NODE_RULES			TEXT("rules")
-#define CONFIG_NODE_APPSET			TEXT("appsetting")
+#define CONFIG_ROOT_VALUE					TEXT("config")
+#define CONFIG_NODE_RULES					TEXT("rules")
+#define CONFIG_NODE_APPSET					TEXT("appsetting")
 
-#define CONFIG_NODE_RULE_ITEM		TEXT("rule")
-#define CONFIG_CONST_NAME			TEXT("name")
-#define CONFIG_CONST_TYPPE			TEXT("type")
-#define CONFIG_CONST_ENABLE			TEXT("enable")
-#define CONFIG_CONST_ENABLE_TRUE	TEXT("true")
-#define CONFIG_CONST_ENABLE_FALSE	TEXT("false")
+#define CONFIG_NODE_RULE_ITEM				TEXT("rule")
+#define CONFIG_CONST_NAME					TEXT("name")
+#define CONFIG_CONST_TYPPE					TEXT("type")
+#define CONFIG_CONST_ENABLE					TEXT("enable")
+#define CONFIG_CONST_ENABLE_TRUE			TEXT("true")
+#define CONFIG_CONST_ENABLE_FALSE			TEXT("false")
 
-#define CONFIG_NODE_NAME_BLACKURL	TEXT("blackurl")
-#define CONFIG_NODE_NAME_WHITEURL	TEXT("whiteurl")
-#define CONFIG_NODE_URL				TEXT("url")
-#define CONFIG_NODE_NAME_SEARCH		TEXT("search")
-#define CONFIG_NODE_NAME_IMAGECHECK	TEXT("imagecheck")
-#define CONFIG_NODE_NAME_TEXT		TEXT("textrule")
+#define CONFIG_NODE_NAME_BLACKURL			TEXT("blackurl")
+#define CONFIG_NODE_NAME_WHITEURL			TEXT("whiteurl")
+#define CONFIG_NODE_URL						TEXT("url")
+#define CONFIG_NODE_NAME_SEARCH				TEXT("search")
+#define CONFIG_NODE_NAME_IMAGECHECK			TEXT("imagecheck")
+#define CONFIG_NODE_NAME_TEXT				TEXT("textrule")
 
-#define CONFIG_NODE_NAME_ONLINETIME	TEXT("onlinetime")
-#define CONFIG_NODE_NAME_BLACKTIME  TEXT("blocktime")
-#define CONFIG_ONLINETIME_SEPERATE  TEXT("-")
+#define CONFIG_NODE_NAME_ONLINETIME			TEXT("onlinetime")
+#define CONFIG_NODE_NAME_BLACKTIME			TEXT("blocktime")
+#define CONFIG_ONLINETIME_SEPERATE			TEXT("-")
 
 
-#define CONFIG_NODE_IMAGE_CHECK_ITEM	TEXT("check")
-#define CONFIG_NODE_IMAGETYPE			TEXT("imagetype")
-#define CONFIG_NODE_IMAGETYPE_BMP		TEXT("bmp")
-#define CONFIG_NODE_IMAGETYPE_GIF		TEXT("gif")
-#define CONFIG_NODE_IMAGETYPE_PNG		TEXT("png")
-#define CONFIG_NODE_IMAGETYPE_JPG		TEXT("jpg")
+#define CONFIG_NODE_IMAGE_CHECK_ITEM		TEXT("check")
+#define CONFIG_NODE_IMAGETYPE				TEXT("imagetype")
+#define CONFIG_NODE_IMAGETYPE_BMP			TEXT("bmp")
+#define CONFIG_NODE_IMAGETYPE_GIF			TEXT("gif")
+#define CONFIG_NODE_IMAGETYPE_PNG			TEXT("png")
+#define CONFIG_NODE_IMAGETYPE_JPG			TEXT("jpg")
 
-#define CONFIG_NODE_SEARCH_ENGINES		TEXT("searchengines")
-#define CONDIG_NODE_SEARCH_ENGINE_ITEM	TEXT("searchengine")
-#define CONFIG_NODE_BLACK_SEARCHWORD	TEXT("blackwords")
-#define CONFIG_NODE_BLACK_WORDITER		TEXT("word")
+#define CONFIG_NODE_SEARCH_ENGINES			TEXT("searchengines")
+#define CONDIG_NODE_SEARCH_ENGINE_ITEM		TEXT("searchengine")
+#define CONFIG_NODE_BLACK_SEARCHWORD		TEXT("blackwords")
+#define CONFIG_NODE_BLACK_WORDITER			TEXT("word")
 //#define CONFIG_NODE_BLACK_ENINE
 
 // Autorize
-#define CONFIG_ITEM_APPSET_AUTHORIZE		TEXT("authorize")
-#define CONFIG_APPSET_AUTHORIZE_USER		TEXT("user")
-#define CONFIG_APPSET_AUTHORIZE_NAME		TEXT("username")
-#define CONFIG_APPSET_AUTHORIZE_PASSWORD	TEXT("password")
-#define CONFIG_APPSET_AUTHORIZE_USERTYPE_SU	TEXT("su")
+#define CONFIG_ITEM_APPSET_AUTHORIZE			TEXT("authorize")
+#define CONFIG_APPSET_AUTHORIZE_USER			TEXT("user")
+#define CONFIG_APPSET_AUTHORIZE_NAME			TEXT("username")
+#define CONFIG_APPSET_AUTHORIZE_PASSWORD		TEXT("password")
+#define CONFIG_APPSET_AUTHORIZE_USERTYPE_SU		TEXT("su")
+#define CONFIG_APPSET_AUTHORIZE_USERTYPE_OTHER	TEXT("other")
 
 
-#define CONFIG_ITEM_APPSET_SYSSETTING	TEXT("syssetting")
+
+#define CONFIG_ITEM_APPSET_SYSSETTING		TEXT("syssetting")
 
 // Eyecare
-#define CONFIG_ITEM_APPSET_EYECARE		TEXT("eyecare")
-#define CONFIG_APPSET_EYECARE_TIME		TEXT("time")
-#define CONFIG_APPSET_EYECARE_TIMESPAN TEXT("timespan")
-#define CONFIG_APPSET_EYECARE_EYECARE	TEXT("eyecare_time")
-#define CONFIG_APPSET_EYECARE_ENTER		TEXT("enter_time")
-#define CONFIG_APPSET_EYECARE_STATE		TEXT("state")
-#define CONFIG_APPSET_EYECARE_TIMELEFT	TEXT("timeleft")
+#define CONFIG_ITEM_APPSET_EYECARE			TEXT("eyecare")
+#define CONFIG_APPSET_EYECARE_TIME			TEXT("time")
+#define CONFIG_APPSET_EYECARE_TIMESPAN		TEXT("timespan")
+#define CONFIG_APPSET_EYECARE_EYECARE		TEXT("eyecare_time")
+#define CONFIG_APPSET_EYECARE_ENTER			TEXT("enter_time")
+#define CONFIG_APPSET_EYECARE_STATE			TEXT("state")
+#define CONFIG_APPSET_EYECARE_TIMELEFT		TEXT("timeleft")
 
 // WebHistory
 #define CONFIG_ITEM_APPSET_WEBHISTORY			TEXT("webhistory")
@@ -107,19 +109,36 @@ class TiXmlNode;
 
 class XMLConfiguration {
 public:
-	XMLConfiguration(void);
+	XMLConfiguration();
 	~XMLConfiguration(void);
 
 	int initialize();
 public:
-	DNSList black_url_set;
-	DNSList white_url_set;
-	SearchRule search_rule;
-	OnlineHourSetting online_setting;
-	EyecareSetting eye_care;
-	WebHistoryRecorderSetting web_history;
-	Authorize authorize;
+	DNSList *		getBlackURLSet() { return &black_url_set_;}
+	DNSList *		getWhiteURLSet() { return &white_url_set_;}
+	SearchRule *	getSearchRule() { return &search_rule_;}
+	EyecareSetting* getEyecareSetting() { return &eye_care_;}
+	OnlineHourSetting *getOnlineSetting() { return &online_setting_;}
+	WebHistoryRecorderSetting * getWebHistoryRecordSetting() { return &web_history_;}
+	Authorize *		getAuthorize() { return &authorize_;}
+	ContentCheckSetting * getContentCheckSetting() { return &content_check_;}
+
+	void setInstance(HINSTANCE hInstance) {
+		hInstance_ = hInstance;
+	}
+private:
+	DNSList black_url_set_;
+	DNSList white_url_set_;
+	SearchRule search_rule_;
+	OnlineHourSetting online_setting_;
+	EyecareSetting eye_care_;
+	WebHistoryRecorderSetting web_history_;
+	Authorize authorize_;
 	ContentCheckSetting	content_check_;
+	
+	HINSTANCE hInstance_;
+	// ƒ¨»œ…Ë÷√
+	void defaultSetting();
 private:
 	// ∂¡»°XML
 	int readConfig();
@@ -197,6 +216,7 @@ private:
 	int saveAppSetting(TiXmlElement * root);
 	int saveWebHistory(TiXmlElement * app_root);
 	int saveEyecare(TiXmlElement *app_root);
+	int saveAuthorize(TiXmlElement *app_root);
 };
 
 #endif  // _SETTING_XMLCONFIGURATION_H__
