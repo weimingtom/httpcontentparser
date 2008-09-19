@@ -4,6 +4,9 @@
 #include <string>
 #include <map>
 #include <passwordtype.h>
+#include <Enumerate.h>
+
+class XMLConfiguration;
 
 // 此类负责密码的统一管理
 // 包括密码的保存， 验证，修改等
@@ -25,6 +28,9 @@ private:
 	std::map<int, std::string> password_;
 	typedef std::map<int, std::string> PASSWORD_MAP;
 	PASSWORD_MAP password_set_;
+
+	friend class XMLConfiguration;	//用于设置密码
+	void EnumUsers(Enumerator2<std::string, int> * enumerator);
 };
 
 #endif  // _SETTING_AUTHORIZE_H__
