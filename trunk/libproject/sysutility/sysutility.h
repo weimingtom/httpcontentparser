@@ -17,7 +17,7 @@ void ClearHistory(HMODULE hModule);
 const TCHAR *GetInstallDir(const TCHAR *directory, const unsigned len);
 
 // 获取指定文件的目录
-const TCHAR* GetFileNameDir(const TCHAR *filename, TCHAR *directory, const unsigned len);
+const TCHAR* GetFileNameDir(TCHAR *filename, TCHAR *directory, const unsigned len);
 
 // 获取保存图片的路径
 const TCHAR * GetPornImageDirectory(TCHAR *filename, const unsigned len);
