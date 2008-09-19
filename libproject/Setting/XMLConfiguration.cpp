@@ -3,6 +3,7 @@
 #include ".\SearchRule.h"
 #include ".\eyecaresetting.h"
 
+#include <webcontenttype.h>
 #include <passwordtype.h>
 #include <tinyXML\tinyxml.h>
 #include <webcontenttype.h>
@@ -20,9 +21,9 @@ XMLConfiguration::XMLConfiguration(void) {
 
 XMLConfiguration::~XMLConfiguration(void) {
 }
-
+namespace {
 // utilit fucntions
-bool XMLConfiguration::checkEnable(const TCHAR *enable) const{
+bool enabledFromString(const TCHAR *enable) {
 	if (NULL != enable) {
 		if (0 == _tcscmp(enable, CONFIG_CONST_ENABLE_FALSE)) {
 			return false;
@@ -34,6 +35,239 @@ bool XMLConfiguration::checkEnable(const TCHAR *enable) const{
 	}
 }
 
+const char * enabledFromBool(const bool enabled) {
+	if (true == enabled) {
+		return CONFIG_CONST_ENABLE_TRUE;
+	} else {
+		return CONFIG_CONST_ENABLE_FALSE;
+	}
+}
+};
+
+///////////////////////////////////////////////////////////////////////////////////
+// 保存规则
+//
+
+//==========================================================
+// XML 保存函数
+int XMLConfiguration::save() {
+	// Create XML
+	TiXmlDocument doc;
+	TiXmlDeclaration * decl = new TiXmlDeclaration( "1.0", "UTF-8", "" );
+	doc.LinkEndChild(decl);
+
+	// 创建根节点
+	TiXmlElement * root_element = new TiXmlElement( CONFIG_ROOT_VALUE );
+	
+	saveRules(root_element);
+	
+	
+	doc.LinkEndChild(root_element);
+	doc.SaveFile("c:\\hello.xml");
+	return 0;
+}
+int XMLConfiguration::saveRules(TiXmlElement *root) {
+	TiXmlElement * rules_root = new TiXmlElement( CONFIG_NODE_RULES );
+	// 保存上网时间规则
+	saveOnlineHour(rules_root);
+	saveWhiteURL(rules_root);
+	saveBlackURL(rules_root);
+	
+	saveSearchRule(rules_root);	// 保存Search rules
+	saveImageRule(rules_root);	// 保存ImageCheck
+	root->LinkEndChild(rules_root);
+	return 0;
+}
+
+//===========================================================
+// URL Rules
+namespace {
+// class DNSEnumerator
+class DNSEnum : public Enumerator1<std::string> {
+public:
+	virtual int Enum(const std::string &dns) {
+		TiXmlElement * url_node = new TiXmlElement(CONFIG_NODE_URL);
+		TiXmlText * text = new TiXmlText(dns);
+		url_node->LinkEndChild(text);
+		rule_root_->LinkEndChild(url_node);
+		return 0;
+	}
+public:
+	DNSEnum(TiXmlElement * rule_root) {
+		rule_root_ = rule_root;
+		assert (rule_root_ != NULL);
+	}
+private:
+	TiXmlElement *rule_root_;
+};
+};
+
+int XMLConfiguration::saveWhiteURL(TiXmlElement *root) {
+	TiXmlElement * rule_root = new TiXmlElement(CONFIG_NODE_RULE_ITEM);
+
+	// 设置属性
+	rule_root->SetAttribute(CONFIG_CONST_NAME, CONFIG_NODE_NAME_WHITEURL);
+	rule_root->SetAttribute(CONFIG_CONST_ENABLE, enabledFromBool(white_url_set.needChecked()));
+	// 添加URL
+	white_url_set.beginEnum(&DNSEnum(rule_root));
+	root->LinkEndChild(rule_root);
+	return 0;
+}
+
+int XMLConfiguration::saveBlackURL(TiXmlElement *root) {
+	TiXmlElement * rule_root = new TiXmlElement(CONFIG_NODE_RULE_ITEM);
+
+	// 设置属性
+	rule_root->SetAttribute(CONFIG_CONST_NAME, CONFIG_NODE_NAME_BLACKURL);
+	rule_root->SetAttribute(CONFIG_CONST_ENABLE, enabledFromBool(black_url_set.needChecked()));
+
+	// 添加URL
+	black_url_set.beginEnum(&DNSEnum(rule_root));
+	root->LinkEndChild(rule_root);
+	return 0;
+}
+
+//==========================================================
+// save Online hour
+namespace {
+class EnumOnlineHour : public Enumerator2<int, int> {
+public:
+	char * genBlocktime(const int day, const int hour) {
+		_sntprintf(buffer, 1024, "%d%s%d", day, CONFIG_ONLINETIME_SEPERATE, hour);
+		return buffer;
+	}
+
+	virtual int Enum(const int day, const int hour) {
+		TiXmlElement * blocktime = new TiXmlElement(CONFIG_NODE_NAME_BLACKTIME);
+
+		TiXmlText * itemitem = new TiXmlText(genBlocktime(day, hour));
+
+		blocktime->LinkEndChild(itemitem);
+		rule_root_->LinkEndChild(blocktime);
+
+		return 0;
+	}
+public:
+	EnumOnlineHour(TiXmlElement * rule_root) {
+		rule_root_ = rule_root;
+	}
+private:
+	TiXmlElement * rule_root_;
+	TCHAR buffer[1024];	// 避免重复
+};
+};
+
+int XMLConfiguration::saveOnlineHour(TiXmlElement *root) {
+	TiXmlElement * rule_root = new TiXmlElement(CONFIG_NODE_RULE_ITEM);
+
+	// 设置属性
+	rule_root->SetAttribute(CONFIG_CONST_NAME, CONFIG_NODE_NAME_ONLINETIME);
+	rule_root->SetAttribute(CONFIG_CONST_ENABLE, enabledFromBool(online_setting.isEnabled()));
+
+	online_setting.enumBlockHour(&EnumOnlineHour(rule_root));
+	
+	root->LinkEndChild(rule_root);
+	return 0;
+}
+
+//==========================================================
+// 保存图片检测规则
+int XMLConfiguration::saveImageRule(TiXmlElement *root) {
+	TiXmlElement * rule_root = new TiXmlElement(CONFIG_NODE_RULE_ITEM);
+
+	// 设置属性
+	rule_root->SetAttribute(CONFIG_CONST_NAME, CONFIG_NODE_NAME_IMAGECHECK);
+
+	// jgp
+	TiXmlElement *item_jpg = new TiXmlElement(CONFIG_NODE_IMAGE_CHECK_ITEM);
+	item_jpg->SetAttribute(CONFIG_NODE_IMAGETYPE, CONFIG_NODE_IMAGETYPE_JPG);
+	item_jpg->SetAttribute(CONFIG_CONST_ENABLE, enabledFromBool(content_check_.needCheck(IMAGE_TYPE_JPEG)));
+	rule_root->LinkEndChild(item_jpg);
+
+	// bmp
+	TiXmlElement *item_bmp = new TiXmlElement(CONFIG_NODE_IMAGE_CHECK_ITEM);
+	item_bmp->SetAttribute(CONFIG_NODE_IMAGETYPE, CONFIG_NODE_IMAGETYPE_BMP);
+	item_bmp->SetAttribute(CONFIG_CONST_ENABLE, enabledFromBool(content_check_.needCheck(IMAGE_TYPE_BMP)));
+	rule_root->LinkEndChild(item_bmp);
+
+	// gif
+	TiXmlElement *item_gif = new TiXmlElement(CONFIG_NODE_IMAGE_CHECK_ITEM);
+	item_gif->SetAttribute(CONFIG_NODE_IMAGETYPE, CONFIG_NODE_IMAGETYPE_GIF);
+	item_gif->SetAttribute(CONFIG_CONST_ENABLE, enabledFromBool(content_check_.needCheck(IMAGE_TYPE_GIF)));
+	rule_root->LinkEndChild(item_gif);
+
+	// png
+	TiXmlElement *item_png = new TiXmlElement(CONFIG_NODE_IMAGE_CHECK_ITEM);
+	item_png->SetAttribute(CONFIG_NODE_IMAGETYPE, CONFIG_NODE_IMAGETYPE_PNG);
+	item_png->SetAttribute(CONFIG_CONST_ENABLE, enabledFromBool(content_check_.needCheck(IMAGE_TYPE_PNG)));
+	rule_root->LinkEndChild(item_png);
+
+	root->LinkEndChild(rule_root);
+	return 0;
+}
+
+//==========================================================
+// search rules
+namespace {
+class EnumBlackWord : public Enumerator1<std::string> {
+public:
+	virtual int Enum(const std::string &data1) {
+		TiXmlElement * blackword = new TiXmlElement(CONFIG_NODE_BLACK_SEARCHWORD);
+		TiXmlText * word = new TiXmlText(data1);
+		blackword->LinkEndChild(word);
+		rule_root_->LinkEndChild(blackword);
+
+		return 0;
+	}
+public:
+	EnumBlackWord(TiXmlElement * rule_root) {
+		rule_root_ = rule_root;
+	}
+private:
+	TiXmlElement * rule_root_;
+};
+
+class EnumSearchEngine : public Enumerator2<std::string, bool> {
+public:
+	virtual int Enum(const std::string &data1, const bool enabled) {
+		TiXmlElement * searchengine_item = new TiXmlElement(CONDIG_NODE_SEARCH_ENGINE_ITEM);
+		searchengine_item->SetAttribute(CONFIG_CONST_NAME, data1);
+		searchengine_item->SetAttribute(CONFIG_CONST_ENABLE, enabled);
+		rule_root_->LinkEndChild(searchengine_item);
+
+		return 0;
+	}
+public:
+	EnumSearchEngine(TiXmlElement * rule_root) {
+		rule_root_ = rule_root;
+	}
+private:
+	TiXmlElement * rule_root_;
+};
+};
+int XMLConfiguration::saveSearchRule(TiXmlElement *root) {
+	TiXmlElement * rule_root = new TiXmlElement(CONFIG_NODE_RULE_ITEM);
+
+	// 设置属性
+	rule_root->SetAttribute(CONFIG_CONST_NAME, CONFIG_NODE_NAME_SEARCH);
+	rule_root->SetAttribute(CONFIG_CONST_ENABLE, enabledFromBool(search_rule.isEnabled()));
+
+	// 设置black word
+	TiXmlElement * blackword = new TiXmlElement(CONFIG_NODE_BLACK_SEARCHWORD);
+	search_rule.enumBlackWord(&EnumBlackWord(blackword));
+	rule_root->LinkEndChild(blackword);
+
+	TiXmlElement *search_engine = new TiXmlElement(CONFIG_NODE_SEARCH_ENGINES);
+	search_rule.enumSearchEngine(&EnumSearchEngine(search_engine));
+	rule_root->LinkEndChild(search_engine);
+
+	root->LinkEndChild(rule_root);
+	return 0;
+}
+
+///////////////////////////////////////////////////////////////////////////////////
+// 读入规则
+//
 
 //======================================================
 // 程序设置
@@ -67,7 +301,7 @@ int XMLConfiguration::parseAppSet(TiXmlNode *appset_root) {
 //===============================================================
 // Eyecare
 int XMLConfiguration::enableEyecareSetting(const TCHAR *enable) {
-	const bool enabled = checkEnable(enable);
+	const bool enabled = enabledFromString(enable);
 	eye_care.Enable(enabled);
 	return 0;
 }
@@ -119,12 +353,12 @@ int XMLConfiguration::getEyecareSetting(TiXmlElement *ele) {
 //=========================================================
 // WebHistory
 int XMLConfiguration::enableWebHistoryRecord(const TCHAR *enable) {
-	const bool enabled = checkEnable(enable);
+	const bool enabled = enabledFromString(enable);
 	return 0;
 }
 
 int XMLConfiguration::setWebHistoryRecord(const TCHAR *type, const TCHAR *enable) {
-	const bool enabled = checkEnable(enable);
+	const bool enabled = enabledFromString(enable);
 	if (0 == _tcscmp(type, CONFIG_APPSET_WEBHISTORY_PORN_WEBPAGE)) {
 		web_history.recordPornPages(enabled);
 	} else if (0 == _tcscmp(type, CONFIG_APPSET_WEBHISTORY_ALL_WEBPAGE)) {
@@ -194,7 +428,7 @@ int XMLConfiguration::getSystemSetting(TiXmlElement * ele) {
 //========================================================
 // 白名单是否可用
 int XMLConfiguration::enableWhiteURL(const TCHAR *enable) {
-	const bool checked = checkEnable(enable);
+	const bool checked = enabledFromString(enable);
 	white_url_set.enableCheck(checked);
 	return 0;
 }
@@ -228,7 +462,7 @@ int XMLConfiguration::getWhiteURL(TiXmlElement * rule_root) {
 //========================================================
 // 黑名单是否可用
 int XMLConfiguration::enableBlackURL(const TCHAR *enable) {
-	const bool checked = checkEnable(enable);
+	const bool checked = enabledFromString(enable);
 	black_url_set.enableCheck(checked);
 	return 0;
 }
@@ -263,7 +497,7 @@ int XMLConfiguration::getBlackURL(TiXmlElement * rule_root) {
 //========================================================
 // Search Rules
 int XMLConfiguration::setSearchEngineCheck(const TCHAR *search_engine, const TCHAR *enable) {
-	const bool enabled = checkEnable(enable);
+	const bool enabled = enabledFromString(enable);
 	search_rule.addSearchHost(search_engine);
 	search_rule.enableCheck(search_engine, enabled);
 	return 0;
@@ -280,7 +514,7 @@ int XMLConfiguration::getSearchRule(TiXmlElement * rule_root) {
 	TiXmlNode * node = rule_root->FirstChild();
 	while (NULL != node) {
 		TiXmlElement * ele = node->ToElement();
-		if (_tcscmp(node->Value(), CONFIG_NODE_SEARCH_ENGINE) == 0) {
+		if (_tcscmp(node->Value(), CONFIG_NODE_SEARCH_ENGINES) == 0) {
 			assert (NULL != ele);
 			getSearchEngineSetting(ele);
 		} else if (_tcscmp(node->Value(), CONFIG_NODE_BLACK_SEARCHWORD) == 0) {
@@ -330,13 +564,30 @@ int XMLConfiguration::getSearchEngineSetting(TiXmlElement * rule_root) {
 int XMLConfiguration::onlineBlocktime(const TCHAR *time) {
 	if (NULL == time)
 		return -1;
+
 	// 解析时间
+	char *p1 = _tcsstr(time, CONFIG_ONLINETIME_SEPERATE);
+	assert (NULL != p1);
+	char *p2 = p1;
+	int day = _tcstol(time, &p2, 10);
+	assert (p1 == p2);
+	int hour = _tcstol(p1 + 1, NULL, 10);
 	
+	online_setting.setHour(day, hour, false);
 	return 0;
 }
 
 
 int XMLConfiguration::getOnlinetime(TiXmlElement * rule_root) {
+	// 是否可用
+	TiXmlElement *ele = rule_root->ToElement();
+	bool enabled = true;
+	if (ele != NULL) {
+		enabled = enabledFromString(ele->Attribute(CONFIG_CONST_NAME));
+	}
+	online_setting.enableOnlineHour(enabled);
+
+	// 获取不可上网的时间
 	TiXmlNode * node = rule_root->FirstChild();
 	while (NULL != node) {
 		TiXmlElement *ele = node->ToElement();
@@ -484,9 +735,5 @@ int XMLConfiguration::readConfig() {
 // public members
 int XMLConfiguration::initialize() {
 	readConfig();
-	return 0;
-}
-
-int XMLConfiguration::save() {
 	return 0;
 }
