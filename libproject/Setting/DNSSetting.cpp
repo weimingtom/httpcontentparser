@@ -184,11 +184,11 @@ void DNSList::addDNS(const std::string &dns_name) {
 }
 
 
-void DNSList::beginEnum(DNSEnumerator *enumerator) {
+void DNSList::beginEnum(Enumerator1<std::string> *enumerator) {
 	assert (NULL != enumerator);
 
 	DNS_SET::const_iterator iter = dns_set_.begin();
 	for (; iter != dns_set_.end(); ++iter) {
-		enumerator->EnumDNS(*iter);
+		enumerator->Enum(*iter);
 	}
 }
