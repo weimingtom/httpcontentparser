@@ -15,8 +15,8 @@ void EyecareTest::getTimeLeft() {
 
 	CoInitialize(NULL);
 	CoCreateInstance(CLSID_Eyecare, NULL, CLSCTX_ALL, IID_IEyecare, (LPVOID*)&pEyeCare);
-	pEyeCare->setEntertainmentTime(10);
-	pEyeCare->setRestTime(10);
+	pEyeCare->setEnterTime(10);
+	pEyeCare->setEyecareTime(10);
 
 	LONG timeLeft ;
 	pEyeCare->getTimeLeft(&timeLeft);
