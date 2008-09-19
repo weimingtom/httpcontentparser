@@ -204,6 +204,12 @@
 			<File
 				RelativePath=".\SearchRuleTest.h">
 			</File>
+			<File
+				RelativePath=".\WebHistoryRecordTest.cpp">
+			</File>
+			<File
+				RelativePath=".\WebHistoryRecordTest.h">
+			</File>
 		</Filter>
 		<File
 			RelativePath=".\ReadMe.txt">
