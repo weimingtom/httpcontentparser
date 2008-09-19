@@ -50,3 +50,10 @@ void OnlineHourSetting::setHour(const DWORD day, const DWORD hour, const bool al
 	assert(hour<24);
 	return setHour(static_cast<DWORD>(MAKELPARAM(day, hour)), allow_access);
 }
+
+void OnlineHourSetting::enumBlockHour(Enumerator2<int, int> *enumerator) {
+	OFFLINE_HOUR::iterator iter = online_hour_.begin();
+	for (; iter != online_hour_.end(); ++iter) {
+		enumerator->Enum(static_cast<int>(LOWORD(*iter)), static_cast<int>(HIWORD(*iter)));
+	}
+}
