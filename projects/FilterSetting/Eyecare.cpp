@@ -28,51 +28,51 @@ STDMETHODIMP CEyecare::InterfaceSupportsErrorInfo(REFIID riid)
 }
 
 STDMETHODIMP CEyecare::setPassword(BSTR password) {
-	// g_Eyecare_setting_.setPassword(_bstr_t(password)); 
+	// g_configuration.getEyecareSetting()->setPassword(_bstr_t(password)); 
 	return S_OK;
 }
 
 STDMETHODIMP CEyecare::setEyecareTime(LONG mintues) {
-	g_Eyecare_setting_.setEyecareTime(mintues);
+	g_configuration.getEyecareSetting()->setEyecareTime(mintues);
 	return S_OK;
 }
 
 STDMETHODIMP CEyecare::setEnterTime(LONG mintues) {
-	g_Eyecare_setting_.setEnterTime(mintues);
+	g_configuration.getEyecareSetting()->setEnterTime(mintues);
 	return S_OK;
 }
 
 STDMETHODIMP CEyecare::getEyecareTime(LONG* second) {
-	*second = g_Eyecare_setting_.getEyecareTime();
+	*second = g_configuration.getEyecareSetting()->getEyecareTime();
 	return S_OK;
 }
 
 STDMETHODIMP CEyecare::getEnterTime(LONG* second) {
-	*second = g_Eyecare_setting_.getEnterTime();
+	*second = g_configuration.getEyecareSetting()->getEnterTime();
 	return S_OK;
 }
 
 STDMETHODIMP CEyecare::getTimeLeft(LONG* second) {
-	*second = g_Eyecare_setting_.getRemainTime();
+	*second = g_configuration.getEyecareSetting()->getRemainTime();
 	return S_OK;
 }
 
 STDMETHODIMP CEyecare::getState(LONG* state) {
-	*state = g_Eyecare_setting_.getState();
+	*state = g_configuration.getEyecareSetting()->getState();
 	return S_OK;
 }
 
 STDMETHODIMP CEyecare::swithToEntertainment(BSTR password, VARIANT_BOOL *bSuccess) {
-	*bSuccess = g_Eyecare_setting_.switchState((char*)_bstr_t(password));
+	*bSuccess = g_configuration.getEyecareSetting()->switchState((char*)_bstr_t(password));
 	return S_OK;
 }
 
 STDMETHODIMP CEyecare::trySwitch(LONG* state) {
-	*state = g_Eyecare_setting_.trySwitch();
+	*state = g_configuration.getEyecareSetting()->trySwitch();
 	return S_OK;
 }
 
 STDMETHODIMP CEyecare::LockScreen(void) {
-	g_Eyecare_setting_.ForceLockWnd();
+	g_configuration.getEyecareSetting()->ForceLockWnd();
 	return S_OK;
 }
