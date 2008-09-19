@@ -28,23 +28,11 @@ bool WebHistoryRecorderSetting::recordAllPages() const {
 		return false;
 	}
 }
-bool WebHistoryRecorderSetting::recordPornPages() const	{
-	if (isEnable() ) {
-		return recordPornPage_;
-	} else {
-		return false;
-	}
-}
-bool WebHistoryRecorderSetting::recordPornImage() const	{
-	if (isEnable() ) {
-		return recordImage_;
-	} else {
-		return false;
-	}
-}
+
+
 bool WebHistoryRecorderSetting::recordAllImage() const	{
 	if (isEnable() ) {
-		return recordPornImage_;
+		return recordImage_;
 	} else {
 		return false;
 	}
@@ -56,6 +44,23 @@ bool WebHistoryRecorderSetting::recordAllWebsite() const {
 		return false;
 	}
 }
+
+bool WebHistoryRecorderSetting::recordPornImage() const	{
+	if (isEnable() ) {
+		return recordPornImage_;
+	} else {
+		return false;
+	}
+}
+
+bool WebHistoryRecorderSetting::recordPornPages() const	{
+	if (isEnable() ) {
+		return recordPornPage_;
+	} else {
+		return false;
+	}
+}
+
 bool WebHistoryRecorderSetting::recordPornWebsite() const {
 	if (isEnable() ) {
 		return recordPornWebsite_;
