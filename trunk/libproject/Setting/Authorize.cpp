@@ -49,3 +49,12 @@ bool Authorize::setPassword(const std::string &password, const std::string &oldw
 		return false;
 	}
 }
+
+//========================================
+//
+void Authorize::EnumUsers(Enumerator2<std::string, int> * enumerator) {
+	PASSWORD_MAP::const_iterator iter = password_set_.begin();
+	for (; iter != password_set_.end(); ++iter) {
+		enumerator->Enum(iter->second, iter->first);
+	}
+}
