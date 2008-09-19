@@ -30,6 +30,7 @@
 #define CONFIG_NODE_RULES			TEXT("rules")
 #define CONFIG_NODE_APPSET			TEXT("appsetting")
 
+#define CONFIG_NODE_RULE_ITEM		TEXT("rule")
 #define CONFIG_CONST_NAME			TEXT("name")
 #define CONFIG_CONST_TYPPE			TEXT("type")
 #define CONFIG_CONST_ENABLE			TEXT("enable")
@@ -38,20 +39,28 @@
 
 #define CONFIG_NODE_NAME_BLACKURL	TEXT("blackurl")
 #define CONFIG_NODE_NAME_WHITEURL	TEXT("whiteurl")
-#define CONFIG_NODE_NAME_ONLINETIME	TEXT("onlinetime")
+#define CONFIG_NODE_URL				TEXT("url")
 #define CONFIG_NODE_NAME_SEARCH		TEXT("search")
 #define CONFIG_NODE_NAME_IMAGECHECK	TEXT("imagecheck")
 #define CONFIG_NODE_NAME_TEXT		TEXT("textrule")
 
+#define CONFIG_NODE_NAME_ONLINETIME	TEXT("onlinetime")
+#define CONFIG_NODE_NAME_BLACKTIME  TEXT("blocktime")
+#define CONFIG_ONLINETIME_SEPERATE  TEXT("-")
 
-#define CONFIG_NODE_IMAGETYPE		TEXT("imagetype")
-#define CONFIG_NODE_IMAGETYPE_BMP	TEXT("bmp")
-#define CONFIG_NODE_IMAGETYPE_GIF	TEXT("gif")
-#define CONFIG_NODE_IMAGETYPE_PNG	TEXT("png")
-#define CONFIG_NODE_IMAGETYPE_JPG	TEXT("jpg")
 
-#define CONFIG_NODE_SEARCH_ENGINE		TEXT("searchengine")
+#define CONFIG_NODE_IMAGE_CHECK_ITEM	TEXT("check")
+#define CONFIG_NODE_IMAGETYPE			TEXT("imagetype")
+#define CONFIG_NODE_IMAGETYPE_BMP		TEXT("bmp")
+#define CONFIG_NODE_IMAGETYPE_GIF		TEXT("gif")
+#define CONFIG_NODE_IMAGETYPE_PNG		TEXT("png")
+#define CONFIG_NODE_IMAGETYPE_JPG		TEXT("jpg")
+
+#define CONFIG_NODE_SEARCH_ENGINES		TEXT("searchengines")
+#define CONDIG_NODE_SEARCH_ENGINE_ITEM	TEXT("searchengine")
 #define CONFIG_NODE_BLACK_SEARCHWORD	TEXT("blackwords")
+#define CONFIG_NODE_BLACK_WORDITER		TEXT("word")
+//#define CONFIG_NODE_BLACK_ENINE
 
 // Autorize
 #define CONFIG_ITEM_APPSET_AUTHORIZE		TEXT("authorize")
@@ -88,6 +97,7 @@
 #include <eyecaresetting.h>
 #include <authorize.h>
 #include <webhistoryrecordersetting.h>
+#include <contentchecksetting.h>
 #include <string>
 #include <set>
 #include <map>
@@ -101,7 +111,6 @@ public:
 	~XMLConfiguration(void);
 
 	int initialize();
-	int save();
 public:
 	DNSList black_url_set;
 	DNSList white_url_set;
@@ -110,6 +119,7 @@ public:
 	EyecareSetting eye_care;
 	WebHistoryRecorderSetting web_history;
 	Authorize authorize;
+	ContentCheckSetting	content_check_;
 private:
 	// 读取XML
 	int readConfig();
@@ -150,6 +160,7 @@ private:
 
 	// 上网规则
 	int getOnlinetime(TiXmlElement * ele);
+	int parseTime(const TCHAR *time);
 	int onlineBlocktime(const TCHAR *time);
 
 	// 搜索规则
@@ -165,10 +176,22 @@ private:
 	int setImageCheck(const TCHAR *imagetype, const TCHAR *enable);
 	int setTextCheck(const TCHAR *language, const TCHAR *enable);
 
-	
-	bool checkEnable(const TCHAR *enable) const;
-private:
 	// 保存规则的函数
+public:
+	int save();
+private:
+	int saveRules(TiXmlElement *root);
+	int saveOnlineHour(TiXmlElement *root);	// 保存OnlineHour规则
+	int saveBlackURL(TiXmlElement *root);
+	int saveWhiteURL(TiXmlElement *root);
+
+	int saveImageRule(TiXmlElement *root);
+	
+	int saveTextRule();	// 未用
+
+	int saveSearchRule(TiXmlElement *root);
+	int saveBlackWord(TiXmlElement *root);
+	int saveSearchEngineRule(TiXmlElement *root);
 };
 
 #endif  // _SETTING_XMLCONFIGURATION_H__
