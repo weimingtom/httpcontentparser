@@ -17,7 +17,6 @@ EyecareTest::~EyecareTest(void) {
 void EyecareTest::TestTimeSetting() {
 	Authorize authorize;
 	string supassword = "123", eyecarePassword = "456";
-	CPPUNIT_ASSERT(authorize.setNewPassword(supassword, PASSWORD_SU));
 	CPPUNIT_ASSERT(authorize.setNewPassword(eyecarePassword, PASSWORD_EYECARE));
 
 	EyecareSetting setting;
@@ -34,7 +33,6 @@ void EyecareTest::TestPassword() {
 	// …Ë÷√‘≠ º√‹¬Î
 	Authorize authorize;
 	string supassword = "123", eyecarePassword = "456";
-	CPPUNIT_ASSERT(authorize.setNewPassword(supassword, PASSWORD_SU));
 	CPPUNIT_ASSERT(authorize.setNewPassword(eyecarePassword, PASSWORD_EYECARE));
 
 	EyecareSetting setting;
@@ -57,7 +55,6 @@ void EyecareTest::TestPassword() {
 void EyecareTest::TestSwitchState() {
 	Authorize authorize;
 	string supassword = "123", eyecarePassword = "456";
-	CPPUNIT_ASSERT(authorize.setNewPassword(supassword, PASSWORD_SU));
 	CPPUNIT_ASSERT(authorize.setNewPassword(eyecarePassword, PASSWORD_EYECARE));
 
 	EyecareSetting setting;
@@ -81,7 +78,6 @@ void EyecareTest::TestSwitchState() {
 void EyecareTest::TextForceSwitch() {
 	Authorize authorize;
 	string supassword = "123", eyecarePassword = "456";
-	CPPUNIT_ASSERT(authorize.setNewPassword(supassword, PASSWORD_SU));
 	CPPUNIT_ASSERT(authorize.setNewPassword(eyecarePassword, PASSWORD_EYECARE));
 
 	const int restTime = 1;
