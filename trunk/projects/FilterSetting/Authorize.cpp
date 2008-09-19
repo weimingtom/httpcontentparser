@@ -28,14 +28,15 @@ STDMETHODIMP CAuthorize::InterfaceSupportsErrorInfo(REFIID riid) {
 
 // ÑéÖ¤ÃÜÂë
 STDMETHODIMP CAuthorize::checkPassword(BSTR password, VARIANT_BOOL* bSuccess) {
-	*bSuccess = convert(g_authorize.checkPassword((char*)_bstr_t(password), PASSWORD_SU)); 
+	*bSuccess = convert(g_configuration.getAuthorize()->checkPassword((char*)_bstr_t(password), PASSWORD_SU)); 
 	return S_OK;
 }
 
 STDMETHODIMP CAuthorize::changePassword(BSTR password, BSTR oldPassword, VARIANT_BOOL* bSuccess)
 {
 	OutputDebugString(_T("change password ....."));
-	*bSuccess = convert(g_authorize.setPassword((char*)_bstr_t(password), (char*)_bstr_t(oldPassword), PASSWORD_SU)); 
+	*bSuccess = convert(g_configuration.getAuthorize()->setPassword((char*)_bstr_t(password),
+		(char*)_bstr_t(oldPassword), PASSWORD_SU)); 
 	return S_OK;
 }
 

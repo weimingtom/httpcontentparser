@@ -10,6 +10,7 @@
 #include <string>
 #include <screensaver.h>
 #include <webhistoryrecordersetting.h>
+#include <xmlconfiguration.h>
 
 class CFilterSettingModule : public CAtlServiceModuleT< CFilterSettingModule, IDS_SERVICENAME >
 {
@@ -32,26 +33,19 @@ CFilterSettingModule _AtlModule;
 
 // DNS Rules
 DNSSetting g_dnssetting;
-DNSList g_black_dns_list;
-DNSList g_white_dns_list;
 
+XMLConfiguration g_configuration;
 
 ScreenSaver g_screenSaver;			// 用于屏幕保存
-Authorize g_authorize;				// 用于验证密码
-EyecareSetting g_Eyecare_setting_;
 HINSTANCE g_hInstance;
-WebHistoryRecorderSetting g_webhistoryRecordSetting_;
+
 
 extern "C" int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, 
                                 LPTSTR /*lpCmdLine*/, int nShowCmd)
 {
 	g_hInstance = hInstance;
-
-	g_dnssetting.initialize(&g_black_dns_list, &g_white_dns_list);
-
-	// 还应该在上
-	// TO DO
-	g_Eyecare_setting_.initialize(&g_authorize, EyecareSetting::ENTERT_TIME);
+	g_configuration.setInstance(hInstance);
+	g_dnssetting.initialize(g_configuration.getBlackURLSet(), g_configuration.getWhiteURLSet());
 	
 	// 初始化屏幕记录
 	g_screenSaver.initialize();
