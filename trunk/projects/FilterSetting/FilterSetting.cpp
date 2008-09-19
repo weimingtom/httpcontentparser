@@ -56,9 +56,6 @@ extern "C" int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/
 	// 初始化屏幕记录
 	g_screenSaver.initialize();
 
-	// 初始化记录网页的设置
-	g_webhistoryRecordSetting_.initialize();
-
 	 // 开启服务线程
 	ServThread::getInstance();
 	
