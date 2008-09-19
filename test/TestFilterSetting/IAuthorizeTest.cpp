@@ -27,9 +27,10 @@ void IAuthorizeTest::testCheckPassword() {
 		}
 		
 		VARIANT_BOOL corrected;
-		_bstr_t last_password = "123";
+		_bstr_t last_password = DEFAULT_PASSWORD;
 		_bstr_t wrong_password = "8382";
 		_bstr_t new_password = "234";
+
 		authorize->checkPassword(last_password, &corrected);
 		CPPUNIT_ASSERT(true == convert(corrected));
 

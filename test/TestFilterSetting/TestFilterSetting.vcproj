@@ -45,8 +45,7 @@
 				Name="VCPostBuildEventTool"
 				CommandLine="copy .\Debug\TestFilterSetting.exe ..\..\testoutput"/>
 			<Tool
-				Name="VCPreBuildEventTool"
-				CommandLine="copy .\Debug\TestFilterSetting.exe ..\..\testoutput"/>
+				Name="VCPreBuildEventTool"/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
 			<Tool
@@ -117,12 +116,6 @@
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
 			<File
-				RelativePath=".\FilterSettingTest.cpp">
-			</File>
-			<File
-				RelativePath=".\IAuthorizeTest.cpp">
-			</File>
-			<File
 				RelativePath=".\stdafx.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
@@ -140,17 +133,21 @@
 			<File
 				RelativePath=".\TestFilterSetting.cpp">
 			</File>
+			<Filter
+				Name="Authoize"
+				Filter="">
+				<File
+					RelativePath=".\IAuthorizeTest.cpp">
+				</File>
+				<File
+					RelativePath=".\IAuthorizeTest.h">
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Í·ÎÄ¼þ"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
-			<File
-				RelativePath=".\FilterSettingTest.h">
-			</File>
-			<File
-				RelativePath=".\IAuthorizeTest.h">
-			</File>
 			<File
 				RelativePath=".\stdafx.h">
 			</File>
@@ -168,6 +165,16 @@
 			</File>
 			<File
 				RelativePath=".\EyecareTest.h">
+			</File>
+		</Filter>
+		<Filter
+			Name="DNS"
+			Filter="">
+			<File
+				RelativePath=".\FilterSettingTest.cpp">
+			</File>
+			<File
+				RelativePath=".\FilterSettingTest.h">
 			</File>
 		</Filter>
 		<File
