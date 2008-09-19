@@ -19,8 +19,8 @@ void EyecareSetting::defaultSetting() {
 	force_locked_ = false;
 	setState(EYECARE_TIME);
 
-	setEntertainTime(45 * 60);
-	setRestTime(45 * 60);
+	setEnterTime(45 * 60);
+	setEyecareTime(45 * 60);
 }
 
 // —È÷§√‹¬Î
@@ -59,8 +59,8 @@ void EyecareSetting::initialize(Authorize *authorize, int state) {
 	assert (state == EYECARE_TIME || state== ENTERT_TIME);
 	setState(state);
 
-	setEntertainTime(3 * 60);
-	setRestTime(3 * 60);
+	setEnterTime(3 * 60);
+	setEyecareTime(3 * 60);
 }
 
 bool EyecareSetting::trySwitch() {
