@@ -2,6 +2,7 @@
 #include ".\contentchecksetting.h"
 
 ContentCheckSetting::ContentCheckSetting(void) {
+	content_type_ = 0;
 }
 
 ContentCheckSetting::~ContentCheckSetting(void) {
@@ -10,7 +11,7 @@ ContentCheckSetting::~ContentCheckSetting(void) {
 
 //==========================
 // member functions
-void ContentCheckSetting::enableCheck(const bool checked, const unsigned type) {
+void ContentCheckSetting::enableCheck(const unsigned type, const bool checked) {
 	if (checked == true) {
 		content_type_ |= type;
 	} else {
