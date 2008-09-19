@@ -51,7 +51,7 @@ extern "C" int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/
 
 	// 还应该在上
 	// TO DO
-	g_Eyecare_setting_.initialize(&g_authorize, EyecareSetting::ENTERTAINMENT_TIME);
+	g_Eyecare_setting_.initialize(&g_authorize, EyecareSetting::ENTERT_TIME);
 	
 	// 初始化屏幕记录
 	g_screenSaver.initialize();
