@@ -56,8 +56,8 @@ void CDlgEyecare::OnApply() {
 		UpdateData(TRUE);
 		IEyecare *pEyeCare = NULL;
 		CoCreateInstance(CLSID_Eyecare, NULL, CLSCTX_ALL, IID_IEyecare, (LPVOID*)&pEyeCare);
-		pEyeCare->setEntertainmentTime(m_nEntertainTime);
-		pEyeCare->setRestTime(m_nRestTime);
+		pEyeCare->setEnterTime(m_nEntertainTime);
+		pEyeCare->setEyecareTime(m_nRestTime);
 		pEyeCare->Release();
 	} catch (_com_error&) {
 		// AfxMessageBox("");
