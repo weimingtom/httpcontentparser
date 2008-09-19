@@ -44,12 +44,12 @@ void CDlgWhiteDNSList::OnShow() {
 
 void CDlgWhiteDNSList::initializeData() {
 	white_url_set.addDNS("google");
-	white_url_set.beginEnum((DNSEnumerator*)this);
+	white_url_set.beginEnum((Enumerator1<std::string>*)this);
 
 	m_chkWhiteDNSList.m_bCheckBtn = white_url_set.needChecked();
 }
 
-int CDlgWhiteDNSList::EnumDNS(const std::string &dns) {
+int CDlgWhiteDNSList::Enum(const std::string &dns) {
 	ListBox.AddItem(dns.c_str());
 	return 0;
 }

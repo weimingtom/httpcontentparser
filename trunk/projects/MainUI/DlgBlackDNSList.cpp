@@ -44,11 +44,11 @@ void CDlgBlackDNSList::DoDataExchange(CDataExchange* pDX)
 }
 
 void CDlgBlackDNSList::initializeData() {
-	black_url_set.beginEnum((DNSEnumerator*)this);
+	black_url_set.beginEnum((Enumerator1<std::string>*)this);
 	m_chkEnableDNS.m_bCheckBtn = black_url_set.needChecked();
 }
 
-int CDlgBlackDNSList::EnumDNS(const std::string &dns) {
+int CDlgBlackDNSList::Enum(const std::string &dns) {
 	ListBox.AddItem(dns.c_str());
 	return 0;
 }
