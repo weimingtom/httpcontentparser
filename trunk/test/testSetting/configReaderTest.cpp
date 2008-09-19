@@ -42,5 +42,14 @@ void ConfigReaderTest::TestSaveFile() {
 	config.content_check_.enableCheck(IMAGE_TYPE_BMP, false);
 	config.content_check_.enableCheck(IMAGE_TYPE_PNG, false);
 	bool a = config.content_check_.needCheck(IMAGE_TYPE_JPEG);
+
+	config.online_setting.enableOnlineHour(true);
+	config.online_setting.setHour(6, 1, false);
+	config.online_setting.setHour(1, 3, true);
+	config.online_setting.setHour(2, 12, false);
+	config.online_setting.setHour(3, 0, false);
+	config.online_setting.setHour(0, 22, false);
+	config.online_setting.setHour(6, 23, false);
+	config.online_setting.setHour(6, 8, true);
 	config.save();
 }
