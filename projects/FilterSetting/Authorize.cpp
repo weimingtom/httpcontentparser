@@ -6,6 +6,7 @@
 #include "globalvariable.h"
 #include "passwordtype.h"
 
+#include <typeconvert.h>
 #include <comdef.h>
 #include <string>
 using namespace std;
@@ -27,14 +28,14 @@ STDMETHODIMP CAuthorize::InterfaceSupportsErrorInfo(REFIID riid) {
 
 // —È÷§√‹¬Î
 STDMETHODIMP CAuthorize::checkPassword(BSTR password, VARIANT_BOOL* bSuccess) {
-	*bSuccess = g_authorize.checkPassword((char*)_bstr_t(password), PASSWORD_SU); 
+	*bSuccess = convert(g_authorize.checkPassword((char*)_bstr_t(password), PASSWORD_SU)); 
 	return S_OK;
 }
 
 STDMETHODIMP CAuthorize::changePassword(BSTR password, BSTR oldPassword, VARIANT_BOOL* bSuccess)
 {
 	OutputDebugString(_T("change password ....."));
-	*bSuccess = g_authorize.setPassword((char*)_bstr_t(password), (char*)_bstr_t(oldPassword), PASSWORD_SU); 
+	*bSuccess = convert(g_authorize.setPassword((char*)_bstr_t(password), (char*)_bstr_t(oldPassword), PASSWORD_SU)); 
 	return S_OK;
 }
 

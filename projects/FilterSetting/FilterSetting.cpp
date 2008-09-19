@@ -59,7 +59,6 @@ extern "C" int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/
 	 // 开启服务线程
 	ServThread::getInstance();
 	
-	g_authorize.setNewPassword("123", PASSWORD_SU);
     return _AtlModule.WinMain(nShowCmd);
 }
 
