@@ -7,11 +7,20 @@
 using namespace std;
 
 EyecareSetting::EyecareSetting() {
-	authorize_ = NULL;
-	force_locked_ = false;
+	defaultSetting();
 }
 
 EyecareSetting::~EyecareSetting(void) {
+}
+
+// 默认设置
+void EyecareSetting::defaultSetting() {
+	authorize_ = NULL;
+	force_locked_ = false;
+	setState(EYECARE_TIME);
+
+	setEntertainTime(45 * 60);
+	setRestTime(45 * 60);
 }
 
 // 验证密码
@@ -47,7 +56,7 @@ void EyecareSetting::initialize(Authorize *authorize, int state) {
 	password_type = PASSWORD_SU;
 
 	// 设置当前状态
-	assert (state == EYECARE_TIME || state== ENTERTAINMENT_TIME);
+	assert (state == EYECARE_TIME || state== ENTERT_TIME);
 	setState(state);
 
 	setEntertainTime(3 * 60);
@@ -73,11 +82,11 @@ int EyecareSetting::ForceLockWnd() {
 // 切换状态
 int EyecareSetting::switchState(const std::string &password) {
 	// 如果从娱乐状态转变，不需要验证密码
-	if (getState() == ENTERTAINMENT_TIME) {
+	if (getState() == ENTERT_TIME) {
 		setState(EYECARE_TIME);
 	} else if (true == checkPassword(password)) {
 		force_locked_ = false;
-		setState(ENTERTAINMENT_TIME);
+		setState(ENTERT_TIME);
 	}
 
 	return getState();

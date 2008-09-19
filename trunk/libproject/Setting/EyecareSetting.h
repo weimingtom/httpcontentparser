@@ -16,7 +16,7 @@ public:
 	~EyecareSetting(void);
 
 	enum {
-		ENTERTAINMENT_TIME = 0,
+		ENTERT_TIME = 0,
 		EYECARE_TIME
 	};
 
@@ -37,9 +37,9 @@ public:
 	int getState() const {return calculagraph_.getCurrentState();}// 获取目前的状态
 
 	// 设置休息时间和娱乐事件
-	void setEntertainTime(const int seconds) { calculagraph_.setTimespan(seconds, ENTERTAINMENT_TIME);}
+	void setEntertainTime(const int seconds) { calculagraph_.setTimespan(seconds, ENTERT_TIME);}
 	void setRestTime(const int seconds) { calculagraph_.setTimespan(seconds, EYECARE_TIME);}
-	int getEntertainTime() const  { return calculagraph_.getTimespan(ENTERTAINMENT_TIME);}
+	int getEntertainTime() const  { return calculagraph_.getTimespan(ENTERT_TIME);}
 	int getRestTime() const { return calculagraph_.getTimespan(EYECARE_TIME);}
 
 	bool trySwitch(); // 尝试切换状态，如果时间已经达标则自动切换，否则不改变
@@ -68,6 +68,8 @@ private:
 	bool force_locked_;
 
 	friend class XMLConfiguration;
+
+	void defaultSetting();
 private:
 	bool enabled_;
 };
