@@ -17,32 +17,51 @@ void ContentSettingTest::TestEnableCheck() {
 }
 void ContentSettingTest::TestNeedCheck() {
 	ContentCheckSetting contentSetting;
-	contentSetting.enableCheck(true, CONTYPE_HTML);
+	contentSetting.enableCheck(CONTYPE_HTML, true);
 	CPPUNIT_ASSERT(contentSetting.needCheck(CONTYPE_HTML));
-	contentSetting.enableCheck(true,CONTYPE_PNG );
+	CPPUNIT_ASSERT(false == contentSetting.needCheck(CONTYPE_JPG));
+	CPPUNIT_ASSERT(true == contentSetting.needCheck(CONTYPE_HTML));
+	CPPUNIT_ASSERT(false == contentSetting.needCheck(CONTYPE_PNG));
+	CPPUNIT_ASSERT(false == contentSetting.needCheck(CONTYPE_XML));
+
+	contentSetting.enableCheck(CONTYPE_PNG, true);
 	CPPUNIT_ASSERT(contentSetting.needCheck(CONTYPE_HTML));
 	CPPUNIT_ASSERT(contentSetting.needCheck(CONTYPE_PNG));
+	CPPUNIT_ASSERT(false == contentSetting.needCheck(CONTYPE_JPG));
+	CPPUNIT_ASSERT(false == contentSetting.needCheck(CONTYPE_XML));
 
-	contentSetting.enableCheck(true, CONTYPE_XML);
-	CPPUNIT_ASSERT(contentSetting.needCheck(CONTYPE_HTML));
-	CPPUNIT_ASSERT(contentSetting.needCheck(CONTYPE_PNG));
-	CPPUNIT_ASSERT(contentSetting.needCheck(CONTYPE_XML));
-
-	contentSetting.enableCheck(false, CONTYPE_XML);
-	CPPUNIT_ASSERT(contentSetting.needCheck(CONTYPE_HTML));
-	CPPUNIT_ASSERT(contentSetting.needCheck(CONTYPE_PNG));
-
-	contentSetting.enableCheck(true, CONTYPE_XML);
+	contentSetting.enableCheck(CONTYPE_XML, true);
 	CPPUNIT_ASSERT(contentSetting.needCheck(CONTYPE_HTML));
 	CPPUNIT_ASSERT(contentSetting.needCheck(CONTYPE_PNG));
 	CPPUNIT_ASSERT(contentSetting.needCheck(CONTYPE_XML));
+	CPPUNIT_ASSERT(false == contentSetting.needCheck(CONTYPE_JPG));
 
-	contentSetting.enableCheck(true, CONTYPE_XML);
+	contentSetting.enableCheck(CONTYPE_XML, false);
+	CPPUNIT_ASSERT(contentSetting.needCheck(CONTYPE_HTML));
+	CPPUNIT_ASSERT(contentSetting.needCheck(CONTYPE_PNG));
+	CPPUNIT_ASSERT(false == contentSetting.needCheck(CONTYPE_JPG));
+
+	contentSetting.enableCheck(CONTYPE_XML, true);
 	CPPUNIT_ASSERT(contentSetting.needCheck(CONTYPE_HTML));
 	CPPUNIT_ASSERT(contentSetting.needCheck(CONTYPE_PNG));
 	CPPUNIT_ASSERT(contentSetting.needCheck(CONTYPE_XML));
+	CPPUNIT_ASSERT(false == contentSetting.needCheck(CONTYPE_JPG));
 
-	contentSetting.enableCheck(true, CONTYPE_BMP);
+	contentSetting.enableCheck(CONTYPE_XML, true);
+	CPPUNIT_ASSERT(contentSetting.needCheck(CONTYPE_HTML));
+	CPPUNIT_ASSERT(contentSetting.needCheck(CONTYPE_PNG));
+	CPPUNIT_ASSERT(contentSetting.needCheck(CONTYPE_XML));
+	CPPUNIT_ASSERT(false == contentSetting.needCheck(CONTYPE_JPG));
+
+	contentSetting.enableCheck(CONTYPE_BMP, true);
+	CPPUNIT_ASSERT(contentSetting.needCheck(CONTYPE_HTML));
+	CPPUNIT_ASSERT(contentSetting.needCheck(CONTYPE_PNG));
+	CPPUNIT_ASSERT(contentSetting.needCheck(CONTYPE_XML));
+	CPPUNIT_ASSERT(contentSetting.needCheck(CONTYPE_BMP));
+	CPPUNIT_ASSERT(false == contentSetting.needCheck(CONTYPE_JPG));
+
+	contentSetting.enableCheck(CONTYPE_JPG, true);
+	CPPUNIT_ASSERT(contentSetting.needCheck(CONTYPE_JPG));
 	CPPUNIT_ASSERT(contentSetting.needCheck(CONTYPE_HTML));
 	CPPUNIT_ASSERT(contentSetting.needCheck(CONTYPE_PNG));
 	CPPUNIT_ASSERT(contentSetting.needCheck(CONTYPE_XML));
