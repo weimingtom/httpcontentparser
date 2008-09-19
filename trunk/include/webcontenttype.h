@@ -41,7 +41,7 @@ bool isImage(const unsigned type) {
 
 // 是否是黄色内容
 inline
-unsigned isPorn(const unsigned type) {
+bool isPorn(const unsigned type) {
 	return (CONTYPE_PORN & type) ? true : false;	
 }
 
@@ -57,7 +57,7 @@ void resetPorn(unsigned *type) {
 
 
 inline
-unsigned isText(const unsigned type) {
+bool isText(const unsigned type) {
 	const unsigned actual_type = type & (~CONTYPE_PORN);
 	return (CONTYPE_HTML & actual_type) || (CONTYPE_XML & actual_type) ? true : false;
 }
