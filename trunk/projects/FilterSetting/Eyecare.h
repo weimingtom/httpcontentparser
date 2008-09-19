@@ -41,10 +41,10 @@ END_COM_MAP()
 
 public:
 	STDMETHOD(setPassword)(BSTR password);			// 设置密码， 如果设置空密码， 则为使用系统管理员密码
-	STDMETHOD(setRestTime)(LONG mintues);			// 设置休息时间的长度
-	STDMETHOD(setEntertainmentTime)(LONG mintues);	// 设置娱乐事件的长度
-	STDMETHOD(getRestTime)(LONG* mintues);			// 获取休息时间的长度
-	STDMETHOD(getEntertainmentTime)(LONG* second);	// 获取娱乐事件的长度
+	STDMETHOD(setEyecareTime)(LONG mintues);			// 设置休息时间的长度
+	STDMETHOD(setEnterTime)(LONG mintues);	// 设置娱乐事件的长度
+	STDMETHOD(getEyecareTime)(LONG* mintues);			// 获取休息时间的长度
+	STDMETHOD(getEnterTime)(LONG* second);	// 获取娱乐事件的长度
 	STDMETHOD(getTimeLeft)(LONG* second);			// 状态切换的剩余时间
 	STDMETHOD(getState)(LONG* state);				// 获取状态
 	STDMETHOD(swithToEntertainment)(BSTR password, VARIANT_BOOL *bSuccess); // 切换到娱乐状体

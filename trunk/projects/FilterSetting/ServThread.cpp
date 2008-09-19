@@ -97,9 +97,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 	// 两个计时器
 	static DWORD tickAutoSaver = GetTickCount();
 	static DWORD tickEyecare = GetTickCount();
-	int result;
 	ServThread *server = ServThread::getInstance();
-	TCHAR  buffer[1024];
 
 	switch (message) {
 		case WM_CREATE:

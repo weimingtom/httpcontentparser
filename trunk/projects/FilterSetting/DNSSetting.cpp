@@ -7,7 +7,7 @@
 #include <comdef.h>
 #include <utility\HTTPPacket.h>
 #include ".\dnssetting.h"
-#include ".\utility.h"
+#include <typeconvert.h>
 
 // CDNSSetting
 

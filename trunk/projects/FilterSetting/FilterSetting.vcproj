@@ -197,9 +197,6 @@ copy .\filtersetting.h ..\..\include\com
 			<File
 				RelativePath=".\stdafx.h">
 			</File>
-			<File
-				RelativePath=".\utility.h">
-			</File>
 		</Filter>
 		<Filter
 			Name="资源文件"
