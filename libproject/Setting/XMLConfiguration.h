@@ -76,8 +76,8 @@
 #define CONFIG_ITEM_APPSET_EYECARE		TEXT("eyecare")
 #define CONFIG_APPSET_EYECARE_TIME		TEXT("time")
 #define CONFIG_APPSET_EYECARE_TIMESPAN TEXT("timespan")
-#define CONFIG_APPSET_EYECARE_REST		TEXT("rest")
-#define CONFIG_APPSET_EYECARE_ENTER		TEXT("entertain")
+#define CONFIG_APPSET_EYECARE_EYECARE	TEXT("eyecare_time")
+#define CONFIG_APPSET_EYECARE_ENTER		TEXT("enter_time")
 #define CONFIG_APPSET_EYECARE_STATE		TEXT("state")
 #define CONFIG_APPSET_EYECARE_TIMELEFT	TEXT("timeleft")
 
@@ -181,17 +181,22 @@ public:
 	int save();
 private:
 	int saveRules(TiXmlElement *root);
-	int saveOnlineHour(TiXmlElement *root);	// 保存OnlineHour规则
-	int saveBlackURL(TiXmlElement *root);
-	int saveWhiteURL(TiXmlElement *root);
+	int saveOnlineHour(TiXmlElement *rules_root);	// 保存OnlineHour规则
+	int saveBlackURL(TiXmlElement *rules_root);
+	int saveWhiteURL(TiXmlElement *rules_root);
 
-	int saveImageRule(TiXmlElement *root);
+	int saveImageRule(TiXmlElement *rules_root);
 	
 	int saveTextRule();	// 未用
 
-	int saveSearchRule(TiXmlElement *root);
+	int saveSearchRule(TiXmlElement *rules_root);
 	int saveBlackWord(TiXmlElement *root);
 	int saveSearchEngineRule(TiXmlElement *root);
+
+	// 保存应用程序设置
+	int saveAppSetting(TiXmlElement * root);
+	int saveWebHistory(TiXmlElement * app_root);
+	int saveEyecare(TiXmlElement *app_root);
 };
 
 #endif  // _SETTING_XMLCONFIGURATION_H__
