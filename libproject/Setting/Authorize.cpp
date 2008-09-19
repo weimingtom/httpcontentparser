@@ -1,13 +1,19 @@
 #include "StdAfx.h"
 #include ".\authorize.h"
 #include <assert.h>
+#include <string>
+
 
 Authorize::Authorize(void) {
+	defaultSetting();
 }
 
 Authorize::~Authorize(void) {
 }
 
+void Authorize::defaultSetting() {
+	setNewPassword(DEFAULT_PASSWORD, PASSWORD_SU);
+}
 
 bool Authorize::setNewPassword(const std::string &password, const int type) {
 	assert(password_set_.find(type) == password_set_.end());

@@ -3,6 +3,7 @@
 
 #include <string>
 #include <map>
+#include <passwordtype.h>
 
 // 此类负责密码的统一管理
 // 包括密码的保存， 验证，修改等
@@ -16,6 +17,9 @@ public:
 	bool setPassword(const std::string &password, const std::string &oldword, const int type);
 	bool checkPassword(const std::string &password, const int type);
 private:
+	// 默认设置
+	void defaultSetting();
+	
 	// 设置
 	std::map<int, std::string> password_;
 	typedef std::map<int, std::string> PASSWORD_MAP;
