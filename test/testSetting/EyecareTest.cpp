@@ -21,7 +21,7 @@ void EyecareTest::TestTimeSetting() {
 	CPPUNIT_ASSERT(authorize.setNewPassword(eyecarePassword, PASSWORD_EYECARE));
 
 	EyecareSetting setting;
-	setting.initialize(&authorize, EyecareSetting::ENTERTAINMENT_TIME);
+	setting.initialize(&authorize, EyecareSetting::ENTERT_TIME);
 
 	setting.setEntertainTime(60);
 	setting.setRestTime(60);
@@ -46,10 +46,10 @@ void EyecareTest::TestPassword() {
 	CPPUNIT_ASSERT (setting.getState() == EyecareSetting::EYECARE_TIME);
 
 	// 使用正确的密码
-	CPPUNIT_ASSERT(setting.switchState(supassword) == EyecareSetting::ENTERTAINMENT_TIME);
-	CPPUNIT_ASSERT (setting.getState() == EyecareSetting::ENTERTAINMENT_TIME);
+	CPPUNIT_ASSERT(setting.switchState(supassword) == EyecareSetting::ENTERT_TIME);
+	CPPUNIT_ASSERT (setting.getState() == EyecareSetting::ENTERT_TIME);
 
-	// 从ENTERTAINMENT_Time转变不需要改变密码
+	// 从ENTERT_TIME转变不需要改变密码
 	CPPUNIT_ASSERT(setting.switchState(eyecarePassword) == EyecareSetting::EYECARE_TIME);
 	CPPUNIT_ASSERT (setting.getState() == EyecareSetting::EYECARE_TIME);
 }
@@ -61,13 +61,13 @@ void EyecareTest::TestSwitchState() {
 	CPPUNIT_ASSERT(authorize.setNewPassword(eyecarePassword, PASSWORD_EYECARE));
 
 	EyecareSetting setting;
-	setting.initialize(&authorize, EyecareSetting::ENTERTAINMENT_TIME);
+	setting.initialize(&authorize, EyecareSetting::ENTERT_TIME);
 	setting.setRestTime(2);
 	setting.setEntertainTime(5);
 
 	// 正常切换
-	CPPUNIT_ASSERT (setting.getState() == EyecareSetting::ENTERTAINMENT_TIME);
-	CPPUNIT_ASSERT (setting.trySwitch() == EyecareSetting::ENTERTAINMENT_TIME);
+	CPPUNIT_ASSERT (setting.getState() == EyecareSetting::ENTERT_TIME);
+	CPPUNIT_ASSERT (setting.trySwitch() == EyecareSetting::ENTERT_TIME);
 	Sleep(6000);
 	int x = setting.getRemainTime();
 	CPPUNIT_ASSERT (setting.trySwitch() == true);
@@ -75,7 +75,7 @@ void EyecareTest::TestSwitchState() {
 	Sleep(2400);
 	x = setting.getRemainTime();
 	CPPUNIT_ASSERT (setting.trySwitch() == true);
-	CPPUNIT_ASSERT (setting.getState() == EyecareSetting::ENTERTAINMENT_TIME);
+	CPPUNIT_ASSERT (setting.getState() == EyecareSetting::ENTERT_TIME);
 }
 
 void EyecareTest::TextForceSwitch() {
@@ -87,20 +87,20 @@ void EyecareTest::TextForceSwitch() {
 	const int restTime = 1;
 	const int entertain = 1;
 	EyecareSetting setting;
-	setting.initialize(&authorize, EyecareSetting::ENTERTAINMENT_TIME);
+	setting.initialize(&authorize, EyecareSetting::ENTERT_TIME);
 	setting.setRestTime(restTime);
 	setting.setEntertainTime(entertain);
 	setting.setPasswordType(PASSWORD_SU);
 
 	// 正常切换
-	CPPUNIT_ASSERT (setting.getState() == EyecareSetting::ENTERTAINMENT_TIME);
+	CPPUNIT_ASSERT (setting.getState() == EyecareSetting::ENTERT_TIME);
 	CPPUNIT_ASSERT (setting.trySwitch() == false);
 	Sleep(1000 * (restTime+1));
 	CPPUNIT_ASSERT (setting.trySwitch() == true);
 	CPPUNIT_ASSERT (setting.getState() == EyecareSetting::EYECARE_TIME);
 	Sleep(1000 * (entertain+1));
 	CPPUNIT_ASSERT (setting.trySwitch() == true);
-	CPPUNIT_ASSERT (setting.getState() == EyecareSetting::ENTERTAINMENT_TIME);
+	CPPUNIT_ASSERT (setting.getState() == EyecareSetting::ENTERT_TIME);
 
 
 	// 强制锁定
@@ -115,11 +115,11 @@ void EyecareTest::TextForceSwitch() {
 	CPPUNIT_ASSERT (setting.trySwitch() == false);
 
 	// 使用密码释放
-	CPPUNIT_ASSERT (setting.switchState("123") == EyecareSetting::ENTERTAINMENT_TIME);
+	CPPUNIT_ASSERT (setting.switchState("123") == EyecareSetting::ENTERT_TIME);
 	Sleep(1000 * (restTime+1));
 	CPPUNIT_ASSERT (setting.trySwitch() ==true);
 	CPPUNIT_ASSERT (setting.getState() == EyecareSetting::EYECARE_TIME);
 	Sleep(1000 * (entertain+1));
 	CPPUNIT_ASSERT (setting.trySwitch() == true);
-	CPPUNIT_ASSERT (setting.getState() == EyecareSetting::ENTERTAINMENT_TIME);	
+	CPPUNIT_ASSERT (setting.getState() == EyecareSetting::ENTERT_TIME);	
 }
