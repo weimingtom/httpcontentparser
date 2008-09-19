@@ -8,8 +8,9 @@
 #include <Guilib1.5\GuiListEdit.h>
 #include <Guilib1.5\GuiDropDownEdit.h>
 #include <Guilib1.5\GuiCheckBox.h>
+#include <Enumerate.h>
 
-class CDlgWhiteDNSList : public CBaseDlg, DNSEnumerator {
+class CDlgWhiteDNSList : public CBaseDlg, Enumerator1<std::string> {
 	DECLARE_DYNAMIC(CDlgWhiteDNSList)
 
 public:
@@ -36,7 +37,7 @@ protected:
 	DNSList white_url_set;
 
 	void initializeData();
-	virtual int EnumDNS(const std::string &dns) ;  // member of DNSEnumerator
+	virtual int Enum(const std::string &dns) ;  // member of DNSEnumerator
 public:
 	virtual BOOL OnInitDialog();
 };

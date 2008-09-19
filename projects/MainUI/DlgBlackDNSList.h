@@ -10,7 +10,7 @@
 
 // CDlgBlackDNSList ¶Ô»°¿ò
 
-class CDlgBlackDNSList : public CBaseDlg, DNSEnumerator {
+class CDlgBlackDNSList : public CBaseDlg, Enumerator1<std::string>  {
 	DECLARE_DYNAMIC(CDlgBlackDNSList)
 
 public:
@@ -35,7 +35,7 @@ protected:
 	DNSList black_url_set;
 
 	void initializeData();
-	virtual int EnumDNS(const std::string &dns) ;  // member of DNSEnumerator
+	virtual int Enum(const std::string &dns) ;  // member of DNSEnumerator
 public:
 	virtual BOOL OnInitDialog();
 	
