@@ -42,12 +42,103 @@ const char * enabledFromBool(const bool enabled) {
 		return CONFIG_CONST_ENABLE_FALSE;
 	}
 }
+
+const char * Eyecare_state(const int state) {
+	if (state == EyecareSetting::ENTERT_TIME) {
+		return CONFIG_APPSET_EYECARE_ENTER;
+	} else if (state == EyecareSetting::EYECARE_TIME) {
+		return CONFIG_APPSET_EYECARE_EYECARE;
+	} else {
+		assert(false); 
+		return CONFIG_APPSET_EYECARE_EYECARE;
+	}
+}
 };
+
 
 ///////////////////////////////////////////////////////////////////////////////////
 // 保存规则
-//
+int XMLConfiguration::saveEyecare(TiXmlElement *app_root) {
+	TiXmlElement * eyecare_root = new TiXmlElement( CONFIG_ITEM_APPSET_EYECARE );
+	eyecare_root->SetAttribute(CONFIG_CONST_ENABLE, enabledFromBool(eye_care.isEnable()));
+	eyecare_root->SetAttribute(CONFIG_APPSET_EYECARE_STATE, Eyecare_state(eye_care.getState()));
 
+	// 设置剩余时间
+	TCHAR buffer[1024];
+	_sntprintf(buffer, 1024, "%d", eye_care.getRemainTime());
+	eyecare_root->SetAttribute(CONFIG_APPSET_EYECARE_TIMELEFT, buffer);
+
+	// 设置娱乐事件
+	TiXmlElement * enter_time = new TiXmlElement( CONFIG_APPSET_EYECARE_TIME );
+	enter_time->SetAttribute(CONFIG_CONST_NAME, CONFIG_APPSET_EYECARE_ENTER);
+
+	_sntprintf(buffer, 1024, "%d", eye_care.getEnterTime());	// 设置娱乐时间间隔
+	enter_time->SetAttribute(CONFIG_APPSET_EYECARE_TIMESPAN, buffer);
+	eyecare_root->LinkEndChild(enter_time);
+
+	// 设置休息时间
+	TiXmlElement * eyecare_time = new TiXmlElement( CONFIG_APPSET_EYECARE_TIME );
+	eyecare_time->SetAttribute(CONFIG_CONST_NAME, CONFIG_APPSET_EYECARE_EYECARE);
+
+	_sntprintf(buffer, 1024, "%d", eye_care.getEyecareTime());
+	eyecare_time->SetAttribute(CONFIG_APPSET_EYECARE_TIMESPAN, buffer);
+	eyecare_root->LinkEndChild(eyecare_time);
+
+	app_root->LinkEndChild(eyecare_root);
+	return 0;
+}
+
+int XMLConfiguration::saveWebHistory(TiXmlElement * app_root) {
+	TiXmlElement * webhistory_root = new TiXmlElement( CONFIG_ITEM_APPSET_WEBHISTORY ); 
+	webhistory_root->SetAttribute(CONFIG_CONST_NAME,  enabledFromBool(web_history.isEnable()));
+
+	// All Images
+	TiXmlElement * allimage = new TiXmlElement( CONFIG_APPSET_WEBHISTORY_CONTENT ); 
+	allimage->SetAttribute(CONFIG_CONST_TYPPE, CONFIG_APPSET_WEBHISTORY_ALL_IMAGE);
+	allimage->SetAttribute(CONFIG_CONST_NAME, enabledFromBool(web_history.recordAllImage()));
+	webhistory_root->LinkEndChild(allimage);
+
+	TiXmlElement * allpages = new TiXmlElement( CONFIG_APPSET_WEBHISTORY_CONTENT ); 
+	allpages->SetAttribute(CONFIG_CONST_TYPPE, CONFIG_APPSET_WEBHISTORY_ALL_WEBPAGE);
+	allpages->SetAttribute(CONFIG_CONST_NAME, enabledFromBool(web_history.recordAllPages()));
+	webhistory_root->LinkEndChild(allpages);
+
+	TiXmlElement * allwebsite = new TiXmlElement( CONFIG_APPSET_WEBHISTORY_CONTENT ); 
+	allwebsite->SetAttribute(CONFIG_CONST_TYPPE, CONFIG_APPSET_WEBHISTORY_ALL_WEBSITE);
+	allwebsite->SetAttribute(CONFIG_CONST_NAME, enabledFromBool(web_history.recordAllWebsite()));
+	webhistory_root->LinkEndChild(allwebsite);
+
+	// Porn
+	TiXmlElement * porn_Iimage = new TiXmlElement( CONFIG_APPSET_WEBHISTORY_CONTENT ); 
+	porn_Iimage->SetAttribute(CONFIG_CONST_TYPPE, CONFIG_APPSET_WEBHISTORY_PORN_IMAGE);
+	porn_Iimage->SetAttribute(CONFIG_CONST_NAME, enabledFromBool(web_history.recordPornImage()));
+	webhistory_root->LinkEndChild(porn_Iimage);
+
+	TiXmlElement * porn_pages = new TiXmlElement( CONFIG_APPSET_WEBHISTORY_CONTENT ); 
+	porn_pages->SetAttribute(CONFIG_CONST_TYPPE, CONFIG_APPSET_WEBHISTORY_PORN_WEBPAGE);
+	porn_pages->SetAttribute(CONFIG_CONST_NAME, enabledFromBool(web_history.recordPornPages()));
+	webhistory_root->LinkEndChild(porn_pages);
+
+	TiXmlElement * porn_website = new TiXmlElement( CONFIG_APPSET_WEBHISTORY_CONTENT ); 
+	porn_website->SetAttribute(CONFIG_CONST_TYPPE, CONFIG_APPSET_WEBHISTORY_PORN_WEBSITE);
+	porn_website->SetAttribute(CONFIG_CONST_NAME, enabledFromBool(web_history.recordPornWebsite()));
+	webhistory_root->LinkEndChild(porn_website);
+
+	app_root->LinkEndChild(webhistory_root);
+	return 0;
+}
+
+int XMLConfiguration::saveAppSetting(TiXmlElement * root) {
+	TiXmlElement * appsetting_root = new TiXmlElement( CONFIG_NODE_APPSET );
+	
+	saveWebHistory(appsetting_root);
+	saveEyecare(appsetting_root);
+	root->LinkEndChild(appsetting_root);
+	return 0;
+}
+
+///////////////////////////////////////////////////////////////////////////////////
+// 保存规则
 //==========================================================
 // XML 保存函数
 int XMLConfiguration::save() {
@@ -60,7 +151,7 @@ int XMLConfiguration::save() {
 	TiXmlElement * root_element = new TiXmlElement( CONFIG_ROOT_VALUE );
 	
 	saveRules(root_element);
-	
+	saveAppSetting(root_element);
 	
 	doc.LinkEndChild(root_element);
 	doc.SaveFile("c:\\hello.xml");
@@ -308,12 +399,12 @@ int XMLConfiguration::enableEyecareSetting(const TCHAR *enable) {
 
 int XMLConfiguration::setEyecareState(const TCHAR *state, const TCHAR *timeleft) {
 	long lt = _tcstol(timeleft, NULL, 10);
-	if (0 == _tcscmp(state, CONFIG_APPSET_EYECARE_REST)) {
+	if (0 == _tcscmp(state, CONFIG_APPSET_EYECARE_EYECARE)) {
 		eye_care.setState(EyecareSetting::EYECARE_TIME);
 		eye_care.setLeftTime(lt);
 	} else if (0 == _tcscmp(state, CONFIG_APPSET_EYECARE_ENTER)) {
 		// 设置状体
-		eye_care.setState(EyecareSetting::ENTERTAINMENT_TIME);
+		eye_care.setState(EyecareSetting::ENTERT_TIME);
 		eye_care.setLeftTime(lt);
 	}
 	return 0;
@@ -321,10 +412,10 @@ int XMLConfiguration::setEyecareState(const TCHAR *state, const TCHAR *timeleft)
 
 int XMLConfiguration::setEyecareSetting(const TCHAR *type, const TCHAR *timespan) {
 	long lt = _tcstol(timespan, NULL, 10);
-	if (0 == _tcscmp(type, CONFIG_APPSET_EYECARE_REST)) {
-		eye_care.setRestTime(lt);
+	if (0 == _tcscmp(type, CONFIG_APPSET_EYECARE_EYECARE)) {
+		eye_care.setEyecareTime(lt);
 	} else if (0 == _tcscmp(type, CONFIG_APPSET_EYECARE_ENTER)) {
-		eye_care.setEntertainTime(lt);
+		eye_care.setEnterTime(lt);
 	}
 
 	return 0;
@@ -607,9 +698,13 @@ int XMLConfiguration::setImageCheck(const TCHAR *imagetype, const TCHAR *enable)
 		return -1;
 
 	if (0 == _tcscmp(imagetype, CONFIG_NODE_IMAGETYPE_JPG)) {
+		content_check_.enableCheck(IMAGE_TYPE_JPEG, enabledFromString(enable));
 	} else if (0 == _tcscmp(imagetype, CONFIG_NODE_IMAGETYPE_BMP)) {
+		content_check_.enableCheck(IMAGE_TYPE_BMP, enabledFromString(enable));
 	} else if (0 == _tcscmp(imagetype, CONFIG_NODE_IMAGETYPE_GIF)) {
+		content_check_.enableCheck(IMAGE_TYPE_GIF, enabledFromString(enable));
 	} else if (0 == _tcscmp(imagetype, CONFIG_NODE_IMAGETYPE_PNG)) {
+		content_check_.enableCheck(IMAGE_TYPE_PNG, enabledFromString(enable));
 	} else {
 		assert (false);
 		return -1;
