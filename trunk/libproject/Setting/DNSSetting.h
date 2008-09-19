@@ -10,13 +10,8 @@
 #include <set>
 #include <map>
 #include <string>
-
+#include <Enumerate.h>
 // 目前我们使用的机制有些适应性不高，我们需要增加cache机制。
-
-class DNSEnumerator {
-public:
-	virtual int EnumDNS(const std::string &dns) = 0;
-};
 
 class DNSList {
 public:
@@ -35,7 +30,7 @@ public:
 	bool needChecked() const { return enable_check_ ;}
 
 	// enumerate
-	void beginEnum(DNSEnumerator *enumerator);
+	void beginEnum(Enumerator1<std::string> *enumerator);
 protected:
 	typedef std::set<std::string> DNS_SET;
 	DNS_SET dns_set_;
