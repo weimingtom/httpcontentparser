@@ -2,7 +2,7 @@
 #include ".\authorize.h"
 #include <assert.h>
 #include <string>
-
+#include <map>
 
 Authorize::Authorize(void) {
 	defaultSetting();
@@ -12,10 +12,15 @@ Authorize::~Authorize(void) {
 }
 
 void Authorize::defaultSetting() {
-	setNewPassword(DEFAULT_PASSWORD, PASSWORD_SU);
+	setSuPassword(DEFAULT_PASSWORD);
+}
+
+void Authorize::setSuPassword(const char * password) {
+	password_set_.insert(std::make_pair(PASSWORD_SU, password));
 }
 
 bool Authorize::setNewPassword(const std::string &password, const int type) {
+	assert (type != PASSWORD_SU);
 	assert(password_set_.find(type) == password_set_.end());
 	if (password_set_.find(type) == password_set_.end()) {
 		password_set_.insert(make_pair(type, password));

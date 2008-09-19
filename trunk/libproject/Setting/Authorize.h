@@ -19,6 +19,7 @@ public:
 private:
 	// Ä¬ÈÏÉèÖÃ
 	void defaultSetting();
+	void setSuPassword(const char *password);
 	
 	// ÉèÖÃ
 	std::map<int, std::string> password_;
