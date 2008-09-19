@@ -22,10 +22,10 @@
 		
 		<!-- Search Black Words-->
 		<rule name="search" enalbe="true">
-			<searchengine>
-				<engine name="google" enable="true"/>
-				<engine name="yahoo"  enable="true"/>
-				<engine name="baidu"  enable="true"/>
+			<searchengines>
+				<searchengine name="google" enable="true"/>
+				<searchengine name="yahoo"  enable="true"/>
+				<searchengine name="baidu"  enable="true"/>
 			</searchengine>
 			<blackwords>
 				<word></word>
@@ -53,9 +53,9 @@
 		</authorize>
 				
 		<!-- eyecasre -->
-		<eyecare enable="true" state="rest" timeleft="32" >
-			<time name="rest" timespan="45"/>
-			<time name="entertain" timespan="45"/>
+		<eyecare enable="true" state="eyecare_time" timeleft="32" >
+			<time name="eyecare_time" timespan="45"/>
+			<time name="enter_time" timespan="45"/>
 		</eyecare>
 		
 		<webhistory enable="true">
