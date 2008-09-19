@@ -27,6 +27,8 @@ bool HTTPContentHander::checkContent(HTTPPacket *packet) {
 		saveText(packet, porned);
 		return porned;
 	}
+
+	return false;
 }
 
 //=====================================================================
@@ -48,7 +50,7 @@ bool HTTPContentHander::checkText(HTTPPacket *packet) {
 //=======================================================================
 // 负责保存内容
 int HTTPContentHander::saveImage(HTTPPacket *packet, const bool porn) {
-	assert (isImage(packet->getContentType() == true));
+	assert (isImage(packet->getContentType()) == true);
 
 	// 获取目录
 	char directory[MAX_PATH];
@@ -66,7 +68,7 @@ int HTTPContentHander::saveImage(HTTPPacket *packet, const bool porn) {
 }
 
 int HTTPContentHander::saveText(HTTPPacket * packet, const bool porn) {
-	assert (isText(packet->getContentType() == true));
+	assert (isText(packet->getContentType()) == true);
 
 		// 获取目录
 	char directory[MAX_PATH];
