@@ -36,15 +36,15 @@ void FilterSettingTest::TestcheckDNS() {
 		CPPUNIT_ASSERT(false);
 	}
 
-	dnssetting->enableBlackDNSCheck(true);
-	dnssetting->enableWhiteDNSCheck(true);
+	dnssetting->enableBlackDNSCheck(VARIANT_TRUE);
+	dnssetting->enableWhiteDNSCheck(VARIANT_TRUE);
 	dnssetting->addBlackDNS(_bstr_t("sina.com"));
-	bool passed  = checkDNS("news.sina.com");
+	bool passed  = convert(checkDNS("news.sina.com"));
 	CPPUNIT_ASSERT(passed == false);
 
-	dnssetting->enableBlackDNSCheck(true);
-	dnssetting->enableWhiteDNSCheck(true);
-	passed  = checkDNS("p1.sina.com");
+	dnssetting->enableBlackDNSCheck(VARIANT_TRUE);
+	dnssetting->enableWhiteDNSCheck(VARIANT_TRUE);
+	passed  = convert(checkDNS("p1.sina.com"));
 	CPPUNIT_ASSERT(passed == false);
 
 	dnssetting->Release();
@@ -59,15 +59,15 @@ void FilterSettingTest::TestaddBlackDNS() {
 		CPPUNIT_ASSERT(false);
 	}
 
-	dnssetting->enableBlackDNSCheck(true);
-	dnssetting->enableWhiteDNSCheck(true);
+	dnssetting->enableBlackDNSCheck(VARIANT_TRUE);
+	dnssetting->enableWhiteDNSCheck(VARIANT_TRUE);
 	dnssetting->addBlackDNS(_bstr_t("sina.com"));
-	bool passed  = checkDNS("sina.com");
+	bool passed  = convert(checkDNS("sina.com"));
 	CPPUNIT_ASSERT(passed == false);
 
-	dnssetting->enableBlackDNSCheck(true);
-	dnssetting->enableWhiteDNSCheck(true);
-	passed  = checkDNS("sina.com");
+	dnssetting->enableBlackDNSCheck(VARIANT_TRUE);
+	dnssetting->enableWhiteDNSCheck(VARIANT_TRUE);
+	passed  = convert(checkDNS("sina.com"));
 	CPPUNIT_ASSERT(passed == false);
 
 	dnssetting->Release();

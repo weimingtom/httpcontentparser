@@ -13,7 +13,7 @@ protected:
 	void testCheckPassword();
 public:
 	IAuthorizeTest(void);
-	~IAuthorizeTest(void);
+	~IAuthorizeTest(void); 
 };
 
 #endif  // _TEST_FILTER_SETTING_IAUTHORIZETEST_H__
