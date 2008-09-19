@@ -26,9 +26,11 @@
 				<searchengine name="google" enable="true"/>
 				<searchengine name="yahoo"  enable="true"/>
 				<searchengine name="baidu"  enable="true"/>
-			</searchengine>
+			</searchengines>
 			<blackwords>
-				<word></word>
+				<word>hello1</word>
+				<word>hello2</word>
+				<word>hello3</word>
 			</blackwords>
 		</rule>
 		
