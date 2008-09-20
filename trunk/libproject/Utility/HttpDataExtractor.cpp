@@ -9,6 +9,11 @@
 #include "stdafx.h"
 #include "httpdataextractor.h"
 #include <logdebug.h>
+
+namespace {
+
+
+
 const char * chunk_token = "\r\n";
 const int chunk_token_length = 2;	// 长度后面紧跟的长度
 const int chunk_tail_length = 2;	// \r\n的长度....
@@ -110,39 +115,7 @@ private:
 	NoSepcifiedLength(NoSepcifiedLength &) {}
 };
 
-HttpDataExtractor * HttpDataExtractor::Create(const HTTP_RESPONSE_HEADER *header,
-								  ProtocolPacket<HTTP_PACKET_SIZE> *data) {
-	if (header == NULL) {
-		return (HttpDataExtractor*) new NoContent(data, header);
-	}
 
-	assert (data != NULL);
-
-	if (header->isChunk()) {
-		return (HttpDataExtractor*)new ChunkPacket(data, header);
-	}
-
-	if (header->getConnectionState() == HTTP_RESPONSE_HEADER::CONNECT_CLOSE) {
-		return (HttpDataExtractor*) new CloseConnectionLinkt(data, header);
-	}
-
-	// 如果没有content部分
-	if (header->existContent() == false) {
-		return (HttpDataExtractor*) new NoContent(data, header);
-	}
-
-	// 如果没有指定长度
-	if (header->getContentLength() == HTTP_RESPONSE_HEADER::NO_DESIGNATION) {
-		return (HttpDataExtractor*) new NoSepcifiedLength(data, header);
-	} else {
-		// 如果指定了长度，且长度为0
-		if (header->getContentLength() == 0) {
-			return (HttpDataExtractor*) new NoContent(data, header);
-		} else {
-			return (HttpDataExtractor*) new FixContent(data, header);
-		}
-	}
-}
 
 //============================
 // class ChunkPacket
@@ -305,4 +278,41 @@ int NoSepcifiedLength::addBuffer(const char *buf, const int len) {
 	finished_ = true;
 	// assert(false);
 	return 0;
+}
+
+};
+
+// class HttpDataExtractor members
+HttpDataExtractor * HttpDataExtractor::Create(const HTTP_RESPONSE_HEADER *header,
+								  ProtocolPacket<HTTP_PACKET_SIZE> *data) {
+	if (header == NULL) {
+		return (HttpDataExtractor*) new NoContent(data, header);
+	}
+
+	assert (data != NULL);
+
+	if (header->isChunk()) {
+		return (HttpDataExtractor*)new ChunkPacket(data, header);
+	}
+
+	if (header->getConnectionState() == HTTP_RESPONSE_HEADER::CONNECT_CLOSE) {
+		return (HttpDataExtractor*) new CloseConnectionLinkt(data, header);
+	}
+
+	// 如果没有content部分
+	if (header->existContent() == false) {
+		return (HttpDataExtractor*) new NoContent(data, header);
+	}
+
+	// 如果没有指定长度
+	if (header->getContentLength() == HTTP_RESPONSE_HEADER::NO_DESIGNATION) {
+		return (HttpDataExtractor*) new NoSepcifiedLength(data, header);
+	} else {
+		// 如果指定了长度，且长度为0
+		if (header->getContentLength() == 0) {
+			return (HttpDataExtractor*) new NoContent(data, header);
+		} else {
+			return (HttpDataExtractor*) new FixContent(data, header);
+		}
+	}
 }
