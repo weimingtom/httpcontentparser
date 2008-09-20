@@ -20,11 +20,9 @@ const TCHAR *GetInstallDir(const TCHAR *directory, const unsigned len);
 const TCHAR* GetFileNameDir(TCHAR *filename, TCHAR *directory, const unsigned len);
 
 // 获取保存图片的路径
-const TCHAR * GetPornImageDirectory(TCHAR *filename, const unsigned len);
 const TCHAR * GetImageDirectory(TCHAR * filename, const unsigned len);
 
 // 获取文字内容的保存路径
-const TCHAR * GetPornTextDirectory(TCHAR * filename, const unsigned len);
-const TCHAR * GetTextDirectory(TCHAR * filename, const unsigned len);
+const TCHAR * GetPageDirectory(TCHAR * filename, const unsigned len);
 
 #endif  // _FILTER_SETTING_SYS_UTILITY_H__
