@@ -7,6 +7,11 @@
 // |----|--------------------------------------|
 // |指向|          ==-具体类型===              |
 
+#define CONTENT_CHECK_PORN			0x10000000
+#define CONTENT_CHECK_NORMAL		0x20000000
+#define CONTENT_CHECK_UNKNOWN		0x00000000
+
+
 #define CONTYPE_HTML	0x00000001
 #define CONTYPE_CSS 	0x00000002
 #define CONTYPE_JS		0x00000004
@@ -17,9 +22,12 @@
 #define CONTYPE_BMP		0x00000080
 #define CONTYPE_UNKNOWN 0x08000000
 
-#define CONTYPE_FLAG	0xf0000000			// 前四位是 标志位, 在比较类型的时候应该将它取0
-#define CONTYPE_PORN    0x10000000			// 所有包含此为的packet为黄色内容
+#define CONTYPE_FLAG	0xf0000000				// 前四位是 标志位, 在比较类型的时候应该将它取0
+#define CONTYPE_PORN    CONTENT_CHECK_PORN			// 所有包含此为的packet为黄色内容
 		// 位置内容
+
+
+
 
 
 #define IMAGE_TYPE_JPEG   CONTYPE_JPG
@@ -94,5 +102,7 @@ bool isText(const unsigned type) {
 	const unsigned actual_type = type & (~CONTYPE_PORN);
 	return (CONTYPE_HTML & actual_type) || (CONTYPE_XML & actual_type) ? true : false;
 }
+
+
 
 #endif  // _INCLUDE_IMAGE_TYPE_H__
