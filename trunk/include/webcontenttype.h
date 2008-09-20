@@ -30,6 +30,39 @@
 // type of images should be check or not.
 
 
+// get relative type's filename ext
+
+#define FILE_EXT_HTML	TEXT("html")
+#define FILE_EXT_CSS	TEXT("css")
+#define FILE_EXT_JS		TEXT("js")
+#define FILE_EXT_XML	TEXT("xml")
+#define FILE_EXT_GIF	TEXT("gif")
+#define FILE_EXT_JPG	TEXT("jpg")
+#define FILE_EXT_BMP	TEXT("bmp")
+#define FILE_EXT_PNG	TEXT("png")
+inline
+const TCHAR * getExt(const int type) {
+	if (type == CONTYPE_HTML) {
+		return FILE_EXT_HTML;
+	} else if (type == CONTYPE_CSS) {
+		return FILE_EXT_CSS;
+	} else if (type == CONTYPE_JS) {
+		return FILE_EXT_JS;
+	} else if (type == CONTYPE_XML) {
+		return FILE_EXT_XML;
+	} else if (type == CONTYPE_GIF) {
+		return FILE_EXT_GIF;
+	} else if (type == CONTYPE_JPG) {
+		return FILE_EXT_JPG;
+	} else if (type == CONTYPE_PNG) {
+		return FILE_EXT_PNG;
+	} else if (type == CONTYPE_BMP) {
+		return FILE_EXT_BMP;
+	}
+
+	return NULL;
+}
+
 inline
 bool isImage(const unsigned type) {
 	const unsigned actual_type = type & (~CONTYPE_PORN);
