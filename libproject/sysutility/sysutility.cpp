@@ -66,30 +66,12 @@ const TCHAR *GetInstallDir(TCHAR *directory, const unsigned len) {
 	return directory;
 }
 
-const TCHAR * GetPornTextDirectory(TCHAR * filename, const unsigned len) {
-	assert (filename != NULL);
-
-	TCHAR install_dir[MAX_PATH];
-	GetInstallDir(install_dir, MAX_PATH);
-	_sntprintf(filename, MAX_PATH, TEXT("%s\\%s"), install_dir, TEXT("History\\text\\porn\\"));
-	return filename;
-}
-
-const TCHAR * GetTextDirectory(TCHAR * filename, const unsigned len) {
+const TCHAR * GetPageDirectory(TCHAR * filename, const unsigned len) {
 	assert (filename != NULL);
 
 	TCHAR install_dir[MAX_PATH];
 	GetInstallDir(install_dir, MAX_PATH);
 	_sntprintf(filename, MAX_PATH, TEXT("%s\\%s"), install_dir, TEXT("History\\text\\normal\\"));
-	return filename;
-}
-
-const TCHAR * GetPornImageDirectory(TCHAR *filename, const unsigned len) {
-	assert (filename != NULL);
-
-	TCHAR install_dir[MAX_PATH];
-	GetInstallDir(install_dir, MAX_PATH);
-	_sntprintf(filename, MAX_PATH, TEXT("%s\\%s"), install_dir, TEXT("History\\images\\normal\\"));
 	return filename;
 }
 
