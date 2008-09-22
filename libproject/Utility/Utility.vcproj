@@ -46,7 +46,8 @@ copy .\httprequestpacket.h ..\..\include\utility
 copy .\strutility.h ..\..\include\utility
 "/>
 			<Tool
-				Name="VCPreBuildEventTool"/>
+				Name="VCPreBuildEventTool"
+				CommandLine="copy .\ziputility.h ..\..\include"/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
 			<Tool
@@ -113,19 +114,7 @@ copy .\httppacket.h ..\..\include\utility
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
 			<File
-				RelativePath=".\fd_set_utility.cpp">
-			</File>
-			<File
 				RelativePath=".\FileMapping.cpp">
-			</File>
-			<File
-				RelativePath=".\HttpDataExtractor.cpp">
-			</File>
-			<File
-				RelativePath=".\HttpPacket.cpp">
-			</File>
-			<File
-				RelativePath=".\HTTPRequestPacket.cpp">
 			</File>
 			<File
 				RelativePath=".\stdafx.cpp">
@@ -154,19 +143,7 @@ copy .\httppacket.h ..\..\include\utility
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
 			<File
-				RelativePath=".\fd_set_utility.h">
-			</File>
-			<File
 				RelativePath=".\FileMapping.h">
-			</File>
-			<File
-				RelativePath=".\HttpDataExtractor.h">
-			</File>
-			<File
-				RelativePath=".\HttpPacket.h">
-			</File>
-			<File
-				RelativePath=".\HTTPRequestPacket.h">
 			</File>
 			<File
 				RelativePath=".\stdafx.h">
@@ -188,9 +165,41 @@ copy .\httppacket.h ..\..\include\utility
 				RelativePath=".\dns.h">
 			</File>
 		</Filter>
-		<File
-			RelativePath=".\ReadMe.txt">
-		</File>
+		<Filter
+			Name="ZIP"
+			Filter="">
+			<File
+				RelativePath=".\ZipUtility.h">
+			</File>
+		</Filter>
+		<Filter
+			Name="HTTP"
+			Filter="">
+			<File
+				RelativePath=".\fd_set_utility.cpp">
+			</File>
+			<File
+				RelativePath=".\fd_set_utility.h">
+			</File>
+			<File
+				RelativePath=".\HttpDataExtractor.cpp">
+			</File>
+			<File
+				RelativePath=".\HttpDataExtractor.h">
+			</File>
+			<File
+				RelativePath=".\HttpPacket.cpp">
+			</File>
+			<File
+				RelativePath=".\HttpPacket.h">
+			</File>
+			<File
+				RelativePath=".\HTTPRequestPacket.cpp">
+			</File>
+			<File
+				RelativePath=".\HTTPRequestPacket.h">
+			</File>
+		</Filter>
 	</Files>
 	<Globals>
 	</Globals>
