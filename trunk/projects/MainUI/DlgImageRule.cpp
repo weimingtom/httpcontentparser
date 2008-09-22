@@ -70,6 +70,10 @@ BOOL CDlgImageRule::OnInitDialog()
 	m_chkImage.SetWindowText(" Check Image");
 	m_chkShowImage.SetWindowText(" Show Image");
 	m_editImageScale.SetMask("Low Bound:#### ---- ####:Upper Bound","Low Bound:____ ---- ____:Upper Bound",CGuiEdit::MASK_FREEMASK);
+
+
+	// 按照初始化设置
+	// g_configuration.getContentCheckSetting()->needCheck();
 	return TRUE;
 	// 异常: OCX 属性页应返回 FALSE
 }

@@ -34,12 +34,12 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 public:
-	CGuiCheckBox m_chkImage;
-	CGuiCheckBox m_chkShowImage;
-	CGuiCheckBox m_chkJPEG;
-	CGuiCheckBox m_chkGIF;
-	CGuiCheckBox m_chkBMP;
-	CGuiCheckBox m_chkPNG;
+	CButton m_chkImage;
+	CButton m_chkShowImage;
+	CButton m_chkJPEG;
+	CButton m_chkGIF;
+	CButton m_chkBMP;
+	CButton m_chkPNG;
 	
 	CGuiGroupBox m_staImageCheck;
 	CGuiGroupBox m_staImageSize;
