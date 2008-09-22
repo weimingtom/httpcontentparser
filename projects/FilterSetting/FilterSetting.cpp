@@ -46,9 +46,6 @@ extern "C" int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/
 	g_hInstance = hInstance;
 	g_configuration.setInstance(hInstance);
 	g_dnssetting.initialize(g_configuration.getBlackURLSet(), g_configuration.getWhiteURLSet());
-	
-	// 初始化屏幕记录
-	g_screenSaver.initialize();
 
 	 // 开启服务线程
 	ServThread::getInstance();
