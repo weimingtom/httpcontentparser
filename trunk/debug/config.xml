@@ -67,8 +67,12 @@
 			<content type="porn_images"  enable="true"/>
 			<content type="porn_website" enable="true"/>
 			<content type="porn_webpage" enable="true"/>
-			<autoclear time="" enable="true"/>
+			<autoclear timespan="" enable="true" min="" max=""/>
 		</webhistory>
+		
+		<screensaver enable="true">
+			<autoclear enable="true" min="" max="" timespan=""/>
+		</screensaver>
 		
 		<!-- system configuration-->
 		<syssetting>
