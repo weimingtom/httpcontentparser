@@ -24,7 +24,7 @@ STDMETHODIMP CScreenSave::InterfaceSupportsErrorInfo(REFIID riid)
 }
 
 STDMETHODIMP CScreenSave::enableScreenSave(VARIANT_BOOL enabled) {
-	g_screenSaver.enableSave(convert(enabled));
+	g_screenSaver.enable(convert(enabled));
 	return S_OK;
 }
 
