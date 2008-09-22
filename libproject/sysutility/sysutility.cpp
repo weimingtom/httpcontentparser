@@ -18,8 +18,6 @@ namespace {
 
 	DWORD GetHistoryRecordDir(TCHAR *moduleDir, const int len, HMODULE hModule);
 	DWORD GetSoftwareDir(TCHAR *dir, const int len, HMODULE hModule);			// 获取软件所在的目录
-	DWORD GetPornImageRecordDir(TCHAR *moduleDir, const int len, HMODULE hModule);
-	DWORD GetNormalImageRecordDir(TCHAR *moduleDir, const int len, HMODULE hModule);
 };
 
 
@@ -71,7 +69,7 @@ const TCHAR * GetPageDirectory(TCHAR * filename, const unsigned len) {
 
 	TCHAR install_dir[MAX_PATH];
 	GetInstallDir(install_dir, MAX_PATH);
-	_sntprintf(filename, MAX_PATH, TEXT("%s\\%s"), install_dir, TEXT("History\\text\\normal\\"));
+	_sntprintf(filename, MAX_PATH, TEXT("%s\\%s"), install_dir, TEXT("History\\text\\"));
 	return filename;
 }
 
@@ -80,7 +78,25 @@ const TCHAR * GetImageDirectory(TCHAR * filename, const unsigned len) {
 
 	TCHAR install_dir[MAX_PATH];
 	GetInstallDir(install_dir, MAX_PATH);
-	_sntprintf(filename, MAX_PATH, TEXT("%s\\%s"), install_dir, TEXT("History\\images\\normal\\"));
+	_sntprintf(filename, MAX_PATH, TEXT("%s\\%s"), install_dir, TEXT("History\\images\\"));
+	return filename;
+}
+
+const TCHAR * GetRecordConfigfile(TCHAR *filename, const unsigned len, HMODULE hModule) {
+	assert (filename != NULL);
+
+	TCHAR install_dir[MAX_PATH];
+	GetInstallDir(install_dir, MAX_PATH);
+	_sntprintf(filename, MAX_PATH, TEXT("%s\\%s"), install_dir, TEXT("History\\config.xml"));
+	return filename;
+}
+
+const TCHAR * GetWebSiteRecordPath(TCHAR *filename, const unsigned len) {
+	assert (filename != NULL);
+
+	TCHAR install_dir[MAX_PATH];
+	GetInstallDir(install_dir, MAX_PATH);
+	_sntprintf(filename, MAX_PATH, TEXT("%s\\%s"), install_dir, TEXT("History\\websites\\websites.xml"));
 	return filename;
 }
 //////////////////////////////////////////////////
@@ -117,27 +133,6 @@ DWORD GetHistoryRecordDir(TCHAR *historyDir, const int len, HMODULE hModule) {
 		_tmkdir(historyDir);
 
 	return (DWORD)_tcslen(historyDir);
-}
-
-// 获取保存目录的路径
-DWORD GetPornImageRecordDir(TCHAR *pornImage, const int len, HMODULE hModule) {
-	TCHAR moduleDir[MAX_PATH];
-	GetSoftwareDir(moduleDir, len, hModule);
-	_sntprintf(pornImage, MAX_PATH, TEXT("%s%s\\"), moduleDir,TEXT("History\\images\\porn\\"));
-	if (_tchdir(pornImage) == -1)
-		_tmkdir(pornImage);
-
-	return (DWORD)_tcslen(pornImage);
-}
-
-DWORD GetNormalImageRecordDir(TCHAR *normalImage, const int len, HMODULE hModule) {
-	TCHAR moduleDir[MAX_PATH];
-	GetSoftwareDir(moduleDir, len, hModule);
-	_sntprintf(normalImage, MAX_PATH, TEXT("%s%s\\"), moduleDir,TEXT("History\\images\\normal\\"));
-	if (_tchdir(normalImage) == -1)
-		_tmkdir(normalImage);
-
-	return (DWORD)_tcslen(normalImage);
 }
 
 DWORD GenerateImageFile(TCHAR *fullpath, const int len, HMODULE hModule) {
