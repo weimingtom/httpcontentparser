@@ -38,6 +38,7 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				CommandLine="copy .\selectio.h ..\..\include
+copy .\webrecordconfig.h ..\..\include
 copy .\Debug\selectiod.lib ..\..\lib
 "/>
 			<Tool
@@ -157,6 +158,16 @@ copy .\release\selectio.lib ..\..\lib
 			</File>
 			<File
 				RelativePath=".\httpcontentcheck.h">
+			</File>
+		</Filter>
+		<Filter
+			Name="webrecordconfig"
+			Filter="">
+			<File
+				RelativePath=".\WebRecordConfig.cpp">
+			</File>
+			<File
+				RelativePath=".\WebRecordConfig.h">
 			</File>
 		</Filter>
 	</Files>
