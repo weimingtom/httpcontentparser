@@ -70,9 +70,9 @@
 			<autoclear timespan="" enable="true" min="" max=""/>
 		</webhistory>
 		
-		<screensaver enable="true">
+		<screensave enable="true" timespace="">
 			<autoclear enable="true" min="" max="" timespan=""/>
-		</screensaver>
+		</screensave>
 		
 		<!-- system configuration-->
 		<syssetting>
