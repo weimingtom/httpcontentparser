@@ -22,7 +22,7 @@
 #define CONTYPE_BMP		0x00000080
 #define CONTYPE_UNKNOWN 0x08000000
 
-#define CONTYPE_FLAG	0xf0000000				// 前四位是 标志位, 在比较类型的时候应该将它取0
+#define CONTYPE_FLAG	0xf0000000					// 前四位是 标志位, 在比较类型的时候应该将它取0
 #define CONTYPE_PORN    CONTENT_CHECK_PORN			// 所有包含此为的packet为黄色内容
 		// 位置内容
 
