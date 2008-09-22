@@ -26,13 +26,12 @@ public:
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 支持
 
-	CGuiCheckBox m_chkEnableDNS;
+	CButton m_chkEnableDNS;
 	CGuiListEdit ListBox;
 	RulesList  rules;
 	DECLARE_MESSAGE_MAP()
 
-	// 保存白名单
-	DNSList black_url_set;
+	BOOL m_bEnableBlackDNS;
 
 	void initializeData();
 	virtual int Enum(const std::string &dns) ;  // member of DNSEnumerator

@@ -13,6 +13,7 @@ IMPLEMENT_DYNAMIC(CDlgBlackDNSList, CDialog)
 CDlgBlackDNSList::CDlgBlackDNSList(CWnd* pParent /*=NULL*/)
 	: CBaseDlg(CDlgBlackDNSList::IDD, pParent)
 {
+	m_bEnableBlackDNS = TRUE;
 }
 
 CDlgBlackDNSList::~CDlgBlackDNSList()
@@ -41,11 +42,13 @@ void CDlgBlackDNSList::DoDataExchange(CDataExchange* pDX)
 	CDialog::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_DNS_LIST, ListBox);
 	DDX_Control(pDX, IDC_CHK_ENABLE_DNS, m_chkEnableDNS);
+	DDX_Check(pDX, IDC_CHK_ENABLE_DNS, m_bEnableBlackDNS);
 }
 
 void CDlgBlackDNSList::initializeData() {
-	black_url_set.beginEnum((Enumerator1<std::string>*)this);
-	m_chkEnableDNS.m_bCheckBtn = black_url_set.needChecked();
+	g_configuration.getWhiteURLSet()->beginEnum((Enumerator1<std::string>*)this);
+	m_bEnableBlackDNS = g_configuration.getWhiteURLSet()->needChecked();
+	UpdateData(FALSE);
 }
 
 int CDlgBlackDNSList::Enum(const std::string &dns) {
