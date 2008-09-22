@@ -4,6 +4,7 @@
 
 // ╠ё╢Ффад╩
 void SaveScreen(HMODULE hModule);
+
 // гЕ©уфад╩╩╨╢Ф
 void ClearScreen(HMODULE hModule);
 
