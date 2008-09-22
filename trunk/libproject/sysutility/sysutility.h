@@ -25,4 +25,9 @@ const TCHAR * GetImageDirectory(TCHAR * filename, const unsigned len);
 // 获取文字内容的保存路径
 const TCHAR * GetPageDirectory(TCHAR * filename, const unsigned len);
 
+// 获取保存网址的文件
+const TCHAR * GetWebSiteRecordPath(TCHAR *filename, const unsigned len);
+
+// 获取历史的文件
+const TCHAR * GetRecordConfigfile(TCHAR *filename, const unsigned len);
 #endif  // _FILTER_SETTING_SYS_UTILITY_H__
