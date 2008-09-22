@@ -4,7 +4,9 @@
 
 #include <com\FilterSetting_i.c>
 #include <com\FilterSetting.h>
+#include <xmlconfiguration.h>
 
 extern IDNSSetting *g_dnssetting;
+extern XMLConfiguration g_configuration;
 
 #endif  // _MAIN_UI_GLOBAL_VARIABLE_H__
