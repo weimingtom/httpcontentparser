@@ -30,12 +30,20 @@
 #define CONFIG_NODE_RULES					TEXT("rules")
 #define CONFIG_NODE_APPSET					TEXT("appsetting")
 
-#define CONFIG_NODE_RULE_ITEM				TEXT("rule")
+
+//======================================================
+// 一下是一些常用的常量
 #define CONFIG_CONST_NAME					TEXT("name")
 #define CONFIG_CONST_TYPPE					TEXT("type")
 #define CONFIG_CONST_ENABLE					TEXT("enable")
 #define CONFIG_CONST_ENABLE_TRUE			TEXT("true")
 #define CONFIG_CONST_ENABLE_FALSE			TEXT("false")
+#define CONFIG_CONST_MIN					TEXT("min")
+#define	CONFIG_CONST_MAX					TEXT("max")
+#define CONSIG_CONST_TIMESPAN				TEXT("timespan")
+
+
+#define CONFIG_NODE_RULE_ITEM				TEXT("rule")
 
 #define CONFIG_NODE_NAME_BLACKURL			TEXT("blackurl")
 #define CONFIG_NODE_NAME_WHITEURL			TEXT("whiteurl")
@@ -93,6 +101,10 @@
 #define CONFIG_APPSET_WEBHISTORY_ALL_WEBPAGE	TEXT("all_webpage")
 #define CONFIG_APPSET_WEBHISTORY_PORN_WEBPAGE	TEXT("porn_webpage")
 
+// screenSaver
+#define CONFIG_ITEM_APPSET_SCREENSAVER			TEXT("screensave")
+#define CONFIG_APPSET_SCREENSAVER_AUTOCLEAR		TEXT("autoclear")
+
 #include <DNSSetting.h>
 #include <SearchRule.h>
 #include <onlinehoursetting.h>
@@ -100,6 +112,7 @@
 #include <authorize.h>
 #include <webhistoryrecordersetting.h>
 #include <contentchecksetting.h>
+#include <screensaver.h>
 #include <string>
 #include <set>
 #include <map>
@@ -127,14 +140,15 @@ public:
 		hInstance_ = hInstance;
 	}
 private:
-	DNSList black_url_set_;
-	DNSList white_url_set_;
-	SearchRule search_rule_;
-	OnlineHourSetting online_setting_;
-	EyecareSetting eye_care_;
-	WebHistoryRecorderSetting web_history_;
-	Authorize authorize_;
-	ContentCheckSetting	content_check_;
+	DNSList						black_url_set_;
+	DNSList						white_url_set_;
+	SearchRule					search_rule_;
+	OnlineHourSetting			online_setting_;
+	EyecareSetting				eye_care_;
+	WebHistoryRecorderSetting	web_history_;
+	Authorize					authorize_;
+	ContentCheckSetting			content_check_;
+	ScreenSaver					screen_save_;
 	
 	HINSTANCE hInstance_;
 	// 默认设置
@@ -151,6 +165,7 @@ private:
 	int parseRules(TiXmlNode *rules_root);
 	int parseAppSet(TiXmlNode *appset_root);
 
+	////////////////////////////////////////////////////////////////////
 	// 分析应用程序设置
 	int getSystemSetting(TiXmlElement * ele);
 	
@@ -169,6 +184,15 @@ private:
 	int enableWebHistoryRecord(const TCHAR *enable);
 	int setWebHistoryRecord(const TCHAR *type, const TCHAR *enable);
 
+	// Screensaver
+	int getScreensave(TiXmlElement * ele);
+	int enableScreensave(const TCHAR *enable);
+	int setScreensaveTimespan(const TCHAR *timespan);
+	int setAutoClear(TiXmlElement * ele);
+	int enableScreenSaveAutoClear();
+	int setScreensaveAutoClearTimespan(const TCHAR *timespan);
+
+	/////////////////////////////////////////////////////////////////////
 	// 分析各个规则
 	int getWhiteURL(TiXmlElement * ele);
 	int getBlackURL(TiXmlElement * ele);
