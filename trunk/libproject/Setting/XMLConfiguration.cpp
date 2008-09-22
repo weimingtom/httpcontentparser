@@ -429,6 +429,9 @@ int XMLConfiguration::parseAppSet(TiXmlNode *appset_root) {
 			} else if (_tcscmp(node->Value(), CONFIG_ITEM_APPSET_SYSSETTING) == 0) {
 				// 系统设置功能
 				getSystemSetting(element);
+			} else if (_tcscmp(node->Value(), CONFIG_ITEM_APPSET_SCREENSAVER) == 0) {
+				// 屏幕保存设置功能
+				getScreensave(element);
 			}
 		}
 		// 获取下一个
@@ -493,6 +496,7 @@ int XMLConfiguration::getEyecareSetting(TiXmlElement *ele) {
 // WebHistory
 int XMLConfiguration::enableWebHistoryRecord(const TCHAR *enable) {
 	const bool enabled = enabledFromString(enable);
+	web_history_.enable(enabled);
 	return 0;
 }
 
@@ -528,6 +532,36 @@ int XMLConfiguration::getWebHistoryRecorder(TiXmlElement *ele) {
 			setWebHistoryRecord(ele->Attribute(CONFIG_CONST_TYPPE), ele->Attribute(CONFIG_CONST_ENABLE));
 		}
 
+		node = node->NextSibling();
+	}
+	return 0;
+}
+
+//===============================================
+// Screensave
+int XMLConfiguration::getScreensave(TiXmlElement * ele){
+	enableScreensave(ele->Attribute(CONFIG_CONST_ENABLE));
+	setScreensaveTimespan(ele->Attribute(CONSIG_CONST_TIMESPAN));
+
+	return 0;
+}
+int XMLConfiguration::enableScreensave(const TCHAR *enable){
+	const bool enabled = enabledFromString(enable);
+	screen_save_.enable(enabled);
+	return 0;
+}
+
+int XMLConfiguration::setScreensaveTimespan(const TCHAR *timespan){
+	screen_save_.setTimeSpan(atoi(timespan));
+	return 0;
+}
+
+int XMLConfiguration::setAutoClear(TiXmlElement * ele) {
+	TiXmlNode *node = ele->FirstChild();
+	while (NULL != node) {
+		TiXmlElement * element = node->ToElement();
+		if (element && _tcscmp(node->Value(), CONFIG_APPSET_SCREENSAVER_AUTOCLEAR) == 0) {
+		}
 		node = node->NextSibling();
 	}
 	return 0;
