@@ -8,18 +8,18 @@ public:
 	ScreenSaver(void);
 	~ScreenSaver(void);
 
-	void initialize();
-
 	//=====
 	int getTimeSpan() const; // seconds
 	void setTimeSpan(const int seconds);
 
 
 	bool isEnabled() const ; // 是否可用
-	void enableSave(const bool enabled);	// 是save可用
+	void enable(const bool enabled);	// 是save可用
 	bool shouldSave(); // 现在应该Save了吗？
 
 private:
+	void defaultSetting();
+
 	Calculagraph calcugraph_;
 	bool enabled_;
 };

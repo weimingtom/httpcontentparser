@@ -2,9 +2,9 @@
 #include ".\screensaver.h"
 
 
-void ScreenSaver::initialize() {
+void ScreenSaver::defaultSetting() {
 	calcugraph_.initialize();
-	enableSave(false);
+	enable(false);
 	setTimeSpan(60 * 20); // 20 mins
 }
 
@@ -13,7 +13,7 @@ void ScreenSaver::initialize() {
 bool ScreenSaver::isEnabled() const  {
 	return enabled_;
 }
-void ScreenSaver::enableSave(const bool enabled) {
+void ScreenSaver::enable(const bool enabled) {
 	enabled_ = enabled;
 }
 
@@ -39,6 +39,7 @@ bool ScreenSaver::shouldSave() {
 //===================================
 // constructors and deconstructors
 ScreenSaver::ScreenSaver(void) {
+	defaultSetting();
 }
 
 ScreenSaver::~ScreenSaver(void) {
