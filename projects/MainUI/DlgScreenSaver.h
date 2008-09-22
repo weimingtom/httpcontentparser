@@ -28,6 +28,8 @@ public:
 	virtual void OnRestore();
 	virtual void OnApply();
 	virtual void OnShow();
+
+	void initializeSetting();
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV Ö§³Ö
 

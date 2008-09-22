@@ -29,21 +29,29 @@ protected:
 	
 	virtual BOOL OnInitDialog();
 
+	void initializeSetting();
+
 	// controls
 	CGuiGroupBox m_staEyecare;
 	CGuiGroupBox m_staPwd;
-	CGuiCheckBox m_chkUseSuPwd;
-	CGuiButton m_btnResetPwd;
-	CGuiButton m_btnSetPwd;
-	CGuiEdit m_edtPwd;
-	CGuiEdit m_edtRetry;
-	CGuiEdit m_edtEnterTime;
-	CGuiEdit m_edtRestTime;
+	CButton m_chkUseSuPwd;
+	CButton m_btnResetPwd;
+	CButton m_btnSetPwd;
+	CEdit m_edtPwd;
+	CEdit m_edtRetry;
+	CEdit m_edtEnterTime;
+	CEdit m_edtRestTime;
 	CString m_strRetryPwd;
 	CString m_strPassword;
+	
+	int m_nEnterTime;
+	int m_nEyecareTime;
+	BOOL m_bUseSUPWD;
 public:
 	afx_msg void OnBnClickedChkUseSupwd();	
 	afx_msg void OnBnClickedBtnReset();
-	int m_nEntertainTime;
-	int m_nRestTime;
+	
+
+	// 设置密码窗口的对话框
+	void SetPwdEditState();	
 };

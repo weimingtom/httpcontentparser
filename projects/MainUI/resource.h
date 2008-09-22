@@ -37,7 +37,6 @@
 #define IDD_DLG_DNS_BLACKLIST           134
 #define IDD_DLG_SEARCH_RULE             135
 #define IDD_DLG_CONTENT                 136
-#define IDD_DLG_BLACKWORD               137
 #define IDD_LEV1_RULE                   138
 #define IDB_BITMAP_CHECKMARK            139
 #define IDD_DLG_TEXT                    140
@@ -142,6 +141,7 @@
 #define IDC_CHK_PORN_PAGE               1074
 #define IDC_CHK_PORN_WEBSITES           1075
 #define IDC_CHK_ALLPAGES                1076
+#define IDC_SLIDER_AUTOCLEAR_TIME       1077
 #define IDC_EDIT1                       4011
 #define IDC_EDIT2                       4012
 #define IDC_EDT_RETRY                   4013
@@ -179,7 +179,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        155
 #define _APS_NEXT_COMMAND_VALUE         32799
-#define _APS_NEXT_CONTROL_VALUE         1077
+#define _APS_NEXT_CONTROL_VALUE         1078
 #define _APS_NEXT_SYMED_VALUE           112
 #endif
 #endif

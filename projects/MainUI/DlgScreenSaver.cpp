@@ -4,7 +4,7 @@
 #include "stdafx.h"
 #include "MainUI.h"
 #include "DlgScreenSaver.h"
-
+#include "globalvariable.h"
 
 // CDlgScreenSaver ¶Ô»°¿ò
 
@@ -35,6 +35,10 @@ void CDlgScreenSaver::OnApply() {
 void CDlgScreenSaver::OnShow() {
 }
 
+
+void initializeSetting() {
+
+}
 BEGIN_MESSAGE_MAP(CDlgScreenSaver, CDialog)
 END_MESSAGE_MAP()
 
