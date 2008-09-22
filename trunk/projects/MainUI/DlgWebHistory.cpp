@@ -5,9 +5,8 @@
 #include "MainUI.h"
 #include "DlgWebHistory.h"
 #include ".\dlgwebhistory.h"
+#include "globalvariable.h"
 #include <sysutility.h>
-#include <com\FilterSetting_i.c>
-#include <com\FilterSetting.h>
 #include <comdef.h>
 
 // CDlgWebHistory 对话框
@@ -71,11 +70,19 @@ void CDlgWebHistory::OnApply() {
 void CDlgWebHistory::OnShow() {
 }
 
+void CDlgWebHistory::initializeSetting() {
+	m_bPornImage	= g_configuration.getWebHistoryRecordSetting()->recordPornImage();
+	m_bPornPage		= g_configuration.getWebHistoryRecordSetting()->recordPornPages();
+	m_bPornWebsite	= g_configuration.getWebHistoryRecordSetting()->recordPornWebsite();
+	m_bAllImage		= g_configuration.getWebHistoryRecordSetting()->recordAllImage();
+	m_bAllPages		= g_configuration.getWebHistoryRecordSetting()->recordAllPages();
+	m_bAllWebsite	= g_configuration.getWebHistoryRecordSetting()->recordAllWebsite();
+	UpdateData(FALSE);
+}
 BEGIN_MESSAGE_MAP(CDlgWebHistory, CDialog)
 	ON_BN_CLICKED(IDC_BUN_CLEAR_CACHE, OnBnClickedBunClearCache)
 	ON_BN_CLICKED(IDC_BTN_EXPORT_WEBSITES, OnBnClickedBtnExportWebsites)
 END_MESSAGE_MAP()
-
 
 // CDlgWebHistory 消息处理程序
 
@@ -88,17 +95,19 @@ BOOL CDlgWebHistory::OnInitDialog()
 	CBaseDlg::OnInitDialog();
 	CString str;
 
-	str.LoadString(IDS_WEB_HISTORY_EXPORT_WEBSITE_LIST);
-	m_btnExportWebSiteList.SetStyleBorder(CGuiButton::STYLEXP);
-	m_btnExportWebSiteList.SetCaption(str);
+	//str.LoadString(IDS_WEB_HISTORY_EXPORT_WEBSITE_LIST);
+	//m_btnExportWebSiteList.SetStyleBorder(CGuiButton::STYLEXP);
+	//m_btnExportWebSiteList.SetCaption(str);
 
-	str.LoadString(IDS_WEB_HISTORY_VIEW_HISTORY);
-	m_btnViewtheHistory.SetStyleBorder(CGuiButton::STYLEXP);
-	m_btnViewtheHistory.SetCaption(str);
+	//str.LoadString(IDS_WEB_HISTORY_VIEW_HISTORY);
+	//m_btnViewtheHistory.SetStyleBorder(CGuiButton::STYLEXP);
+	//m_btnViewtheHistory.SetCaption(str);
 
-	str.LoadString(IDS_WEB_HISTORY_CLEAR);
-	m_btnClearCache.SetStyleBorder(CGuiButton::STYLEXP);
-	m_btnClearCache.SetCaption(str);
+	//str.LoadString(IDS_WEB_HISTORY_CLEAR);
+	//m_btnClearCache.SetStyleBorder(CGuiButton::STYLEXP);
+	//m_btnClearCache.SetCaption(str);
+
+	initializeSetting();
 
 	return TRUE;  // return TRUE unless you set the focus to a control
 }

@@ -5,8 +5,7 @@
 #include "MainUI.h"
 #include "DlgEyecare.h"
 #include ".\dlgeyecare.h"
-#include <com\FilterSetting_i.c>
-#include <com\FilterSetting.h>
+#include ".\globalvariable.h"
 #include <comdef.h>
 
 // CDlgEyecare 对话框
@@ -16,8 +15,9 @@ CDlgEyecare::CDlgEyecare(CWnd* pParent /*=NULL*/)
 	: CBaseDlg(CDlgEyecare::IDD, pParent)
 	, m_strRetryPwd(_T(""))
 	, m_strPassword(_T(""))
-	, m_nEntertainTime(0)
-	, m_nRestTime(0)
+	, m_nEnterTime(0)
+	, m_nEyecareTime(0)
+	, m_bUseSUPWD(FALSE)
 {
 }
 
@@ -42,8 +42,9 @@ void CDlgEyecare::DoDataExchange(CDataExchange* pDX)
 	//==============================================
 	DDX_Text(pDX, IDC_EDT_PWD_RETRY, m_strRetryPwd);
 	DDX_Text(pDX, IDC_EDIT_PWD, m_strPassword);
-	DDX_Text(pDX, IDC_EDT_ENTERTIME, m_nEntertainTime);
-	DDX_Text(pDX, IDC_EDT_RESTTIME, m_nRestTime);
+	DDX_Text(pDX, IDC_EDT_ENTERTIME, m_nEnterTime);
+	DDX_Text(pDX, IDC_EDT_RESTTIME, m_nEyecareTime);
+	DDX_Check(pDX, IDC_CHK_USE_SUPWD, m_bUseSUPWD);
 }
 
 
@@ -56,8 +57,8 @@ void CDlgEyecare::OnApply() {
 		UpdateData(TRUE);
 		IEyecare *pEyeCare = NULL;
 		CoCreateInstance(CLSID_Eyecare, NULL, CLSCTX_ALL, IID_IEyecare, (LPVOID*)&pEyeCare);
-		pEyeCare->setEnterTime(m_nEntertainTime);
-		pEyeCare->setEyecareTime(m_nRestTime);
+		pEyeCare->setEnterTime(m_nEnterTime);
+		pEyeCare->setEyecareTime(m_nEyecareTime);
 		pEyeCare->Release();
 	} catch (_com_error&) {
 		// AfxMessageBox("");
@@ -65,6 +66,16 @@ void CDlgEyecare::OnApply() {
 }
 
 void CDlgEyecare::OnShow() {
+}
+
+void CDlgEyecare::initializeSetting() {
+	SetPwdEditState();
+
+	// 读出出示信息
+	m_nEnterTime = g_configuration.getEyecareSetting()->getEnterTime();
+	m_nEyecareTime = g_configuration.getEyecareSetting()->getEyecareTime();
+
+	UpdateData(FALSE);
 }
 
 BEGIN_MESSAGE_MAP(CDlgEyecare, CDialog)
@@ -78,16 +89,24 @@ END_MESSAGE_MAP()
 BOOL CDlgEyecare::OnInitDialog()
 {
 	CBaseDlg::OnInitDialog();
-	m_btnResetPwd.SetStyleBorder(CGuiButton::STYLEXP);
-	m_btnResetPwd.SetCaption("Reset");
-	m_btnSetPwd.SetStyleBorder(CGuiButton::STYLEXP);
-	m_btnSetPwd.SetCaption("Set");
+	//m_btnResetPwd.SetStyleBorder(CGuiButton::STYLEXP);
+	//m_btnResetPwd.SetCaption("Reset");
+	//m_btnSetPwd.SetStyleBorder(CGuiButton::STYLEXP);
+	//m_btnSetPwd.SetCaption("Set");
+
+	initializeSetting();
 	return TRUE;
 }
 
-void CDlgEyecare::OnBnClickedChkUseSupwd()
-{
-	if (FALSE == m_chkUseSuPwd.m_bCheckBtn) {
+
+
+void CDlgEyecare::OnBnClickedChkUseSupwd() {
+	UpdateData(TRUE);
+	SetPwdEditState();
+}
+
+void CDlgEyecare::SetPwdEditState() {
+	if (TRUE == m_bUseSUPWD) {
 		m_edtPwd.EnableWindow(FALSE);
 		m_edtRetry.EnableWindow(FALSE);
 		m_btnResetPwd.EnableWindow(FALSE);

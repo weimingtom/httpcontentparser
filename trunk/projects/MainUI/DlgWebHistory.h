@@ -30,14 +30,17 @@ protected:
 	DECLARE_MESSAGE_MAP()
 
 	void ChangeRecordType();
+
+	// ≥ı ºªØ
+	void initializeSetting();
 public:
 	afx_msg void OnBnClickedBunClearCache();
 	virtual BOOL OnInitDialog();
 	afx_msg void OnBnClickedBtnExportWebsites();
 
-	CGuiButton m_btnExportWebSiteList;
-	CGuiButton m_btnViewtheHistory;
-	CGuiButton m_btnClearCache;
+	CButton m_btnExportWebSiteList;
+	CButton m_btnViewtheHistory;
+	CButton m_btnClearCache;
 	CGuiGroupBox m_staTools;
 	CGuiGroupBox m_staHistory;
 	CGuiGroupBox m_staTypes;
