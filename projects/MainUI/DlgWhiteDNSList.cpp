@@ -12,6 +12,7 @@
 IMPLEMENT_DYNAMIC(CDlgWhiteDNSList, CDialog)
 CDlgWhiteDNSList::CDlgWhiteDNSList(CWnd* pParent /*=NULL*/)
 	: CBaseDlg(CDlgWhiteDNSList::IDD, pParent)
+	, m_bEnableWhiteDNS(TRUE)
 {
 }
 
@@ -24,6 +25,7 @@ void CDlgWhiteDNSList::DoDataExchange(CDataExchange* pDX)
 	CDialog::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_CHK_WHITE_DNSLIST, m_chkWhiteDNSList);
 	DDX_Control(pDX, IDC_STA_WHIE_DNSLIST, ListBox);
+	DDX_Check(pDX, IDC_CHK_WHITE_DNSLIST, m_bEnableWhiteDNS);
 }
 
 void CDlgWhiteDNSList::OnRestore() {
@@ -43,10 +45,10 @@ void CDlgWhiteDNSList::OnShow() {
 }
 
 void CDlgWhiteDNSList::initializeData() {
-	white_url_set.addDNS("google");
-	white_url_set.beginEnum((Enumerator1<std::string>*)this);
+	g_configuration.getWhiteURLSet()->beginEnum((Enumerator1<std::string>*)this);
 
-	m_chkWhiteDNSList.m_bCheckBtn = white_url_set.needChecked();
+	m_bEnableWhiteDNS = g_configuration.getWhiteURLSet()->needChecked();
+	UpdateData(FALSE);
 }
 
 int CDlgWhiteDNSList::Enum(const std::string &dns) {

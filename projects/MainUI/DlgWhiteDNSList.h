@@ -29,12 +29,11 @@ protected:
 	DECLARE_MESSAGE_MAP()
 
 	// controls
-	CGuiCheckBox m_chkWhiteDNSList;
+	CButton m_chkWhiteDNSList;
 	CGuiListEdit ListBox;
 	RulesList  rules;
 
-	// ±£´æ°×Ãûµ¥
-	DNSList white_url_set;
+	BOOL m_bEnableWhiteDNS;
 
 	void initializeData();
 	virtual int Enum(const std::string &dns) ;  // member of DNSEnumerator
