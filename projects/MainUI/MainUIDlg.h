@@ -96,9 +96,9 @@ private:
 	CMenu		m_trayMenu;
 	
 	CGuiGroupBox m_staFunFrame;
-	CButton m_btnOk;
-	CButton m_btnCancel;
-	CButton m_btnApply;
+	CGuiButton m_btnOk;
+	CGuiButton m_btnCancel;
+	CGuiButton m_btnApply;
 
 	CImageList image_list_;
 	//
