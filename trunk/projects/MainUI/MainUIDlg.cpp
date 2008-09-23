@@ -309,12 +309,12 @@ BOOL CMainUIDlg::OnInitDialog()
 	
 
 	//
-	//m_btnOk.SetStyleBorder(CGuiButton::STYLEXP);
-	//m_btnOk.SetCaption("OK");
-	//m_btnCancel.SetStyleBorder(CGuiButton::STYLEXP);
-	//m_btnCancel.SetCaption("Cancel");
-	//m_btnApply.SetStyleBorder(CGuiButton::STYLEXP);
-	//m_btnApply.SetCaption("Apply");
+	m_btnOk.SetStyleBorder(CGuiButton::STYLEXP);
+	m_btnOk.SetCaption("OK");
+	m_btnCancel.SetStyleBorder(CGuiButton::STYLEXP);
+	m_btnCancel.SetCaption("Cancel");
+	m_btnApply.SetStyleBorder(CGuiButton::STYLEXP);
+	m_btnApply.SetCaption("Apply");
 	//
 	return TRUE;  // 除非设置了控件的焦点，否则返回 TRUE
 }
