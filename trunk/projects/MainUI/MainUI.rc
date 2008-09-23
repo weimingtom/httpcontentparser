@@ -93,8 +93,7 @@ BEGIN
     CONTROL         "",IDC_POSITION_LEFT,"Static",SS_BLACKFRAME | NOT 
                     WS_VISIBLE,7,7,87,257
     CONTROL         "",IDC_STA_FRAME,"Static",SS_BLACKFRAME,149,7,268,257
-    CONTROL         "OK",IDC_OK,"Button",BS_OWNERDRAW | WS_TABSTOP,243,243,
-                    49,14
+    PUSHBUTTON      "OK",IDC_OK,243,243,49,14
     PUSHBUTTON      "Cancel",IDC_CANCEL,302,243,49,14
     PUSHBUTTON      "Apply",IDC_APPLY,359,243,49,14
     LTEXT           "Title",IDC_RIGHT_TITLE,165,18,237,11
