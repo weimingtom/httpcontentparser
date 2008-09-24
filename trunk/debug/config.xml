@@ -70,8 +70,8 @@
 			<autoclear timespan="" enable="true" min="" max=""/>
 		</webhistory>
 		
-		<screensave enable="true" timespace="">
-			<autoclear enable="true" min="" max="" timespan=""/>
+		<screensave enable="true" timespan="30">
+			<autoclear enable="true" min="1" max="30" timespan="1"/>
 		</screensave>
 		
 		<!-- system configuration-->
