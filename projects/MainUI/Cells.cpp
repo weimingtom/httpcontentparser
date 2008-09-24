@@ -29,6 +29,13 @@ BOOL CCells::PreCreateWindow(CREATESTRUCT& cs) {
 	return CWnd::PreCreateWindow(cs);
 }
 
+void CCells::check(const int row, const int col) {
+	cells[row][col].check();
+}
+
+void CCells::uncheck(const int row, const int col) {
+	cells[row][col].uncheck();
+}
 BOOL CCells::Create(LPCTSTR lpszClassName, LPCTSTR lpszWindowName, DWORD dwStyle,
 					const RECT& rectwindows, CWnd* pParentWnd, UINT nID, CCreateContext* pContext)
 {

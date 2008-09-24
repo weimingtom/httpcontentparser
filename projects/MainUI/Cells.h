@@ -24,6 +24,9 @@ protected:
 public: 
 	virtual BOOL Create(LPCTSTR lpszClassName, LPCTSTR lpszWindowName,
 		DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, UINT nID, CCreateContext* pContext = NULL);
+
+	void check(const int row, const int col);
+	void uncheck(const int row, const int col);
 };
 
 
