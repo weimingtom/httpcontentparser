@@ -6,6 +6,7 @@
 #include ".\DlgBlackDNSList.h"
 #include ".\ContentList.h"
 #include ".\globalvariable.h"
+#include <typeconvert.h>
 
 // CDlgBlackDNSList 对话框
 
@@ -19,8 +20,8 @@ CDlgBlackDNSList::CDlgBlackDNSList(CWnd* pParent /*=NULL*/)
 CDlgBlackDNSList::~CDlgBlackDNSList()
 {
 }
-void CDlgBlackDNSList::OnRestore() {
 
+void CDlgBlackDNSList::OnRestore() {
 }
 
 void CDlgBlackDNSList::OnApply() {
@@ -28,7 +29,7 @@ void CDlgBlackDNSList::OnApply() {
 
 	// DNS CHECK是否可用
 	ASSERT(g_dnssetting != NULL);
-	g_dnssetting->enableBlackDNSCheck((m_chkEnableDNS.GetCheck() == BST_CHECKED));
+	g_dnssetting->enableBlackDNSCheck(convert(m_chkEnableDNS.GetCheck() == BST_CHECKED));
 }
 
 void CDlgBlackDNSList::OnShow() {

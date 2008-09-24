@@ -2,10 +2,11 @@
 //
 
 #include "stdafx.h"
-#include "MainUI.h"
-#include "DlgWhiteDNSList.h"
+#include ".\MainUI.h"
+#include ".\DlgWhiteDNSList.h"
 #include ".\dlgwhitednslist.h"
-#include "globalvariable.h"
+#include ".\globalvariable.h"
+#include <typeconvert.h>
 
 // CDlgWhiteDNSList ¶Ô»°¿ò
 
@@ -35,7 +36,7 @@ void CDlgWhiteDNSList::OnRestore() {
 void CDlgWhiteDNSList::OnApply() {
 	rules.OnApply();
 	ASSERT(g_dnssetting != NULL);
-	g_dnssetting->enableWhiteDNSCheck((m_chkWhiteDNSList.GetCheck() == BST_CHECKED));
+	g_dnssetting->enableWhiteDNSCheck(convert(m_chkWhiteDNSList.GetCheck() == BST_CHECKED));
 }
 
 void CDlgWhiteDNSList::OnShow() {
