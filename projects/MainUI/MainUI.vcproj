@@ -184,6 +184,9 @@
 			<File
 				RelativePath=".\res\optionmarks.bmp">
 			</File>
+			<File
+				RelativePath=".\res\rt_manif.bin">
+			</File>
 		</Filter>
 		<Filter
 			Name="dlg"
