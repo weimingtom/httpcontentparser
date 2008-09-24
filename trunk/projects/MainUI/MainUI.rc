@@ -563,6 +563,13 @@ END
 //
 
 IDB_BITMAP_CHECKMARK    BITMAP                  "res\\optionmarks.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// RT_MANIFEST
+//
+
+1                       RT_MANIFEST             "res\\rt_manif.bin"
 #endif    // 中文(中华人民共和国) resources
 /////////////////////////////////////////////////////////////////////////////
 
@@ -585,22 +592,20 @@ IDD_DLG_IMAGERULES DIALOGEX 0, 0, 257, 199
 STYLE DS_SETFONT | WS_CHILD | WS_SYSMENU
 FONT 8, "Microsoft Sans Serif", 400, 0, 0x0
 BEGIN
-    GROUPBOX        "Image Type",IDC_STA_IMAGETYPE,7,62,170,58,BS_FLAT
-    CONTROL         " ??JPEG",IDC_CHK_JPEG,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,23,81,51,10
+    GROUPBOX        "Image Type",IDC_STA_IMAGETYPE,7,73,199,58,BS_FLAT
+    CONTROL         " JPEG",IDC_CHK_JPEG,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,32,89,51,10
     CONTROL         " BMP",IDC_CHK_BMP,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
-                    24,97,62,10
+                    33,105,62,10
     CONTROL         " GIF",IDC_CHK_GIF,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
-                    99,82,69,10
+                    119,90,69,10
     CONTROL         " PNG",IDC_CHK_PNG,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
-                    98,97,72,10
-    GROUPBOX        "Image Size",IDC_STA_IMAGESIZE,7,127,169,54,BS_FLAT
-    CONTROL         "",IDC_CHK_IMAGE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
-                    19,30,54,8
-    GROUPBOX        "Image Check",IDC_STA_IMAGE_CHECK,7,14,170,37,BS_FLAT
-    CONTROL         " Show Image",IDC_CHK_SHOWIMAGE,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,101,30,65,10
-    EDITTEXT        IDC_EDIT2,16,149,149,14,ES_CENTER | ES_AUTOHSCROLL
+                    118,105,72,10
+    GROUPBOX        "Image Size",IDC_STA_IMAGESIZE,7,138,201,54,BS_FLAT
+    GROUPBOX        "Image Check",IDC_STA_IMAGE_CHECK,7,7,200,57,BS_FLAT
+    EDITTEXT        IDC_EDIT2,19,159,176,14,ES_CENTER | ES_AUTOHSCROLL
+    CONTROL         "",IDC_SLIDER1,"msctls_trackbar32",TBS_TOP | WS_TABSTOP,
+                    18,24,181,20
 END
 
 IDD_DLG_DNS_WHITELIST DIALOGEX 0, 0, 250, 199

@@ -1,3 +1,6 @@
+#ifndef _MAINUI_CDLGSCREENSAVER_H__
+#define _MAINUI_CDLGSCREENSAVER_H__
+
 #include ".\basedlg.h"
 #include "afxwin.h"
 #include <Guilib1.5\GuiCheckBox.h>
@@ -38,4 +41,20 @@ public:
 	CGuiGroupBox m_staFunction;
 	CGuiGroupBox m_staTimespan;
 	CGuiGroupBox m_staAutoClear;
+	CSliderCtrl m_sliderSaveTimespan;
+	CSliderCtrl m_sliderAutoclearTimespan;
+	
+	BOOL m_bEnableScreensave;
+	BOOL m_bEnableAutoclean;
+
+public:
+	virtual BOOL OnInitDialog();
+	afx_msg void OnBnClickedChkScreensave();
+	afx_msg void OnBnClickedChkAutoclean();
+
+protected:
+	void enableAutoSave();
+	void enableAutoclean();
 };
+
+#endif  // _MAINUI_CDLGSCREENSAVER_H__

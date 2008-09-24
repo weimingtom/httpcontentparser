@@ -4,9 +4,10 @@
 #include ".\Cells.h"
 #include <afxwin.h>
 #include <Guilib1.5\GuiCheckBox.h>
+#include <Enumerate.h>
 // CDlgOnlineHour 对话框
 
-class CDlgOnlineHour : public CBaseDlg
+class CDlgOnlineHour : public CBaseDlg, Enumerator2<int, int>
 {
 	DECLARE_DYNAMIC(CDlgOnlineHour)
 
@@ -21,12 +22,20 @@ public:
 	virtual void OnApply();
 	virtual void OnShow();
 
+protected:
 	CCells cells;
+	CButton m_chkTimeCtrl;
+
+	void initializeSetting();
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 支持
 
 	DECLARE_MESSAGE_MAP()
 public:
 	virtual BOOL OnInitDialog();
-	CButton m_chkTimeCtrl;
+	BOOL m_bEnableTimeCheck;
+
+protected:
+	// 
+	virtual int Enum(const int day, const int hour);
 };
