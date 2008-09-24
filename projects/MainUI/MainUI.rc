@@ -748,6 +748,7 @@ BEGIN
     IDS_WEB_HISTORY_FILEDLG_DEFAULT "Websites"
     IDS_WEB_HISTORY_FILEDLG_EXT 
                             "TXT files (*.txt)|*.txt|All Files (*.*)|*.*||"
+    IDS_ERROR_WEB_SET_FAILED "Set Web Record Failed!"
 END
 
 #endif    // Ó¢Óï(ÃÀ¹ú) resources
