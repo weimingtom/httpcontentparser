@@ -2,8 +2,8 @@
 //
 
 #include "stdafx.h"
-#include "MainUI.h"
-#include "MainUIDlg.h"
+#include ".\MainUI.h"
+#include ".\MainUIDlg.h"
 #include ".\mainuidlg.h"
 #include ".\dlgchangepassword.h"
 #include ".\dlgcheckpassword.h"

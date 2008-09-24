@@ -2,11 +2,13 @@
 //
 
 #include "stdafx.h"
-#include "MainUI.h"
-#include "DlgOnlineHour.h"
+#include ".\MainUI.h"
+#include ".\DlgOnlineHour.h"
 #include ".\basedlg.h"
 #include ".\dlgonlinehour.h"
-#include "resource.h"
+#include ".\resource.h"
+#include ".\globalvariable.h"
+
 
 // CDlgOnlineHour ¶Ô»°¿ò
 IMPLEMENT_DYNAMIC(CDlgOnlineHour, CDialog)

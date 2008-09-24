@@ -2,9 +2,9 @@
 //
 
 #include "stdafx.h"
-#include "MainUI.h"
-#include "MainUIDlg.h"
-#include "globalvariable.h"
+#include ".\MainUI.h"
+#include ".\MainUIDlg.h"
+#include ".\globalvariable.h"
 #include ".\mainui.h"
 
 IDNSSetting *g_dnssetting = NULL;
