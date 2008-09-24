@@ -181,6 +181,7 @@ int XMLConfiguration::saveAppSetting(TiXmlElement * root) {
 	saveWebHistory(appsetting_root);
 	saveEyecare(appsetting_root);
 	saveAuthorize(appsetting_root);
+	saveScreensave(appsetting_root);
 	root->LinkEndChild(appsetting_root);
 	return 0;
 }
@@ -310,6 +311,24 @@ int XMLConfiguration::saveOnlineHour(TiXmlElement *root) {
 }
 
 //==========================================================
+// 保存屏幕保存功能
+int XMLConfiguration::saveScreensave(TiXmlElement * root) {
+	TiXmlElement * rule_root = new TiXmlElement(CONFIG_ITEM_APPSET_SCREENSAVER);
+	rule_root->SetAttribute(CONFIG_CONST_ENABLE, enabledFromBool(screen_save_.isEnabled()));
+	rule_root->SetAttribute(CONSIG_CONST_TIMESPAN, TEXT("10"));
+
+	TiXmlElement * auto_save = new TiXmlElement(CONFIG_APPSET_SCREENSAVER_AUTOCLEAR);
+	auto_save->SetAttribute(CONFIG_CONST_ENABLE,	enabledFromBool(screen_save_.isEnabled()));
+	auto_save->SetAttribute(CONFIG_CONST_MIN,		enabledFromBool(screen_save_.isEnabled()));
+	auto_save->SetAttribute(CONFIG_CONST_MAX,		enabledFromBool(screen_save_.isEnabled()));
+	auto_save->SetAttribute(CONSIG_CONST_TIMESPAN,	enabledFromBool(screen_save_.isEnabled()));
+	rule_root->LinkEndChild(auto_save);
+
+	root->LinkEndChild(rule_root);
+	return 0;
+}
+
+//==========================================================
 // 保存图片检测规则
 int XMLConfiguration::saveImageRule(TiXmlElement *root) {
 	TiXmlElement * rule_root = new TiXmlElement(CONFIG_NODE_RULE_ITEM);
@@ -371,7 +390,7 @@ public:
 	virtual int Enum(const std::string &data1, const bool enabled) {
 		TiXmlElement * searchengine_item = new TiXmlElement(CONDIG_NODE_SEARCH_ENGINE_ITEM);
 		searchengine_item->SetAttribute(CONFIG_CONST_NAME, data1);
-		searchengine_item->SetAttribute(CONFIG_CONST_ENABLE, enabled);
+		searchengine_item->SetAttribute(CONFIG_CONST_ENABLE, enabledFromBool(enabled));
 		rule_root_->LinkEndChild(searchengine_item);
 
 		return 0;
@@ -556,16 +575,37 @@ int XMLConfiguration::setScreensaveTimespan(const TCHAR *timespan){
 	return 0;
 }
 
-int XMLConfiguration::setAutoClear(TiXmlElement * ele) {
+int XMLConfiguration::setAutoClean(TiXmlElement * ele) {
 	TiXmlNode *node = ele->FirstChild();
 	while (NULL != node) {
 		TiXmlElement * element = node->ToElement();
-		if (element && _tcscmp(node->Value(), CONFIG_APPSET_SCREENSAVER_AUTOCLEAR) == 0) {
+		if (element && _tcscmp(element->Value(), CONFIG_APPSET_SCREENSAVER_AUTOCLEAR) == 0) {
+			enableScreenSaveAutoClean(element->Attribute(CONFIG_CONST_ENABLE));
+			setScreensaveAutoCleanTimespan(element->Attribute(CONSIG_CONST_TIMESPAN));
+			setAutoCleanTimeScale(element->Attribute(CONFIG_CONST_MAX), element->Attribute(CONFIG_CONST_MIN));
 		}
 		node = node->NextSibling();
 	}
 	return 0;
 }
+
+int XMLConfiguration::enableScreenSaveAutoClean(const TCHAR *enable) {
+	const bool enabled = enabledFromString(enable);
+	screen_save_auto_clean_.enable(enabled);
+	return 0;
+}
+int XMLConfiguration::setScreensaveAutoCleanTimespan(const TCHAR *timespan) {
+	screen_save_auto_clean_.setTimespan(_ttoi64(timespan));
+	return 0;
+}
+
+int XMLConfiguration::setAutoCleanTimeScale(const TCHAR *maxt, const TCHAR * mint) {
+	const __int64 low_bound = _ttoi64(mint);
+	const __int64 upper_bound = _ttoi64(maxt);
+	screen_save_auto_clean_.setScale(upper_bound, low_bound);
+	return 0;
+}
+
 
 //================================================
 // Authorize
@@ -890,6 +930,9 @@ TCHAR * XMLConfiguration::getConfigFilePath(TCHAR *buffer, const int bufsize) {
 	TCHAR filename[MAX_PATH], directory[MAX_PATH];
 	GetModuleFileName((HMODULE)hInstance_, filename, MAX_PATH);
 	GetFileNameDir(filename, directory, MAX_PATH);
+	if (_tcslen(directory) == 0) {
+		GetCurrentDirectory(MAX_PATH, directory);
+	}
 	_sntprintf(buffer, bufsize, "%s\\%s", directory, CONFIG_FILE_NAME);
 	return buffer;
 }
