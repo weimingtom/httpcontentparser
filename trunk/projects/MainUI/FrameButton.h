@@ -13,6 +13,15 @@ public:
 	void DrawCheck(CDC* pDC, CRect m_rcTemp);	
 	void DrawOrange(CDC* pDC, CRect m_rcTemp);	
 	
+	void check() {
+		m_bCheckBtn = TRUE;
+		m_bOldTemp = TRUE;
+	}
+
+	void uncheck() {
+		m_bCheckBtn = FALSE;
+		m_bOldTemp = FALSE;
+	}
 public:
 	BOOL         m_bCheckBtn;
 	BOOL         m_bPressBtn;
