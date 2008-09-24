@@ -36,14 +36,13 @@ protected:
 	virtual BOOL OnInitDialog();
 	DECLARE_MESSAGE_MAP()
 public:
-	CGuiCheckBox m_chkAutoLoad;
+	// control variables
+	CButton m_chkAutoLoad;
 	CGuiGroupBox m_staSystemOption;
 	CGuiGroupBox m_staOthers;
 	CGuiGroupBox m_staHotkey;
 	CHotKeyCtrl m_hotKeyShowDlg;
 	CHotKeyCtrl m_hotkeySwitchUser;
-	
-
 protected:
 	void setHotKey();
 };
