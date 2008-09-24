@@ -20,7 +20,8 @@ int getBufferTotalSize(LPWSABUF lpBuffers, DWORD dwBufferCount) {
 int WriteToBuffer(LPWSABUF	lpBuffers, DWORD dwBufferCount, 
 				  const int begin, const char * data, const int len) {
   int address = 0;
-  for (int i = 0; i < static_cast<int>(dwBufferCount); ++i) {
+  int i;
+  for (i = 0; i < static_cast<int>(dwBufferCount); ++i) {
 	  if (static_cast<int>(lpBuffers[i].len + address) > begin)
 		  break;
 	  address += lpBuffers[i].len;
