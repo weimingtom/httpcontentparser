@@ -3,9 +3,10 @@
 
 #include "stdafx.h"
 #include "MainUI.h"
-#include "DlgWebHistory.h"
+#include ".\DlgWebHistory.h"
 #include ".\dlgwebhistory.h"
-#include "globalvariable.h"
+#include ".\globalvariable.h"
+#include <typeconvert.h>
 #include <sysutility.h>
 #include <comdef.h>
 
@@ -48,14 +49,17 @@ void CDlgWebHistory::ChangeRecordType() {
 		UpdateData(TRUE);
 		IWebHistoryRecorder *pWebHistory = NULL;
 		CoCreateInstance(CLSID_WebHistoryRecorder, NULL, CLSCTX_ALL, IID_IWebHistoryRecorder, (LPVOID*)&pWebHistory);
-		pWebHistory->put_RecordAllImage(m_bAllImage);
-		pWebHistory->put_RecordAllPages(m_bAllPages);
-		pWebHistory->put_RecordAllWebsite(m_bAllWebsite);
-		pWebHistory->put_RecordPornImage(m_bPornImage);
-		pWebHistory->put_RecordPronPages(m_bPornPage);
-		pWebHistory->put_RecordPornWebsite(m_bPornWebsite);
+		pWebHistory->put_RecordAllImage(convert(m_bAllImage));
+		pWebHistory->put_RecordAllPages(convert(m_bAllPages));
+		pWebHistory->put_RecordAllWebsite(convert(m_bAllWebsite));
+		pWebHistory->put_RecordPornImage(convert(m_bPornImage));
+		pWebHistory->put_RecordPronPages(convert(m_bPornPage));
+		pWebHistory->put_RecordPornWebsite(convert(m_bPornWebsite));
 		pWebHistory->Release();
 	} catch (_com_error&) {
+		CString str;
+		str.LoadString(IDS_ERROR_WEB_SET_FAILED);
+		AfxMessageBox(str);
 	} catch(...) {
 	}
 }
@@ -94,18 +98,6 @@ BOOL CDlgWebHistory::OnInitDialog()
 {
 	CBaseDlg::OnInitDialog();
 	CString str;
-
-	//str.LoadString(IDS_WEB_HISTORY_EXPORT_WEBSITE_LIST);
-	//m_btnExportWebSiteList.SetStyleBorder(CGuiButton::STYLEXP);
-	//m_btnExportWebSiteList.SetCaption(str);
-
-	//str.LoadString(IDS_WEB_HISTORY_VIEW_HISTORY);
-	//m_btnViewtheHistory.SetStyleBorder(CGuiButton::STYLEXP);
-	//m_btnViewtheHistory.SetCaption(str);
-
-	//str.LoadString(IDS_WEB_HISTORY_CLEAR);
-	//m_btnClearCache.SetStyleBorder(CGuiButton::STYLEXP);
-	//m_btnClearCache.SetCaption(str);
 
 	initializeSetting();
 
