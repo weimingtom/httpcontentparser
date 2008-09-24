@@ -28,5 +28,5 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	virtual BOOL OnInitDialog();
-	CGuiCheckBox m_chkTimeCtrl;
+	CButton m_chkTimeCtrl;
 };
