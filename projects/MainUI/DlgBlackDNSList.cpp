@@ -2,10 +2,10 @@
 //
 
 #include "stdafx.h"
-#include "MainUI.h"
-#include "DlgBlackDNSList.h"
-#include "ContentList.h"
-#include "globalvariable.h"
+#include ".\MainUI.h"
+#include ".\DlgBlackDNSList.h"
+#include ".\ContentList.h"
+#include ".\globalvariable.h"
 
 // CDlgBlackDNSList ¶Ô»°¿ò
 

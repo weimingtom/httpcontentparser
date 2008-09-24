@@ -2,7 +2,7 @@
 
 #include ".\basedlg.h"
 #include ".\Cells.h"
-#include "afxwin.h"
+#include <afxwin.h>
 #include <Guilib1.5\GuiCheckBox.h>
 // CDlgOnlineHour ¶Ô»°¿ò
 
