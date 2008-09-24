@@ -98,6 +98,7 @@ IDR_APPSETTING          REGISTRY                "AppSetting.rgs"
 IDR_SCREENSAVE          REGISTRY                "ScreenSave.rgs"
 IDR_WEBHISTORYRECORDER  REGISTRY                "WebHistoryRecorder.rgs"
 IDR_DNSSETTING          REGISTRY                "DNSSetting.rgs"
+IDR_ACCESSNETWORK       REGISTRY                "AccessNetwork.rgs"
 
 /////////////////////////////////////////////////////////////////////////////
 //

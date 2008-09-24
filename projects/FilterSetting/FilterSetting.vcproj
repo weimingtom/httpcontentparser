@@ -203,6 +203,9 @@ copy .\filtersetting.h ..\..\include\com
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx"
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}">
 			<File
+				RelativePath=".\AccessNetwork.rgs">
+			</File>
+			<File
 				RelativePath=".\AppSetting.rgs">
 			</File>
 			<File
@@ -308,6 +311,16 @@ copy .\filtersetting.h ..\..\include\com
 			</File>
 			<File
 				RelativePath=".\Authorize.rgs">
+			</File>
+		</Filter>
+		<Filter
+			Name="accessNetwork"
+			Filter="">
+			<File
+				RelativePath=".\AccessNetwork.cpp">
+			</File>
+			<File
+				RelativePath=".\AccessNetwork.h">
 			</File>
 		</Filter>
 		<File
