@@ -30,12 +30,13 @@ public:
 	virtual void OnApply();
 	virtual void OnShow();
 protected:
+	void intializeSetting();
+protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV Ö§³Ö
+	virtual BOOL OnInitDialog();
 
 	DECLARE_MESSAGE_MAP()
-public:
-	CButton m_chkImage;
-	CButton m_chkShowImage;
+protected:
 	CButton m_chkJPEG;
 	CButton m_chkGIF;
 	CButton m_chkBMP;
@@ -46,8 +47,8 @@ public:
 	CGuiGroupBox m_staImageType;
 	CGuiEdit m_editImageScale;
 
-	BOOL m_bShowImage;
-	BOOL m_bCheckImage;
-
-	virtual BOOL OnInitDialog();
+	BOOL m_bCheckGIF;
+	BOOL m_bCheckJPEG;
+	BOOL m_bCheckBMP;
+	BOOL m_bCheckPNG;
 };
