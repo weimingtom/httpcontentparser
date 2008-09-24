@@ -419,7 +419,7 @@ void CMainUIDlg::OnTraymenuMainui() {
 }
 
 void CMainUIDlg::OnMainExit() {
-	EndDialog(IDOK);
+	CDialog::OnOK();
 }
 
 int CMainUIDlg::OnCreate(LPCREATESTRUCT lpCreateStruct)
