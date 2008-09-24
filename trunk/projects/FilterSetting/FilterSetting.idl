@@ -106,6 +106,19 @@ interface IDNSSetting : IDispatch{
 	[id(12), helpstring("method checkDNS")] HRESULT checkDNS([in] BSTR dns_name, [out,retval] VARIANT_BOOL* passed);
 };
 [
+	object,
+	uuid(89FB4FD4-6795-4BC3-8CF4-52E38C2B9CD3),
+	dual,
+	nonextensible,
+	helpstring("IAccessNetwork 接口"),
+	pointer_default(unique)
+]
+interface IAccessNetwork : IDispatch{
+	[id(1), helpstring("方法accessNetwork")] HRESULT accessNetwork([out,retval] VARIANT_BOOL* bAccessable);
+	[id(2), helpstring("方法setBlockTime")] HRESULT setBlockTime([in] LONG day, [in] LONG hour);
+	[id(3), helpstring("方法removeBlockTime")] HRESULT removeBlockTime([in] LONG day, [in] LONG hour);
+};
+[
 	uuid(42F932B5-F5CB-4F0D-8925-1B6BE5FECD1B),
 	version(1.0),
 	helpstring("FilterSetting 1.0 ClassLibrary")
@@ -161,5 +174,13 @@ library FilterSettingLib {
 	coclass DNSSetting
 	{
 		[default] interface IDNSSetting;
+	};
+	[
+		uuid(78C9ED29-AF1B-470E-B9F6-F9B7703E6265),
+		helpstring("AccessNetwork Class")
+	]
+	coclass AccessNetwork
+	{
+		[default] interface IAccessNetwork;
 	};
 };
