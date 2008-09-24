@@ -58,9 +58,6 @@ void EyecareSetting::initialize(Authorize *authorize, int state) {
 	// …Ë÷√µ±«∞◊¥Ã¨
 	assert (state == EYECARE_TIME || state== ENTERT_TIME);
 	setState(state);
-
-	setEnterTime(3 * 60);
-	setEyecareTime(3 * 60);
 }
 
 bool EyecareSetting::trySwitch() {

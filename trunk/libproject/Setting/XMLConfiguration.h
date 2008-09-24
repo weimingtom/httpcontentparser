@@ -113,6 +113,7 @@
 #include <webhistoryrecordersetting.h>
 #include <contentchecksetting.h>
 #include <screensaver.h>
+#include <autoclean.h>
 #include <string>
 #include <set>
 #include <map>
@@ -135,7 +136,8 @@ public:
 	WebHistoryRecorderSetting * getWebHistoryRecordSetting() { return &web_history_;}
 	Authorize *		getAuthorize() { return &authorize_;}
 	ContentCheckSetting * getContentCheckSetting() { return &content_check_;}
-
+	ScreenSaver		*getScreenSave() { return &screen_save_;}
+	AutoClean		*getScreenSaveAutoClean() { return &screen_save_auto_clean_;}
 	void setInstance(HINSTANCE hInstance) {
 		hInstance_ = hInstance;
 	}
@@ -149,7 +151,7 @@ private:
 	Authorize					authorize_;
 	ContentCheckSetting			content_check_;
 	ScreenSaver					screen_save_;
-	
+	AutoClean					screen_save_auto_clean_;
 	HINSTANCE hInstance_;
 	// 默认设置
 	void defaultSetting();
@@ -188,9 +190,10 @@ private:
 	int getScreensave(TiXmlElement * ele);
 	int enableScreensave(const TCHAR *enable);
 	int setScreensaveTimespan(const TCHAR *timespan);
-	int setAutoClear(TiXmlElement * ele);
-	int enableScreenSaveAutoClear();
-	int setScreensaveAutoClearTimespan(const TCHAR *timespan);
+	int setAutoClean(TiXmlElement * ele);
+	int enableScreenSaveAutoClean(const TCHAR *enabled);
+	int setScreensaveAutoCleanTimespan(const TCHAR *timespan);
+	int setAutoCleanTimeScale(const TCHAR *maxt, const TCHAR * mint);
 
 	/////////////////////////////////////////////////////////////////////
 	// 分析各个规则
@@ -241,6 +244,9 @@ private:
 	int saveWebHistory(TiXmlElement * app_root);
 	int saveEyecare(TiXmlElement *app_root);
 	int saveAuthorize(TiXmlElement *app_root);
+
+	// 保存Screen Save
+	int saveScreensave(TiXmlElement * root);
 };
 
 #endif  // _SETTING_XMLCONFIGURATION_H__
