@@ -25,4 +25,15 @@ const VARIANT_BOOL convert(const bool value) {
 	return VARIANT_FALSE;
 }
 
+inline 
+const VARIANT_BOOL convert(const BOOL value) {
+	if (TRUE == value) {
+		return VARIANT_TRUE;
+	} else if (FALSE == value) {
+		return VARIANT_FALSE;
+	}
+	assert(false);
+	return VARIANT_FALSE;
+}
+
 #endif  // _FILTER_SETTING_UTILITY_H__
