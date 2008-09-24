@@ -19,7 +19,7 @@
 #endif						
 
 #ifndef _WIN32_WINDOWS		// 允许使用 Windows 98 或更高版本的特定功能。
-#define _WIN32_WINDOWS 0x0410 //为 Windows Me 及更新版本改变为适当的值。
+#define _WIN32_WINDOWS 0x0400 //为 Windows Me 及更新版本改变为适当的值。
 #endif
 
 #ifndef _WIN32_IE			// 允许使用 IE 4.0 或更高版本的特定功能。
