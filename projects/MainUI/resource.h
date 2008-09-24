@@ -69,6 +69,7 @@
 #define IDC_CANCEL                      1005
 #define IDC_BTN_RESET                   1005
 #define IDC_BTN_HISTORY                 1005
+#define IDC_VIEW_HISTORY                1005
 #define IDC_APPLY                       1006
 #define IDC_LIST1                       1006
 #define IDC_CHK_PNG                     1006
@@ -127,6 +128,7 @@
 #define IDC_EDT_NEW                     1055
 #define IDC_EDT_PASSWORD                1056
 #define IDC_SLIDER1                     1057
+#define IDC_SLIDER_CLEAN_TIMESPAN       1058
 #define IDC_STA_PROGRAMHISTORY          1062
 #define IDC_STA_WEBCONTENT              1063
 #define IDC_STA_IMAGE_SAVE              1064
@@ -142,6 +144,9 @@
 #define IDC_CHK_PORN_WEBSITES           1075
 #define IDC_CHK_ALLPAGES                1076
 #define IDC_SLIDER_AUTOCLEAR_TIME       1077
+#define IDC_SLIDER_SAVE_TIMESPAN        1078
+#define IDC_CHK_AUTOCLEAN               1079
+#define IDC_CHK_SCREENSAVE              1080
 #define IDC_EDIT1                       4011
 #define IDC_EDIT2                       4012
 #define IDC_EDT_RETRY                   4013
@@ -179,7 +184,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        155
 #define _APS_NEXT_COMMAND_VALUE         32799
-#define _APS_NEXT_CONTROL_VALUE         1078
+#define _APS_NEXT_CONTROL_VALUE         1081
 #define _APS_NEXT_SYMED_VALUE           112
 #endif
 #endif

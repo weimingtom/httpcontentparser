@@ -288,19 +288,19 @@ IDD_DLG_SCREEN_SAVER DIALOGEX 0, 0, 250, 200
 STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
-    PUSHBUTTON      "Clear",IDC_BTN_CLEAR,181,162,50,14
-    LTEXT           "",IDC_STATIC,29,89,8,8
-    CONTROL         "",IDC_SLIDER1,"msctls_trackbar32",TBS_BOTH | 
-                    TBS_NOTICKS | WS_TABSTOP,84,86,121,15
-    CONTROL         "Enable Screen Saver",IDC_CHECK1,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,21,26,82,10
-    GROUPBOX        "Function",IDC_STA_FUNCTION,7,7,236,47
-    GROUPBOX        "Timesspan",IDC_STA_TIMESPAN,7,66,236,57
-    GROUPBOX        "Auto Clear",IDC_STA_AUTOCLEAR,7,140,236,53
-    CONTROL         "Enable Auto Clear",IDC_CHECK2,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,142,25,73,10
-    LTEXT           "¾²Ì¬",IDC_STATIC,24,90,17,8
-    LTEXT           "¾²Ì¬",IDC_STATIC,22,161,17,8
+    PUSHBUTTON      "Clear",IDC_BTN_CLEAR,173,154,50,14
+    CONTROL         "",IDC_SLIDER_SAVE_TIMESPAN,"msctls_trackbar32",
+                    TBS_AUTOTICKS | TBS_TOP | WS_TABSTOP,17,90,141,22
+    CONTROL         "Enable Screen Save",IDC_CHK_SCREENSAVE,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,21,26,79,10
+    GROUPBOX        "Function",IDC_STA_FUNCTION,7,7,236,51
+    GROUPBOX        "Timespan",IDC_STA_TIMESPAN,7,71,236,55
+    GROUPBOX        "Auto Clear",IDC_STA_AUTOCLEAR,7,136,236,57
+    CONTROL         "Enable Auto Clean",IDC_CHK_AUTOCLEAN,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,142,26,75,10
+    CONTROL         "",IDC_SLIDER_CLEAN_TIMESPAN,"msctls_trackbar32",
+                    TBS_AUTOTICKS | TBS_TOP | WS_TABSTOP,17,151,147,24
+    PUSHBUTTON      "View",IDC_VIEW_HISTORY,175,94,47,14
 END
 
 IDD_DLG_WEB_HISTORY DIALOGEX 0, 0, 250, 200
