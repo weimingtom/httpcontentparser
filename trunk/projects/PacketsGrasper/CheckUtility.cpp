@@ -6,6 +6,7 @@
 #include <com\FilterSetting.h>
 #include <utility\httprequestpacket.h>
 #include <utility\debugmessage.h>
+#include <typeconvert.h>
 #include <string>
 #include <comdef.h>
 using namespace std;
@@ -30,7 +31,7 @@ bool checkDNS(const char * dns_name) {
 		dnsSetting->Release();
 		CoUninitialize(); 
 
-		return enabled;
+		return convert(enabled);
 	} catch (_com_error &) {
 		return false;
 	}

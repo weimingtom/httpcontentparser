@@ -3,6 +3,7 @@
 	ProjectType="Visual C++"
 	Version="7.10"
 	Name="PacketsGrasper"
+	ProjectGUID="{AC87FE40-8934-49B5-8353-942817AED586}"
 	SccProjectName=""
 	SccLocalPath=""
 	Keyword="MFCProj">
