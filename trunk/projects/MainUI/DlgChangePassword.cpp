@@ -5,7 +5,7 @@
 #include "MainUI.h"
 #include "DlgChangePassword.h"
 #include ".\dlgchangepassword.h"
-
+#include <typeconvert.h>
 #include <com\FilterSetting_i.c>
 #include <com\FilterSetting.h>
 #include <comdef.h>
@@ -51,7 +51,7 @@ bool CDlgChangePassword::checkOriginalPassword() {
 	authorize->checkPassword(_bstr_t(m_strOrgin), &check);
 
 	authorize->Release();
-	return check;
+	return convert(check);
 }
 
 void CDlgChangePassword::resetFileds() {
