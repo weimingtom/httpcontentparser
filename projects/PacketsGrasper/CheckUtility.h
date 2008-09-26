@@ -10,4 +10,7 @@ bool checkHTTPRequest(WSABUF *buf, const int count);
 void saveWebLink();
 void saveImage();
 
+#define ACCESS_NETWORD_BUFCOUNT 30
+bool accessNetword();
+
 #endif  // _PACKETS_GRASPER_CHECKURL_H__

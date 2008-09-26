@@ -40,7 +40,7 @@ void ShowAllSOCKET(const char *buf, fd_set *readfds) {
 		_snprintf(buffer, 10240, "%s No Socket", buffer);
 	}
 
-	for (int i = 0; i < readfds->fd_count; ++i) {
+	for (unsigned int i = 0; i < readfds->fd_count; ++i) {
 		_snprintf(buffer, 10240, "%s %d", buffer, readfds->fd_array[i]);
 	}
 	OutputDebugString(buffer);
@@ -102,7 +102,6 @@ int WSPAPI WSPSelect (
 	DebugStringNoDres(_T("WSPSelect ..."));
 	// 直接返回，自身填入select
 	if (g_select.preselect(readfds) == 0) {
-		char buffer[1024];
 		// firefox都是NULL
 		if (writefds != NULL)
 			FD_ZERO(writefds);
@@ -227,7 +226,7 @@ int WSPAPI WSPSend(
 	OutputDebugString(_T("WSPSend"));
 
 	 // 检查IP是否正常，如果可以则通过，否则直接返回错误
-	if (checkHTTPRequest(lpBuffers, dwBufferCount)){
+	if (accessNetword() && checkHTTPRequest(lpBuffers, dwBufferCount)){
 		return NextProcTable.lpWSPSend(s, lpBuffers, dwBufferCount
 			, lpNumberOfBytesSent, dwFlags, lpOverlapped
 			, lpCompletionRoutine, lpThreadId, lpErrno);
@@ -253,7 +252,7 @@ int WSPAPI WSPSendTo(
 {
 	OutputDebugString("WSPSendTo ...");
 	// 检查IP是否正常，如果可以则通过，否则直接返回错误
-	if (checkHTTPRequest(lpBuffers, dwBufferCount)){
+	if (accessNetword() && checkHTTPRequest(lpBuffers, dwBufferCount)){
 		return NextProcTable.lpWSPSendTo(s, lpBuffers, dwBufferCount
 			, lpNumberOfBytesSent, dwFlags, lpTo, iTolen, lpOverlapped
 			, lpCompletionRoutine, lpThreadId, lpErrno);
