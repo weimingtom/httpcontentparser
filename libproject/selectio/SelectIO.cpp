@@ -2,6 +2,7 @@
 #include ".\selectio.h"
 #include "httpcontentcheck.h"
 #include "buffercallCOM.h"
+#include <webcontenttype.h>
 #include <logdebug.h>
 #include <utility\HTTPPacket.h>
 #include <utility\fd_set_utility.h>
@@ -85,15 +86,11 @@ int CSelectIO::prerecv(SOCKET s, LPWSABUF lpBuffers,
 
 	// 检查内容
 	// 如果检查失败
-	if (false == checkPacket(packet)) {
+	if (false == handlePacket(packet)) {
 		removeCompletedPacket(s, packet);
 		return 1;
 	}
-
-	// 保存包的内容
-	savePacket(packet);
 	
-
 	// 获取一个
 	ProtocolPacket<HTTP_PACKET_SIZE> * raw_packet= packet->getRawPacket();
 	assert(raw_packet != NULL);
@@ -476,18 +473,17 @@ int CSelectIO::removePacket(const SOCKET s, HTTPPacket *p) {
 }
 
 
-namespace {
-	BufferCOMObjectCaller<BUFFER_COM_ALL_COUNT> bufferCOMCaller;
-};
-
-void CSelectIO::savePacket(HTTPPacket *packet) {
-	// bufferCOMCaller
-}
 
 // 此函数负责检查包的内容
 // 1. 检查这个包是否来自白名单中的网站
 // 2. 分析包的类型, 并确定该包是否应该被检查
 // 3. 分析不包的内容
-bool CSelectIO::checkPacket(HTTPPacket *packet) {
-	return true;
+bool CSelectIO::handlePacket(HTTPPacket *packet) {
+	OutputDebugString("handle packet...");
+	const int result =  handler_.handleContent(packet);
+	if (CONTENT_CHECK_PORN == result) {
+		return false;
+	} else {
+		return true;
+	}
 }
