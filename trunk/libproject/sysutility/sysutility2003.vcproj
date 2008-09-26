@@ -39,7 +39,8 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				CommandLine="copy .\sysutility.h ..\..\include
-copy .\debug\sysutility.lib ..\..\lib\sysutilityd.lib"/>
+copy .\debug\sysutility.lib ..\..\lib\sysutilityd.lib
+"/>
 			<Tool
 				Name="VCPreBuildEventTool"/>
 			<Tool
@@ -81,7 +82,8 @@ copy .\debug\sysutility.lib ..\..\lib\sysutilityd.lib"/>
 			<Tool
 				Name="VCPostBuildEventTool"
 				CommandLine="copy .\sysutility.h ..\..\include
-copy .\debug\sysutility.lib ..\..\lib\sysutility.lib"/>
+copy .\debug\sysutility.lib ..\..\lib\sysutility.lib
+"/>
 			<Tool
 				Name="VCPreBuildEventTool"/>
 			<Tool
