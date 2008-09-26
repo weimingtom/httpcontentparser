@@ -109,25 +109,28 @@ void WebRecordConfig::writeNormalImage(TiXmlElement * root) {
 	writeItems(&image_normal_set_, CONTYPE_PNG, normal_image_root);
 }
 
-void WebRecordConfig::writePornImage(TiXmlElement * root) {
-	TiXmlElement * porn_image_root = getNormalImageRoot(root);
-	writeItems(&image_porn_set_, CONTYPE_PNG, porn_image_root);
+void WebRecordConfig::writeNormalText(TiXmlElement * root) {
+	TiXmlElement * unknown_text_root = getNormalTextRoot(root);
+	writeItems(&text_unknown_set_, CONTYPE_PNG, unknown_text_root);
 }
-void WebRecordConfig::writeUnknownImage(TiXmlElement * root) {
-	TiXmlElement * unknown_image_root = getNormalImageRoot(root);
-	writeItems(&image_unknown_set_, CONTYPE_PNG, unknown_image_root);
+
+void WebRecordConfig::writePornImage(TiXmlElement * root) {
+	TiXmlElement * porn_image_root = getPornImageRoot(root);
+	writeItems(&image_porn_set_, CONTYPE_PNG, porn_image_root);
 }
 
 void WebRecordConfig::writePornText(TiXmlElement * root) {
-	TiXmlElement * unknown_text_root = getNormalImageRoot(root);
+	TiXmlElement * unknown_text_root = getPornTextRoot(root);
 	writeItems(&text_unknown_set_, CONTYPE_PNG, unknown_text_root);
 }
-void WebRecordConfig::writeNormalText(TiXmlElement * root) {
-	TiXmlElement * unknown_text_root = getNormalImageRoot(root);
-	writeItems(&text_unknown_set_, CONTYPE_PNG, unknown_text_root);
+
+void WebRecordConfig::writeUnknownImage(TiXmlElement * root) {
+	TiXmlElement * unknown_image_root = getUnknownImageRoot(root);
+	writeItems(&image_unknown_set_, CONTYPE_PNG, unknown_image_root);
 }
+
 void WebRecordConfig::writeUnknownText(TiXmlElement * root) {
-	TiXmlElement * unknown_text_root = getNormalImageRoot(root);
+	TiXmlElement * unknown_text_root = getUnknownTextRoot(root);
 	writeItems(&text_unknown_set_, CONTYPE_PNG, unknown_text_root);
 }
 
