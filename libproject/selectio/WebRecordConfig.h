@@ -6,11 +6,21 @@
 #include <set>
 #include <map>
 
+#define REPOS_ROOT_NAME		TEXT("history")
 #define REPOS_TYPE_PORN		TEXT("porn")
 #define REPOS_TYPE_NORMAL	TEXT("normal")
 #define REPOS_TYPE_UNKNOWN	TEXT("unknown")
 
-#define REPOS_IMAGE_ROOT			TEXT("images")
+
+#define REPOS_NORMAL_IMAGE_ROOT			TEXT("normal_images")
+#define REPOS_NORMAL_TEXT_ROOT			TEXT("normal_texts")
+
+#define REPOS_UNKNOWN_IMAGE_ROOT		TEXT("unknown_images")
+#define REPOS_UNKNOWN_TEXT_ROOT			TEXT("unknown_texts")
+
+#define REPOS_PORN_IMAGE_ROOT			TEXT("porn_images")
+#define REPOS_PORN_TEXT_ROOT			TEXT("porn_texts")
+
 #define REPOS_IMAGE_ITEM			TEXT("image")
 #define REPOS_TEXT_ITEM				TEXT("text")
 #define REPOS_ITEM_ATTR_PATH		TEXT("path")
@@ -23,7 +33,7 @@ class TiXmlNode;
 // 此类负责操作保存历史的配置文件
 class WebRecordConfig {
 public:
-	WebRecordConfig(void);
+	WebRecordConfig(const TCHAR *filename);
 	~WebRecordConfig(void);
 public:
 	int addItem(const TCHAR * filename, const int check_result, const int content_type);
@@ -80,9 +90,10 @@ private:
 	TiXmlElement * getPornTextRoot(TiXmlElement * root);
 	TiXmlElement * getUnknownTextRoot(TiXmlElement * root);
 
-private:
+protected:
+	WebRecordConfig(void);
 	// 检测XML文件是否合法
-	void validateConfig(const TCHAR *filename);
+	TCHAR filename_[MAX_PATH];
 };
 
 

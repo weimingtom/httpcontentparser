@@ -6,6 +6,11 @@
 #include <time.h>
 #include <stdio.h>
 
+WebRecordConfig::WebRecordConfig(const TCHAR * filename) {
+	but_cnt_ = 0; 
+	assert (0 != _tcslen(filename));
+	_tcsncpy(filename_, filename, MAX_PATH-1);
+}
 WebRecordConfig::WebRecordConfig(void) {
 	but_cnt_ = 0;
 }
@@ -61,35 +66,31 @@ void WebRecordConfig::flush() {
 
 	// 如果文件不存在则创建一个
 	// 打开文件
-	TCHAR filename[MAX_PATH];
-	TiXmlDocument doc(filename);
-	// if (access(filename, 0)
-	TiXmlElement * root = doc.RootElement();
+	TiXmlDocument doc;
+	if (!doc.LoadFile(filename_)) {
+		// 如果打开文件失败，则直接删除，并添加必要的信息
+		DeleteFile(filename_);
+		TiXmlDeclaration * decl = new TiXmlDeclaration( "1.0", "UTF-8", "" );
+		doc.LinkEndChild(decl);
 
+		TiXmlElement * root = new TiXmlElement(REPOS_ROOT_NAME);
+		doc.LinkEndChild(root);
+	} 
+	TiXmlElement * root = doc.RootElement();
+	const TCHAR * s = root->Value();
 	// 写入文件
-	getNormalImageRoot(root);
-	getPornImageRoot(root);
-	getUnknownImageRoot(root);
-	getNormalTextRoot(root);
-	getPornTextRoot(root);
-	getUnknownTextRoot(root);
+	writePornImage(root);
+	writePornText(root);
+	writeNormalImage(root);
+	writeNormalText(root);
+	writeUnknownImage(root);
+	writeUnknownText(root);
+
+	// 保存文件
+	doc.SaveFile(filename_);
 }
 
 namespace {
-const TCHAR * contentCheckResult(const int result) {
-	switch (result) {
-		case CONTENT_CHECK_PORN:
-			return REPOS_TYPE_PORN;
-		case CONTENT_CHECK_NORMAL:
-			return REPOS_TYPE_NORMAL;
-		case CONTENT_CHECK_UNKNOWN:
-			return REPOS_TYPE_UNKNOWN;
-		default:
-			assert(false);
-			return NULL;
-	}
-}
-
 const TCHAR *contentType(const int type) {
 	if (isText(type)) {
 		return REPOS_TEXT_ITEM;
@@ -183,34 +184,67 @@ void WebRecordConfig::writeItems(BUFFER_RECORD_SET *itemsets, const int content_
 
 //========================================================
 // 从xml中获取根结点，如果获取不到，则新建
-TiXmlElement * WebRecordConfig::getNormalImageRoot(TiXmlElement * root) {
-	assert (NULL != root);
-	
-	return NULL;
-}
+
 TiXmlElement * WebRecordConfig::getPornImageRoot(TiXmlElement * root) {
 	assert (NULL != root);
-	return NULL;
-}
-TiXmlElement * WebRecordConfig::getUnknownImageRoot(TiXmlElement * root) {
-	assert (NULL != root);
-	return NULL;
-}
-TiXmlElement * WebRecordConfig::getNormalTextRoot(TiXmlElement * root) {
-	assert (NULL != root);
-	return NULL;
-}
-TiXmlElement * WebRecordConfig::getPornTextRoot(TiXmlElement * root) {
-	assert (NULL != root);
-	return NULL;
-}
-TiXmlElement * WebRecordConfig::getUnknownTextRoot(TiXmlElement * root) {
-	assert (NULL != root);
-	return NULL;
+	TiXmlElement * ele = root->FirstChildElement(REPOS_PORN_IMAGE_ROOT);
+	if (ele == NULL) {
+		ele = new TiXmlElement(REPOS_PORN_IMAGE_ROOT);
+		root->LinkEndChild(ele);
+	}
+	return ele;
 }
 
-// 检测XML文件是否合法
-// 首先检查文件是否存在，如果不存在则创建一个, 并添加必要信息
-// 如果没有相应的信息，XML文件不合法，则重新修改
-void WebRecordConfig::validateConfig(const TCHAR *filename) {
+TiXmlElement * WebRecordConfig::getPornTextRoot(TiXmlElement * root) {
+	assert (NULL != root);
+	TiXmlElement * ele = root->FirstChildElement(REPOS_PORN_TEXT_ROOT);
+	if (ele == NULL) {
+		ele = new TiXmlElement(REPOS_PORN_TEXT_ROOT);
+		root->LinkEndChild(ele);
+	}
+	return ele;
+}
+
+//============================
+// unknown
+TiXmlElement * WebRecordConfig::getUnknownImageRoot(TiXmlElement * root) {
+	assert (NULL != root);
+	TiXmlElement * ele = root->FirstChildElement(REPOS_UNKNOWN_IMAGE_ROOT);
+	if (ele == NULL) {
+		ele = new TiXmlElement(REPOS_UNKNOWN_IMAGE_ROOT);
+		root->LinkEndChild(ele);
+	}
+	return ele;
+}
+
+TiXmlElement * WebRecordConfig::getUnknownTextRoot(TiXmlElement * root) {
+	assert (NULL != root);
+	TiXmlElement * ele = root->FirstChildElement(REPOS_UNKNOWN_TEXT_ROOT);
+	if (ele == NULL) {
+		ele = new TiXmlElement(REPOS_UNKNOWN_TEXT_ROOT);
+		root->LinkEndChild(ele);
+	}
+	return ele;
+}
+
+//=========================
+// Normal
+TiXmlElement * WebRecordConfig::getNormalTextRoot(TiXmlElement * root) {
+	assert (NULL != root);
+	TiXmlElement * ele = root->FirstChildElement(REPOS_NORMAL_TEXT_ROOT);
+	if (ele == NULL) {
+		ele = new TiXmlElement(REPOS_NORMAL_TEXT_ROOT);
+		root->LinkEndChild(ele);
+	}
+	return ele;
+}
+
+TiXmlElement * WebRecordConfig::getNormalImageRoot(TiXmlElement * root) {
+	assert (NULL != root);
+	TiXmlElement * ele = root->FirstChildElement(REPOS_NORMAL_IMAGE_ROOT);
+	if (ele == NULL) {
+		ele = new TiXmlElement(REPOS_NORMAL_IMAGE_ROOT);
+		root->LinkEndChild(ele);
+	}
+	return ele;
 }

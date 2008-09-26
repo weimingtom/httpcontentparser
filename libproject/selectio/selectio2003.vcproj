@@ -37,12 +37,14 @@
 				Name="VCMIDLTool"/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy .\selectio.h ..\..\include
-copy .\webrecordconfig.h ..\..\include
+				CommandLine="
 copy .\Debug\selectiod.lib ..\..\lib
 "/>
 			<Tool
-				Name="VCPreBuildEventTool"/>
+				Name="VCPreBuildEventTool"
+				CommandLine="copy .\selectio.h ..\..\include
+copy .\webrecordconfig.h ..\..\include
+copy .\httpcontentcheck.h ..\..\include"/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
 			<Tool
@@ -80,11 +82,14 @@ copy .\Debug\selectiod.lib ..\..\lib
 				Name="VCMIDLTool"/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy .\selectio.h ..\..\include
+				CommandLine="
 copy .\release\selectio.lib ..\..\lib
 "/>
 			<Tool
-				Name="VCPreBuildEventTool"/>
+				Name="VCPreBuildEventTool"
+				CommandLine="copy .\selectio.h ..\..\include
+copy .\webrecordconfig.h ..\..\include
+copy .\httpcontentcheck.h ..\..\include"/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
 			<Tool
