@@ -51,7 +51,7 @@ copy .\contentchecksetting.h ..\..\include
 copy .\XMLconfiguration.h ..\..\include
 copy .\SearchRule.h ..\..\include
 copy .\onlinehoursetting.h ..\..\include
-"/>
+copy .\autoclean.h ..\..\include"/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
 			<Tool
@@ -102,7 +102,7 @@ copy .\contentchecksetting.h ..\..\include
 copy .\XMLconfiguration.h ..\..\include
 copy .\SearchRule.h ..\..\include
 copy .\onlinehoursetting.h ..\..\include
-"/>
+copy .\autoclean.h ..\..\include"/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
 			<Tool
@@ -124,17 +124,11 @@ copy .\onlinehoursetting.h ..\..\include
 			Name="源文件"
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
-			<File
-				RelativePath=".\AutoClear.cpp">
-			</File>
 		</Filter>
 		<Filter
 			Name="头文件"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
-			<File
-				RelativePath=".\AutoClear.h">
-			</File>
 		</Filter>
 		<Filter
 			Name="EyecareSetting"
@@ -257,6 +251,16 @@ copy .\onlinehoursetting.h ..\..\include
 			</File>
 			<File
 				RelativePath=".\SearchRule.h">
+			</File>
+		</Filter>
+		<Filter
+			Name="autoclean"
+			Filter="">
+			<File
+				RelativePath=".\AutoClean.cpp">
+			</File>
+			<File
+				RelativePath=".\AutoClean.h">
 			</File>
 		</Filter>
 		<File
