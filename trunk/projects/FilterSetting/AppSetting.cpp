@@ -1,12 +1,22 @@
 // AppSetting.cpp : CAppSetting 的实现
 
 #include "stdafx.h"
-#include "AppSetting.h"
+#include ".\AppSetting.h"
 #include ".\appsetting.h"
 #include ".\servthread.h"
+#include ".\globalvariable.h"
 #include <hotkey.h>
 #include <assert.h>
+#include <comdef.h>
 
+namespace {
+	const TCHAR* GetFileNameDir(TCHAR *filename, TCHAR *directory, const unsigned len) {
+		TCHAR dir[MAX_PATH], driver[MAX_PATH];
+		_tsplitpath(filename, driver, dir, NULL, NULL);
+		_sntprintf(directory, len, TEXT("%s\\%s"), driver, dir);
+		return directory;
+	}
+};
 
 // CAppSetting
 
@@ -31,6 +41,16 @@ STDMETHODIMP CAppSetting::setHotkey(USHORT wVirtualKeyCode, USHORT wModifiers, L
 }
 
 STDMETHODIMP CAppSetting::setScreenSaverTimespan(LONG seconds) {
+	return S_OK;
+}
 
+STDMETHODIMP CAppSetting::GetInstallPath(BSTR* installpath) {
+	// 获取当前路径
+	TCHAR filename[MAX_PATH], path[MAX_PATH];
+	GetModuleFileName(g_hInstance, path, MAX_PATH);
+	GetFileNameDir(filename, path, MAX_PATH);
+
+	_bstr_t bstr_path(path);
+	*installpath = (BSTR)bstr_path;
 	return S_OK;
 }
