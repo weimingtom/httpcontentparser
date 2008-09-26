@@ -56,7 +56,7 @@ void CDlgEyecare::OnApply() {
 	try {
 		UpdateData(TRUE);
 		IEyecare *pEyeCare = NULL;
-		CoCreateInstance(CLSID_Eyecare, NULL, CLSCTX_ALL, IID_IEyecare, (LPVOID*)&pEyeCare);
+		CoCreateInstance(CLSID_Eyecare, NULL, CLSCTX_LOCAL_SERVER, IID_IEyecare, (LPVOID*)&pEyeCare);
 		pEyeCare->setEnterTime(m_nEnterTime);
 		pEyeCare->setEyecareTime(m_nEyecareTime);
 		pEyeCare->Release();
