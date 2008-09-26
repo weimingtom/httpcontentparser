@@ -30,13 +30,11 @@ HTTPContentHander::~HTTPContentHander() {
 // 是否是
 int HTTPContentHander::handleContent(HTTPPacket *packet) {
 	if (false == needHandle(packet)) {
-		OutputDebugString("need not handle packet...");
 		return CONTENT_CHECK_UNKNOWN;
 	}
 
 	char * data = NULL;
 	try {
-		OutputDebugString("need not handle packet...");
 		// 分配缓冲区
 		int sizeRead;
 		data = new char[packet->getDataSize()];
@@ -46,7 +44,6 @@ int HTTPContentHander::handleContent(HTTPPacket *packet) {
 
 		const int check_result = checkContent(packet);
 
-		OutputDebugString("=save=================");
 		saveContent(packet, check_result);
 
 		delete data;
@@ -132,8 +129,6 @@ int HTTPContentHander::saveText(HTTPPacket * packet, const int check_result) {
 	packet->achieve_data(fullpath);
 
 	// 增加到配置文件当中
-	OutputDebugString("=save text=================");
-	OutputDebugString(fullpath);
 	addToRepostory(fullpath, packet, check_result);
 	return -1;
 }
@@ -164,7 +159,7 @@ const TCHAR * HTTPContentHander::generateImageName(TCHAR *fullpath, const int bu
 		GetImageDirectory(dir, MAX_PATH, installpath_);
 		_sntprintf(fullpath, bufsize,  "%s%s", dir, filename);
 
-		if (_taccess(fullpath, 0) == 0)
+		if (_taccess(fullpath, 0) == -1)
 			break;
 	}
 	return fullpath;

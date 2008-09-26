@@ -1,6 +1,7 @@
 #ifndef _UTILITY_SELECTIO_H__
 #define _UTILITY_SELECTIO_H__
 
+#include <httpcontentcheck.h>
 #include <ws2spi.h>
 #include <io.h>
 #include <map>
@@ -81,8 +82,9 @@ protected:
 	friend class SelectIOTest;
 
 // 检查包的的内容
-	bool checkPacket(HTTPPacket *packet);
-	void savePacket(HTTPPacket *packet);
+	bool handlePacket(HTTPPacket *packet);
+protected:
+	HTTPContentHander handler_;
 };
 
 // utility functions
