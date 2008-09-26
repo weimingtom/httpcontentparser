@@ -46,14 +46,14 @@ int WSPAPI WSPRecv(
 	
 	int moveSize = 0;
 	for (; iter != iterEnd; ++iter) {
-		const int bytes = iter->second.length();
+		const int bytes = static_cast<const int>(iter->second.length());
 		if (moveSize + bytes <= g_bufBegin) {
 			moveSize += bytes;
 			continue;
 		}
 
 		const int bytes_written = WriteToBuffer(lpBuffers, dwBufferCount, 0, 
-			iter->second.c_str(), iter->second.length());
+			iter->second.c_str(), static_cast<const int>(iter->second.length()));
 		*lpNumberOfBytesRecvd = bytes_written;
 		break;
 	}
@@ -184,7 +184,6 @@ void SelectIOTest::testZeroChunk() {
 	WSABUF wsabuf;
 	wsabuf.buf = buffer;
 	wsabuf.len = buf_size;
-	DWORD dwNumberOfBytesRecvd;
 
 	// 初始化SelectIO
 	resetFakeBuffer();
@@ -263,16 +262,16 @@ void SelectIOTest::testCopyBuffer() {
 
 	const char data1[] = "388888888888888888888888888888888888888888888888888";
 	CPPUNIT_ASSERT(getBufferTotalSize(wsabuf, 3) == 9);
-	CPPUNIT_ASSERT(WriteToBuffer(wsabuf, 3, 0, data1, strlen(data1)) == 
+	CPPUNIT_ASSERT(WriteToBuffer(wsabuf, 3, 0, data1, static_cast<const int>(strlen(data1))) == 
 		getBufferTotalSize(wsabuf, 3));
 	CPPUNIT_ASSERT(WriteToBuffer(wsabuf, 3, 
-		getBufferTotalSize(wsabuf, 3), data1, strlen(data1)) == 0);
+		getBufferTotalSize(wsabuf, 3), data1, static_cast<const int>(strlen(data1))) == 0);
 	CPPUNIT_ASSERT(WriteToBuffer(wsabuf, 3, 
-		getBufferTotalSize(wsabuf, 3)+1, data1, strlen(data1)) == 0);
+		getBufferTotalSize(wsabuf, 3)+1, data1, static_cast<const int>(strlen(data1))) == 0);
 	CPPUNIT_ASSERT(WriteToBuffer(wsabuf, 3, 
-		getBufferTotalSize(wsabuf, 3)-1, data1, strlen(data1)) == 1);
+		getBufferTotalSize(wsabuf, 3)-1, data1, static_cast<const int>(strlen(data1))) == 1);
 	CPPUNIT_ASSERT(WriteToBuffer(wsabuf, 3, 
-		getBufferTotalSize(wsabuf, 3)-2, data1, strlen(data1)) == 2);
+		getBufferTotalSize(wsabuf, 3)-2, data1, static_cast<const int>(strlen(data1))) == 2);
 }
 
 // 传入一个非法的HTTP包，查看反应
@@ -433,8 +432,7 @@ void SelectIOTest::testConstantPackets() {
 	WSABUF wsabuf;
 	wsabuf.buf = buffer;
 	wsabuf.len = buf_size;
-	DWORD dwNumberOfBytesRecvd;
-	fd_set readfds;
+	// fd_set readfds;
 }
 
 void SelectIOTest::testRemovePacket() {
@@ -478,7 +476,7 @@ void SelectIOTest::testRemovePacket() {
 		g_SockData.insert(make_pair(*iter, data1));
 	}
 
-	int cnt = socket_set.size();
+	int cnt = static_cast<int>(socket_set.size());
 	for (; iter != socket_set.end(); ++iter) {
 		CPPUNIT_ASSERT(select._sockets_map_.size() == cnt);
 		FD_ZERO(&readfds);
