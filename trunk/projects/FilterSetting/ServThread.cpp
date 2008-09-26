@@ -5,6 +5,7 @@
 #include <hotkey.h>
 #include <windowtitle.h>
 #include <sysutility.h>
+#include <PrintScreen.h>
 
 #define TIME_ESCAPE  8000
 #define ID_TIMER     1
@@ -112,15 +113,17 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 		case WM_TIMER: 
 			// 自动保存屏幕
 			if (g_screenSaver.shouldSave()) {
-				SaveScreen(g_hInstance);
+				TCHAR fullpath[MAX_PATH];
+				GenScreenSPFile(fullpath, MAX_PATH, g_hInstance);
+				GetScreen(fullpath);
 			}
 
 			// 自动开启
 			break;
 		case WM_REGISTER_HOTKEY: 
 			// 如何进行错误处理
-			UnregisterHotKey(hWnd, lParam);
-			return RegisterHotKey(hWnd, lParam, HIWORD(wParam), LOWORD(wParam));
+			UnregisterHotKey(hWnd, (int)lParam);
+			return RegisterHotKey(hWnd, (int)lParam, HIWORD(wParam), LOWORD(wParam));
 		case WM_DESTROY:
 			UnregisterHotKey(hWnd, server->hotkeyid_switchuser_);
 			UnregisterHotKey(hWnd, server->hotkeyid_showdlg_);
