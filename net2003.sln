@@ -9,6 +9,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestSetting", "test\testSet
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestSelectIO", "test\TestSelectIO\TestSelectIO2003.vcproj", "{08BB70AD-DD8F-4547-891E-D7080499F9F5}"
 	ProjectSection(ProjectDependencies) = postProject
+		{9DBE4172-DCAE-4D27-8131-7B16A30D149A} = {9DBE4172-DCAE-4D27-8131-7B16A30D149A}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestLogsystem", "test\TestLogsystem\TestLogsystem2003.vcproj", "{26B62905-A724-4724-9EFF-15FC2B58B8DC}"
@@ -73,6 +74,12 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SwitchUser", "projects\Swit
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ScreenRecord", "libproject\ScreenRecord\ScreenRecord2003.vcproj", "{50DE1C4B-8A9A-4512-8755-6E8A610E70D3}"
 	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PacketsGrasper", "projects\PacketsGrasper\PacketsGrasper2003.vcproj", "{AC87FE40-8934-49B5-8353-942817AED586}"
+	ProjectSection(ProjectDependencies) = postProject
+		{CD11D86D-3173-4945-8215-7450A0D9CB3C} = {CD11D86D-3173-4945-8215-7450A0D9CB3C}
+		{9DBE4172-DCAE-4D27-8131-7B16A30D149A} = {9DBE4172-DCAE-4D27-8131-7B16A30D149A}
 	EndProjectSection
 EndProject
 Global
@@ -235,6 +242,14 @@ Global
 		{50DE1C4B-8A9A-4512-8755-6E8A610E70D3}.Release.Build.0 = Release|Win32
 		{50DE1C4B-8A9A-4512-8755-6E8A610E70D3}.Release Unicode.ActiveCfg = Release|Win32
 		{50DE1C4B-8A9A-4512-8755-6E8A610E70D3}.Release Unicode.Build.0 = Release|Win32
+		{AC87FE40-8934-49B5-8353-942817AED586}.Debug.ActiveCfg = Debug|Win32
+		{AC87FE40-8934-49B5-8353-942817AED586}.Debug.Build.0 = Debug|Win32
+		{AC87FE40-8934-49B5-8353-942817AED586}.Debug Unicode.ActiveCfg = Debug|Win32
+		{AC87FE40-8934-49B5-8353-942817AED586}.Debug Unicode.Build.0 = Debug|Win32
+		{AC87FE40-8934-49B5-8353-942817AED586}.Release.ActiveCfg = Release|Win32
+		{AC87FE40-8934-49B5-8353-942817AED586}.Release.Build.0 = Release|Win32
+		{AC87FE40-8934-49B5-8353-942817AED586}.Release Unicode.ActiveCfg = Release|Win32
+		{AC87FE40-8934-49B5-8353-942817AED586}.Release Unicode.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 	EndGlobalSection
