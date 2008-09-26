@@ -12,13 +12,7 @@
 #define VC_EXTRALEAN		// 从 Windows 头中排除极少使用的资料
 #endif
 
-#include <windows.h>
-#include <tchar.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <direct.h>
-#include <conio.h>
-#include <process.h>
-#include <assert.h>
+#include <afx.h>
+#include <afxwin.h>         // MFC 核心组件和标准组件
 
 // TODO: 在此处引用程序要求的附加头文件
