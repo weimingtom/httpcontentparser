@@ -38,6 +38,10 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				CommandLine="copy .\Debug\utilityd.lib ..\..\lib
+"/>
+			<Tool
+				Name="VCPreBuildEventTool"
+				CommandLine="copy .\ziputility.h ..\..\include
 copy .\Filemapping.h ..\..\include\utility
 copy .\fd_set_utility.h ..\..\include\utility
 copy .\httppacket.h ..\..\include\utility
@@ -45,9 +49,6 @@ copy .\dns.h ..\..\include\utility
 copy .\httprequestpacket.h ..\..\include\utility
 copy .\strutility.h ..\..\include\utility
 "/>
-			<Tool
-				Name="VCPreBuildEventTool"
-				CommandLine="copy .\ziputility.h ..\..\include"/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
 			<Tool
@@ -91,7 +92,15 @@ copy .\fd_set_utility.h ..\..\include\utility
 copy .\httppacket.h ..\..\include\utility
 "/>
 			<Tool
-				Name="VCPreBuildEventTool"/>
+				Name="VCPreBuildEventTool"
+				CommandLine="copy .\ziputility.h ..\..\include
+copy .\Filemapping.h ..\..\include\utility
+copy .\fd_set_utility.h ..\..\include\utility
+copy .\httppacket.h ..\..\include\utility
+copy .\dns.h ..\..\include\utility
+copy .\httprequestpacket.h ..\..\include\utility
+copy .\strutility.h ..\..\include\utility
+"/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
 			<Tool
