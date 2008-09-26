@@ -47,9 +47,11 @@
 #include <afxdhtml.h>
 
 #ifdef _DEBUG
+#pragma comment(lib, "settingd.lib")
 #pragma comment(lib, "sysutilityd.lib")
 #pragma comment(lib, "GuiTk115d.lib")
 #else
+#pragma comment(lib, "setting.lib")
 #pragma comment(lib, "sysutility.lib")
 #pragma comment(lib, "GuiTk115.lib")
 #endif 
