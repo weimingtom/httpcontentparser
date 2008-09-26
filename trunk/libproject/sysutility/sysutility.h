@@ -3,7 +3,7 @@
 
 
 // ±£´æÆÁÄ»
-void SaveScreen(HMODULE hModule);
+DWORD GenScreenSPFile(TCHAR *fullpath, const int len, HMODULE hModule);
 
 // Çå¿ÕÆÁÄ»»º´æ
 void ClearScreen(HMODULE hModule);
