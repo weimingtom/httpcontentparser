@@ -50,6 +50,6 @@ STDMETHODIMP CAppSetting::GetInstallPath(BSTR* installpath) {
 	GetModuleFileName(g_hInstance, filename, MAX_PATH);
 	GetFileNameDir(filename, path, MAX_PATH);
 
-	*installpath = bstr_t(filename);
+	*installpath = bstr_t(path);
 	return S_OK;
 }
