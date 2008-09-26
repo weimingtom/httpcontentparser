@@ -3,7 +3,7 @@
 
 
 #include <webcontenttype.h>
-#include ".\webrecordconfig.h"
+class WebRecordConfig;
 class HTTPPacket;
 
 
@@ -16,7 +16,7 @@ public:
 	int handleContent(HTTPPacket *packet);
 private:
 	// 是否需要处理
-	int needHandle(HTTPPacket *packet);
+	bool needHandle(HTTPPacket *packet);
 	// 处理文字和图片
 	int checkContent(HTTPPacket *packet);
 	int saveContent(HTTPPacket *packet, const int check_result);
@@ -30,7 +30,14 @@ private:
 	void addToRepostory(const TCHAR *fullpath, HTTPPacket * packet, const int check_result);
 
 private:
-	WebRecordConfig record_config_;
+	WebRecordConfig * record_config_;
+	TCHAR installpath_[MAX_PATH];
+
+private:
+	const TCHAR * genRandomName(TCHAR * filename, const int bufsize, const int content_type);
+	const TCHAR * generateImageName(TCHAR *fullpath, const int bufsize, const int content_type);
+	const TCHAR * generatePageName(TCHAR *fullpath, const int bufsize, const int content_type);
+	const TCHAR * getInstallDir();
 };
 
 

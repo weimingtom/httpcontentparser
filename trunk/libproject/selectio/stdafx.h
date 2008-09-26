@@ -11,11 +11,13 @@
 
  
 #ifdef _DEBUG
+#	pragma comment(lib, "tinyxmld.lib")
 #	pragma comment(lib, "utilityd.lib")
-#	pragma comment(lib, "logsystemd.lib")
+#	pragma comment(lib, "sysutilityd.lib")
 #else
+#	pragma comment(lib, "tinyxml.lib")
 #	pragma comment(lib, "utility.lib")
-#	pragma comment(lib, "logsystem.lib")
+#	pragma comment(lib, "sysutility.lib")
 #endif
 
 // TODO: 在此处引用程序要求的附加头文件
