@@ -49,53 +49,37 @@ void ClearScreen(HMODULE hModule) {
 	_execlp(TEXT("del"), arg1, TEXT("/q"));
 }
 
-const TCHAR* GetFileNameDir(TCHAR *filename, TCHAR *directory, const unsigned len) {
+const TCHAR* GetFileNameDir(const TCHAR *filename, TCHAR *directory, const unsigned len) {
 	TCHAR dir[MAX_PATH], driver[MAX_PATH];
 	_tsplitpath(filename, driver, dir, NULL, NULL);
 	_sntprintf(directory, len, TEXT("%s\\%s"), driver, dir);
 	return directory;
 }
 
-// 获取安装目录
-const TCHAR *GetInstallDir(TCHAR *directory, const unsigned len) {
-	assert (directory != NULL);
-	GetCurrentDirectory(len, directory);
-	return directory;
-}
 
-const TCHAR * GetPageDirectory(TCHAR * filename, const unsigned len) {
+const TCHAR * GetPageDirectory(TCHAR * filename, const unsigned len, const TCHAR * installPath) {
 	assert (filename != NULL);
-
-	TCHAR install_dir[MAX_PATH];
-	GetInstallDir(install_dir, MAX_PATH);
-	_sntprintf(filename, MAX_PATH, TEXT("%s\\%s"), install_dir, TEXT("History\\text\\"));
+	_sntprintf(filename, MAX_PATH, TEXT("%s\\%s"), installPath, TEXT("History\\text\\"));
 	return filename;
 }
 
-const TCHAR * GetImageDirectory(TCHAR * filename, const unsigned len) {
+const TCHAR * GetImageDirectory(TCHAR * filename, const unsigned len, const TCHAR * installPath) {
 	assert (filename != NULL);
-
-	TCHAR install_dir[MAX_PATH];
-	GetInstallDir(install_dir, MAX_PATH);
-	_sntprintf(filename, MAX_PATH, TEXT("%s\\%s"), install_dir, TEXT("History\\images\\"));
+	_sntprintf(filename, MAX_PATH, TEXT("%s\\%s"), installPath, TEXT("History\\images\\"));
 	return filename;
 }
 
-const TCHAR * GetRecordConfigfile(TCHAR *filename, const unsigned len, HMODULE hModule) {
-	assert (filename != NULL);
 
-	TCHAR install_dir[MAX_PATH];
-	GetInstallDir(install_dir, MAX_PATH);
-	_sntprintf(filename, MAX_PATH, TEXT("%s\\%s"), install_dir, TEXT("History\\config.xml"));
+
+const TCHAR * GetWebSiteRecordPath(TCHAR *filename, const unsigned len, const TCHAR * installPath) {
+	assert (filename != NULL);
+	_sntprintf(filename, MAX_PATH, TEXT("%s\\%s"), installPath, TEXT("History\\websites\\websites.xml"));
 	return filename;
 }
 
-const TCHAR * GetWebSiteRecordPath(TCHAR *filename, const unsigned len) {
+const TCHAR * GetRecordConfigfile(TCHAR *filename, const unsigned len, const TCHAR * installPath) {
 	assert (filename != NULL);
-
-	TCHAR install_dir[MAX_PATH];
-	GetInstallDir(install_dir, MAX_PATH);
-	_sntprintf(filename, MAX_PATH, TEXT("%s\\%s"), install_dir, TEXT("History\\websites\\websites.xml"));
+	_sntprintf(filename, MAX_PATH, TEXT("%s\\%s"), installPath, TEXT("History\\config.xml"));
 	return filename;
 }
 //////////////////////////////////////////////////
