@@ -15,7 +15,8 @@
 			OutputDirectory="Debug"
 			IntermediateDirectory="Debug"
 			ConfigurationType="1"
-			UseOfATL="1"
+			UseOfMFC="2"
+			UseOfATL="2"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE"
 			CharacterSet="2">
 			<Tool
@@ -310,6 +311,10 @@ copy .\filtersetting.h ..\..\include\com
 			<File
 				RelativePath=".\Authorize.rgs">
 			</File>
+		</Filter>
+		<Filter
+			Name="PrintScreen"
+			Filter="">
 		</Filter>
 		<File
 			RelativePath=".\ReadMe.txt">

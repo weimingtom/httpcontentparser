@@ -42,9 +42,11 @@
 #ifdef _DEBUG
 #	pragma comment(lib, "settingd.lib")
 #	pragma comment(lib, "sysutilityd.lib")
+#	pragma comment(lib, "ScreenRecord_d.lib")
 #else 
 #	pragma comment(lib, "setting.lib")
 #	pragma comment(lib, "sysutility.lib")
+#	pragma comment(lib, "ScreenRecord.lib")
 #endif
 
 using namespace ATL;
