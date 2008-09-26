@@ -39,7 +39,6 @@
 #include <atlbase.h>
 #include <atlcom.h>
 
-#include <globalsetting.h>
 #ifdef _DEBUG
 #	pragma comment(lib, "settingd.lib")
 #	pragma comment(lib, "sysutilityd.lib")
