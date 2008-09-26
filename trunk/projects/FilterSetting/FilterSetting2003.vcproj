@@ -91,6 +91,7 @@ copy .\Debug\FilterSetting.exe ..\..\debug
 			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
+				AdditionalIncludeDirectories="..\..\include"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="3"
