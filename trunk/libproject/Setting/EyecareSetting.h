@@ -1,6 +1,7 @@
 #ifndef _SETTING_EYECARE_SETTING_H__
 #define _SETTING_EYECARE_SETTING_H__
 
+#include <string>
 #include <comdef.h>
 #include "calculagraph.h"
 
