@@ -47,10 +47,9 @@ STDMETHODIMP CAppSetting::setScreenSaverTimespan(LONG seconds) {
 STDMETHODIMP CAppSetting::GetInstallPath(BSTR* installpath) {
 	// 获取当前路径
 	TCHAR filename[MAX_PATH], path[MAX_PATH];
-	GetModuleFileName(g_hInstance, path, MAX_PATH);
+	GetModuleFileName(g_hInstance, filename, MAX_PATH);
 	GetFileNameDir(filename, path, MAX_PATH);
 
-	_bstr_t bstr_path(path);
-	*installpath = (BSTR)bstr_path;
+	*installpath = bstr_t(filename);
 	return S_OK;
 }
