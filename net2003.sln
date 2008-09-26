@@ -71,6 +71,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SwitchUser", "projects\Swit
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ScreenRecord", "libproject\ScreenRecord\ScreenRecord2003.vcproj", "{50DE1C4B-8A9A-4512-8755-6E8A610E70D3}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfiguration) = preSolution
 		Debug = Debug
@@ -223,6 +227,14 @@ Global
 		{0F6C2688-C3EC-4755-A216-7D9F2166452D}.Release.Build.0 = Release|Win32
 		{0F6C2688-C3EC-4755-A216-7D9F2166452D}.Release Unicode.ActiveCfg = Release|Win32
 		{0F6C2688-C3EC-4755-A216-7D9F2166452D}.Release Unicode.Build.0 = Release|Win32
+		{50DE1C4B-8A9A-4512-8755-6E8A610E70D3}.Debug.ActiveCfg = Debug|Win32
+		{50DE1C4B-8A9A-4512-8755-6E8A610E70D3}.Debug.Build.0 = Debug|Win32
+		{50DE1C4B-8A9A-4512-8755-6E8A610E70D3}.Debug Unicode.ActiveCfg = Debug|Win32
+		{50DE1C4B-8A9A-4512-8755-6E8A610E70D3}.Debug Unicode.Build.0 = Debug|Win32
+		{50DE1C4B-8A9A-4512-8755-6E8A610E70D3}.Release.ActiveCfg = Release|Win32
+		{50DE1C4B-8A9A-4512-8755-6E8A610E70D3}.Release.Build.0 = Release|Win32
+		{50DE1C4B-8A9A-4512-8755-6E8A610E70D3}.Release Unicode.ActiveCfg = Release|Win32
+		{50DE1C4B-8A9A-4512-8755-6E8A610E70D3}.Release Unicode.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 	EndGlobalSection
