@@ -313,8 +313,14 @@ copy .\filtersetting.h ..\..\include\com
 			</File>
 		</Filter>
 		<Filter
-			Name="PrintScreen"
+			Name="Accessnetwork"
 			Filter="">
+			<File
+				RelativePath=".\AccessNetwork.cpp">
+			</File>
+			<File
+				RelativePath=".\AccessNetwork.h">
+			</File>
 		</Filter>
 		<File
 			RelativePath=".\ReadMe.txt">
