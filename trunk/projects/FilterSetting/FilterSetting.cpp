@@ -33,10 +33,8 @@ CFilterSettingModule _AtlModule;
 
 // DNS Rules
 DNSSetting g_dnssetting;
-
 XMLConfiguration g_configuration;
 
-ScreenSaver g_screenSaver;			// ÓÃÓÚÆÁÄ»±£´æ
 HINSTANCE g_hInstance;
 
 
