@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "sysutility.h"
-
-
+#include <assert.h>
 
 
 namespace {
@@ -47,6 +46,15 @@ void ClearScreen(HMODULE hModule) {
 	GetScreenRecordDir(dir, MAX_PATH, hModule);
 	_sntprintf(arg1, MAX_PATH , TEXT("%s*"), dir);
 	_execlp(TEXT("del"), arg1, TEXT("/q"));
+}
+
+const TCHAR * GetAppConfigFilename(TCHAR *fullpath, const int len, HMODULE hModule) {
+	TCHAR filename[MAX_PATH], directory[MAX_PATH];
+	GetModuleFileName((HMODULE)hModule, filename, MAX_PATH);
+	GetFileNameDir(filename, directory, MAX_PATH);
+	assert (_tcslen(directory) != 0);
+	_sntprintf(fullpath, len, "%s\\%s", directory, CONFIG_FILE_NAME);
+	return fullpath;
 }
 
 const TCHAR* GetFileNameDir(const TCHAR *filename, TCHAR *directory, const unsigned len) {
