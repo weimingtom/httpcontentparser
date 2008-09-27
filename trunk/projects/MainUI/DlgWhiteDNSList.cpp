@@ -14,6 +14,7 @@ IMPLEMENT_DYNAMIC(CDlgWhiteDNSList, CDialog)
 CDlgWhiteDNSList::CDlgWhiteDNSList(CWnd* pParent /*=NULL*/)
 	: CBaseDlg(CDlgWhiteDNSList::IDD, pParent)
 	, m_bEnableWhiteDNS(TRUE)
+	, m_bCheckDenyAllOthers(FALSE)
 {
 }
 
@@ -27,6 +28,7 @@ void CDlgWhiteDNSList::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_CHK_WHITE_DNSLIST, m_chkWhiteDNSList);
 	DDX_Control(pDX, IDC_STA_WHIE_DNSLIST, ListBox);
 	DDX_Check(pDX, IDC_CHK_WHITE_DNSLIST, m_bEnableWhiteDNS);
+	DDX_Check(pDX, IDC_CHK_DENY_OTHERS, m_bCheckDenyAllOthers);
 }
 
 void CDlgWhiteDNSList::OnRestore() {
