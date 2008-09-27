@@ -3,6 +3,7 @@
 
 
 #define CONFIG_FILE_NAME					TEXT("config.xml")
+#define EYECARE_APP_FILENAME				TEXT("Eyecare.exe")
 
 // 保存屏幕
 DWORD GenScreenSPFile(TCHAR *fullpath, const int len, HMODULE hModule);
@@ -15,6 +16,9 @@ void StartEyecare(HMODULE hModule);
 
 // 清空所有
 void ClearHistory(HMODULE hModule);
+
+// 获取安装路径
+const TCHAR * GetInstallPath(TCHAR *install_path, const int len, HMODULE hModule);
 
 // 获取配置文件的路径
 const TCHAR * GetAppConfigFilename(TCHAR *fullpath, const int len, HMODULE);
