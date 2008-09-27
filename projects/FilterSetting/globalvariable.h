@@ -14,7 +14,6 @@ extern DNSSetting g_dnssetting;
 
 // extern Authorize g_authorize;
 extern XMLConfiguration g_configuration;
-extern ScreenSaver g_screenSaver;
 extern HINSTANCE g_hInstance;
 
 #endif  // _FILTER_SETTING_GLOBALVARIABLE_H__
