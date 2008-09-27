@@ -54,10 +54,10 @@
 			<user username="su" password=""/>
 		</authorize>
 				
-		<!-- eyecasre -->
+		<!-- eyecasre time unit : seconds-->
 		<eyecare enable="true" state="eyecare_time" timeleft="32" >
-			<time name="eyecare_time" timespan="45"/>
-			<time name="enter_time" timespan="45"/>
+			<time name="eyecare_time" timespan="2700"/>
+			<time name="enter_time" timespan="2700"/>
 		</eyecare>
 		
 		<webhistory enable="true">
@@ -70,8 +70,10 @@
 			<autoclear timespan="" enable="true" min="" max=""/>
 		</webhistory>
 		
-		<screensave enable="true" timespan="30">
-			<autoclear enable="true" min="1" max="30" timespan="1"/>
+		<!-- screensave config, time unit : seconds-->
+		<screensave enable="true" timespan="300">
+			<!-- screensave config, time unit : days-->
+			<autoclear enable="true" min="1" max="10" timespan="2"/>
 		</screensave>
 		
 		<!-- system configuration-->
