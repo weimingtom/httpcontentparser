@@ -39,4 +39,5 @@ protected:
 	virtual int Enum(const std::string &dns) ;  // member of DNSEnumerator
 public:
 	virtual BOOL OnInitDialog();
+	BOOL m_bCheckDenyAllOthers;
 };
