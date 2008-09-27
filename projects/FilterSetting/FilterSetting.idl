@@ -49,8 +49,7 @@ interface IEyecare : IDispatch{
 ]
 interface IAppSetting : IDispatch{
 	[id(1), helpstring("Method setHotkey")] HRESULT setHotkey([in] USHORT wVirtualKeyCode, [in] USHORT wModifiers, [in] LONG type, [out,retval] VARIANT_BOOL* bSuccess);
-	[id(2), helpstring("Method setScreenSaverTimespan")] HRESULT setScreenSaverTimespan([in] LONG seconds);
-	[id(3), helpstring("·½·¨GetInstallPath")] HRESULT GetInstallPath([out,retval] BSTR* path);
+	[id(3), helpstring("Method GetInstallPath")] HRESULT GetInstallPath([out,retval] BSTR* path);
 };
 [
 	object,
