@@ -2,6 +2,8 @@
 #define _FILTER_SETTING_SYS_UTILITY_H__
 
 
+#define CONFIG_FILE_NAME					TEXT("config.xml")
+
 // 保存屏幕
 DWORD GenScreenSPFile(TCHAR *fullpath, const int len, HMODULE hModule);
 
@@ -13,6 +15,9 @@ void StartEyecare(HMODULE hModule);
 
 // 清空所有
 void ClearHistory(HMODULE hModule);
+
+// 获取配置文件的路径
+const TCHAR * GetAppConfigFilename(TCHAR *fullpath, const int len, HMODULE);
 
 // 获取指定文件的目录
 const TCHAR* GetFileNameDir(const TCHAR *filename, TCHAR *directory, const unsigned len);

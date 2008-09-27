@@ -10,6 +10,10 @@
 #define TIME_ESCAPE  8000
 #define ID_TIMER     1
 
+// 每隔十分钟自动存储一次配置文件
+#define ID_SAVE_CONFIG_TIMESPAN	1000 * 60 * 10	// 10分钟
+#define ID_TIMER_SAVE_CONFG	2
+
 
 #define WM_USER_SCREEN_SAVE (WM_USER + 0x10)
 #define WM_USER_EYECARE (WM_USER + 0x15)

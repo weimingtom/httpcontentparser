@@ -190,7 +190,7 @@ int XMLConfiguration::saveAppSetting(TiXmlElement * root) {
 // 保存规则
 //==========================================================
 // XML 保存函数
-int XMLConfiguration::save() {
+int XMLConfiguration::saveConfig(const TCHAR * filename) {
 	// Create XML
 	TiXmlDocument doc;
 	TiXmlDeclaration * decl = new TiXmlDeclaration( "1.0", "UTF-8", "" );
@@ -203,7 +203,8 @@ int XMLConfiguration::save() {
 	saveAppSetting(root_element);
 	
 	doc.LinkEndChild(root_element);
-	doc.SaveFile("c:\\hello.xml");
+
+	doc.SaveFile(filename);
 	return 0;
 }
 int XMLConfiguration::saveRules(TiXmlElement *root) {
@@ -926,35 +927,10 @@ int XMLConfiguration::readDefaultConfig() {
 	return 0;
 }
 
-TCHAR * XMLConfiguration::getConfigFilePath(TCHAR *buffer, const int bufsize) {
-	TCHAR filename[MAX_PATH], directory[MAX_PATH];
-	GetModuleFileName((HMODULE)hInstance_, filename, MAX_PATH);
-	GetFileNameDir(filename, directory, MAX_PATH);
-	if (_tcslen(directory) == 0) {
-		GetCurrentDirectory(MAX_PATH, directory);
-	}
-	_sntprintf(buffer, bufsize, "%s\\%s", directory, CONFIG_FILE_NAME);
-	return buffer;
-}
-
-// 此函数负责读取配置
-// 首先他会获取配置文件路径
-// 如果配置文件存在，则直接从文件中获取配置信息
-// 否则直接充值配置信息
-int XMLConfiguration::readConfig() {
-	TCHAR filename[MAX_PATH] = {0};
-	getConfigFilePath(filename, MAX_PATH);
-
-	if (strlen(filename) == 0) {
-		return readDefaultConfig();
-	} else {
-		return readConfigFromFile(filename);
-	}
-}
 
 //========================================
 // public members
-int XMLConfiguration::initialize() {
-	readConfig();
+int XMLConfiguration::loadConfig(const TCHAR * filename) {
+	readConfigFromFile(filename);
 	return 0;
 }

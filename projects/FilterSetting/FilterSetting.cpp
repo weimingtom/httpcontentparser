@@ -44,7 +44,13 @@ extern "C" int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/
                                 LPTSTR /*lpCmdLine*/, int nShowCmd)
 {
 	g_hInstance = hInstance;
-	g_configuration.setInstance(hInstance);
+
+	// 初始化配置
+	TCHAR config_path[MAX_PATH];
+	GetAppConfigFilename(config_path, MAX_PATH, hInstance);
+	g_configuration.loadConfig(config_path);
+
+
 	g_dnssetting.initialize(g_configuration.getBlackURLSet(), g_configuration.getWhiteURLSet());
 
 	 // 开启服务线程

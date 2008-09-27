@@ -6,6 +6,7 @@
 #include ".\MainUIDlg.h"
 #include ".\globalvariable.h"
 #include ".\mainui.h"
+#include <sysutility.h>
 
 IDNSSetting *g_dnssetting = NULL;
 XMLConfiguration g_configuration;	// 配置信息
@@ -51,8 +52,9 @@ BOOL CMainUIApp::InitInstance()
 	AfxEnableControlContainer();
 
 	// 读取配置信息
-	g_configuration.setInstance(AfxGetInstanceHandle());
-	g_configuration.initialize();
+	TCHAR config_path[MAX_PATH];
+	GetAppConfigFilename(config_path, MAX_PATH, AfxGetInstanceHandle());
+	g_configuration.loadConfig(config_path);
 
 	//============================================
 	CMainUIDlg dlg;

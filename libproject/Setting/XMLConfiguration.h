@@ -24,8 +24,6 @@
 // |                 XMLConfiguration                   |
 // |____________________________________________________|
 
-#define CONFIG_FILE_NAME					TEXT("config.xml")
-
 #define CONFIG_ROOT_VALUE					TEXT("config")
 #define CONFIG_NODE_RULES					TEXT("rules")
 #define CONFIG_NODE_APPSET					TEXT("appsetting")
@@ -126,7 +124,9 @@ public:
 	XMLConfiguration();
 	~XMLConfiguration(void);
 
-	int initialize();
+public:
+	int loadConfig(const TCHAR * filename);
+	int saveConfig(const TCHAR * filename);
 public:
 	DNSList *		getBlackURLSet() { return &black_url_set_;}
 	DNSList *		getWhiteURLSet() { return &white_url_set_;}
@@ -138,9 +138,7 @@ public:
 	ContentCheckSetting * getContentCheckSetting() { return &content_check_;}
 	ScreenSaver		*getScreenSave() { return &screen_save_;}
 	AutoClean		*getScreenSaveAutoClean() { return &screen_save_auto_clean_;}
-	void setInstance(HINSTANCE hInstance) {
-		hInstance_ = hInstance;
-	}
+
 private:
 	DNSList						black_url_set_;
 	DNSList						white_url_set_;
@@ -152,15 +150,13 @@ private:
 	ContentCheckSetting			content_check_;
 	ScreenSaver					screen_save_;
 	AutoClean					screen_save_auto_clean_;
-	HINSTANCE hInstance_;
+
 	// 默认设置
 	void defaultSetting();
 private:
 	// 读取XML
-	int readConfig();
 	int readDefaultConfig();
 	int readConfigFromFile(const TCHAR *filename);
-	TCHAR * getConfigFilePath(TCHAR *buffer, const int bufsize);
 
 	// 分析XML
 	int parseConfiguration(TiXmlElement * root);
@@ -221,10 +217,6 @@ private:
 	int getImageRule(TiXmlElement * ele);
 	int setImageCheck(const TCHAR *imagetype, const TCHAR *enable);
 	int setTextCheck(const TCHAR *language, const TCHAR *enable);
-
-	// 保存规则的函数
-public:
-	int save();
 private:
 	int saveRules(TiXmlElement *root);
 	int saveOnlineHour(TiXmlElement *rules_root);	// 保存OnlineHour规则

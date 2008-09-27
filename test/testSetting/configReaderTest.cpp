@@ -16,11 +16,11 @@ ConfigReaderTest::~ConfigReaderTest(void) {
 //
 void ConfigReaderTest::TestReadFromFile() {
 	XMLConfiguration config;
-	config.initialize();
+	// config.loadConfig();
 }
 
 void ConfigReaderTest::TestSaveFile() {
 	XMLConfiguration config;
-	config.initialize();
-	config.save();
+	// config.initialize();
+	// config.save();
 }

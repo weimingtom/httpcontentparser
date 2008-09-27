@@ -8,15 +8,7 @@
 #include <hotkey.h>
 #include <assert.h>
 #include <comdef.h>
-
-namespace {
-	const TCHAR* GetFileNameDir(TCHAR *filename, TCHAR *directory, const unsigned len) {
-		TCHAR dir[MAX_PATH], driver[MAX_PATH];
-		_tsplitpath(filename, driver, dir, NULL, NULL);
-		_sntprintf(directory, len, TEXT("%s\\%s"), driver, dir);
-		return directory;
-	}
-};
+#include <sysutility.h>
 
 // CAppSetting
 
