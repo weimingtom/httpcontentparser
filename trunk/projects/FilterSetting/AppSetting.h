@@ -42,7 +42,6 @@ END_COM_MAP()
 public:
 
 	STDMETHOD(setHotkey)(USHORT wVirtualKeyCode, USHORT wModifiers, LONG type, VARIANT_BOOL* bSuccess);
-	STDMETHOD(setScreenSaverTimespan)(LONG seconds);
 	STDMETHOD(GetInstallPath)(BSTR* path);
 };
 

@@ -32,9 +32,6 @@ STDMETHODIMP CAppSetting::setHotkey(USHORT wVirtualKeyCode, USHORT wModifiers, L
 	return S_OK;
 }
 
-STDMETHODIMP CAppSetting::setScreenSaverTimespan(LONG seconds) {
-	return S_OK;
-}
 
 STDMETHODIMP CAppSetting::GetInstallPath(BSTR* installpath) {
 	// 获取当前路径
