@@ -24,17 +24,17 @@ STDMETHODIMP CScreenSave::InterfaceSupportsErrorInfo(REFIID riid)
 }
 
 STDMETHODIMP CScreenSave::enableScreenSave(VARIANT_BOOL enabled) {
-	g_screenSaver.enable(convert(enabled));
+	g_configuration.getScreenSave()->enable(convert(enabled));
 	return S_OK;
 }
 
 STDMETHODIMP CScreenSave::setTimeSpan(LONG seconds) {
-	g_screenSaver.setTimeSpan(seconds);
+	g_configuration.getScreenSave()->setTimeSpan(seconds);
 	return S_OK;
 }
 
 STDMETHODIMP CScreenSave::isEnabled(VARIANT_BOOL* enabled) {
-	*enabled = g_screenSaver.isEnabled();
+	*enabled = convert(g_configuration.getScreenSave()->isEnabled());
 	return S_OK;
 }
 
@@ -45,7 +45,5 @@ STDMETHODIMP CScreenSave::ClearCache(void) {
 
 STDMETHODIMP CScreenSave::setAutoClearTimespan(LONG seconds)
 {
-	// TODO: 在此添加实现代码
-
 	return S_OK;
 }
