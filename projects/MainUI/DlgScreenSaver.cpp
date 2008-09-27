@@ -38,6 +38,14 @@ void CDlgScreenSaver::OnRestore() {
 }
 
 void CDlgScreenSaver::OnApply() {
+	try {
+		IScreenSave * screensave = NULL;
+		HRESULT hr = CoCreateInstance(CLSID_ScreenSave, NULL, CLSCTX_LOCAL_SERVER, IID_IScreenSave, (LPVOID*)&screensave);
+		screensave->enableScreenSave(m_bEnableScreensave);
+		screensave->setTimeSpan(m_sliderSaveTimespan.GetPos() * 60);
+		// screensave->enable
+	} catch (_com_error& ) {
+	}
 }
 void CDlgScreenSaver::OnShow() {
 }
@@ -50,6 +58,12 @@ void CDlgScreenSaver::initializeSetting() {
 
 	m_bEnableScreensave = g_configuration.getScreenSave()->isEnabled();
 	m_bEnableAutoclean = g_configuration.getScreenSaveAutoClean()->isEnable();
+
+	// ÉèÖÃ×Ô¶¯´æ´¢
+	m_sliderSaveTimespan.SetRange(1, 120);
+	m_sliderSaveTimespan.SetTicFreq(10);
+	int pos = g_configuration.getScreenSave()->getTimeSpan() / 60;
+	m_sliderSaveTimespan.SetPos(pos);
 }
 
 
