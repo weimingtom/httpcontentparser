@@ -9,8 +9,8 @@
 // CCells
 
 IMPLEMENT_DYNAMIC(CCells, CWnd)
-CCells::CCells()
-{
+CCells::CCells() {
+	memset(access_netword, 0, sizeof(access_netword));
 }
 
 CCells::~CCells()
@@ -31,10 +31,12 @@ BOOL CCells::PreCreateWindow(CREATESTRUCT& cs) {
 
 void CCells::check(const int row, const int col) {
 	cells[row][col].check();
+	access_netword[row][col] = UNACCESSABLE;
 }
 
 void CCells::uncheck(const int row, const int col) {
 	cells[row][col].uncheck();
+	access_netword[row][col] = ACCESSABLE;
 }
 BOOL CCells::Create(LPCTSTR lpszClassName, LPCTSTR lpszWindowName, DWORD dwStyle,
 					const RECT& rectwindows, CWnd* pParentWnd, UINT nID, CCreateContext* pContext)
@@ -60,4 +62,15 @@ BOOL CCells::Create(LPCTSTR lpszClassName, LPCTSTR lpszWindowName, DWORD dwStyle
 		rect.right = rect.left + ItemWidth;
 	}
 	return bResult;
+}
+
+
+void CCells::StarEnum(Enumerator2<int, int> *enumerate) {
+	for (int i = 0; i < Rows; ++i) {
+		for (int j = 0; j < Column; ++j) {
+			if (access_netword[i][j] == UNACCESSABLE) {
+				enumerate->Enum(i, j);
+			}
+		}
+	}
 }

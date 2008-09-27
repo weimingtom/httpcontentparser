@@ -9,6 +9,8 @@
 #include ".\resource.h"
 #include ".\globalvariable.h"
 
+#include <comdef.h>
+
 
 // CDlgOnlineHour ∂‘ª∞øÚ
 IMPLEMENT_DYNAMIC(CDlgOnlineHour, CDialog)
@@ -26,7 +28,39 @@ void CDlgOnlineHour::OnRestore() {
 
 }
 
+namespace {
+	// …Ë÷√
+class Enumerator : public Enumerator2<int, int> {
+public:
+	Enumerator(IAccessNetwork * access) {
+		accessNetwork_ = access;
+		assert (accessNetwork_ != NULL);
+	}
+	virtual int Enum(const int day, const int hour) {
+		accessNetwork_->setBlockTime(day, hour);
+		return 0;
+	}
+
+private:
+	IAccessNetwork * accessNetwork_;
+};
+}; // namespace
+
 void CDlgOnlineHour::OnApply() {
+	try {
+		CoInitialize(NULL);
+		IAccessNetwork * accessNetwork = NULL;
+		HRESULT hr = CoCreateInstance(CLSID_AccessNetwork, NULL, CLSCTX_LOCAL_SERVER,
+			IID_IAccessNetwork, (LPVOID*)&accessNetwork);
+
+		Enumerator enumerate(accessNetwork);
+		cells.StarEnum(&enumerate);
+
+		accessNetwork->Release();
+		CoUninitialize();
+	} catch (_com_error &) {
+		CoUninitialize();
+	}
 }
 
 void CDlgOnlineHour::OnShow() {
