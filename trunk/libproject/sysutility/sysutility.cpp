@@ -8,15 +8,16 @@ namespace {
 	DWORD GetImageRecordDir(TCHAR *moduleDir, const int len, HMODULE hModule);	// 保存图像的目录
 	DWORD GenerateImageFile(TCHAR *file, const int len, HMODULE hModule);	// 自动生成文件名
 	DWORD GetHistoryRecordDir(TCHAR *moduleDir, const int len, HMODULE hModule);
-	DWORD GetSoftwareDir(TCHAR *dir, const int len, HMODULE hModule);			// 获取软件所在的目录
 };
 
 
 
 void StartEyecare(HMODULE hModule) {
-	TCHAR filename[MAX_PATH];
-	GetSoftwareDir(filename, MAX_PATH, hModule);
-	WinExec(filename, SW_MAXIMIZE);
+	TCHAR install_path[MAX_PATH], fullpath[MAX_PATH];
+	GetInstallPath(install_path, MAX_PATH, hModule);
+
+	_sntprintf(fullpath, MAX_PATH, "%s%s", install_path, EYECARE_APP_FILENAME);
+	WinExec(fullpath, SW_MAXIMIZE);
 }
 
 
@@ -78,36 +79,36 @@ const TCHAR * GetImageDirectory(TCHAR * filename, const unsigned len, const TCHA
 }
 
 
-
 const TCHAR * GetWebSiteRecordPath(TCHAR *filename, const unsigned len, const TCHAR * installPath) {
 	assert (filename != NULL);
 	_sntprintf(filename, MAX_PATH, TEXT("%s\\%s"), installPath, TEXT("History\\websites\\websites.xml"));
 	return filename;
 }
 
+// 获取记录图片 文字历史的文件的路径
 const TCHAR * GetRecordConfigfile(TCHAR *filename, const unsigned len, const TCHAR * installPath) {
 	assert (filename != NULL);
 	_sntprintf(filename, MAX_PATH, TEXT("%s\\%s"), installPath, TEXT("History\\config.xml"));
 	return filename;
 }
+
+// 获取软件所在目录
+const TCHAR * GetInstallPath(TCHAR *install_path, const int len, HMODULE hModule) {
+	TCHAR moduleName[MAX_PATH];
+	DWORD length = GetModuleFileName(hModule, moduleName, MAX_PATH);
+	GetFileNameDir(moduleName, install_path, MAX_PATH);
+	return install_path;
+}
+
 //////////////////////////////////////////////////
 // utility functions
 
 namespace {
 
-// 获取软件所在目录
-DWORD GetSoftwareDir(TCHAR *softDir, const int len, HMODULE hModule) {
-	TCHAR moduleName[MAX_PATH], driver[MAX_PATH], dir[MAX_PATH];
-	DWORD length = GetModuleFileName(hModule, moduleName, MAX_PATH);
-	_tsplitpath(moduleName, driver, dir, NULL, NULL);
-	_sntprintf(softDir, len, "%s%s", driver, dir);
-	return (DWORD)_tcslen(softDir);
-}
-
 // 保存屏幕截图的目录
 DWORD GetScreenRecordDir(TCHAR *screendir, const int len, HMODULE hModule) {
 	TCHAR moduleDir[MAX_PATH];
-	GetSoftwareDir(moduleDir, len, hModule);
+	GetInstallPath(moduleDir, len, hModule);
 	_sntprintf(screendir, MAX_PATH, TEXT("%s%s\\"), moduleDir,TEXT("Screen\\"));
 	if (_tchdir(screendir) == -1)
 		_tmkdir(screendir);
@@ -118,7 +119,7 @@ DWORD GetScreenRecordDir(TCHAR *screendir, const int len, HMODULE hModule) {
 // 获取保存历史的
 DWORD GetHistoryRecordDir(TCHAR *historyDir, const int len, HMODULE hModule) {
 	TCHAR moduleDir[MAX_PATH];
-	GetSoftwareDir(moduleDir, len, hModule);
+	GetInstallPath(moduleDir, len, hModule);
 	_sntprintf(historyDir, MAX_PATH, TEXT("%s%s\\"), moduleDir,TEXT("History\\"));
 	if (_tchdir(historyDir) == -1)
 		_tmkdir(historyDir);
