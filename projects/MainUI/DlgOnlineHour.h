@@ -35,7 +35,7 @@ public:
 	virtual BOOL OnInitDialog();
 	BOOL m_bEnableTimeCheck;
 
+	// Enum the accessNetword hour
 protected:
-	// 
 	virtual int Enum(const int day, const int hour);
 };
