@@ -82,6 +82,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PacketsGrasper", "projects\
 		{9DBE4172-DCAE-4D27-8131-7B16A30D149A} = {9DBE4172-DCAE-4D27-8131-7B16A30D149A}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestSysutility", "test\TestSysutility\TestSysutility.vcproj", "{82442190-6EDE-4A41-8282-119A5F796AA8}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfiguration) = preSolution
 		Debug = Debug
@@ -250,6 +254,14 @@ Global
 		{AC87FE40-8934-49B5-8353-942817AED586}.Release.Build.0 = Release|Win32
 		{AC87FE40-8934-49B5-8353-942817AED586}.Release Unicode.ActiveCfg = Release|Win32
 		{AC87FE40-8934-49B5-8353-942817AED586}.Release Unicode.Build.0 = Release|Win32
+		{82442190-6EDE-4A41-8282-119A5F796AA8}.Debug.ActiveCfg = Debug|Win32
+		{82442190-6EDE-4A41-8282-119A5F796AA8}.Debug.Build.0 = Debug|Win32
+		{82442190-6EDE-4A41-8282-119A5F796AA8}.Debug Unicode.ActiveCfg = Debug|Win32
+		{82442190-6EDE-4A41-8282-119A5F796AA8}.Debug Unicode.Build.0 = Debug|Win32
+		{82442190-6EDE-4A41-8282-119A5F796AA8}.Release.ActiveCfg = Release|Win32
+		{82442190-6EDE-4A41-8282-119A5F796AA8}.Release.Build.0 = Release|Win32
+		{82442190-6EDE-4A41-8282-119A5F796AA8}.Release Unicode.ActiveCfg = Release|Win32
+		{82442190-6EDE-4A41-8282-119A5F796AA8}.Release Unicode.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 	EndGlobalSection
