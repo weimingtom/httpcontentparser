@@ -46,6 +46,10 @@ void IAuthorizeTest::testCheckPassword() {
 
 		authorize->changePassword(new_password, last_password, &corrected);
 		CPPUNIT_ASSERT(true == convert(corrected));
+
+		// 改回默认密码，否则测试可能失败
+		authorize->changePassword(_bstr_t(DEFAULT_PASSWORD), new_password, &corrected);
+		CPPUNIT_ASSERT(true == convert(corrected));
 		
 		authorize->Release();
 		CoUninitialize();
