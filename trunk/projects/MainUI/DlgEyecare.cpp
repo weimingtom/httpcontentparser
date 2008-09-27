@@ -57,8 +57,8 @@ void CDlgEyecare::OnApply() {
 		UpdateData(TRUE);
 		IEyecare *pEyeCare = NULL;
 		CoCreateInstance(CLSID_Eyecare, NULL, CLSCTX_LOCAL_SERVER, IID_IEyecare, (LPVOID*)&pEyeCare);
-		pEyeCare->setEnterTime(m_nEnterTime);
-		pEyeCare->setEyecareTime(m_nEyecareTime);
+		pEyeCare->setEnterTime(m_nEnterTime * 60);
+		pEyeCare->setEyecareTime(m_nEyecareTime * 60);
 		pEyeCare->Release();
 	} catch (_com_error&) {
 		// AfxMessageBox("");
@@ -72,8 +72,8 @@ void CDlgEyecare::initializeSetting() {
 	SetPwdEditState();
 
 	// 读出出示信息
-	m_nEnterTime = g_configuration.getEyecareSetting()->getEnterTime();
-	m_nEyecareTime = g_configuration.getEyecareSetting()->getEyecareTime();
+	m_nEnterTime = g_configuration.getEyecareSetting()->getEnterTime() / 60;
+	m_nEyecareTime = g_configuration.getEyecareSetting()->getEyecareTime() / 60;
 
 	UpdateData(FALSE);
 }

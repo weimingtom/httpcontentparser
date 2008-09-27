@@ -225,6 +225,8 @@ BEGIN
     PUSHBUTTON      "Reset",IDC_BTN_RESET,182,135,50,14
     LTEXT           "Password",IDC_STATIC,36,138,32,8
     LTEXT           "Re-type",IDC_STATIC,36,158,27,8
+    LTEXT           "Mins.",IDC_STATIC,181,33,18,8
+    LTEXT           "Mins.",IDC_STATIC,181,55,18,8
 END
 
 IDD_LEV1_TIME_RULE DIALOGEX 0, 0, 281, 198
@@ -288,7 +290,7 @@ IDD_DLG_SCREEN_SAVER DIALOGEX 0, 0, 250, 200
 STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
-    PUSHBUTTON      "Clear",IDC_BTN_CLEAR,173,154,50,14
+    PUSHBUTTON      "Clear",IDC_BTN_CLEAR,184,157,50,14
     CONTROL         "",IDC_SLIDER_SAVE_TIMESPAN,"msctls_trackbar32",
                     TBS_AUTOTICKS | TBS_TOP | WS_TABSTOP,17,90,141,22
     CONTROL         "Enable Screen Save",IDC_CHK_SCREENSAVE,"Button",
@@ -299,8 +301,10 @@ BEGIN
     CONTROL         "Enable Auto Clean",IDC_CHK_AUTOCLEAN,"Button",
                     BS_AUTOCHECKBOX | WS_TABSTOP,142,26,75,10
     CONTROL         "",IDC_SLIDER_CLEAN_TIMESPAN,"msctls_trackbar32",
-                    TBS_AUTOTICKS | TBS_TOP | WS_TABSTOP,17,151,147,24
-    PUSHBUTTON      "View",IDC_VIEW_HISTORY,175,94,47,14
+                    TBS_AUTOTICKS | TBS_TOP | WS_TABSTOP,17,155,147,20
+    PUSHBUTTON      "View",IDC_VIEW_HISTORY,189,94,47,14
+    LTEXT           "Mins",IDC_STATIC,151,111,15,8
+    LTEXT           "Hours",IDC_STATIC,147,176,20,8
 END
 
 IDD_DLG_WEB_HISTORY DIALOGEX 0, 0, 250, 200
@@ -563,8 +567,6 @@ END
 //
 
 IDB_BITMAP_CHECKMARK    BITMAP                  "res\\optionmarks.bmp"
-
-
 #endif    // 中文(中华人民共和国) resources
 /////////////////////////////////////////////////////////////////////////////
 
