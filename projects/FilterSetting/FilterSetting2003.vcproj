@@ -159,9 +159,6 @@ copy .\filtersetting.h ..\..\include\com
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
 			<File
-				RelativePath=".\AppSetting.cpp">
-			</File>
-			<File
 				RelativePath=".\FilterSetting.cpp">
 			</File>
 			<File
@@ -187,9 +184,6 @@ copy .\filtersetting.h ..\..\include\com
 			Name="Í·ÎÄ¼þ"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
-			<File
-				RelativePath=".\AppSetting.h">
-			</File>
 			<File
 				RelativePath=".\globalvariable.h">
 			</File>
@@ -320,6 +314,16 @@ copy .\filtersetting.h ..\..\include\com
 			</File>
 			<File
 				RelativePath=".\AccessNetwork.h">
+			</File>
+		</Filter>
+		<Filter
+			Name="AppSetting"
+			Filter="">
+			<File
+				RelativePath=".\AppSetting.cpp">
+			</File>
+			<File
+				RelativePath=".\AppSetting.h">
 			</File>
 		</Filter>
 		<File
