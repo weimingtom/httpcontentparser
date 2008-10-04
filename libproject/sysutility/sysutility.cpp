@@ -4,11 +4,11 @@
 #include <utility\strutility.h>
 
 namespace {
-	DWORD GetScreenRecordDir(TCHAR *moduleDir, const int len, HMODULE hModule);	//
-	DWORD GetImageRecordDir(TCHAR *moduleDir, const int len, HMODULE hModule);	// 保存图像的目录
-	DWORD GenerateImageFile(TCHAR *file, const int len, HMODULE hModule);	// 自动生成文件名
-	DWORD GetHistoryRecordDir(TCHAR *moduleDir, const int len, HMODULE hModule);
-	DWORD GenerateFullPath(TCHAR *fullpath, const int len, const TCHAR * dir, const TCHAR * filename);
+	void GetScreenRecordDir(TCHAR *moduleDir, const int len, HMODULE hModule);	//
+	void GetImageRecordDir(TCHAR *moduleDir, const int len, HMODULE hModule);	// 保存图像的目录
+	void GenerateImageFile(TCHAR *file, const int len, HMODULE hModule);	// 自动生成文件名
+	void GetHistoryRecordDir(TCHAR *moduleDir, const int len, HMODULE hModule);
+	void GenerateFullPath(TCHAR *fullpath, const int len, const TCHAR * dir, const TCHAR * filename);
 };
 
 
@@ -108,32 +108,27 @@ const TCHAR * GetInstallPath(TCHAR *install_path, const int len, HMODULE hModule
 
 namespace {
 
-DWORD GenerateFullPath(TCHAR *fullpath, const int len, const TCHAR * dir, const TCHAR * filename) {
+void GenerateFullPath(TCHAR *fullpath, const int len, const TCHAR * dir, const TCHAR * filename) {
 	assert(strutility::endwith(dir, "\\") == true);
 	_sntprintf(fullpath, len, TEXT("%s%s"), dir, filename);
-	return _tcslen(fullpath);
 }
 
 // 保存屏幕截图的目录
-DWORD GetScreenRecordDir(TCHAR *screendir, const int len, HMODULE hModule) {
+void GetScreenRecordDir(TCHAR *screendir, const int len, HMODULE hModule) {
 	TCHAR moduleDir[MAX_PATH];
 	GetInstallPath(moduleDir, len, hModule);
 	_sntprintf(screendir, MAX_PATH, TEXT("%s%s"), moduleDir,TEXT("Screen\\"));
 	if (_tchdir(screendir) == -1)
 		_tmkdir(screendir);
-
-	return (DWORD)_tcslen(screendir);
 }
 
 // 获取保存历史的
-DWORD GetHistoryRecordDir(TCHAR *historyDir, const int len, HMODULE hModule) {
+void GetHistoryRecordDir(TCHAR *historyDir, const int len, HMODULE hModule) {
 	TCHAR moduleDir[MAX_PATH];
 	GetInstallPath(moduleDir, len, hModule);
 	_sntprintf(historyDir, MAX_PATH, TEXT("%s%s"), moduleDir,TEXT("History\\"));
 	if (_tchdir(historyDir) == -1)
 		_tmkdir(historyDir);
-
-	return (DWORD)_tcslen(historyDir);
 }
 
 
