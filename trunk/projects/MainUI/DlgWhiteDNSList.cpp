@@ -50,7 +50,7 @@ void CDlgWhiteDNSList::OnShow() {
 void CDlgWhiteDNSList::initializeData() {
 	g_configuration.getWhiteURLSet()->beginEnum((Enumerator1<std::string>*)this);
 
-	m_bEnableWhiteDNS = g_configuration.getWhiteURLSet()->needChecked();
+	m_bEnableWhiteDNS = g_configuration.getWhiteURLSet()->isEnabled();
 	UpdateData(FALSE);
 }
 
