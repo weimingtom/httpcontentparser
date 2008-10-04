@@ -8,6 +8,12 @@
 
 namespace strutility {
 
+#ifndef UNICODE
+typedef std::string _tstring;
+#else
+typedef std::wstring _tstring;
+#endif
+
 void trim_left(TCHAR * str, const TCHAR* trimed);
 void trim_right(TCHAR * str, const TCHAR* trimed);
 void trim(TCHAR * str, const TCHAR* trimed);
