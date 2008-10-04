@@ -37,4 +37,7 @@ const TCHAR * GetWebSiteRecordPath(TCHAR *filename, const unsigned len, const TC
 
 // 获取历史的文件
 const TCHAR * GetRecordConfigfile(TCHAR *filename, const unsigned len, const TCHAR * installPath);
+
+// 当前的Eyecare是否在运行
+HWND GetEyecareApp();
 #endif  // _FILTER_SETTING_SYS_UTILITY_H__
