@@ -34,6 +34,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Setting", "libproject\Setti
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sysutility", "libproject\sysutility\sysutility2003.vcproj", "{950E97E5-8DCB-44E9-9237-9A4DEF89E925}"
 	ProjectSection(ProjectDependencies) = postProject
+		{CD11D86D-3173-4945-8215-7450A0D9CB3C} = {CD11D86D-3173-4945-8215-7450A0D9CB3C}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ThreadSync", "libproject\ThreadSync\ThreadSync2003.vcproj", "{EC738080-9EB3-45D7-8440-0B79B280ACD7}"
