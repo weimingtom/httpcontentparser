@@ -108,4 +108,7 @@ void CDlgScreenSaver::OnBnClickedChkAutoclean() {
 
 void CDlgScreenSaver::OnBnClickedBtnClear() {
 	ClearScreen((HMODULE)AfxGetInstanceHandle());
+	CString str;
+	str.LoadString(IDS_SCREEN_RECORD_CLEAR_BUTTON);
+	AfxMessageBox(str);
 }
