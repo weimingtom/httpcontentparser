@@ -19,10 +19,11 @@ void WebHistoryRecorderSetting::defaultSetting() {
 	recordPage_ = false;
 	recordWebsite_ = false;
 
+	SettingItem::defaultSetting();
 }
 
 bool WebHistoryRecorderSetting::recordAllPages() const {
-	if (isEnable() ) {
+	if (isEnabled() ) {
 		return recordPage_;
 	} else {
 		return false;
@@ -31,14 +32,14 @@ bool WebHistoryRecorderSetting::recordAllPages() const {
 
 
 bool WebHistoryRecorderSetting::recordAllImage() const	{
-	if (isEnable() ) {
+	if (isEnabled() ) {
 		return recordImage_;
 	} else {
 		return false;
 	}
 }
 bool WebHistoryRecorderSetting::recordAllWebsite() const {
-	if (isEnable() ) {
+	if (isEnabled() ) {
 		return recordWebsite_;
 	} else {
 		return false;
@@ -46,7 +47,7 @@ bool WebHistoryRecorderSetting::recordAllWebsite() const {
 }
 
 bool WebHistoryRecorderSetting::recordPornImage() const	{
-	if (isEnable() ) {
+	if (isEnabled() ) {
 		return recordPornImage_;
 	} else {
 		return false;
@@ -54,7 +55,7 @@ bool WebHistoryRecorderSetting::recordPornImage() const	{
 }
 
 bool WebHistoryRecorderSetting::recordPornPages() const	{
-	if (isEnable() ) {
+	if (isEnabled() ) {
 		return recordPornPage_;
 	} else {
 		return false;
@@ -62,7 +63,7 @@ bool WebHistoryRecorderSetting::recordPornPages() const	{
 }
 
 bool WebHistoryRecorderSetting::recordPornWebsite() const {
-	if (isEnable() ) {
+	if (isEnabled() ) {
 		return recordPornWebsite_;
 	} else {
 		return false;

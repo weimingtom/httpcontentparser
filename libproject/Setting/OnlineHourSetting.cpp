@@ -3,7 +3,7 @@
 #include <assert.h>
 
 OnlineHourSetting::OnlineHourSetting(void) {
-	enable_rule_ = true;
+	defaultSetting();
 }
 
 OnlineHourSetting::~OnlineHourSetting(void) {

@@ -3,7 +3,7 @@
 #include <assert.h>
 
 SearchRule::SearchRule(void) {
-	enabled_ = true;
+	defaultSetting();
 }
 
 SearchRule::~SearchRule(void) {

@@ -127,17 +127,17 @@ int DNSCheck::checkDNS(const std::string &dns_name) {
 }
 
 void DNSCheck::enableBlackDNSCheck(const bool checked) {
-	black_dns_list_->enableCheck(checked);
+	black_dns_list_->enable(checked);
 }
 
 void DNSCheck::enableWhiteDNSCheck(const bool checked) {
-	white_dns_list_->enableCheck(checked);
+	white_dns_list_->enable(checked);
 }
 
 //=================================================================
 // class DNSCheck
 DNSList::DNSList(void) {
-	enable_check_ = true;
+	defaultSetting();
 }
 
 DNSList::~DNSList(void) {
@@ -146,9 +146,10 @@ DNSList::~DNSList(void) {
 //==================================
 // 测试DNS是否在黑白名单当中
 bool DNSList::checkDNS(const std::string &dns_name) const {
-	if ( false == needChecked())	// 表明不在此名单内
+	if ( false == isEnabled())	
 		return false;
 
+	// 表明不在此名单内
 	if (dns_set_.end() != dns_set_.find(dns_name)) {
 		return true;
 	} else {

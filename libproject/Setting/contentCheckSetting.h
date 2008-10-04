@@ -4,6 +4,7 @@
 #define _SETTING_CONTENTCHECKSETTING_H__
 
 #include <webcontenttype.h>
+#include <settingitem.h>
 
 // class ImageCheckSetting
 // 本类负责对图片的控制
@@ -11,7 +12,7 @@
 // 如果跨越进程边界进行检测，可能对系统性能影响较大
 
 // 注意由于我们使用了每一位代表一个类型，因此我们可以使用微操作进行过滤
-class ContentCheckSetting {
+class ContentCheckSetting : public SettingItem {
 public:
 	ContentCheckSetting(void);
 	~ContentCheckSetting(void);

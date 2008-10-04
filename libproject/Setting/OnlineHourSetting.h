@@ -3,21 +3,14 @@
 
 #include <set>
 #include <enumerate.h>
+#include <settingitem.h>
 
 // class  OnlineHourSetting
 // 设置上线的时间
-class OnlineHourSetting {
+class OnlineHourSetting : public SettingItem {
 public:
 	OnlineHourSetting(void);
 	~OnlineHourSetting(void);
-
-	// 是否可用
-	void enableOnlineHour(const bool enabled) {
-		enable_rule_ = enabled;
-	}
-	bool isEnabled() const {
-		return enable_rule_;
-	}
 
 	void setHour(const DWORD full, const bool allow_access);
 	void setHour(const DWORD day, const DWORD hour, const bool allow_access);
@@ -31,8 +24,6 @@ public:
 private:
 	typedef std::set<DWORD> OFFLINE_HOUR;
 	OFFLINE_HOUR online_hour_;
-
-	bool enable_rule_;
 };
 
 #endif  // _SETTING_ONLINEHOURSETTING_H__

@@ -11,9 +11,10 @@
 #include <map>
 #include <string>
 #include <Enumerate.h>
+#include <settingitem.h>
 // 目前我们使用的机制有些适应性不高，我们需要增加cache机制。
 
-class DNSList {
+class DNSList : public SettingItem {
 public:
 	DNSList(void);
 	~DNSList(void);
@@ -26,15 +27,11 @@ public:
 	void addDNS(const std::string &dns_name);
 	bool removeDNS(const std::string &dns_name);
 
-	void enableCheck(const bool checked) { enable_check_ = checked;}
-	bool needChecked() const { return enable_check_ ;}
-
 	// enumerate
 	void beginEnum(Enumerator1<std::string> *enumerator);
 protected:
 	typedef std::set<std::string> DNS_SET;
 	DNS_SET dns_set_;
-	bool enable_check_;
 };
 
 // 检测

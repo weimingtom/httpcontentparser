@@ -41,7 +41,8 @@
 				CommandLine="copy .\debug\settingd.lib ..\..\lib"/>
 			<Tool
 				Name="VCPreBuildEventTool"
-				CommandLine="copy .\webhistoryrecordersetting.h ..\..\include
+				CommandLine="copy .\settingitem.h ..\..\include
+copy .\webhistoryrecordersetting.h ..\..\include
 copy .\authorize.h ..\..\include
 copy .\eyecaresetting.h ..\..\include
 copy .\screensaver.h ..\..\include
@@ -51,7 +52,8 @@ copy .\contentchecksetting.h ..\..\include
 copy .\XMLconfiguration.h ..\..\include
 copy .\SearchRule.h ..\..\include
 copy .\onlinehoursetting.h ..\..\include
-copy .\autoclean.h ..\..\include"/>
+copy .\autoclean.h ..\..\include
+"/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
 			<Tool
@@ -102,7 +104,8 @@ copy .\contentchecksetting.h ..\..\include
 copy .\XMLconfiguration.h ..\..\include
 copy .\SearchRule.h ..\..\include
 copy .\onlinehoursetting.h ..\..\include
-copy .\autoclean.h ..\..\include"/>
+copy .\autoclean.h ..\..\include
+"/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
 			<Tool
@@ -197,9 +200,6 @@ copy .\autoclean.h ..\..\include"/>
 			Name="dnssetting"
 			Filter="">
 			<File
-				RelativePath=".\Authorize.h">
-			</File>
-			<File
 				RelativePath=".\DNSSetting.cpp">
 			</File>
 			<File
@@ -211,6 +211,9 @@ copy .\autoclean.h ..\..\include"/>
 			Filter="">
 			<File
 				RelativePath=".\Authorize.cpp">
+			</File>
+			<File
+				RelativePath=".\Authorize.h">
 			</File>
 		</Filter>
 		<Filter
@@ -261,6 +264,16 @@ copy .\autoclean.h ..\..\include"/>
 			</File>
 			<File
 				RelativePath=".\AutoClean.h">
+			</File>
+		</Filter>
+		<Filter
+			Name="Setting"
+			Filter="">
+			<File
+				RelativePath=".\SettingItem.cpp">
+			</File>
+			<File
+				RelativePath=".\SettingItem.h">
 			</File>
 		</Filter>
 		<File
