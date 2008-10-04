@@ -33,13 +33,13 @@ void OnlineHourSettingTest::TestOnlineHour() {
 	CPPUNIT_ASSERT(online_hour.getHour(1, 1) == true);
 	CPPUNIT_ASSERT(online_hour.getHour((DWORD)MAKELPARAM(1,2)) == false);
 
-	online_hour.enableOnlineHour(false);
+	online_hour.enable(false);
 	CPPUNIT_ASSERT(online_hour.isEnabled() == false);
 	CPPUNIT_ASSERT(online_hour.getHour((DWORD)MAKELPARAM(1,0)) == true);
 	CPPUNIT_ASSERT(online_hour.getHour(1, 1) == true);
 	CPPUNIT_ASSERT(online_hour.getHour((DWORD)MAKELPARAM(1,2)) == true);
 
-	online_hour.enableOnlineHour(true);
+	online_hour.enable(true);
 	CPPUNIT_ASSERT(online_hour.isEnabled() == true);
 	CPPUNIT_ASSERT(online_hour.getHour((DWORD)MAKELPARAM(1,0)) == false);
 	CPPUNIT_ASSERT(online_hour.getHour(1, 1) == true);
