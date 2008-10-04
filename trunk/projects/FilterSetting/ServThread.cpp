@@ -132,11 +132,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 				GetModuleFileName((HMODULE)g_hInstance, config_path, MAX_PATH);
 				g_configuration.saveConfig(config_path);
 			} else if (ID_TIMER_EYECARE_TRY == wParam) {
-				// 如果试图改变状态成功，且状态为EYECARE_TIME, 
-				if ( (true == g_configuration.getEyecareSetting()->trySwitch()) && 
-					(g_configuration.getEyecareSetting()->getState() == EyecareSetting::EYECARE_TIME)) {
+				// 如果试图改变状态成功，且状态为EYECARE_TIME,
+				g_configuration.getEyecareSetting()->trySwitch();
+				if (g_configuration.getEyecareSetting()->getState() == EyecareSetting::EYECARE_TIME) {
 					// 启动进程
-					StartEyecare((HMODULE)g_hInstance);
+					HWND hwnd = GetEyecareApp();
+					if (NULL == hwnd) {
+						StartEyecare((HMODULE)g_hInstance);
+					};
 				}
 			}
 			// 自动开启
