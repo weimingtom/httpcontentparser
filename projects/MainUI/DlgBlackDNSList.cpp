@@ -48,7 +48,7 @@ void CDlgBlackDNSList::DoDataExchange(CDataExchange* pDX)
 
 void CDlgBlackDNSList::initializeData() {
 	g_configuration.getBlackURLSet()->beginEnum((Enumerator1<std::string>*)this);
-	m_bEnableBlackDNS = g_configuration.getBlackURLSet()->needChecked();
+	m_bEnableBlackDNS = g_configuration.getBlackURLSet()->isEnabled();
 	UpdateData(FALSE);
 }
 
