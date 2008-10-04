@@ -21,4 +21,8 @@
 #include <process.h>
 #include <assert.h>
 
-// TODO: 在此处引用程序要求的附加头文件
+#ifdef _DEBUG
+#	pragma comment(lib, "utilityd.lib")
+#else 
+#	pragma comment(lib, "utility.lib")
+#endif
