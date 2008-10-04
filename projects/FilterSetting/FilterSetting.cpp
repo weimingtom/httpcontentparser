@@ -51,11 +51,6 @@ extern "C" int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/
 
 	g_dnssetting.initialize(g_configuration.getBlackURLSet(), g_configuration.getWhiteURLSet());
 
-	// 获取当前状态，如果是EYECARE， 则启动
-	if (EyecareSetting::EYECARE_TIME == g_configuration.getEyecareSetting()->getState()) {
-		StartEyecare(hInstance);
-	}
-
 	 // 开启服务线程
 	ServThread::getInstance();
 	
