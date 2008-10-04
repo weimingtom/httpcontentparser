@@ -5,7 +5,7 @@
 fd_set* FDSET_Add(fd_set * a, fd_set * b) {
 	if (a == NULL || b == NULL) return NULL;
 
-	for (int i=0; i < b->fd_count; ++i) {
+	for (unsigned i=0; i < b->fd_count; ++i) {
 		if (FD_ISSET(b->fd_array[i], a) == false)
 			FD_SET(b->fd_array[i], a);
 	}
@@ -20,7 +20,7 @@ fd_set* FDSET_Add(fd_set * a, SOCKET   s) {
 }
 fd_set* FDSET_Set(fd_set * a, fd_set * b) {
 	if (a == NULL || b == NULL) return NULL;
-	for (int i = 0; i < b->fd_count; ++i) {
+	for (unsigned i = 0; i < b->fd_count; ++i) {
 		FD_SET(b->fd_array[i], a);
 	}
 
@@ -28,7 +28,7 @@ fd_set* FDSET_Set(fd_set * a, fd_set * b) {
 }
 fd_set* FDSET_Del(fd_set * a, fd_set * b) {
 	if (a == NULL || b == NULL) return NULL;
-	for (int i = 0; i < b->fd_count; ++i) {
+	for (unsigned i = 0; i < b->fd_count; ++i) {
 		FD_CLR(b->fd_array[i], a);
 	}
 	return a;
