@@ -10,11 +10,13 @@ public:
 	CPPUNIT_TEST_SUITE(ContentSettingTest);
 	CPPUNIT_TEST(TestEnableCheck);
 	CPPUNIT_TEST(TestNeedCheck);
+	CPPUNIT_TEST(TestTwoModel);
 	CPPUNIT_TEST_SUITE_END();
 
 private:
 	void TestEnableCheck();
 	void TestNeedCheck();
+	void TestTwoModel();
 };
 
 #endif  // _TESTSETTING_CONTENTSETTINGTEST_H__

@@ -9,7 +9,36 @@ DNSSettingTest::DNSSettingTest(void) {
 DNSSettingTest::~DNSSettingTest(void) {
 }
 
+void DNSSettingTest::testTwoModels() {
+	CPPUNIT_ASSERT(SettingItem::MODE_CHILD == SettingItem::getModel());
+
+	DNSList black, white;
+	DNSSetting dns_setting;
+	dns_setting.initialize(&black, &white);
+
+	CPPUNIT_ASSERT(true == dns_setting.addBlackDNS("sina.com"));
+	CPPUNIT_ASSERT(true ==  dns_setting.addBlackDNS("sohu.com"));
+	CPPUNIT_ASSERT(true ==  dns_setting.addWhiteDNS("google.com"));
+
+	dns_setting.enableBlackDNSCheck(true);
+	CPPUNIT_ASSERT(0 !=  dns_setting.fuzzeCheckDNS("name.google.com"));
+	CPPUNIT_ASSERT(0 == dns_setting.fuzzeCheckDNS("news.sohu.com"));
+	CPPUNIT_ASSERT(0 == dns_setting.fuzzeCheckDNS("p1.sine.sina.com"));
+	
+	SettingItem::setModel(SettingItem::MODE_PARENT);
+	CPPUNIT_ASSERT(0 !=  dns_setting.fuzzeCheckDNS("name.google.com"));
+	CPPUNIT_ASSERT(0 != dns_setting.fuzzeCheckDNS("news.sohu.com"));
+	CPPUNIT_ASSERT(0 != dns_setting.fuzzeCheckDNS("p1.sine.sina.com"));
+
+	SettingItem::setModel(SettingItem::MODE_CHILD);
+	CPPUNIT_ASSERT(0 !=  dns_setting.fuzzeCheckDNS("name.google.com"));
+	CPPUNIT_ASSERT(0 == dns_setting.fuzzeCheckDNS("news.sohu.com"));
+	CPPUNIT_ASSERT(0 == dns_setting.fuzzeCheckDNS("p1.sine.sina.com"));
+}
+
 void DNSSettingTest::testFuzzeCheck() {
+	CPPUNIT_ASSERT(SettingItem::MODE_CHILD == SettingItem::getModel());
+
 	DNSList black, white;
 	DNSSetting dns_setting;
 	dns_setting.initialize(&black, &white);
@@ -23,9 +52,15 @@ void DNSSettingTest::testFuzzeCheck() {
 	CPPUNIT_ASSERT(0 == dns_setting.fuzzeCheckDNS("news.sohu.com"));
 	CPPUNIT_ASSERT(0 == dns_setting.fuzzeCheckDNS("p1.sine.sina.com"));
 
+	dns_setting.enableBlackDNSCheck(false);
+	CPPUNIT_ASSERT(0 !=  dns_setting.fuzzeCheckDNS("name.google.com"));
+	CPPUNIT_ASSERT(0 != dns_setting.fuzzeCheckDNS("news.sohu.com"));
+	CPPUNIT_ASSERT(0 != dns_setting.fuzzeCheckDNS("p1.sine.sina.com"));
 }
 
 void DNSSettingTest::testCheck() {
+	CPPUNIT_ASSERT(SettingItem::MODE_CHILD == SettingItem::getModel());
+
 	DNSList black, white;
 	DNSSetting dns_setting;
 	dns_setting.initialize(&black, &white);

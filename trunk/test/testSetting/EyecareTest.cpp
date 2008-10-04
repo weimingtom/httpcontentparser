@@ -15,6 +15,8 @@ EyecareTest::~EyecareTest(void) {
 }
 
 void EyecareTest::TestTimeSetting() {
+	CPPUNIT_ASSERT(SettingItem::MODE_CHILD == SettingItem::getModel());
+
 	Authorize authorize;
 	string supassword = "123", eyecarePassword = "456";
 	CPPUNIT_ASSERT(authorize.setNewPassword(eyecarePassword, PASSWORD_EYECARE));
@@ -30,6 +32,8 @@ void EyecareTest::TestTimeSetting() {
 	CPPUNIT_ASSERT(setting.getRemainTime() > 0);
 }
 void EyecareTest::TestPassword() {
+	CPPUNIT_ASSERT(SettingItem::MODE_CHILD == SettingItem::getModel());
+
 	// …Ë÷√‘≠ º√‹¬Î
 	Authorize authorize;
 	string supassword = "123", eyecarePassword = "456";
@@ -53,6 +57,8 @@ void EyecareTest::TestPassword() {
 }
 
 void EyecareTest::TestSwitchState() {
+	CPPUNIT_ASSERT(SettingItem::MODE_CHILD == SettingItem::getModel());
+
 	Authorize authorize;
 	string supassword = "123", eyecarePassword = "456";
 	CPPUNIT_ASSERT(authorize.setNewPassword(eyecarePassword, PASSWORD_EYECARE));
@@ -76,6 +82,8 @@ void EyecareTest::TestSwitchState() {
 }
 
 void EyecareTest::TextForceSwitch() {
+	CPPUNIT_ASSERT(SettingItem::MODE_CHILD == SettingItem::getModel());
+
 	Authorize authorize;
 	string supassword = "123", eyecarePassword = "456";
 	CPPUNIT_ASSERT(authorize.setNewPassword(eyecarePassword, PASSWORD_EYECARE));
