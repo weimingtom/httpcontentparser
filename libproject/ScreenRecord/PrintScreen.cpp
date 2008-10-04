@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "printscreen.h"
+#include <atlimage.h>
 
 BOOL CreateBitmapInfoStruct(HBITMAP hBmp,PBITMAPINFO& pbmi) { 
 	BITMAP bmp; 
@@ -160,10 +161,14 @@ void GetScreen(TCHAR* filename) {
 	dcMem.BitBlt(0,0,width, height, &dcScreen, 0, 0, SRCCOPY);
 	dcMem.SelectObject(pOldBmp);
 
-	PBITMAPINFO bmpinfo;
-	if (TRUE == CreateBitmapInfoStruct((HBITMAP)bmp.GetSafeHandle(), bmpinfo)) {
-		CreateBMPFile(filename,bmpinfo, (HBITMAP)bmp.GetSafeHandle(), dcMem.GetSafeHdc());
-		LocalFree((HLOCAL)bmpinfo);
-	}
+	CImage image;
+	image.Attach(bmp);
+	image.Save(filename);
+
+	//PBITMAPINFO bmpinfo;
+	//if (TRUE == CreateBitmapInfoStruct((HBITMAP)bmp.GetSafeHandle(), bmpinfo)) {
+	//	CreateBMPFile(filename,bmpinfo, (HBITMAP)bmp.GetSafeHandle(), dcMem.GetSafeHdc());
+	//	LocalFree((HLOCAL)bmpinfo);
+	//}
 }
 
