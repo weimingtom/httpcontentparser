@@ -1,12 +1,12 @@
-cd ..\Debug
-..\testoutput\TestSelectIO.exe
 
-..\testoutput\TestUtility.exe
+TestSelectIO.exe
 
-..\testoutput\TestFilterSetting.exe
+TestUtility.exe
 
-..\testoutput\TestSetting.exe
+TestFilterSetting.exe
 
-..\testoutput\TestUtility.exe
+TestSysutility.exe
 
-cd ..\testoutput
+TestSetting.exe
+
+
