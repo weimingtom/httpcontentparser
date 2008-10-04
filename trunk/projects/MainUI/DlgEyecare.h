@@ -32,6 +32,7 @@ protected:
 	void initializeSetting();
 
 	// controls
+	CGuiGroupBox m_staAfterEyecareTerminate;
 	CGuiGroupBox m_staEyecare;
 	CGuiGroupBox m_staPwd;
 	CButton m_chkUseSuPwd;
@@ -54,4 +55,5 @@ public:
 
 	// 设置密码窗口的对话框
 	void SetPwdEditState();	
+	int m_nAfterEyecareTerminate;
 };
