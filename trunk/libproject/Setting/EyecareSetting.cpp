@@ -21,6 +21,8 @@ void EyecareSetting::defaultSetting() {
 
 	setEnterTime(45 * 60);
 	setEyecareTime(45 * 60);
+
+	SettingItem::defaultSetting();
 }
 
 // ÑéÖ¤ÃÜÂë

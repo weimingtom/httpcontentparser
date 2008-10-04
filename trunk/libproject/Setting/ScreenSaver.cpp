@@ -6,16 +6,10 @@ void ScreenSaver::defaultSetting() {
 	calcugraph_.initialize();
 	enable(false);
 	setTimeSpan(60 * 20); // 20 mins
+
+	SettingItem::defaultSetting();
 }
 
-
-//  «∑Òø…”√
-bool ScreenSaver::isEnabled() const  {
-	return enabled_;
-}
-void ScreenSaver::enable(const bool enabled) {
-	enabled_ = enabled;
-}
 
 void ScreenSaver::setTimeSpan(const int seconds) {
 	calcugraph_.setTimespan(seconds);

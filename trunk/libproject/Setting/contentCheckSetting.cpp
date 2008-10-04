@@ -3,6 +3,7 @@
 
 ContentCheckSetting::ContentCheckSetting(void) {
 	content_type_ = 0;
+	defaultSetting();
 }
 
 ContentCheckSetting::~ContentCheckSetting(void) {
@@ -20,8 +21,12 @@ void ContentCheckSetting::enableCheck(const unsigned type, const bool checked) {
 }
 
 bool ContentCheckSetting::needCheck(const unsigned type) const {
-	if( content_type_ & type )
-		return true;
-	else
+	if (isEnabled() == true) {
+		if( content_type_ & type )
+			return true;
+		else
+			return false;
+	} else {
 		return false;
+	}
 }

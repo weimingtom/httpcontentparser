@@ -1,7 +1,9 @@
 #ifndef _SETTING_WEBHISTORY_RECORDER_SETTING_H__
 #define _SETTING_WEBHISTORY_RECORDER_SETTING_H__
 
-class WebHistoryRecorderSetting {
+#include <settingitem.h>
+
+class WebHistoryRecorderSetting  : public SettingItem  {
 public:
 	WebHistoryRecorderSetting(void);
 	~WebHistoryRecorderSetting(void);
@@ -24,9 +26,6 @@ public:
 	void recordPornPages(const bool enable)	{ recordPornPage_ = enable;}
 	void recordPornImage(const bool enable) { recordPornImage_ = enable;}
 	void recordPornWebsite(const bool enable) { recordPornWebsite_ = enable;}
-
-	bool isEnable() const { return enabled_;}
-	void enable(const bool enabled) { enabled_ = enabled; }
 public:
 	void defaultSetting();
 
@@ -36,8 +35,6 @@ public:
 	bool recordPornImage_;
 	bool recordWebsite_;
 	bool recordPornWebsite_;
-	
-	bool enabled_;
 };
 
 #endif // _SETTING_WEBHISTORY_RECORDER_SETTING_H__

@@ -107,7 +107,7 @@ int XMLConfiguration::saveAuthorize(TiXmlElement *app_root) {
 // 保存
 int XMLConfiguration::saveEyecare(TiXmlElement *app_root) {
 	TiXmlElement * eyecare_root = new TiXmlElement( CONFIG_ITEM_APPSET_EYECARE);
-	eyecare_root->SetAttribute(CONFIG_CONST_ENABLE, enabledFromBool(getEyecareSetting()->isEnable()));
+	eyecare_root->SetAttribute(CONFIG_CONST_ENABLE, enabledFromBool(getEyecareSetting()->isEnabled()));
 	eyecare_root->SetAttribute(CONFIG_APPSET_EYECARE_STATE, Eyecare_state(getEyecareSetting()->getState()));
 
 	// 设置剩余时间
@@ -137,7 +137,7 @@ int XMLConfiguration::saveEyecare(TiXmlElement *app_root) {
 
 int XMLConfiguration::saveWebHistory(TiXmlElement * app_root) {
 	TiXmlElement * webhistory_root = new TiXmlElement(CONFIG_ITEM_APPSET_WEBHISTORY); 
-	webhistory_root->SetAttribute(CONFIG_CONST_NAME,  enabledFromBool(getWebHistoryRecordSetting()->isEnable()));
+	webhistory_root->SetAttribute(CONFIG_CONST_NAME,  enabledFromBool(getWebHistoryRecordSetting()->isEnabled()));
 
 	// All Images
 	TiXmlElement * allimage = new TiXmlElement(CONFIG_APPSET_WEBHISTORY_CONTENT); 
@@ -248,7 +248,7 @@ int XMLConfiguration::saveWhiteURL(TiXmlElement *root) {
 
 	// 设置属性
 	rule_root->SetAttribute(CONFIG_CONST_NAME, CONFIG_NODE_NAME_WHITEURL);
-	rule_root->SetAttribute(CONFIG_CONST_ENABLE, enabledFromBool(getWhiteURLSet()->needChecked()));
+	rule_root->SetAttribute(CONFIG_CONST_ENABLE, enabledFromBool(getWhiteURLSet()->isEnabled()));
 	// 添加URL
 	getWhiteURLSet()->beginEnum(&DNSEnum(rule_root));
 	root->LinkEndChild(rule_root);
@@ -260,7 +260,7 @@ int XMLConfiguration::saveBlackURL(TiXmlElement *root) {
 
 	// 设置属性
 	rule_root->SetAttribute(CONFIG_CONST_NAME, CONFIG_NODE_NAME_BLACKURL);
-	rule_root->SetAttribute(CONFIG_CONST_ENABLE, enabledFromBool(getBlackURLSet()->needChecked()));
+	rule_root->SetAttribute(CONFIG_CONST_ENABLE, enabledFromBool(getBlackURLSet()->isEnabled()));
 
 	// 添加URL
 	getBlackURLSet()->beginEnum(&DNSEnum(rule_root));
@@ -464,7 +464,7 @@ int XMLConfiguration::parseAppSet(TiXmlNode *appset_root) {
 // Eyecare
 int XMLConfiguration::enableEyecareSetting(const TCHAR *enable) {
 	const bool enabled = enabledFromString(enable);
-	getEyecareSetting()->Enable(enabled);
+	getEyecareSetting()->enable(enabled);
 	return 0;
 }
 
@@ -643,7 +643,7 @@ int XMLConfiguration::getSystemSetting(TiXmlElement * ele) {
 // 白名单是否可用
 int XMLConfiguration::enableWhiteURL(const TCHAR *enable) {
 	const bool checked = enabledFromString(enable);
-	getWhiteURLSet()->enableCheck(checked);
+	getWhiteURLSet()->enable(checked);
 	return 0;
 }
 
@@ -677,7 +677,7 @@ int XMLConfiguration::getWhiteURL(TiXmlElement * rule_root) {
 // 黑名单是否可用
 int XMLConfiguration::enableBlackURL(const TCHAR *enable) {
 	const bool checked = enabledFromString(enable);
-	getBlackURLSet()->enableCheck(checked);
+	getBlackURLSet()->enable(checked);
 	return 0;
 }
 
@@ -799,7 +799,7 @@ int XMLConfiguration::getOnlinetime(TiXmlElement * rule_root) {
 	if (ele != NULL) {
 		enabled = enabledFromString(ele->Attribute(CONFIG_CONST_NAME));
 	}
-	getOnlineSetting()->enableOnlineHour(enabled);
+	getOnlineSetting()->enable(enabled);
 
 	// 获取不可上网的时间
 	TiXmlNode * node = rule_root->FirstChild();

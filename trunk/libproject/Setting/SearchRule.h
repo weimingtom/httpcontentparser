@@ -5,9 +5,10 @@
 #include <set>
 #include <map>
 #include <Enumerate.h>
+#include <settingitem.h>
 
 // 用来记录Search Rule的实现
-class SearchRule {
+class SearchRule : public SettingItem {
 public:
 	SearchRule(void);
 	~SearchRule(void);
@@ -24,11 +25,6 @@ public:
 	bool check(const std::string &host_name, const std::string &search_word) const;
 
 	bool shouldCheck(const std::string &search_host) const;
-
-	// enabled?
-	bool isEnabled() const { return enabled_;}
-	void enable(const bool enable) {enabled_ = enable;}
-
 	// enumerate
 	void enumBlackWord(Enumerator1<std::string> * enumerator);
 	void enumSearchEngine(Enumerator2<std::string, bool> *enumerator);
@@ -40,9 +36,6 @@ protected:
 	SEARCH_HOST search_host_;
 
 	bool checkWord(const std::string &word) const;
-
-	// 整个功能是否可用
-	bool enabled_;
 };
 
 #endif  // _SETTING_SEARCHRULE_H__

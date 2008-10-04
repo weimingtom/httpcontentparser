@@ -3,6 +3,7 @@
 
 #include <string>
 #include <comdef.h>
+#include <settingitem.h>
 #include "calculagraph.h"
 
 
@@ -11,7 +12,7 @@ class XMLConfiguration;
 
 // TODO : we must add sate store function
 // TODO : 
-class EyecareSetting {
+class EyecareSetting : public SettingItem {
 public:
 	EyecareSetting();
 	~EyecareSetting(void);
@@ -22,10 +23,6 @@ public:
 	};
 
 public:
-	// 是否可用
-	bool isEnable() const { return enabled_;}
-	void Enable(const bool enable) {enabled_ = enable;}
-
 	// 验证密码
 	bool setPassword(const std::string &password, 
 		const std::string& orgin_password);
@@ -71,8 +68,6 @@ private:
 	friend class XMLConfiguration;
 
 	void defaultSetting();
-private:
-	bool enabled_;
 };
 
 #endif  // _SETTING_EYECARE_SETTING_H__
