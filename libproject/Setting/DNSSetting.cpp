@@ -159,6 +159,10 @@ bool DNSList::checkDNS(const std::string &dns_name) const {
 
 // 查看dns_name是否有一个是包含它的
 bool DNSList::fuzzeCheckDNS(const std::string &dns_name) const {
+	if (isEnabled() == false) {
+		return false;
+	}
+
 	DNS_SET::const_iterator iter = dns_set_.begin();
 	for (; iter != dns_set_.end(); ++iter) {
 		if (dns_name.find(*iter) != -1) {
