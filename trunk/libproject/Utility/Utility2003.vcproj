@@ -141,9 +141,6 @@ copy .\strutility.h ..\..\include\utility
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\strutility.cpp">
-			</File>
-			<File
 				RelativePath=".\syncutility.cpp">
 			</File>
 		</Filter>
@@ -156,9 +153,6 @@ copy .\strutility.h ..\..\include\utility
 			</File>
 			<File
 				RelativePath=".\stdafx.h">
-			</File>
-			<File
-				RelativePath=".\strutility.h">
 			</File>
 			<File
 				RelativePath=".\syncutility.h">
@@ -207,6 +201,16 @@ copy .\strutility.h ..\..\include\utility
 			</File>
 			<File
 				RelativePath=".\HTTPRequestPacket.h">
+			</File>
+		</Filter>
+		<Filter
+			Name="sysutility"
+			Filter="">
+			<File
+				RelativePath=".\strutility.cpp">
+			</File>
+			<File
+				RelativePath=".\strutility.h">
 			</File>
 		</Filter>
 	</Files>

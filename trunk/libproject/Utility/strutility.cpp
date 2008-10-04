@@ -2,6 +2,7 @@
 #include "strutility.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include <assert.h>
 
 namespace strutility {
 
@@ -36,13 +37,13 @@ void trim(TCHAR * str, TCHAR * trimed) {
 }
 
 
-const char *strnstr(const char *src, const char *des, const int len) {
+const TCHAR *strnstr(const TCHAR *src, const TCHAR *des, const int len) {
 	const int buf_size = 1024 * 24;
 	try {
 		if (buf_size > len + 1) {
-			char buffer[buf_size] = {0};
+			TCHAR buffer[buf_size] = {0};
 			memcpy(buffer, src, len);
-			char *p =  strstr(buffer, des);
+			TCHAR *p =  strstr(buffer, des);
 
 			// 如果返回 NULL, 否则计算偏移量
 			if (p ==  NULL) return NULL;
@@ -50,9 +51,9 @@ const char *strnstr(const char *src, const char *des, const int len) {
 				return (src + (p - buffer));
 			}
 		} else {
-			char * buffer = new char[len + 1];
+			TCHAR * buffer = new TCHAR[len + 1];
 			memcpy(buffer, src, len);
-			char *p =  strstr(buffer, des);
+			TCHAR *p =  strstr(buffer, des);
 
 			// 如果返回 NULL, 否则计算偏移量
 			if (p ==  NULL) return NULL;
@@ -65,6 +66,25 @@ const char *strnstr(const char *src, const char *des, const int len) {
 	}
 }
 
+bool beginwith(const TCHAR *src, const TCHAR *header) {
+	assert (src != NULL);
+	assert (header != NULL);
+	return  (src == _tcsstr(src, header)) ? true : false;
+}
+
+bool endwith(const TCHAR * src, const TCHAR *detail) {
+	assert (src != NULL);
+	assert (detail != NULL);
+	const size_t len1 = strlen(src);
+	const size_t len2 = strlen(detail);
+	if (len1 < len2) {
+		return false;
+	} else if (0 != _tcscmp(&(src[len1-len2]), detail)) {
+		return false;
+	} else {
+		return true;
+	}
+}
 
 //void splitstring_token(TCHAR *str, const TCHAR *seps,
 //				 std::vector<std::string> &vec, bool remove_spes) {
