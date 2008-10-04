@@ -30,6 +30,7 @@
 #define IDS_WEB_HISTORY_FILEDLG_DEFAULT 117
 #define IDS_WEB_HISTORY_FILEDLG_EXT     118
 #define IDS_ERROR_WEB_SET_FAILED        119
+#define IDS_SCREEN_RECORD_CLEAR_BUTTON  120
 #define IDR_MAINFRAME                   128
 #define IDD_DLG_HELP                    129
 #define IDD_DLG_ABOUT                   130
