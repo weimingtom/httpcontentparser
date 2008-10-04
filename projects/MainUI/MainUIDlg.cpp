@@ -419,6 +419,7 @@ void CMainUIDlg::OnTraymenuMainui() {
 }
 
 void CMainUIDlg::OnMainExit() {
+	ShowWindow(SW_SHOW);
 	CDialog::OnOK();
 }
 
