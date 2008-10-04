@@ -731,6 +731,7 @@ BEGIN
     IDS_WEB_HISTORY_FILEDLG_EXT 
                             "TXT files (*.txt)|*.txt|All Files (*.*)|*.*||"
     IDS_ERROR_WEB_SET_FAILED "Set Web Record Failed!"
+    IDS_SCREEN_RECORD_CLEAR_BUTTON "Clear Completed!"
 END
 
 #endif    // Ó¢Óï(ÃÀ¹ú) resources
