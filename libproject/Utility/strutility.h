@@ -12,7 +12,10 @@ void trim_left(TCHAR * str, const TCHAR* trimed);
 void trim_right(TCHAR * str, const TCHAR* trimed);
 void trim(TCHAR * str, const TCHAR* trimed);
 
-const char *strnstr(const char *src, const char *des, const int len);
+const TCHAR *strnstr(const TCHAR *src, const TCHAR *des, const int len);
+
+bool beginwith(const TCHAR *src, const TCHAR *header);
+bool endwith(const TCHAR * src, const TCHAR *detail);
 
 
 // 使用token分割字符床，并将分割的字符串保存在vec当中
