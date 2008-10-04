@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "resource.h"
 #include <windowtitle.h>
+#include <sysutility.h>
 #include <com\FilterSetting_i.c>
 #include <com\FilterSetting.h>
 #include <comdef.h>
@@ -60,6 +61,13 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
                      LPTSTR    lpCmdLine,
                      int       nCmdShow)
 {
+	// 首先确定应用程序是否已经打开，
+	HWND hOld = GetEyecareApp();
+	if (NULL != hOld) {
+		return 0;
+	}
+
+
 	CoInitialize(NULL);
 	UNREFERENCED_PARAMETER(hPrevInstance);
 	UNREFERENCED_PARAMETER(lpCmdLine);

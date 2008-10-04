@@ -17,4 +17,8 @@
 #include <memory.h>
 #include <tchar.h>
 
-// TODO: 在此处引用程序要求的附加头文件
+#ifdef _DEBUG
+#	pragma comment(lib, "sysutilityd.lib")
+#else
+#	pragma comment(lib, "sysutility.lib")
+#endif
