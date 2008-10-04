@@ -1,7 +1,7 @@
 //{{NO_DEPENDENCIES}}
 // Microsoft Visual C++ generated include file.
 // Used by MainUI.rc
-// 
+//
 #define IDR_RT_MANIFEST                 1
 #define IDM_ABOUTBOX                    0x0010
 #define IDD_ABOUTBOX                    100
@@ -151,6 +151,9 @@
 #define IDC_CHK_AUTOCLEAN               1079
 #define IDC_CHK_SCREENSAVE              1080
 #define IDC_CHK_DENY_OTHERS             1082
+#define IDC_RADIO1                      1083
+#define IDC_RADIO2                      1084
+#define IDC_STA_AFTEREYECARE_TERMINATE  1085
 #define IDC_EDIT1                       4011
 #define IDC_EDIT2                       4012
 #define IDC_EDT_RETRY                   4013
@@ -188,7 +191,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        156
 #define _APS_NEXT_COMMAND_VALUE         32799
-#define _APS_NEXT_CONTROL_VALUE         1083
+#define _APS_NEXT_CONTROL_VALUE         1086
 #define _APS_NEXT_SYMED_VALUE           112
 #endif
 #endif

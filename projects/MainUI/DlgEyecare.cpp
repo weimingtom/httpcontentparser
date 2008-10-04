@@ -18,6 +18,7 @@ CDlgEyecare::CDlgEyecare(CWnd* pParent /*=NULL*/)
 	, m_nEnterTime(0)
 	, m_nEyecareTime(0)
 	, m_bUseSUPWD(FALSE)
+	, m_nAfterEyecareTerminate(0)
 {
 }
 
@@ -45,6 +46,7 @@ void CDlgEyecare::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_EDT_ENTERTIME, m_nEnterTime);
 	DDX_Text(pDX, IDC_EDT_RESTTIME, m_nEyecareTime);
 	DDX_Check(pDX, IDC_CHK_USE_SUPWD, m_bUseSUPWD);
+	DDX_Control(pDX, IDC_STA_AFTEREYECARE_TERMINATE, m_staAfterEyecareTerminate);
 }
 
 
