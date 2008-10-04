@@ -2,10 +2,11 @@
 //
 
 #include "stdafx.h"
-#include "MainUI.h"
-#include "DlgScreenSaver.h"
-#include "globalvariable.h"
+#include ".\MainUI.h"
+#include ".\DlgScreenSaver.h"
+#include ".\globalvariable.h"
 #include ".\dlgscreensaver.h"
+#include <sysutility.h>
 
 // CDlgScreenSaver ¶Ô»°¿ò
 
@@ -77,6 +78,7 @@ void CDlgScreenSaver::enableAutoclean() {
 BEGIN_MESSAGE_MAP(CDlgScreenSaver, CDialog)
 	ON_BN_CLICKED(IDC_CHK_SCREENSAVE, OnBnClickedChkScreensave)
 	ON_BN_CLICKED(IDC_CHK_AUTOCLEAN, OnBnClickedChkAutoclean)
+	ON_BN_CLICKED(IDC_BTN_CLEAR, OnBnClickedBtnClear)
 END_MESSAGE_MAP()
 
 
@@ -102,4 +104,8 @@ void CDlgScreenSaver::OnBnClickedChkScreensave() {
 void CDlgScreenSaver::OnBnClickedChkAutoclean() {
 	UpdateData(TRUE);
 	enableAutoclean();
+}
+
+void CDlgScreenSaver::OnBnClickedBtnClear() {
+	ClearScreen((HMODULE)AfxGetInstanceHandle());
 }

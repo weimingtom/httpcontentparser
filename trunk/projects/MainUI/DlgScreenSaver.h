@@ -51,7 +51,7 @@ public:
 	virtual BOOL OnInitDialog();
 	afx_msg void OnBnClickedChkScreensave();
 	afx_msg void OnBnClickedChkAutoclean();
-
+	afx_msg void OnBnClickedBtnClear();
 protected:
 	void enableAutoSave();
 	void enableAutoclean();
