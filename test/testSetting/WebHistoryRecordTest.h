@@ -13,13 +13,14 @@ public:
 	CPPUNIT_TEST_SUITE(WebHistoryRecordTest);
 	CPPUNIT_TEST(TestDefault);
 	CPPUNIT_TEST(TestRegular);
-	CPPUNIT_TEST(TextEnable);
+	CPPUNIT_TEST(TestEnable);
+	CPPUNIT_TEST(TestParentMode);
 	CPPUNIT_TEST_SUITE_END();
 protected:
 	void TestDefault();
 	void TestRegular();
-	void TextEnable();
-
+	void TestEnable();
+	void TestParentMode();
 };
 
 #endif // _TEST_SETTING_WEBHISTORYRECORDTEST_H_

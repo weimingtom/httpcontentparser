@@ -11,9 +11,11 @@ public:
 public:
 	CPPUNIT_TEST_SUITE(OnlineHourSettingTest);
 	CPPUNIT_TEST(TestOnlineHour);
+	CPPUNIT_TEST(TestTowModeSwitched);
 	CPPUNIT_TEST_SUITE_END();
 private:
 	void TestOnlineHour();
+	void TestTowModeSwitched();
 };
 
 #endif  // _TEST_SETTING_ONLINEHOURSETTINGTEST_H__
