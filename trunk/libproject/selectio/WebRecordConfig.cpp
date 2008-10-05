@@ -75,6 +75,7 @@ void WebRecordConfig::flush() {
 
 		TiXmlElement * root = new TiXmlElement(REPOS_ROOT_NAME);
 		doc.LinkEndChild(root);
+		doc.SaveFile(filename_);
 	} 
 	TiXmlElement * root = doc.RootElement();
 	const TCHAR * s = root->Value();
