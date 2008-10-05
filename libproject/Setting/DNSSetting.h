@@ -34,28 +34,6 @@ protected:
 	DNS_SET dns_set_;
 };
 
-// 检测
-class DNSCheck {
-public:
-	DNSCheck(DNSList *black_dns_list, DNSList *white_dns_list);
-	~DNSCheck(void);
-
-	enum {IN_BLACK_LIST = 0,
-		IN_WHITE_LIST,
-		NOT_SEPCIFIED
-	};
-
-	int fuzzeCheckDNS(const std::string &dns_name);
-	int checkDNS(const std::string &dns_name);
-	void enableBlackDNSCheck(const bool checked);
-	void enableWhiteDNSCheck(const bool checked);
-protected:
-
-	DNSList * black_dns_list_;
-	DNSList * white_dns_list_;
-	DNSCheck();
-};
-
 // class DNSSetting
 // 负责对所有包进行检测是否应该通过
 // 这个类在COM组件中是哟个
@@ -64,6 +42,11 @@ public:
 	DNSSetting();
 	~DNSSetting(void);
 
+	enum {IN_BLACK_LIST = 0,
+		IN_WHITE_LIST,
+		NOT_SEPCIFIED
+	};
+
 public:
 	bool initialize(DNSList *black_dns_list, DNSList *white_dns_list);
 
@@ -71,17 +54,25 @@ public:
 	int checkDNS(const std::string &dns);
 	int fuzzeCheckDNS(const std::string &dns);
 
+	// enable
+	void justPassWhiteDNS(const bool checked);
+	bool justPassWhiteDNS() const;
 	void enableWhiteDNSCheck(const bool checked);
 	void enableBlackDNSCheck(const bool checked);
 
+	// 添加
 	bool addBlackDNS(const std::string &dns);
 	bool addWhiteDNS(const std::string &dns);
 	bool removeBlackDNS(const std::string &dns_name);
 	bool removeWhiteDNS(const std::string &dns_name);
 private:
-	DNSCheck	* dns_check_;
 	DNSList		* black_dns_list_;
 	DNSList		* white_dns_list_;
+
+	bool just_pass_white_dns_;
+
+private:
+	void defaultSetting();
 };
 
 
