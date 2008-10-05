@@ -9,7 +9,7 @@
 		</rule>
 		
 		<!--URL White List-->
-		<rule name="whiteurl" enable="true">
+		<rule name="whiteurl" enable="true" justpass="true">
 			<url>www.yahoo.com</url>
 			<url>www.sohu.com</url>
 		</rule>

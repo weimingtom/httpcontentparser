@@ -9,8 +9,6 @@
 #include <dnssetting.h>
 #include <xmlconfiguration.h>
 
-extern DNSSetting g_dnssetting;
-
 
 // extern Authorize g_authorize;
 extern XMLConfiguration g_configuration;

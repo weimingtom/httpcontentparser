@@ -15,11 +15,13 @@ public:
 	CPPUNIT_TEST(testCheck);
 	CPPUNIT_TEST(testFuzzeCheck);
 	CPPUNIT_TEST(testTwoModels);
+	CPPUNIT_TEST(testJustPassedWhiteDNS);
 	CPPUNIT_TEST_SUITE_END();
 protected:
 	void testCheck();
 	void testFuzzeCheck();
 	void testTwoModels();
+	void testJustPassedWhiteDNS();
 };
 
 #endif  // _TEST_SETTING_DNSSETTINGTEST_H__
