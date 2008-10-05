@@ -288,9 +288,9 @@ BEGIN
     GROUPBOX        "After Terminate Eyecare",IDC_STA_AFTEREYECARE_TERMINATE,
                     7,77,236,39
     CONTROL         "Just Reset Timer",IDC_RAD_JUST_RESET_TIMER,"Button",
-                    BS_AUTORADIOBUTTON | WS_GROUP,35,95,69,10
+                    BS_AUTORADIOBUTTON | WS_GROUP,131,95,69,10
     CONTROL         "Enter Parent Mode",IDC_RAD_ENTER_SU_MODE,"Button",
-                    BS_AUTORADIOBUTTON,142,95,76,10
+                    BS_AUTORADIOBUTTON,35,95,76,10
 END
 
 IDD_LEV1_TIME_RULE DIALOGEX 0, 0, 281, 198

@@ -15,12 +15,13 @@ ConfigReaderTest::~ConfigReaderTest(void) {
 //===========================================
 //
 void ConfigReaderTest::TestReadFromFile() {
-	XMLConfiguration config;
-	// config.loadConfig();
+	//XMLConfiguration config;
+	//config.loadConfig();
 }
 
 void ConfigReaderTest::TestSaveFile() {
 	XMLConfiguration config;
-	// config.initialize();
-	// config.save();
+	config.saveConfig(TEXT("c:\\default.xml"));
+	config.loadConfig(TEXT("config.xml"));
+	config.saveConfig(TEXT("c:\\hello.xml"));
 }

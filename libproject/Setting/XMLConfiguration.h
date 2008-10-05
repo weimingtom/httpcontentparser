@@ -88,6 +88,7 @@
 #define CONFIG_APPSET_EYECARE_ENTER			TEXT("enter_time")
 #define CONFIG_APPSET_EYECARE_STATE			TEXT("state")
 #define CONFIG_APPSET_EYECARE_TIMELEFT		TEXT("timeleft")
+#define CONFIG_APPSET_EYECARE_TERM_MODE		TEXT("term_mode")
 
 // WebHistory
 #define CONFIG_ITEM_APPSET_WEBHISTORY			TEXT("webhistory")
@@ -175,7 +176,8 @@ private:
 	int getEyecareSetting(TiXmlElement *ele);
 	int setEyecareSetting(const TCHAR *type, const TCHAR *time);
 	int enableEyecareSetting(const TCHAR *enable);
-	int setEyecareState(const TCHAR *state, const TCHAR *timeleft);
+	int setEyecareState(const TCHAR *state, const TCHAR *value);
+	int setEyecareTermMode(const TCHAR * value);
 
 	// WebHistory
 	int getWebHistoryRecorder(TiXmlElement *ele);

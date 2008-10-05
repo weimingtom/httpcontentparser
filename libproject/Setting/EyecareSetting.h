@@ -70,7 +70,7 @@ private:
 public:
 	// 当用户输入密码切换状态后的反映，有两种
 	// 1. 进入超级用户模式  2. 充值用户
-	enum {EYECARE_TERMIN_ENTERSU, EYECARE_TERMIN_RESETTIMER};
+	enum {EYECARE_TERMIN_ENTERSU = 0, EYECARE_TERMIN_RESETTIMER};
 	void setTerimatedMode(const int mode) {after_eyecare_terminated_ = mode;}
 	int getTerminatedMode() const { return after_eyecare_terminated_;}
 private:
