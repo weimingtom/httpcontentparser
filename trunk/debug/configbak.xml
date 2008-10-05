@@ -55,7 +55,7 @@
 		</authorize>
 				
 		<!-- eyecasre time unit : seconds-->
-		<eyecare enable="true" state="eyecare_time" timeleft="32" >
+		<eyecare enable="true" state="eyecare_time" timeleft="32" term_mode="0">
 			<time name="eyecare_time" timespan="2700"/>
 			<time name="enter_time" timespan="2700"/>
 		</eyecare>

@@ -106,12 +106,21 @@ int XMLConfiguration::saveAuthorize(TiXmlElement *app_root) {
 //////////////////////////////////////////////////////////
 // 保存
 int XMLConfiguration::saveEyecare(TiXmlElement *app_root) {
+	TCHAR buffer[1024];
+
+	//=========================================
+	// 设置属性
 	TiXmlElement * eyecare_root = new TiXmlElement( CONFIG_ITEM_APPSET_EYECARE);
 	eyecare_root->SetAttribute(CONFIG_CONST_ENABLE, enabledFromBool(getEyecareSetting()->isEnabled()));
 	eyecare_root->SetAttribute(CONFIG_APPSET_EYECARE_STATE, Eyecare_state(getEyecareSetting()->getState()));
 
+	// 保存Term_mode
+	_sntprintf(buffer, 1024, "%d", getEyecareSetting()->getTerminatedMode());
+	eyecare_root->SetAttribute(CONFIG_APPSET_EYECARE_TERM_MODE, buffer);
+
+	//==========================================
+	// 子集点
 	// 设置剩余时间
-	TCHAR buffer[1024];
 	_sntprintf(buffer, 1024, "%d", getEyecareSetting()->getRemainTime());
 	eyecare_root->SetAttribute(CONFIG_APPSET_EYECARE_TIMELEFT, buffer);
 
@@ -468,8 +477,8 @@ int XMLConfiguration::enableEyecareSetting(const TCHAR *enable) {
 	return 0;
 }
 
-int XMLConfiguration::setEyecareState(const TCHAR *state, const TCHAR *timeleft) {
-	long lt = _tcstol(timeleft, NULL, 10);
+int XMLConfiguration::setEyecareState(const TCHAR *state, const TCHAR *value) {
+	long lt = _tcstol(value, NULL, 10);
 	if (0 == _tcscmp(state, CONFIG_APPSET_EYECARE_EYECARE)) {
 		getEyecareSetting()->setState(EyecareSetting::EYECARE_TIME);
 		getEyecareSetting()->setLeftTime(lt);
@@ -492,19 +501,28 @@ int XMLConfiguration::setEyecareSetting(const TCHAR *type, const TCHAR *timespan
 	return 0;
 }
 
+int XMLConfiguration::setEyecareTermMode(const TCHAR * value) {
+	long lt = _tcstol(value, NULL, 10);
+	getEyecareSetting()->setTerimatedMode(lt);
+	return 0;
+}
+
 int XMLConfiguration::getEyecareSetting(TiXmlElement *ele) {
 	assert (0 == _tcscmp(ele->Value(), CONFIG_ITEM_APPSET_EYECARE));
 
 	// 设置它是否可用
 	enableEyecareSetting(ele->Attribute(CONFIG_CONST_ENABLE));
 	setEyecareState(ele->Attribute(CONFIG_APPSET_EYECARE_STATE), ele->Attribute(CONFIG_APPSET_EYECARE_TIMELEFT));
+	setEyecareTermMode(ele->Attribute(CONFIG_APPSET_EYECARE_TERM_MODE));
 
 	TiXmlNode * node = ele->FirstChild();
 	while (NULL != node) {
 		TiXmlElement *ele = node->ToElement();
-		if (NULL != ele && 0 == _tcscmp(ele->Value(), CONFIG_APPSET_EYECARE_TIME)) {
+		if (NULL != ele) {
+			if (0 == _tcscmp(ele->Value(), CONFIG_APPSET_EYECARE_TIME)) {
 			setEyecareSetting(ele->Attribute(CONFIG_CONST_NAME),
 				ele->Attribute(CONFIG_APPSET_EYECARE_TIMESPAN));
+			}
 		}
 
 		node = node->NextSibling();
