@@ -23,6 +23,8 @@ void EyecareSetting::defaultSetting() {
 	setEyecareTime(45 * 60);
 
 	SettingItem::defaultSetting();
+
+	after_eyecare_terminated_ = EYECARE_TERMIN_RESETTIMER;
 }
 
 // 验证密码
@@ -43,6 +45,15 @@ bool EyecareSetting::setPassword(const std::string &password, const std::string 
 	}
 }
 
+// 获取当前状态
+int EyecareSetting::getState() const {
+	// 处于parent 模式时，永远处于enter mode
+	if (SettingItem::getModel() == SettingItem::MODE_PARENT) {
+		return EyecareSetting::ENTERT_TIME;
+	}
+	return calculagraph_.getCurrentState();
+}
+
 bool EyecareSetting::setPasswordType(const int type) {
 	assert (NULL != authorize_);
 	assert (type == PASSWORD_SU || type == PASSWORD_EYECARE);
@@ -50,6 +61,7 @@ bool EyecareSetting::setPasswordType(const int type) {
 	return true;
 }
 
+// 初始化设置
 void EyecareSetting::initialize(Authorize *authorize, int state) {
 	assert (NULL == authorize_);
 	assert (NULL != authorize);
@@ -86,6 +98,12 @@ int EyecareSetting::switchState(const std::string &password) {
 	} else if (true == checkPassword(password)) {
 		force_locked_ = false;
 		setState(ENTERT_TIME);
+
+		if (getTerminatedMode() == EYECARE_TERMIN_RESETTIMER) {
+			calculagraph_.Reset();
+		} else {
+			SettingItem::setModel(SettingItem::MODE_PARENT);
+		}
 	}
 
 	return getState();

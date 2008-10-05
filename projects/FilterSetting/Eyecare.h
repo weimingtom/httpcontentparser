@@ -50,6 +50,8 @@ public:
 	STDMETHOD(swithToEntertainment)(BSTR password, VARIANT_BOOL *bSuccess); // «–ªªµΩ”È¿÷◊¥ÃÂ
 	STDMETHOD(trySwitch)(LONG* state);
 	STDMETHOD(LockScreen)(void);
+	STDMETHOD(setTermMode)(LONG mode);
+	STDMETHOD(getTermMode)(LONG* mode);
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(Eyecare), CEyecare)

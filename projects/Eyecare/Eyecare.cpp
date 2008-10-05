@@ -8,6 +8,7 @@
 #include <com\FilterSetting_i.c>
 #include <com\FilterSetting.h>
 #include <comdef.h>
+#include <typeconvert.h>
 
 #define MAX_LOADSTRING 100
 #define WM_MY_SHOWDIALOG (WM_USER + 0x0001)
@@ -26,6 +27,26 @@ ATOM				MyRegisterClass(HINSTANCE hInstance);
 BOOL				InitInstance(HINSTANCE, int);
 LRESULT CALLBACK	WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK	About(HWND, UINT, WPARAM, LPARAM);
+
+
+BOOL TRYSwitchMode(LPCTSTR password) {
+	try {
+		VARIANT_BOOL succeeded = FALSE;
+		IEyecare *eyecare = NULL;
+		HRESULT hr = CoCreateInstance(CLSID_Eyecare, NULL, CLSCTX_LOCAL_SERVER, IID_IEyecare, (LPVOID*)&eyecare);
+		if (FAILED(hr)) {
+			return FALSE;
+		}
+
+		eyecare->swithToEntertainment(_bstr_t(password), &succeeded);
+		eyecare->Release();
+
+		return convert(succeeded);
+	} catch (_com_error &) {
+		return FALSE;
+	}
+}
+
 
 
 LRESULT CALLBACK LowLevelKeyboardProc(int nCode, WPARAM wParam, LPARAM lParam) 
@@ -126,7 +147,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    hInst = hInstance; // Store instance handle in our global variable
 
    DWORD dwStyle = WS_VISIBLE | WS_OVERLAPPED;
-   hWnd = CreateWindowEx(WS_EX_TOPMOST, EYECARE_MAIN_WND_CLASS, EYECARE_MAIN_WND_TITLE, WS_VISIBLE | WS_MAXIMIZE |WS_POPUP,
+   hWnd = CreateWindowEx(0, EYECARE_MAIN_WND_CLASS, EYECARE_MAIN_WND_TITLE, WS_VISIBLE | WS_MAXIMIZE |WS_POPUP,
       CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, NULL, NULL, hInstance, NULL);
 
    if (!hWnd)
@@ -140,23 +161,6 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    return TRUE;
 }
 
-BOOL CheckPassword(LPCTSTR password) {
-	try {
-		VARIANT_BOOL passed = FALSE;
-		IAuthorize *authorize = NULL;
-		HRESULT hr = CoCreateInstance(CLSID_Authorize, NULL, CLSCTX_LOCAL_SERVER, IID_IAuthorize, (LPVOID*)&authorize);
-		if (FAILED(hr)) {
-			return FALSE;
-		}
-
-		authorize->checkPassword(_bstr_t(password), &passed);
-		authorize->Release();
-
-		return passed;
-	} catch (_com_error &) {
-		return FALSE;
-	}
-}
 
 LRESULT CALLBACK InputPasswordDlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -203,7 +207,7 @@ LRESULT CALLBACK InputPasswordDlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM
 		case WM_COMMAND:
 			GetDlgItemText(hDlg, IDC_PASSWORD, szBuffer, MAX_PATH);
 			if (LOWORD(wParam) == IDOK) {
-				if (CheckPassword(szBuffer)) {
+				if (TRYSwitchMode(szBuffer)) {
 					EndDialog(hDlg, LOWORD(wParam));
 					return TRUE;
 				} else {

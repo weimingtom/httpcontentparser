@@ -63,7 +63,9 @@ STDMETHODIMP CEyecare::getState(LONG* state) {
 }
 
 STDMETHODIMP CEyecare::swithToEntertainment(BSTR password, VARIANT_BOOL *bSuccess) {
-	*bSuccess = g_configuration.getEyecareSetting()->switchState((char*)_bstr_t(password));
+	int old_state = g_configuration.getEyecareSetting()->getState();
+	int state = g_configuration.getEyecareSetting()->switchState((char*)_bstr_t(password));
+	*bSuccess = (state != old_state) ? VARIANT_TRUE : VARIANT_FALSE;
 	return S_OK;
 }
 
@@ -74,5 +76,17 @@ STDMETHODIMP CEyecare::trySwitch(LONG* state) {
 
 STDMETHODIMP CEyecare::LockScreen(void) {
 	g_configuration.getEyecareSetting()->ForceLockWnd();
+	return S_OK;
+}
+
+STDMETHODIMP CEyecare::setTermMode(LONG mode) {
+	assert(mode == EyecareSetting::EYECARE_TERMIN_ENTERSU || 
+		mode == EyecareSetting::EYECARE_TERMIN_RESETTIMER);
+	g_configuration.getEyecareSetting()->setTerimatedMode(mode);
+	return S_OK;
+}
+
+STDMETHODIMP CEyecare::getTermMode(LONG* mode) {
+	*mode = g_configuration.getEyecareSetting()->getTerminatedMode();
 	return S_OK;
 }

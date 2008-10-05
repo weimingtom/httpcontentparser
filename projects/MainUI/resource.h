@@ -148,12 +148,14 @@
 #define IDC_CHK_ALLPAGES                1076
 #define IDC_SLIDER_AUTOCLEAR_TIME       1077
 #define IDC_SLIDER_SAVE_TIMESPAN        1078
+
+// Eyecare DLG
 #define IDC_CHK_AUTOCLEAN               1079
 #define IDC_CHK_SCREENSAVE              1080
 #define IDC_CHK_DENY_OTHERS             1082
-#define IDC_RADIO1                      1083
-#define IDC_RADIO2                      1084
-#define IDC_STA_AFTEREYECARE_TERMINATE  1085
+#define IDC_RAD_ENTER_SU_MODE           1084
+#define IDC_RAD_JUST_RESET_TIMER        1085
+#define IDC_STA_AFTEREYECARE_TERMINATE  1086
 #define IDC_EDIT1                       4011
 #define IDC_EDIT2                       4012
 #define IDC_EDT_RETRY                   4013
@@ -191,7 +193,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        156
 #define _APS_NEXT_COMMAND_VALUE         32799
-#define _APS_NEXT_CONTROL_VALUE         1086
+#define _APS_NEXT_CONTROL_VALUE         1087
 #define _APS_NEXT_SYMED_VALUE           112
 #endif
 #endif

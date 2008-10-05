@@ -18,7 +18,6 @@ CDlgEyecare::CDlgEyecare(CWnd* pParent /*=NULL*/)
 	, m_nEnterTime(0)
 	, m_nEyecareTime(0)
 	, m_bUseSUPWD(FALSE)
-	, m_nAfterEyecareTerminate(0)
 {
 }
 
@@ -46,7 +45,6 @@ void CDlgEyecare::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_EDT_ENTERTIME, m_nEnterTime);
 	DDX_Text(pDX, IDC_EDT_RESTTIME, m_nEyecareTime);
 	DDX_Check(pDX, IDC_CHK_USE_SUPWD, m_bUseSUPWD);
-	DDX_Control(pDX, IDC_STA_AFTEREYECARE_TERMINATE, m_staAfterEyecareTerminate);
 }
 
 
@@ -54,7 +52,8 @@ void CDlgEyecare::OnRestore() {
 
 }
 
-void CDlgEyecare::OnApply() {
+// 设置时间间隔
+void CDlgEyecare::setEyecareTimespan() {
 	try {
 		UpdateData(TRUE);
 		IEyecare *pEyeCare = NULL;
@@ -67,6 +66,27 @@ void CDlgEyecare::OnApply() {
 	}
 }
 
+// 设置输入密码结束锁定后的模式
+void CDlgEyecare::setEyecareTerminatedMode() {
+	try {
+		UpdateData(TRUE);
+		IEyecare *pEyeCare = NULL;
+		CoCreateInstance(CLSID_Eyecare, NULL, CLSCTX_LOCAL_SERVER, IID_IEyecare, (LPVOID*)&pEyeCare);
+		UINT checked = GetCheckedRadioButton(IDC_RAD_ENTER_SU_MODE, IDC_RAD_JUST_RESET_TIMER);
+		const int mode = (checked ==  IDC_RAD_ENTER_SU_MODE) ? 
+			EyecareSetting::EYECARE_TERMIN_ENTERSU : EyecareSetting::EYECARE_TERMIN_RESETTIMER;
+
+		pEyeCare->setTermMode(mode);
+		pEyeCare->Release();
+	} catch(_com_error&) {
+	}
+}
+
+void CDlgEyecare::OnApply() {
+	setEyecareTimespan();
+	setEyecareTerminatedMode();
+}
+
 void CDlgEyecare::OnShow() {
 }
 
@@ -77,6 +97,12 @@ void CDlgEyecare::initializeSetting() {
 	m_nEnterTime = g_configuration.getEyecareSetting()->getEnterTime() / 60;
 	m_nEyecareTime = g_configuration.getEyecareSetting()->getEyecareTime() / 60;
 
+	const int mode = g_configuration.getEyecareSetting()->getTerminatedMode();
+	assert(mode == EyecareSetting::EYECARE_TERMIN_ENTERSU || mode == EyecareSetting::EYECARE_TERMIN_RESETTIMER);
+	
+	UINT checked = (mode == EyecareSetting::EYECARE_TERMIN_RESETTIMER) ? IDC_RAD_JUST_RESET_TIMER : IDC_RAD_ENTER_SU_MODE;
+	CheckRadioButton(IDC_RAD_ENTER_SU_MODE, IDC_RAD_JUST_RESET_TIMER, checked);
+	
 	UpdateData(FALSE);
 }
 
@@ -87,15 +113,9 @@ END_MESSAGE_MAP()
 
 
 // CDlgEyecare 消息处理程序
-
 BOOL CDlgEyecare::OnInitDialog()
 {
 	CBaseDlg::OnInitDialog();
-	//m_btnResetPwd.SetStyleBorder(CGuiButton::STYLEXP);
-	//m_btnResetPwd.SetCaption("Reset");
-	//m_btnSetPwd.SetStyleBorder(CGuiButton::STYLEXP);
-	//m_btnSetPwd.SetCaption("Set");
-
 	initializeSetting();
 	return TRUE;
 }
