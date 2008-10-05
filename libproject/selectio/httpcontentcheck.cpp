@@ -62,6 +62,10 @@ int HTTPContentHander::handleContent(HTTPPacket *packet) {
 
 // 是否需要处理
 bool HTTPContentHander::needHandle(HTTPPacket *packet) {
+	if (packet->getDataSize() == 0) {
+		return false;
+	}
+
 	if (isImage(packet->getContentType()) ||
 		isText(packet->getContentType()) ) {
 		return true;
