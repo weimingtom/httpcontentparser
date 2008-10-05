@@ -5,16 +5,21 @@
 #include <assert.h>
 using namespace std;
 
+
+
 DNSSetting::DNSSetting() {
-	black_dns_list_ = NULL;
-	white_dns_list_ = NULL;
-	dns_check_  = NULL;
+	defaultSetting();
 }
 
 DNSSetting::~DNSSetting(void) {
 }
 
 
+void DNSSetting::defaultSetting() {
+	black_dns_list_ = NULL;
+	white_dns_list_ = NULL;
+	just_pass_white_dns_ = false;
+}
 // 初始化
 bool DNSSetting::initialize(DNSList *black_dns_list, DNSList *white_dns_list) {
 	assert ( black_dns_list_ == NULL);
@@ -23,41 +28,23 @@ bool DNSSetting::initialize(DNSList *black_dns_list, DNSList *white_dns_list) {
 	black_dns_list_ = black_dns_list;
 	white_dns_list_ = white_dns_list;
 
-	// 为了防止外部类
-	assert ( dns_check_ == NULL);
-	static DNSCheck dnschecker(black_dns_list_, white_dns_list_);
-	dns_check_ = &dnschecker;
 	return false;
 }
 
-int DNSSetting::fuzzeCheckDNS(const std::string &dns) {
-	assert (dns_check_ != NULL);
-	return dns_check_->fuzzeCheckDNS(dns);
+
+// 仅仅允许通过WHITE DNS
+void DNSSetting::justPassWhiteDNS(const bool checked) {
+	just_pass_white_dns_ = checked;
 }
 
-// 检测DNS
-int DNSSetting::checkDNS(const std::string &dns){
-	assert ( dns_check_ != NULL);
-	return dns_check_->checkDNS(dns);
+bool DNSSetting::justPassWhiteDNS() const {
+	return just_pass_white_dns_;
 }
-
-// 是DNS检测 "可用"或"不可用"
-void DNSSetting::enableWhiteDNSCheck(const bool checked){
-	assert ( dns_check_ != NULL);
-	dns_check_->enableWhiteDNSCheck(checked);
-}
-
-
-void DNSSetting::enableBlackDNSCheck(const bool checked){
-	assert ( dns_check_ != NULL);
-	dns_check_->enableBlackDNSCheck(checked);
-}
-
 // DNSlist
 // 添加删除DNS
 bool DNSSetting::addBlackDNS(const std::string &dns){
 	assert ( black_dns_list_ != NULL);
-	if (checkDNS(dns) == DNSCheck::IN_WHITE_LIST) {
+	if (checkDNS(dns) == IN_WHITE_LIST) {
 		return false;
 	} else {
 		black_dns_list_->addDNS(dns);
@@ -68,7 +55,7 @@ bool DNSSetting::addBlackDNS(const std::string &dns){
 bool DNSSetting::addWhiteDNS(const std::string &dns){
 	assert ( white_dns_list_ != NULL);
 
-	if (checkDNS(dns) == DNSCheck::IN_BLACK_LIST) {
+	if (checkDNS(dns) == IN_BLACK_LIST) {
 		return false;
 	} else {
 		white_dns_list_->addDNS(dns);
@@ -85,22 +72,7 @@ bool DNSSetting::removeWhiteDNS(const std::string &dns_name) {
 	return white_dns_list_->removeDNS(dns_name);
 }
 
-
-//=================================================================
-// class DNSCheck
-DNSCheck::DNSCheck(DNSList *black_dns_list, DNSList *white_dns_list)
-	: black_dns_list_(black_dns_list), white_dns_list_(white_dns_list)  {
-	assert(black_dns_list != NULL);
-	assert(white_dns_list != NULL);
-}
-DNSCheck::DNSCheck(void) {
-	assert(false);
-}
-
-DNSCheck::~DNSCheck(void) {
-}
-
-int DNSCheck::fuzzeCheckDNS(const std::string &dns_name) {
+int DNSSetting::fuzzeCheckDNS(const std::string &dns_name) {
 	assert(black_dns_list_ != NULL);
 	assert(white_dns_list_ != NULL);
 
@@ -113,7 +85,7 @@ int DNSCheck::fuzzeCheckDNS(const std::string &dns_name) {
 	}
 }
 
-int DNSCheck::checkDNS(const std::string &dns_name) {
+int DNSSetting::checkDNS(const std::string &dns_name) {
 	assert(black_dns_list_ != NULL);
 	assert(white_dns_list_ != NULL);
 
@@ -126,11 +98,11 @@ int DNSCheck::checkDNS(const std::string &dns_name) {
 	}
 }
 
-void DNSCheck::enableBlackDNSCheck(const bool checked) {
+void DNSSetting::enableBlackDNSCheck(const bool checked) {
 	black_dns_list_->enable(checked);
 }
 
-void DNSCheck::enableWhiteDNSCheck(const bool checked) {
+void DNSSetting::enableWhiteDNSCheck(const bool checked) {
 	white_dns_list_->enable(checked);
 }
 
