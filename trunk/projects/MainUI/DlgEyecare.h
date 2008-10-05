@@ -28,7 +28,8 @@ protected:
 	DECLARE_MESSAGE_MAP()
 	
 	virtual BOOL OnInitDialog();
-
+	afx_msg void OnBnClickedChkUseSupwd();	
+	afx_msg void OnBnClickedBtnReset();
 	void initializeSetting();
 
 	// controls
@@ -49,11 +50,13 @@ protected:
 	int m_nEyecareTime;
 	BOOL m_bUseSUPWD;
 public:
-	afx_msg void OnBnClickedChkUseSupwd();	
-	afx_msg void OnBnClickedBtnReset();
 	
-
 	// 设置密码窗口的对话框
 	void SetPwdEditState();	
-	int m_nAfterEyecareTerminate;
+	
+	// 设置Eyecare 结束后的状态
+	void setEyecareTerminatedMode();
+
+	// 设置时间间隔
+	void setEyecareTimespan();
 };

@@ -32,7 +32,7 @@ public:
 
 	// 获取剩余时间
 	int getRemainTime() const { return calculagraph_.getRemainTime();}
-	int getState() const {return calculagraph_.getCurrentState();}// 获取目前的状态
+	int getState() const;// 获取目前的状态
 
 	// 设置休息时间和娱乐事件
 	void setEnterTime(const int seconds) { calculagraph_.setTimespan(seconds, ENTERT_TIME);}
@@ -45,8 +45,6 @@ public:
 
 	int ForceLockWnd(); // 强制关闭屏幕, 此时只有输入密码才可进入
 
-	// 从配置文件中读取设置信息
-	void loadSetting();
 	void initialize(Authorize *authorize, int state);
 private:
 	bool checkPassword(const std::string &password);
@@ -67,7 +65,16 @@ private:
 
 	friend class XMLConfiguration;
 
+	// 默认设置
 	void defaultSetting();
+public:
+	// 当用户输入密码切换状态后的反映，有两种
+	// 1. 进入超级用户模式  2. 充值用户
+	enum {EYECARE_TERMIN_ENTERSU, EYECARE_TERMIN_RESETTIMER};
+	void setTerimatedMode(const int mode) {after_eyecare_terminated_ = mode;}
+	int getTerminatedMode() const { return after_eyecare_terminated_;}
+private:
+	int after_eyecare_terminated_;
 };
 
 #endif  // _SETTING_EYECARE_SETTING_H__

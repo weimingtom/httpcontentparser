@@ -272,8 +272,8 @@ BEGIN
     CONTROL         "",IDC_SPIN2,"msctls_updown32",UDS_SETBUDDYINT | 
                     UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS,177,48,11,
                     14
-    GROUPBOX        "Time Setting",IDC_STA_EYECARE_TIME,7,7,236,67
-    GROUPBOX        "Password",IDC_STA_PASSWORD,7,130,236,64
+    GROUPBOX        "Time Setting",IDC_STA_EYECARE_TIME,7,7,236,64
+    GROUPBOX        "Password",IDC_STA_PASSWORD,7,121,236,73
     CONTROL         " Use Admin Password",IDC_CHK_USE_SUPWD,"Button",
                     BS_AUTOCHECKBOX | WS_TABSTOP,37,135,109,10
     EDITTEXT        IDC_EDIT_PWD,77,151,88,14,ES_PASSWORD | ES_AUTOHSCROLL
@@ -286,11 +286,11 @@ BEGIN
     LTEXT           "Mins.",IDC_STATIC,181,30,18,8
     LTEXT           "Mins.",IDC_STATIC,181,48,18,8
     GROUPBOX        "After Terminate Eyecare",IDC_STA_AFTEREYECARE_TERMINATE,
-                    7,78,236,48
-    CONTROL         "Just Reset Timer",IDC_RADIO1,"Button",
-                    BS_AUTORADIOBUTTON,37,100,71,10
-    CONTROL         "Enter Parent Model",IDC_RADIO2,"Button",
-                    BS_AUTORADIOBUTTON,141,100,77,10
+                    7,77,236,39
+    CONTROL         "Just Reset Timer",IDC_RAD_JUST_RESET_TIMER,"Button",
+                    BS_AUTORADIOBUTTON | WS_GROUP,35,95,69,10
+    CONTROL         "Enter Parent Mode",IDC_RAD_ENTER_SU_MODE,"Button",
+                    BS_AUTORADIOBUTTON,142,95,76,10
 END
 
 IDD_LEV1_TIME_RULE DIALOGEX 0, 0, 281, 198
