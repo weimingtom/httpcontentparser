@@ -8,6 +8,8 @@ public:
 	CPPUNIT_TEST_SUITE(FilterSettingTest);
 	CPPUNIT_TEST(TestaddBlackDNS);
 	CPPUNIT_TEST(TestcheckDNS);
+	CPPUNIT_TEST(TestPassedWhiteDNS);
+	CPPUNIT_TEST(TestEnableWhiteAndPassWhite);
 	CPPUNIT_TEST_SUITE_END();
 public:
 	virtual void setUp();
@@ -16,6 +18,8 @@ public:
 protected:
 	void TestcheckDNS();
 	void TestaddBlackDNS();
+	void TestPassedWhiteDNS();
+	void TestEnableWhiteAndPassWhite();
 public:
 	FilterSettingTest(void);
 	~FilterSettingTest(void);

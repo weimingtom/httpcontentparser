@@ -36,9 +36,12 @@ void CDlgWhiteDNSList::OnRestore() {
 }
 
 void CDlgWhiteDNSList::OnApply() {
+	UpdateData(TRUE);
+
 	rules.OnApply();
 	ASSERT(g_dnssetting != NULL);
 	g_dnssetting->enableWhiteDNSCheck(convert(m_chkWhiteDNSList.GetCheck() == BST_CHECKED));
+	g_dnssetting->justEnableWhiteDNS(convert(m_bCheckDenyAllOthers));
 }
 
 void CDlgWhiteDNSList::OnShow() {
@@ -47,10 +50,12 @@ void CDlgWhiteDNSList::OnShow() {
 	ListBox.UpdateWindow();
 }
 
+// 初始化设置
 void CDlgWhiteDNSList::initializeData() {
 	g_configuration.getWhiteURLSet()->beginEnum((Enumerator1<std::string>*)this);
 
 	m_bEnableWhiteDNS = g_configuration.getWhiteURLSet()->isEnabled();
+	m_bCheckDenyAllOthers = g_configuration.getDNSSetting()->justPassWhiteDNS();
 	UpdateData(FALSE);
 }
 
@@ -59,6 +64,8 @@ int CDlgWhiteDNSList::Enum(const std::string &dns) {
 	return 0;
 }
 BEGIN_MESSAGE_MAP(CDlgWhiteDNSList, CDialog)
+	ON_BN_CLICKED(IDC_CHK_DENY_OTHERS, OnBnClickedChkDenyOthers)
+	ON_BN_CLICKED(IDC_CHK_WHITE_DNSLIST, OnBnClickedChkWhiteDnslist)
 END_MESSAGE_MAP()
 
 
@@ -72,4 +79,22 @@ BOOL CDlgWhiteDNSList::OnInitDialog()
 	initializeData();
 
 	return TRUE;  // return TRUE unless you set the focus to a control
+}
+
+// 当点击此按钮时，另外一个复选框会被自动选中并不
+void CDlgWhiteDNSList::OnBnClickedChkDenyOthers() {
+	UpdateData(TRUE);
+	if (m_bCheckDenyAllOthers == TRUE) {
+		m_bEnableWhiteDNS = TRUE;
+	}
+	UpdateData(FALSE);
+}
+
+// 当此复选框未被选中时，另外一个复选框也不能被选中
+void CDlgWhiteDNSList::OnBnClickedChkWhiteDnslist() {
+	UpdateData(TRUE);
+	if (m_bEnableWhiteDNS== FALSE) {
+		m_bCheckDenyAllOthers = FALSE;
+	}
+	UpdateData(FALSE);
 }

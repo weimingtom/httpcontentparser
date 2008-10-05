@@ -40,4 +40,6 @@ protected:
 public:
 	virtual BOOL OnInitDialog();
 	BOOL m_bCheckDenyAllOthers;
+	afx_msg void OnBnClickedChkDenyOthers();
+	afx_msg void OnBnClickedChkWhiteDnslist();
 };

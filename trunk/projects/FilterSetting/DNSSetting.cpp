@@ -27,43 +27,42 @@ STDMETHODIMP CDNSSetting::InterfaceSupportsErrorInfo(REFIID riid)
 }
 
 STDMETHODIMP CDNSSetting::addBlackDNS(BSTR dns) {
-	g_dnssetting.addBlackDNS(std::string((char*)_bstr_t(dns)));
+	g_configuration.getDNSSetting()->addBlackDNS(std::string((char*)_bstr_t(dns)));
 	return S_OK;
 }
 
 STDMETHODIMP CDNSSetting::addWhiteDNS(BSTR dns) {
-	g_dnssetting.addWhiteDNS(std::string((char*)_bstr_t(dns)));
+	g_configuration.getDNSSetting()->addWhiteDNS(std::string((char*)_bstr_t(dns)));
 	return S_OK;
 }
 
 
 STDMETHODIMP CDNSSetting::removeBlackDNS(BSTR blackDNS) {
-	g_dnssetting.removeBlackDNS(std::string((char*)_bstr_t(blackDNS)));
+	g_configuration.getDNSSetting()->removeBlackDNS(std::string((char*)_bstr_t(blackDNS)));
 	return S_OK;
 }
 
 STDMETHODIMP CDNSSetting::removeWhiteDNS(BSTR whiteDNS) {
-	g_dnssetting.removeWhiteDNS(std::string((char*)_bstr_t(whiteDNS)));
+	g_configuration.getDNSSetting()->removeWhiteDNS(std::string((char*)_bstr_t(whiteDNS)));
 	return S_OK;
 }
 
 // check DNS
 STDMETHODIMP CDNSSetting::enableWhiteDNSCheck(VARIANT_BOOL enable) {
-	g_dnssetting.enableWhiteDNSCheck(convert(enable));
+	g_configuration.getDNSSetting()->enableWhiteDNSCheck(convert(enable));
 	return S_OK;
 }
 
 STDMETHODIMP CDNSSetting::enableBlackDNSCheck(VARIANT_BOOL enable) {
-	g_dnssetting.enableBlackDNSCheck(convert(enable));
+	g_configuration.getDNSSetting()->enableBlackDNSCheck(convert(enable));
 	return S_OK;
 }
-STDMETHODIMP CDNSSetting::checkDNS(BSTR dns_name, VARIANT_BOOL* passed)
-{
-	const int result = g_dnssetting.fuzzeCheckDNS((char*)_bstr_t(dns_name));
-	if (result == DNSCheck::IN_BLACK_LIST) {
-		*passed = VARIANT_FALSE;
-	} else {
-		*passed = VARIANT_TRUE;
-	}
+STDMETHODIMP CDNSSetting::checkDNS(BSTR dns_name, VARIANT_BOOL* passed) {
+	*passed = convert(g_configuration.getDNSSetting()->fuzzeCheckDNS((char*)_bstr_t(dns_name)));
+	return S_OK;
+}
+
+STDMETHODIMP CDNSSetting::justEnableWhiteDNS(VARIANT_BOOL enabled) {
+	g_configuration.getDNSSetting()->justPassWhiteDNS(convert(enabled));
 	return S_OK;
 }

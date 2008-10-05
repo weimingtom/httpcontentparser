@@ -14,7 +14,7 @@
 #include <settingitem.h>
 // 目前我们使用的机制有些适应性不高，我们需要增加cache机制。
 
-class DNSList : public SettingItem {
+class DNSList {
 public:
 	DNSList(void);
 	~DNSList(void);
@@ -29,34 +29,43 @@ public:
 
 	// enumerate
 	void beginEnum(Enumerator1<std::string> *enumerator);
+public:
+	void enable(const bool check) {enabled_ = check;}
+	bool isEnabled() const { return enabled_;}
 protected:
 	typedef std::set<std::string> DNS_SET;
 	DNS_SET dns_set_;
+
+	bool enabled_;
 };
 
 // class DNSSetting
 // 负责对所有包进行检测是否应该通过
 // 这个类在COM组件中是哟个
-class DNSSetting {
+class DNSSetting  : public SettingItem {
 public:
 	DNSSetting();
 	~DNSSetting(void);
 
+private:
 	enum {IN_BLACK_LIST = 0,
 		IN_WHITE_LIST,
 		NOT_SEPCIFIED
 	};
 
+	// 根据设置项来确定DNS是否合法
+	bool dealResult(const int result);
+
 public:
 	bool initialize(DNSList *black_dns_list, DNSList *white_dns_list);
 
 	// 对DNS的CHECK
-	int checkDNS(const std::string &dns);
-	int fuzzeCheckDNS(const std::string &dns);
+	bool checkDNS(const std::string &dns);
+	bool fuzzeCheckDNS(const std::string &dns);
 
 	// enable
 	void justPassWhiteDNS(const bool checked);
-	bool justPassWhiteDNS() const;
+	bool justPassWhiteDNS();
 	void enableWhiteDNSCheck(const bool checked);
 	void enableBlackDNSCheck(const bool checked);
 
@@ -66,11 +75,12 @@ public:
 	bool removeBlackDNS(const std::string &dns_name);
 	bool removeWhiteDNS(const std::string &dns_name);
 private:
+	int check(const std::string &dns);
+	int fuzzeCheck(const std::string &dns);
 	DNSList		* black_dns_list_;
 	DNSList		* white_dns_list_;
 
 	bool just_pass_white_dns_;
-
 private:
 	void defaultSetting();
 };

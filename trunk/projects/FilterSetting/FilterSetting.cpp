@@ -32,7 +32,6 @@ public :
 CFilterSettingModule _AtlModule;
 
 // DNS Rules
-DNSSetting g_dnssetting;
 XMLConfiguration g_configuration;
 
 HINSTANCE g_hInstance;
@@ -48,8 +47,6 @@ extern "C" int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/
 	GetAppConfigFilename(config_path, MAX_PATH, hInstance);
 	g_configuration.loadConfig(config_path);
 
-
-	g_dnssetting.initialize(g_configuration.getBlackURLSet(), g_configuration.getWhiteURLSet());
 
 	 // 开启服务线程
 	ServThread::getInstance();

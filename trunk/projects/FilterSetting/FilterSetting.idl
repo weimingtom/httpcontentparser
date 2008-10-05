@@ -106,6 +106,7 @@ interface IDNSSetting : IDispatch{
 	[id(10), helpstring("method enableWhiteDNSCheck")] HRESULT enableWhiteDNSCheck([in] VARIANT_BOOL enable);
 	[id(11), helpstring("method enableBlackDNSCheck")] HRESULT enableBlackDNSCheck([in] VARIANT_BOOL enable);
 	[id(12), helpstring("method checkDNS")] HRESULT checkDNS([in] BSTR dns_name, [out,retval] VARIANT_BOOL* passed);
+	[id(13), helpstring("·½·¨justEnableWhiteDNS")] HRESULT justEnableWhiteDNS([in] VARIANT_BOOL enabled);
 };
 [
 	object,

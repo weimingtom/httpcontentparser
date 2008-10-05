@@ -67,6 +67,7 @@ const char * UserType(const int user_type) {
 
 void XMLConfiguration::defaultSetting() {
 	getEyecareSetting()->initialize(getAuthorize(),  EyecareSetting::ENTERT_TIME);
+	getDNSSetting()->initialize(getBlackURLSet(), getWhiteURLSet());
 }
 
 ///////////////////////////////////////////////////////////////////////////////////
@@ -258,6 +259,7 @@ int XMLConfiguration::saveWhiteURL(TiXmlElement *root) {
 	// 设置属性
 	rule_root->SetAttribute(CONFIG_CONST_NAME, CONFIG_NODE_NAME_WHITEURL);
 	rule_root->SetAttribute(CONFIG_CONST_ENABLE, enabledFromBool(getWhiteURLSet()->isEnabled()));
+	rule_root->SetAttribute(CONFIG_WHITEURL_JUSTPASSED, enabledFromBool(getDNSSetting()->justPassWhiteDNS()));
 	// 添加URL
 	getWhiteURLSet()->beginEnum(&DNSEnum(rule_root));
 	root->LinkEndChild(rule_root);
@@ -665,6 +667,11 @@ int XMLConfiguration::enableWhiteURL(const TCHAR *enable) {
 	return 0;
 }
 
+int XMLConfiguration::enableJustPassWhite(const TCHAR *enable) {
+	const bool checked = enabledFromString(enable);
+	getDNSSetting()->justPassWhiteDNS(checked);
+	return 0;
+}
 // 设置URL 白名单
 int XMLConfiguration::addWhiteURL(const TCHAR *URL) {
 	if (NULL == URL)
@@ -678,6 +685,9 @@ int XMLConfiguration::getWhiteURL(TiXmlElement * rule_root) {
 	// enable?
 	const TCHAR *  enable_attr = rule_root->Attribute(CONFIG_CONST_ENABLE);
 	enableWhiteURL(enable_attr);
+
+	const TCHAR *  enable_attr_passed = rule_root->Attribute(CONFIG_WHITEURL_JUSTPASSED);
+	enableJustPassWhite(enable_attr_passed);
 	// 内容
 	TiXmlNode * node = rule_root->FirstChild();
 	while (NULL != node) {

@@ -430,9 +430,9 @@ STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
     CONTROL         "Enable White DNS List",IDC_CHK_WHITE_DNSLIST,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,7,7,130,10
+                    BS_AUTOCHECKBOX | WS_TABSTOP,7,7,108,10
     LTEXT           "static",IDC_STA_WHIE_DNSLIST,7,25,236,159
-    CONTROL         "Deny others",IDC_CHK_DENY_OTHERS,"Button",
+    CONTROL         "Pass White Website Only",IDC_CHK_DENY_OTHERS,"Button",
                     BS_AUTOCHECKBOX | WS_TABSTOP,129,7,107,10
 END
 

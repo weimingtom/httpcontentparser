@@ -45,6 +45,7 @@
 
 #define CONFIG_NODE_NAME_BLACKURL			TEXT("blackurl")
 #define CONFIG_NODE_NAME_WHITEURL			TEXT("whiteurl")
+#define CONFIG_WHITEURL_JUSTPASSED			TEXT("justpass")
 #define CONFIG_NODE_URL						TEXT("url")
 #define CONFIG_NODE_NAME_SEARCH				TEXT("search")
 #define CONFIG_NODE_NAME_IMAGECHECK			TEXT("imagecheck")
@@ -131,6 +132,7 @@ public:
 public:
 	DNSList *		getBlackURLSet() { return &black_url_set_;}
 	DNSList *		getWhiteURLSet() { return &white_url_set_;}
+	DNSSetting*		getDNSSetting() { return &dnssetting_;}
 	SearchRule *	getSearchRule() { return &search_rule_;}
 	EyecareSetting* getEyecareSetting() { return &eye_care_;}
 	OnlineHourSetting *getOnlineSetting() { return &online_setting_;}
@@ -139,7 +141,7 @@ public:
 	ContentCheckSetting * getContentCheckSetting() { return &content_check_;}
 	ScreenSaver		*getScreenSave() { return &screen_save_;}
 	AutoClean		*getScreenSaveAutoClean() { return &screen_save_auto_clean_;}
-
+	
 private:
 	DNSList						black_url_set_;
 	DNSList						white_url_set_;
@@ -151,6 +153,7 @@ private:
 	ContentCheckSetting			content_check_;
 	ScreenSaver					screen_save_;
 	AutoClean					screen_save_auto_clean_;
+	DNSSetting					dnssetting_;
 
 	// ƒ¨»œ…Ë÷√
 	void defaultSetting();
@@ -199,6 +202,7 @@ private:
 	int getBlackURL(TiXmlElement * ele);
 	int addWhiteURL(const TCHAR *URL);
 	int enableWhiteURL(const TCHAR *enble);
+	int enableJustPassWhite(const TCHAR *enabled);
 	int addBlackURL(const TCHAR *URL);
 	int enableBlackURL(const TCHAR *enble);
 

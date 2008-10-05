@@ -19,6 +19,8 @@ void DNSSetting::defaultSetting() {
 	black_dns_list_ = NULL;
 	white_dns_list_ = NULL;
 	just_pass_white_dns_ = false;
+
+	SettingItem::defaultSetting();
 }
 // 初始化
 bool DNSSetting::initialize(DNSList *black_dns_list, DNSList *white_dns_list) {
@@ -35,16 +37,23 @@ bool DNSSetting::initialize(DNSList *black_dns_list, DNSList *white_dns_list) {
 // 仅仅允许通过WHITE DNS
 void DNSSetting::justPassWhiteDNS(const bool checked) {
 	just_pass_white_dns_ = checked;
+
+	if (true == checked)
+		enableWhiteDNSCheck(true);
 }
 
-bool DNSSetting::justPassWhiteDNS() const {
+bool DNSSetting::justPassWhiteDNS() {
+	assert (white_dns_list_ != NULL);
+	if (false == white_dns_list_->isEnabled())
+		just_pass_white_dns_ = false;
+
 	return just_pass_white_dns_;
 }
 // DNSlist
 // 添加删除DNS
 bool DNSSetting::addBlackDNS(const std::string &dns){
 	assert ( black_dns_list_ != NULL);
-	if (checkDNS(dns) == IN_WHITE_LIST) {
+	if (check(dns) == IN_WHITE_LIST) {
 		return false;
 	} else {
 		black_dns_list_->addDNS(dns);
@@ -55,7 +64,7 @@ bool DNSSetting::addBlackDNS(const std::string &dns){
 bool DNSSetting::addWhiteDNS(const std::string &dns){
 	assert ( white_dns_list_ != NULL);
 
-	if (checkDNS(dns) == IN_BLACK_LIST) {
+	if (check(dns) == IN_BLACK_LIST) {
 		return false;
 	} else {
 		white_dns_list_->addDNS(dns);
@@ -63,38 +72,76 @@ bool DNSSetting::addWhiteDNS(const std::string &dns){
 	}
 }
 
+// 移除
 bool DNSSetting::removeBlackDNS(const std::string &dns_name) {
 	assert ( black_dns_list_ != NULL);
 	return black_dns_list_->removeDNS(dns_name); 
 }
+
 bool DNSSetting::removeWhiteDNS(const std::string &dns_name) {
 	assert ( white_dns_list_ != NULL);
 	return white_dns_list_->removeDNS(dns_name);
 }
 
-int DNSSetting::fuzzeCheckDNS(const std::string &dns_name) {
-	assert(black_dns_list_ != NULL);
-	assert(white_dns_list_ != NULL);
-
-	if (true == white_dns_list_->fuzzeCheckDNS(dns_name)) {	// 如果在白名单中
-		return IN_WHITE_LIST;
-	} else if (true == black_dns_list_->fuzzeCheckDNS(dns_name)) {	// 如果在黑名单中
-		return IN_BLACK_LIST;
+int DNSSetting::check(const std::string &dns) {
+	if (true == white_dns_list_->checkDNS(dns)) {	// 如果在白名单中
+		return (IN_WHITE_LIST);
+	} else if (true == black_dns_list_->checkDNS(dns)) {	// 如果在黑名单中
+		return (IN_BLACK_LIST);
 	} else {	// 如果不在黑名单中
-		return NOT_SEPCIFIED;
+		return (NOT_SEPCIFIED);
 	}
 }
 
-int DNSSetting::checkDNS(const std::string &dns_name) {
+int DNSSetting::fuzzeCheck(const std::string &dns) {
+	if (true == white_dns_list_->fuzzeCheckDNS(dns)) {	// 如果在白名单中
+		return (IN_WHITE_LIST);
+	} else if (true == black_dns_list_->fuzzeCheckDNS(dns)) {	// 如果在黑名单中
+		return (IN_BLACK_LIST);
+	} else {	// 如果不在黑名单中
+		return (NOT_SEPCIFIED);
+	}
+}
+
+bool DNSSetting::fuzzeCheckDNS(const std::string &dns_name) {
 	assert(black_dns_list_ != NULL);
 	assert(white_dns_list_ != NULL);
 
-	if (true == white_dns_list_->checkDNS(dns_name)) {	// 如果在白名单中
-		return IN_WHITE_LIST;
-	} else if (true == black_dns_list_->checkDNS(dns_name)) {	// 如果在黑名单中
-		return IN_BLACK_LIST;
-	} else {	// 如果不在黑名单中
-		return NOT_SEPCIFIED;
+	// 如果是不可用直接返回false, 这里主要为了应对SettingItem::PARENT_MODE
+	if (isEnabled() == false) {
+		return true;
+	}
+
+	int result = fuzzeCheck(dns_name);
+	return dealResult(result);
+}
+
+bool DNSSetting::checkDNS(const std::string &dns_name) {
+	assert(black_dns_list_ != NULL);
+	assert(white_dns_list_ != NULL);
+
+	// 如果是不可用直接返回false, 这里主要为了应对SettingItem::PARENT_MODE
+	if (isEnabled() == false) {
+		return true;
+	}
+
+	int result = check(dns_name);
+	return dealResult(result);
+}
+
+bool DNSSetting::dealResult(const int result) {
+	if (justPassWhiteDNS()) {
+		// 如果仅仅通过白名单
+		if (result == IN_WHITE_LIST) 
+			return true;
+		else
+			return false;
+	} else {
+		// 如果只检测黑名单
+		if (result == IN_BLACK_LIST) 
+			return false;
+		else
+			return true;
 	}
 }
 
@@ -109,7 +156,7 @@ void DNSSetting::enableWhiteDNSCheck(const bool checked) {
 //=================================================================
 // class DNSCheck
 DNSList::DNSList(void) {
-	defaultSetting();
+	enabled_ = true;
 }
 
 DNSList::~DNSList(void) {
