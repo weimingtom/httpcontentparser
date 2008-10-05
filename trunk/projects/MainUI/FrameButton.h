@@ -22,6 +22,10 @@ public:
 		m_bCheckBtn = FALSE;
 		m_bOldTemp = FALSE;
 	}
+
+	bool isChecked() {
+		return m_bCheckBtn && m_bOldTemp;
+	}
 public:
 	BOOL         m_bCheckBtn;
 	BOOL         m_bPressBtn;

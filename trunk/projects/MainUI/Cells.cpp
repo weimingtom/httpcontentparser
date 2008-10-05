@@ -64,8 +64,21 @@ BOOL CCells::Create(LPCTSTR lpszClassName, LPCTSTR lpszWindowName, DWORD dwStyle
 	return bResult;
 }
 
+void  CCells::prepareForEnum() {
+	for (int row = 0; row < Rows; ++row) {
+		for (int col = 0; col < Column; ++col) {
+			if (cells[row][col].isChecked() == true) {
+				access_netword[row][col] = UNACCESSABLE;
+			} else {
+				access_netword[row][col] = ACCESSABLE;
+			}
+		}
+	}
+}
 
 void CCells::StarEnum(Enumerator2<int, int> *enumerate) {
+	prepareForEnum();
+
 	for (int i = 0; i < Rows; ++i) {
 		for (int j = 0; j < Column; ++j) {
 			if (access_netword[i][j] == UNACCESSABLE) {

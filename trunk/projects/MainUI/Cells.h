@@ -34,8 +34,11 @@ public:
 	void check(const int row, const int col);
 	void uncheck(const int row, const int col);
 
+// enum function
 public:
 	void StarEnum(Enumerator2<int, int> *enumerate);
+private:
+	void prepareForEnum();
 };
 
 
