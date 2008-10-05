@@ -441,18 +441,18 @@ STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
     LTEXT           "",IDC_STA_CELLS,26,7,225,121,NOT WS_VISIBLE
-    LTEXT           "Mon.",IDC_STATIC,7,23,17,8
-    LTEXT           "Tues",IDC_STATIC,7,38,16,8
-    LTEXT           "Wed.",IDC_STATIC,7,53,18,8
-    LTEXT           "Thurs.",IDC_STATIC,7,68,22,8
-    LTEXT           "Fri.",IDC_STATIC,7,82,12,8
-    LTEXT           "Sat.",IDC_STATIC,7,98,15,8
-    LTEXT           "Sun.",IDC_STATIC,7,113,15,8
+    LTEXT           "Sun.",IDC_STATIC,7,23,16,8
+    LTEXT           "Tues",IDC_STATIC,7,54,16,8
+    LTEXT           "Wed.",IDC_STATIC,7,69,18,8
+    LTEXT           "Thurs.",IDC_STATIC,7,84,22,8
+    LTEXT           "Fri.",IDC_STATIC,7,98,12,8
+    LTEXT           "Sat.",IDC_STATIC,7,113,15,8
     LTEXT           "00:00",IDC_STATIC,22,7,20,8
     LTEXT           "24:00",IDC_STATIC,231,7,20,8
     CONTROL         "Time Control",IDC_CHK_TIMECTRL,"Button",BS_AUTOCHECKBOX | 
                     WS_TABSTOP,107,145,64,10
     LTEXT           "12:00",IDC_STATIC,126,7,20,8
+    LTEXT           "Mon.",IDC_STATIC,7,38,17,8
 END
 
 

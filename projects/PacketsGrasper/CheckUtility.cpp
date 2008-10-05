@@ -63,30 +63,24 @@ bool accessNetword() {
 	static bool accessable = false;
 
 	try {
-		if (cnt == 0) {
-			CoInitialize(NULL);
+		CoInitialize(NULL);
 
-			// 初始化
-			IAccessNetwork *accessNetword = NULL;
-			HRESULT hr = CoCreateInstance(CLSID_AccessNetwork, NULL, CLSCTX_LOCAL_SERVER, IID_IAccessNetwork, (LPVOID*)&accessNetword);
-			if (FAILED(hr)) {
-				AfxMessageBox("初始化系统服务失败..");
-				return FALSE;
-			}
-
-			VARIANT_BOOL varbool_accessable;
-			accessNetword->accessNetwork(&varbool_accessable);
-			accessable = convert(varbool_accessable);
-			CoUninitialize(); 
+		// 初始化
+		IAccessNetwork *accessNetword = NULL;
+		HRESULT hr = CoCreateInstance(CLSID_AccessNetwork, NULL, CLSCTX_LOCAL_SERVER, IID_IAccessNetwork, (LPVOID*)&accessNetword);
+		if (FAILED(hr)) {
+			return FALSE;
 		}
+
+		VARIANT_BOOL varbool_accessable;
+		accessNetword->accessNetwork(&varbool_accessable);
+		accessable = convert(varbool_accessable);
+		CoUninitialize(); 
+
 	} catch (_com_error &) {
 		CoUninitialize(); 
 		return false;
 	}
-
-	cnt ++;
-	if (cnt == ACCESS_NETWORD_BUFCOUNT)
-		cnt = 0;
 
 	return accessable;
 }

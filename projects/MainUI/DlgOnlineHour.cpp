@@ -36,6 +36,15 @@ public:
 		accessNetwork_ = access;
 		assert (accessNetwork_ != NULL);
 	}
+
+	// 取消已有的设置
+	void reset() {
+		for (int day = 0; day < 7; ++day) {
+			for (int hour = 0; hour < 23; ++hour) {
+				accessNetwork_->removeBlockTime(day, hour);
+			}
+		}
+	}
 	virtual int Enum(const int day, const int hour) {
 		accessNetwork_->setBlockTime(day, hour);
 		return 0;
@@ -54,6 +63,7 @@ void CDlgOnlineHour::OnApply() {
 			IID_IAccessNetwork, (LPVOID*)&accessNetwork);
 
 		Enumerator enumerate(accessNetwork);
+		enumerate.reset();
 		cells.StarEnum(&enumerate);
 
 		accessNetwork->Release();
