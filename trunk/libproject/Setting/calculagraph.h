@@ -6,12 +6,17 @@
 template<int STATE_NUM>
 class MultiCalculagraph;
 
+// 单个状态的定时切换
+// 可以确定一个时间是否应该发生
 class Calculagraph {
 public:
 	Calculagraph(void);
 	~Calculagraph(void);
 public:
 	void initialize() {Reset();}
+
+	// 尝试切换状态，如果成功， 则返回true
+	// 如果失败则返回false
 	bool trySwitch();
 
 	// 设置
@@ -20,13 +25,16 @@ public:
 private:
 	friend  class MultiCalculagraph;
 
+	// 充值当前计时器
 	void Reset();
 	DWORD getTimeEscape() const;
 	DWORD state_begin_;
 	DWORD time_span_;
 };
 
-// 多个状态的state
+
+// class MultiCalculagraph
+// 多个状态的定时切换
 template<int STATE_NUM>
 class MultiCalculagraph {
 public:
@@ -34,19 +42,31 @@ public:
 	~MultiCalculagraph() {}
 
 public:
-	bool trySwitch();
 	void initialize(int type) { setCurrentState(type);}
 
+	// 尝试切换状态，如果成功， 则返回true
+	// 如果失败则返回false
+	bool trySwitch();
+	
+	// 获取当前状态
 	int  getCurrentState() const { return state_; }
+
+	// 获取切换状态的剩余时间
 	int  getRemainTime() const { return (getCurrentTimespan() - getCurrentTimeEscape());}
+
+	// 设置和获取时间间隔
 	void setTimespan(const DWORD seconds, const int type);
 	DWORD getTimespan(const int type) const;
 
+	void Reset() { return Reset(getCurrentState());}
 	// 强制改变状态
 	int  forceSwitch(int type);
 private:
-	void setCurrentState(const int type);
+	// 充值及时器，但需要指明及时器的种类
 	void  Reset(const int type);
+
+	// 设置当前状态
+	void setCurrentState(const int type);
 	int getNextState();
 	DWORD getCurrentTimeEscape() const;
 	DWORD getCurrentTimespan() const;
