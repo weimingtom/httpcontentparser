@@ -32,6 +32,7 @@
 #define IDS_ERROR_WEB_SET_FAILED        119
 #define IDS_SCREEN_RECORD_CLEAR_BUTTON  120
 #define IDS_CHECK_PASSWORD_WRONG        121
+#define IDS_APP_SERVER_INIT_FAILED      122
 #define IDR_MAINFRAME                   128
 #define IDD_DLG_HELP                    129
 #define IDD_DLG_ABOUT                   130

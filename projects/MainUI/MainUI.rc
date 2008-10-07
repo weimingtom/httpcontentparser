@@ -739,6 +739,7 @@ BEGIN
     IDS_ERROR_WEB_SET_FAILED "Set Web Record Failed!"
     IDS_SCREEN_RECORD_CLEAR_BUTTON "Clear Completed!"
     IDS_CHECK_PASSWORD_WRONG "Password was not corrected!"
+    IDS_APP_SERVER_INIT_FAILED "Service Launch Failed!"
 END
 
 #endif    // Ó¢Óï(ÃÀ¹ú) resources
