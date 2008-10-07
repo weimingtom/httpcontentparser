@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include ".\services.h"
 #include ".\globalvariable.h"
-#include <com\cominit.h>
+#include <com\comutility.h>
 #include <typeconvert.h>
 
 bool Services::isParentModel() {
