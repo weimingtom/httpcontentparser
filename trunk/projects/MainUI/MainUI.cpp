@@ -9,7 +9,7 @@
 #include ".\services.h"
 #include <sysutility.h>
 #include <typeconvert.h>
-#include <com\cominit.h>
+#include <com\comutility.h>
 
 
 IDNSSetting *g_dnssetting = NULL;
