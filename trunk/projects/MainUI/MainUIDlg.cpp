@@ -275,6 +275,15 @@ void CMainUIDlg::setupTrayMenu() {
 	m_sysTray.SetSysMenu(&m_trayMenu);
 }
 
+int CMainUIDlg::OnCreate(LPCREATESTRUCT lpCreateStruct)
+{
+	if (CDialog::OnCreate(lpCreateStruct) == -1)
+		return -1;
+
+	setupTrayMenu();
+	return 0;
+}
+
 BOOL CMainUIDlg::OnInitDialog()
 {
 	CDialog::OnInitDialog();
@@ -348,37 +357,7 @@ void CMainUIDlg::OnSysCommand(UINT nID, LPARAM lParam)
 	}
 }
 
-// 如果向对话框添加最小化按钮，则需要下面的代码
-//  来绘制该图标。对于使用文档/视图模型的 MFC 应用程序，
-//  这将由框架自动完成。
 
-void CMainUIDlg::OnPaint() 
-{
-	if (IsIconic()) {
-		CPaintDC dc(this); // 用于绘制的设备上下文
-
-		SendMessage(WM_ICONERASEBKGND, reinterpret_cast<WPARAM>(dc.GetSafeHdc()), 0);
-
-		// 使图标在工作矩形中居中
-		int cxIcon = GetSystemMetrics(SM_CXICON);
-		int cyIcon = GetSystemMetrics(SM_CYICON);
-		CRect rect;
-		GetClientRect(&rect);
-		int x = (rect.Width() - cxIcon + 1) / 2;
-		int y = (rect.Height() - cyIcon + 1) / 2;
-
-		// 绘制图标
-		dc.DrawIcon(x, y, m_hIcon);
-	} else {
-		CDialog::OnPaint();
-	}
-}
-
-//当用户拖动最小化窗口时系统调用此函数取得光标显示。
-HCURSOR CMainUIDlg::OnQueryDragIcon()
-{
-	return static_cast<HCURSOR>(m_hIcon);
-}
 
 
 void CMainUIDlg::OnTvnSelchangedTreeNavig(NMHDR *pNMHDR, LRESULT *pResult)
@@ -398,6 +377,7 @@ void CMainUIDlg::OnTvnSelchangedTreeNavig(NMHDR *pNMHDR, LRESULT *pResult)
 	*pResult = 0;
 }
 
+// 按下Apply按钮
 void CMainUIDlg::OnBnClickedApply()
 {
 	ASSERT (NULL != m_curDlg);
@@ -418,18 +398,10 @@ void CMainUIDlg::OnTraymenuMainui() {
 	}
 }
 
+// 推出按钮
 void CMainUIDlg::OnMainExit() {
 	ShowWindow(SW_SHOW);
 	CDialog::OnOK();
-}
-
-int CMainUIDlg::OnCreate(LPCREATESTRUCT lpCreateStruct)
-{
-	if (CDialog::OnCreate(lpCreateStruct) == -1)
-		return -1;
-
-	setupTrayMenu();
-	return 0;
 }
 
 void CMainUIDlg::OnMainChangepassword()
@@ -497,4 +469,38 @@ void CMainUIDlg::OnOK() {
 
 void CMainUIDlg::OnCancel() {
 	ShowWindow(SW_HIDE);
+}
+
+
+//==============================================
+// 如果向对话框添加最小化按钮，则需要下面的代码
+//  来绘制该图标。对于使用文档/视图模型的 MFC 应用程序，
+//  这将由框架自动完成。
+
+void CMainUIDlg::OnPaint() 
+{
+	if (IsIconic()) {
+		CPaintDC dc(this); // 用于绘制的设备上下文
+
+		SendMessage(WM_ICONERASEBKGND, reinterpret_cast<WPARAM>(dc.GetSafeHdc()), 0);
+
+		// 使图标在工作矩形中居中
+		int cxIcon = GetSystemMetrics(SM_CXICON);
+		int cyIcon = GetSystemMetrics(SM_CYICON);
+		CRect rect;
+		GetClientRect(&rect);
+		int x = (rect.Width() - cxIcon + 1) / 2;
+		int y = (rect.Height() - cyIcon + 1) / 2;
+
+		// 绘制图标
+		dc.DrawIcon(x, y, m_hIcon);
+	} else {
+		CDialog::OnPaint();
+	}
+}
+
+//当用户拖动最小化窗口时系统调用此函数取得光标显示。
+HCURSOR CMainUIDlg::OnQueryDragIcon()
+{
+	return static_cast<HCURSOR>(m_hIcon);
 }
