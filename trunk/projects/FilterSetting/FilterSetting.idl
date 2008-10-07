@@ -53,6 +53,7 @@ interface IAppSetting : IDispatch{
 	[id(1), helpstring("Method setHotkey")] HRESULT setHotkey([in] USHORT wVirtualKeyCode, [in] USHORT wModifiers, [in] LONG type, [out,retval] VARIANT_BOOL* bSuccess);
 	[id(3), helpstring("Method GetInstallPath")] HRESULT GetInstallPath([out,retval] BSTR* path);
 	[id(4), helpstring("Method switchModel")] HRESULT switchModel([in] VARIANT_BOOL bParent, [in] BSTR pwd, [out,retval] VARIANT_BOOL* bSucc);
+	[propget, id(5), helpstring("Property ParentModel")] HRESULT ParentModel([out, retval] VARIANT_BOOL* pVal);
 };
 [
 	object,

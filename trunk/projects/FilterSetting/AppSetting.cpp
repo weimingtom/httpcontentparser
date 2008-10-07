@@ -58,3 +58,13 @@ STDMETHODIMP CAppSetting::switchModel(VARIANT_BOOL bParent, BSTR pwd, VARIANT_BO
 	}
 	return S_OK;
 }
+
+// 当前模式是否是家长模式
+STDMETHODIMP CAppSetting::get_ParentModel(VARIANT_BOOL* pVal) {
+	if (SettingItem::MODE_PARENT == SettingItem::getModel()) {
+		*pVal = VARIANT_TRUE;
+	} else {
+		*pVal = VARIANT_FALSE;
+	}
+	return S_OK;
+}
