@@ -44,6 +44,7 @@ public:
 	STDMETHOD(setHotkey)(USHORT wVirtualKeyCode, USHORT wModifiers, LONG type, VARIANT_BOOL* bSuccess);
 	STDMETHOD(GetInstallPath)(BSTR* path);
 	STDMETHOD(switchModel)(VARIANT_BOOL bParent, BSTR pwd, VARIANT_BOOL* bSucc);
+	STDMETHOD(get_ParentModel)(VARIANT_BOOL* pVal);
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(AppSetting), CAppSetting)
