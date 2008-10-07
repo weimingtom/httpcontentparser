@@ -38,11 +38,12 @@
 				Name="VCMIDLTool"/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy .\sysutility.h ..\..\include
-copy .\debug\sysutility.lib ..\..\lib\sysutilityd.lib
+				CommandLine="copy .\debug\sysutility.lib ..\..\lib\sysutilityd.lib
 "/>
 			<Tool
-				Name="VCPreBuildEventTool"/>
+				Name="VCPreBuildEventTool"
+				CommandLine="copy .\sysutility.h ..\..\include
+copy .\app_constants.h ..\..\include"/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
 			<Tool
@@ -141,6 +142,19 @@ copy .\debug\sysutility.lib ..\..\lib\sysutility.lib
 			Name="资源文件"
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx"
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}">
+		</Filter>
+		<Filter
+			Name="install"
+			Filter="">
+			<File
+				RelativePath=".\app_constants.h">
+			</File>
+			<File
+				RelativePath=".\XInstall.cpp">
+			</File>
+			<File
+				RelativePath=".\XInstall.h">
+			</File>
 		</Filter>
 		<File
 			RelativePath=".\ReadMe.txt">

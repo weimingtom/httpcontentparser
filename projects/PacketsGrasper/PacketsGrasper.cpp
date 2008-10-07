@@ -12,7 +12,7 @@
 #include <utility\debugmessage.h>
 #include <utility\fd_set_utility.h>
 #include <utility\HttpPacket.h>
-#include "spidefines.h"
+#include <app_constants.h>
 
 #pragma data_seg(".inidata")
 	int				m_iRefCount		= 0;

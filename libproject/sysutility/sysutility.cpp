@@ -1,9 +1,14 @@
 #include "stdafx.h"
 #include "sysutility.h"
+#include ".\xinstall.h"
 #include <utility\strutility.h>
 #include <windowtitle.h>
 #include <assert.h>
 #include <process.h>
+#include <app_constants.h>
+#include <stdlib.h>
+#include  <io.h>
+
 
 
 #define SCREEN_SAVE_TYPE	TEXT("jpg")
@@ -19,7 +24,49 @@ namespace {
 	void DeleteFiles(const TCHAR * dir, const TCHAR * exp);
 };
 
+// 注册服务
+// returns : 0 代表成功
+//			 -1 代表文件不存在
+BOOL isPacketFiltersInstalled(HMODULE hModule) {
+	TCHAR install_path[MAX_PATH], fullpath[MAX_PATH];
+	GetInstallPath(install_path, MAX_PATH, hModule);
 
+	_sntprintf(fullpath, MAX_PATH, TEXT("%s%s"), install_path, PACKETSGRASPER_DLL_NAME);
+
+
+	CXInstall	m_Install;
+	return m_Install.IsInstalled(fullpath);
+}
+
+UINT InstallPacketsFilter(HMODULE hModule) {
+	TCHAR install_path[MAX_PATH], fullpath[MAX_PATH];
+	GetInstallPath(install_path, MAX_PATH, hModule);
+
+	_sntprintf(fullpath, MAX_PATH, TEXT("%s%s"), install_path, PACKETSGRASPER_DLL_NAME);
+
+	// 文件不存在
+	if (_taccess(fullpath, 0) == -1) {
+		return PACKETSFILTERED_FILE_NOT_FOUND;
+	}
+
+	CXInstall	m_Install;
+	return m_Install.InstallProvider(fullpath);
+}
+
+UINT RegisterServices(HMODULE hModule) {	
+	TCHAR install_path[MAX_PATH], fullpath[MAX_PATH], cmd[MAX_PATH];
+	GetInstallPath(install_path, MAX_PATH, hModule);
+
+	_sntprintf(fullpath, MAX_PATH, TEXT("%s%s"), install_path, SERVICE_FILENAME);
+	if (_taccess(fullpath, 0) != -1) {
+		_sntprintf(cmd, MAX_PATH, "%s /RegServer", fullpath);
+		return PACKETSFILTERED_INSTALL_SUCC;
+	} else {
+		// 如果文件不存在则返回FALSE
+		return PACKETSFILTERED_FILE_NOT_FOUND;
+	}
+
+}
 
 void StartEyecare(HMODULE hModule) {
 	// 首先检测应用程序是否已经打开了
