@@ -10,10 +10,13 @@
 namespace {
 	void GetScreenRecordDir(TCHAR *moduleDir, const int len, HMODULE hModule);	//
 	void GetImageRecordDir(TCHAR *moduleDir, const int len, HMODULE hModule);	// 保存图像的目录
+	void GetTextRecordDir(TCHAR *moduleDir, const int len, HMODULE hModule);
 	void GenerateImageFile(TCHAR *file, const int len, HMODULE hModule);	// 自动生成文件名
 	void GetHistoryRecordDir(TCHAR *moduleDir, const int len, HMODULE hModule);
 	void GenerateFullPath(TCHAR *fullpath, const int len, const TCHAR * dir, const TCHAR * filename);
-	void GetFilespathInDir(const TCHAR * dir, std::vector<strutility::_tstring> * files);
+	void GetFilespathInDir(const TCHAR * dir, const TCHAR *exp, std::vector<strutility::_tstring> * files);
+
+	void DeleteFiles(const TCHAR * dir, const TCHAR * exp);
 };
 
 
@@ -41,8 +44,8 @@ DWORD GenScreenSPFile(TCHAR *fullpath, const int len, HMODULE hModule) {
 	SYSTEMTIME time;
 	GetLocalTime(&time);
 	TCHAR filename[MAX_PATH];
-	_sntprintf(filename, MAX_PATH, TEXT("%02d%02d%04d%02d%02d%02d.%s"), 
-		time.wMonth, time.wDay,time.wYear, 
+	_sntprintf(filename, MAX_PATH, TEXT("%04d%02d%02d%02d%02d%02d.%s"), 
+		time.wYear, time.wMonth, time.wDay, 
 		time.wHour, time.wMinute, time.wSecond,
 		SCREEN_SAVE_TYPE);
 
@@ -51,27 +54,18 @@ DWORD GenScreenSPFile(TCHAR *fullpath, const int len, HMODULE hModule) {
 	return (DWORD)_tcslen(fullpath);
 }
 void ClearHistory(HMODULE hModule) {
-	TCHAR dir[MAX_PATH], arg1 [MAX_PATH];
-	GetHistoryRecordDir(dir, MAX_PATH, hModule);
-	_sntprintf(arg1, MAX_PATH , TEXT("%s*"), dir);
-	_execlp("del", arg1, TEXT("/q"));
+	TCHAR dir[MAX_PATH];
+	GetImageRecordDir(dir, MAX_PATH, hModule);
+	DeleteFiles(dir, TEXT("*.*"));
+
+	GetTextRecordDir(dir, MAX_PATH, hModule);
+	DeleteFiles(dir, TEXT("*.*"));
 }
 
 void ClearScreen(HMODULE hModule) {
 	TCHAR dir[MAX_PATH];
 	GetScreenRecordDir(dir, MAX_PATH, hModule);
-	
-	// 获取所有文件
-	using namespace std;
-	using namespace strutility;
-
-	vector<_tstring> vecfilepaths;
-	GetFilespathInDir(dir, &vecfilepaths);
-
-	vector<_tstring>::iterator iter = vecfilepaths.begin();
-	for (; iter != vecfilepaths.end(); ++iter) {
-		DeleteFile(iter->c_str());
-	}
+	DeleteFiles(dir, TEXT("*.jgp"));
 }
 
 const TCHAR * GetAppConfigFilename(TCHAR *fullpath, const int len, HMODULE hModule) {
@@ -162,12 +156,29 @@ void GetHistoryRecordDir(TCHAR *historyDir, const int len, HMODULE hModule) {
 		_tmkdir(historyDir);
 }
 
-void GetFilespathInDir(const TCHAR * dir, std::vector<strutility::_tstring> * files) {
+void GetImageRecordDir(TCHAR *imagedir, const int len, HMODULE hModule) {
+	TCHAR history_dir[MAX_PATH];
+	GetHistoryRecordDir(history_dir, len, hModule);
+	_sntprintf(imagedir, MAX_PATH, TEXT("%s%s"), history_dir,TEXT("images\\"));
+	if (_tchdir(imagedir) == -1)
+		_tmkdir(imagedir);
+}
+
+void GetTextRecordDir(TCHAR *textdir, const int len, HMODULE hModule) {
+	TCHAR history_dir[MAX_PATH];
+	GetHistoryRecordDir(history_dir, len, hModule);
+	_sntprintf(textdir, MAX_PATH, TEXT("%s%s"), history_dir,TEXT("text\\"));
+	if (_tchdir(textdir) == -1)
+		_tmkdir(textdir);
+}
+
+void GetFilespathInDir(const TCHAR * dir,  const TCHAR *exp, 
+					   std::vector<strutility::_tstring> * files) {
 	using namespace std;
 	using namespace strutility;
 
 	TCHAR fileexp[MAX_PATH];
-	_sntprintf(fileexp, MAX_PATH, "%s*.%s", dir, SCREEN_SAVE_TYPE);
+	_sntprintf(fileexp, MAX_PATH, "%s%s", dir, exp);
 	WIN32_FIND_DATA find_data;
 	HANDLE hFind = FindFirstFile(fileexp, &find_data);
 
@@ -181,6 +192,20 @@ void GetFilespathInDir(const TCHAR * dir, std::vector<strutility::_tstring> * fi
 	} while (FindNextFile(hFind, &find_data));
 
 	FindClose(hFind);
+}
+
+void DeleteFiles(const TCHAR * dir, const TCHAR * exp) {
+	// 获取所有文件
+	using namespace std;
+	using namespace strutility;
+
+	vector<_tstring> vecfilepaths;
+	GetFilespathInDir(dir, exp, &vecfilepaths);
+
+	vector<_tstring>::iterator iter = vecfilepaths.begin();
+	for (; iter != vecfilepaths.end(); ++iter) {
+		DeleteFile(iter->c_str());
+	}
 }
 
 };
