@@ -32,11 +32,29 @@ STDMETHODIMP CAppSetting::setHotkey(USHORT wVirtualKeyCode, USHORT wModifiers, L
 	return S_OK;
 }
 
-
+// 获取安装路径
 STDMETHODIMP CAppSetting::GetInstallPath(BSTR* installpath) {
-	// 获取当前路径
 	TCHAR path[MAX_PATH];
 	::GetInstallPath(path, MAX_PATH, g_hInstance);
 	*installpath = bstr_t(path);
+	return S_OK;
+}
+
+
+STDMETHODIMP CAppSetting::switchModel(VARIANT_BOOL bParent, BSTR pwd, VARIANT_BOOL* bSucc) {
+	if (VARIANT_TRUE == bParent) {
+		// 切换到家长模式需要验证密码
+		if (true == g_configuration.getAuthorize()->checkPassword((TCHAR*)_bstr_t(pwd), PASSWORD_SU)) {
+			SettingItem::setModel(SettingItem::MODE_PARENT);
+			*bSucc = VARIANT_TRUE;
+		} else {
+			// 验证密码失败
+			*bSucc = VARIANT_FALSE;
+		}
+	} else {
+		// 如果切换到孩子模式，则不需要密码
+		SettingItem::setModel(SettingItem::MODE_CHILD);
+		*bSucc = VARIANT_TRUE;
+	}
 	return S_OK;
 }
