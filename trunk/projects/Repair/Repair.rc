@@ -169,6 +169,9 @@ END
 STRINGTABLE 
 BEGIN
     IDS_ABOUTBOX            "关于 Repair(&A)..."
+    IDS_FILENOT_FOUNT       "Some Important file lost, Please Reinstall the software."
+    IDS_REPAIR_SUCCESS      "Repair Successfully!"
+    IDS_INSTALL_FAILED      "Install Failed!"
 END
 
 #endif    // 中文(中华人民共和国) resources

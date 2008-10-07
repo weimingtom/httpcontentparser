@@ -41,8 +41,7 @@
 				Name="VCMIDLTool"/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy .\spidefines.h ..\..\include
-copy .\Debug\SPIInstaller.exe ..\..\Debug
+				CommandLine="copy .\Debug\SPIInstaller.exe ..\..\Debug
 "/>
 			<Tool
 				Name="VCPreBuildEventTool"/>

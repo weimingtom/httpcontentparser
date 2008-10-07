@@ -20,7 +20,9 @@
 #include <conio.h>
 #include <process.h>
 #include <assert.h>
+#include <winsock2.h>
 
+#pragma comment(lib, "ws2_32.lib")
 #ifdef _DEBUG
 #	pragma comment(lib, "utilityd.lib")
 #else 
