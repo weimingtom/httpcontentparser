@@ -4,6 +4,7 @@
 #include <objbase.h>
 
 class AutoInitInScale {
+public:
 	AutoInitInScale() {CoInitialize(NULL);}
 	~AutoInitInScale() {CoUninitialize();}
 };
