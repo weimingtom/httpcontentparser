@@ -665,7 +665,7 @@ END
 // Menu
 //
 
-IDC_MENU_TRAY MENU 
+IDC_MENU_TRAY_PARENT MENU 
 BEGIN
     POPUP "Main"
     BEGIN
@@ -673,17 +673,18 @@ BEGIN
         BEGIN
             MENUITEM "www.sina.com",                ID_WEBSITES_WWW32788
         END
-        MENUITEM "Web History",                 ID_TOOLS_WEBHISTORY
-        MENUITEM "Desktop Image",               ID_TOOLS_DESKTOPIMAGE
-        MENUITEM "Lock Computer",               ID_MAIN_LOCKCOMPUTER
+        MENUITEM "Web History",                 ID_TRAYMENU_WEBHISTORY
+        MENUITEM "Desktop Image",               ID_TRAYMENU_DESKTOPIMAGE
+        MENUITEM "Lock Computer",               ID_TRAYMENU_LOCKCOMPUTER
         MENUITEM SEPARATOR
-        MENUITEM "Change Password",             ID_MAIN_CHANGEPASSWORD
+        MENUITEM "Change Password",             ID_TRAYMENU_CHANGEPASSWORD
         MENUITEM "Option",                      ID_TRAYMENU_MAINUI
         MENUITEM SEPARATOR
-        MENUITEM "Children",                    ID_MAIN_CHILDREN, CHECKED
-        MENUITEM "Parents",                     ID_MAIN_PARENTS
+        MENUITEM "Children",                    ID_TRAYMENU_MODEL_CHILDREN
+        , CHECKED
+        MENUITEM "Parents",                     ID_TRAYMENU_MODEL_PARENTS
         MENUITEM SEPARATOR
-        MENUITEM "Exit",                        ID_MAIN_EXIT
+        MENUITEM "Exit",                        ID_TRAYMENU_EXIT
     END
 END
 

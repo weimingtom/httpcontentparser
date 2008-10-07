@@ -165,10 +165,10 @@
 #define IDC_POSITION_RIGHT              8002
 #define IDC_MENU_SYSTRAY                32000
 #define IDC_MENU_TRAY                   32000
+#define IDC_MENU_TRAY_PARENT            32000
 #define ID_Menu                         32771
 #define ID_MAIN                         32772
 #define ID_MAIN_WEBSITES                32774
-#define ID_MAIN_EXIT                    32775
 #define ID_WEBSITES_WWW                 32777
 #define ID__HELLO                       32778
 #define ID__HELLO2                      32779
@@ -180,19 +180,20 @@
 #define ID__WEBSITES                    32787
 #define ID_WEBSITES_WWW32788            32788
 #define ID_MAIN_TOOLS                   32791
-#define ID_TOOLS_WEBHISTORY             32792
-#define ID_TOOLS_DESKTOPIMAGE           32793
-#define ID_MAIN_CHILDREN                32794
-#define ID_MAIN_CHANGEPASSWORD          32795
-#define ID_MAIN_PARENTS                 32797
-#define ID_MAIN_LOCKCOMPUTER            32798
+#define ID_TRAYMENU_WEBHISTORY          32799
+#define ID_TRAYMENU_DESKTOPIMAGE        32800
+#define ID_TRAYMENU_LOCKCOMPUTER        32801
+#define ID_TRAYMENU_MODEL_PARENTS       32804
+#define ID_TRAYMENU_MODEL_CHILDREN      32805
+#define ID_TRAYMENU_EXIT                32806
+#define ID_TRAYMENU_CHANGEPASSWORD      32807
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        156
-#define _APS_NEXT_COMMAND_VALUE         32799
+#define _APS_NEXT_COMMAND_VALUE         32808
 #define _APS_NEXT_CONTROL_VALUE         1087
 #define _APS_NEXT_SYMED_VALUE           112
 #endif

@@ -334,6 +334,16 @@
 			Name="UtilitydLG"
 			Filter="">
 		</Filter>
+		<Filter
+			Name="Service"
+			Filter="">
+			<File
+				RelativePath=".\Services.cpp">
+			</File>
+			<File
+				RelativePath=".\Services.h">
+			</File>
+		</Filter>
 		<File
 			RelativePath=".\res\MainUI.manifest">
 		</File>

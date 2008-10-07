@@ -94,6 +94,7 @@ private:
 	// system Tray
 	CGuiSysTray		m_sysTray;
 	CMenu		m_trayMenu;
+	//CMenu		m_trayMenuChild;
 	
 	CGuiGroupBox m_staFunFrame;
 	CGuiButton m_btnOk;
@@ -107,17 +108,26 @@ protected:
 	afx_msg void OnNMClickTreeNavig(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnTvnSelchangedTreeNavig(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnBnClickedApply();
-	afx_msg void OnTraymenuMainui();
-	afx_msg void OnMainExit();
 	afx_msg int  OnCreate(LPCREATESTRUCT lpCreateStruct);
-	afx_msg void OnMainChangepassword();
-	afx_msg void OnMainParents();
-	afx_msg void OnMainChildren();
 	afx_msg LRESULT OnHotKey(WPARAM wParam, LPARAM lParam);
 	afx_msg void OnBnClickedOk();
 	afx_msg void OnBnClickedCancel();
+
+	// 菜单处理项
+	afx_msg void OnMainExit();
+	afx_msg void OnTraymenuMainui();
+	afx_msg void OnMainChangepassword();
+	afx_msg void OnMainParents();
+	afx_msg void OnMainChildren();
 	afx_msg void OnToolsDesktopimage();
 	afx_msg void OnToolsWebhistory();
+	afx_msg void OnMainLockcomputer();
+
+
 	virtual void OnOK();
 	virtual void OnCancel();
+protected:
+	// 根据当前状态初始化TrayMenu
+	// 此函数会在每次应用程序启动及状态切换时调用
+	void UpdateMenuState();
 };
