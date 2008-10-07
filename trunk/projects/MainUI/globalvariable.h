@@ -7,6 +7,9 @@
 #include <xmlconfiguration.h>
 
 extern IDNSSetting *g_dnssetting;
+extern IAppSetting *g_appSetting;
 extern XMLConfiguration g_configuration;
+
+extern bool g_parentModel;
 
 #endif  // _MAIN_UI_GLOBAL_VARIABLE_H__

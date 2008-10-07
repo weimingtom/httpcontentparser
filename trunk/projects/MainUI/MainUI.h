@@ -27,6 +27,8 @@ public:
 
 	DECLARE_MESSAGE_MAP()
 	virtual int ExitInstance();
+protected:
+	BOOL Initialize(void);
 };
 
 extern CMainUIApp theApp;
