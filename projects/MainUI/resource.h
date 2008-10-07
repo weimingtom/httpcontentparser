@@ -112,8 +112,12 @@
 #define IDC_STA_HOTKEY                  1030
 #define IDC_CHK_ALLWEBSITES             1030
 #define IDC_OK                          1031
+#define IDC_MAIN_OK                     1031
+#define IDC_OK2                         1032
 #define IDC_HOTKEY1                     1033
 #define IDC_HOTKEY_SHOWDLG              1033
+#define IDC_MAIN_OK2                    1033
+#define IDC_MAIN_CANCEL                 1033
 #define IDC_HOTKEY2                     1034
 #define IDC_CHK_ENABLE_DNS              1034
 #define IDC_HOTKEY_SWITCHUSR            1034
@@ -156,6 +160,7 @@
 #define IDC_RAD_ENTER_SU_MODE           1084
 #define IDC_RAD_JUST_RESET_TIMER        1085
 #define IDC_STA_AFTEREYECARE_TERMINATE  1086
+#define IDC_MAIN_APPLY                  1087
 #define IDC_EDIT1                       4011
 #define IDC_EDIT2                       4012
 #define IDC_EDT_RETRY                   4013
@@ -194,7 +199,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        156
 #define _APS_NEXT_COMMAND_VALUE         32808
-#define _APS_NEXT_CONTROL_VALUE         1087
+#define _APS_NEXT_CONTROL_VALUE         1088
 #define _APS_NEXT_SYMED_VALUE           112
 #endif
 #endif

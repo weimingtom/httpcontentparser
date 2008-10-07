@@ -31,7 +31,7 @@ class CMainUIDlg : public CDialog
 // 构造
 public:
 	CMainUIDlg(CWnd* pParent = NULL);	// 标准构造函数
-
+	~CMainUIDlg();
 // 对话框数据
 	enum { IDD = IDD_MAINUI_DIALOG };
 
@@ -94,25 +94,24 @@ private:
 	// system Tray
 	CGuiSysTray		m_sysTray;
 	CMenu		m_trayMenu;
-	//CMenu		m_trayMenuChild;
 	
 	CGuiGroupBox m_staFunFrame;
-	CGuiButton m_btnOk;
-	CGuiButton m_btnCancel;
-	CGuiButton m_btnApply;
-
+	CGuiButton m_btnOkBAK; // if remove it, some error happens.
 	CImageList image_list_;
+
 	//
 	BOOL	m_bShowed; // 当前界面是否显示
 protected:
 	afx_msg void OnNMClickTreeNavig(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnTvnSelchangedTreeNavig(NMHDR *pNMHDR, LRESULT *pResult);
-	afx_msg void OnBnClickedApply();
+	
 	afx_msg int  OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg LRESULT OnHotKey(WPARAM wParam, LPARAM lParam);
-	afx_msg void OnBnClickedOk();
-	afx_msg void OnBnClickedCancel();
 
+	// 按钮项
+	afx_msg void OnBnClickedOk();
+	afx_msg void OnBnClickedMainCancel();
+	afx_msg void OnBnClickedApply();
 	// 菜单处理项
 	afx_msg void OnMainExit();
 	afx_msg void OnTraymenuMainui();
@@ -129,5 +128,5 @@ protected:
 protected:
 	// 根据当前状态初始化TrayMenu
 	// 此函数会在每次应用程序启动及状态切换时调用
-	void UpdateMenuState();
+	void UpdateUIStateByModel();
 };

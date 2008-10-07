@@ -58,13 +58,12 @@ CMainUIDlg::CMainUIDlg(CWnd* pParent /*=NULL*/)
 	m_bShowed = TRUE;
 }
 
+CMainUIDlg::~CMainUIDlg() {
+}
 void CMainUIDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_TREE_NAVIG, m_treeNavigation);
-	DDX_Control(pDX, IDC_OK, m_btnOk);
-	DDX_Control(pDX, IDC_CANCEL, m_btnCancel);
-	DDX_Control(pDX, IDC_APPLY, m_btnApply);
 	DDX_Control(pDX, IDC_STA_FRAME, m_staFunFrame);
 }
 
@@ -75,13 +74,13 @@ BEGIN_MESSAGE_MAP(CMainUIDlg, CDialog)
 	//}}AFX_MSG_MAP
 	ON_NOTIFY(NM_CLICK, IDC_TREE_NAVIG, OnNMClickTreeNavig)
 	ON_NOTIFY(TVN_SELCHANGED, IDC_TREE_NAVIG, OnTvnSelchangedTreeNavig)
-	ON_BN_CLICKED(IDC_APPLY, OnBnClickedApply)
+	
 	ON_WM_CREATE()
 	ON_WM_KEYDOWN()
 	ON_MESSAGE(WM_HOTKEY, OnHotKey)
 	ON_WM_CONTEXTMENU()
-	ON_BN_CLICKED(IDC_OK, OnBnClickedOk)
-	ON_BN_CLICKED(IDC_CANCEL, OnBnClickedCancel)
+	ON_BN_CLICKED(IDC_MAIN_OK, OnBnClickedOk)
+	ON_BN_CLICKED(IDC_MAIN_APPLY, OnBnClickedApply)
 	ON_COMMAND(ID_TRAYMENU_CHANGEPASSWORD, OnMainChangepassword)
 	ON_COMMAND(ID_TRAYMENU_MAINUI, OnTraymenuMainui)
 	ON_COMMAND(ID_TRAYMENU_EXIT, OnMainExit)
@@ -90,7 +89,7 @@ BEGIN_MESSAGE_MAP(CMainUIDlg, CDialog)
 	ON_COMMAND(ID_TRAYMENU_DESKTOPIMAGE, OnToolsDesktopimage)
 	ON_COMMAND(ID_TRAYMENU_WEBHISTORY, OnToolsWebhistory)
 	ON_COMMAND(ID_TRAYMENU_LOCKCOMPUTER, OnMainLockcomputer)
-//	ON_UPDATE_COMMAND_UI(ID_MAIN_LOCKCOMPUTER, OnUpdateMainLockcomputer)
+	ON_BN_CLICKED(IDC_MAIN_CANCEL, OnBnClickedMainCancel)
 END_MESSAGE_MAP()
 
 // CMainUIDlg 消息处理程序
@@ -102,7 +101,7 @@ void CMainUIDlg::OnNMClickTreeNavig(NMHDR *pNMHDR, LRESULT *pResult)
 }
 
 // 设置状态
-void CMainUIDlg::UpdateMenuState() {
+void CMainUIDlg::UpdateUIStateByModel() {
 	CMenu *pMenu = m_trayMenu.GetSubMenu(0);
 	if (Services::isParentModel() == true) {
 		for (UINT i = 0; i < pMenu->GetMenuItemCount(); ++i) {
@@ -110,6 +109,7 @@ void CMainUIDlg::UpdateMenuState() {
 			pMenu->EnableMenuItem(uID, MF_ENABLED);
 		}
 
+		// 选中家长模式
 		pMenu->CheckMenuItem(ID_TRAYMENU_MODEL_PARENTS, MF_CHECKED);
 		pMenu->CheckMenuItem(ID_TRAYMENU_MODEL_CHILDREN, MF_UNCHECKED);
 	} else {
@@ -121,21 +121,22 @@ void CMainUIDlg::UpdateMenuState() {
 				uID == ID_TRAYMENU_WEBHISTORY ||
 				uID == ID_TRAYMENU_DESKTOPIMAGE) {
 					pMenu->EnableMenuItem(uID, MF_GRAYED);
-			}
+				}
 		}
 
 		pMenu->CheckMenuItem(ID_TRAYMENU_MODEL_PARENTS, MF_UNCHECKED);
 		pMenu->CheckMenuItem(ID_TRAYMENU_MODEL_CHILDREN, MF_CHECKED);
 	}
 }
+
+// 设置托盘的图标
 void CMainUIDlg::setupTrayMenu() {
 	// system Tray
 	m_trayMenu.LoadMenu(IDC_MENU_TRAY_PARENT);
-	// m_trayMenuChild.LoadMenu(IDC_MENU_TRAY_CHILD);
 	m_sysTray.Create(this,10200, CALLMESSAGE, AfxGetApp()->LoadIcon(IDR_MAINFRAME),_T("Hola"));
 	m_sysTray.SetSysMenu(&m_trayMenu);
 
-	UpdateMenuState();
+	UpdateUIStateByModel();
 }
 
 int CMainUIDlg::OnCreate(LPCREATESTRUCT lpCreateStruct)
@@ -181,14 +182,10 @@ BOOL CMainUIDlg::OnInitDialog()
 	InitTreeNodes();
 	
 
-	//
-	m_btnOk.SetStyleBorder(CGuiButton::STYLEXP);
-	m_btnOk.SetCaption("OK");
-	m_btnCancel.SetStyleBorder(CGuiButton::STYLEXP);
-	m_btnCancel.SetCaption("Cancel");
-	m_btnApply.SetStyleBorder(CGuiButton::STYLEXP);
-	m_btnApply.SetCaption("Apply");
-	//
+	// 如果处于孩子模式下，则直接最小化窗口
+	if (Services::isParentModel() == false) {
+		ShowWindow(SW_HIDE);
+	}
 	return TRUE;  // 除非设置了控件的焦点，否则返回 TRUE
 }
 
@@ -206,12 +203,7 @@ void CMainUIDlg::OnSysCommand(UINT nID, LPARAM lParam)
 	}
 }
 
-// 按下Apply按钮
-void CMainUIDlg::OnBnClickedApply()
-{
-	ASSERT (NULL != m_curDlg);
-	m_curDlg->OnApply();
-}
+
 
 
 void CMainUIDlg::OnTraymenuMainui() {
@@ -257,13 +249,13 @@ void CMainUIDlg::OnMainParents()
 {
 	CDlgCheckPassword dlg;
 	if (IDOK == dlg.DoModal()) {
-		UpdateMenuState();
+		UpdateUIStateByModel();
 	}
 }
 void CMainUIDlg::OnMainChildren()
 {
 	Services::switchChildModel();
-	UpdateMenuState();
+	UpdateUIStateByModel();
 }
 
 LRESULT CMainUIDlg::OnHotKey(WPARAM wParam, LPARAM lParam) {
@@ -278,17 +270,7 @@ LRESULT CMainUIDlg::OnHotKey(WPARAM wParam, LPARAM lParam) {
 
 	return -1;
 }
-void CMainUIDlg::OnBnClickedOk()
-{
-	ASSERT (NULL != m_curDlg);
-	m_curDlg->OnApply();
-	ShowWindow(SW_HIDE);
-}
 
-void CMainUIDlg::OnBnClickedCancel()
-{
-	ShowWindow(SW_HIDE);
-}
 
 // 弹出工具窗口
 // 直接运行程序即刻，程序应该能够自己验证密码
@@ -302,10 +284,33 @@ void CMainUIDlg::OnToolsWebhistory() {
 // 相应按钮
 void CMainUIDlg::OnOK() {
 	ShowWindow(SW_HIDE);
+	m_bShowed = FALSE;
 }
 
 void CMainUIDlg::OnCancel() {
 	ShowWindow(SW_HIDE);
+	m_bShowed = FALSE;
+}
+
+void CMainUIDlg::OnBnClickedOk()
+{
+	ASSERT (NULL != m_curDlg);
+	m_curDlg->OnApply();
+	m_bShowed = FALSE;
+	ShowWindow(SW_HIDE);
+}
+
+void CMainUIDlg::OnBnClickedMainCancel()
+{
+	m_bShowed = FALSE;
+	ShowWindow(SW_HIDE);
+}
+
+// 按下Apply按钮
+void CMainUIDlg::OnBnClickedApply()
+{
+	ASSERT (NULL != m_curDlg);
+	m_curDlg->OnApply();
 }
 
 // 设置控件的字体
