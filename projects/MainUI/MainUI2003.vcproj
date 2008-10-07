@@ -130,6 +130,12 @@
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
 			<File
+				RelativePath=".\MainUI.cpp">
+			</File>
+			<File
+				RelativePath=".\MainUI.h">
+			</File>
+			<File
 				RelativePath=".\Resource.h">
 			</File>
 			<File
@@ -155,18 +161,6 @@
 			Name="头文件"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
-			<File
-				RelativePath=".\BaseDlg.cpp">
-			</File>
-			<File
-				RelativePath=".\BaseDlg.h">
-			</File>
-			<File
-				RelativePath=".\MainUI.cpp">
-			</File>
-			<File
-				RelativePath=".\MainUI.h">
-			</File>
 		</Filter>
 		<Filter
 			Name="资源文件"
@@ -296,6 +290,16 @@
 					RelativePath=".\Lev1DlgRules.h">
 				</File>
 			</Filter>
+			<Filter
+				Name="common parent"
+				Filter="">
+				<File
+					RelativePath=".\BaseDlg.cpp">
+				</File>
+				<File
+					RelativePath=".\BaseDlg.h">
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="selfUI"
@@ -325,6 +329,10 @@
 			<File
 				RelativePath=".\globalvariable.h">
 			</File>
+		</Filter>
+		<Filter
+			Name="UtilitydLG"
+			Filter="">
 		</Filter>
 		<File
 			RelativePath=".\res\MainUI.manifest">

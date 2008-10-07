@@ -31,6 +31,7 @@
 #define IDS_WEB_HISTORY_FILEDLG_EXT     118
 #define IDS_ERROR_WEB_SET_FAILED        119
 #define IDS_SCREEN_RECORD_CLEAR_BUTTON  120
+#define IDS_CHECK_PASSWORD_WRONG        121
 #define IDR_MAINFRAME                   128
 #define IDD_DLG_HELP                    129
 #define IDD_DLG_ABOUT                   130
@@ -148,8 +149,6 @@
 #define IDC_CHK_ALLPAGES                1076
 #define IDC_SLIDER_AUTOCLEAR_TIME       1077
 #define IDC_SLIDER_SAVE_TIMESPAN        1078
-
-// Eyecare DLG
 #define IDC_CHK_AUTOCLEAN               1079
 #define IDC_CHK_SCREENSAVE              1080
 #define IDC_CHK_DENY_OTHERS             1082

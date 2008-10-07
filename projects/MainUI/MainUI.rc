@@ -738,6 +738,7 @@ BEGIN
                             "TXT files (*.txt)|*.txt|All Files (*.*)|*.*||"
     IDS_ERROR_WEB_SET_FAILED "Set Web Record Failed!"
     IDS_SCREEN_RECORD_CLEAR_BUTTON "Clear Completed!"
+    IDS_CHECK_PASSWORD_WRONG "Password was not corrected!"
 END
 
 #endif    // Ó¢Óï(ÃÀ¹ú) resources
