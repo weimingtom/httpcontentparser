@@ -9,4 +9,11 @@ public:
 	~AutoInitInScale() {CoUninitialize();}
 };
 
+inline
+void SafeRelease(IUnknown *pUnknown) {
+	if (NULL != pUnknown) {
+		pUnknown->Release();
+	}
+}
+
 #endif  // _INCLUDE_COM_INITIALIZE_H__
