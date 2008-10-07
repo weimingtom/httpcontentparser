@@ -5,8 +5,8 @@
 #include ".\MainUI.h"
 #include ".\dlgcheckpassword.h"
 #include ".\globalvariable.h"
+#include ".\services.h"
 #include <typeconvert.h>
-#include <com\COMInit.h>
 
 
 // CDlgCheckPassword ¶Ô»°¿ò
@@ -26,17 +26,7 @@ CDlgCheckPassword::~CDlgCheckPassword()
 // ¼ì²âÃÜÂë
 bool CDlgCheckPassword::checkPassword() {
 	UpdateData(TRUE);
-	AutoInitInScale auto_;
-	try {
-		VARIANT_BOOL bSucc;
-		IAppSetting *appSetting = NULL;
-		HRESULT hr = CoCreateInstance(CLSID_AppSetting, NULL, CLSCTX_LOCAL_SERVER, IID_IAppSetting, (LPVOID*)&appSetting);
-		appSetting->switchModel(VARIANT_TRUE, _bstr_t((LPCTSTR)m_strPassword), &bSucc);
-
-		return convert(bSucc);
-	} catch (_com_error &) {
-		return false;
-	}
+	return Services::switchParentModel((LPCTSTR)m_strPassword);
 }
 void CDlgCheckPassword::DoDataExchange(CDataExchange* pDX)
 {

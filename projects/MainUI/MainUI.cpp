@@ -6,12 +6,13 @@
 #include ".\MainUIDlg.h"
 #include ".\globalvariable.h"
 #include ".\mainui.h"
+#include ".\services.h"
 #include <sysutility.h>
 #include <typeconvert.h>
 #include <com\cominit.h>
 
+
 IDNSSetting *g_dnssetting = NULL;
-IAppSetting *g_appSetting = NULL;
 XMLConfiguration g_configuration;	// 配置信息
 extern bool g_parentModel = false;
 
@@ -96,17 +97,6 @@ BOOL CMainUIApp::Initialize(void)
 		return FALSE;
 	}
 
-	// 获取系统设置
-	hr = CoCreateInstance(CLSID_AppSetting, 
-		NULL, CLSCTX_LOCAL_SERVER, IID_IAppSetting, (LPVOID*)&g_appSetting);
-	if (FAILED(hr)) {
-		AfxMessageBox(str);
-		return FALSE;
-	}
-
-	// 获取当前状态
-	VARIANT_BOOL bParent;
-	g_appSetting->get_ParentModel(&bParent);
-	g_parentModel = convert(bParent);
-	return 0;
+	g_parentModel = Services::isParentModel();
+	return TRUE;
 }

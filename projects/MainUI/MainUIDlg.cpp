@@ -7,6 +7,7 @@
 #include ".\mainuidlg.h"
 #include ".\dlgchangepassword.h"
 #include ".\dlgcheckpassword.h"
+#include ".\services.h"
 
 #include <hotkey.h>
 
@@ -79,17 +80,289 @@ BEGIN_MESSAGE_MAP(CMainUIDlg, CDialog)
 	ON_WM_KEYDOWN()
 	ON_MESSAGE(WM_HOTKEY, OnHotKey)
 	ON_WM_CONTEXTMENU()
-	ON_COMMAND(ID_MAIN_CHANGEPASSWORD, OnMainChangepassword)
-	ON_COMMAND(ID_TRAYMENU_MAINUI, OnTraymenuMainui)
-	ON_COMMAND(ID_MAIN_EXIT, OnMainExit)
-	ON_COMMAND(ID_MAIN_PARENTS, OnMainParents)
-	ON_COMMAND(ID_MAIN_CHILDREN, OnMainChildren)
 	ON_BN_CLICKED(IDC_OK, OnBnClickedOk)
 	ON_BN_CLICKED(IDC_CANCEL, OnBnClickedCancel)
-	ON_COMMAND(ID_TOOLS_DESKTOPIMAGE, OnToolsDesktopimage)
-	ON_COMMAND(ID_TOOLS_WEBHISTORY, OnToolsWebhistory)
+	ON_COMMAND(ID_TRAYMENU_CHANGEPASSWORD, OnMainChangepassword)
+	ON_COMMAND(ID_TRAYMENU_MAINUI, OnTraymenuMainui)
+	ON_COMMAND(ID_TRAYMENU_EXIT, OnMainExit)
+	ON_COMMAND(ID_TRAYMENU_MODEL_PARENTS, OnMainParents)
+	ON_COMMAND(ID_TRAYMENU_MODEL_CHILDREN, OnMainChildren)
+	ON_COMMAND(ID_TRAYMENU_DESKTOPIMAGE, OnToolsDesktopimage)
+	ON_COMMAND(ID_TRAYMENU_WEBHISTORY, OnToolsWebhistory)
+	ON_COMMAND(ID_TRAYMENU_LOCKCOMPUTER, OnMainLockcomputer)
+//	ON_UPDATE_COMMAND_UI(ID_MAIN_LOCKCOMPUTER, OnUpdateMainLockcomputer)
 END_MESSAGE_MAP()
 
+// CMainUIDlg 消息处理程序
+
+void CMainUIDlg::OnNMClickTreeNavig(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	// 获取当前选中的项
+	*pResult = 0;
+}
+
+// 设置状态
+void CMainUIDlg::UpdateMenuState() {
+	CMenu *pMenu = m_trayMenu.GetSubMenu(0);
+	if (Services::isParentModel() == true) {
+		for (UINT i = 0; i < pMenu->GetMenuItemCount(); ++i) {
+			const UINT uID = pMenu->GetMenuItemID(i);
+			pMenu->EnableMenuItem(uID, MF_ENABLED);
+		}
+
+		pMenu->CheckMenuItem(ID_TRAYMENU_MODEL_PARENTS, MF_CHECKED);
+		pMenu->CheckMenuItem(ID_TRAYMENU_MODEL_CHILDREN, MF_UNCHECKED);
+	} else {
+		// 如果在孩子模式下，很多按钮将不可用
+		for (UINT i = 0; i < pMenu->GetMenuItemCount(); ++i) {
+			const UINT uID = pMenu->GetMenuItemID(i);
+			if (uID == ID_TRAYMENU_MAINUI ||
+				uID == ID_TRAYMENU_LOCKCOMPUTER || 
+				uID == ID_TRAYMENU_WEBHISTORY ||
+				uID == ID_TRAYMENU_DESKTOPIMAGE) {
+					pMenu->EnableMenuItem(uID, MF_GRAYED);
+			}
+		}
+
+		pMenu->CheckMenuItem(ID_TRAYMENU_MODEL_PARENTS, MF_UNCHECKED);
+		pMenu->CheckMenuItem(ID_TRAYMENU_MODEL_CHILDREN, MF_CHECKED);
+	}
+}
+void CMainUIDlg::setupTrayMenu() {
+	// system Tray
+	m_trayMenu.LoadMenu(IDC_MENU_TRAY_PARENT);
+	// m_trayMenuChild.LoadMenu(IDC_MENU_TRAY_CHILD);
+	m_sysTray.Create(this,10200, CALLMESSAGE, AfxGetApp()->LoadIcon(IDR_MAINFRAME),_T("Hola"));
+	m_sysTray.SetSysMenu(&m_trayMenu);
+
+	UpdateMenuState();
+}
+
+int CMainUIDlg::OnCreate(LPCREATESTRUCT lpCreateStruct)
+{
+	if (CDialog::OnCreate(lpCreateStruct) == -1)
+		return -1;
+
+	setupTrayMenu();
+	return 0;
+}
+
+
+BOOL CMainUIDlg::OnInitDialog()
+{
+	CDialog::OnInitDialog();
+	
+
+	// 设置字体
+	setControlsFonts();
+
+	// IDM_ABOUTBOX 必须在系统命令范围内。
+	ASSERT((IDM_ABOUTBOX & 0xFFF0) == IDM_ABOUTBOX);
+	ASSERT(IDM_ABOUTBOX < 0xF000);
+
+	CMenu* pSysMenu = GetSystemMenu(FALSE);
+	if (pSysMenu != NULL)
+	{
+		CString strAboutMenu;
+		strAboutMenu.LoadString(IDS_ABOUTBOX);
+		if (!strAboutMenu.IsEmpty())
+		{
+			pSysMenu->AppendMenu(MF_SEPARATOR);
+			pSysMenu->AppendMenu(MF_STRING, IDM_ABOUTBOX, strAboutMenu);
+		}
+	}
+
+	// 设置此对话框的图标。当应用程序主窗口不是对话框时，框架将自动
+	//  执行此操作
+	SetIcon(m_hIcon, TRUE);			// 设置大图标
+	SetIcon(m_hIcon, FALSE);		// 设置小图标
+
+	initDlgs();
+	InitTreeNodes();
+	
+
+	//
+	m_btnOk.SetStyleBorder(CGuiButton::STYLEXP);
+	m_btnOk.SetCaption("OK");
+	m_btnCancel.SetStyleBorder(CGuiButton::STYLEXP);
+	m_btnCancel.SetCaption("Cancel");
+	m_btnApply.SetStyleBorder(CGuiButton::STYLEXP);
+	m_btnApply.SetCaption("Apply");
+	//
+	return TRUE;  // 除非设置了控件的焦点，否则返回 TRUE
+}
+
+
+void CMainUIDlg::OnSysCommand(UINT nID, LPARAM lParam)
+{
+	if ((nID & 0xFFF0) == IDM_ABOUTBOX) {
+		CAboutDlg dlgAbout;
+		dlgAbout.DoModal();
+	} else if (nID == SC_MINIMIZE) {
+		ShowWindow(SW_HIDE);
+		m_bShowed = FALSE;
+	} else {
+		CDialog::OnSysCommand(nID, lParam);
+	}
+}
+
+// 按下Apply按钮
+void CMainUIDlg::OnBnClickedApply()
+{
+	ASSERT (NULL != m_curDlg);
+	m_curDlg->OnApply();
+}
+
+
+void CMainUIDlg::OnTraymenuMainui() {
+	CString strMenuItem;
+	if (m_bShowed) {
+		strMenuItem.LoadString(IDS_TRAYMENU_HIDEUI);
+		ShowWindow(SW_HIDE);
+		m_bShowed = FALSE;
+	} else {
+		if (Services::isParentModel() == false) {
+			// 如果当前模式不是parent mode, 弹出对话框
+			// 使用户输入密码
+			CDlgCheckPassword dlg;
+			if (IDOK == dlg.DoModal()) {
+				strMenuItem.LoadString(IDS_TRAYMENU_SHOWUI);
+				ShowWindow(SW_SHOW);
+				m_bShowed = TRUE;
+			}
+		} else {
+			// 如果用户是parent model,则直接弹出对话框
+			strMenuItem.LoadString(IDS_TRAYMENU_SHOWUI);
+			ShowWindow(SW_SHOW);
+			m_bShowed = TRUE;
+		}
+	}
+}
+
+// 推出按钮
+void CMainUIDlg::OnMainExit() {
+	ShowWindow(SW_SHOW);
+	CDialog::OnOK();
+}
+
+void CMainUIDlg::OnMainChangepassword()
+{
+	CDlgChangePassword dlg;
+	dlg.DoModal();
+}
+
+//====================================
+// 模式切换
+void CMainUIDlg::OnMainParents()
+{
+	CDlgCheckPassword dlg;
+	if (IDOK == dlg.DoModal()) {
+		UpdateMenuState();
+	}
+}
+void CMainUIDlg::OnMainChildren()
+{
+	Services::switchChildModel();
+	UpdateMenuState();
+}
+
+LRESULT CMainUIDlg::OnHotKey(WPARAM wParam, LPARAM lParam) {
+	int id = (int)wParam;
+	if (id == HOTKEY_ID_POPUP_MAIN) {
+		AfxGetMainWnd()->ShowWindow(SW_SHOW);
+	} else if (id == HOTKEY_ID_SWITCH_USER) {
+		CDlgCheckPassword dlg;
+		if (IDOK == dlg.DoModal()) {
+		}
+	}
+
+	return -1;
+}
+void CMainUIDlg::OnBnClickedOk()
+{
+	ASSERT (NULL != m_curDlg);
+	m_curDlg->OnApply();
+	ShowWindow(SW_HIDE);
+}
+
+void CMainUIDlg::OnBnClickedCancel()
+{
+	ShowWindow(SW_HIDE);
+}
+
+// 弹出工具窗口
+// 直接运行程序即刻，程序应该能够自己验证密码
+void CMainUIDlg::OnToolsDesktopimage() {
+}
+
+void CMainUIDlg::OnToolsWebhistory() {
+}
+
+
+// 相应按钮
+void CMainUIDlg::OnOK() {
+	ShowWindow(SW_HIDE);
+}
+
+void CMainUIDlg::OnCancel() {
+	ShowWindow(SW_HIDE);
+}
+
+// 设置控件的字体
+void CMainUIDlg::setControlsFonts() {
+	LOGFONT lf;  
+	memset(&lf, 0, sizeof(LOGFONT));
+	lf.lfHeight = 14; 
+	lf.lfWeight = FW_LIGHT;
+	strcpy(lf.lfFaceName, "宋体");
+	m_fontTree.CreateFontIndirect(&lf); 
+	GetDlgItem(IDC_TREE_NAVIG)->SetFont(&m_fontTree);
+
+	memset(&lf, 0, sizeof(LOGFONT));
+	strcpy(lf.lfFaceName, "宋体");
+	lf.lfWeight = FW_BOLD;
+	lf.lfHeight = 18;
+	m_fontTitle.CreateFontIndirect(&lf); 
+	GetDlgItem(IDC_RIGHT_TITLE)->SetFont(&m_fontTitle);
+}
+
+//==============================================
+// 如果向对话框添加最小化按钮，则需要下面的代码
+//  来绘制该图标。对于使用文档/视图模型的 MFC 应用程序，
+//  这将由框架自动完成。
+
+void CMainUIDlg::OnPaint() 
+{
+	if (IsIconic()) {
+		CPaintDC dc(this); // 用于绘制的设备上下文
+
+		SendMessage(WM_ICONERASEBKGND, reinterpret_cast<WPARAM>(dc.GetSafeHdc()), 0);
+
+		// 使图标在工作矩形中居中
+		int cxIcon = GetSystemMetrics(SM_CXICON);
+		int cyIcon = GetSystemMetrics(SM_CYICON);
+		CRect rect;
+		GetClientRect(&rect);
+		int x = (rect.Width() - cxIcon + 1) / 2;
+		int y = (rect.Height() - cyIcon + 1) / 2;
+
+		// 绘制图标
+		dc.DrawIcon(x, y, m_hIcon);
+	} else {
+		CDialog::OnPaint();
+	}
+}
+
+//当用户拖动最小化窗口时系统调用此函数取得光标显示。
+HCURSOR CMainUIDlg::OnQueryDragIcon()
+{
+	return static_cast<HCURSOR>(m_hIcon);
+}
+void CMainUIDlg::OnMainLockcomputer() {
+}
+
+//===================================================
+// 设置子对话框
 void CMainUIDlg::InitTreeNodes() {
 	// m_treeNavigation.DeleteAllItems();
 
@@ -203,6 +476,14 @@ void CMainUIDlg::setRulesDlg() {
 	m_treeNavigation.SelectItem(hItemRules);
 }
 
+
+void CMainUIDlg::ChangeCurDlg(CBaseDlg *dlg) {
+	if (m_curDlg != dlg) {
+		m_curDlg = dlg;
+	}
+}
+
+// 设置当前显示的对话框
 void CMainUIDlg::setCurDlg(const DWORD item) {
 	if (item == -1)  // 如果是根节点
 		return;
@@ -259,106 +540,6 @@ void CMainUIDlg::setCurDlg(const DWORD item) {
 
 	showDlg();
 }
-// CMainUIDlg 消息处理程序
-
-void CMainUIDlg::OnNMClickTreeNavig(NMHDR *pNMHDR, LRESULT *pResult)
-{
-	// 获取当前选中的项
-	*pResult = 0;
-}
-
-void CMainUIDlg::setupTrayMenu() {
-	// system Tray
-	m_trayMenu.LoadMenu(IDC_MENU_SYSTRAY);
-//	m_trayMenu.StyleDispl(CNewMenu::STYLE_ORIGINAL);
-	m_sysTray.Create(this,10200, CALLMESSAGE, AfxGetApp()->LoadIcon(IDR_MAINFRAME),_T("Hola"));
-	m_sysTray.SetSysMenu(&m_trayMenu);
-}
-
-int CMainUIDlg::OnCreate(LPCREATESTRUCT lpCreateStruct)
-{
-	if (CDialog::OnCreate(lpCreateStruct) == -1)
-		return -1;
-
-	setupTrayMenu();
-	return 0;
-}
-
-BOOL CMainUIDlg::OnInitDialog()
-{
-	CDialog::OnInitDialog();
-	
-
-	// 设置字体
-	setControlsFonts();
-
-	// IDM_ABOUTBOX 必须在系统命令范围内。
-	ASSERT((IDM_ABOUTBOX & 0xFFF0) == IDM_ABOUTBOX);
-	ASSERT(IDM_ABOUTBOX < 0xF000);
-
-	CMenu* pSysMenu = GetSystemMenu(FALSE);
-	if (pSysMenu != NULL)
-	{
-		CString strAboutMenu;
-		strAboutMenu.LoadString(IDS_ABOUTBOX);
-		if (!strAboutMenu.IsEmpty())
-		{
-			pSysMenu->AppendMenu(MF_SEPARATOR);
-			pSysMenu->AppendMenu(MF_STRING, IDM_ABOUTBOX, strAboutMenu);
-		}
-	}
-
-	// 设置此对话框的图标。当应用程序主窗口不是对话框时，框架将自动
-	//  执行此操作
-	SetIcon(m_hIcon, TRUE);			// 设置大图标
-	SetIcon(m_hIcon, FALSE);		// 设置小图标
-
-	initDlgs();
-	InitTreeNodes();
-	
-
-	//
-	m_btnOk.SetStyleBorder(CGuiButton::STYLEXP);
-	m_btnOk.SetCaption("OK");
-	m_btnCancel.SetStyleBorder(CGuiButton::STYLEXP);
-	m_btnCancel.SetCaption("Cancel");
-	m_btnApply.SetStyleBorder(CGuiButton::STYLEXP);
-	m_btnApply.SetCaption("Apply");
-	//
-	return TRUE;  // 除非设置了控件的焦点，否则返回 TRUE
-}
-
-void CMainUIDlg::setControlsFonts() {
-	LOGFONT lf;  
-	memset(&lf, 0, sizeof(LOGFONT));
-	lf.lfHeight = 14; 
-	lf.lfWeight = FW_LIGHT;
-	strcpy(lf.lfFaceName, "宋体");
-	m_fontTree.CreateFontIndirect(&lf); 
-	GetDlgItem(IDC_TREE_NAVIG)->SetFont(&m_fontTree);
-
-	memset(&lf, 0, sizeof(LOGFONT));
-	strcpy(lf.lfFaceName, "宋体");
-	lf.lfWeight = FW_BOLD;
-	lf.lfHeight = 18;
-	m_fontTitle.CreateFontIndirect(&lf); 
-	GetDlgItem(IDC_RIGHT_TITLE)->SetFont(&m_fontTitle);
-}
-void CMainUIDlg::OnSysCommand(UINT nID, LPARAM lParam)
-{
-	if ((nID & 0xFFF0) == IDM_ABOUTBOX) {
-		CAboutDlg dlgAbout;
-		dlgAbout.DoModal();
-	} else if (nID == SC_MINIMIZE) {
-		ShowWindow(SW_HIDE);
-		m_bShowed = FALSE;
-	} else {
-		CDialog::OnSysCommand(nID, lParam);
-	}
-}
-
-
-
 
 void CMainUIDlg::OnTvnSelchangedTreeNavig(NMHDR *pNMHDR, LRESULT *pResult)
 {
@@ -375,132 +556,4 @@ void CMainUIDlg::OnTvnSelchangedTreeNavig(NMHDR *pNMHDR, LRESULT *pResult)
 	}
 
 	*pResult = 0;
-}
-
-// 按下Apply按钮
-void CMainUIDlg::OnBnClickedApply()
-{
-	ASSERT (NULL != m_curDlg);
-	m_curDlg->OnApply();
-}
-
-
-void CMainUIDlg::OnTraymenuMainui() {
-	CString strMenuItem;
-	if (m_bShowed) {
-		strMenuItem.LoadString(IDS_TRAYMENU_HIDEUI);
-		ShowWindow(SW_HIDE);
-		m_bShowed = FALSE;
-	} else {
-		strMenuItem.LoadString(IDS_TRAYMENU_SHOWUI);
-		ShowWindow(SW_SHOW);
-		m_bShowed = TRUE;
-	}
-}
-
-// 推出按钮
-void CMainUIDlg::OnMainExit() {
-	ShowWindow(SW_SHOW);
-	CDialog::OnOK();
-}
-
-void CMainUIDlg::OnMainChangepassword()
-{
-	CDlgChangePassword dlg;
-	dlg.DoModal();
-}
-
-void CMainUIDlg::OnMainParents()
-{
-	m_trayMenu.CheckMenuItem(ID_MAIN_PARENTS, TRUE);
-	m_trayMenu.CheckMenuItem(ID_MAIN_CHILDREN, FALSE);
-	CDlgCheckPassword dlg;
-	if (IDOK == dlg.DoModal()) {
-	}
-}
-
-LRESULT CMainUIDlg::OnHotKey(WPARAM wParam, LPARAM lParam) {
-	int id = (int)wParam;
-	if (id == HOTKEY_ID_POPUP_MAIN) {
-		AfxGetMainWnd()->ShowWindow(SW_SHOW);
-	} else if (id == HOTKEY_ID_SWITCH_USER) {
-		CDlgCheckPassword dlg;
-		if (IDOK == dlg.DoModal()) {
-		}
-	}
-
-	return -1;
-}
-
-void CMainUIDlg::OnMainChildren()
-{
-	m_trayMenu.CheckMenuItem(ID_MAIN_PARENTS, FALSE);
-	m_trayMenu.CheckMenuItem(ID_MAIN_CHILDREN, TRUE);
-}
-
-void CMainUIDlg::OnBnClickedOk()
-{
-	ASSERT (NULL != m_curDlg);
-	m_curDlg->OnApply();
-	ShowWindow(SW_HIDE);
-}
-
-void CMainUIDlg::OnBnClickedCancel()
-{
-	ShowWindow(SW_HIDE);
-}
-
-// 弹出工具窗口
-// 直接运行程序即刻，程序应该能够自己验证密码
-void CMainUIDlg::OnToolsDesktopimage() {
-}
-
-void CMainUIDlg::OnToolsWebhistory() {
-}
-
-void CMainUIDlg::ChangeCurDlg(CBaseDlg *dlg) {
-	if (m_curDlg != dlg) {
-		m_curDlg = dlg;
-	}
-}
-void CMainUIDlg::OnOK() {
-	ShowWindow(SW_HIDE);
-}
-
-void CMainUIDlg::OnCancel() {
-	ShowWindow(SW_HIDE);
-}
-
-
-//==============================================
-// 如果向对话框添加最小化按钮，则需要下面的代码
-//  来绘制该图标。对于使用文档/视图模型的 MFC 应用程序，
-//  这将由框架自动完成。
-
-void CMainUIDlg::OnPaint() 
-{
-	if (IsIconic()) {
-		CPaintDC dc(this); // 用于绘制的设备上下文
-
-		SendMessage(WM_ICONERASEBKGND, reinterpret_cast<WPARAM>(dc.GetSafeHdc()), 0);
-
-		// 使图标在工作矩形中居中
-		int cxIcon = GetSystemMetrics(SM_CXICON);
-		int cyIcon = GetSystemMetrics(SM_CYICON);
-		CRect rect;
-		GetClientRect(&rect);
-		int x = (rect.Width() - cxIcon + 1) / 2;
-		int y = (rect.Height() - cyIcon + 1) / 2;
-
-		// 绘制图标
-		dc.DrawIcon(x, y, m_hIcon);
-	} else {
-		CDialog::OnPaint();
-	}
-}
-
-//当用户拖动最小化窗口时系统调用此函数取得光标显示。
-HCURSOR CMainUIDlg::OnQueryDragIcon()
-{
-	return static_cast<HCURSOR>(m_hIcon);
 }
