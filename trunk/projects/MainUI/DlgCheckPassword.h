@@ -1,8 +1,6 @@
-#pragma once
+#ifndef _MAINUI_CDLGCHECKPASSWORD_H__
+#define _MAINUI_CDLGCHECKPASSWORD_H__
 
-#include <Guilib1.5\GuiEdit.h> 
-#include <Guilib1.5\GuiGroupBox.h>
-#include <Guilib1.5\GuiButton.h>
 #include "afxwin.h"
 
 // CDlgCheckPassword ¶Ô»°¿ò
@@ -23,14 +21,19 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 public:
-	CGuiEdit m_edtPassword;
+	CEdit m_edtPassword;
 	CString m_strPassword;
-	CGuiButton m_btnOk;
-	CGuiButton m_btnCancel;
+	CButton m_btnOk;
+	CButton m_btnCancel;
 	HICON m_hIcon;
 
 public:
 	afx_msg void OnBnClickedOk();
-	virtual BOOL OnInitDialog();
 	afx_msg HCURSOR OnQueryDragIcon();
+	virtual BOOL OnInitDialog();
+
+public:
+	bool checkPassword();
 };
+
+#endif  // _MAINUI_CDLGCHECKPASSWORD_H__

@@ -2,9 +2,11 @@
 //
 
 #include "stdafx.h"
-#include "MainUI.h"
-#include "DlgCheckPassword.h"
+#include ".\MainUI.h"
 #include ".\dlgcheckpassword.h"
+#include ".\globalvariable.h"
+#include <typeconvert.h>
+#include <com\COMInit.h>
 
 
 // CDlgCheckPassword 对话框
@@ -21,6 +23,21 @@ CDlgCheckPassword::~CDlgCheckPassword()
 {
 }
 
+// 检测密码
+bool CDlgCheckPassword::checkPassword() {
+	UpdateData(TRUE);
+	AutoInitInScale auto_;
+	try {
+		VARIANT_BOOL bSucc;
+		IAppSetting *appSetting = NULL;
+		HRESULT hr = CoCreateInstance(CLSID_AppSetting, NULL, CLSCTX_LOCAL_SERVER, IID_IAppSetting, (LPVOID*)&appSetting);
+		appSetting->switchModel(VARIANT_TRUE, _bstr_t((LPCTSTR)m_strPassword), &bSucc);
+
+		return convert(bSucc);
+	} catch (_com_error &) {
+		return false;
+	}
+}
 void CDlgCheckPassword::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
@@ -41,18 +58,18 @@ END_MESSAGE_MAP()
 
 void CDlgCheckPassword::OnBnClickedOk()
 {
-	// TODO: 在此添加控件通知处理程序代码
-	OnOK();
+	if (checkPassword() == true) {
+		OnOK();
+	} else {
+		CString strAlert;
+		strAlert.LoadString(IDS_CHECK_PASSWORD_WRONG);
+		AfxMessageBox(strAlert, MB_OK | MB_ICONSTOP | MB_APPLMODAL );
+	}
 }
 
 BOOL CDlgCheckPassword::OnInitDialog()
 {
 	CDialog::OnInitDialog();
-
-	m_btnOk.SetStyleBorder(CGuiButton::STYLEXP);
-	m_btnOk.SetCaption("OK");
-	m_btnCancel.SetStyleBorder(CGuiButton::STYLEXP);
-	m_btnCancel.SetCaption("Cancel");
 
 	// set Icon
 	SetIcon(m_hIcon, TRUE);			// 设置大图标
