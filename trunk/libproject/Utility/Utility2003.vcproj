@@ -48,7 +48,7 @@ copy .\httppacket.h ..\..\include\utility
 copy .\dns.h ..\..\include\utility
 copy .\httprequestpacket.h ..\..\include\utility
 copy .\strutility.h ..\..\include\utility
-"/>
+copy .\timeutility.h ..\..\include\utility"/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
 			<Tool
@@ -211,6 +211,16 @@ copy .\strutility.h ..\..\include\utility
 			</File>
 			<File
 				RelativePath=".\strutility.h">
+			</File>
+		</Filter>
+		<Filter
+			Name="timeutility"
+			Filter="">
+			<File
+				RelativePath=".\timeutility.cpp">
+			</File>
+			<File
+				RelativePath=".\timeutility.h">
 			</File>
 		</Filter>
 	</Files>
