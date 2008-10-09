@@ -75,11 +75,13 @@
 #define IDC_BTN_RESET                   1005
 #define IDC_BTN_HISTORY                 1005
 #define IDC_VIEW_HISTORY                1005
+#define IDC_BTN_HISTORY_PAGES           1005
 #define IDC_APPLY                       1006
 #define IDC_LIST1                       1006
 #define IDC_CHK_PNG                     1006
 #define IDS_TREE_ONLINE_HOUR            1006
 #define IDC_BTN_EXPORT_WEBSITES         1006
+#define IDC_BTN_HISTORY_IMAGE           1006
 #define IDC_BUTTON3                     1007
 #define IDS_TREE_HELP                   1007
 #define IDC_BUTTON4                     1008
@@ -116,7 +118,6 @@
 #define IDC_OK2                         1032
 #define IDC_HOTKEY1                     1033
 #define IDC_HOTKEY_SHOWDLG              1033
-#define IDC_MAIN_OK2                    1033
 #define IDC_MAIN_CANCEL                 1033
 #define IDC_HOTKEY2                     1034
 #define IDC_CHK_ENABLE_DNS              1034
