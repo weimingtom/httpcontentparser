@@ -92,7 +92,8 @@ void CDlgWebHistory::initializeSetting() {
 }
 BEGIN_MESSAGE_MAP(CDlgWebHistory, CDialog)
 	ON_BN_CLICKED(IDC_BUN_CLEAR_CACHE, OnBnClickedBunClearCache)
-	ON_BN_CLICKED(IDC_BTN_EXPORT_WEBSITES, OnBnClickedBtnExportWebsites)
+	ON_BN_CLICKED(IDC_BTN_HISTORY_PAGES, OnBnClickedBtnHistoryPages)
+	ON_BN_CLICKED(IDC_BTN_HISTORY_IMAGE, OnBnClickedBtnHistoryImage)
 END_MESSAGE_MAP()
 
 // CDlgWebHistory 消息处理程序
@@ -111,11 +112,19 @@ BOOL CDlgWebHistory::OnInitDialog()
 	return TRUE;  // return TRUE unless you set the focus to a control
 }
 
-void CDlgWebHistory::OnBnClickedBtnExportWebsites() {
-	CString strExt, strDefault;
-	strExt.LoadString(IDS_WEB_HISTORY_FILEDLG_EXT);
-	strDefault.LoadString(IDS_WEB_HISTORY_FILEDLG_DEFAULT);
-	CFileDialog dlg(FALSE, _T("Chart Files (*.xlc)|*.xlc|All Files (*.*)|*.*||"), strDefault);
-	if (IDOK == dlg.DoModal()) {
-	}
+
+void CDlgWebHistory::OnBnClickedBtnHistoryPages()
+{
+	TCHAR webpages[MAX_PATH], installpath[MAX_PATH];
+	GetInstallPath(installpath, MAX_PATH, (HMODULE)AfxGetInstanceHandle());
+	GetPageDirectory(webpages, MAX_PATH, installpath);
+	ShellExecute(NULL, TEXT("open"), NULL, NULL, webpages, SW_SHOWNORMAL);
+}
+
+void CDlgWebHistory::OnBnClickedBtnHistoryImage()
+{
+	TCHAR webimages[MAX_PATH], installpath[MAX_PATH];
+	GetInstallPath(installpath, MAX_PATH, (HMODULE)AfxGetInstanceHandle());
+	GetImageDirectory(webimages, MAX_PATH, installpath);
+	ShellExecute(NULL, TEXT("open"), NULL, NULL, webimages, SW_SHOWNORMAL);
 }

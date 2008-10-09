@@ -36,8 +36,10 @@ protected:
 	void initializeSetting();
 public:
 	afx_msg void OnBnClickedBunClearCache();
+	afx_msg void OnBnClickedBtnHistoryPages();
+	afx_msg void OnBnClickedBtnHistoryImage();
 	virtual BOOL OnInitDialog();
-	afx_msg void OnBnClickedBtnExportWebsites();
+
 
 	CButton m_btnExportWebSiteList;
 	CButton m_btnViewtheHistory;

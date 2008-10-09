@@ -390,14 +390,13 @@ BEGIN
     CONTROL         "Save All website",IDC_CHK_ALLWEBSITES,"Button",
                     BS_AUTOCHECKBOX | WS_TABSTOP,132,64,88,10
     PUSHBUTTON      "Clear",IDC_BUN_CLEAR_CACHE,180,109,50,14
-    PUSHBUTTON      "View the History",IDC_BTN_HISTORY,124,164,92,14
+    PUSHBUTTON      "View the pages",IDC_BTN_HISTORY_PAGES,124,164,92,14
     GROUPBOX        "History",IDC_STA_HISTORY,7,90,236,47
     CONTROL         "",IDC_SLIDER_AUTOCLEAR_TIME,"msctls_trackbar32",
                     TBS_AUTOTICKS | TBS_TOP | WS_TABSTOP,61,104,109,20
     GROUPBOX        "Tools",IDC_STA_TOOLS,7,146,236,47
     LTEXT           "Auto Clear",IDC_STATIC,17,112,35,8
-    PUSHBUTTON      "Export Website List",IDC_BTN_EXPORT_WEBSITES,23,164,85,
-                    14
+    PUSHBUTTON      "View the Images",IDC_BTN_HISTORY_IMAGE,23,164,85,14
 END
 
 IDD_TEMPLATE1 DIALOGEX 0, 0, 250, 200
