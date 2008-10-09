@@ -121,11 +121,17 @@
 			<File
 				RelativePath=".\TestUtility.cpp">
 			</File>
+			<File
+				RelativePath=".\ZipUtilityTest.cpp">
+			</File>
 		</Filter>
 		<Filter
 			Name="头文件"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
+			<File
+				RelativePath=".\ZipUtilityTest.h">
+			</File>
 		</Filter>
 		<Filter
 			Name="资源文件"
