@@ -26,11 +26,10 @@ bool AutoClean::shouldExec() {
 		return false;
 	}
 
-	CTime t;
-	t.GetCurrentTime();
+	CTime t = CTime::GetCurrentTime();
 	CTimeSpan timespan = t - *last_time_;
 
-	if (timespan.GetTotalHours() / 24 > getTimespan()) {
+	if (timespan.GetTotalHours() / 24 >= getTimespan()) {
 		return true;
 	} else {
 		return false;
@@ -58,7 +57,7 @@ void AutoClean::setScale(const int min, const int max) {
 // ³äÖµÊ±¼ä
 void AutoClean::reset() {
 	assert (NULL != last_time_);
-	last_time_->GetCurrentTime();
+	*last_time_ = CTime::GetCurrentTime();
 }
 
 void AutoClean::setLastTime(LPCTSTR lpstr) {
