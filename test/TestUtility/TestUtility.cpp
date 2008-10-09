@@ -10,7 +10,9 @@
 #include ".\httprequestpackettest.h"
 #include ".\strutilitytest.h"
 #include ".\webcontenttest.h"
+#include ".\ziputilitytest.h"
 
+CPPUNIT_TEST_SUITE_REGISTRATION(ZipUtilityTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(TimeutilityTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(WebContentTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(StrUtilityTest);
