@@ -25,8 +25,6 @@ public:
 	CPPUNIT_TEST(testHTTPHeaderParsed);
 	CPPUNIT_TEST(testWrongHeader);
 	CPPUNIT_TEST(testRawPacket);
-	
-	
 	CPPUNIT_TEST_SUITE_END();
 protected:
 	void testConnectionState();

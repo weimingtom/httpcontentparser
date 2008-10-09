@@ -2,6 +2,7 @@
 //
 
 #include "stdafx.h"
+#include ".\timeutilitytest.h"
 #include ".\protocolpackettest.h"
 #include ".\fdutilitytest.h"
 #include ".\httppackettest.h"
@@ -10,6 +11,7 @@
 #include ".\strutilitytest.h"
 #include ".\webcontenttest.h"
 
+CPPUNIT_TEST_SUITE_REGISTRATION(TimeutilityTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(WebContentTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(StrUtilityTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(HttpRequestPacketTest);
