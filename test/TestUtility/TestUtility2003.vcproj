@@ -119,19 +119,51 @@
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
 			<File
+				RelativePath=".\TestUtility.cpp">
+			</File>
+		</Filter>
+		<Filter
+			Name="头文件"
+			Filter="h;hpp;hxx;hm;inl;inc;xsd"
+			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
+		</Filter>
+		<Filter
+			Name="资源文件"
+			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx"
+			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}">
+		</Filter>
+		<Filter
+			Name="test"
+			Filter="">
+			<File
 				RelativePath=".\DNSTest.cpp">
+			</File>
+			<File
+				RelativePath=".\DNSTest.h">
 			</File>
 			<File
 				RelativePath=".\FDUtilityTest.cpp">
 			</File>
 			<File
+				RelativePath=".\FDUtilityTest.h">
+			</File>
+			<File
 				RelativePath=".\HTTPPacketTest.cpp">
+			</File>
+			<File
+				RelativePath=".\HTTPPacketTest.h">
 			</File>
 			<File
 				RelativePath=".\HttpRequestPacketTest.cpp">
 			</File>
 			<File
+				RelativePath=".\HttpRequestPacketTest.h">
+			</File>
+			<File
 				RelativePath=".\ProtocolPacketTest.cpp">
+			</File>
+			<File
+				RelativePath=".\ProtocolPacketTest.h">
 			</File>
 			<File
 				RelativePath=".\stdafx.cpp">
@@ -149,48 +181,26 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\StrUtilityTest.cpp">
-			</File>
-			<File
-				RelativePath=".\TestUtility.cpp">
-			</File>
-			<File
-				RelativePath=".\WebContentTest.cpp">
-			</File>
-		</Filter>
-		<Filter
-			Name="头文件"
-			Filter="h;hpp;hxx;hm;inl;inc;xsd"
-			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
-			<File
-				RelativePath=".\DNSTest.h">
-			</File>
-			<File
-				RelativePath=".\FDUtilityTest.h">
-			</File>
-			<File
-				RelativePath=".\HTTPPacketTest.h">
-			</File>
-			<File
-				RelativePath=".\HttpRequestPacketTest.h">
-			</File>
-			<File
-				RelativePath=".\ProtocolPacketTest.h">
-			</File>
-			<File
 				RelativePath=".\stdafx.h">
+			</File>
+			<File
+				RelativePath=".\StrUtilityTest.cpp">
 			</File>
 			<File
 				RelativePath=".\StrUtilityTest.h">
 			</File>
 			<File
+				RelativePath=".\TimeutilityTest.cpp">
+			</File>
+			<File
+				RelativePath=".\TimeutilityTest.h">
+			</File>
+			<File
+				RelativePath=".\WebContentTest.cpp">
+			</File>
+			<File
 				RelativePath=".\WebContentTest.h">
 			</File>
-		</Filter>
-		<Filter
-			Name="资源文件"
-			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx"
-			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}">
 		</Filter>
 		<File
 			RelativePath=".\ReadMe.txt">
