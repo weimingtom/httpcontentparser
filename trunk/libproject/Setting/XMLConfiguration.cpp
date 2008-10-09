@@ -2,7 +2,7 @@
 #include ".\xmlconfiguration.h"
 #include ".\SearchRule.h"
 #include ".\eyecaresetting.h"
-
+#include ".\autoclean.h"
 #include <webcontenttype.h>
 #include <passwordtype.h>
 #include <tinyXML\tinyxml.h>
@@ -181,6 +181,14 @@ int XMLConfiguration::saveWebHistory(TiXmlElement * app_root) {
 	porn_website->SetAttribute(CONFIG_CONST_NAME, enabledFromBool(getWebHistoryRecordSetting()->recordPornWebsite()));
 	webhistory_root->LinkEndChild(porn_website);
 
+	TCHAR buffer[MAX_PATH];
+	TiXmlElement * autoclean = new TiXmlElement( CONFIG_APPSET_AUTOCLEAR ); 
+	autoclean->SetAttribute(CONFIG_CONST_MAX, _itot(getWebHistoryRecordAutoClean()->getRangeMax(), buffer, 10));
+	autoclean->SetAttribute(CONFIG_CONST_MIN, _itot(getWebHistoryRecordAutoClean()->getRangeMin(), buffer, 10));
+	autoclean->SetAttribute(CONSIG_CONST_TIMESPAN, _itot(getWebHistoryRecordAutoClean()->getTimespan(), buffer, 10));
+	autoclean->SetAttribute(CONFIG_CONST_LASTTIME, getWebHistoryRecordAutoClean()->getLastTime());
+	webhistory_root->LinkEndChild(autoclean);
+
 	app_root->LinkEndChild(webhistory_root);
 	return 0;
 }
@@ -329,12 +337,20 @@ int XMLConfiguration::saveScreensave(TiXmlElement * root) {
 	rule_root->SetAttribute(CONFIG_CONST_ENABLE, enabledFromBool(screen_save_.isEnabled()));
 	rule_root->SetAttribute(CONSIG_CONST_TIMESPAN, TEXT("10"));
 
-	TiXmlElement * auto_save = new TiXmlElement(CONFIG_APPSET_SCREENSAVER_AUTOCLEAR);
+	TiXmlElement * auto_save = new TiXmlElement(CONFIG_APPSET_AUTOCLEAR);
 	auto_save->SetAttribute(CONFIG_CONST_ENABLE,	enabledFromBool(screen_save_.isEnabled()));
 	auto_save->SetAttribute(CONFIG_CONST_MIN,		enabledFromBool(screen_save_.isEnabled()));
 	auto_save->SetAttribute(CONFIG_CONST_MAX,		enabledFromBool(screen_save_.isEnabled()));
 	auto_save->SetAttribute(CONSIG_CONST_TIMESPAN,	enabledFromBool(screen_save_.isEnabled()));
 	rule_root->LinkEndChild(auto_save);
+
+	TCHAR buffer[MAX_PATH];
+	TiXmlElement * autoclean = new TiXmlElement( CONFIG_APPSET_AUTOCLEAR ); 
+	autoclean->SetAttribute(CONFIG_CONST_MAX, _itot(getScreenSaveAutoClean()->getRangeMax(), buffer, 10));
+	autoclean->SetAttribute(CONFIG_CONST_MIN, _itot(getScreenSaveAutoClean()->getRangeMin(), buffer, 10));
+	autoclean->SetAttribute(CONSIG_CONST_TIMESPAN, _itot(getScreenSaveAutoClean()->getTimespan(), buffer, 10));
+	autoclean->SetAttribute(CONFIG_CONST_LASTTIME, getScreenSaveAutoClean()->getLastTime());
+	rule_root->LinkEndChild(autoclean);
 
 	root->LinkEndChild(rule_root);
 	return 0;
@@ -564,12 +580,14 @@ int XMLConfiguration::getWebHistoryRecorder(TiXmlElement *ele) {
 
 	// 设置它是否可用
 	enableWebHistoryRecord(ele->Attribute(CONFIG_CONST_ENABLE));
-
+	
 	TiXmlNode * node = ele->FirstChild();
 	while (NULL != node) {
 		TiXmlElement *ele = node->ToElement();
 		if (NULL != ele && 0 == _tcscmp(ele->Value(), CONFIG_APPSET_WEBHISTORY_CONTENT)) {
 			setWebHistoryRecord(ele->Attribute(CONFIG_CONST_TYPPE), ele->Attribute(CONFIG_CONST_ENABLE));
+		} else if (NULL != ele && 0 == _tcscmp(ele->Value(), CONFIG_APPSET_AUTOCLEAR)) {
+			setWebHistoryAutoClean(ele);
 		}
 
 		node = node->NextSibling();
@@ -577,12 +595,43 @@ int XMLConfiguration::getWebHistoryRecorder(TiXmlElement *ele) {
 	return 0;
 }
 
+int XMLConfiguration::setWebHistoryAutoClean(TiXmlElement * element) {
+	assert (element && _tcscmp(element->Value(), CONFIG_APPSET_AUTOCLEAR) == 0);
+	enableWebHistoryAutoClean(element->Attribute(CONFIG_CONST_ENABLE));
+	setWebHistoryAutoCleanTimespan(element->Attribute(CONSIG_CONST_TIMESPAN));
+	setWebHistoryAutoCleanTimeScale(element->Attribute(CONFIG_CONST_MAX), element->Attribute(CONFIG_CONST_MIN));
+	setWebHistoryLastCleanTiime(element->Attribute(CONFIG_CONST_LASTTIME));
+	return 0;
+}
+
+int XMLConfiguration::enableWebHistoryAutoClean(const TCHAR *enable) {
+	const bool enabled = enabledFromString(enable);
+	getWebHistoryRecordAutoClean()->enable(enabled);
+	return 0;
+}
+int XMLConfiguration::setWebHistoryAutoCleanTimespan(const TCHAR *timespan) {
+	getWebHistoryRecordAutoClean()->setTimespan(_ttoi(timespan));
+	return 0;
+}
+
+int XMLConfiguration::setWebHistoryAutoCleanTimeScale(const TCHAR *maxt, const TCHAR * mint) {
+	const int low_bound = _ttoi(mint);
+	const int upper_bound = _ttoi(maxt);
+	getWebHistoryRecordAutoClean()->setScale(low_bound, upper_bound);
+	return 0;
+}
+
+
+int XMLConfiguration::setWebHistoryLastCleanTiime(const TCHAR * lastclean) {
+	getWebHistoryRecordAutoClean()->setLastTime(lastclean);
+	return 0;
+}
 //===============================================
 // Screensave
 int XMLConfiguration::getScreensave(TiXmlElement * ele){
 	enableScreensave(ele->Attribute(CONFIG_CONST_ENABLE));
 	setScreensaveTimespan(ele->Attribute(CONSIG_CONST_TIMESPAN));
-
+	setScreensaveAutoClean(ele);
 	return 0;
 }
 int XMLConfiguration::enableScreensave(const TCHAR *enable){
@@ -596,34 +645,43 @@ int XMLConfiguration::setScreensaveTimespan(const TCHAR *timespan){
 	return 0;
 }
 
-int XMLConfiguration::setAutoClean(TiXmlElement * ele) {
+
+int XMLConfiguration::setScreensaveAutoClean(TiXmlElement * ele) {
 	TiXmlNode *node = ele->FirstChild();
 	while (NULL != node) {
 		TiXmlElement * element = node->ToElement();
-		if (element && _tcscmp(element->Value(), CONFIG_APPSET_SCREENSAVER_AUTOCLEAR) == 0) {
+		if (element && _tcscmp(element->Value(), CONFIG_APPSET_AUTOCLEAR) == 0) {
 			enableScreenSaveAutoClean(element->Attribute(CONFIG_CONST_ENABLE));
 			setScreensaveAutoCleanTimespan(element->Attribute(CONSIG_CONST_TIMESPAN));
-			setAutoCleanTimeScale(element->Attribute(CONFIG_CONST_MAX), element->Attribute(CONFIG_CONST_MIN));
+			setScreensaveAutoCleanTimeScale(element->Attribute(CONFIG_CONST_MAX), element->Attribute(CONFIG_CONST_MIN));
+			setScreensaveLastCleanTiime(element->Attribute(CONFIG_CONST_LASTTIME));
 		}
 		node = node->NextSibling();
 	}
 	return 0;
 }
 
-int XMLConfiguration::enableScreenSaveAutoClean(const TCHAR *enable) {
-	const bool enabled = enabledFromString(enable);
-	screen_save_auto_clean_.enable(enabled);
-	return 0;
-}
-int XMLConfiguration::setScreensaveAutoCleanTimespan(const TCHAR *timespan) {
-	screen_save_auto_clean_.setTimespan(_ttoi64(timespan));
+
+//== 设置ScreenSaveAutoClean的
+int XMLConfiguration::setScreensaveLastCleanTiime(const TCHAR * lastclean) {
+	getScreenSaveAutoClean()->setLastTime(lastclean);
 	return 0;
 }
 
-int XMLConfiguration::setAutoCleanTimeScale(const TCHAR *maxt, const TCHAR * mint) {
-	const __int64 low_bound = _ttoi64(mint);
-	const __int64 upper_bound = _ttoi64(maxt);
-	screen_save_auto_clean_.setScale(upper_bound, low_bound);
+int XMLConfiguration::enableScreenSaveAutoClean(const TCHAR *enable) {
+	const bool enabled = enabledFromString(enable);
+	getScreenSaveAutoClean()->enable(enabled);
+	return 0;
+}
+int XMLConfiguration::setScreensaveAutoCleanTimespan(const TCHAR *timespan) {
+	getScreenSaveAutoClean()->setTimespan(_ttoi(timespan));
+	return 0;
+}
+
+int XMLConfiguration::setScreensaveAutoCleanTimeScale(const TCHAR *maxt, const TCHAR * mint) {
+	const int low_bound = _ttoi(mint);
+	const int upper_bound = _ttoi(maxt);
+	getScreenSaveAutoClean()->setScale(low_bound, upper_bound);
 	return 0;
 }
 

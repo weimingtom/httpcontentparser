@@ -42,6 +42,7 @@ void CDlgWebHistory::DoDataExchange(CDataExchange* pDX)
 	DDX_Check(pDX, IDC_CHK_ALL_IMAGE, m_bAllImage);
 	DDX_Check(pDX, IDC_CHK_ALLPAGES, m_bAllPages);
 	DDX_Check(pDX, IDC_CHK_ALLWEBSITES, m_bAllWebsite);
+	DDX_Control(pDX, IDC_SLIDER_AUTOCLEAR_TIME, m_sliderWebHistoryAutoClean);
 }
 
 void CDlgWebHistory::ChangeRecordType() {
@@ -81,6 +82,12 @@ void CDlgWebHistory::initializeSetting() {
 	m_bAllImage		= g_configuration.getWebHistoryRecordSetting()->recordAllImage();
 	m_bAllPages		= g_configuration.getWebHistoryRecordSetting()->recordAllPages();
 	m_bAllWebsite	= g_configuration.getWebHistoryRecordSetting()->recordAllWebsite();
+
+	// auto clean
+	m_sliderWebHistoryAutoClean.SetRange(g_configuration.getWebHistoryRecordAutoClean()->getRangeMin(),
+	g_configuration.getWebHistoryRecordAutoClean()->getRangeMax());
+	m_sliderWebHistoryAutoClean.SetTicFreq(1);
+	m_sliderWebHistoryAutoClean.SetPos(g_configuration.getWebHistoryRecordAutoClean()->getTimespan());
 	UpdateData(FALSE);
 }
 BEGIN_MESSAGE_MAP(CDlgWebHistory, CDialog)
