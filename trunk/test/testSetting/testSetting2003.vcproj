@@ -15,6 +15,7 @@
 			OutputDirectory="Debug"
 			IntermediateDirectory="Debug"
 			ConfigurationType="1"
+			UseOfATL="2"
 			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
@@ -162,6 +163,12 @@
 			</File>
 			<File
 				RelativePath=".\AuthorizeTest.h">
+			</File>
+			<File
+				RelativePath=".\AutocleanTest.cpp">
+			</File>
+			<File
+				RelativePath=".\AutocleanTest.h">
 			</File>
 			<File
 				RelativePath=".\calculargraphTest.cpp">
