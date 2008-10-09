@@ -39,6 +39,7 @@
 #define CONFIG_CONST_MIN					TEXT("min")
 #define	CONFIG_CONST_MAX					TEXT("max")
 #define CONSIG_CONST_TIMESPAN				TEXT("timespan")
+#define CONFIG_CONST_LASTTIME				TEXT("lastclean")
 
 
 #define CONFIG_NODE_RULE_ITEM				TEXT("rule")
@@ -103,7 +104,7 @@
 
 // screenSaver
 #define CONFIG_ITEM_APPSET_SCREENSAVER			TEXT("screensave")
-#define CONFIG_APPSET_SCREENSAVER_AUTOCLEAR		TEXT("autoclear")
+#define CONFIG_APPSET_AUTOCLEAR					TEXT("autoclean")
 
 #include <DNSSetting.h>
 #include <SearchRule.h>
@@ -135,13 +136,13 @@ public:
 	DNSSetting*		getDNSSetting() { return &dnssetting_;}
 	SearchRule *	getSearchRule() { return &search_rule_;}
 	EyecareSetting* getEyecareSetting() { return &eye_care_;}
-	OnlineHourSetting *getOnlineSetting() { return &online_setting_;}
-	WebHistoryRecorderSetting * getWebHistoryRecordSetting() { return &web_history_;}
-	Authorize *		getAuthorize() { return &authorize_;}
-	ContentCheckSetting * getContentCheckSetting() { return &content_check_;}
-	ScreenSaver		*getScreenSave() { return &screen_save_;}
-	AutoClean		*getScreenSaveAutoClean() { return &screen_save_auto_clean_;}
-	
+	OnlineHourSetting* getOnlineSetting() { return &online_setting_;}
+	WebHistoryRecorderSetting* getWebHistoryRecordSetting() { return &web_history_;}
+	Authorize*		getAuthorize() { return &authorize_;}
+	ContentCheckSetting* getContentCheckSetting() { return &content_check_;}
+	ScreenSaver*	getScreenSave() { return &screen_save_;}
+	AutoClean*		getScreenSaveAutoClean() { return &screenrecord_auto_clean_;}
+	AutoClean*		getWebHistoryRecordAutoClean() { return &webhistory_auto_clean_;}
 private:
 	DNSList						black_url_set_;
 	DNSList						white_url_set_;
@@ -152,7 +153,8 @@ private:
 	Authorize					authorize_;
 	ContentCheckSetting			content_check_;
 	ScreenSaver					screen_save_;
-	AutoClean					screen_save_auto_clean_;
+	AutoClean					screenrecord_auto_clean_;
+	AutoClean					webhistory_auto_clean_;
 	DNSSetting					dnssetting_;
 
 	// 默认设置
@@ -186,15 +188,21 @@ private:
 	int getWebHistoryRecorder(TiXmlElement *ele);
 	int enableWebHistoryRecord(const TCHAR *enable);
 	int setWebHistoryRecord(const TCHAR *type, const TCHAR *enable);
+	int enableWebHistoryAutoClean(const TCHAR *enable);
+	int setWebHistoryAutoCleanTimespan(const TCHAR *timespan);
+	int setWebHistoryAutoCleanTimeScale(const TCHAR *maxt, const TCHAR * mint);
+	int setWebHistoryAutoClean(TiXmlElement * element);
+	int setWebHistoryLastCleanTiime(const TCHAR * lastclean);
 
 	// Screensaver
 	int getScreensave(TiXmlElement * ele);
 	int enableScreensave(const TCHAR *enable);
 	int setScreensaveTimespan(const TCHAR *timespan);
-	int setAutoClean(TiXmlElement * ele);
+	int setScreensaveAutoClean(TiXmlElement * ele);
 	int enableScreenSaveAutoClean(const TCHAR *enabled);
 	int setScreensaveAutoCleanTimespan(const TCHAR *timespan);
-	int setAutoCleanTimeScale(const TCHAR *maxt, const TCHAR * mint);
+	int setScreensaveAutoCleanTimeScale(const TCHAR *maxt, const TCHAR * mint);
+	int setScreensaveLastCleanTiime(const TCHAR * lastclean);
 
 	/////////////////////////////////////////////////////////////////////
 	// 分析各个规则

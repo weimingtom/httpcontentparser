@@ -10,7 +10,7 @@
 #include <map>
 #include <set>
 #include <vector>
-
+#include <atltime.h>
 #pragma comment(lib, "zlib.lib")
 
 #ifdef _DEBUG

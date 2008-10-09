@@ -6,6 +6,7 @@
 #include <Guilib1.5\GuiButton.h>
 #include <Guilib1.5\GuiEdit.h>
 #include "afxwin.h"
+#include "afxcmn.h"
 
 
 // CDlgWebHistory ¶Ô»°¿ò
@@ -44,6 +45,7 @@ public:
 	CGuiGroupBox m_staTools;
 	CGuiGroupBox m_staHistory;
 	CGuiGroupBox m_staTypes;
+	CSliderCtrl m_sliderWebHistoryAutoClean;
 
 	// constrols
 	BOOL m_bPornImage;

@@ -35,7 +35,7 @@ void CDlgScreenSaver::DoDataExchange(CDataExchange* pDX)
 }
 
 void CDlgScreenSaver::OnRestore() {
-
+	initializeSetting();
 }
 
 void CDlgScreenSaver::OnApply() {
@@ -65,6 +65,12 @@ void CDlgScreenSaver::initializeSetting() {
 	m_sliderSaveTimespan.SetTicFreq(10);
 	int pos = g_configuration.getScreenSave()->getTimeSpan() / 60;
 	m_sliderSaveTimespan.SetPos(pos);
+
+	// 设置自动清理
+	m_sliderAutoclearTimespan.SetRange(g_configuration.getScreenSaveAutoClean()->getRangeMin(),
+		g_configuration.getScreenSaveAutoClean()->getRangeMax());
+	m_sliderAutoclearTimespan.SetTicFreq(1);
+	m_sliderAutoclearTimespan.SetPos(g_configuration.getScreenSaveAutoClean()->getTimespan());
 }
 
 

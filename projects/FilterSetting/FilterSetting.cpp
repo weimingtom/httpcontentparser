@@ -47,6 +47,16 @@ extern "C" int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/
 	GetAppConfigFilename(config_path, MAX_PATH, hInstance);
 	g_configuration.loadConfig(config_path);
 
+	if (g_configuration.getWebHistoryRecordAutoClean()->shouldExec()) {
+		g_configuration.getWebHistoryRecordAutoClean()->reset();
+		ClearHistory((HMODULE)hInstance);
+		
+	}
+	if (g_configuration.getScreenSaveAutoClean()->shouldExec()) {
+		g_configuration.getScreenSaveAutoClean()->reset();
+		ClearScreen((HMODULE)hInstance);
+	}
+
 
 	 // 开启服务线程
 	ServThread::getInstance();

@@ -393,7 +393,7 @@ BEGIN
     PUSHBUTTON      "View the History",IDC_BTN_HISTORY,124,164,92,14
     GROUPBOX        "History",IDC_STA_HISTORY,7,90,236,47
     CONTROL         "",IDC_SLIDER_AUTOCLEAR_TIME,"msctls_trackbar32",
-                    TBS_BOTH | WS_TABSTOP,61,104,109,20
+                    TBS_AUTOTICKS | TBS_TOP | WS_TABSTOP,61,104,109,20
     GROUPBOX        "Tools",IDC_STA_TOOLS,7,146,236,47
     LTEXT           "Auto Clear",IDC_STATIC,17,112,35,8
     PUSHBUTTON      "Export Website List",IDC_BTN_EXPORT_WEBSITES,23,164,85,
