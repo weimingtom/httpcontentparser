@@ -205,7 +205,7 @@ copy .\strutility.h ..\..\include\utility
 			</File>
 		</Filter>
 		<Filter
-			Name="sysutility"
+			Name="strutility"
 			Filter="">
 			<File
 				RelativePath=".\strutility.cpp">

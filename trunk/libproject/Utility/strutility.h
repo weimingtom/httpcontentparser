@@ -18,6 +18,13 @@ void trim_left(TCHAR * str, const TCHAR* trimed);
 void trim_right(TCHAR * str, const TCHAR* trimed);
 void trim(TCHAR * str, const TCHAR* trimed);
 
+// 获去一个以begin为开头，以end为结尾的字符串
+// 例如: src = "hello world"; begin = "o" end="o" contain = false
+// result = "w"
+// 再如: src = "hello world"; begin = "o" end="o" contain = true
+// result="wow"
+int extract_string(TCHAR *result, const int buf_size, const TCHAR * src, const TCHAR *begin, const TCHAR *end, bool contain=false);
+
 const TCHAR *strnstr(const TCHAR *src, const TCHAR *des, const int len);
 
 bool beginwith(const TCHAR *src, const TCHAR *header);
