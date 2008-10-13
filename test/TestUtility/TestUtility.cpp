@@ -11,7 +11,9 @@
 #include ".\strutilitytest.h"
 #include ".\webcontenttest.h"
 #include ".\ziputilitytest.h"
+#include ".\seachpackettest.h"
 
+CPPUNIT_TEST_SUITE_REGISTRATION(HttpRequestPacketTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(ZipUtilityTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(TimeutilityTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(WebContentTest);
