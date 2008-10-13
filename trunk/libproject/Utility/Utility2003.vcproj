@@ -49,7 +49,7 @@ copy .\dns.h ..\..\include\utility
 copy .\httprequestpacket.h ..\..\include\utility
 copy .\strutility.h ..\..\include\utility
 copy .\timeutility.h ..\..\include\utility
-"/>
+copy .\SeachPacket.h ..\..\include\utility"/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
 			<Tool
@@ -127,6 +127,9 @@ copy .\strutility.h ..\..\include\utility
 				RelativePath=".\FileMapping.cpp">
 			</File>
 			<File
+				RelativePath=".\SeachPacket.cpp">
+			</File>
+			<File
 				RelativePath=".\stdafx.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
@@ -151,6 +154,9 @@ copy .\strutility.h ..\..\include\utility
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
 			<File
 				RelativePath=".\FileMapping.h">
+			</File>
+			<File
+				RelativePath=".\SeachPacket.h">
 			</File>
 			<File
 				RelativePath=".\stdafx.h">

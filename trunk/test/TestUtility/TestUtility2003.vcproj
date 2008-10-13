@@ -121,22 +121,19 @@
 			<File
 				RelativePath=".\TestUtility.cpp">
 			</File>
-			<File
-				RelativePath=".\ZipUtilityTest.cpp">
-			</File>
 		</Filter>
 		<Filter
 			Name="头文件"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
-			<File
-				RelativePath=".\ZipUtilityTest.h">
-			</File>
 		</Filter>
 		<Filter
 			Name="资源文件"
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx"
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}">
+			<File
+				RelativePath=".\ZipUtilityTest.cpp">
+			</File>
 		</Filter>
 		<Filter
 			Name="test"
@@ -170,6 +167,12 @@
 			</File>
 			<File
 				RelativePath=".\ProtocolPacketTest.h">
+			</File>
+			<File
+				RelativePath=".\SeachPacketTest.cpp">
+			</File>
+			<File
+				RelativePath=".\SeachPacketTest.h">
 			</File>
 			<File
 				RelativePath=".\stdafx.cpp">
@@ -206,6 +209,9 @@
 			</File>
 			<File
 				RelativePath=".\WebContentTest.h">
+			</File>
+			<File
+				RelativePath=".\ZipUtilityTest.h">
 			</File>
 		</Filter>
 		<File
