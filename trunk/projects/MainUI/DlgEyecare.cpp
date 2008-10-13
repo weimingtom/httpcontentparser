@@ -8,16 +8,18 @@
 #include ".\globalvariable.h"
 #include <comdef.h>
 
+#define ID_TIME_UPDATE_STATE  1010
+#define TIME_ESCPLE			  400
+
 // CDlgEyecare 对话框
 
 IMPLEMENT_DYNAMIC(CDlgEyecare, CDialog)
 CDlgEyecare::CDlgEyecare(CWnd* pParent /*=NULL*/)
 	: CBaseDlg(CDlgEyecare::IDD, pParent)
-	, m_strRetryPwd(_T(""))
-	, m_strPassword(_T(""))
 	, m_nEnterTime(0)
 	, m_nEyecareTime(0)
-	, m_bUseSUPWD(FALSE)
+	, m_strCurrentState(_T(""))
+	, m_strTimeLeft(_T(""))
 {
 }
 
@@ -29,22 +31,13 @@ void CDlgEyecare::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_STA_EYECARE_TIME, m_staEyecare);
-	DDX_Control(pDX, IDC_STA_PASSWORD, m_staPwd);
-	DDX_Control(pDX, IDC_CHK_USE_SUPWD, m_chkUseSuPwd);
-	DDX_Control(pDX, IDC_BTN_RESET, m_btnResetPwd);
-	DDX_Control(pDX, IDC_BTN_SETPWD, m_btnSetPwd);
-	DDX_Control(pDX, IDC_EDIT_PWD, m_edtPwd);
-	DDX_Control(pDX, IDC_EDT_PWD_RETRY, m_edtRetry);
+	DDX_Control(pDX, IDC_STA_STATE, m_staState);
 	DDX_Control(pDX, IDC_EDT_ENTERTIME, m_edtEnterTime);
 	DDX_Control(pDX, IDC_EDT_RESTTIME, m_edtRestTime);
-
-
-	//==============================================
-	DDX_Text(pDX, IDC_EDT_PWD_RETRY, m_strRetryPwd);
-	DDX_Text(pDX, IDC_EDIT_PWD, m_strPassword);
 	DDX_Text(pDX, IDC_EDT_ENTERTIME, m_nEnterTime);
 	DDX_Text(pDX, IDC_EDT_RESTTIME, m_nEyecareTime);
-	DDX_Check(pDX, IDC_CHK_USE_SUPWD, m_bUseSUPWD);
+	DDX_Text(pDX, IDC_STA_CURRENT_STATE, m_strCurrentState);
+	DDX_Text(pDX, IDC_STA_TIME_LEFT, m_strTimeLeft);
 }
 
 
@@ -91,8 +84,6 @@ void CDlgEyecare::OnShow() {
 }
 
 void CDlgEyecare::initializeSetting() {
-	SetPwdEditState();
-
 	// 读出出示信息
 	m_nEnterTime = g_configuration.getEyecareSetting()->getEnterTime() / 60;
 	m_nEyecareTime = g_configuration.getEyecareSetting()->getEyecareTime() / 60;
@@ -107,8 +98,8 @@ void CDlgEyecare::initializeSetting() {
 }
 
 BEGIN_MESSAGE_MAP(CDlgEyecare, CDialog)
-	ON_BN_CLICKED(IDC_CHK_USE_SUPWD, OnBnClickedChkUseSupwd)
-	ON_BN_CLICKED(IDC_BTN_RESET, OnBnClickedBtnReset)
+	ON_WM_TIMER()
+	ON_WM_DESTROY()
 END_MESSAGE_MAP()
 
 
@@ -117,33 +108,42 @@ BOOL CDlgEyecare::OnInitDialog()
 {
 	CBaseDlg::OnInitDialog();
 	initializeSetting();
+
+	UpdateState();
+	SetTimer(ID_TIME_UPDATE_STATE, TIME_ESCPLE, NULL);
+	
 	return TRUE;
 }
 
 
 
-void CDlgEyecare::OnBnClickedChkUseSupwd() {
+void CDlgEyecare::UpdateState() {
 	UpdateData(TRUE);
-	SetPwdEditState();
-}
+	IEyecare *pEyeCare = NULL;
+	CoCreateInstance(CLSID_Eyecare, NULL, CLSCTX_LOCAL_SERVER, IID_IEyecare, (LPVOID*)&pEyeCare);
 
-void CDlgEyecare::SetPwdEditState() {
-	if (TRUE == m_bUseSUPWD) {
-		m_edtPwd.EnableWindow(FALSE);
-		m_edtRetry.EnableWindow(FALSE);
-		m_btnResetPwd.EnableWindow(FALSE);
-		m_btnSetPwd.EnableWindow(FALSE);
+	LONG value;
+	pEyeCare->getState(&value);
+	m_strCurrentState.LoadString(value == EyecareSetting::EYECARE_TIME ? IDS_EYECARE_STATE_EYECARE : IDS_EYECARE_STATE_ENTERTAIN);
+
+	pEyeCare->getTimeLeft(&value);
+	if (value > 60) {
+		m_strTimeLeft.Format("%d mins.", value/60);
 	} else {
-		m_edtPwd.EnableWindow(TRUE);
-		m_edtRetry.EnableWindow(TRUE);
-		m_btnResetPwd.EnableWindow(TRUE);
-		m_btnSetPwd.EnableWindow(TRUE);
+		m_strTimeLeft.Format("%d sec..", value);
 	}
+
+	pEyeCare->Release();
+	UpdateData(FALSE);
+}
+void CDlgEyecare::OnTimer(UINT nIDEvent) {
+	if (nIDEvent == ID_TIME_UPDATE_STATE) {
+		UpdateState();
+	}
+	CBaseDlg::OnTimer(nIDEvent);
 }
 
-void CDlgEyecare::OnBnClickedBtnReset()
-{
-	m_strRetryPwd = "";
-	m_strPassword = "";
-	UpdateData(FALSE);
+void CDlgEyecare::OnDestroy() {
+	CBaseDlg::OnDestroy();
+	KillTimer(ID_TIME_UPDATE_STATE);
 }

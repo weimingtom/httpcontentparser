@@ -28,35 +28,29 @@ protected:
 	DECLARE_MESSAGE_MAP()
 	
 	virtual BOOL OnInitDialog();
-	afx_msg void OnBnClickedChkUseSupwd();	
-	afx_msg void OnBnClickedBtnReset();
 	void initializeSetting();
+	afx_msg void OnTimer(UINT nIDEvent);
+	afx_msg void OnDestroy();
 
 	// controls
 	CGuiGroupBox m_staAfterEyecareTerminate;
 	CGuiGroupBox m_staEyecare;
-	CGuiGroupBox m_staPwd;
-	CButton m_chkUseSuPwd;
-	CButton m_btnResetPwd;
-	CButton m_btnSetPwd;
-	CEdit m_edtPwd;
-	CEdit m_edtRetry;
+	CGuiGroupBox m_staState;
 	CEdit m_edtEnterTime;
 	CEdit m_edtRestTime;
-	CString m_strRetryPwd;
-	CString m_strPassword;
-	
+	CString m_strCurrentState;
+	CString m_strTimeLeft;
 	int m_nEnterTime;
 	int m_nEyecareTime;
-	BOOL m_bUseSUPWD;
 public:
-	
-	// 设置密码窗口的对话框
-	void SetPwdEditState();	
 	
 	// 设置Eyecare 结束后的状态
 	void setEyecareTerminatedMode();
 
 	// 设置时间间隔
 	void setEyecareTimespan();
+
+	void UpdateState();
+	
+	
 };
