@@ -191,9 +191,15 @@ IDD_DLG_SEARCH_RULE DIALOGEX 0, 0, 250, 200
 STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
-    LTEXT           "??",IDC_SEARCH_LIST,7,25,236,158
+    LTEXT           "??",IDC_SEARCH_LIST,7,25,184,158
     CONTROL         "Enable Search Check",IDC_CHK_ENABLE_SEARCH,"Button",
                     BS_AUTOCHECKBOX | WS_TABSTOP,7,7,114,10
+    CONTROL         "google",IDC_CHK_GOOGLE,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,203,27,37,10
+    CONTROL         "baidu",IDC_CHK_BAIDU,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,203,68,33,10
+    CONTROL         "yahoo",IDC_CHK_YAHOO,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,203,48,36,10
 END
 
 IDD_DLG_CONTENT DIALOGEX 0, 0, 250, 200
@@ -259,7 +265,7 @@ BEGIN
                     BS_AUTOCHECKBOX | WS_TABSTOP,29,163,88,10
 END
 
-IDD_DLG_EYECARE DIALOGEX 0, 0, 250, 201
+IDD_DLG_EYECARE DIALOGEX 0, 0, 250, 190
 STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
@@ -273,25 +279,20 @@ BEGIN
     CONTROL         "",IDC_SPIN2,"msctls_updown32",UDS_SETBUDDYINT | 
                     UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS,177,48,11,
                     14
-    GROUPBOX        "Time Setting",IDC_STA_EYECARE_TIME,7,7,236,64
-    GROUPBOX        "Password",IDC_STA_PASSWORD,7,121,236,73
-    CONTROL         " Use Admin Password",IDC_CHK_USE_SUPWD,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,37,135,109,10
-    EDITTEXT        IDC_EDIT_PWD,77,151,88,14,ES_PASSWORD | ES_AUTOHSCROLL
-    EDITTEXT        IDC_EDT_PWD_RETRY,78,172,87,14,ES_PASSWORD | 
-                    ES_AUTOHSCROLL
-    PUSHBUTTON      "Set",IDC_BTN_SETPWD,182,172,50,14
-    PUSHBUTTON      "Reset",IDC_BTN_RESET,182,151,50,14
-    LTEXT           "Password",IDC_STATIC,36,154,32,8
-    LTEXT           "Re-type",IDC_STATIC,36,174,27,8
+    GROUPBOX        "Time Setting",IDC_STA_EYECARE_TIME,7,7,236,68
     LTEXT           "Mins.",IDC_STATIC,181,30,18,8
     LTEXT           "Mins.",IDC_STATIC,181,48,18,8
     GROUPBOX        "After Terminate Eyecare",IDC_STA_AFTEREYECARE_TERMINATE,
-                    7,77,236,39
+                    7,83,236,45
     CONTROL         "Just Reset Timer",IDC_RAD_JUST_RESET_TIMER,"Button",
-                    BS_AUTORADIOBUTTON | WS_GROUP,131,95,69,10
+                    BS_AUTORADIOBUTTON | WS_GROUP,131,104,69,10
     CONTROL         "Enter Parent Mode",IDC_RAD_ENTER_SU_MODE,"Button",
-                    BS_AUTORADIOBUTTON,35,95,76,10
+                    BS_AUTORADIOBUTTON,35,104,76,10
+    GROUPBOX        "State",IDC_STA_STATE,7,136,236,47
+    LTEXT           "Current State:",IDC_STATIC,16,157,48,8
+    LTEXT           "Left Time:",IDC_STATIC,131,157,33,8
+    LTEXT           "¾²Ì¬",IDC_STA_CURRENT_STATE,72,157,51,8
+    LTEXT           "¾²Ì¬",IDC_STA_TIME_LEFT,176,156,47,8
 END
 
 IDD_LEV1_TIME_RULE DIALOGEX 0, 0, 281, 198
@@ -557,7 +558,7 @@ BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 243
         TOPMARGIN, 7
-        BOTTOMMARGIN, 194
+        BOTTOMMARGIN, 183
     END
 
     IDD_LEV1_TIME_RULE, DIALOG
@@ -741,6 +742,8 @@ BEGIN
     IDS_SCREEN_RECORD_CLEAR_BUTTON "Clear Completed!"
     IDS_CHECK_PASSWORD_WRONG "Password was not corrected!"
     IDS_APP_SERVER_INIT_FAILED "Service Launch Failed!"
+    IDS_EYECARE_STATE_EYECARE "Eyecare time"
+    IDS_EYECARE_STATE_ENTERTAIN "Entertain time"
 END
 
 #endif    // Ó¢Óï(ÃÀ¹ú) resources
