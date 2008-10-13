@@ -9,6 +9,7 @@
 #define IDC_TRAY_MENU                   101
 #define IDC_STA_PASSWORD                101
 #define IDC_STA_FUNCTION                101
+#define IDC_STA_STATE                   101
 #define IDD_MAINUI_DIALOG               102
 #define IDS_TREE_LEV1_RULES             102
 #define IDS_COMMENT_DNS                 103
@@ -33,6 +34,8 @@
 #define IDS_SCREEN_RECORD_CLEAR_BUTTON  120
 #define IDS_CHECK_PASSWORD_WRONG        121
 #define IDS_APP_SERVER_INIT_FAILED      122
+#define IDS_EYECARE_STATE_EYECARE       123
+#define IDS_EYECARE_STATE_ENTERTAIN     124
 #define IDR_MAINFRAME                   128
 #define IDD_DLG_HELP                    129
 #define IDD_DLG_ABOUT                   130
@@ -162,6 +165,11 @@
 #define IDC_RAD_JUST_RESET_TIMER        1085
 #define IDC_STA_AFTEREYECARE_TERMINATE  1086
 #define IDC_MAIN_APPLY                  1087
+#define IDC_CHK_GOOGLE                  1088
+#define IDC_CHK_YAHOO                   1089
+#define IDC_CHK_BAIDU                   1090
+#define IDC_STA_CURRENT_STATE           1091
+#define IDC_STA_TIME_LEFT               1092
 #define IDC_EDIT1                       4011
 #define IDC_EDIT2                       4012
 #define IDC_EDT_RETRY                   4013
@@ -200,7 +208,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        156
 #define _APS_NEXT_COMMAND_VALUE         32808
-#define _APS_NEXT_CONTROL_VALUE         1088
+#define _APS_NEXT_CONTROL_VALUE         1093
 #define _APS_NEXT_SYMED_VALUE           112
 #endif
 #endif
