@@ -9,6 +9,29 @@ StrUtilityTest::StrUtilityTest(void) {
 StrUtilityTest::~StrUtilityTest(void) {
 }
 
+void StrUtilityTest::Test_extract_string() {
+	{
+	TCHAR result[1024];
+	const TCHAR * src = "hello world";
+	const TCHAR * beg = "o";
+	CPPUNIT_ASSERT (0 != strutility::extract_string(result, 1024, src, beg, beg, false));
+	CPPUNIT_ASSERT (0 == _tcscmp(result, TEXT(" w")));
+
+	CPPUNIT_ASSERT (0 != strutility::extract_string(result, 1024, src, beg, beg, true));
+	CPPUNIT_ASSERT (0 == _tcscmp(result, TEXT("o wo")));
+	}
+
+	{
+	TCHAR result[1024];
+	const TCHAR * src = "hhhhhhhhhhhhhhhhh";
+	const TCHAR * beg = "h";
+	CPPUNIT_ASSERT (0 == strutility::extract_string(result, 1024, src, beg, beg, false));
+	CPPUNIT_ASSERT (0 == _tcscmp(result, TEXT("")));
+
+	CPPUNIT_ASSERT (0 != strutility::extract_string(result, 1024, src, beg, beg, true));
+	CPPUNIT_ASSERT (0 == _tcscmp(result, TEXT("hh")));
+	}
+}
 // 
 void StrUtilityTest::Teststrnstr() {
 	{

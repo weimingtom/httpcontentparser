@@ -1,13 +1,29 @@
 #include "StdAfx.h"
 #include ".\httprequestpacket.h"
 #include <utility\strutility.h>
+#include <fstream>
 
+namespace {
+
+int ahieve_buffer(const TCHAR * filename, const char *buf, const int len) {
+	if (len < 10) return 0;
+	std::fstream file;
+	file.open(filename, std::ios::out | std::ios::app);
+	file.write(buf, len);
+	return 0;
+}
+
+int gen_filename(TCHAR *filename, const int buf_size) {
+	_sntprintf(filename, buf_size, TEXT("c:\\%d.log"), GetTickCount());
+	return 0;
+}
+};
 //============================================
 const char * HTTPRequestPacket::HTTP_REQUEST_HOST = "Host: ";
 const char * HTTPRequestPacket::HTTP_REQUEST_REFERER = "Referer: ";
 const char * HTTPRequestPacket::HTTP_REQUEST_USER_AGENT = "User-Agent: ";
-const char * HTTPRequestPacket::HTTP_REQUEST_OPER_GET = "GET";
-const char * HTTPRequestPacket::HTTP_REQUEST_OPER_POST = "POST";
+const char * HTTPRequestPacket::HTTP_REQUEST_OPER_GET = "GET ";
+const char * HTTPRequestPacket::HTTP_REQUEST_OPER_POST = "POST ";
 
 
 //===============================================
@@ -34,6 +50,7 @@ void HTTPRequestPacket::reset() {
 	memset(host_, 0, sizeof(host_));
 	memset(referer_, 0, sizeof(referer_));
 	memset(useagent_, 0, sizeof(useagent_));
+	memset(oper_, 0, sizeof(oper_));
 }
 
 // ×¨ÃÅÕë¶Ô
@@ -45,9 +62,19 @@ int HTTPRequestPacket::parsePacket(WSABUF * wsabuf, const int count) {
 		cur += wsabuf[i].len;
 	}
 
+	ahieve_buffer(TEXT("c:\\request.log"), buffer, cur);
+
 	return parsePacket(buffer, cur);
 }
 
+int HTTPRequestPacket::getGET(char *buffer, const int len) {
+	if (HTTP_REQUEST_OPETYPE_GET == getRequestType()) {
+		strncpy(buffer, oper_, len);
+		return strlen(buffer);
+	}
+
+	return 0;
+}
 int HTTPRequestPacket::parsePacket(char * buf, const int len) {
 	using namespace strutility;
 
@@ -64,14 +91,21 @@ int HTTPRequestPacket::parsePacket(char * buf, const int len) {
 	while (next != NULL) {
 		if (strstr(p, HTTP_REQUEST_HOST) == p) {
 			const int tab_length = strlen(HTTP_REQUEST_HOST);
-			strncpy(host_, p + tab_length, getWrittenCount(next-p-tab_length));
+			strncpy(host_, p + tab_length, getWrittenCount(next - p - tab_length));
 			cnt++;
 		} else if (strstr(p, HTTP_REQUEST_REFERER) == p) {
 			const int tab_length = strlen(HTTP_REQUEST_REFERER);
-			strncpy(referer_, p + tab_length, getWrittenCount(next-p-tab_length));
+			strncpy(referer_, p + tab_length, getWrittenCount(next - p - tab_length));
 			cnt++;
 		} else if (strstr(p, HTTP_REQUEST_OPER_GET) == p) {
-			//strncpy(host_, p, getWrittenCount(next-p));
+			const int tab_length = strlen(HTTP_REQUEST_OPER_GET);
+			strncpy(oper_, p + tab_length, getWrittenCount(next - p - tab_length));
+			http_request_type_ = HTTP_REQUEST_OPETYPE_GET;
+			cnt++;
+		} else if (strstr(p, HTTP_REQUEST_OPER_POST) == p) {
+			const int tab_length = strlen(HTTP_REQUEST_OPER_POST);
+			strncpy(oper_, p + tab_length, getWrittenCount(next - p - tab_length));
+			http_request_type_ = HTTP_REQUEST_OPETYPE_POST;
 			cnt++;
 		} else if (strstr(p, HTTP_REQUEST_USER_AGENT) == p) {
 			const int tab_length = strlen(HTTP_REQUEST_USER_AGENT);

@@ -101,7 +101,7 @@ void HttpRequestPacketTest::parsePacket() {
 	request_packet.getHost(buffer, HTTP_REQUEST_ITEM_MAX_LENGTH);
 	CPPUNIT_ASSERT(strcmp("d1.sina.com.cn", buffer) == 0);
 
-
+	CPPUNIT_ASSERT(HTTPRequestPacket::HTTP_REQUEST_OPETYPE_GET == request_packet.getRequestType());
 	request_packet.getReferer(buffer, HTTP_REQUEST_ITEM_MAX_LENGTH);
 	CPPUNIT_ASSERT(strcmp("http://news.sina.com.cn/c/2008-09-04/202816233711.shtml", buffer) == 0);
 
@@ -123,10 +123,13 @@ void HttpRequestPacketTest::parsePacket() {
 	request_packet.getHost(buffer, HTTP_REQUEST_ITEM_MAX_LENGTH);
 	CPPUNIT_ASSERT(strcmp("d1.sina.com.cn", buffer) == 0);
 
+	CPPUNIT_ASSERT(HTTPRequestPacket::HTTP_REQUEST_OPETYPE_GET == request_packet.getRequestType());
 
 	request_packet.getReferer(buffer, HTTP_REQUEST_ITEM_MAX_LENGTH);
 	CPPUNIT_ASSERT(strcmp("http://news.sina.com.cn/c/2008-09-04/202816233711.shtml", buffer) == 0);
 
+	CPPUNIT_ASSERT(0 != request_packet.getGET(buffer, HTTP_REQUEST_ITEM_MAX_LENGTH));
+	CPPUNIT_ASSERT(strcmp("/iframe/gn/9/2007-04-28/17251.html HTTP/1.1", buffer) == 0);
 
 	request_packet.getUserAgent(buffer, HTTP_REQUEST_ITEM_MAX_LENGTH);
 	CPPUNIT_ASSERT(strcmp("Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.16) Gecko/20080702 Firefox/2.0.0.16 GoogleToolbarFF", buffer) == 0);

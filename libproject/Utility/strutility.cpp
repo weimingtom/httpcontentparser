@@ -86,6 +86,30 @@ bool endwith(const TCHAR * src, const TCHAR *detail) {
 	}
 }
 
+int extract_string(TCHAR *result, const int buf_size, const TCHAR * src, const TCHAR *begin, const TCHAR *end, bool contain) {
+	memset(result, 0, sizeof(TCHAR) * buf_size);
+	const TCHAR * src_beg = _tcsstr(src, begin);
+	// 如果无法找到开头
+	if (NULL == src_beg) 
+		return 0;
+	// 如果已经到了结尾
+	if (src_beg[strlen(begin)] == NULL)
+		return 0;
+
+	// 从开头向后找
+	const TCHAR * src_end = _tcsstr(src_beg + _tcslen(begin), end);
+	// 如果未找到
+	if (NULL == src_end) 
+		return 0;
+
+	// 拷贝操作
+	const TCHAR * copy_beg = contain ? src_beg: src_beg + _tcslen(begin);
+	const TCHAR * copy_end = contain ? src_end + _tcslen(end) : src_end;
+	int size = (int)(copy_end - copy_beg > buf_size ? buf_size : copy_end - copy_beg);
+	memcpy(result, copy_beg, size * sizeof(TCHAR));
+	return (int)_tcslen(result);
+}
+
 //void splitstring_token(TCHAR *str, const TCHAR *seps,
 //				 std::vector<std::string> &vec, bool remove_spes) {
 //	char * token = _tcstok(str, seps);
