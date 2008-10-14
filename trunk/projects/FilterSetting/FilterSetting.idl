@@ -124,6 +124,20 @@ interface IAccessNetwork : IDispatch{
 	[id(3), helpstring("Method removeBlockTime")] HRESULT removeBlockTime([in] LONG day, [in] LONG hour);
 };
 [
+	object,
+	uuid(1DB7FB63-E5C2-4C58-9A6A-1A72C63AA185),
+	dual,
+	nonextensible,
+	helpstring("ISearchRule Interface"),
+	pointer_default(unique)
+]
+interface ISearchRule : IDispatch{
+	[id(1), helpstring("Method check")] HRESULT check([in] BSTR seach_word, [in] BSTR host_name, [out,retval] VARIANT_BOOL* pass);
+	[id(2), helpstring("Method addBlackSeachword")] HRESULT addBlackSeachword([in] BSTR seachword);
+	[id(3), helpstring("Method enableCheckSeachEngine")] HRESULT enableCheckSeachEngine(BSTR seachengine, [in] VARIANT_BOOL enabled);
+	[id(4), helpstring("·½·¨removeBlackSeachWord")] HRESULT removeBlackSeachWord([in] BSTR blackword);
+};
+[
 	uuid(42F932B5-F5CB-4F0D-8925-1B6BE5FECD1B),
 	version(1.0),
 	helpstring("FilterSetting 1.0 ClassLibrary")
@@ -187,5 +201,13 @@ library FilterSettingLib {
 	coclass AccessNetwork
 	{
 		[default] interface IAccessNetwork;
+	};
+	[
+		uuid(81618862-ED18-4860-AC33-43CE632BA252),
+		helpstring("SearchRule Class")
+	]
+	coclass SearchRule
+	{
+		[default] interface ISearchRule;
 	};
 };
