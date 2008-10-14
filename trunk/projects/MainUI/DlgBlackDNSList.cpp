@@ -13,6 +13,7 @@
 IMPLEMENT_DYNAMIC(CDlgBlackDNSList, CDialog)
 CDlgBlackDNSList::CDlgBlackDNSList(CWnd* pParent /*=NULL*/)
 	: CBaseDlg(CDlgBlackDNSList::IDD, pParent)
+	, rules(this)
 {
 	m_bEnableBlackDNS = TRUE;
 }
@@ -56,6 +57,21 @@ int CDlgBlackDNSList::Enum(const std::string &dns) {
 	ListBox.AddItem(dns.c_str());
 	return 0;
 }
+
+// add items
+void CDlgBlackDNSList::OnAddItem(const CString &str) {
+	ASSERT (NULL != g_dnssetting);
+	g_dnssetting->addBlackDNS(_bstr_t(str));
+}
+void CDlgBlackDNSList::OnDelItem(const CString &str) {
+	ASSERT (NULL != g_dnssetting);
+	g_dnssetting->removeBlackDNS(_bstr_t(str));
+}
+bool CDlgBlackDNSList::ValidateItem(const CString & str, CString &output) {
+	output = str;
+	return true;
+}
+
 
 BEGIN_MESSAGE_MAP(CDlgBlackDNSList, CDialog)
 END_MESSAGE_MAP()

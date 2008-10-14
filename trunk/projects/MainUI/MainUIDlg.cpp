@@ -393,9 +393,9 @@ void CMainUIDlg::InitTreeNodes() {
 	hItem = m_treeNavigation.InsertItem(strItem, hRoot);
 	m_treeNavigation.SetItemData(hItem, IDS_TREE_OPTIONS);
 
-	strItem.LoadString(IDS_TREE_HELP);
-	hItem = m_treeNavigation.InsertItem(strItem, hRoot);
-	m_treeNavigation.SetItemData(hItem, IDS_TREE_HELP);
+	//strItem.LoadString(IDS_TREE_HELP);
+	//hItem = m_treeNavigation.InsertItem(strItem, hRoot);
+	//m_treeNavigation.SetItemData(hItem, IDS_TREE_HELP);
 
 	strItem.LoadString(IDS_TREE_ABOUT);
 	hItem = m_treeNavigation.InsertItem(strItem, hRoot);
@@ -416,7 +416,6 @@ void CMainUIDlg::showDlg() {
 
 void CMainUIDlg::initDlgs() {
 	m_dlgImageRules.Create(CDlgImageRule::IDD, this);
-	m_dlgHelp.Create(CDlgHelp::IDD, this);
 	m_dlgOnlineHour.Create(CDlgOnlineHour::IDD, this);
 	m_dlgSearchRule.Create(CDlgSearchRule::IDD, this);
 	m_dlgDnsRule.Create(CDlgBlackDNSList::IDD, this);
@@ -517,9 +516,9 @@ void CMainUIDlg::setCurDlg(const DWORD item) {
 		case IDS_TREE_ONLINE_HOUR:
 			ChangeCurDlg(&m_dlgOnlineHour);
 			break;
-		case IDS_TREE_HELP:
-			ChangeCurDlg(&m_dlgHelp);
-			break;
+		//case IDS_TREE_HELP:
+		//	ChangeCurDlg(&m_dlgHelp);
+		//	break;
 		case IDS_TREE_ABOUT:
 			ChangeCurDlg(&m_dlgAbout);
 			break;

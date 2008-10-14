@@ -13,6 +13,7 @@
 IMPLEMENT_DYNAMIC(CDlgWhiteDNSList, CDialog)
 CDlgWhiteDNSList::CDlgWhiteDNSList(CWnd* pParent /*=NULL*/)
 	: CBaseDlg(CDlgWhiteDNSList::IDD, pParent)
+	, rules(this)
 	, m_bEnableWhiteDNS(TRUE)
 	, m_bCheckDenyAllOthers(FALSE)
 {
@@ -63,6 +64,22 @@ int CDlgWhiteDNSList::Enum(const std::string &dns) {
 	ListBox.AddItem(dns.c_str());
 	return 0;
 }
+
+// ÐÞ¸Ä¹æÔò
+void CDlgWhiteDNSList::OnAddItem(const CString &str) {
+	ASSERT (NULL != g_dnssetting);
+	g_dnssetting->addWhiteDNS(_bstr_t(str));
+}
+void CDlgWhiteDNSList::OnDelItem(const CString &str) {
+	ASSERT (NULL != g_dnssetting);
+	g_dnssetting->removeWhiteDNS(_bstr_t(str));
+}
+bool CDlgWhiteDNSList::ValidateItem(const CString & str, CString &output) {
+	output = str;
+	return true;
+}
+
+
 BEGIN_MESSAGE_MAP(CDlgWhiteDNSList, CDialog)
 	ON_BN_CLICKED(IDC_CHK_DENY_OTHERS, OnBnClickedChkDenyOthers)
 	ON_BN_CLICKED(IDC_CHK_WHITE_DNSLIST, OnBnClickedChkWhiteDnslist)

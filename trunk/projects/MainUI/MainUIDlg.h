@@ -70,7 +70,6 @@ private:
 	CDlgEyecare	m_dlgEyecare;
 	CDlgOptions m_dlgOptions;
 	CDlgImageRule m_dlgImageRules;
-	CDlgHelp	m_dlgHelp;
 	CDlgOnlineHour m_dlgOnlineHour;
 	CDlgSearchRule m_dlgSearchRule;
 	CDlgScreenSaver m_dlgScreenSaver;
