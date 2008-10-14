@@ -6,7 +6,9 @@
 #include ".\iauthorizetest.h"
 #include ".\eyecaretest.h"
 #include ".\iaccessnetworktest.h"
+#include ".\iseachruletest.h"
 
+CPPUNIT_TEST_SUITE_REGISTRATION(ISeachRuleTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(IAccessNetworkTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(EyecareTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(FilterSettingTest);

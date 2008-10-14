@@ -18,6 +18,13 @@ public:
 		word_set_.insert(word);
 	}
 
+	void removeBlackSeachWord(const char * word) {
+		WORD_SET::iterator iter = word_set_.find(word);
+		if (word_set_.end() != iter) {
+			word_set_.erase(iter);
+		}
+	}
+
 	void addSearchHost(const std::string &search_host) {
 		search_host_.insert(std::make_pair(search_host, true));
 	}
