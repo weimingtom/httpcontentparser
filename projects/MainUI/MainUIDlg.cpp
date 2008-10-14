@@ -126,6 +126,9 @@ void CMainUIDlg::UpdateUIStateByModel() {
 
 		pMenu->CheckMenuItem(ID_TRAYMENU_MODEL_PARENTS, MF_UNCHECKED);
 		pMenu->CheckMenuItem(ID_TRAYMENU_MODEL_CHILDREN, MF_CHECKED);
+
+		// 此外还要隐藏著对话框
+		ShowWindow(SW_HIDE);
 	}
 }
 
