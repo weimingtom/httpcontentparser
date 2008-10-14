@@ -1,14 +1,13 @@
 #include "stdafx.h"
 #include "selectio.h"
 #include "debug.h" 
-#include "checkutility.h"
 #include ".\overlapped.h"
 
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <tchar.h>
-
+#include <serviceUtility.h>
 #include <utility\debugmessage.h>
 #include <utility\fd_set_utility.h>
 #include <utility\HttpPacket.h>

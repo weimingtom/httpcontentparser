@@ -197,16 +197,6 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="checker"
-			Filter="">
-			<File
-				RelativePath=".\CheckUtility.cpp">
-			</File>
-			<File
-				RelativePath=".\CheckUtility.h">
-			</File>
-		</Filter>
-		<Filter
 			Name="io"
 			Filter="">
 			<File
