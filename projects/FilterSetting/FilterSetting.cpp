@@ -6,11 +6,12 @@
 #include "FilterSetting.h"
 #include ".\servthread.h"
 #include "sysutility.h"
+#include <application.h>
 #include <passwordtype.h>
-#include <string>
 #include <screensaver.h>
 #include <webhistoryrecordersetting.h>
 #include <xmlconfiguration.h>
+#include <string>
 
 class CFilterSettingModule : public CAtlServiceModuleT< CFilterSettingModule, IDS_SERVICENAME >
 {
@@ -40,6 +41,12 @@ HINSTANCE g_hInstance;
 extern "C" int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, 
                                 LPTSTR /*lpCmdLine*/, int nShowCmd)
 {
+	// 如果已经有程序启动，则直接推出
+	HANDLE hMutex = CreateMutex(NULL, FALSE, COM_SERVICE_MUTEX);
+	if (GetLastError() == ERROR_ALREADY_EXISTS) {
+		return 0;
+	}
+
 	g_hInstance = hInstance;
 
 	// 初始化配置
