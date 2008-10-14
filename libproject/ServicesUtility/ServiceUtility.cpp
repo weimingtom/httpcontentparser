@@ -1,6 +1,5 @@
 #include "stdafx.h"
-#include "CheckUtility.h"
-#include "debug.h"
+#include "./serviceUtility.h"
 
 #include <com\FilterSetting_i.c>
 #include <com\FilterSetting.h>
@@ -13,58 +12,6 @@
 #include <string>
 #include <comdef.h>
 using namespace std;
-
-// 检测规则
-bool is_google_seach(const char *oper) {
-	if (strstr(oper, "/search") == oper) {
-		return true;
-	} else { 
-		return false;
-	}
-}
-bool is_baidu_seach(const char *oper) {
-	if (strstr(oper, "/s") == oper) {
-		return true;
-	} else {
-		return false;
-	}
-}
-bool is_yahoo_seach(const char *oper) {
-	if (strstr(oper, "") == oper) {
-		return true;
-	} else {
-		return false;
-	}
-}
-
-int get_seach_word(char *seach_word, const int buf_size, const char * oper, const char *host_name) {
-	using namespace strutility;
-	if (NULL != strstr(TEXT("google.com"), host_name)) {
-		return extract_string(seach_word, buf_size, oper, "&Q", "&", false);
-	} else if (NULL != strstr(TEXT("yahoo.com"), host_name)) {
-		return extract_string(seach_word, buf_size, oper, "&q=	", "&", false);
-	} else if (NULL != strstr(TEXT("baidu.com"), host_name)) {
-		return extract_string(seach_word, buf_size, oper, "&q=", "&", false);
-	} else {
-		return 0;
-	}
-
-	return strlen(seach_word);
-}
-
-// 判断是不是seach host
-bool need_check_seach(const char * host_name, const char * oper) {
-	if (NULL != strstr(TEXT("google.com"), host_name)) {
-		return is_google_seach(oper);
-	} else if (NULL != strstr(TEXT("yahoo.com"), host_name)) {
-		return is_yahoo_seach(oper);
-	} else if (NULL != strstr(TEXT("baidu.com"), host_name)) {
-		return is_baidu_seach(oper);
-	} else {
-		// 如果不是这几个主机
-		return false;
-	}
-}
 
 bool checkDNS(const char * dns_name) {
 	AutoInitInScale _auto_com_init;
@@ -89,7 +36,7 @@ bool checkDNS(const char * dns_name) {
 }
 
 // 检测HTTP
-bool checkSeachRule(HTTPRequestPacket packet) {
+bool checkSeachRule(HTTPRequestPacket& packet) {
 	// 如果不是Search
 	if (HTTPRequestPacket::HTTP_REQUEST_OPETYPE_GET != packet.getRequestType())
 		return true;
@@ -102,12 +49,19 @@ bool checkSeachRule(HTTPRequestPacket packet) {
 	memset(host_name, 0, sizeof(host_name));
 	memset(oper, 0, sizeof(oper));
 	packet.getGET(oper, MAX_PATH);
+	packet.getHost(host_name, HTTP_REQUEST_ITEM_MAX_LENGTH);
 	
+	if (strlen(host_name) == 0)
+		return true;
 	if (strlen(oper) == 0)
-		return 0;
+		return true;
 
 	SeachPacket seach_packet;
-	seach_packet.parse(oper, host_name);
+	int result = seach_packet.parse(oper, host_name);
+	if (0 == result) {
+		return true;
+	}
+
 	seach_packet.get_seach_word(search_word, HTTP_REQUEST_ITEM_MAX_LENGTH);
 
 	// 获取seach word

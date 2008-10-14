@@ -10,10 +10,12 @@
 #	pragma comment(lib, "utilityd.lib")
 #	pragma comment(lib, "logsystemd.lib")
 #	pragma comment(lib, "selectiod.lib")
+#	pragma comment(lib, "ServicesUtilityd.lib")
 #else
 #	pragma comment(lib, "utility.lib")
 #	pragma comment(lib, "logsystem.lib")
 #	pragma comment(lib, "selectio.lib")
+#	pragma comment(lib, "ServicesUtility.lib")
 #endif
 
 #endif //STDAFX_H

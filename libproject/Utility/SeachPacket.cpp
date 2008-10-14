@@ -89,6 +89,9 @@ int SeachPacket::parse_yahoo(const char * oper) {
 //===============================================================
 // 分析包
 int SeachPacket::parse(const char * oper, const char * host_name) {
+	if (strlen(host_name) == 0) {
+		return 0;
+	}
 	// oper 都已 " HTTP/1.1" 或者" HTTP/1.0"结尾， 我们用&代替其中的空格 ;)
 	// 将空格用" "用"&"代替
 	char buffer[HTTP_REQUEST_ITEM_MAX_LENGTH] = {0};
@@ -101,11 +104,11 @@ int SeachPacket::parse(const char * oper, const char * host_name) {
 		return 0;
 	}
 
-	if (NULL != strstr(TEXT("google.com"), host_name)) {
+	if (NULL != strstr(host_name, "google")) {
 		return parse_google(buffer);
-	} else if (NULL != strstr(TEXT("yahoo.com"), host_name)) {
+	} else if (NULL != strstr(host_name, "yahoo")) {
 		return parse_yahoo(buffer);
-	} else if (NULL != strstr(TEXT("baidu.com"), host_name)) {
+	} else if (NULL != strstr(host_name, "baidu")) {
 		return parse_baidu(buffer);
 	} else {
 		// 如果不是这几个主机
