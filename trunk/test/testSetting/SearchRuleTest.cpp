@@ -117,4 +117,12 @@ void SearchRuleTest::TestParentChildMode() {
 	CPPUNIT_ASSERT(false == search_rule.check(search_host2, search_word1));
 	CPPUNIT_ASSERT(true == search_rule.check(search_host1, no_word));
 	CPPUNIT_ASSERT(true == search_rule.check(search_host1, no_word));
+
+	search_rule.removeBlackSeachWord(search_word1.c_str());
+	SettingItem::setModel(SettingItem::MODE_CHILD);
+	search_rule.enable(true);
+	CPPUNIT_ASSERT(true == search_rule.check(search_host1, search_word1));
+	CPPUNIT_ASSERT(true == search_rule.check(search_host2, search_word1));
+	CPPUNIT_ASSERT(true == search_rule.check(search_host1, no_word));
+	CPPUNIT_ASSERT(true == search_rule.check(search_host1, no_word));
 }

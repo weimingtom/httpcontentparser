@@ -35,12 +35,14 @@ bool SearchRule::check(const std::string &host_name,  const std::string &search_
 // 首先查看host_name, 是否在我们的host_map当中, 如果不存在直接返回false
 // 否则， 根据用户设置返回
 bool SearchRule::shouldCheck(const std::string &search_host) const {
-	SEARCH_HOST::const_iterator iter = search_host_.find(search_host);
-	if (search_host_.end() == iter) {
-		return false;
-	} else {
-		return iter->second;
+	SEARCH_HOST::const_iterator iter = search_host_.begin();
+	for (; iter != search_host_.end(); ++iter) {
+		if (std::string::npos != search_host.find(iter->first)) {
+			return iter->second;
+		}
 	}
+
+	return false;
 }
 
 //========================================================
