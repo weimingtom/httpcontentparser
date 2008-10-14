@@ -9,6 +9,7 @@
 #include ".\services.h"
 #include <sysutility.h>
 #include <typeconvert.h>
+#include <windowtitle.h>
 #include <com\comutility.h>
 
 
@@ -20,6 +21,19 @@ extern bool g_parentModel = false;
 #define new DEBUG_NEW
 #endif
 
+namespace {
+	BOOL CALLBACK EnumWndProc(HWND hwnd, LPARAM lParam)
+	{
+		HANDLE h = GetProp(hwnd, MAIN_WINDOW_PROP_NAME);
+		if( h == (HWND)MAIN_WINDOW_PROP_VALUE)
+		{
+			*(HWND*)lParam = hwnd;
+			return false;
+		}
+		return true;
+	}
+
+};
 
 // CMainUIApp
 
@@ -45,6 +59,24 @@ BOOL CMainUIApp::InitInstance()
 {
 	CoInitialize(NULL);
 
+	// 读取配置信息
+	TCHAR config_path[MAX_PATH];
+	GetAppConfigFilename(config_path, MAX_PATH, AfxGetInstanceHandle());
+	g_configuration.loadConfig(config_path);
+
+	HWND hwnd = NULL;
+	EnumWindows(EnumWndProc, (LPARAM)&hwnd);
+	if (hwnd != NULL) {
+		// 如果当前运行在Parent状态
+		if (Services::isParentModel() == true) {
+			SendMessage(hwnd, WM_SETFOCUS, 0, 0);
+			BOOL b = ::SetWindowPos(hwnd, HWND_TOP, 0, 0, 0, 0, SWP_NOSIZE | SWP_SHOWWINDOW | SWP_NOMOVE);
+			return FALSE;
+		}
+		return FALSE;
+	}
+
+
 	if (FALSE == Initialize()) {
 		return FALSE;
 	}
@@ -56,18 +88,13 @@ BOOL CMainUIApp::InitInstance()
 	CWinApp::InitInstance();
 	AfxEnableControlContainer();
 
-	// 读取配置信息
-	TCHAR config_path[MAX_PATH];
-	GetAppConfigFilename(config_path, MAX_PATH, AfxGetInstanceHandle());
-	g_configuration.loadConfig(config_path);
-
 	//============================================
 	CMainUIDlg dlg;
 	m_pMainWnd = &dlg;
 	INT_PTR nResponse = dlg.DoModal();
 	if (nResponse == IDOK) 	{
 	}
-	else if (nResponse == IDCANCEL) 	{
+	else if (nResponse == IDCANCEL) {
 	}
 
 	// 由于对话框已关闭，所以将返回 FALSE 以便退出应用程序，
