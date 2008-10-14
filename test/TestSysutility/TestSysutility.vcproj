@@ -92,7 +92,7 @@
 				Name="VCMIDLTool"/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy .\Debug\TestSysutility.exe ..\..\testoutput"/>
+				CommandLine="copy .\release\TestSysutility.exe ..\..\testoutput\release"/>
 			<Tool
 				Name="VCPreBuildEventTool"/>
 			<Tool

@@ -91,7 +91,8 @@
 			<Tool
 				Name="VCMIDLTool"/>
 			<Tool
-				Name="VCPostBuildEventTool"/>
+				Name="VCPostBuildEventTool"
+				CommandLine="copy .\release\TestSetting.exe ..\..\testoutput\release"/>
 			<Tool
 				Name="VCPreBuildEventTool"/>
 			<Tool
