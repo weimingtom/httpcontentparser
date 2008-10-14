@@ -6,10 +6,15 @@
 #include <set>
 #include <string>
 
+struct RuleChanged {
+	virtual void OnAddItem(const CString &str) = 0;
+	virtual void OnDelItem(const CString &str) = 0;
+	virtual bool ValidateItem(const CString & str, CString &output) = 0;		// 此字符串可能被修改
+};
 
 class RulesList : public OnTextChanged {
 public:
-	RulesList();
+	RulesList(RuleChanged * changed);
 public:
 	virtual void OnDelete(const CString &str);
 	virtual void OnBeginEdit(const CString &strOld);
@@ -20,16 +25,18 @@ public:
 	void OnApply();
 
 protected:
-	void addDNSRule(const CString &str);
-	void removeDNSRule(const CString &str);
-	bool validateDNS(const CString &str);
+	void addItem(const CString &str);
+	void removeItem(const CString &str);
+	bool validateItem(const CString &str, CString &output);
 protected:
 	CString m_strOld;
 
 	typedef std::set<std::string> STRING_SET;
-	STRING_SET addedDNS;
-	STRING_SET removedDNS;
+	STRING_SET added_items;
+	STRING_SET remove_items;
+	STRING_SET current_items; // 当前列表中的所有DNS
 
-	STRING_SET currentDNS; // 当前列表中的所有DNS
+protected:
+	RulesList();
+	RuleChanged * const changed_;
 };
-

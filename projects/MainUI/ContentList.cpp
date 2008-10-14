@@ -8,16 +8,20 @@
 
 #include <comdef.h>
 #include <comutil.h>
+#include <assert.h>
 
 //===================================
 // constructors
-RulesList::RulesList() {
+RulesList::RulesList(RuleChanged * changed) : changed_(changed) {
+	ASSERT (changed != NULL);
+}
+RulesList::RulesList() : changed_(NULL) {
 }
 
 //==================================
 void RulesList::OnDelete(const CString &str) {
 	TRACE("RulesList::OnDelete\n");
-	removeDNSRule(str);
+	removeItem(str);
 	m_strOld = "";
 }
 
@@ -42,8 +46,9 @@ bool RulesList::OnEndEdit(const CString &strNew) {
 		return false;
 	}
 
-	if (validateDNS(strNew)) {
-		addDNSRule(strNew);
+	CString result_item;
+	if (validateItem(strNew, result_item)) {
+		addItem(result_item);
 		// 不能返回，还要执行下面代码
 	} else {
 		// 应该删除当前项
@@ -53,7 +58,7 @@ bool RulesList::OnEndEdit(const CString &strNew) {
 
 	// 删除原有规则
 	if (m_strOld.GetLength() != 0) {
-		removeDNSRule(m_strOld);
+		removeItem(m_strOld);
 	}
 
 	m_strOld = "";
@@ -62,8 +67,9 @@ bool RulesList::OnEndEdit(const CString &strNew) {
 
 bool RulesList::OnAdd(const CString &strNew) {
 	TRACE("RulesList::OnAdd\n");
-	if (validateDNS(strNew)) {
-		addDNSRule(strNew);
+	CString result_item;
+	if (validateItem(strNew, result_item)) {
+		addItem(result_item);
 		m_strOld = "";
 		return true;
 	} else {
@@ -74,76 +80,76 @@ bool RulesList::OnAdd(const CString &strNew) {
 // 此函数将规则添加到COM组件当中
 void RulesList::OnApply() {
 	// 喊出
-	STRING_SET::iterator iterDel =	removedDNS.begin();
-	for (; iterDel != removedDNS.end(); ++iterDel) {
+	STRING_SET::iterator iterDel =	remove_items.begin();
+	for (; iterDel != remove_items.end(); ++iterDel) {
 		TRACE("remove ");
 		TRACE(iterDel->c_str());
 		TRACE("\n");
-		g_dnssetting->removeBlackDNS(_bstr_t(iterDel->c_str()));
+		changed_->OnDelItem(iterDel->c_str());
 	}
-	removedDNS.clear();
+	remove_items.clear();
 
-	STRING_SET::iterator iterAdd =	addedDNS.begin();
-	for (; iterAdd != addedDNS.end(); ++iterAdd) {
+	STRING_SET::iterator iterAdd =	added_items.begin();
+	for (; iterAdd != added_items.end(); ++iterAdd) {
 		TRACE("Add ");
 		TRACE(iterAdd->c_str());
 		TRACE("\n");
-		g_dnssetting->addBlackDNS(_bstr_t(iterAdd->c_str()));
+		changed_->OnAddItem(iterAdd->c_str());
 	}
-	addedDNS.clear();
+	added_items.clear();
 }
 
 //====================================
 //
-void RulesList::addDNSRule(const CString &str) {
+void RulesList::addItem(const CString &str) {
 	if (str.GetLength() == 0)
 		return;
 
 	// 如果在删除列表中存在，则删除它
-	STRING_SET::iterator iterDel =	removedDNS.find((LPCTSTR)str);
-	if (iterDel != removedDNS.end()) {
-		removedDNS.erase(iterDel);
+	STRING_SET::iterator iterDel =	remove_items.find((LPCTSTR)str);
+	if (iterDel != remove_items.end()) {
+		remove_items.erase(iterDel);
 	}
 
 	// 添加到列表
-	ASSERT(addedDNS.find((LPCTSTR)str) == addedDNS.end());
-	addedDNS.insert((LPCTSTR)str);
+	ASSERT(added_items.find((LPCTSTR)str) == added_items.end());
+	added_items.insert((LPCTSTR)str);
 
 	// 
-	ASSERT(currentDNS.find((LPCTSTR)str) == currentDNS.end());
-	currentDNS.insert((LPCTSTR)str);
+	ASSERT(current_items.find((LPCTSTR)str) == current_items.end());
+	current_items.insert((LPCTSTR)str);
 }
 
 // 移除一个
-void RulesList::removeDNSRule(const CString &str) {
+void RulesList::removeItem(const CString &str) {
 	if (str.GetLength() == 0)
 		return;
 
 	// 从添加表列中删除
-	STRING_SET::iterator iterAdd =	addedDNS.find((LPCTSTR)str);
-	if (iterAdd != addedDNS.end()) {
-		addedDNS.erase(iterAdd);
+	STRING_SET::iterator iterAdd =	added_items.find((LPCTSTR)str);
+	if (iterAdd != added_items.end()) {
+		added_items.erase(iterAdd);
 	}
 
 	// 添加到删除列表
-	ASSERT( removedDNS.find((LPCTSTR)str) == removedDNS.end());
-	removedDNS.insert((LPCTSTR)str);
+	ASSERT( remove_items.find((LPCTSTR)str) == remove_items.end());
+	remove_items.insert((LPCTSTR)str);
 
 	// 如果存在于当前的列表当中，则删除它
-	STRING_SET::iterator cur =  currentDNS.find((LPCTSTR)str);
-	ASSERT( cur != currentDNS.end());
-	currentDNS.erase(cur);
+	STRING_SET::iterator cur =  current_items.find((LPCTSTR)str);
+	ASSERT( cur != current_items.end());
+	current_items.erase(cur);
 }
 
-bool RulesList::validateDNS(const CString &str) {
+bool RulesList::validateItem(const CString &str, CString &output) {
 	// 如果已经存在规则了
 	ASSERT(str.GetLength() != 0);
 
 	// 如果添加列表中已经存在了....
-	if (currentDNS.find((LPCTSTR)str) != currentDNS.end()) {
+	if (current_items.find((LPCTSTR)str) != current_items.end()) {
 		return false;
 	}
 
 	// 还要验证他是否是一个正确的DNS
-	return true;
+	return changed_->ValidateItem(str, output);
 }

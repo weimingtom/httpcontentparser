@@ -182,7 +182,7 @@ IDD_DLG_DNS_BLACKLIST DIALOGEX 0, 0, 250, 200
 STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
-    LTEXT           "??",IDC_DNS_LIST,7,25,236,158
+    LTEXT           "Position",IDC_DNS_LIST,7,25,236,158
     CONTROL         "Enable DNS Check",IDC_CHK_ENABLE_DNS,"Button",
                     BS_AUTOCHECKBOX | WS_TABSTOP,7,7,114,10
 END
@@ -197,9 +197,9 @@ BEGIN
     CONTROL         "google",IDC_CHK_GOOGLE,"Button",BS_AUTOCHECKBOX | 
                     WS_TABSTOP,203,27,37,10
     CONTROL         "baidu",IDC_CHK_BAIDU,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,203,68,33,10
+                    WS_TABSTOP,203,59,33,10
     CONTROL         "yahoo",IDC_CHK_YAHOO,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,203,48,36,10
+                    WS_TABSTOP,203,43,36,10
 END
 
 IDD_DLG_CONTENT DIALOGEX 0, 0, 250, 200

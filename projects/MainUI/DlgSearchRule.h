@@ -6,11 +6,10 @@
 #include <Enumerate.h>
 #include <string>
 #include "afxwin.h"
+#include ".\ContentList.h"
 
 // CDlgSearchRule 对话框
-
-class CDlgSearchRule : public CBaseDlg, Enumerator1<std::string> 
-{
+class CDlgSearchRule : public CBaseDlg, Enumerator1<std::string>, RuleChanged {
 	DECLARE_DYNAMIC(CDlgSearchRule)
 
 public:
@@ -36,7 +35,14 @@ protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 支持
 	DECLARE_MESSAGE_MAP()
 
-
 	// control variable
 	BOOL m_bEnableSearchRule;
+	BOOL m_bChkGoogle;
+	BOOL m_bChkYahoo;
+	BOOL m_bChkBaidu;
+public:
+	virtual void OnAddItem(const CString &str);
+	virtual void OnDelItem(const CString &str);
+	virtual bool ValidateItem(const CString & str, CString &output);
+	RulesList  rules;
 };

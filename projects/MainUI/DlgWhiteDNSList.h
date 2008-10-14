@@ -10,7 +10,7 @@
 #include <Guilib1.5\GuiCheckBox.h>
 #include <Enumerate.h>
 
-class CDlgWhiteDNSList : public CBaseDlg, Enumerator1<std::string> {
+class CDlgWhiteDNSList : public CBaseDlg, Enumerator1<std::string>, RuleChanged {
 	DECLARE_DYNAMIC(CDlgWhiteDNSList)
 
 public:
@@ -31,8 +31,6 @@ protected:
 	// controls
 	CButton m_chkWhiteDNSList;
 	CGuiListEdit ListBox;
-	RulesList  rules;
-
 	BOOL m_bEnableWhiteDNS;
 
 	void initializeData();
@@ -42,4 +40,11 @@ public:
 	BOOL m_bCheckDenyAllOthers;
 	afx_msg void OnBnClickedChkDenyOthers();
 	afx_msg void OnBnClickedChkWhiteDnslist();
+
+// DNS Rules
+public:
+	virtual void OnAddItem(const CString &str);
+	virtual void OnDelItem(const CString &str);
+	virtual bool ValidateItem(const CString & str, CString &output);
+	RulesList  rules;
 };
