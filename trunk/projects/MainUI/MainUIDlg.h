@@ -103,8 +103,6 @@ private:
 protected:
 	afx_msg void OnNMClickTreeNavig(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnTvnSelchangedTreeNavig(NMHDR *pNMHDR, LRESULT *pResult);
-	
-	afx_msg int  OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg LRESULT OnHotKey(WPARAM wParam, LPARAM lParam);
 
 	// 按钮项
@@ -121,11 +119,11 @@ protected:
 	afx_msg void OnToolsWebhistory();
 	afx_msg void OnMainLockcomputer();
 
-
 	virtual void OnOK();
 	virtual void OnCancel();
 protected:
 	// 根据当前状态初始化TrayMenu
 	// 此函数会在每次应用程序启动及状态切换时调用
 	void UpdateUIStateByModel();
+	
 };

@@ -8,7 +8,7 @@
 #include ".\dlgchangepassword.h"
 #include ".\dlgcheckpassword.h"
 #include ".\services.h"
-
+#include <windowtitle.h>
 #include <hotkey.h>
 
 #ifdef _DEBUG
@@ -74,8 +74,6 @@ BEGIN_MESSAGE_MAP(CMainUIDlg, CDialog)
 	//}}AFX_MSG_MAP
 	ON_NOTIFY(NM_CLICK, IDC_TREE_NAVIG, OnNMClickTreeNavig)
 	ON_NOTIFY(TVN_SELCHANGED, IDC_TREE_NAVIG, OnTvnSelchangedTreeNavig)
-	
-	ON_WM_CREATE()
 	ON_WM_KEYDOWN()
 	ON_MESSAGE(WM_HOTKEY, OnHotKey)
 	ON_WM_CONTEXTMENU()
@@ -142,20 +140,13 @@ void CMainUIDlg::setupTrayMenu() {
 	UpdateUIStateByModel();
 }
 
-int CMainUIDlg::OnCreate(LPCREATESTRUCT lpCreateStruct)
-{
-	if (CDialog::OnCreate(lpCreateStruct) == -1)
-		return -1;
-
-	setupTrayMenu();
-	return 0;
-}
-
-
 BOOL CMainUIDlg::OnInitDialog()
 {
 	CDialog::OnInitDialog();
-	
+
+	// 设置一个属性，一边用户在开启新程序时相应
+	// 通过获取此属性，便能判断程序是否已经启动
+	SetProp(this->GetSafeHwnd(), MAIN_WINDOW_PROP_NAME, (HWND)MAIN_WINDOW_PROP_VALUE);
 
 	// 设置字体
 	setControlsFonts();
@@ -183,12 +174,9 @@ BOOL CMainUIDlg::OnInitDialog()
 
 	initDlgs();
 	InitTreeNodes();
-	
 
-	// 如果处于孩子模式下，则直接最小化窗口
-	if (Services::isParentModel() == false) {
-		ShowWindow(SW_HIDE);
-	}
+	setupTrayMenu();
+
 	return TRUE;  // 除非设置了控件的焦点，否则返回 TRUE
 }
 
@@ -357,7 +345,13 @@ void CMainUIDlg::OnPaint()
 		// 绘制图标
 		dc.DrawIcon(x, y, m_hIcon);
 	} else {
-		CDialog::OnPaint();
+		if (Services::isParentModel() == false) {
+			ShowWindow(SW_HIDE);
+			m_bShowed = FALSE;
+			return;
+		} else {
+			CDialog::OnPaint();
+		}
 	}
 }
 
@@ -564,3 +558,4 @@ void CMainUIDlg::OnTvnSelchangedTreeNavig(NMHDR *pNMHDR, LRESULT *pResult)
 
 	*pResult = 0;
 }
+
