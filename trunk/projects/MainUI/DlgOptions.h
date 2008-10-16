@@ -42,6 +42,10 @@ public:
 	CGuiGroupBox m_staHotkey;
 	CHotKeyCtrl m_hotKeyShowDlg;
 	CHotKeyCtrl m_hotkeySwitchUser;
+	BOOL m_bAutoRun;
+	BOOL m_bOld_autorun;
+
+	void SetAutoRun();
 protected:
 	void setHotKey();
 };
