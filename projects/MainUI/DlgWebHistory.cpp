@@ -20,6 +20,7 @@ CDlgWebHistory::CDlgWebHistory(CWnd* pParent /*=NULL*/)
 , m_bAllImage(FALSE)
 , m_bAllPages(FALSE)
 , m_bAllWebsite(FALSE)
+, m_strAutoClean(_T(""))
 {
 }
 
@@ -43,6 +44,7 @@ void CDlgWebHistory::DoDataExchange(CDataExchange* pDX)
 	DDX_Check(pDX, IDC_CHK_ALLPAGES, m_bAllPages);
 	DDX_Check(pDX, IDC_CHK_ALLWEBSITES, m_bAllWebsite);
 	DDX_Control(pDX, IDC_SLIDER_AUTOCLEAR_TIME, m_sliderWebHistoryAutoClean);
+	DDX_Text(pDX, IDC_STA_WEBHISTORY_AUTOCLEAN, m_strAutoClean);
 }
 
 void CDlgWebHistory::ChangeRecordType() {
@@ -75,6 +77,11 @@ void CDlgWebHistory::OnApply() {
 void CDlgWebHistory::OnShow() {
 }
 
+void CDlgWebHistory::updateSta() {
+	m_strAutoClean.Format("%d days", m_sliderWebHistoryAutoClean.GetPos());
+	UpdateData(FALSE);
+}
+
 void CDlgWebHistory::initializeSetting() {
 	m_bPornImage	= g_configuration.getWebHistoryRecordSetting()->recordPornImage();
 	m_bPornPage		= g_configuration.getWebHistoryRecordSetting()->recordPornPages();
@@ -88,12 +95,15 @@ void CDlgWebHistory::initializeSetting() {
 	g_configuration.getWebHistoryRecordAutoClean()->getRangeMax());
 	m_sliderWebHistoryAutoClean.SetTicFreq(1);
 	m_sliderWebHistoryAutoClean.SetPos(g_configuration.getWebHistoryRecordAutoClean()->getTimespan());
+
+	updateSta();
 	UpdateData(FALSE);
 }
 BEGIN_MESSAGE_MAP(CDlgWebHistory, CDialog)
 	ON_BN_CLICKED(IDC_BUN_CLEAR_CACHE, OnBnClickedBunClearCache)
 	ON_BN_CLICKED(IDC_BTN_HISTORY_PAGES, OnBnClickedBtnHistoryPages)
 	ON_BN_CLICKED(IDC_BTN_HISTORY_IMAGE, OnBnClickedBtnHistoryImage)
+	ON_WM_HSCROLL()
 END_MESSAGE_MAP()
 
 // CDlgWebHistory 消息处理程序
@@ -127,4 +137,13 @@ void CDlgWebHistory::OnBnClickedBtnHistoryImage()
 	GetInstallPath(installpath, MAX_PATH, (HMODULE)AfxGetInstanceHandle());
 	GetImageDirectory(webimages, MAX_PATH, installpath);
 	ShellExecute(NULL, TEXT("open"), NULL, NULL, webimages, SW_SHOWNORMAL);
+}
+
+void CDlgWebHistory::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
+{
+	if (pScrollBar->GetSafeHwnd() == m_sliderWebHistoryAutoClean.GetSafeHwnd()) {
+		updateSta();
+	}
+
+	CBaseDlg::OnHScroll(nSBCode, nPos, pScrollBar);
 }

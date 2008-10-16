@@ -47,14 +47,21 @@ public:
 	BOOL m_bEnableScreensave;
 	BOOL m_bEnableAutoclean;
 
+	CString m_strAutoCleanHours;
+	CString m_strTimespanMins;
+
 public:
 	virtual BOOL OnInitDialog();
 	afx_msg void OnBnClickedChkScreensave();
 	afx_msg void OnBnClickedChkAutoclean();
 	afx_msg void OnBnClickedBtnClear();
+	afx_msg void OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
 protected:
 	void enableAutoSave();
 	void enableAutoclean();
+
+	void setAutoCleanTips();
+	void setTimespanTips();
 };
 
 #endif  // _MAINUI_CDLGSCREENSAVER_H__

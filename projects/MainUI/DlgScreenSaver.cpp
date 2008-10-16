@@ -15,6 +15,8 @@ CDlgScreenSaver::CDlgScreenSaver(CWnd* pParent /*=NULL*/)
 	: CBaseDlg(CDlgScreenSaver::IDD, pParent)
 	, m_bEnableScreensave(FALSE)
 	, m_bEnableAutoclean(FALSE)
+	, m_strAutoCleanHours(_T(""))
+	, m_strTimespanMins(_T(""))
 {
 }
 
@@ -32,6 +34,8 @@ void CDlgScreenSaver::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_SLIDER_CLEAN_TIMESPAN, m_sliderAutoclearTimespan);
 	DDX_Check(pDX, IDC_CHK_SCREENSAVE, m_bEnableScreensave);
 	DDX_Check(pDX, IDC_CHK_AUTOCLEAN, m_bEnableAutoclean);
+	DDX_Text(pDX, IDC_STA_SCREENSAVE_AUTOCLEN, m_strAutoCleanHours);
+	DDX_Text(pDX, IDC_STA_SCREENSAVE_TIMESPAN, m_strTimespanMins);
 }
 
 void CDlgScreenSaver::OnRestore() {
@@ -71,6 +75,9 @@ void CDlgScreenSaver::initializeSetting() {
 		g_configuration.getScreenSaveAutoClean()->getRangeMax());
 	m_sliderAutoclearTimespan.SetTicFreq(1);
 	m_sliderAutoclearTimespan.SetPos(g_configuration.getScreenSaveAutoClean()->getTimespan());
+
+	setAutoCleanTips();
+	setTimespanTips();
 }
 
 
@@ -81,10 +88,22 @@ void CDlgScreenSaver::enableAutoclean() {
 	m_sliderAutoclearTimespan.EnableWindow(m_bEnableAutoclean);
 }
 
+
+void CDlgScreenSaver::setAutoCleanTips() {
+	m_strAutoCleanHours.Format("%d days", m_sliderAutoclearTimespan.GetPos());
+	UpdateData(FALSE);
+}
+
+void CDlgScreenSaver::setTimespanTips() {
+	m_strTimespanMins.Format("%d Mins", m_sliderSaveTimespan.GetPos());
+	UpdateData(FALSE);
+}
+
 BEGIN_MESSAGE_MAP(CDlgScreenSaver, CDialog)
 	ON_BN_CLICKED(IDC_CHK_SCREENSAVE, OnBnClickedChkScreensave)
 	ON_BN_CLICKED(IDC_CHK_AUTOCLEAN, OnBnClickedChkAutoclean)
 	ON_BN_CLICKED(IDC_BTN_CLEAR, OnBnClickedBtnClear)
+	ON_WM_HSCROLL()
 END_MESSAGE_MAP()
 
 
@@ -117,4 +136,14 @@ void CDlgScreenSaver::OnBnClickedBtnClear() {
 	CString str;
 	str.LoadString(IDS_SCREEN_RECORD_CLEAR_BUTTON);
 	AfxMessageBox(str);
+}
+
+void CDlgScreenSaver::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar) {
+	if (pScrollBar->GetSafeHwnd() == m_sliderSaveTimespan.GetSafeHwnd()) {
+		setTimespanTips();
+	} else if (pScrollBar->GetSafeHwnd() == m_sliderAutoclearTimespan.GetSafeHwnd()) {
+		setAutoCleanTips();
+	}
+	
+	CBaseDlg::OnHScroll(nSBCode, nPos, pScrollBar);	
 }
