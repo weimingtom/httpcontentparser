@@ -33,7 +33,7 @@ protected:
 	void ChangeRecordType();
 
 	// ≥ı ºªØ
-	void initializeSetting();
+	void restoreSetting();
 public:
 	afx_msg void OnBnClickedBunClearCache();
 	afx_msg void OnBnClickedBtnHistoryPages();
@@ -62,4 +62,10 @@ protected:
 	
 public:
 	afx_msg void OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
+	afx_msg void OnBnClickedChkPronImage();
+	afx_msg void OnBnClickedChkPornPage();
+	afx_msg void OnBnClickedChkPornWebsites();
+	afx_msg void OnBnClickedChkAllImage();
+	afx_msg void OnBnClickedChkAllpages();
+	afx_msg void OnBnClickedChkAllwebsites();
 };

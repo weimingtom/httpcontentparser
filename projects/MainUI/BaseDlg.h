@@ -8,6 +8,8 @@ public:
 
 	// 在改变对话框之前应该调用此函数
 	virtual int  BeforeChange();
+	int  AfterChange();
+	
 
 	// 确定对话框数据是否有改变
 	bool Modified() {
@@ -19,12 +21,10 @@ public:
 	virtual void OnApply() = 0;
 	virtual void OnShow() = 0;
 	void OnOK() {}
+public:
+	void SetModify(const bool changed);
+
 private:
-
-	void SetModify(const bool changed) {
-		changed_ = changed;
-	}
-
 	bool changed_;
 	CBaseDlg() {changed_ = false;}
 };

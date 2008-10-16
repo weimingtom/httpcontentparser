@@ -68,7 +68,7 @@ void CDlgWebHistory::ChangeRecordType() {
 }
 
 void CDlgWebHistory::OnRestore() {
-
+	restoreSetting();
 }
 
 void CDlgWebHistory::OnApply() {
@@ -82,7 +82,7 @@ void CDlgWebHistory::updateSta() {
 	UpdateData(FALSE);
 }
 
-void CDlgWebHistory::initializeSetting() {
+void CDlgWebHistory::restoreSetting() {
 	m_bPornImage	= g_configuration.getWebHistoryRecordSetting()->recordPornImage();
 	m_bPornPage		= g_configuration.getWebHistoryRecordSetting()->recordPornPages();
 	m_bPornWebsite	= g_configuration.getWebHistoryRecordSetting()->recordPornWebsite();
@@ -104,6 +104,12 @@ BEGIN_MESSAGE_MAP(CDlgWebHistory, CDialog)
 	ON_BN_CLICKED(IDC_BTN_HISTORY_PAGES, OnBnClickedBtnHistoryPages)
 	ON_BN_CLICKED(IDC_BTN_HISTORY_IMAGE, OnBnClickedBtnHistoryImage)
 	ON_WM_HSCROLL()
+	ON_BN_CLICKED(IDC_CHK_PRON_IMAGE, OnBnClickedChkPronImage)
+	ON_BN_CLICKED(IDC_CHK_PORN_PAGE, OnBnClickedChkPornPage)
+	ON_BN_CLICKED(IDC_CHK_PORN_WEBSITES, OnBnClickedChkPornWebsites)
+	ON_BN_CLICKED(IDC_CHK_ALL_IMAGE, OnBnClickedChkAllImage)
+	ON_BN_CLICKED(IDC_CHK_ALLPAGES, OnBnClickedChkAllpages)
+	ON_BN_CLICKED(IDC_CHK_ALLWEBSITES, OnBnClickedChkAllwebsites)
 END_MESSAGE_MAP()
 
 // CDlgWebHistory 消息处理程序
@@ -117,7 +123,7 @@ BOOL CDlgWebHistory::OnInitDialog()
 	CBaseDlg::OnInitDialog();
 	CString str;
 
-	initializeSetting();
+	OnRestore();
 
 	return TRUE;  // return TRUE unless you set the focus to a control
 }
@@ -131,19 +137,42 @@ void CDlgWebHistory::OnBnClickedBtnHistoryPages()
 	ShellExecute(NULL, TEXT("open"), NULL, NULL, webpages, SW_SHOWNORMAL);
 }
 
-void CDlgWebHistory::OnBnClickedBtnHistoryImage()
-{
+void CDlgWebHistory::OnBnClickedBtnHistoryImage() {
 	TCHAR webimages[MAX_PATH], installpath[MAX_PATH];
 	GetInstallPath(installpath, MAX_PATH, (HMODULE)AfxGetInstanceHandle());
 	GetImageDirectory(webimages, MAX_PATH, installpath);
 	ShellExecute(NULL, TEXT("open"), NULL, NULL, webimages, SW_SHOWNORMAL);
 }
 
-void CDlgWebHistory::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
-{
+void CDlgWebHistory::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar) {
 	if (pScrollBar->GetSafeHwnd() == m_sliderWebHistoryAutoClean.GetSafeHwnd()) {
 		updateSta();
+		SetModify(TRUE);
 	}
 
 	CBaseDlg::OnHScroll(nSBCode, nPos, pScrollBar);
+}
+
+void CDlgWebHistory::OnBnClickedChkPronImage() {
+	SetModify(TRUE);
+}
+
+void CDlgWebHistory::OnBnClickedChkPornPage() {
+	SetModify(TRUE);
+}
+
+void CDlgWebHistory::OnBnClickedChkPornWebsites() {
+	SetModify(TRUE);
+}
+
+void CDlgWebHistory::OnBnClickedChkAllImage() {
+	SetModify(TRUE);
+}
+
+void CDlgWebHistory::OnBnClickedChkAllpages() {
+	SetModify(TRUE);
+}
+
+void CDlgWebHistory::OnBnClickedChkAllwebsites() {
+	SetModify(TRUE);
 }

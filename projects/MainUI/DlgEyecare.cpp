@@ -42,7 +42,7 @@ void CDlgEyecare::DoDataExchange(CDataExchange* pDX)
 
 
 void CDlgEyecare::OnRestore() {
-
+	restoreSetting();
 }
 
 // 设置时间间隔
@@ -83,7 +83,7 @@ void CDlgEyecare::OnApply() {
 void CDlgEyecare::OnShow() {
 }
 
-void CDlgEyecare::initializeSetting() {
+void CDlgEyecare::restoreSetting() {
 	// 读出出示信息
 	m_nEnterTime = g_configuration.getEyecareSetting()->getEnterTime() / 60;
 	m_nEyecareTime = g_configuration.getEyecareSetting()->getEyecareTime() / 60;
@@ -100,6 +100,11 @@ void CDlgEyecare::initializeSetting() {
 BEGIN_MESSAGE_MAP(CDlgEyecare, CDialog)
 	ON_WM_TIMER()
 	ON_WM_DESTROY()
+	ON_BN_CLICKED(IDC_RAD_JUST_RESET_TIMER, OnBnClickedRadJustResetTimer)
+	ON_BN_CLICKED(IDC_RAD_ENTER_SU_MODE, OnBnClickedRadEnterSuMode)
+	ON_EN_CHANGE(IDC_EDT_RESTTIME, OnEnChangeEdtResttime)
+	ON_EN_CHANGE(IDC_EDT_ENTERTIME, OnEnChangeEdtEntertime)
+	ON_WM_VSCROLL()
 END_MESSAGE_MAP()
 
 
@@ -107,7 +112,7 @@ END_MESSAGE_MAP()
 BOOL CDlgEyecare::OnInitDialog()
 {
 	CBaseDlg::OnInitDialog();
-	initializeSetting();
+	OnRestore();
 
 	UpdateState();
 	SetTimer(ID_TIME_UPDATE_STATE, TIME_ESCPLE, NULL);
@@ -146,4 +151,29 @@ void CDlgEyecare::OnTimer(UINT nIDEvent) {
 void CDlgEyecare::OnDestroy() {
 	CBaseDlg::OnDestroy();
 	KillTimer(ID_TIME_UPDATE_STATE);
+}
+
+void CDlgEyecare::OnBnClickedRadJustResetTimer()
+{
+	SetModify(true);
+}
+
+void CDlgEyecare::OnBnClickedRadEnterSuMode()
+{
+	SetModify(true);
+}
+
+void CDlgEyecare::OnEnChangeEdtResttime()
+{
+	SetModify(true);
+}
+
+void CDlgEyecare::OnEnChangeEdtEntertime()
+{
+	SetModify(true);
+}
+
+void CDlgEyecare::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
+{
+	SetModify(true);
 }

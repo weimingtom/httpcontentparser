@@ -25,6 +25,8 @@
 #include <Guilib1.5\GuisysTray.h>
 #include <Guilib1.5\NewMenu.h>
 
+class CBaseDlg;
+
 // CMainUIDlg 对话框
 class CMainUIDlg : public CDialog
 {
@@ -125,5 +127,4 @@ protected:
 	// 根据当前状态初始化TrayMenu
 	// 此函数会在每次应用程序启动及状态切换时调用
 	void UpdateUIStateByModel();
-	
 };

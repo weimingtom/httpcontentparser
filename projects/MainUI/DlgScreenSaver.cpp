@@ -40,7 +40,7 @@ void CDlgScreenSaver::DoDataExchange(CDataExchange* pDX)
 }
 
 void CDlgScreenSaver::OnRestore() {
-	initializeSetting();
+	restoreSetting();
 }
 
 void CDlgScreenSaver::OnApply() {
@@ -57,7 +57,7 @@ void CDlgScreenSaver::OnShow() {
 }
  
 
-void CDlgScreenSaver::initializeSetting() {
+void CDlgScreenSaver::restoreSetting() {
 	m_sliderAutoclearTimespan.SetRangeMax(g_configuration.getScreenSaveAutoClean()->getRangeMax()/ ( 60 * 60 * 24));
 	m_sliderAutoclearTimespan.SetRangeMin(g_configuration.getScreenSaveAutoClean()->getRangeMin()/ ( 60 * 60 * 24));
 	m_sliderAutoclearTimespan.SetPos(g_configuration.getScreenSaveAutoClean()->getTimespan()/ (60 * 60 * 24));
@@ -113,7 +113,7 @@ END_MESSAGE_MAP()
 BOOL CDlgScreenSaver::OnInitDialog() {
 	CBaseDlg::OnInitDialog();
 	
-	initializeSetting();
+	OnRestore();
 
 	enableAutoSave();
 	enableAutoclean();
@@ -125,11 +125,13 @@ BOOL CDlgScreenSaver::OnInitDialog() {
 void CDlgScreenSaver::OnBnClickedChkScreensave() {
 	UpdateData(TRUE);
 	enableAutoSave();
+	SetModify(TRUE);
 }
 
 void CDlgScreenSaver::OnBnClickedChkAutoclean() {
 	UpdateData(TRUE);
 	enableAutoclean();
+	SetModify(TRUE);
 }
 
 void CDlgScreenSaver::OnBnClickedBtnClear() {
@@ -142,8 +144,10 @@ void CDlgScreenSaver::OnBnClickedBtnClear() {
 void CDlgScreenSaver::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar) {
 	if (pScrollBar->GetSafeHwnd() == m_sliderSaveTimespan.GetSafeHwnd()) {
 		setTimespanTips();
+		SetModify(TRUE);
 	} else if (pScrollBar->GetSafeHwnd() == m_sliderAutoclearTimespan.GetSafeHwnd()) {
 		setAutoCleanTips();
+		SetModify(TRUE);
 	}
 	
 	CBaseDlg::OnHScroll(nSBCode, nPos, pScrollBar);	

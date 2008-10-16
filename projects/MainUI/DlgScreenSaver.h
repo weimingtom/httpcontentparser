@@ -32,7 +32,7 @@ public:
 	virtual void OnApply();
 	virtual void OnShow();
 
-	void initializeSetting();
+	void restoreSetting();
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV Ö§³Ö
 
