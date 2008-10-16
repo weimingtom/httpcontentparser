@@ -16,6 +16,7 @@ public:
 	CPPUNIT_TEST(testGetPageDirectory);
 	CPPUNIT_TEST(testGetRecordConfigfile);
 	CPPUNIT_TEST(testGetFileNameDir);
+	CPPUNIT_TEST(testRegisterOper);
 	CPPUNIT_TEST_SUITE_END();
 protected:
 	void testGetInstallPath();
@@ -24,6 +25,7 @@ protected:
 	void testGetPageDirectory();
 	void testGetRecordConfigfile();
 	void testGetFileNameDir();
+	void testRegisterOper();
 };
 
 #endif  // _TESTUTILITY_SYSUTILITYTEST_H__
