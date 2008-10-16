@@ -6,7 +6,7 @@
 #include "FilterSetting.h"
 #include ".\servthread.h"
 #include "sysutility.h"
-#include <application.h>
+#include <app_constants.h>
 #include <passwordtype.h>
 #include <screensaver.h>
 #include <webhistoryrecordersetting.h>
