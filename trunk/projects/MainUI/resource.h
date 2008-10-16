@@ -171,6 +171,9 @@
 #define IDC_CHK_BAIDU                   1090
 #define IDC_STA_CURRENT_STATE           1091
 #define IDC_STA_TIME_LEFT               1092
+#define IDC_STA_SCREENSAVE_TIMESPAN     1094
+#define IDC_STA_SCREENSAVE_AUTOCLEN     1095
+#define IDC_STA_WEBHISTORY_AUTOCLEAN    1096
 #define IDC_EDIT1                       4011
 #define IDC_EDIT2                       4012
 #define IDC_EDT_RETRY                   4013
@@ -209,7 +212,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        156
 #define _APS_NEXT_COMMAND_VALUE         32808
-#define _APS_NEXT_CONTROL_VALUE         1094
+#define _APS_NEXT_CONTROL_VALUE         1097
 #define _APS_NEXT_SYMED_VALUE           112
 #endif
 #endif

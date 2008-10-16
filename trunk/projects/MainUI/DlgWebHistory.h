@@ -40,6 +40,8 @@ public:
 	afx_msg void OnBnClickedBtnHistoryImage();
 	virtual BOOL OnInitDialog();
 
+protected:
+	void updateSta();
 
 	CButton m_btnExportWebSiteList;
 	CButton m_btnViewtheHistory;
@@ -48,6 +50,7 @@ public:
 	CGuiGroupBox m_staHistory;
 	CGuiGroupBox m_staTypes;
 	CSliderCtrl m_sliderWebHistoryAutoClean;
+	CString m_strAutoClean;
 
 	// constrols
 	BOOL m_bPornImage;
@@ -56,4 +59,7 @@ public:
 	BOOL m_bAllImage;
 	BOOL m_bAllPages;
 	BOOL m_bAllWebsite;
+	
+public:
+	afx_msg void OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
 };
