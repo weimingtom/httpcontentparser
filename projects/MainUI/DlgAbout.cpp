@@ -4,7 +4,7 @@
 #include "stdafx.h"
 #include "MainUI.h"
 #include "DlgAbout.h"
-
+#include <Guilib1.5\GuiGroupBox.h>
 
 // CDlgAbout ¶Ô»°¿ò
 
@@ -30,6 +30,7 @@ void CDlgAbout::OnShow() {
 void CDlgAbout::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
+	DDX_Control(pDX, IDC_STA_ABOUT, m_staAbout);
 }
 
 
