@@ -552,8 +552,10 @@ void CMainUIDlg::OnTvnSelchangedTreeNavig(NMHDR *pNMHDR, LRESULT *pResult)
 	// 首先调用
 	if (m_curDlg->BeforeChange() == 1) {
 		setCurDlg(itemData);
+		m_curDlg->AfterChange();
 	} else {
 		m_curDlg->OnRestore();
+		m_curDlg->SetModify(false);
 	}
 
 	*pResult = 0;

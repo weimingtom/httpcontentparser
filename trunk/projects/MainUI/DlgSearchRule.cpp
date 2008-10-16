@@ -95,6 +95,8 @@ void CDlgSearchRule::OnAddItem(const CString &str) {
 
 	seach_rule->addBlackSeachword(_bstr_t(str));
 	SafeRelease(seach_rule);
+
+	SetModify(TRUE);
 }
 void CDlgSearchRule::OnDelItem(const CString &str) {
 	AutoInitInScale _auto_com_init;
@@ -106,6 +108,8 @@ void CDlgSearchRule::OnDelItem(const CString &str) {
 
 	seach_rule->removeBlackSeachWord(_bstr_t(str));
 	SafeRelease(seach_rule);
+
+	SetModify(TRUE);
 }
 bool CDlgSearchRule::ValidateItem(const CString & str, CString &output) {
 	output = str;
@@ -113,6 +117,10 @@ bool CDlgSearchRule::ValidateItem(const CString & str, CString &output) {
 }
 
 BEGIN_MESSAGE_MAP(CDlgSearchRule, CDialog)
+	ON_BN_CLICKED(IDC_CHK_ENABLE_SEARCH, OnBnClickedChkEnableSearch)
+	ON_BN_CLICKED(IDC_CHK_GOOGLE, OnBnClickedChkGoogle)
+	ON_BN_CLICKED(IDC_CHK_YAHOO, OnBnClickedChkYahoo)
+	ON_BN_CLICKED(IDC_CHK_BAIDU, OnBnClickedChkBaidu)
 END_MESSAGE_MAP()
 
 
@@ -126,4 +134,24 @@ BOOL CDlgSearchRule::OnInitDialog()
 	
 	return TRUE;  // return TRUE unless you set the focus to a control
 	// 异常: OCX 属性页应返回 FALSE
+}
+
+void CDlgSearchRule::OnBnClickedChkEnableSearch()
+{
+	SetModify(TRUE);
+}
+
+void CDlgSearchRule::OnBnClickedChkGoogle()
+{
+	SetModify(TRUE);
+}
+
+void CDlgSearchRule::OnBnClickedChkYahoo()
+{
+	SetModify(TRUE);
+}
+
+void CDlgSearchRule::OnBnClickedChkBaidu()
+{
+	SetModify(TRUE);
 }

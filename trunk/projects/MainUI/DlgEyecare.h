@@ -28,7 +28,7 @@ protected:
 	DECLARE_MESSAGE_MAP()
 	
 	virtual BOOL OnInitDialog();
-	void initializeSetting();
+	void restoreSetting();
 	afx_msg void OnTimer(UINT nIDEvent);
 	afx_msg void OnDestroy();
 
@@ -53,4 +53,9 @@ public:
 	void UpdateState();
 	
 	
+	afx_msg void OnBnClickedRadJustResetTimer();
+	afx_msg void OnBnClickedRadEnterSuMode();
+	afx_msg void OnEnChangeEdtResttime();
+	afx_msg void OnEnChangeEdtEntertime();
+	afx_msg void OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
 };

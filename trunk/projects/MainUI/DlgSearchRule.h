@@ -45,4 +45,8 @@ public:
 	virtual void OnDelItem(const CString &str);
 	virtual bool ValidateItem(const CString & str, CString &output);
 	RulesList  rules;
+	afx_msg void OnBnClickedChkEnableSearch();
+	afx_msg void OnBnClickedChkGoogle();
+	afx_msg void OnBnClickedChkYahoo();
+	afx_msg void OnBnClickedChkBaidu();
 };
