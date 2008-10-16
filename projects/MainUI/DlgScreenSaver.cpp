@@ -7,6 +7,7 @@
 #include ".\globalvariable.h"
 #include ".\dlgscreensaver.h"
 #include <sysutility.h>
+#include <typeconvert.h>
 
 // CDlgScreenSaver ¶Ô»°¿ò
 
@@ -46,7 +47,7 @@ void CDlgScreenSaver::OnApply() {
 	try {
 		IScreenSave * screensave = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_ScreenSave, NULL, CLSCTX_LOCAL_SERVER, IID_IScreenSave, (LPVOID*)&screensave);
-		screensave->enableScreenSave(m_bEnableScreensave);
+		screensave->enableScreenSave(convert(m_bEnableScreensave));
 		screensave->setTimeSpan(m_sliderSaveTimespan.GetPos() * 60);
 		// screensave->enable
 	} catch (_com_error& ) {
