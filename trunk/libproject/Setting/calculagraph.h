@@ -22,6 +22,8 @@ public:
 	// 设置
 	void setTimespan(const DWORD seconds);
 	DWORD getTimespan() const;
+
+	void setTimeEscape(const DWORD seconds);
 private:
 	friend  class MultiCalculagraph;
 
@@ -53,6 +55,7 @@ public:
 
 	// 获取切换状态的剩余时间
 	int  getRemainTime() const { return (getCurrentTimespan() - getCurrentTimeEscape());}
+	void setRemainTime(const DWORD seconds);
 
 	// 设置和获取时间间隔
 	void setTimespan(const DWORD seconds, const int type);
@@ -73,6 +76,13 @@ private:
 	int state_;	// 当前状态
 	Calculagraph calculagraph_[STATE_NUM];
 };
+
+// 设置当前状态切换的剩余时间
+template<int STATE_NUM>
+void MultiCalculagraph<STATE_NUM>::setRemainTime(const DWORD seconds) {
+	DWORD second_escape = calculagraph_[state_].getTimespan() -  seconds;
+	calculagraph_[state_].setTimeEscape(second_escape);
+}
 
 template<int STATE_NUM>
 int MultiCalculagraph<STATE_NUM>::getNextState() {
