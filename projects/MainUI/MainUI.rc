@@ -744,6 +744,7 @@ BEGIN
     IDS_APP_SERVER_INIT_FAILED "Service Launch Failed!"
     IDS_EYECARE_STATE_EYECARE "Eyecare time"
     IDS_EYECARE_STATE_ENTERTAIN "Entertain time"
+    IDS_HOTKEY_CONFLICT     "Hotkey Conflict!"
 END
 
 #endif    // Ó¢Óï(ÃÀ¹ú) resources
