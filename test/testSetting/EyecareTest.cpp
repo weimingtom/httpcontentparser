@@ -14,6 +14,26 @@ EyecareTest::EyecareTest(void) {
 EyecareTest::~EyecareTest(void) {
 }
 
+void EyecareTest::TestSetLeft() {
+	CPPUNIT_ASSERT(SettingItem::MODE_CHILD == SettingItem::getModel());
+
+	Authorize authorize;
+	string supassword = "123", eyecarePassword = "456";
+	CPPUNIT_ASSERT(authorize.setNewPassword(eyecarePassword, PASSWORD_EYECARE));
+
+	EyecareSetting setting;
+	setting.initialize(&authorize, EyecareSetting::ENTERT_TIME);
+
+	setting.setEnterTime(60);
+	setting.setEyecareTime(60);
+	
+	int a = setting.getRemainTime();
+	CPPUNIT_ASSERT(setting.getRemainTime() > 0);
+	setting.setLeftTime(20);
+	Sleep(1000);
+	CPPUNIT_ASSERT(setting.getRemainTime() < 20);
+}
+
 void EyecareTest::TestTimeSetting() {
 	CPPUNIT_ASSERT(SettingItem::MODE_CHILD == SettingItem::getModel());
 

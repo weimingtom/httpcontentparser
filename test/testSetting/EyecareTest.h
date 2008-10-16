@@ -7,6 +7,7 @@
 class EyecareTest : public CPPUNIT_NS::TestFixture {
 public:
 	CPPUNIT_TEST_SUITE(EyecareTest);
+	CPPUNIT_TEST(TestSetLeft);
 	CPPUNIT_TEST(TestTimeSetting);
 	CPPUNIT_TEST(TextForceSwitch);
 	CPPUNIT_TEST(TestPassword);
@@ -18,6 +19,7 @@ private:
 	void TestPassword();
 	void TestSwitchState();
 	void TestTimeSetting();
+	void TestSetLeft();
 public:
 	EyecareTest(void);
 	~EyecareTest(void);

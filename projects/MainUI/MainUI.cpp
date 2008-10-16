@@ -64,6 +64,9 @@ BOOL CMainUIApp::InitInstance()
 	GetAppConfigFilename(config_path, MAX_PATH, AfxGetInstanceHandle());
 	g_configuration.loadConfig(config_path);
 
+	int x = g_configuration.getEyecareSetting()->getRemainTime();
+
+
 	HWND hwnd = NULL;
 	EnumWindows(EnumWndProc, (LPARAM)&hwnd);
 	if (hwnd != NULL) {

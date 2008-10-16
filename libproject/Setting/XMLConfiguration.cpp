@@ -530,7 +530,6 @@ int XMLConfiguration::getEyecareSetting(TiXmlElement *ele) {
 
 	// 设置它是否可用
 	enableEyecareSetting(ele->Attribute(CONFIG_CONST_ENABLE));
-	setEyecareState(ele->Attribute(CONFIG_APPSET_EYECARE_STATE), ele->Attribute(CONFIG_APPSET_EYECARE_TIMELEFT));
 	setEyecareTermMode(ele->Attribute(CONFIG_APPSET_EYECARE_TERM_MODE));
 
 	TiXmlNode * node = ele->FirstChild();
@@ -545,6 +544,8 @@ int XMLConfiguration::getEyecareSetting(TiXmlElement *ele) {
 
 		node = node->NextSibling();
 	}
+
+	setEyecareState(ele->Attribute(CONFIG_APPSET_EYECARE_STATE), ele->Attribute(CONFIG_APPSET_EYECARE_TIMELEFT));
 	return 0;
 }
 

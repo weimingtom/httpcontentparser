@@ -9,6 +9,7 @@
 
 class Authorize;
 class XMLConfiguration;
+class EyecareTest;
 
 // TODO : we must add sate store function
 // TODO : 
@@ -50,7 +51,7 @@ private:
 	bool checkPassword(const std::string &password);
 
 	void setState(int state) { calculagraph_.forceSwitch(state);}
-	void setLeftTime(int timeleft) {}
+	void setLeftTime(int seconds) { calculagraph_.setRemainTime(seconds);}
 
 	MultiCalculagraph<2> calculagraph_; // 用于两个计时器
 
@@ -75,6 +76,8 @@ public:
 	int getTerminatedMode() const { return after_eyecare_terminated_;}
 private:
 	int after_eyecare_terminated_;
+
+	friend class EyecareTest;
 };
 
 #endif  // _SETTING_EYECARE_SETTING_H__

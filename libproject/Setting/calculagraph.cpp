@@ -20,6 +20,10 @@ bool Calculagraph::trySwitch() {
 	}
 }
 
+void Calculagraph::setTimeEscape(const DWORD seconds) {
+	state_begin_ = GetTickCount() - seconds * 1000;
+}	
+
 
 // …Ë÷√
 void Calculagraph::setTimespan(const DWORD seconds) {
