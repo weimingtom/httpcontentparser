@@ -151,6 +151,6 @@ void SysutilityTest::testGetAppConfigFilename() {
 }
 
 void SysutilityTest::testRegisterOper() {
-	HMODULE handle = GetModule(TEXT("TestSysutility.exe"));
-	BOOL isAuto_run = isAutoRun(handle);
+	//HMODULE handle = GetModule(TEXT("TestSysutility.exe"));
+	//BOOL isAuto_run = isAutoRun(handle);
 }

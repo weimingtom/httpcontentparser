@@ -62,7 +62,7 @@ BOOL isAutoRun(HMODULE hModule) {
 // 开机自动运行
 INT RegisterAutoRun(const TCHAR * fullpath, BOOL auto_run) {
 	HKEY hKey = GetAutoRunKey();
-	if (ERROR_SUCCESS != hKey) {
+	if (NULL == hKey) {
 		return -1;
 	}
 
