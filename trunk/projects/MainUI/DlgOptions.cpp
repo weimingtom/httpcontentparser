@@ -38,32 +38,24 @@ void CDlgOptions::DoDataExchange(CDataExchange* pDX)
 }
 
 void CDlgOptions::setHotKey() {
-	try {
-		IAppSetting *pAppSetting = NULL;
-		CoCreateInstance(CLSID_AppSetting, NULL, CLSCTX_ALL, IID_IAppSetting, (LPVOID*)&pAppSetting);
-		VARIANT_BOOL  succ;
-		WORD vKey, vModifiers;
+	CString strPrompt;
+	strPrompt.LoadString(IDS_HOTKEY_CONFLICT);
 
-		// 设置显示对话框的热键
-		m_hotKeyShowDlg.GetHotKey(vKey, vModifiers);
-		if (vKey != 0 || vModifiers != 0) {
-			pAppSetting->setHotkey(vKey, vModifiers, HOTKEY_ID_POPUP_MAIN, &succ);
-			if (succ == VARIANT_FALSE)
-				throw int(0);
-		}
+	// 设置显示对话框的热键
+	//WORD vKey, vModifiers;
+	//m_hotKeyShowDlg.GetHotKey(vKey, vModifiers);
 
-		//  设置切换用户的热键
-		m_hotkeySwitchUser.GetHotKey(vKey, vModifiers);
-		if (vKey != 0 || vModifiers != 0) {
-			pAppSetting->setHotkey(vKey, vModifiers, HOTKEY_ID_SWITCH_USER, &succ);
-			if (succ == VARIANT_FALSE)
-				throw int(0);
-		}
+	//if (!RegisterHotKey(AfxGetMainWnd()->GetSafeHwnd() ,100,vModifiers,vKey)) {
+	//	
+	//	MessageBox(strPrompt);
+	//	return;
+	//}
 
-		pAppSetting->Release();
-	} catch (...) {
-		AfxMessageBox("Set Hotkey failed!");
-	}
+	//m_hotkeySwitchUser.GetHotKey(vKey, vModifiers);
+	//if (!RegisterHotKey(AfxGetMainWnd()->GetSafeHwnd(),100,vModifiers,vKey)) {
+	//	MessageBox(strPrompt);
+	//	return;
+	//}
 }
 
 void CDlgOptions::OnRestore() {
@@ -72,6 +64,7 @@ void CDlgOptions::OnRestore() {
 
 void CDlgOptions::OnApply() {
 	setHotKey();
+
 	SetAutoRun();
 }
 void CDlgOptions::OnShow() {

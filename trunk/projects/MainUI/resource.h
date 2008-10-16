@@ -36,6 +36,7 @@
 #define IDS_APP_SERVER_INIT_FAILED      122
 #define IDS_EYECARE_STATE_EYECARE       123
 #define IDS_EYECARE_STATE_ENTERTAIN     124
+#define IDS_HOTKEY_CONFLICT             125
 #define IDR_MAINFRAME                   128
 #define IDD_DLG_HELP                    129
 #define IDD_DLG_ABOUT                   130
@@ -170,7 +171,6 @@
 #define IDC_CHK_BAIDU                   1090
 #define IDC_STA_CURRENT_STATE           1091
 #define IDC_STA_TIME_LEFT               1092
-#define IDC_RICHEDIT21                  1093
 #define IDC_EDIT1                       4011
 #define IDC_EDIT2                       4012
 #define IDC_EDT_RETRY                   4013
