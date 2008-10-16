@@ -1,8 +1,8 @@
 #ifndef _UTILITY_ZIPUTILITY_H__
 #define _UTILITY_ZIPUTILITY_H__
 
-#include <zlib/zzconf.h>
-#include <zlib/zzlib.h>
+#include <zlib/zconf.h>
+#include <zlib/zlib.h>
 
 // class ZipUtility
 // 此类负责在对堆栈上解压缩Zip格式
