@@ -43,7 +43,8 @@
 			<Tool
 				Name="VCPreBuildEventTool"
 				CommandLine="copy .\sysutility.h ..\..\include
-copy .\app_constants.h ..\..\include"/>
+
+"/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
 			<Tool
@@ -146,9 +147,6 @@ copy .\debug\sysutility.lib ..\..\lib\sysutility.lib
 		<Filter
 			Name="install"
 			Filter="">
-			<File
-				RelativePath=".\app_constants.h">
-			</File>
 			<File
 				RelativePath=".\XInstall.cpp">
 			</File>

@@ -38,6 +38,11 @@ const TCHAR * GetWebSiteRecordPath(TCHAR *filename, const unsigned len, const TC
 // 获取历史的文件
 const TCHAR * GetRecordConfigfile(TCHAR *filename, const unsigned len, const TCHAR * installPath);
 
+// 开机自动运行
+INT RegisterAutoRun(const TCHAR * fullpath, BOOL auto_run);
+
+BOOL isAutoRun(HMODULE hModule);
+
 BOOL isPacketFiltersInstalled(HMODULE hModule);
 UINT InstallPacketsFilter(HMODULE hModule);
 

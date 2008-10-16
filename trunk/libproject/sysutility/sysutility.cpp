@@ -22,8 +22,67 @@ namespace {
 	void GetFilespathInDir(const TCHAR * dir, const TCHAR *exp, std::vector<strutility::_tstring> * files);
 
 	void DeleteFiles(const TCHAR * dir, const TCHAR * exp);
+	
+	HKEY GetAutoRunKey();
 };
 
+
+
+// 程序是否是自动运行的
+BOOL isAutoRun(HMODULE hModule) {
+	TCHAR fullpath[MAX_PATH];
+	GetModuleFileName(hModule, fullpath, MAX_PATH);
+
+	// 获取自动运行HKEY
+	HKEY hKey = GetAutoRunKey();
+	if (NULL == hKey) {
+		return FALSE;
+	}
+
+	TCHAR value[MAX_PATH] = {0};
+	DWORD length = MAX_PATH;
+	DWORD type = REG_SZ;
+	LONG result = RegQueryValueEx (hKey, REGISTER_MAINUI_KEY, NULL, &type, (LPBYTE)value, &length);
+	RegCloseKey(hKey);
+
+	
+	if (ERROR_SUCCESS != result) {
+		return FALSE;
+	}
+
+	if (_tcscmp(fullpath, value) != 0) {
+		return FALSE;
+	}
+
+	return TRUE;
+}
+
+
+
+// 开机自动运行
+INT RegisterAutoRun(const TCHAR * fullpath, BOOL auto_run) {
+	HKEY hKey = GetAutoRunKey();
+	if (ERROR_SUCCESS != hKey) {
+		return -1;
+	}
+
+	// 生成注册表项
+	if ( TRUE == auto_run) {
+		if (ERROR_SUCCESS == RegSetValueEx( hKey,REGISTER_MAINUI_KEY , 0, REG_SZ, (const BYTE*)(LPCSTR)fullpath, _tcslen(fullpath))) {
+			RegCloseKey(hKey);
+			return 0;
+		} else {
+			return -1;
+		}
+	} else {
+		if (ERROR_SUCCESS == RegDeleteKey(hKey, REGISTER_MAINUI_KEY)) {
+			RegCloseKey(hKey);
+			return 0;
+		} else {
+			return -1;
+		}
+	}
+}
 // 注册服务
 // returns : 0 代表成功
 //			 -1 代表文件不存在
@@ -252,6 +311,16 @@ void DeleteFiles(const TCHAR * dir, const TCHAR * exp) {
 	vector<_tstring>::iterator iter = vecfilepaths.begin();
 	for (; iter != vecfilepaths.end(); ++iter) {
 		DeleteFile(iter->c_str());
+	}
+}
+
+// 获取自动运行的表项
+HKEY GetAutoRunKey() {
+	HKEY hKey;
+	if( RegOpenKeyEx(HKEY_LOCAL_MACHINE, TEXT("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run"), 0, KEY_ALL_ACCESS, &hKey )  == ERROR_SUCCESS )  {
+		return hKey;
+	} else {
+		return NULL;
 	}
 }
 

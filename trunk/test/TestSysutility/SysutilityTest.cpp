@@ -149,3 +149,8 @@ void SysutilityTest::testGetAppConfigFilename() {
 
 	std::cout<<"App config : " << fullpath << std::endl;
 }
+
+void SysutilityTest::testRegisterOper() {
+	HMODULE handle = GetModule(TEXT("TestSysutility.exe"));
+	BOOL isAuto_run = isAutoRun(handle);
+}
