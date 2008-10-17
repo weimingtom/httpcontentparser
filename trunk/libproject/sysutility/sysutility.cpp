@@ -141,7 +141,10 @@ void StartEyecare(HMODULE hModule) {
 	WinExec(fullpath, SW_MAXIMIZE);
 }
 
-
+DWORD GetScreenRecordPath(TCHAR * fullpath, const int len, HMODULE hModule) {
+	GetScreenRecordDir(fullpath, MAX_PATH, hModule);
+	return strlen (fullpath);
+}
 DWORD GenScreenSPFile(TCHAR *fullpath, const int len, HMODULE hModule) {
 	TCHAR dir[MAX_PATH];
 	GetScreenRecordDir(dir, MAX_PATH, hModule);

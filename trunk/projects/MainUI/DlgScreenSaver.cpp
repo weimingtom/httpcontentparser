@@ -103,6 +103,7 @@ BEGIN_MESSAGE_MAP(CDlgScreenSaver, CDialog)
 	ON_BN_CLICKED(IDC_CHK_AUTOCLEAN, OnBnClickedChkAutoclean)
 	ON_BN_CLICKED(IDC_BTN_CLEAR, OnBnClickedBtnClear)
 	ON_WM_HSCROLL()
+	ON_BN_CLICKED(IDC_VIEW_HISTORY, OnBnClickedViewHistory)
 END_MESSAGE_MAP()
 
 
@@ -149,4 +150,11 @@ void CDlgScreenSaver::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 	}
 	
 	CBaseDlg::OnHScroll(nSBCode, nPos, pScrollBar);	
+}
+
+void CDlgScreenSaver::OnBnClickedViewHistory()
+{
+	TCHAR images[MAX_PATH];
+	GetScreenRecordPath(images, MAX_PATH, (HMODULE)AfxGetInstanceHandle());
+	ShellExecute(NULL, TEXT("open"), NULL, NULL, images, SW_SHOWNORMAL);
 }

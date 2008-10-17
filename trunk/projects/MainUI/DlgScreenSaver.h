@@ -62,6 +62,8 @@ protected:
 
 	void setAutoCleanTips();
 	void setTimespanTips();
+public:
+	afx_msg void OnBnClickedViewHistory();
 };
 
 #endif  // _MAINUI_CDLGSCREENSAVER_H__
