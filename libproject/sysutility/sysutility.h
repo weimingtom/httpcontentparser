@@ -8,6 +8,8 @@
 // ±£´æÆÁÄ»
 DWORD GenScreenSPFile(TCHAR *fullpath, const int len, HMODULE hModule);
 
+DWORD GetScreenRecordPath(TCHAR * fullpath, const int len, HMODULE hModule);
+
 // Çå¿ÕÆÁÄ»»º´æ
 void ClearScreen(HMODULE hModule);
 

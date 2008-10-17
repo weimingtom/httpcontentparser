@@ -10,6 +10,7 @@
 #include ".\services.h"
 #include <windowtitle.h>
 #include <hotkey.h>
+#include <sysutility.h>
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -266,9 +267,16 @@ LRESULT CMainUIDlg::OnHotKey(WPARAM wParam, LPARAM lParam) {
 // 弹出工具窗口
 // 直接运行程序即刻，程序应该能够自己验证密码
 void CMainUIDlg::OnToolsDesktopimage() {
+	TCHAR images[MAX_PATH];
+	GetScreenRecordPath(images, MAX_PATH, (HMODULE)AfxGetInstanceHandle());
+	ShellExecute(NULL, TEXT("open"), NULL, NULL, images, SW_SHOWNORMAL);
 }
 
 void CMainUIDlg::OnToolsWebhistory() {
+	TCHAR webimages[MAX_PATH], installpath[MAX_PATH];
+	GetInstallPath(installpath, MAX_PATH, (HMODULE)AfxGetInstanceHandle());
+	GetImageDirectory(webimages, MAX_PATH, installpath);
+	ShellExecute(NULL, TEXT("open"), NULL, NULL, webimages, SW_SHOWNORMAL);
 }
 
 
