@@ -2,9 +2,9 @@
 //
 
 #include "stdafx.h"
-#include "FrameButton.h"
-#include ".\framebutton.h"
 
+#include ".\framebutton.h"
+#include ".\resource.h"
 
 // CFrameButton
 
@@ -240,6 +240,10 @@ void CFrameButton::OnLButtonDown(UINT nFlags, CPoint point)
 	UpdateWindow();
 	KillTimer(1);
 	SetTimer(1, 10, NULL);
+
+	// Ó²±àÂë
+	AfxGetMainWnd()->GetDlgItem(IDC_MAIN_OK)->EnableWindow(TRUE);
+	AfxGetMainWnd()->GetDlgItem(IDC_MAIN_APPLY)->EnableWindow(TRUE);
 }
 
 void CFrameButton::OnLButtonUp(UINT nFlags, CPoint point)
