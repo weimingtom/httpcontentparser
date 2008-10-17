@@ -52,7 +52,7 @@ private:
 };
 }; // namespace
 
-void CDlgOnlineHour::OnApply() {
+int CDlgOnlineHour::OnApply() {
 	try {
 		CoInitialize(NULL);
 		IAccessNetwork * accessNetwork = NULL;
@@ -65,8 +65,10 @@ void CDlgOnlineHour::OnApply() {
 
 		accessNetwork->Release();
 		CoUninitialize();
+		return 0;
 	} catch (_com_error &) {
 		CoUninitialize();
+		return -1;
 	}
 }
 

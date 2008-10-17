@@ -28,7 +28,8 @@ void CLev1DlgTools::restoreSetting() {
 
 }
 
-void CLev1DlgTools::OnApply() {
+int CLev1DlgTools::OnApply() {
+	return 0;
 }
 
 void CLev1DlgTools::OnShow() {
