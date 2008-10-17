@@ -14,7 +14,7 @@ public:
 // 对话框数据
 	enum { IDD = IDD_DLG_HELP };
 
-	virtual void OnRestore();
+	virtual void restoreSetting();
 	virtual void OnApply();
 	virtual void OnShow();
 protected:

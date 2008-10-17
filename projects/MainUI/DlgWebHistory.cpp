@@ -67,10 +67,6 @@ void CDlgWebHistory::ChangeRecordType() {
 	}
 }
 
-void CDlgWebHistory::OnRestore() {
-	restoreSetting();
-}
-
 void CDlgWebHistory::OnApply() {
 	ChangeRecordType();
 }
@@ -123,7 +119,7 @@ BOOL CDlgWebHistory::OnInitDialog()
 	CBaseDlg::OnInitDialog();
 	CString str;
 
-	OnRestore();
+	Restore();
 
 	return TRUE;  // return TRUE unless you set the focus to a control
 }

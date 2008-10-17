@@ -6,6 +6,8 @@
 #include <set>
 #include <string>
 
+class CBaseDlg;
+
 struct RuleChanged {
 	virtual void OnAddItem(const CString &str) = 0;
 	virtual void OnDelItem(const CString &str) = 0;
@@ -14,7 +16,7 @@ struct RuleChanged {
 
 class RulesList : public OnTextChanged {
 public:
-	RulesList(RuleChanged * changed);
+	RulesList(CBaseDlg * dlg, RuleChanged * changed);
 public:
 	virtual void OnDelete(const CString &str);
 	virtual void OnBeginEdit(const CString &strOld);
@@ -39,4 +41,5 @@ protected:
 protected:
 	RulesList();
 	RuleChanged * const changed_;
+	CBaseDlg	* dlg_;
 };

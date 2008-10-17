@@ -20,8 +20,7 @@ CDlgHelp::~CDlgHelp()
 }
 
 
-void CDlgHelp::OnRestore() {
-
+void CDlgHelp::restoreSetting() {
 }
 
 void CDlgHelp::OnApply() {

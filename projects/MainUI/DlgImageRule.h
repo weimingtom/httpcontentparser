@@ -12,6 +12,7 @@
 #include <Guilib1.5\GuiGroupBox.h>
 #include <Guilib1.5\GuiRadioButton.h>
 #include <Guilib1.5\GuiComboFont.h>
+#include "afxcmn.h"
 
 // CDlgImageRule 对话框
 
@@ -26,11 +27,10 @@ public:
 // 对话框数据 
 	enum { IDD = IDD_DLG_IMAGERULES };
 
-	virtual void OnRestore();
 	virtual void OnApply();
 	virtual void OnShow();
 protected:
-	void intializeSetting();
+	virtual void restoreSetting();
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 支持
 	virtual BOOL OnInitDialog();
@@ -46,9 +46,18 @@ protected:
 	CGuiGroupBox m_staImageSize;
 	CGuiGroupBox m_staImageType;
 	CGuiEdit m_editImageScale;
+	CSliderCtrl m_sliderImageCheckDegree;
 
 	BOOL m_bCheckGIF;
 	BOOL m_bCheckJPEG;
 	BOOL m_bCheckBMP;
 	BOOL m_bCheckPNG;
+public:
+	afx_msg void OnBnClickedChkJpeg();
+	afx_msg void OnBnClickedChkGif();
+	afx_msg void OnBnClickedChkBmp();
+	afx_msg void OnBnClickedChkPng();
+	afx_msg void OnEnChangeEdit2();
+	afx_msg void OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
+	
 };

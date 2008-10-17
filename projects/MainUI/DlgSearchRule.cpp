@@ -14,7 +14,7 @@
 IMPLEMENT_DYNAMIC(CDlgSearchRule, CDialog)
 CDlgSearchRule::CDlgSearchRule(CWnd* pParent /*=NULL*/)
 	: CBaseDlg(CDlgSearchRule::IDD, pParent)
-	, rules(this)
+	, rules(this, this)
 	, m_bEnableSearchRule(TRUE)
 	, m_bChkGoogle(FALSE)
 	, m_bChkYahoo(FALSE)
@@ -24,10 +24,6 @@ CDlgSearchRule::CDlgSearchRule(CWnd* pParent /*=NULL*/)
 
 CDlgSearchRule::~CDlgSearchRule()
 {
-}
-
-void CDlgSearchRule::OnRestore() {
-
 }
 
 void CDlgSearchRule::OnApply() {
@@ -72,7 +68,7 @@ void CDlgSearchRule::DoDataExchange(CDataExchange* pDX)
 	DDX_Check(pDX, IDC_CHK_BAIDU, m_bChkBaidu);
 }
 
-void CDlgSearchRule::initializeData() {
+void CDlgSearchRule::restoreSetting() {
 	ListBox.setOnTextChanged(&rules);
 	g_configuration.getSearchRule()->enumBlackWord((Enumerator1<std::string>*)this);
 	m_bEnableSearchRule = g_configuration.getSearchRule()->isEnabled();
@@ -130,7 +126,7 @@ BOOL CDlgSearchRule::OnInitDialog()
 {
 	CBaseDlg::OnInitDialog();
 
-	initializeData();
+	Restore();
 	
 	return TRUE;  // return TRUE unless you set the focus to a control
 	// 异常: OCX 属性页应返回 FALSE

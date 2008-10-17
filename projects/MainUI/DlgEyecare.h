@@ -20,7 +20,6 @@ public:
 // 对话框数据
 	enum { IDD = IDD_DLG_EYECARE };
 
-	virtual void OnRestore();
 	virtual void OnApply();
 	virtual void OnShow();
 protected:

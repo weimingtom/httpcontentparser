@@ -41,17 +41,15 @@ void CDlgImageRule::DoDataExchange(CDataExchange* pDX)
 	DDX_Check(pDX, IDC_CHK_JPEG, m_bCheckJPEG);
 	DDX_Check(pDX, IDC_CHK_BMP, m_bCheckBMP);
 	DDX_Check(pDX, IDC_CHK_PNG, m_bCheckPNG);
+	DDX_Control(pDX, IDC_SLIDER_IMAGECHECK_DEGREE, m_sliderImageCheckDegree);
 }
 
-void CDlgImageRule::OnRestore() {
-}
 
 void CDlgImageRule::OnShow() {
 }
 
 void CDlgImageRule::OnApply() {
 	UpdateData(TRUE);
-
 	//ASSERT (g_globalSetting != NULL);
 
 	//g_globalSetting->enableShowImage(m_bShowImage == true ? VARIANT_TRUE : VARIANT_FALSE);
@@ -61,7 +59,7 @@ void CDlgImageRule::OnApply() {
 }
 
 
-void CDlgImageRule::intializeSetting() {
+void CDlgImageRule::restoreSetting() {
 	// 按照初始化设置
 	m_bCheckGIF = g_configuration.getContentCheckSetting()->needCheck(IMAGE_TYPE_GIF);
 	m_bCheckJPEG = g_configuration.getContentCheckSetting()->needCheck(IMAGE_TYPE_JPEG);
@@ -71,6 +69,12 @@ void CDlgImageRule::intializeSetting() {
 }
 
 BEGIN_MESSAGE_MAP(CDlgImageRule, CDialog)
+	ON_BN_CLICKED(IDC_CHK_JPEG, OnBnClickedChkJpeg)
+	ON_BN_CLICKED(IDC_CHK_GIF, OnBnClickedChkGif)
+	ON_BN_CLICKED(IDC_CHK_BMP, OnBnClickedChkBmp)
+	ON_BN_CLICKED(IDC_CHK_PNG, OnBnClickedChkPng)
+	ON_EN_CHANGE(IDC_EDIT2, OnEnChangeEdit2)
+	ON_WM_HSCROLL()
 END_MESSAGE_MAP()
 
 
@@ -79,9 +83,42 @@ END_MESSAGE_MAP()
 BOOL CDlgImageRule::OnInitDialog() 
 {
 	CBaseDlg::OnInitDialog();
-	
+	m_sliderImageCheckDegree.SetRange(0, 5);
 	m_editImageScale.SetMask("Low Bound:#### ---- ####:Upper Bound","Low Bound:____ ---- ____:Upper Bound",CGuiEdit::MASK_FREEMASK);
-	intializeSetting();
+	Restore();
 	return TRUE;
 	// 异常: OCX 属性页应返回 FALSE
+}
+
+void CDlgImageRule::OnBnClickedChkJpeg()
+{
+	SetModify(true);
+}
+
+void CDlgImageRule::OnBnClickedChkGif()
+{
+	SetModify(true);
+}
+
+void CDlgImageRule::OnBnClickedChkBmp()
+{
+	SetModify(true);
+}
+
+void CDlgImageRule::OnBnClickedChkPng()
+{
+	SetModify(true);
+}
+
+void CDlgImageRule::OnEnChangeEdit2()
+{
+	SetModify(true);
+}
+
+void CDlgImageRule::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
+{
+	if (pScrollBar->GetSafeHwnd() == m_sliderImageCheckDegree.GetSafeHwnd()) {
+		SetModify(true);
+	}
+	CBaseDlg::OnHScroll(nSBCode, nPos, pScrollBar);
 }

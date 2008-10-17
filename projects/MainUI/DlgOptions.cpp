@@ -58,15 +58,18 @@ void CDlgOptions::setHotKey() {
 	//}
 }
 
-void CDlgOptions::OnRestore() {
-}
-
 
 void CDlgOptions::OnApply() {
 	setHotKey();
-
 	SetAutoRun();
 }
+
+void CDlgOptions::restoreSetting() {
+	m_bAutoRun = isAutoRun((HMODULE)AfxGetInstanceHandle());
+	m_bOld_autorun = m_bAutoRun;
+	UpdateData(FALSE);
+}
+
 void CDlgOptions::OnShow() {
 }
 
@@ -81,6 +84,7 @@ void CDlgOptions::SetAutoRun() {
 }
 
 BEGIN_MESSAGE_MAP(CDlgOptions, CDialog)
+	ON_BN_CLICKED(IDC_CHK_AUTOLOAD, OnBnClickedChkAutoload)
 END_MESSAGE_MAP()
 
 
@@ -89,8 +93,11 @@ BOOL CDlgOptions::OnInitDialog()
 {
 	CBaseDlg::OnInitDialog();
 
-	m_bAutoRun = isAutoRun((HMODULE)AfxGetInstanceHandle());
-	m_bOld_autorun = m_bAutoRun;
-	UpdateData(FALSE);
-	return TRUE;  // return TRUE unless you set the focus to a control
+	Restore();
+	return TRUE;
+}
+
+void CDlgOptions::OnBnClickedChkAutoload()
+{
+	SetModify(true);
 }

@@ -21,7 +21,6 @@ public:
 // 对话框数据
 	enum { IDD = IDD_DLG_WEB_HISTORY };
 
-	virtual void OnRestore();
 	virtual void OnApply();
 	virtual void OnShow();
 
@@ -33,7 +32,7 @@ protected:
 	void ChangeRecordType();
 
 	// 初始化
-	void restoreSetting();
+	virtual void restoreSetting();
 public:
 	afx_msg void OnBnClickedBunClearCache();
 	afx_msg void OnBnClickedBtnHistoryPages();

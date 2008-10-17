@@ -19,14 +19,13 @@ public:
 // 对话框数据
 	enum { IDD = IDD_DLG_SEARCH_RULE };
 
-	virtual void OnRestore();
 	virtual void OnApply();
 	virtual void OnShow();
 
 	virtual BOOL OnInitDialog();
 protected:
 	// 初始化初始设置
-	void initializeData();
+	virtual void restoreSetting();
 	virtual int Enum(const std::string &dns) ;  // member of DNSEnumerator
 
 	CGuiListEdit ListBox;

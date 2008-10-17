@@ -24,9 +24,6 @@ CDlgOnlineHour::~CDlgOnlineHour()
 {
 }
 
-void CDlgOnlineHour::OnRestore() {
-
-}
 
 namespace {
 	// ÉèÖÃ
@@ -83,7 +80,7 @@ void CDlgOnlineHour::DoDataExchange(CDataExchange* pDX)
 	DDX_Check(pDX, IDC_CHK_TIMECTRL, m_bEnableTimeCheck);
 }
 
-void CDlgOnlineHour::initializeSetting() {
+void CDlgOnlineHour::restoreSetting() {
 	m_bEnableTimeCheck = g_configuration.getOnlineSetting()->isEnabled();
 	UpdateData(FALSE);
 
@@ -97,6 +94,7 @@ int CDlgOnlineHour::Enum(const int day, const int hour) {
 }
 
 BEGIN_MESSAGE_MAP(CDlgOnlineHour, CDialog)
+	ON_BN_CLICKED(IDC_CHK_TIMECTRL, OnBnClickedChkTimectrl)
 END_MESSAGE_MAP()
 
 
@@ -111,8 +109,13 @@ BOOL CDlgOnlineHour::OnInitDialog()
 	cells.Create(NULL, NULL, WS_CHILD, rect, this, IDC_WND_HELLO);
 	cells.ShowWindow(SW_SHOW);
 
-	initializeSetting();
+	Restore();
 
 	return TRUE;  // return TRUE unless you set the focus to a control
 }
 
+
+void CDlgOnlineHour::OnBnClickedChkTimectrl()
+{
+	SetModify(true);
+}

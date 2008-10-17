@@ -20,7 +20,6 @@ public:
 // 对话框数据
 	enum { IDD = IDD_DLG_DNS_WHITELIST };
 
-	virtual void OnRestore();
 	virtual void OnApply();
 	virtual void OnShow();
 protected:
@@ -33,7 +32,8 @@ protected:
 	CGuiListEdit ListBox;
 	BOOL m_bEnableWhiteDNS;
 
-	void initializeData();
+protected:
+	void restoreSetting();
 	virtual int Enum(const std::string &dns) ;  // member of DNSEnumerator
 public:
 	virtual BOOL OnInitDialog();
