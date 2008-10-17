@@ -6,7 +6,7 @@
 #include <assert.h>
 #include <process.h>
 #include <app_constants.h>
-#include <stdlib.h>
+#include <stdlib.h> 
 #include  <io.h>
 
 
@@ -174,7 +174,7 @@ void ClearHistory(HMODULE hModule) {
 void ClearScreen(HMODULE hModule) {
 	TCHAR dir[MAX_PATH];
 	GetScreenRecordDir(dir, MAX_PATH, hModule);
-	DeleteFiles(dir, TEXT("*.jgp"));
+	DeleteFiles(dir, TEXT("*.jpg"));
 }
 
 const TCHAR * GetAppConfigFilename(TCHAR *fullpath, const int len, HMODULE hModule) {
@@ -287,7 +287,7 @@ void GetFilespathInDir(const TCHAR * dir,  const TCHAR *exp,
 	using namespace strutility;
 
 	TCHAR fileexp[MAX_PATH];
-	_sntprintf(fileexp, MAX_PATH, "%s%s", dir, exp);
+	_sntprintf(fileexp, MAX_PATH, TEXT("%s%s"), dir, exp);
 	WIN32_FIND_DATA find_data;
 	HANDLE hFind = FindFirstFile(fileexp, &find_data);
 
