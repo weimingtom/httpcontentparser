@@ -26,13 +26,15 @@ public:
 // 对话框数据
 	enum { IDD = IDD_DLG_OPTION };
 
-	virtual void OnRestore();
 	virtual void OnApply();
 	virtual void OnShow();
-
+protected:
+	virtual void restoreSetting();
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 支持
 	virtual BOOL OnInitDialog();
+	afx_msg void OnBnClickedChkAutoload();
+
 	DECLARE_MESSAGE_MAP()
 public:
 	// control variables

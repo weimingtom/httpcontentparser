@@ -26,9 +26,11 @@ public:
 // 对话框数据
 	enum { IDD = IDD_LEV1_RULE };
 
-	virtual void OnRestore();
+	
 	virtual void OnApply();
 	virtual void OnShow();
+protected:
+	virtual void restoreSetting();
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 支持
 

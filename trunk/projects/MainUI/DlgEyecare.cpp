@@ -40,11 +40,6 @@ void CDlgEyecare::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_STA_TIME_LEFT, m_strTimeLeft);
 }
 
-
-void CDlgEyecare::OnRestore() {
-	restoreSetting();
-}
-
 // 设置时间间隔
 void CDlgEyecare::setEyecareTimespan() {
 	try {
@@ -112,7 +107,9 @@ END_MESSAGE_MAP()
 BOOL CDlgEyecare::OnInitDialog()
 {
 	CBaseDlg::OnInitDialog();
-	OnRestore();
+
+	// 获取设置
+	Restore();
 
 	UpdateState();
 	SetTimer(ID_TIME_UPDATE_STATE, TIME_ESCPLE, NULL);
@@ -153,6 +150,9 @@ void CDlgEyecare::OnDestroy() {
 	KillTimer(ID_TIME_UPDATE_STATE);
 }
 
+
+//=============================================
+// 状态改变
 void CDlgEyecare::OnBnClickedRadJustResetTimer()
 {
 	SetModify(true);

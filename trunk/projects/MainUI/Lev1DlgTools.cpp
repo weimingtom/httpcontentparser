@@ -24,12 +24,13 @@ void CLev1DlgTools::DoDataExchange(CDataExchange* pDX)
 }
 
 
-void CLev1DlgTools::OnRestore() {
+void CLev1DlgTools::restoreSetting() {
 
 }
 
 void CLev1DlgTools::OnApply() {
 }
+
 void CLev1DlgTools::OnShow() {
 }
 

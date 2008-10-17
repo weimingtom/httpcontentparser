@@ -21,14 +21,24 @@ int  CBaseDlg::AfterChange() {
 	return 0;
 }
 
+void CBaseDlg::Apply() {
+	OnApply();
+	SetModify(false);
+}
+// ªÿ∏¥…Ë÷√
+void CBaseDlg::Restore() {
+	restoreSetting();
+	SetModify(false);
+}
+
 int  CBaseDlg::BeforeChange() {
 	if (Modified() == true) {
 		int result = AfxMessageBox("Setting have been changed, Would you like apply the change?", MB_YESNO);
 		if (result == IDOK) {
-			OnApply();
+			Apply();
 			return 1;
 		} else {
-			OnRestore();
+			Restore();
 			return 0;
 		}
 	} else {

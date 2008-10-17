@@ -286,7 +286,7 @@ void CMainUIDlg::OnCancel() {
 void CMainUIDlg::OnBnClickedOk()
 {
 	ASSERT (NULL != m_curDlg);
-	m_curDlg->OnApply();
+	m_curDlg->Apply();
 	m_bShowed = FALSE;
 	ShowWindow(SW_HIDE);
 }
@@ -295,13 +295,14 @@ void CMainUIDlg::OnBnClickedMainCancel()
 {
 	m_bShowed = FALSE;
 	ShowWindow(SW_HIDE);
+	m_curDlg->Restore();
 }
 
 // 按下Apply按钮
 void CMainUIDlg::OnBnClickedApply()
 {
 	ASSERT (NULL != m_curDlg);
-	m_curDlg->OnApply();
+	m_curDlg->Apply();
 }
 
 // 设置控件的字体
@@ -554,7 +555,7 @@ void CMainUIDlg::OnTvnSelchangedTreeNavig(NMHDR *pNMHDR, LRESULT *pResult)
 		setCurDlg(itemData);
 		m_curDlg->AfterChange();
 	} else {
-		m_curDlg->OnRestore();
+		m_curDlg->Restore();
 		m_curDlg->SetModify(false);
 	}
 

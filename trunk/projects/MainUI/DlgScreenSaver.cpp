@@ -39,10 +39,6 @@ void CDlgScreenSaver::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_STA_SCREENSAVE_TIMESPAN, m_strTimespanMins);
 }
 
-void CDlgScreenSaver::OnRestore() {
-	restoreSetting();
-}
-
 void CDlgScreenSaver::OnApply() {
 	try {
 		IScreenSave * screensave = NULL;
@@ -113,7 +109,7 @@ END_MESSAGE_MAP()
 BOOL CDlgScreenSaver::OnInitDialog() {
 	CBaseDlg::OnInitDialog();
 	
-	OnRestore();
+	Restore();
 
 	enableAutoSave();
 	enableAutoclean();

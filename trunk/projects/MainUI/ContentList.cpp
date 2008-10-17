@@ -2,20 +2,22 @@
 //
 
 #include "stdafx.h"
-#include "MainUI.h"
-#include "ContentList.h"
-#include "globalvariable.h"
-
+#include ".\MainUI.h"
+#include ".\ContentList.h"
+#include ".\globalvariable.h"
+#include ".\basedlg.h"
 #include <comdef.h>
 #include <comutil.h>
 #include <assert.h>
 
+
 //===================================
 // constructors
-RulesList::RulesList(RuleChanged * changed) : changed_(changed) {
+RulesList::RulesList(CBaseDlg * dlg, RuleChanged * changed) : dlg_(dlg), changed_(changed) {
 	ASSERT (changed != NULL);
+	ASSERT( dlg  != NULL);
 }
-RulesList::RulesList() : changed_(NULL) {
+RulesList::RulesList() : dlg_(NULL), changed_(NULL) {
 }
 
 //==================================
@@ -62,6 +64,7 @@ bool RulesList::OnEndEdit(const CString &strNew) {
 	}
 
 	m_strOld = "";
+	dlg_->SetModify(true);
 	return true;
 }
 

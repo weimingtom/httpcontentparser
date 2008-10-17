@@ -17,9 +17,13 @@ public:
 	}
 
 	// ª÷∏¥…Ë÷√
-	virtual void OnRestore() = 0;
-	virtual void OnApply() = 0;
+	void Restore();
+	void Apply();
 	virtual void OnShow() = 0;
+
+protected:
+	virtual int OnApply() = 0;
+	virtual int restoreSetting() = 0;
 	void OnOK() {}
 public:
 	void SetModify(const bool changed);

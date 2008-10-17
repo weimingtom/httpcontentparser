@@ -13,7 +13,7 @@
 IMPLEMENT_DYNAMIC(CDlgWhiteDNSList, CDialog)
 CDlgWhiteDNSList::CDlgWhiteDNSList(CWnd* pParent /*=NULL*/)
 	: CBaseDlg(CDlgWhiteDNSList::IDD, pParent)
-	, rules(this)
+	, rules(this, this)
 	, m_bEnableWhiteDNS(TRUE)
 	, m_bCheckDenyAllOthers(FALSE)
 {
@@ -32,10 +32,6 @@ void CDlgWhiteDNSList::DoDataExchange(CDataExchange* pDX)
 	DDX_Check(pDX, IDC_CHK_DENY_OTHERS, m_bCheckDenyAllOthers);
 }
 
-void CDlgWhiteDNSList::OnRestore() {
-
-}
-
 void CDlgWhiteDNSList::OnApply() {
 	UpdateData(TRUE);
 
@@ -52,7 +48,7 @@ void CDlgWhiteDNSList::OnShow() {
 }
 
 // ³õÊ¼»¯ÉèÖÃ
-void CDlgWhiteDNSList::initializeData() {
+void CDlgWhiteDNSList::restoreSetting() {
 	g_configuration.getWhiteURLSet()->beginEnum((Enumerator1<std::string>*)this);
 
 	m_bEnableWhiteDNS = g_configuration.getWhiteURLSet()->isEnabled();
@@ -93,7 +89,7 @@ BOOL CDlgWhiteDNSList::OnInitDialog()
 	CBaseDlg::OnInitDialog();
 	ListBox.setOnTextChanged(&rules);
 
-	initializeData();
+	Restore();
 
 	return TRUE;  // return TRUE unless you set the focus to a control
 }

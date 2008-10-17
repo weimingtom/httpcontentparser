@@ -16,6 +16,7 @@ public:
 	virtual void OnRestore();
 	virtual void OnApply();
 	virtual void OnShow();
+	virtual void restoreSetting() {}
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV Ö§³Ö
 

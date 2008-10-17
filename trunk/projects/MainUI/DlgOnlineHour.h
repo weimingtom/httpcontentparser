@@ -18,7 +18,6 @@ public:
 // 对话框数据
 	enum { IDD = IDD_DLG_ONLINE_RULE };
 
-	virtual void OnRestore();
 	virtual void OnApply();
 	virtual void OnShow();
 
@@ -26,7 +25,7 @@ protected:
 	CCells cells;
 	CButton m_chkTimeCtrl;
 
-	void initializeSetting();
+	virtual void restoreSetting();
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 支持
 
@@ -38,4 +37,6 @@ public:
 	// Enum the accessNetword hour
 protected:
 	virtual int Enum(const int day, const int hour);
+public:
+	afx_msg void OnBnClickedChkTimectrl();
 };
