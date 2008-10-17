@@ -1,8 +1,9 @@
-#pragma once
+#ifndef _MAINUI_FRAMEBUTTON_H__
+#define _MAINUI_FRAMEBUTTON_H__
 
+class CBaseDlg;
 
 // CFrameButton
-
 class CFrameButton : public CButton {
 	DECLARE_DYNAMIC(CFrameButton)
 
@@ -47,4 +48,5 @@ public:
 	virtual void DrawItem(LPDRAWITEMSTRUCT /*lpDrawItemStruct*/);
 };
 
+#endif  // _MAINUI_FRAMEBUTTON_H__
 
