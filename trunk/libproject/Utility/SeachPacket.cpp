@@ -2,6 +2,7 @@
 #include ".\seachpacket.h"
 #include <utility\strutility.h>
 #include <assert.h>
+#include <fstream>
 
 #define SEACH_COMMAND_GOOGLE		"/search?"
 #define SEACH_COMMAND_YAHOO			"/search?"
@@ -100,7 +101,6 @@ int SeachPacket::parse(const char * oper, const char * host_name) {
 	if (NULL != pos) {
 		pos[0] = '&';
 	} else {
-		assert(false);
 		return 0;
 	}
 

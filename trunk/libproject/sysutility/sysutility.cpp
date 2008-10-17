@@ -163,12 +163,16 @@ DWORD GenScreenSPFile(TCHAR *fullpath, const int len, HMODULE hModule) {
 	return (DWORD)_tcslen(fullpath);
 }
 void ClearHistory(HMODULE hModule) {
-	TCHAR dir[MAX_PATH];
+	TCHAR dir[MAX_PATH] = {0}, filepath[MAX_PATH] = {0};
 	GetImageRecordDir(dir, MAX_PATH, hModule);
 	DeleteFiles(dir, TEXT("*.*"));
 
 	GetTextRecordDir(dir, MAX_PATH, hModule);
 	DeleteFiles(dir, TEXT("*.*"));
+
+	GetInstallPath(dir, MAX_PATH, hModule);
+	GetWebSiteRecordPath(filepath, MAX_PATH, dir);
+	DeleteFile(filepath);
 }
 
 void ClearScreen(HMODULE hModule) {
@@ -212,7 +216,7 @@ const TCHAR * GetImageDirectory(TCHAR * filename, const unsigned len, const TCHA
 const TCHAR * GetWebSiteRecordPath(TCHAR *filename, const unsigned len, const TCHAR * installPath) {
 	assert (filename != NULL);
 	assert ( true == strutility::endwith(installPath, "\\"));
-	GenerateFullPath(filename, MAX_PATH, installPath, TEXT("History\\websites\\websites.xml"));
+	GenerateFullPath(filename, MAX_PATH, installPath, TEXT("History\\websites\\websites.txt"));
 	return filename;
 }
 

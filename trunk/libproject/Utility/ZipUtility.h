@@ -21,8 +21,8 @@ public:
 		}
 	}
 
-	const int infloate_size(const char *src, const int size int *infloat);
-	const int unzip(const char * src, const int size, int *infatesize);
+	int infloate_size(const char *src, const int size int *infloat);
+	int unzip(const char * src, const int size, int *infatesize);
 private:
 	char * buffer_pointer_;
 

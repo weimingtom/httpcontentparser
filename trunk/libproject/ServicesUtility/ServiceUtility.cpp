@@ -11,9 +11,22 @@
 #include <typeconvert.h>
 #include <string>
 #include <comdef.h>
+#include ".\hostnamerecorder.h"
 using namespace std;
 
+int	host_record_cnt = 0;
+HostnameRecorder hostrecorder;
+
 bool checkDNS(const char * dns_name) {
+
+	// 每个三次记录一次
+	if (3 == host_record_cnt) {
+		host_record_cnt = 0;
+		hostrecorder.add(std::string(dns_name));
+	}
+
+	host_record_cnt++;
+
 	AutoInitInScale _auto_com_init;
 	try {
 		_VARIANT_BOOL passed;
