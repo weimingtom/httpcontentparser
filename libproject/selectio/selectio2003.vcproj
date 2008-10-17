@@ -44,7 +44,8 @@ copy .\Debug\selectiod.lib ..\..\lib
 				Name="VCPreBuildEventTool"
 				CommandLine="copy .\selectio.h ..\..\include
 copy .\webrecordconfig.h ..\..\include
-copy .\httpcontentcheck.h ..\..\include"/>
+copy .\httpcontentcheck.h ..\..\include
+"/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
 			<Tool
@@ -89,7 +90,8 @@ copy .\release\selectio.lib ..\..\lib
 				Name="VCPreBuildEventTool"
 				CommandLine="copy .\selectio.h ..\..\include
 copy .\webrecordconfig.h ..\..\include
-copy .\httpcontentcheck.h ..\..\include"/>
+copy .\httpcontentcheck.h ..\..\include
+"/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
 			<Tool

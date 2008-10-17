@@ -4,6 +4,7 @@
 #include <webcontenttype.h>
 #include <utility/httppacket.h>
 #include <sysutility.h>
+#include <com\comutility.h>
 #include <com\FilterSetting_i.c>
 #include <com\FilterSetting.h>
 #include <assert.h>
@@ -194,7 +195,7 @@ const TCHAR * HTTPContentHander::getInstallDir() {
 	}
 
 	try {
-		CoInitialize(NULL);
+		AutoInitInScale _auto_com_init;
 		BSTR retVal;
 		IAppSetting * appSetting = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_AppSetting, NULL, CLSCTX_LOCAL_SERVER, IID_IAppSetting, (LPVOID*)&appSetting);
@@ -206,12 +207,9 @@ const TCHAR * HTTPContentHander::getInstallDir() {
 		//TCHAR config_name[MAX_PATH];
 		//GetRecordConfigfile(config_name, MAX_PATH, install_path);
 		//record_config_ = new WebRecordConfig(config_name);
-
 		
 		_tcsncpy(installpath_, (TCHAR*)install_path, MAX_PATH);
-		CoUninitialize();
 	} catch (_com_error &) {
-		CoUninitialize();
 	}
 
 	return installpath_;
