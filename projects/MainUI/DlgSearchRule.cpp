@@ -26,7 +26,7 @@ CDlgSearchRule::~CDlgSearchRule()
 {
 }
 
-void CDlgSearchRule::OnApply() {
+int CDlgSearchRule::OnApply() {
 	rules.OnApply();
 	UpdateData();
 	try {
@@ -35,18 +35,18 @@ void CDlgSearchRule::OnApply() {
 		HRESULT hr = CoCreateInstance(CLSID_SearchRule, NULL, CLSCTX_LOCAL_SERVER, IID_ISearchRule, (LPVOID*)&seach_rule);
 		if (FAILED(hr)) {
 			//AfxMessageBox(
-			return;
+			return -1;
 		}
 
 		seach_rule->enableCheckSeachEngine(_bstr_t("google"), convert(m_bChkGoogle));
 		seach_rule->enableCheckSeachEngine(_bstr_t("yahoo"), convert(m_bChkYahoo));
 		seach_rule->enableCheckSeachEngine(_bstr_t("baidu"), convert(m_bChkBaidu));
 		SafeRelease(seach_rule);
-		return;
+		return 0;
 
 	} catch (_com_error&) {
 		//AfxMessageBox(
-		return;
+		return -1;
 	}
 }
 

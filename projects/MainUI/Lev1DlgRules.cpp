@@ -34,7 +34,8 @@ END_MESSAGE_MAP()
 void CLev1DlgRules::restoreSetting() {
 }
 
-void CLev1DlgRules::OnApply() {
+int CLev1DlgRules::OnApply() {
+	return 0;
 }
 
 void CLev1DlgRules::OnShow() {

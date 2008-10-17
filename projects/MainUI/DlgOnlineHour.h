@@ -18,7 +18,7 @@ public:
 // 对话框数据
 	enum { IDD = IDD_DLG_ONLINE_RULE };
 
-	virtual void OnApply();
+	virtual int OnApply();
 	virtual void OnShow();
 
 protected:

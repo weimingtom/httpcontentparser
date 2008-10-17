@@ -27,7 +27,7 @@ public:
 	enum { IDD = IDD_LEV1_RULE };
 
 	
-	virtual void OnApply();
+	virtual int OnApply();
 	virtual void OnShow();
 protected:
 	virtual void restoreSetting();

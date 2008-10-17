@@ -32,13 +32,14 @@ void CDlgWhiteDNSList::DoDataExchange(CDataExchange* pDX)
 	DDX_Check(pDX, IDC_CHK_DENY_OTHERS, m_bCheckDenyAllOthers);
 }
 
-void CDlgWhiteDNSList::OnApply() {
+int CDlgWhiteDNSList::OnApply() {
 	UpdateData(TRUE);
 
 	rules.OnApply();
 	ASSERT(g_dnssetting != NULL);
 	g_dnssetting->enableWhiteDNSCheck(convert(m_chkWhiteDNSList.GetCheck() == BST_CHECKED));
 	g_dnssetting->justEnableWhiteDNS(convert(m_bCheckDenyAllOthers));
+	return 0;
 }
 
 void CDlgWhiteDNSList::OnShow() {

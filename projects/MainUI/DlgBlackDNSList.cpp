@@ -23,12 +23,13 @@ CDlgBlackDNSList::~CDlgBlackDNSList()
 }
 
 
-void CDlgBlackDNSList::OnApply() {
+int CDlgBlackDNSList::OnApply() {
 	rules.OnApply();
 
 	// DNS CHECKÊÇ·ñ¿ÉÓÃ
 	ASSERT(g_dnssetting != NULL);
 	g_dnssetting->enableBlackDNSCheck(convert(m_chkEnableDNS.GetCheck() == BST_CHECKED));
+	return 0;
 }
 
 void CDlgBlackDNSList::OnShow() {

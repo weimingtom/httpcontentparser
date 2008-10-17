@@ -28,7 +28,7 @@ public:
 // 对话框数据
 	enum { IDD = IDD_DLG_SCREEN_SAVER };
 
-	virtual void OnApply();
+	virtual int OnApply();
 	virtual void OnShow();
 
 protected:

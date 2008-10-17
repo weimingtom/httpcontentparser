@@ -39,14 +39,16 @@ void CDlgScreenSaver::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_STA_SCREENSAVE_TIMESPAN, m_strTimespanMins);
 }
 
-void CDlgScreenSaver::OnApply() {
+int CDlgScreenSaver::OnApply() {
 	try {
 		IScreenSave * screensave = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_ScreenSave, NULL, CLSCTX_LOCAL_SERVER, IID_IScreenSave, (LPVOID*)&screensave);
 		screensave->enableScreenSave(convert(m_bEnableScreensave));
 		screensave->setTimeSpan(m_sliderSaveTimespan.GetPos() * 60);
 		// screensave->enable
+		return 0;
 	} catch (_com_error& ) {
+		return -1;
 	}
 }
 void CDlgScreenSaver::OnShow() {

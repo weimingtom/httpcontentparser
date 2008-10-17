@@ -70,9 +70,10 @@ void CDlgEyecare::setEyecareTerminatedMode() {
 	}
 }
 
-void CDlgEyecare::OnApply() {
+int CDlgEyecare::OnApply() {
 	setEyecareTimespan();
 	setEyecareTerminatedMode();
+	return 0;
 }
 
 void CDlgEyecare::OnShow() {

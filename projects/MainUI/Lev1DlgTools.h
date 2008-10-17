@@ -26,7 +26,7 @@ public:
 // 对话框数据
 	enum { IDD = IDD_LEV1_TOOLS };
 
-	virtual void OnApply();
+	virtual int OnApply();
 	virtual void OnShow();
 protected:
 	virtual void restoreSetting();

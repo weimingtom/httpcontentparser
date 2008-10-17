@@ -48,7 +48,7 @@ void CDlgImageRule::DoDataExchange(CDataExchange* pDX)
 void CDlgImageRule::OnShow() {
 }
 
-void CDlgImageRule::OnApply() {
+int CDlgImageRule::OnApply() {
 	UpdateData(TRUE);
 	//ASSERT (g_globalSetting != NULL);
 
@@ -56,6 +56,7 @@ void CDlgImageRule::OnApply() {
 	//g_dnssetting->enableImageCheck(HTTP_RESPONSE_HEADER::CONTYPE_GIF, m_bCheckImage == true ? VARIANT_TRUE : VARIANT_FALSE);
 	//g_dnssetting->enableImageCheck(HTTP_RESPONSE_HEADER::CONTYPE_JPG, m_bCheckImage == true ? VARIANT_TRUE : VARIANT_FALSE);
 	//g_dnssetting->enableImageCheck(HTTP_RESPONSE_HEADER::CONTYPE_PNG, m_bCheckImage == true ? VARIANT_TRUE : VARIANT_FALSE);
+	return 0;
 }
 
 

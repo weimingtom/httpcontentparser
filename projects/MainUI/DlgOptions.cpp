@@ -59,9 +59,10 @@ void CDlgOptions::setHotKey() {
 }
 
 
-void CDlgOptions::OnApply() {
+int CDlgOptions::OnApply() {
 	setHotKey();
 	SetAutoRun();
+	return 0;
 }
 
 void CDlgOptions::restoreSetting() {

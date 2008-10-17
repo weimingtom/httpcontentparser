@@ -23,7 +23,7 @@ public:
 
 protected:
 	virtual int OnApply() = 0;
-	virtual int restoreSetting() = 0;
+	virtual void restoreSetting() = 0;
 	void OnOK() {}
 public:
 	void SetModify(const bool changed);
