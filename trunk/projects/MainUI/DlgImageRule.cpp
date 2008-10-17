@@ -84,7 +84,8 @@ END_MESSAGE_MAP()
 BOOL CDlgImageRule::OnInitDialog() 
 {
 	CBaseDlg::OnInitDialog();
-	m_sliderImageCheckDegree.SetRange(0, 5);
+	m_sliderImageCheckDegree.SetRange(0, 4);
+	m_sliderImageCheckDegree.SetPos(2);
 	m_editImageScale.SetMask("Low Bound:#### ---- ####:Upper Bound","Low Bound:____ ---- ____:Upper Bound",CGuiEdit::MASK_FREEMASK);
 	Restore();
 	return TRUE;
