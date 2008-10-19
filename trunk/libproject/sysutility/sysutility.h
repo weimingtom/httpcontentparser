@@ -17,6 +17,7 @@ void ClearScreen(HMODULE hModule);
 void StartEyecare(HMODULE hModule);
 
 // 获取主界面的路径
+HWND GetMainUIHWND();
 void GetMainUIPath(TCHAR * fullpath, const int len, HMODULE hModule);
 void GetMainUIPath(TCHAR * fullpath, const int len, const TCHAR * installPath);
 // 启动主界面

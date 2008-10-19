@@ -127,6 +127,26 @@ UINT RegisterServices(HMODULE hModule) {
 
 }
 
+namespace {
+BOOL CALLBACK EnumWndProc(HWND hwnd, LPARAM lParam)
+{
+	HANDLE h = GetProp(hwnd, MAIN_WINDOW_PROP_NAME);
+	if( h == (HWND)MAIN_WINDOW_PROP_VALUE)
+	{
+		*(HWND*)lParam = hwnd;
+		return false;
+	}
+	return true;
+}
+
+};
+// 获取主程序窗口
+HWND GetMainUIHWND() {
+	HWND hwnd = NULL;
+	EnumWindows(EnumWndProc, (LPARAM)&hwnd);
+	return hwnd;
+}
+
 // 启动主程序
 void GetMainUIPath(TCHAR * fullpath, const int len, HMODULE hModule) {
 	TCHAR installpath[MAX_PATH];
