@@ -6,9 +6,11 @@
 #include ".\servthread.h"
 #include ".\globalvariable.h"
 #include <app_constants.h>
+#include <typeconvert.h>
+#include <sysutility.h>
 #include <assert.h>
 #include <comdef.h>
-#include <sysutility.h>
+
 
 // CAppSetting
 

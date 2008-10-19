@@ -90,6 +90,7 @@ BEGIN_MESSAGE_MAP(CMainUIDlg, CDialog)
 	ON_COMMAND(ID_TRAYMENU_LOCKCOMPUTER, OnMainLockcomputer)
 	ON_BN_CLICKED(IDC_MAIN_CANCEL, OnBnClickedMainCancel)
 	ON_WM_DESTROY()
+	ON_WM_SETFOCUS()
 END_MESSAGE_MAP()
 
 // CMainUIDlg 消息处理程序
@@ -581,4 +582,9 @@ void CMainUIDlg::OnDestroy()
 	UnregisterHotKey(this->GetSafeHwnd(), HOTKEY_SHOW_MAINUI);
 	UnregisterHotKey(this->GetSafeHwnd(), HOTKEY_SHOW_SWITCH_USER);
 	CDialog::OnDestroy();
+}
+
+void CMainUIDlg::OnSetFocus(CWnd* pOldWnd)
+{
+	CDialog::OnSetFocus(pOldWnd);
 }

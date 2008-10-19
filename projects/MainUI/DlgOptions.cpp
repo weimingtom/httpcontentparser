@@ -107,7 +107,7 @@ void CDlgOptions::setHotKey() {
 	// 设置启动程序， 必须通过COM设置
 	m_hotkeyLaunch.GetHotKey(m_wLaunchKey, vModifiers_mfc);
 	m_wLaunchModifier = getModifierKey(vModifiers_mfc);
-	if (setLaunchHotkey(m_wLaunchKey, m_wLaunchModifier)) {
+	if (!setLaunchHotkey(m_wLaunchKey, m_wLaunchModifier)) {
 		MessageBox(strPrompt);
 		return;
 	}
