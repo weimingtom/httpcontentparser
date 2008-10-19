@@ -578,5 +578,7 @@ void CMainUIDlg::OnTvnSelchangedTreeNavig(NMHDR *pNMHDR, LRESULT *pResult)
 // ×¢ÏúÈÈ¼ü
 void CMainUIDlg::OnDestroy()
 {
+	UnregisterHotKey(this->GetSafeHwnd(), HOTKEY_SHOW_MAINUI);
+	UnregisterHotKey(this->GetSafeHwnd(), HOTKEY_SHOW_SWITCH_USER);
 	CDialog::OnDestroy();
 }
