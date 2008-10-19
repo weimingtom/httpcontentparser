@@ -16,6 +16,12 @@ void ClearScreen(HMODULE hModule);
 // 启动眼睛保护程序
 void StartEyecare(HMODULE hModule);
 
+// 获取主界面的路径
+void GetMainUIPath(TCHAR * fullpath, const int len, HMODULE hModule);
+void GetMainUIPath(TCHAR * fullpath, const int len, const TCHAR * installPath);
+// 启动主界面
+void StartMainUI(HMODULE hModule);
+
 // 清空所有
 void ClearHistory(HMODULE hModule);
 
@@ -45,6 +51,7 @@ INT RegisterAutoRun(const TCHAR * fullpath, BOOL auto_run);
 
 BOOL isAutoRun(HMODULE hModule);
 
+// 过滤包是否已经安装
 BOOL isPacketFiltersInstalled(HMODULE hModule);
 UINT InstallPacketsFilter(HMODULE hModule);
 

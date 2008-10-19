@@ -2,6 +2,7 @@
 #include ".\sysutilitytest.h"
 #include <sysutility.h>
 #include <utility\strutility.h>
+#include <app_constants.h>
 #include <iostream>
 #include <windows.h>
 #include <tlhelp32.h>
@@ -65,6 +66,24 @@ HMODULE GetModule(const TCHAR * exefilename) {
 }
 };
 
+void SysutilityTest::testGetMainUIName() {
+	HMODULE handle = GetModule(TEXT("TestSysutility.exe"));
+	TCHAR workdir[MAX_PATH], fullpath[MAX_PATH], expected[MAX_PATH], installpath[MAX_PATH];
+	GetCurrentDirectory(MAX_PATH, workdir);
+	_sntprintf(expected, MAX_PATH, TEXT("%s\\%s"), workdir, APPLICATION_MAINUI_NAME);
+
+	GetMainUIPath(fullpath, MAX_PATH, handle);
+	CPPUNIT_ASSERT( expected == _tcsstr(expected, fullpath));
+	CPPUNIT_ASSERT( 0 == _tcscmp(fullpath, expected));
+
+	GetInstallPath(installpath, MAX_PATH, handle);
+	GetMainUIPath(fullpath, MAX_PATH, installpath);
+	CPPUNIT_ASSERT( expected == _tcsstr(expected, fullpath));
+	CPPUNIT_ASSERT( 0 == _tcscmp(fullpath, expected));
+
+	std::cout<<"MainUI fullpath: " << fullpath << std::endl;
+
+}
 void SysutilityTest::testGetFileNameDir() {
 	const TCHAR * name = TEXT("WAHT.EXE");
 	const TCHAR * dir = TEXT("C:\\PROGRAM FILES\\HELLO\\");
@@ -78,7 +97,7 @@ void SysutilityTest::testGetFileNameDir() {
 // 保存历史的配置文件
 void SysutilityTest::testGetRecordConfigfile() {
 	HMODULE handle = GetModule(TEXT("TestSysutility.exe"));
-	TCHAR workdir[MAX_PATH], fullpath[MAX_PATH], configfile[MAX_PATH], installpath[MAX_PATH];;
+	TCHAR workdir[MAX_PATH], fullpath[MAX_PATH], configfile[MAX_PATH], installpath[MAX_PATH];
 	GetCurrentDirectory(MAX_PATH, workdir);
 	_sntprintf(configfile, MAX_PATH, TEXT("%s\\%s"), workdir, TEXT("History\\config.xml"));
 
