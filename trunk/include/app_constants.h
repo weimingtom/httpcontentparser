@@ -28,4 +28,11 @@
 // 注册表项名称
 #define REGISTER_MAINUI_KEY	TEXT("MainUI")
 
+
+// 热键定义
+#define HOTKEY_LANUCH_MAINUI	100
+#define	HOTKEY_SHOW_MAINUI		200
+#define HOTKEY_SHOW_SWITCH_USER	300
+
+
 #endif // _SPI_INSTALLER_SPIDEFINES_H__
