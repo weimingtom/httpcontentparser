@@ -110,22 +110,35 @@ int extract_string(TCHAR *result, const int buf_size, const TCHAR * src, const T
 	return (int)_tcslen(result);
 }
 
-//void splitstring_token(TCHAR *str, const TCHAR *seps,
-//				 std::vector<std::string> &vec, bool remove_spes) {
-//	char * token = _tcstok(str, seps);
-//	while( token != NULL )  {
-//		// 去掉分隔符
-//		if (remove_spes)
-//			trim(token, seps);
-//
-//		vec.push_back(std::string(token));
-//		token = _tcstok( NULL, seps );
-//	}
-//}
-//void splitstring(TCHAR *str, const TCHAR *seps, std::vector<std::string> &vec, bool remove_spes) {
-//	try {
-//		const int len = _tcslen(str);
-//	} catch (...) {
-//	}
-//}
+int splitstring(TCHAR *str, const TCHAR *seps, std::vector<_tstring> * vec) {
+	try {
+		assert (NULL != vec);
+		// 获取长度
+		const int bufsize  = (int)_tcslen(str) + 1;
+		
+		// 分配缓冲区
+		TCHAR * buffer = new TCHAR[bufsize];
+		TCHAR * beg = str, *end = beg+1;
+		while (NULL != *beg) {
+			if (isin(*beg, seps) == true) {
+				beg++;
+				end = beg + 1;
+			} else if (isin(*end, seps) == false && NULL != *end) {
+				end++;
+			} else {
+				memset(buffer, 0, sizeof(TCHAR) * bufsize);
+				memcpy(buffer, beg, (end - beg) * sizeof(TCHAR));
+				vec->push_back(buffer);
+				beg = end;
+				end = beg +1;
+			}
+		}
+
+		delete[] buffer;
+		return (int)vec->size();
+	} catch (...) {
+		return 0;
+	}
+}
+
 };

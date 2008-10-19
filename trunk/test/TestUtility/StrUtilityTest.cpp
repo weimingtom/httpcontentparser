@@ -1,12 +1,50 @@
 #include "StdAfx.h"
 #include ".\strutilitytest.h"
 #include <utility\strutility.h>
+#include <string>
 using namespace strutility;
 
 StrUtilityTest::StrUtilityTest(void) {
 }
 
 StrUtilityTest::~StrUtilityTest(void) {
+}
+
+void StrUtilityTest::TestSplitString() {
+
+
+	{
+	TCHAR * unit1 = TEXT("///////////\\\\\\\\\\\\\,.//\\");
+	std::vector<std::string> vec;
+	splitstring(unit1, TEXT("\\.,//"), &vec);
+	CPPUNIT_ASSERT (0 == vec.size());
+	}
+
+	{
+	TCHAR * unit1 = TEXT("....a.b.c.d.e.f....");
+	std::vector<std::string> vec;
+	splitstring(unit1, TEXT("\\.,//"), &vec);
+	CPPUNIT_ASSERT (6 == vec.size());
+	CPPUNIT_ASSERT (0 == _tcscmp(vec[0].c_str(), TEXT("a")));
+	CPPUNIT_ASSERT (0 == _tcscmp(vec[1].c_str(), TEXT("b")));
+	CPPUNIT_ASSERT (0 == _tcscmp(vec[2].c_str(), TEXT("c")));
+	CPPUNIT_ASSERT (0 == _tcscmp(vec[3].c_str(), TEXT("d")));
+	CPPUNIT_ASSERT (0 == _tcscmp(vec[4].c_str(), TEXT("e")));
+	CPPUNIT_ASSERT (0 == _tcscmp(vec[5].c_str(), TEXT("f")));
+	}
+
+	{
+	TCHAR * unit1 = TEXT("helodiofsdf\\.,//aidjf.iijsod.vdsdo/ijasdf/;iadf");
+	std::vector<std::string> vec;
+	splitstring(unit1, TEXT("\\.,//"), &vec);
+	CPPUNIT_ASSERT (6 == vec.size());
+	CPPUNIT_ASSERT (0 == _tcscmp(vec[0].c_str(), TEXT("helodiofsdf")));
+	CPPUNIT_ASSERT (0 == _tcscmp(vec[1].c_str(), TEXT("aidjf")));
+	CPPUNIT_ASSERT (0 == _tcscmp(vec[2].c_str(), TEXT("iijsod")));
+	CPPUNIT_ASSERT (0 == _tcscmp(vec[3].c_str(), TEXT("vdsdo")));
+	CPPUNIT_ASSERT (0 == _tcscmp(vec[4].c_str(), TEXT("ijasdf")));
+	CPPUNIT_ASSERT (0 == _tcscmp(vec[5].c_str(), TEXT(";iadf")));
+	}
 }
 
 void StrUtilityTest::Test_extract_string() {

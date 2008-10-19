@@ -30,15 +30,19 @@ const TCHAR *strnstr(const TCHAR *src, const TCHAR *des, const int len);
 bool beginwith(const TCHAR *src, const TCHAR *header);
 bool endwith(const TCHAR * src, const TCHAR *detail);
 
-
-// 使用token分割字符床，并将分割的字符串保存在vec当中
-// 调用此函数时，不能再使用strtok
-
+// 字符是否存与char_set当中
+inline
+bool isin(const TCHAR c, const TCHAR * char_set) {
+	TCHAR sub[2] = {0};
+	sub[0] = c;
+	if (NULL != _tcsstr(char_set, sub)) {
+		return true;
+	} else {
+		return false;
+	}
+}
 // 参数 remove_spes表示 ： 是否去掉分隔符
-//void splitstring_token(TCHAR *str, const char *seps, 
-//	 std::vector<std::string> &vec, bool remove_spes = false);
-//
-//void splitstring(TCHAR *str, const char *seps, 
-//	 std::vector<std::string> &vec, bool remove_spes = false);
+int splitstring(TCHAR *str, const char *seps, std::vector<_tstring> *vec);
 };
+
 #endif

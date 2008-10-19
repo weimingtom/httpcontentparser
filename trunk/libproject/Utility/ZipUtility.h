@@ -21,7 +21,7 @@ public:
 		}
 	}
 
-	int infloate_size(const char *src, const int size int *infloat);
+	int infloate_size(const char *src, const int size, int *infloat);
 	int unzip(const char * src, const int size, int *infatesize);
 private:
 	char * buffer_pointer_;
@@ -32,7 +32,7 @@ private:
 
 
 template <int STACK_BUFFER_SIZE>
-const char * ZipUtility<STACK_BUFFER_SIZE>::infloate_size(const char * src, const int size, int *infloat) {
+int ZipUtility<STACK_BUFFER_SIZE>::infloate_size(const char * src, const int size, int *infloat) {
 	int ret;
     z_stream strm;
 
