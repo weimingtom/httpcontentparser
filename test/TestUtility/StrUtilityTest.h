@@ -11,11 +11,13 @@ public:
 
 public:
 	CPPUNIT_TEST_SUITE(StrUtilityTest);
+	CPPUNIT_TEST(TestSplitString);
 	CPPUNIT_TEST(Teststrnstr);
 	CPPUNIT_TEST(TestEndWith);
 	CPPUNIT_TEST(Test_extract_string);
 	CPPUNIT_TEST_SUITE_END();
 private:
+	void TestSplitString();
 	void Teststrnstr();
 	void Test_extract_string();
 	void TestEndWith();

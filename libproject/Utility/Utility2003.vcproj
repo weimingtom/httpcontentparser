@@ -49,7 +49,8 @@ copy .\dns.h ..\..\include\utility
 copy .\httprequestpacket.h ..\..\include\utility
 copy .\strutility.h ..\..\include\utility
 copy .\timeutility.h ..\..\include\utility
-copy .\SeachPacket.h ..\..\include\utility"/>
+copy .\SeachPacket.h ..\..\include\utility
+"/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
 			<Tool
@@ -156,9 +157,6 @@ copy .\strutility.h ..\..\include\utility
 				RelativePath=".\FileMapping.h">
 			</File>
 			<File
-				RelativePath=".\SeachPacket.h">
-			</File>
-			<File
 				RelativePath=".\stdafx.h">
 			</File>
 			<File
@@ -208,6 +206,9 @@ copy .\strutility.h ..\..\include\utility
 			</File>
 			<File
 				RelativePath=".\HTTPRequestPacket.h">
+			</File>
+			<File
+				RelativePath=".\SeachPacket.h">
 			</File>
 		</Filter>
 		<Filter
