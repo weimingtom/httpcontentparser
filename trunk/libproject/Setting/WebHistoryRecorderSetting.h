@@ -2,8 +2,11 @@
 #define _SETTING_WEBHISTORY_RECORDER_SETTING_H__
 
 #include <settingitem.h>
+#include <configitem.h>
+#include <xmldefined.h>
+#include <autoclean.h>
 
-class WebHistoryRecorderSetting  : public SettingItem  {
+class WebHistoryRecorderSetting  : public SettingItem , public ConfigItem {
 public:
 	WebHistoryRecorderSetting(void);
 	~WebHistoryRecorderSetting(void);
@@ -35,6 +38,32 @@ public:
 	bool recordPornImage_;
 	bool recordWebsite_;
 	bool recordPornWebsite_;
+
+public:
+	virtual int parseConfig(TiXmlElement * item_root);
+	virtual int saveConfig(TiXmlElement * root);
+	
+	
+private:
+	// ∂¡»°WebHistory
+	int getWebHistoryRecorder(TiXmlElement *ele);
+	int enableWebHistoryRecord(const TCHAR *enable);
+	int setWebHistoryRecord(const TCHAR *type, const TCHAR *enable);
+	int setWebHistoryLastCleanTiime(const TCHAR * lastclean);
+	
+	// ±£¥Ê
+	int saveWebHistory(TiXmlElement * app_root);
+
+	// auto clean
+	int setWebHistoryAutoCleanTimespan(const TCHAR *timespan);
+	int setWebHistoryAutoCleanTimeScale(const TCHAR *maxt, const TCHAR * mint);
+	int setWebHistoryAutoClean(TiXmlElement * element);
+	int enableWebHistoryAutoClean(const TCHAR *enable);
+		
+public:
+	AutoClean*	getAutoclean() { return &webhistory_auto_clean_;}
+private:
+	AutoClean	webhistory_auto_clean_;
 };
 
 #endif // _SETTING_WEBHISTORY_RECORDER_SETTING_H__

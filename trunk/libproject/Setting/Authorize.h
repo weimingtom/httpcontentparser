@@ -5,13 +5,15 @@
 #include <map>
 #include <passwordtype.h>
 #include <Enumerate.h>
+#include <configitem.h>
+#include <xmldefined.h>
 
 class XMLConfiguration;
 
 // 此类负责密码的统一管理
 // 包括密码的保存， 验证，修改等
 // 管理密码
-class Authorize {
+class Authorize :  public ConfigItem  {
 public:
 	Authorize(void);
 	~Authorize(void);
@@ -31,6 +33,16 @@ private:
 
 	friend class XMLConfiguration;	//用于设置密码
 	void EnumUsers(Enumerator2<std::string, int> * enumerator);
+
+// XML file
+public:
+	virtual int parseConfig(TiXmlElement * item_root);
+	virtual int saveConfig(TiXmlElement * root);
+private:
+	int saveAuthorize(TiXmlElement *app_root);
+	int getAuthorizeSetting(TiXmlElement *ele);
+	int addUser(const TCHAR *username, const TCHAR *password);
+
 };
 
 #endif  // _SETTING_AUTHORIZE_H__

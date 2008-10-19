@@ -3,6 +3,7 @@
 #include <assert.h>
 #include <string>
 #include <map>
+#include <passwordtype.h>
 
 Authorize::Authorize(void) {
 	defaultSetting();
@@ -57,4 +58,82 @@ void Authorize::EnumUsers(Enumerator2<std::string, int> * enumerator) {
 	for (; iter != password_set_.end(); ++iter) {
 		enumerator->Enum(iter->second, iter->first);
 	}
+}
+
+// ±£´æ XML
+int Authorize::parseConfig(TiXmlElement * item_root) {
+	getAuthorizeSetting(item_root);
+	return 0;
+}
+int Authorize::saveConfig(TiXmlElement * item_root) {
+	saveAuthorize(item_root);
+	return 0;
+}
+
+
+namespace {
+
+inline
+const char * UserType(const int user_type) {
+	if ( user_type == PASSWORD_SU) {
+		return CONFIG_APPSET_AUTHORIZE_USERTYPE_SU;
+	} else {
+		assert (false);
+		return CONFIG_APPSET_AUTHORIZE_USERTYPE_OTHER;
+	}
+}
+
+// class DNSEnumerator
+class EnumUsersInfo : public Enumerator2<std::string, int> {
+public:
+	virtual int Enum(const std::string &password, const int type) {
+		TiXmlElement * url_node = new TiXmlElement(CONFIG_APPSET_AUTHORIZE_USER);
+		url_node->SetAttribute(CONFIG_APPSET_AUTHORIZE_NAME, UserType(type));
+		url_node->SetAttribute(CONFIG_APPSET_AUTHORIZE_PASSWORD, password);
+
+
+		rule_root_->LinkEndChild(url_node);
+		return 0;
+	}
+public:
+	EnumUsersInfo(TiXmlElement * rule_root) {
+		rule_root_ = rule_root;
+		assert (rule_root_ != NULL);
+	}
+private:
+	TiXmlElement *rule_root_;
+};
+
+};
+
+//================================================
+// Authorize
+int Authorize::addUser(const TCHAR *username, const TCHAR *password) {
+	if ( 0 == _tcscmp(username, CONFIG_APPSET_AUTHORIZE_USERTYPE_SU)) {
+		setSuPassword(password);
+	}
+	return 0;
+}
+
+int Authorize::getAuthorizeSetting(TiXmlElement *ele) {
+	assert (0 == _tcscmp(ele->Value(), CONFIG_ITEM_APPSET_AUTHORIZE));
+
+	TiXmlNode * node = ele->FirstChild();
+	while (NULL != node) {
+		TiXmlElement *ele = node->ToElement();
+		if (NULL != ele && 0 == _tcscmp(ele->Value(), CONFIG_APPSET_AUTHORIZE_USER)) {
+			addUser(ele->Attribute(CONFIG_APPSET_AUTHORIZE_NAME), ele->Attribute(CONFIG_APPSET_AUTHORIZE_PASSWORD));
+		}
+
+		node = node->NextSibling();
+	}
+	return 0;
+}
+
+int Authorize::saveAuthorize(TiXmlElement *app_root) {
+	TiXmlElement * author_root = new TiXmlElement(CONFIG_ITEM_APPSET_AUTHORIZE);
+	
+	EnumUsers(&EnumUsersInfo(author_root));
+	app_root->LinkEndChild(author_root);
+	return 0;
 }

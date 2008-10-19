@@ -54,6 +54,8 @@ copy .\XMLconfiguration.h ..\..\include
 copy .\SearchRule.h ..\..\include
 copy .\onlinehoursetting.h ..\..\include
 copy .\autoclean.h ..\..\include
+copy .\configitem.h ..\..\include
+copy .\hotkeysetting.h ..\..\include
 "/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
@@ -281,6 +283,16 @@ copy .\autoclean.h ..\..\include
 			</File>
 			<File
 				RelativePath=".\SettingItem.h">
+			</File>
+		</Filter>
+		<Filter
+			Name="Hotkey"
+			Filter="">
+			<File
+				RelativePath=".\HotkeySetting.cpp">
+			</File>
+			<File
+				RelativePath=".\HotkeySetting.h">
 			</File>
 		</Filter>
 		<File
