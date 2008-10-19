@@ -28,7 +28,8 @@ STDMETHODIMP CAppSetting::InterfaceSupportsErrorInfo(REFIID riid)
 }
 
 STDMETHODIMP CAppSetting::setHotkey(USHORT wVirtualKeyCode, USHORT wModifiers, LONG type, VARIANT_BOOL* bSuccess) {
-	*bSuccess = ServThread::getInstance()->setHotKey(wVirtualKeyCode, wModifiers, type);
+	BOOL bSucc = (int)ServThread::getInstance()->setHotKey(wVirtualKeyCode, wModifiers, type);
+	*bSuccess = convert(bSucc);
 	return S_OK;
 }
 
