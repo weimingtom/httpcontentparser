@@ -28,6 +28,7 @@ public :
 
 		return S_OK;
 	}
+	void ServiceMain(DWORD dwArgc, LPTSTR* lpszArgv);
 };
 
 CFilterSettingModule _AtlModule;
@@ -44,6 +45,7 @@ extern "C" int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/
 	// 如果已经有程序启动，则直接推出
 	HANDLE hMutex = CreateMutex(NULL, FALSE, COM_SERVICE_MUTEX);
 	if (GetLastError() == ERROR_ALREADY_EXISTS) {
+		CloseHandle(hMutex);
 		return 0;
 	}
 
@@ -71,3 +73,8 @@ extern "C" int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/
     return _AtlModule.WinMain(nShowCmd);
 }
 
+
+void CFilterSettingModule::ServiceMain(DWORD dwArgc, LPTSTR* lpszArgv)
+{
+	CAtlServiceModuleT<CFilterSettingModule,IDS_SERVICENAME>::ServiceMain(dwArgc, lpszArgv);
+}

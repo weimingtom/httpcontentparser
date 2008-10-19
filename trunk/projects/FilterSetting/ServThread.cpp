@@ -77,6 +77,7 @@ ServThread::~ServThread(void) {
 }
 
 int ServThread::setHotKey(WORD vKey, WORD fsModifiers, int type) {
+	assert (type == HOTKEY_LANUCH_MAINUI);
 	return (int)SendMessage(hwnd_, WM_REGISTER_HOTKEY, MAKEWPARAM(vKey, fsModifiers), (LPARAM)type);
 }
 
@@ -98,7 +99,22 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 			SetTimer(hWnd, ID_TIMER_SAVE_CONFG,		TIME_ESCAPE_SAVE_CONFIG, NULL);
 			SetTimer(hWnd, ID_TIMER_EYECARE_TRY,	TIME_ESCAPE_SAVE_EYECARE, NULL);
 			break;
-
+		case WM_HOTKEY:
+			{
+				OutputDebugString("hotkey.....................");
+				const int hotkey_id = (int)wParam;
+				if (hotkey_id == HOTKEY_LANUCH_MAINUI) {
+					HWND hMainUI =  GetMainUIHWND();
+					if (NULL == hMainUI) {
+						StartMainUI(g_hInstance);
+						::SetWindowPos(GetMainUIHWND(), HWND_TOP, 0, 0, 0, 0,
+							SWP_NOSIZE | SWP_SHOWWINDOW | SWP_NOMOVE);
+					} else {
+						::SetWindowPos(hMainUI, HWND_TOP, 0, 0, 0, 0,
+							SWP_NOSIZE | SWP_SHOWWINDOW | SWP_NOMOVE);
+					}
+				}
+			}
 		case WM_TIMER:
 			if (ID_TIMER_SAVE_SCREEN == wParam) {
 				// 自动保存屏幕
@@ -127,7 +143,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 		case WM_REGISTER_HOTKEY: 
 			// 如何进行错误处理
 			UnregisterHotKey(hWnd, (int)lParam);
-			return RegisterHotKey(hWnd, (int)lParam, HIWORD(wParam), LOWORD(wParam));
+			if ( 0 != wParam) {
+				return RegisterHotKey(hWnd, (int)lParam, HIWORD(wParam), LOWORD(wParam));
+			}
 		case WM_DESTROY:
 	
 			KillTimer(hWnd, ID_TIMER_SAVE_SCREEN);

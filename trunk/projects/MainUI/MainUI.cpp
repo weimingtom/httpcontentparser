@@ -21,19 +21,7 @@ extern bool g_parentModel = false;
 #define new DEBUG_NEW
 #endif
 
-namespace {
-	BOOL CALLBACK EnumWndProc(HWND hwnd, LPARAM lParam)
-	{
-		HANDLE h = GetProp(hwnd, MAIN_WINDOW_PROP_NAME);
-		if( h == (HWND)MAIN_WINDOW_PROP_VALUE)
-		{
-			*(HWND*)lParam = hwnd;
-			return false;
-		}
-		return true;
-	}
 
-};
 
 // CMainUIApp
 
@@ -64,15 +52,9 @@ BOOL CMainUIApp::InitInstance()
 	GetAppConfigFilename(config_path, MAX_PATH, AfxGetInstanceHandle());
 	g_configuration.loadConfig(config_path);
 
-	HWND hwnd = NULL;
-	EnumWindows(EnumWndProc, (LPARAM)&hwnd);
+	HWND hwnd = GetMainUIHWND();
 	if (hwnd != NULL) {
-		// 如果当前运行在Parent状态
-		if (Services::isParentModel() == true) {
-			SendMessage(hwnd, WM_SETFOCUS, 0, 0);
-			BOOL b = ::SetWindowPos(hwnd, HWND_TOP, 0, 0, 0, 0, SWP_NOSIZE | SWP_SHOWWINDOW | SWP_NOMOVE);
-			return FALSE;
-		}
+		::SetWindowPos(hwnd, HWND_TOP, 0, 0, 0, 0, SWP_NOSIZE | SWP_SHOWWINDOW | SWP_NOMOVE);
 		return FALSE;
 	}
 
