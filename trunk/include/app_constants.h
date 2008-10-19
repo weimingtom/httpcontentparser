@@ -25,8 +25,11 @@
 // 用于防治Service启动多次
 #define COM_SERVICE_MUTEX	TEXT("7F6E3389-60CF-4b19-B1BD-BC6258E63BDC")
 
+// 应用程序的名称
+#define APPLICATION_MAINUI_NAME	TEXT("MainUI")
+
 // 注册表项名称
-#define REGISTER_MAINUI_KEY	TEXT("MainUI")
+#define REGISTER_MAINUI_KEY	APPLICATION_MAINUI_NAME
 
 
 // 热键定义
