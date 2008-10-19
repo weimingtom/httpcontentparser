@@ -126,6 +126,8 @@
 #define IDC_CHK_ENABLE_DNS              1034
 #define IDC_HOTKEY_SWITCHUSR            1034
 #define IDC_CHK_ENABLE_SEARCH           1035
+#define IDC_HOTKEY_SWITCHUSR2           1035
+#define IDC_HOTKEY_LAUNCH               1035
 #define IDC_STA_WHIE_DNSLIST            1039
 #define IDC_STA_FRAME                   1040
 #define IDC_SPIN1                       1042

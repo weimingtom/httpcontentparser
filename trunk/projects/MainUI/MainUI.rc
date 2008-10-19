@@ -231,18 +231,21 @@ BEGIN
     CONTROL         "Auto Load When system Launch",IDC_CHK_AUTOLOAD,"Button",
                     BS_AUTOCHECKBOX | WS_TABSTOP,45,25,120,10
     GROUPBOX        "System",IDC_STA_SYSTEM,7,7,225,43
-    GROUPBOX        "Others",IDC_STA_OTHERS,7,128,223,59
+    GROUPBOX        "Others",IDC_STA_OTHERS,7,141,223,46
     LTEXT           "Show Dialog:",IDC_STATIC,17,79,42,8
-    LTEXT           "Switch User",IDC_STATIC,17,95,38,8
+    LTEXT           "Switch User:",IDC_STATIC,17,95,41,8
     CONTROL         "",IDC_HOTKEY_SHOWDLG,"msctls_hotkey32",WS_BORDER | 
-                    WS_TABSTOP,69,76,80,14
+                    WS_TABSTOP,78,76,106,14
     CONTROL         "",IDC_HOTKEY_SWITCHUSR,"msctls_hotkey32",WS_BORDER | 
-                    WS_TABSTOP,69,92,80,14
-    GROUPBOX        "Hotkeys",IDC_STA_HOTKEY,7,58,223,59
+                    WS_TABSTOP,78,92,106,14
+    GROUPBOX        "Hotkeys",IDC_STA_HOTKEY,7,58,223,74
     CONTROL         "Record Web History",IDC_CHECK1,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,41,145,111,10
+                    WS_TABSTOP,41,151,111,10
     CONTROL         "Enable Imgage Record",IDC_CHECK2,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,41,164,111,10
+                    BS_AUTOCHECKBOX | WS_TABSTOP,41,170,111,10
+    LTEXT           "Lanchu App:",IDC_STATIC,17,111,41,8
+    CONTROL         "",IDC_HOTKEY_LAUNCH,"msctls_hotkey32",WS_BORDER | 
+                    WS_TABSTOP,78,109,106,14
 END
 
 IDD_DLG_TOOLS DIALOGEX 0, 0, 250, 200

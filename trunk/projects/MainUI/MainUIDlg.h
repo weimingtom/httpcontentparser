@@ -127,4 +127,6 @@ protected:
 	// 根据当前状态初始化TrayMenu
 	// 此函数会在每次应用程序启动及状态切换时调用
 	void UpdateUIStateByModel();
+public:
+	afx_msg void OnDestroy();
 };

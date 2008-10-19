@@ -9,7 +9,7 @@
 #include ".\dlgcheckpassword.h"
 #include ".\services.h"
 #include <windowtitle.h>
-#include <hotkey.h>
+#include <app_constants.h>
 #include <sysutility.h>
 
 #ifdef _DEBUG
@@ -89,6 +89,7 @@ BEGIN_MESSAGE_MAP(CMainUIDlg, CDialog)
 	ON_COMMAND(ID_TRAYMENU_WEBHISTORY, OnToolsWebhistory)
 	ON_COMMAND(ID_TRAYMENU_LOCKCOMPUTER, OnMainLockcomputer)
 	ON_BN_CLICKED(IDC_MAIN_CANCEL, OnBnClickedMainCancel)
+	ON_WM_DESTROY()
 END_MESSAGE_MAP()
 
 // CMainUIDlg 消息处理程序
@@ -252,9 +253,10 @@ void CMainUIDlg::OnMainChildren()
 
 LRESULT CMainUIDlg::OnHotKey(WPARAM wParam, LPARAM lParam) {
 	int id = (int)wParam;
-	if (id == HOTKEY_ID_POPUP_MAIN) {
+	if (id == HOTKEY_SHOW_MAINUI) {
 		AfxGetMainWnd()->ShowWindow(SW_SHOW);
-	} else if (id == HOTKEY_ID_SWITCH_USER) {
+		AfxGetMainWnd()->SetFocus();
+	} else if (id == HOTKEY_SHOW_SWITCH_USER) {
 		CDlgCheckPassword dlg;
 		if (IDOK == dlg.DoModal()) {
 		}
@@ -570,3 +572,9 @@ void CMainUIDlg::OnTvnSelchangedTreeNavig(NMHDR *pNMHDR, LRESULT *pResult)
 	*pResult = 0;
 }
 
+
+// 注销热键
+void CMainUIDlg::OnDestroy()
+{
+	CDialog::OnDestroy();
+}
