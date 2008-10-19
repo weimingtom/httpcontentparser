@@ -83,17 +83,25 @@ void CDlgOptions::setHotKey() {
 	// 设置显示对话框的热键
 	m_hotKeyShowDlg.GetHotKey(m_wMainUIKey, vModifiers_mfc);
 	m_wMainUIModifier = getModifierKey(vModifiers_mfc);
-	if (!RegisterHotKey(AfxGetMainWnd()->GetSafeHwnd() ,HOTKEY_SHOW_MAINUI, m_wMainUIModifier,m_wMainUIKey)) {
-		MessageBox(strPrompt);
-		return;
+	if (0 != m_wMainUIKey && 0 != m_wMainUIModifier) {
+		if (!RegisterHotKey(AfxGetMainWnd()->GetSafeHwnd() ,HOTKEY_SHOW_MAINUI, m_wMainUIModifier,m_wMainUIKey)) {
+			MessageBox(strPrompt);
+			return;
+		}
+	} else {
+		UnregisterHotKey(AfxGetMainWnd()->GetSafeHwnd() ,HOTKEY_SHOW_MAINUI);
 	}
 
 	// 设置显示对话框的热键
 	m_hotkeySwitchUser.GetHotKey(m_wSwitchUserKey, vModifiers_mfc);
 	m_wSwitchUserModifier = getModifierKey(vModifiers_mfc);
-	if (!RegisterHotKey(AfxGetMainWnd()->GetSafeHwnd(), HOTKEY_SHOW_SWITCH_USER, m_wSwitchUserModifier, m_wSwitchUserKey)) {
-		MessageBox(strPrompt);
-		return;
+	if (0 != m_wSwitchUserModifier && 0 != m_wSwitchUserKey) {
+		if (!RegisterHotKey(AfxGetMainWnd()->GetSafeHwnd(), HOTKEY_SHOW_SWITCH_USER, m_wSwitchUserModifier, m_wSwitchUserKey)) {
+			MessageBox(strPrompt);
+			return;
+		}
+	} else {
+		UnregisterHotKey(AfxGetMainWnd()->GetSafeHwnd() ,HOTKEY_SHOW_SWITCH_USER);
 	}
 
 	// 设置启动程序， 必须通过COM设置
