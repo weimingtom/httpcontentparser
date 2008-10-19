@@ -111,6 +111,8 @@ END
 //
 
 IDB_BITMAP_CHECKMARK    BITMAP                  "res\\optionmarks.bmp"
+IDB_BMP_ACCESSABLE      BITMAP                  "res\\accessable.bmp"
+IDB_BMP_BLOCK           BITMAP                  "res\\block.bmp"
 #endif    // 中文(中华人民共和国) resources
 /////////////////////////////////////////////////////////////////////////////
 
@@ -449,9 +451,11 @@ BEGIN
     LTEXT           "00:00",IDC_STATIC,22,7,20,8
     LTEXT           "24:00",IDC_STATIC,231,7,20,8
     CONTROL         "Time Control",IDC_CHK_TIMECTRL,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,107,145,64,10
+                    WS_TABSTOP,47,141,64,10
     LTEXT           "12:00",IDC_STATIC,126,7,20,8
     LTEXT           "Mon.",IDC_STATIC,7,38,17,8
+    CONTROL         157,IDC_STATIC,"Static",SS_BITMAP,170,143,9,15
+    CONTROL         158,IDC_STATIC,"Static",SS_BITMAP,197,143,9,15
 END
 
 
