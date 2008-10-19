@@ -56,6 +56,13 @@ int CDlgImageRule::OnApply() {
 	//g_dnssetting->enableImageCheck(HTTP_RESPONSE_HEADER::CONTYPE_GIF, m_bCheckImage == true ? VARIANT_TRUE : VARIANT_FALSE);
 	//g_dnssetting->enableImageCheck(HTTP_RESPONSE_HEADER::CONTYPE_JPG, m_bCheckImage == true ? VARIANT_TRUE : VARIANT_FALSE);
 	//g_dnssetting->enableImageCheck(HTTP_RESPONSE_HEADER::CONTYPE_PNG, m_bCheckImage == true ? VARIANT_TRUE : VARIANT_FALSE);
+
+	// 保存在记录的类中
+	g_configuration.getContentCheckSetting()->enableCheck(IMAGE_TYPE_GIF, m_bCheckGIF);
+	g_configuration.getContentCheckSetting()->enableCheck(IMAGE_TYPE_JPEG, m_bCheckJPEG);
+	g_configuration.getContentCheckSetting()->enableCheck(IMAGE_TYPE_BMP, m_bCheckBMP);
+	g_configuration.getContentCheckSetting()->enableCheck(IMAGE_TYPE_PNG, m_bCheckPNG);
+	g_configuration.getContentCheckSetting()->setTightness(m_sliderImageCheckDegree.GetPos());
 	return 0;
 }
 
@@ -66,6 +73,10 @@ void CDlgImageRule::restoreSetting() {
 	m_bCheckJPEG = g_configuration.getContentCheckSetting()->needCheck(IMAGE_TYPE_JPEG);
 	m_bCheckBMP = g_configuration.getContentCheckSetting()->needCheck(IMAGE_TYPE_BMP);
 	m_bCheckPNG = g_configuration.getContentCheckSetting()->needCheck(IMAGE_TYPE_PNG);
+
+	m_sliderImageCheckDegree.SetRange(0, 4);
+	m_sliderImageCheckDegree.SetPos(g_configuration.getContentCheckSetting()->getTightness());
+
 	UpdateData(FALSE);
 }
 
@@ -84,8 +95,6 @@ END_MESSAGE_MAP()
 BOOL CDlgImageRule::OnInitDialog() 
 {
 	CBaseDlg::OnInitDialog();
-	m_sliderImageCheckDegree.SetRange(0, 4);
-	m_sliderImageCheckDegree.SetPos(2);
 	m_editImageScale.SetMask("Low Bound:#### ---- ####:Upper Bound","Low Bound:____ ---- ____:Upper Bound",CGuiEdit::MASK_FREEMASK);
 	Restore();
 	return TRUE;

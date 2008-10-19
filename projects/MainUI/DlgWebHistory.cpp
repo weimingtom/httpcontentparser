@@ -44,7 +44,6 @@ void CDlgWebHistory::DoDataExchange(CDataExchange* pDX)
 	DDX_Check(pDX, IDC_CHK_ALLPAGES, m_bAllPages);
 	DDX_Check(pDX, IDC_CHK_ALLWEBSITES, m_bAllWebsite);
 	DDX_Control(pDX, IDC_SLIDER_AUTOCLEAR_TIME, m_sliderWebHistoryAutoClean);
-	DDX_Text(pDX, IDC_STA_WEBHISTORY_AUTOCLEAN, m_strAutoClean);
 }
 
 void CDlgWebHistory::ChangeRecordType() {
@@ -59,6 +58,15 @@ void CDlgWebHistory::ChangeRecordType() {
 		pWebHistory->put_RecordPronPages(convert(m_bPornPage));
 		pWebHistory->put_RecordPornWebsite(convert(m_bPornWebsite));
 		pWebHistory->Release();
+
+		g_configuration.getWebHistoryRecordSetting()->recordPornImage(m_bPornImage);
+		g_configuration.getWebHistoryRecordSetting()->recordPornPages(m_bPornPage);
+		g_configuration.getWebHistoryRecordSetting()->recordPornWebsite(m_bPornWebsite);
+		g_configuration.getWebHistoryRecordSetting()->recordAllImage(m_bAllImage);
+		g_configuration.getWebHistoryRecordSetting()->recordAllPages(m_bAllPages);
+		g_configuration.getWebHistoryRecordSetting()->recordAllWebsite(m_bAllWebsite);
+		g_configuration.getWebHistoryRecordAutoClean()->enable(true);
+		g_configuration.getWebHistoryRecordAutoClean()->setTimespan(m_sliderWebHistoryAutoClean.GetPos());
 	} catch (_com_error&) {
 		CString str;
 		str.LoadString(IDS_ERROR_WEB_SET_FAILED);
@@ -76,7 +84,7 @@ void CDlgWebHistory::OnShow() {
 
 void CDlgWebHistory::updateSta() {
 	m_strAutoClean.Format("%d days", m_sliderWebHistoryAutoClean.GetPos());
-	UpdateData(FALSE);
+	GetDlgItem(IDC_STA_WEBHISTORY_AUTOCLEAN)->SetWindowText(m_strAutoClean);
 }
 
 void CDlgWebHistory::restoreSetting() {

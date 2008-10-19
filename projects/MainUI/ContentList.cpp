@@ -25,6 +25,7 @@ void RulesList::OnDelete(const CString &str) {
 	TRACE("RulesList::OnDelete\n");
 	removeItem(str);
 	m_strOld = "";
+	dlg_->SetModify(true);
 }
 
 void RulesList::OnBeginEdit(const CString &strOld) {
@@ -80,8 +81,13 @@ bool RulesList::OnAdd(const CString &strNew) {
 	}
 }
 
+void RulesList::Reset() {
+	remove_items.clear();
+	added_items.clear();
+	current_items.clear();
+}
 // 此函数将规则添加到COM组件当中
-void RulesList::OnApply() {
+void RulesList::Apply() {
 	// 喊出
 	STRING_SET::iterator iterDel =	remove_items.begin();
 	for (; iterDel != remove_items.end(); ++iterDel) {

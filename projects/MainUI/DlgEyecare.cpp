@@ -73,6 +73,15 @@ void CDlgEyecare::setEyecareTerminatedMode() {
 int CDlgEyecare::OnApply() {
 	setEyecareTimespan();
 	setEyecareTerminatedMode();
+	
+	UINT checked = GetCheckedRadioButton(IDC_RAD_ENTER_SU_MODE, IDC_RAD_JUST_RESET_TIMER);
+	const int mode = (checked ==  IDC_RAD_ENTER_SU_MODE) ? 
+			EyecareSetting::EYECARE_TERMIN_ENTERSU : EyecareSetting::EYECARE_TERMIN_RESETTIMER;
+
+	// 保存在类中
+	g_configuration.getEyecareSetting()->setEnterTime(m_nEnterTime * 60);
+	g_configuration.getEyecareSetting()->setEyecareTime(m_nEyecareTime * 60);
+	g_configuration.getEyecareSetting()->setTerimatedMode(mode);
 	return 0;
 }
 

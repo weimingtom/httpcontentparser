@@ -27,7 +27,7 @@ CDlgSearchRule::~CDlgSearchRule()
 }
 
 int CDlgSearchRule::OnApply() {
-	rules.OnApply();
+	rules.Apply();
 	UpdateData();
 	try {
 		AutoInitInScale _auto_com_init;
@@ -42,8 +42,12 @@ int CDlgSearchRule::OnApply() {
 		seach_rule->enableCheckSeachEngine(_bstr_t("yahoo"), convert(m_bChkYahoo));
 		seach_rule->enableCheckSeachEngine(_bstr_t("baidu"), convert(m_bChkBaidu));
 		SafeRelease(seach_rule);
-		return 0;
 
+		// 保存在类当中
+		g_configuration.getSearchRule()->enableCheck("google", m_bChkGoogle);
+		g_configuration.getSearchRule()->enableCheck("yahoo", m_bChkYahoo);
+		g_configuration.getSearchRule()->enableCheck("baidu", m_bChkBaidu);
+		return 0;
 	} catch (_com_error&) {
 		//AfxMessageBox(
 		return -1;
@@ -69,7 +73,8 @@ void CDlgSearchRule::DoDataExchange(CDataExchange* pDX)
 }
 
 void CDlgSearchRule::restoreSetting() {
-	ListBox.setOnTextChanged(&rules);
+	rules.Reset();
+	ListBox.GetListCtrl()->DeleteAllItems();
 	g_configuration.getSearchRule()->enumBlackWord((Enumerator1<std::string>*)this);
 	m_bEnableSearchRule = g_configuration.getSearchRule()->isEnabled();
 
@@ -82,30 +87,44 @@ int CDlgSearchRule::Enum(const std::string &words) {
 }
 
 void CDlgSearchRule::OnAddItem(const CString &str) {
-	AutoInitInScale _auto_com_init;
-	ISearchRule *seach_rule;
-	HRESULT hr = CoCreateInstance(CLSID_SearchRule, NULL, CLSCTX_LOCAL_SERVER, IID_ISearchRule, (LPVOID*)&seach_rule);
-	if (FAILED(hr)) {
-		return;
+	try {
+		AutoInitInScale _auto_com_init;
+		ISearchRule *seach_rule;
+		HRESULT hr = CoCreateInstance(CLSID_SearchRule, NULL, CLSCTX_LOCAL_SERVER, IID_ISearchRule, (LPVOID*)&seach_rule);
+		if (FAILED(hr)) {
+			return;
+		}
+
+		seach_rule->addBlackSeachword(_bstr_t(str));
+		SafeRelease(seach_rule);
+
+		// 修改界面
+		SetModify(TRUE);
+
+		// 保存结果
+		g_configuration.getSearchRule()->addBlackSearchWord((LPCTSTR)str);
+	} catch(...) {
 	}
-
-	seach_rule->addBlackSeachword(_bstr_t(str));
-	SafeRelease(seach_rule);
-
-	SetModify(TRUE);
 }
 void CDlgSearchRule::OnDelItem(const CString &str) {
-	AutoInitInScale _auto_com_init;
-	ISearchRule *seach_rule;
-	HRESULT hr = CoCreateInstance(CLSID_SearchRule, NULL, CLSCTX_LOCAL_SERVER, IID_ISearchRule, (LPVOID*)&seach_rule);
-	if (FAILED(hr)) {
-		return;
+	try {
+		AutoInitInScale _auto_com_init;
+		ISearchRule *seach_rule;
+		HRESULT hr = CoCreateInstance(CLSID_SearchRule, NULL, CLSCTX_LOCAL_SERVER, IID_ISearchRule, (LPVOID*)&seach_rule);
+		if (FAILED(hr)) {
+			return;
+		}
+
+		seach_rule->removeBlackSeachWord(_bstr_t(str));
+		SafeRelease(seach_rule);
+
+		// 修改界面
+		SetModify(TRUE);
+
+		// 保存结果
+		g_configuration.getSearchRule()->removeBlackSeachWord((LPCTSTR)str);
+	} catch (...) {
 	}
-
-	seach_rule->removeBlackSeachWord(_bstr_t(str));
-	SafeRelease(seach_rule);
-
-	SetModify(TRUE);
 }
 bool CDlgSearchRule::ValidateItem(const CString & str, CString &output) {
 	output = str;
@@ -126,6 +145,7 @@ BOOL CDlgSearchRule::OnInitDialog()
 {
 	CBaseDlg::OnInitDialog();
 
+	ListBox.setOnTextChanged(&rules);
 	Restore();
 	
 	return TRUE;  // return TRUE unless you set the focus to a control

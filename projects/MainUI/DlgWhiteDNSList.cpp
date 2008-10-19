@@ -35,10 +35,14 @@ void CDlgWhiteDNSList::DoDataExchange(CDataExchange* pDX)
 int CDlgWhiteDNSList::OnApply() {
 	UpdateData(TRUE);
 
-	rules.OnApply();
+	rules.Apply();
 	ASSERT(g_dnssetting != NULL);
 	g_dnssetting->enableWhiteDNSCheck(convert(m_chkWhiteDNSList.GetCheck() == BST_CHECKED));
 	g_dnssetting->justEnableWhiteDNS(convert(m_bCheckDenyAllOthers));
+
+	// 记录在配置文件
+	g_configuration.getWhiteURLSet()->enable(m_chkWhiteDNSList.GetCheck() == BST_CHECKED);
+	g_configuration.getDNSSetting()->enable(m_bCheckDenyAllOthers);
 	return 0;
 }
 
@@ -50,6 +54,9 @@ void CDlgWhiteDNSList::OnShow() {
 
 // 初始化设置
 void CDlgWhiteDNSList::restoreSetting() {
+	rules.Reset();
+	ListBox.GetListCtrl()->DeleteAllItems();
+
 	g_configuration.getWhiteURLSet()->beginEnum((Enumerator1<std::string>*)this);
 
 	m_bEnableWhiteDNS = g_configuration.getWhiteURLSet()->isEnabled();
@@ -66,10 +73,12 @@ int CDlgWhiteDNSList::Enum(const std::string &dns) {
 void CDlgWhiteDNSList::OnAddItem(const CString &str) {
 	ASSERT (NULL != g_dnssetting);
 	g_dnssetting->addWhiteDNS(_bstr_t(str));
+	g_configuration.getWhiteURLSet()->addDNS((LPCTSTR)str);
 }
 void CDlgWhiteDNSList::OnDelItem(const CString &str) {
 	ASSERT (NULL != g_dnssetting);
 	g_dnssetting->removeWhiteDNS(_bstr_t(str));
+	g_configuration.getWhiteURLSet()->removeDNS((LPCTSTR)str);
 }
 bool CDlgWhiteDNSList::ValidateItem(const CString & str, CString &output) {
 	output = str;
