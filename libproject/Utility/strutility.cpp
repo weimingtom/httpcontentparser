@@ -110,7 +110,7 @@ int extract_string(TCHAR *result, const int buf_size, const TCHAR * src, const T
 	return (int)_tcslen(result);
 }
 
-int splitstring(TCHAR *str, const TCHAR *seps, std::vector<_tstring> * vec) {
+int splitstring(const TCHAR *str, const TCHAR *seps, std::vector<_tstring> * vec) {
 	try {
 		assert (NULL != vec);
 		// 获取长度
@@ -118,7 +118,7 @@ int splitstring(TCHAR *str, const TCHAR *seps, std::vector<_tstring> * vec) {
 		
 		// 分配缓冲区
 		TCHAR * buffer = new TCHAR[bufsize];
-		TCHAR * beg = str, *end = beg+1;
+		const TCHAR * beg = str, *end = beg+1;
 		while (NULL != *beg) {
 			if (isin(*beg, seps) == true) {
 				beg++;

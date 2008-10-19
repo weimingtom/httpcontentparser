@@ -42,7 +42,7 @@ bool isin(const TCHAR c, const TCHAR * char_set) {
 	}
 }
 // 参数 remove_spes表示 ： 是否去掉分隔符
-int splitstring(TCHAR *str, const char *seps, std::vector<_tstring> *vec);
+int splitstring(const TCHAR *str, const char *seps, std::vector<_tstring> *vec);
 };
 
 #endif
