@@ -24,7 +24,9 @@ public:
 	virtual bool OnAdd(const CString &str);
 
 	// 应用
-	void OnApply();
+	void Apply();
+	// 回复修改前的设置
+	void Reset();
 
 protected:
 	void addItem(const CString &str);

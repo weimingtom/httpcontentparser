@@ -35,8 +35,6 @@ void CDlgScreenSaver::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_SLIDER_CLEAN_TIMESPAN, m_sliderAutoclearTimespan);
 	DDX_Check(pDX, IDC_CHK_SCREENSAVE, m_bEnableScreensave);
 	DDX_Check(pDX, IDC_CHK_AUTOCLEAN, m_bEnableAutoclean);
-	DDX_Text(pDX, IDC_STA_SCREENSAVE_AUTOCLEN, m_strAutoCleanHours);
-	DDX_Text(pDX, IDC_STA_SCREENSAVE_TIMESPAN, m_strTimespanMins);
 }
 
 int CDlgScreenSaver::OnApply() {
@@ -46,6 +44,13 @@ int CDlgScreenSaver::OnApply() {
 		screensave->enableScreenSave(convert(m_bEnableScreensave));
 		screensave->setTimeSpan(m_sliderSaveTimespan.GetPos() * 60);
 		// screensave->enable
+
+		// ±£´æÉèÖÃ
+		g_configuration.getScreenSaveAutoClean()->enable(m_bEnableAutoclean);
+		g_configuration.getScreenSaveAutoClean()->setTimespan(m_sliderAutoclearTimespan.GetPos());
+
+		g_configuration.getScreenSave()->enable(m_bEnableScreensave);
+		g_configuration.getScreenSave()->setTimeSpan(m_sliderSaveTimespan.GetPos() * 60);
 		return 0;
 	} catch (_com_error& ) {
 		return -1;
@@ -56,9 +61,9 @@ void CDlgScreenSaver::OnShow() {
  
 
 void CDlgScreenSaver::restoreSetting() {
-	m_sliderAutoclearTimespan.SetRangeMax(g_configuration.getScreenSaveAutoClean()->getRangeMax()/ ( 60 * 60 * 24));
-	m_sliderAutoclearTimespan.SetRangeMin(g_configuration.getScreenSaveAutoClean()->getRangeMin()/ ( 60 * 60 * 24));
-	m_sliderAutoclearTimespan.SetPos(g_configuration.getScreenSaveAutoClean()->getTimespan()/ (60 * 60 * 24));
+	//m_sliderAutoclearTimespan.SetRangeMax(g_configuration.getScreenSaveAutoClean()->getRangeMax()/ ( 60 * 60 * 24));
+	//m_sliderAutoclearTimespan.SetRangeMin(g_configuration.getScreenSaveAutoClean()->getRangeMin()/ ( 60 * 60 * 24));
+	//m_sliderAutoclearTimespan.SetPos(g_configuration.getScreenSaveAutoClean()->getTimespan()/ (60 * 60 * 24));
 
 	m_bEnableScreensave = g_configuration.getScreenSave()->isEnabled();
 	m_bEnableAutoclean = g_configuration.getScreenSaveAutoClean()->isEnable();
@@ -90,12 +95,12 @@ void CDlgScreenSaver::enableAutoclean() {
 
 void CDlgScreenSaver::setAutoCleanTips() {
 	m_strAutoCleanHours.Format("%d days", m_sliderAutoclearTimespan.GetPos());
-	UpdateData(FALSE);
+	GetDlgItem(IDC_STA_SCREENSAVE_AUTOCLEN)->SetWindowText(m_strAutoCleanHours);
 }
 
 void CDlgScreenSaver::setTimespanTips() {
 	m_strTimespanMins.Format("%d Mins", m_sliderSaveTimespan.GetPos());
-	UpdateData(FALSE);
+	GetDlgItem(IDC_STA_SCREENSAVE_TIMESPAN)->SetWindowText(m_strTimespanMins);
 }
 
 BEGIN_MESSAGE_MAP(CDlgScreenSaver, CDialog)

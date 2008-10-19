@@ -24,11 +24,14 @@ CDlgBlackDNSList::~CDlgBlackDNSList()
 
 
 int CDlgBlackDNSList::OnApply() {
-	rules.OnApply();
+	rules.Apply();
 
 	// DNS CHECK是否可用
 	ASSERT(g_dnssetting != NULL);
 	g_dnssetting->enableBlackDNSCheck(convert(m_chkEnableDNS.GetCheck() == BST_CHECKED));
+
+	// 记录在配置文件
+	g_configuration.getBlackURLSet()->enable(m_chkEnableDNS.GetCheck() == BST_CHECKED);
 	return 0;
 }
 
@@ -47,6 +50,10 @@ void CDlgBlackDNSList::DoDataExchange(CDataExchange* pDX)
 }
 
 void CDlgBlackDNSList::restoreSetting() {
+	// 充值
+	rules.Reset();
+	ListBox.GetListCtrl()->DeleteAllItems();
+	
 	g_configuration.getBlackURLSet()->beginEnum((Enumerator1<std::string>*)this);
 	m_bEnableBlackDNS = g_configuration.getBlackURLSet()->isEnabled();
 	UpdateData(FALSE);
@@ -61,10 +68,12 @@ int CDlgBlackDNSList::Enum(const std::string &dns) {
 void CDlgBlackDNSList::OnAddItem(const CString &str) {
 	ASSERT (NULL != g_dnssetting);
 	g_dnssetting->addBlackDNS(_bstr_t(str));
+	g_configuration.getBlackURLSet()->addDNS((LPCTSTR)str);
 }
 void CDlgBlackDNSList::OnDelItem(const CString &str) {
 	ASSERT (NULL != g_dnssetting);
 	g_dnssetting->removeBlackDNS(_bstr_t(str));
+	g_configuration.getBlackURLSet()->removeDNS((LPCTSTR)str);
 }
 bool CDlgBlackDNSList::ValidateItem(const CString & str, CString &output) {
 	output = str;
