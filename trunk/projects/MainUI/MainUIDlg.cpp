@@ -259,6 +259,8 @@ LRESULT CMainUIDlg::OnHotKey(WPARAM wParam, LPARAM lParam) {
 	} else if (id == HOTKEY_SHOW_SWITCH_USER) {
 		CDlgCheckPassword dlg;
 		if (IDOK == dlg.DoModal()) {
+		} else {
+			ShowWindow(SW_HIDE);
 		}
 	}
 
