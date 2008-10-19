@@ -22,8 +22,15 @@ public:
 	// 此函数会根据网站及图片类型进行判断
 	// 如果网站在白名单之内，就不会检测了
 	bool needCheck(const unsigned type) const;
+
+	// 松紧程度，有0～4五个值，默认为2
+	int getTightness() const { return tightness_;}
+	void setTightness(const int new_tight) { tightness_ = new_tight;}
 private:
 	unsigned content_type_;
+	int	tightness_;
+
+	void defaultSetting();
 };
 
 #endif  // _SETTING_CONTENTCHECKSETTING_H__

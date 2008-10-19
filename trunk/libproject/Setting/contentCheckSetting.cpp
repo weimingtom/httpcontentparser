@@ -30,3 +30,8 @@ bool ContentCheckSetting::needCheck(const unsigned type) const {
 		return false;
 	}
 }
+
+void ContentCheckSetting::defaultSetting() {
+	SettingItem::defaultSetting();
+	tightness_ = 2;
+}
