@@ -23,7 +23,9 @@
 #ifdef _DEBUG
 #	pragma comment(lib, "cppunitd.lib")
 #	pragma comment(lib, "testrunnerd.lib")
+#	pragma comment(lib, "sysutilityd.lib")
 #else 
 #	pragma comment(lib, "TestRunner.lib")
 #	pragma comment(lib, "cppunit.lib")
+#	pragma comment(lib, "sysutility.lib")
 #endif
