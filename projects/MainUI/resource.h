@@ -62,6 +62,9 @@
 #define IDD_TEMPLATE                    154
 #define IDD_DLG_SCREEN_SAVER            155
 #define IDD_DLG_WEB_HISTORY             156
+#define IDB_BMP_ACCESSABLE              157
+#define IDB_BITMAP3                     158
+#define IDB_BMP_BLOCK                   158
 #define IDC_TREE_NAVIG                  1000
 #define IDS_TREE_ROOT                   1001
 #define IDS_TREE_DNS_RULE               1002
@@ -126,7 +129,6 @@
 #define IDC_CHK_ENABLE_DNS              1034
 #define IDC_HOTKEY_SWITCHUSR            1034
 #define IDC_CHK_ENABLE_SEARCH           1035
-#define IDC_HOTKEY_SWITCHUSR2           1035
 #define IDC_HOTKEY_LAUNCH               1035
 #define IDC_STA_WHIE_DNSLIST            1039
 #define IDC_STA_FRAME                   1040
@@ -213,7 +215,7 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        156
+#define _APS_NEXT_RESOURCE_VALUE        159
 #define _APS_NEXT_COMMAND_VALUE         32808
 #define _APS_NEXT_CONTROL_VALUE         1099
 #define _APS_NEXT_SYMED_VALUE           112
