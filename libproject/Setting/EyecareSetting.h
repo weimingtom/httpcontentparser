@@ -4,6 +4,8 @@
 #include <string>
 #include <comdef.h>
 #include <settingitem.h>
+#include <configitem.h>
+#include <xmldefined.h>
 #include "calculagraph.h"
 
 
@@ -13,7 +15,7 @@ class EyecareTest;
 
 // TODO : we must add sate store function
 // TODO : 
-class EyecareSetting : public SettingItem {
+class EyecareSetting : public SettingItem  , public ConfigItem {
 public:
 	EyecareSetting();
 	~EyecareSetting(void);
@@ -78,6 +80,21 @@ private:
 	int after_eyecare_terminated_;
 
 	friend class EyecareTest;
+
+	// XML
+public:
+	virtual int parseConfig(TiXmlElement * item_root);
+	virtual int saveConfig(TiXmlElement * root);
+private:
+		// Eyecare
+	int getEyecareSetting(TiXmlElement *ele);
+	int setEyecareSetting(const TCHAR *type, const TCHAR *time);
+	int enableEyecareSetting(const TCHAR *enable);
+	int setEyecareState(const TCHAR *state, const TCHAR *value);
+	int setEyecareTermMode(const TCHAR * value);
+
+	// ±£´æ
+	int saveEyecare(TiXmlElement *app_root);
 };
 
 #endif  // _SETTING_EYECARE_SETTING_H__

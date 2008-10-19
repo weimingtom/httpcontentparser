@@ -6,9 +6,11 @@
 #include <map>
 #include <Enumerate.h>
 #include <settingitem.h>
+#include <configitem.h>
+#include <xmldefined.h>
 
 // 用来记录Search Rule的实现
-class SearchRule : public SettingItem {
+class SearchRule : public SettingItem , public ConfigItem {
 public:
 	SearchRule(void);
 	~SearchRule(void);
@@ -43,6 +45,19 @@ protected:
 	SEARCH_HOST search_host_;
 
 	bool checkWord(const std::string &word) const;
+
+	// XML文件
+public:
+	virtual int parseConfig(TiXmlElement * item_root);
+	virtual int saveConfig(TiXmlElement * root);
+private:
+	// 搜索规则
+	int getSearchRule(TiXmlElement * ele);
+	int setSearchEngineCheck(const TCHAR *word);
+	int saveSearchRule(TiXmlElement *rules_root);
+	int getSearchBlackWord(TiXmlElement * ele);
+	int getSearchEngineSetting(TiXmlElement * ele);
+	int setSearchEngineCheck(const TCHAR *search_engine, const TCHAR *enable);
 };
 
 #endif  // _SETTING_SEARCHRULE_H__

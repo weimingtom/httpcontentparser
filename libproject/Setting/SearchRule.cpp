@@ -73,3 +73,132 @@ bool SearchRule::checkWord(const std::string &word) const {
 		return false;
 	}
 }
+
+
+//============================================================
+//
+int SearchRule::parseConfig(TiXmlElement * item_root) {
+	getSearchRule(item_root);
+	return 0;
+}
+int SearchRule::saveConfig(TiXmlElement * item_root) {
+	saveSearchRule(item_root);	// 保存Search rules
+	return 0;
+}
+
+//========================================================
+// Search Rules
+int SearchRule::setSearchEngineCheck(const TCHAR *search_engine, const TCHAR *enable) {
+	const bool enabled = enabledFromString(enable);
+	addSearchHost(search_engine);
+	enableCheck(search_engine, enabled);
+	return 0;
+}
+
+
+int SearchRule::getSearchRule(TiXmlElement * rule_root) {
+	TiXmlNode * node = rule_root->FirstChild();
+	while (NULL != node) {
+		TiXmlElement * ele = node->ToElement();
+		if (_tcscmp(node->Value(), CONFIG_NODE_SEARCH_ENGINES) == 0) {
+			assert (NULL != ele);
+			getSearchEngineSetting(ele);
+		} else if (_tcscmp(node->Value(), CONFIG_NODE_BLACK_SEARCHWORD) == 0) {
+			assert (NULL != ele);
+			getSearchBlackWord(ele);
+		} else {
+		}
+
+		node = node->NextSibling();
+	}
+	return 0;
+}
+
+// 获取Search  规则
+// Search规则涉及到 搜索引擎和 Blacksearch word，
+// 因此与其他的略有不同
+int SearchRule::getSearchBlackWord(TiXmlElement * rule_root) {
+	TiXmlNode * node = rule_root->FirstChild();
+	while (NULL != node) {
+		TiXmlElement *ele = node->ToElement();
+		if (NULL != ele) {
+			addBlackSearchWord(ele->GetText());
+		}
+
+		node = node->NextSibling();
+	}
+	return 0;
+}
+
+int SearchRule::getSearchEngineSetting(TiXmlElement * rule_root) {
+	TiXmlNode * node = rule_root->FirstChild();
+	while (NULL != node) {
+		TiXmlElement *ele = node->ToElement();
+		if (NULL != ele) {
+			setSearchEngineCheck(ele->Attribute(CONFIG_CONST_NAME),
+				ele->Attribute(CONFIG_CONST_ENABLE));
+		}
+
+		node = node->NextSibling();
+	}
+	return 0;
+}
+
+//==========================================================
+// search rules
+namespace {
+class EnumBlackWord : public Enumerator1<std::string> {
+public:
+	virtual int Enum(const std::string &data1) {
+		TiXmlElement * blackword = new TiXmlElement(CONFIG_NODE_BLACK_SEARCHWORD);
+		TiXmlText * word = new TiXmlText(data1);
+		blackword->LinkEndChild(word);
+		rule_root_->LinkEndChild(blackword);
+
+		return 0;
+	}
+public:
+	EnumBlackWord(TiXmlElement * rule_root) {
+		rule_root_ = rule_root;
+	}
+private:
+	TiXmlElement * rule_root_;
+};
+
+class EnumSearchEngine : public Enumerator2<std::string, bool> {
+public:
+	virtual int Enum(const std::string &data1, const bool enabled) {
+		TiXmlElement * searchengine_item = new TiXmlElement(CONDIG_NODE_SEARCH_ENGINE_ITEM);
+		searchengine_item->SetAttribute(CONFIG_CONST_NAME, data1);
+		searchengine_item->SetAttribute(CONFIG_CONST_ENABLE, enabledFromBool(enabled));
+		rule_root_->LinkEndChild(searchengine_item);
+
+		return 0;
+	}
+public:
+	EnumSearchEngine(TiXmlElement * rule_root) {
+		rule_root_ = rule_root;
+	}
+private:
+	TiXmlElement * rule_root_;
+};
+};
+int SearchRule::saveSearchRule(TiXmlElement *root) {
+	TiXmlElement * rule_root = new TiXmlElement(CONFIG_NODE_RULE_ITEM);
+
+	// 设置属性
+	rule_root->SetAttribute(CONFIG_CONST_NAME, CONFIG_NODE_NAME_SEARCH);
+	rule_root->SetAttribute(CONFIG_CONST_ENABLE, enabledFromBool(isEnabled()));
+
+	// 设置black word
+	TiXmlElement * blackword = new TiXmlElement(CONFIG_NODE_BLACK_SEARCHWORD);
+	enumBlackWord(&EnumBlackWord(blackword));
+	rule_root->LinkEndChild(blackword);
+
+	TiXmlElement *search_engine = new TiXmlElement(CONFIG_NODE_SEARCH_ENGINES);
+	enumSearchEngine(&EnumSearchEngine(search_engine));
+	rule_root->LinkEndChild(search_engine);
+
+	root->LinkEndChild(rule_root);
+	return 0;
+}
