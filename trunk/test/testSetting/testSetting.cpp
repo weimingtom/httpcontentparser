@@ -12,7 +12,9 @@
 #include ".\onlinehoursettingtest.h"
 #include ".\webhistoryrecordtest.h"
 #include ".\autocleantest.h"
+#include ".\hotkeysettingtest.h"
 
+CPPUNIT_TEST_SUITE_REGISTRATION(HotkeySettingTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(AutocleanTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(WebHistoryRecordTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(OnlineHourSettingTest);
