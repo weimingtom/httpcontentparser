@@ -3,9 +3,9 @@
 #include ".\xinstall.h"
 #include <utility\strutility.h>
 #include <windowtitle.h>
+#include <app_constants.h>
 #include <assert.h>
 #include <process.h>
-#include <app_constants.h>
 #include <stdlib.h> 
 #include  <io.h>
 
@@ -127,6 +127,23 @@ UINT RegisterServices(HMODULE hModule) {
 
 }
 
+// 启动主程序
+void GetMainUIPath(TCHAR * fullpath, const int len, HMODULE hModule) {
+	TCHAR installpath[MAX_PATH];
+	GetInstallPath(installpath, len, hModule);
+	_sntprintf(fullpath, len, "%s%s", installpath, APPLICATION_MAINUI_NAME);
+}
+
+void GetMainUIPath(TCHAR * fullpath, const int len, const TCHAR * installPath) {
+	_sntprintf(fullpath, len, "%s%s", installPath, APPLICATION_MAINUI_NAME);
+}
+
+void StartMainUI(HMODULE hModule) {
+	TCHAR  fullpath[MAX_PATH];
+	GetMainUIPath(fullpath, MAX_PATH, hModule);
+	WinExec(fullpath, SW_SHOW);
+}
+
 void StartEyecare(HMODULE hModule) {
 	// 首先检测应用程序是否已经打开了
 	HWND hOld = GetEyecareApp();
@@ -241,11 +258,13 @@ HWND GetEyecareApp() {
 	HWND hwnd = FindWindow(EYECARE_MAIN_WND_CLASS, NULL);
 	return hwnd;
 }
+
+
+
 //////////////////////////////////////////////////
 // utility functions
 
 namespace {
-
 void GenerateFullPath(TCHAR *fullpath, const int len, const TCHAR * dir, const TCHAR * filename) {
 	assert(strutility::endwith(dir, "\\") == true);
 	_sntprintf(fullpath, len, TEXT("%s%s"), dir, filename);
