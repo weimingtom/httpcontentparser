@@ -2,7 +2,7 @@
 #include ".\servthread.h"
 #include "assert.h"
 #include "globalvariable.h"
-#include <hotkey.h>
+#include <app_constants.h>
 #include <windowtitle.h>
 #include <sysutility.h>
 #include <PrintScreen.h>
@@ -22,6 +22,7 @@
 
 
 // WPARAM (vKey + vModifier) LPARAM (ID)
+// WPARAM , HIWORD = vModifier 
 #define WM_REGISTER_HOTKEY (WM_USER + 0x20)
 
 extern HINSTANCE g_hInstance;
@@ -70,32 +71,16 @@ ServThread * ServThread::getInstance() {
 ServThread::ServThread(void) {
 	dwThreadId_ = 0;
 	hThread_ = NULL;
-
-	hotkeyid_switchuser_ = 0;
-	hotkeyid_showdlg_ = 0;
 }
 
 ServThread::~ServThread(void) {
-	GlobalDeleteAtom(hotkeyid_switchuser_);
-	GlobalDeleteAtom(hotkeyid_showdlg_);
 }
 
 int ServThread::setHotKey(WORD vKey, WORD fsModifiers, int type) {
-	int hotkeyid;
-	if (type == HOTKEY_ID_POPUP_MAIN) {
-		hotkeyid = hotkeyid_showdlg_;
-	} else if (type == HOTKEY_ID_SWITCH_USER){
-		hotkeyid = hotkeyid_switchuser_;
-	} else {
-		assert(false);
-	}
-
-	return (int)SendMessage(hwnd_, WM_REGISTER_HOTKEY, MAKEWPARAM(vKey, fsModifiers), (LPARAM)hotkeyid);
+	return (int)SendMessage(hwnd_, WM_REGISTER_HOTKEY, MAKEWPARAM(vKey, fsModifiers), (LPARAM)type);
 }
 
 void ServThread::initialize() {
-	hotkeyid_switchuser_  = GlobalAddAtom(HOTKEY_ID_POPUP_MAIN_TEXT);
-	hotkeyid_showdlg_ = GlobalAddAtom(HOTKEY_ID_SWITCH_USER_TEXT);
 }
 
 TCHAR szWindowClass[] = TEXT("None");
@@ -113,11 +98,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 			SetTimer(hWnd, ID_TIMER_SAVE_CONFG,		TIME_ESCAPE_SAVE_CONFIG, NULL);
 			SetTimer(hWnd, ID_TIMER_EYECARE_TRY,	TIME_ESCAPE_SAVE_EYECARE, NULL);
 			break;
-		case WM_SETHOTKEY:
-			return 0;
-		case WM_HOTKEY:
-			OutputDebugString(TEXT("jidij==================="));
-			return 0;
 
 		case WM_TIMER:
 			if (ID_TIMER_SAVE_SCREEN == wParam) {
@@ -149,9 +129,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 			UnregisterHotKey(hWnd, (int)lParam);
 			return RegisterHotKey(hWnd, (int)lParam, HIWORD(wParam), LOWORD(wParam));
 		case WM_DESTROY:
-			UnregisterHotKey(hWnd, server->hotkeyid_switchuser_);
-			UnregisterHotKey(hWnd, server->hotkeyid_showdlg_);
-
+	
 			KillTimer(hWnd, ID_TIMER_SAVE_SCREEN);
 			KillTimer(hWnd, ID_TIMER_SAVE_CONFG);
 			KillTimer(hWnd, ID_TIMER_EYECARE_TRY);

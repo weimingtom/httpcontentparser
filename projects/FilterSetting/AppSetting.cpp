@@ -5,7 +5,7 @@
 #include ".\appsetting.h"
 #include ".\servthread.h"
 #include ".\globalvariable.h"
-#include <hotkey.h>
+#include <app_constants.h>
 #include <assert.h>
 #include <comdef.h>
 #include <sysutility.h>

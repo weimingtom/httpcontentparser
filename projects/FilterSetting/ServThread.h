@@ -28,9 +28,6 @@ private:
 
 	// hotkey ids;
 	void initialize();
-	int hotkeyid_switchuser_;
-	int hotkeyid_showdlg_;
-
 	friend LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 };
 
