@@ -252,6 +252,7 @@ void CMainUIDlg::OnMainChildren()
 	UpdateUIStateByModel();
 }
 
+// 相应热键消息
 LRESULT CMainUIDlg::OnHotKey(WPARAM wParam, LPARAM lParam) {
 	int id = (int)wParam;
 	if (id == HOTKEY_SHOW_MAINUI) {
@@ -299,7 +300,12 @@ void CMainUIDlg::OnCancel() {
 void CMainUIDlg::OnBnClickedOk()
 {
 	ASSERT (NULL != m_curDlg);
-	m_curDlg->Apply();
+	if ( -1 == m_curDlg->Apply()) {
+		m_curDlg->Restore();
+		return;
+	}
+	
+	m_curDlg->SetModify(false);
 	m_bShowed = FALSE;
 	ShowWindow(SW_HIDE);
 }
@@ -307,15 +313,21 @@ void CMainUIDlg::OnBnClickedOk()
 void CMainUIDlg::OnBnClickedMainCancel()
 {
 	m_bShowed = FALSE;
-	ShowWindow(SW_HIDE);
-	m_curDlg->Restore();
+	ShowWindow(SW_HIDE);	// 隐藏窗口
+	m_curDlg->Restore();	// 恢复设置
+	m_curDlg->SetModify(false);
 }
 
 // 按下Apply按钮
 void CMainUIDlg::OnBnClickedApply()
 {
 	ASSERT (NULL != m_curDlg);
-	m_curDlg->Apply();
+	if ( -1 == m_curDlg->Apply()) {
+		m_curDlg->Restore();
+		return;
+	}
+
+	m_curDlg->SetModify(false);
 }
 
 // 设置控件的字体
@@ -425,6 +437,7 @@ void CMainUIDlg::showDlg() {
 	m_curDlg->OnShow();
 }
 
+// 创建对话框
 void CMainUIDlg::initDlgs() {
 	m_dlgImageRules.Create(CDlgImageRule::IDD, this);
 	m_dlgOnlineHour.Create(CDlgOnlineHour::IDD, this);

@@ -17,8 +17,8 @@ public:
 	}
 
 	// ª÷∏¥…Ë÷√
-	void Restore();
-	void Apply();
+	int Restore();
+	int Apply();
 	virtual void OnShow() = 0;
 
 protected:
