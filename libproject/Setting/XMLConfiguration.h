@@ -35,6 +35,7 @@
 #include <contentchecksetting.h>
 #include <screensaver.h>
 #include <autoclean.h>
+#include <hotkeysetting.h>
 #include <xmldefined.h>
 #include <string>
 #include <set>
@@ -64,6 +65,7 @@ public:
 	ScreenSaver*	getScreenSave() { return &screen_save_;}
 	AutoClean*		getScreenSaveAutoClean() { return getScreenSave()->getAutoClean();}
 	AutoClean*		getWebHistoryRecordAutoClean() { return getWebHistoryRecordSetting()->getAutoclean();}
+	HotkeySetting*   getHotkey() { return &hotkey_;}
 private:
 	DNSList						black_url_set_;
 	DNSList						white_url_set_;
@@ -75,6 +77,7 @@ private:
 	ContentCheckSetting			content_check_;
 	ScreenSaver					screen_save_;
 	DNSSetting					dnssetting_;
+	HotkeySetting				hotkey_;
 
 	// ƒ¨»œ…Ë÷√
 	void defaultSetting();
