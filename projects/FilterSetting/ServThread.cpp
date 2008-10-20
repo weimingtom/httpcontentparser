@@ -3,7 +3,6 @@
 #include "assert.h"
 #include "globalvariable.h"
 #include <app_constants.h>
-#include <windowtitle.h>
 #include <sysutility.h>
 #include <PrintScreen.h>
 

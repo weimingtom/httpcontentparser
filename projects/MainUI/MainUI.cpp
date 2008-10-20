@@ -9,7 +9,7 @@
 #include ".\services.h"
 #include <sysutility.h>
 #include <typeconvert.h>
-#include <windowtitle.h>
+#include <app_constants.h>
 #include <com\comutility.h>
 
 
