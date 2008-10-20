@@ -67,18 +67,23 @@
 			<content type="porn_images"  enable="true"/>
 			<content type="porn_website" enable="true"/>
 			<content type="porn_webpage" enable="true"/>
-			<autoclean timespan="1" enable="true" min="1" max="15" lastclean="2008-08-08 12:12">
+			<autoclean timespan="1" enable="true" min="1" max="15" lastclean="2008-08-08 12:12"/>
 		</webhistory>
 		
 		<!-- screensave config, time unit : seconds-->
 		<screensave enable="true" timespan="300">
 			<!-- screensave config, time unit : days-->
-			<autoclean timespan="1" enable="true" min="1" max="15" lastclean="2008-08-08 12:12">
+			<autoclean timespan="1" enable="true" min="1" max="15" lastclean="2008-08-08 12:12"/>
 		</screensave>
 		
 		<!-- system configuration-->
 		<syssetting>
 			<app type="autoload" enable="true"></app>
 		</syssetting>
+		<hotkeys>
+			<hotkey name="Launch"		hokkey="0">
+			<hotkey name="showUI"		hokkey="0">
+			<hotkey name="SwitchUser"	hokkey="0">
+		</hotkeys>
 	</appsetting>
 </config>
