@@ -88,31 +88,9 @@ private:
 	int parseRules(TiXmlNode *rules_root);
 	int parseAppSet(TiXmlNode *appset_root);
 
-
-	////////////////////////////////////////////////////////////////////
-	// 分析应用程序设置
-	int getSystemSetting(TiXmlElement * ele);
-
-	/////////////////////////////////////////////////////////////////////
-	// 分析各个规则
-	int getWhiteURL(TiXmlElement * ele);
-	int getBlackURL(TiXmlElement * ele);
-	int addWhiteURL(const TCHAR *URL);
-	int enableWhiteURL(const TCHAR *enble);
-	int enableJustPassWhite(const TCHAR *enabled);
-	int addBlackURL(const TCHAR *URL);
-	int enableBlackURL(const TCHAR *enble);
 private:
 	int saveRules(TiXmlElement *root);
-	int saveBlackURL(TiXmlElement *rules_root);
-	int saveWhiteURL(TiXmlElement *rules_root);
-
-	int setTextCheck(const TCHAR *language, const TCHAR *enable);
 	
-	int saveTextRule();	// 未用
-	int saveBlackWord(TiXmlElement *root);
-	int saveSearchEngineRule(TiXmlElement *root);
-
 	// 保存应用程序设置
 	int saveAppSetting(TiXmlElement * root);
 };

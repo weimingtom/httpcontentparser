@@ -45,15 +45,14 @@ int ScreenSaver::parseConfig(TiXmlElement * item_root) {
 	getScreensave(item_root);
 	return 0;
 }
-int ScreenSaver::saveConfig(TiXmlElement * item_root) {
-	saveScreensave(item_root);
-	return 0;
+TiXmlElement * ScreenSaver::saveConfig(TiXmlElement * item_root) {
+	return saveScreensave(item_root);
 }
 
 
 //==========================================================
 // 保存屏幕保存功能
-int ScreenSaver::saveScreensave(TiXmlElement * root) {
+TiXmlElement * ScreenSaver::saveScreensave(TiXmlElement * root) {
 	TiXmlElement * rule_root = new TiXmlElement(CONFIG_ITEM_APPSET_SCREENSAVER);
 	rule_root->SetAttribute(CONFIG_CONST_ENABLE, enabledFromBool(isEnabled()));
 	rule_root->SetAttribute(CONSIG_CONST_TIMESPAN, TEXT("10"));
@@ -74,7 +73,7 @@ int ScreenSaver::saveScreensave(TiXmlElement * root) {
 	rule_root->LinkEndChild(autoclean);
 
 	root->LinkEndChild(rule_root);
-	return 0;
+	return rule_root;
 }
 
 //===============================================

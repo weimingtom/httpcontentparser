@@ -16,7 +16,9 @@
 
 //=====================================================
 // constructor and deconstructor
-XMLConfiguration::XMLConfiguration() {
+XMLConfiguration::XMLConfiguration() 
+	: black_url_set_(CONFIG_NODE_NAME_BLACKURL)
+	, white_url_set_(CONFIG_NODE_NAME_WHITEURL) {
 	defaultSetting();
 }
 
@@ -67,70 +69,17 @@ int XMLConfiguration::saveRules(TiXmlElement *root) {
 	TiXmlElement * rules_root = new TiXmlElement( CONFIG_NODE_RULES );
 	// 保存上网时间规则
 	getOnlineSetting()->saveConfig(rules_root);
-	saveWhiteURL(rules_root);
-	saveBlackURL(rules_root);
+	getBlackURLSet()->saveConfig(rules_root);
 	
+	// 涉及两个类
+	TiXmlElement * white_item = getWhiteURLSet()->saveConfig(rules_root);
+	getDNSSetting()->saveConfig(white_item);
+
 	getSearchRule()->saveConfig(rules_root);
 	getContentCheckSetting()->saveConfig(rules_root);
 	root->LinkEndChild(rules_root);
 	return 0;
 }
-
-//===========================================================
-// URL Rules
-namespace {
-// class DNSEnumerator
-class DNSEnum : public Enumerator1<std::string> {
-public:
-	virtual int Enum(const std::string &dns) {
-		TiXmlElement * url_node = new TiXmlElement(CONFIG_NODE_URL);
-		TiXmlText * text = new TiXmlText(dns);
-		url_node->LinkEndChild(text);
-		rule_root_->LinkEndChild(url_node);
-		return 0;
-	}
-public:
-	DNSEnum(TiXmlElement * rule_root) {
-		rule_root_ = rule_root;
-		assert (rule_root_ != NULL);
-	}
-private:
-	TiXmlElement *rule_root_;
-};
-};
-
-int XMLConfiguration::saveWhiteURL(TiXmlElement *root) {
-	TiXmlElement * rule_root = new TiXmlElement(CONFIG_NODE_RULE_ITEM);
-
-	// 设置属性
-	rule_root->SetAttribute(CONFIG_CONST_NAME, CONFIG_NODE_NAME_WHITEURL);
-	rule_root->SetAttribute(CONFIG_CONST_ENABLE, enabledFromBool(getWhiteURLSet()->isEnabled()));
-	rule_root->SetAttribute(CONFIG_WHITEURL_JUSTPASSED, enabledFromBool(getDNSSetting()->justPassWhiteDNS()));
-	// 添加URL
-	getWhiteURLSet()->beginEnum(&DNSEnum(rule_root));
-	root->LinkEndChild(rule_root);
-	return 0;
-}
-
-int XMLConfiguration::saveBlackURL(TiXmlElement *root) {
-	TiXmlElement * rule_root = new TiXmlElement(CONFIG_NODE_RULE_ITEM);
-
-	// 设置属性
-	rule_root->SetAttribute(CONFIG_CONST_NAME, CONFIG_NODE_NAME_BLACKURL);
-	rule_root->SetAttribute(CONFIG_CONST_ENABLE, enabledFromBool(getBlackURLSet()->isEnabled()));
-
-	// 添加URL
-	getBlackURLSet()->beginEnum(&DNSEnum(rule_root));
-	root->LinkEndChild(rule_root);
-	return 0;
-}
-
-//==========================================================
-// save Online hour
-namespace {
-
-};
-
 
 ///////////////////////////////////////////////////////////////////////////////////
 // 读入规则
@@ -156,7 +105,7 @@ int XMLConfiguration::parseAppSet(TiXmlNode *appset_root) {
 				getWebHistoryRecordSetting()->readconfig(element);
 			} else if (_tcscmp(node->Value(), CONFIG_ITEM_APPSET_SYSSETTING) == 0) {
 				// 系统设置功能
-				getSystemSetting(element);
+				// getSystemSetting(element);
 			} else if (_tcscmp(node->Value(), CONFIG_ITEM_APPSET_SCREENSAVER) == 0) {
 				// 屏幕保存设置功能
 				getScreenSave()->readconfig(element);
@@ -167,97 +116,6 @@ int XMLConfiguration::parseAppSet(TiXmlNode *appset_root) {
 	}
 	return 0;
 }
-
-int XMLConfiguration::getSystemSetting(TiXmlElement * ele) {
-	return 0;
-}
-
-//=========================================================
-// rule set function
-//========================================================
-// 白名单是否可用
-int XMLConfiguration::enableWhiteURL(const TCHAR *enable) {
-	const bool checked = enabledFromString(enable);
-	getWhiteURLSet()->enable(checked);
-	return 0;
-}
-
-int XMLConfiguration::enableJustPassWhite(const TCHAR *enable) {
-	const bool checked = enabledFromString(enable);
-	getDNSSetting()->justPassWhiteDNS(checked);
-	return 0;
-}
-// 设置URL 白名单
-int XMLConfiguration::addWhiteURL(const TCHAR *URL) {
-	if (NULL == URL)
-		return -1;
-
-	getWhiteURLSet()->addDNS(URL);
-	return 0;
-}
-
-int XMLConfiguration::getWhiteURL(TiXmlElement * rule_root) {
-	// enable?
-	const TCHAR *  enable_attr = rule_root->Attribute(CONFIG_CONST_ENABLE);
-	enableWhiteURL(enable_attr);
-
-	const TCHAR *  enable_attr_passed = rule_root->Attribute(CONFIG_WHITEURL_JUSTPASSED);
-	enableJustPassWhite(enable_attr_passed);
-	// 内容
-	TiXmlNode * node = rule_root->FirstChild();
-	while (NULL != node) {
-		TiXmlElement *ele = node->ToElement();
-		if (NULL != ele) {
-			addWhiteURL(ele->GetText());
-		}
-
-		node = node->NextSibling();
-	}
-	return 0;
-}
-
-//========================================================
-// 黑名单是否可用
-int XMLConfiguration::enableBlackURL(const TCHAR *enable) {
-	const bool checked = enabledFromString(enable);
-	getBlackURLSet()->enable(checked);
-	return 0;
-}
-
-// 设置URL 黑名单
-int XMLConfiguration::addBlackURL(const TCHAR *URL) {
-	if (NULL == URL)
-		return -1;
-
-	getBlackURLSet()->addDNS(URL);
-	return 0;
-}
-
-int XMLConfiguration::getBlackURL(TiXmlElement * rule_root) {
-	// enable?
-	const TCHAR *  enable_attr = rule_root->Attribute(CONFIG_CONST_ENABLE);
-	enableBlackURL(enable_attr);
-
-	// 内容
-	TiXmlNode * node = rule_root->FirstChild();
-	while (NULL != node) {
-		TiXmlElement *ele = node->ToElement();
-		if (NULL != ele) {
-			addBlackURL(ele->GetText());
-		}
-
-		node = node->NextSibling();
-	}
-	return 0;
-}
-
-
-//============================================================
-// 文字规则
-int XMLConfiguration::setTextCheck(const TCHAR *language, const TCHAR *enable) {
-	return 0;
-}
-
 
 //============================================================
 // 解析Rules
@@ -270,9 +128,10 @@ int XMLConfiguration::parseRules(TiXmlNode *rules_root) {
 		if ( NULL != element ) {
 			const TCHAR *  name_attr = element->Attribute(CONFIG_CONST_NAME);
 			if (0 == _tcscmp(name_attr,		  CONFIG_NODE_NAME_BLACKURL)) {
-				getBlackURL(element);
+				getBlackURLSet()->readconfig(element);
 			} else if (0 == _tcscmp(name_attr, CONFIG_NODE_NAME_WHITEURL)) {
-				getWhiteURL(element);
+				getDNSSetting()->readconfig(element);
+				getWhiteURLSet()->readconfig(element);
 			} else if (0 == _tcscmp(name_attr, CONFIG_NODE_NAME_ONLINETIME)) {
 				getOnlineSetting()->readconfig(element);
 			} else if (0 == _tcscmp(name_attr, CONFIG_NODE_NAME_SEARCH)) {

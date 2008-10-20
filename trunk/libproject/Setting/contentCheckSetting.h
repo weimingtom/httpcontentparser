@@ -36,12 +36,12 @@ private:
 // XML file
 public:
 	virtual int parseConfig(TiXmlElement * item_root);
-	virtual int saveConfig(TiXmlElement * root);
+	virtual TiXmlElement * saveConfig(TiXmlElement * root);
 private:
 	// 处理各个规则的具体细节
 	int getImageRule(TiXmlElement * ele);
 	int setImageCheck(const TCHAR *imagetype, const TCHAR *enable);
-	int saveImageRule(TiXmlElement *rules_root);
+	TiXmlElement * saveImageRule(TiXmlElement *rules_root);
 };
 
 #endif  // _SETTING_CONTENTCHECKSETTING_H__

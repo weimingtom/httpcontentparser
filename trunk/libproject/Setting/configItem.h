@@ -9,10 +9,10 @@
 class ConfigItem {
 public:
 	int readconfig(TiXmlElement * item_root);
-	int saveconfig(TiXmlElement * root);
+	TiXmlElement * saveconfig(TiXmlElement * root);
 protected:
 	virtual int parseConfig(TiXmlElement * item_root) = 0;
-	virtual int saveConfig(TiXmlElement * root) = 0;
+	virtual TiXmlElement * saveConfig(TiXmlElement * root) = 0;
 
 	TiXmlElement * findItem(TiXmlElement * root);
 protected:

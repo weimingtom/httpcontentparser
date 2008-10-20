@@ -30,7 +30,7 @@ private:
 	// XML file
 public:
 	virtual int parseConfig(TiXmlElement * item_root);
-	virtual int saveConfig(TiXmlElement * root);
+	virtual TiXmlElement * saveConfig(TiXmlElement * root);
 private:
 	// 上网规则
 	int getOnlinetime(TiXmlElement * ele);
@@ -38,7 +38,7 @@ private:
 	int onlineBlocktime(const TCHAR *time);
 
 	// 保存OnlineHour规则
-	int saveOnlineHour(TiXmlElement *rules_root);	
+	TiXmlElement * saveOnlineHour(TiXmlElement *rules_root);	
 };
 
 #endif  // _SETTING_ONLINEHOURSETTING_H__

@@ -84,7 +84,7 @@ private:
 	// XML
 public:
 	virtual int parseConfig(TiXmlElement * item_root);
-	virtual int saveConfig(TiXmlElement * root);
+	virtual TiXmlElement *  saveConfig(TiXmlElement * root);
 private:
 		// Eyecare
 	int getEyecareSetting(TiXmlElement *ele);
@@ -94,7 +94,7 @@ private:
 	int setEyecareTermMode(const TCHAR * value);
 
 	// ±£´æ
-	int saveEyecare(TiXmlElement *app_root);
+	TiXmlElement *  saveEyecare(TiXmlElement *app_root);
 };
 
 #endif  // _SETTING_EYECARE_SETTING_H__

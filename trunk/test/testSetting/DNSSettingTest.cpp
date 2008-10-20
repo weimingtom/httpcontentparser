@@ -12,7 +12,7 @@ DNSSettingTest::~DNSSettingTest(void) {
 void DNSSettingTest::testJustPassedWhiteDNS() {
 	CPPUNIT_ASSERT(SettingItem::MODE_CHILD == SettingItem::getModel());
 
-	DNSList black, white;
+	DNSList black(""), white("");
 	DNSSetting dns_setting;
 	dns_setting.initialize(&black, &white);
 
@@ -74,7 +74,7 @@ void DNSSettingTest::testJustPassedWhiteDNS() {
 void DNSSettingTest::testTwoModels() {
 	CPPUNIT_ASSERT(SettingItem::MODE_CHILD == SettingItem::getModel());
 
-	DNSList black, white;
+	DNSList black(""), white("");
 	DNSSetting dns_setting;
 	dns_setting.initialize(&black, &white);
 
@@ -101,7 +101,7 @@ void DNSSettingTest::testTwoModels() {
 void DNSSettingTest::testFuzzeCheck() {
 	CPPUNIT_ASSERT(SettingItem::MODE_CHILD == SettingItem::getModel());
 
-	DNSList black, white;
+	DNSList black(""), white("");
 	DNSSetting dns_setting;
 	dns_setting.initialize(&black, &white);
 
@@ -123,7 +123,7 @@ void DNSSettingTest::testFuzzeCheck() {
 void DNSSettingTest::testCheck() {
 	CPPUNIT_ASSERT(SettingItem::MODE_CHILD == SettingItem::getModel());
 
-	DNSList black, white;
+	DNSList black(""), white("");
 	DNSSetting dns_setting;
 	dns_setting.initialize(&black, &white);
 

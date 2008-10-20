@@ -25,6 +25,6 @@ int ConfigItem::readconfig(TiXmlElement * item_root) {
 	return parseConfig(item_root);
 }
 
-int ConfigItem::saveconfig(TiXmlElement * item_root) {
+TiXmlElement * ConfigItem::saveconfig(TiXmlElement * item_root) {
 	return saveConfig(item_root);
 }

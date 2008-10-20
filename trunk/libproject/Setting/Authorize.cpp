@@ -65,9 +65,8 @@ int Authorize::parseConfig(TiXmlElement * item_root) {
 	getAuthorizeSetting(item_root);
 	return 0;
 }
-int Authorize::saveConfig(TiXmlElement * item_root) {
-	saveAuthorize(item_root);
-	return 0;
+TiXmlElement * Authorize::saveConfig(TiXmlElement * item_root) {
+	return saveAuthorize(item_root);
 }
 
 
@@ -130,10 +129,10 @@ int Authorize::getAuthorizeSetting(TiXmlElement *ele) {
 	return 0;
 }
 
-int Authorize::saveAuthorize(TiXmlElement *app_root) {
+TiXmlElement * Authorize::saveAuthorize(TiXmlElement *app_root) {
 	TiXmlElement * author_root = new TiXmlElement(CONFIG_ITEM_APPSET_AUTHORIZE);
 	
 	EnumUsers(&EnumUsersInfo(author_root));
 	app_root->LinkEndChild(author_root);
-	return 0;
+	return author_root;
 }

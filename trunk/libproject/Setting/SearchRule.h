@@ -49,15 +49,16 @@ protected:
 	// XML文件
 public:
 	virtual int parseConfig(TiXmlElement * item_root);
-	virtual int saveConfig(TiXmlElement * root);
+	virtual TiXmlElement *  saveConfig(TiXmlElement * item_root);
 private:
 	// 搜索规则
 	int getSearchRule(TiXmlElement * ele);
 	int setSearchEngineCheck(const TCHAR *word);
-	int saveSearchRule(TiXmlElement *rules_root);
 	int getSearchBlackWord(TiXmlElement * ele);
 	int getSearchEngineSetting(TiXmlElement * ele);
 	int setSearchEngineCheck(const TCHAR *search_engine, const TCHAR *enable);
+
+	TiXmlElement *  saveSearchRule(TiXmlElement *rules_root);
 };
 
 #endif  // _SETTING_SEARCHRULE_H__

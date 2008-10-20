@@ -65,9 +65,8 @@ int OnlineHourSetting::parseConfig(TiXmlElement * item_root) {
 	getOnlinetime(item_root);
 	return 0;
 }
-int OnlineHourSetting::saveConfig(TiXmlElement * item_root) {
-	saveOnlineHour(item_root);
-	return 0;
+TiXmlElement * OnlineHourSetting::saveConfig(TiXmlElement * item_root) {
+	return saveOnlineHour(item_root);
 }
 
 int OnlineHourSetting::onlineBlocktime(const TCHAR *time) {
@@ -137,7 +136,7 @@ private:
 };
 };
 
-int OnlineHourSetting::saveOnlineHour(TiXmlElement *root) {
+TiXmlElement * OnlineHourSetting::saveOnlineHour(TiXmlElement *root) {
 	TiXmlElement * rule_root = new TiXmlElement(CONFIG_NODE_RULE_ITEM);
 
 	// ÉèÖÃÊôÐÔ
@@ -147,5 +146,5 @@ int OnlineHourSetting::saveOnlineHour(TiXmlElement *root) {
 	enumBlockHour(&EnumOnlineHour(rule_root));
 	
 	root->LinkEndChild(rule_root);
-	return 0;
+	return rule_root;
 }

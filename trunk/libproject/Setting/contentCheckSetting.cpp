@@ -42,14 +42,13 @@ int ContentCheckSetting::parseConfig(TiXmlElement * item_root) {
 	getImageRule(item_root);
 	return 0;
 }
-int ContentCheckSetting::saveConfig(TiXmlElement * item_root) {
-	saveImageRule(item_root);
-	return 0;
+TiXmlElement * ContentCheckSetting::saveConfig(TiXmlElement * item_root) {
+	return saveImageRule(item_root);
 }
 
 //==========================================================
 // 保存图片检测规则
-int ContentCheckSetting::saveImageRule(TiXmlElement *root) {
+TiXmlElement * ContentCheckSetting::saveImageRule(TiXmlElement *root) {
 	TiXmlElement * rule_root = new TiXmlElement(CONFIG_NODE_RULE_ITEM);
 
 	// 设置属性
@@ -80,7 +79,7 @@ int ContentCheckSetting::saveImageRule(TiXmlElement *root) {
 	rule_root->LinkEndChild(item_png);
 
 	root->LinkEndChild(rule_root);
-	return 0;
+	return rule_root;
 }
 
 
