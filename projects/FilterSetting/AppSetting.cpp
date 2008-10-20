@@ -32,6 +32,12 @@ STDMETHODIMP CAppSetting::InterfaceSupportsErrorInfo(REFIID riid)
 STDMETHODIMP CAppSetting::setHotkey(USHORT wVirtualKeyCode, USHORT wModifiers, LONG type, VARIANT_BOOL* bSuccess) {
 	BOOL bSucc = (int)ServThread::getInstance()->setHotKey(wVirtualKeyCode, wModifiers, type);
 	*bSuccess = convert(bSucc);
+
+	if (type == HOTKEY_LANUCH_MAINUI && FALSE == bSucc) {
+	} else {
+		g_configuration.getHotkey()->setHotkey(getHotkeyname(type), (unsigned)MAKELPARAM(wModifiers,wVirtualKeyCode));
+	}
+
 	return S_OK;
 }
 

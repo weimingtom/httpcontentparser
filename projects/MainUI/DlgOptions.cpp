@@ -63,20 +63,6 @@ BOOL setLaunchHotkey(WORD vKey, WORD vModifiers, const int type) {
 	}
 }
 
-TCHAR * getHotkeyname(const int type) {
-	switch (type) {
-		case HOTKEY_SHOW_MAINUI:
-			return CONFIG_HOTKEY_SHOWUI;
-		case HOTKEY_SHOW_SWITCH_USER:
-			return CONFIG_HOTKEY_SWITCHUSER;
-		case HOTKEY_LANUCH_MAINUI:
-			return CONFIG_HOTKEY_LAUNCH;
-		default:
-			ASSERT(false);
-			return TEXT("");
-	}
-}
-
 BOOL setHotkey(WORD vKey, WORD vModifiers_mfc, const int type) {
 	WORD vModifier = getModifierKey(vModifiers_mfc);
 	if (0 != vModifier && 0 != vKey) {

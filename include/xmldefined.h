@@ -1,6 +1,7 @@
 #ifndef _INCLUDE_XML_ELEMENT_DEFINED_H__
 #define _INCLUDE_XML_ELEMENT_DEFINED_H__
 
+#include <app_constants.h>
 
 #define CONFIG_ROOT_VALUE					TEXT("config")
 #define CONFIG_NODE_RULES					TEXT("rules")
@@ -88,9 +89,6 @@
 #define CONFIG_ITEM_APPSET_HOTKEY				TEXT("hotkeys")
 #define CONFIG_APPSET_HOTKEY_ITEM				TEXT("hotkey")
 #define CONFIG_HOTKEY_PROP_KEY					TEXT("key")
-#define CONFIG_HOTKEY_LAUNCH					TEXT("launch")
-#define CONFIG_HOTKEY_SHOWUI					TEXT("showui")
-#define CONFIG_HOTKEY_SWITCHUSER				TEXT("switchuser")
 
 
 inline
