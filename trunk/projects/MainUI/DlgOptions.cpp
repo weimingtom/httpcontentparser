@@ -21,8 +21,7 @@ CDlgOptions::CDlgOptions(CWnd* pParent /*=NULL*/)
 {
 }
 
-CDlgOptions::~CDlgOptions()
-{
+CDlgOptions::~CDlgOptions() {
 }
 
 namespace {
@@ -81,17 +80,13 @@ TCHAR * getHotkeyname(const int type) {
 BOOL setHotkey(WORD vKey, WORD vModifiers_mfc, const int type) {
 	WORD vModifier = getModifierKey(vModifiers_mfc);
 	if (0 != vModifier && 0 != vKey) {
-		if (!RegisterHotKey(AfxGetMainWnd()->GetSafeHwnd() ,type, vModifier,vKey)) {
+		if (!RegisterHotKey(AfxGetMainWnd()->GetSafeHwnd() ,type, vModifier,vKey)) 
 			return FALSE;
-		}
-
-		// ±£´æ
-		g_configuration.getHotkey()->setHotkey(getHotkeyname(type), (unsigned)MAKELPARAM(vModifier, vKey));
 	} else {
 		UnregisterHotKey(AfxGetMainWnd()->GetSafeHwnd() ,type);
-		g_configuration.getHotkey()->setHotkey(getHotkeyname(type), (unsigned)MAKELPARAM(0, 0));
 	}
 
+	g_configuration.getHotkey()->setHotkey(getHotkeyname(type), (unsigned)MAKELPARAM(vModifier, vKey));
 	return TRUE;
 }
 };
@@ -150,7 +145,6 @@ int CDlgOptions::setHotKey() {
 
 
 int CDlgOptions::OnApply() {
-	
 	SetAutoRun();
 	if ( -1 == setHotKey()) {
 		return -1;
@@ -203,7 +197,6 @@ BOOL CDlgOptions::OnInitDialog()
 	return TRUE;
 }
 
-void CDlgOptions::OnBnClickedChkAutoload()
-{
+void CDlgOptions::OnBnClickedChkAutoload() {
 	SetModify(true);
 }
