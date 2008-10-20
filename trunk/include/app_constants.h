@@ -58,6 +58,16 @@ TCHAR * getHotkeyname(const int type) {
 	}
 }
 
+// 应用程序的常量， 窗口名称 窗口类
 
+#define MAIN_WINDOW_TITLE (TEXT("MainUI"))
+#define MAIN_WINDOW_CLASS (TEXT("#32770"))
+
+#define MAIN_WINDOW_PROP_NAME	(TEXT("Unicode_value"))
+#define MAIN_WINDOW_PROP_VALUE  7777
+
+// for Eyecare windows
+#define EYECARE_MAIN_WND_CLASS (TEXT("Eyecare_main_wnd_class"))
+#define EYECARE_MAIN_WND_TITLE (TEXT(""))
 
 #endif // _SPI_INSTALLER_SPIDEFINES_H__

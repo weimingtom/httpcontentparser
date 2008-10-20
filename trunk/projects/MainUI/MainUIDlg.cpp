@@ -8,7 +8,6 @@
 #include ".\dlgchangepassword.h"
 #include ".\dlgcheckpassword.h"
 #include ".\services.h"
-#include <windowtitle.h>
 #include <app_constants.h>
 #include <sysutility.h>
 

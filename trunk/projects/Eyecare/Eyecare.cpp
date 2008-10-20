@@ -3,7 +3,7 @@
 
 #include "stdafx.h"
 #include "resource.h"
-#include <windowtitle.h>
+#include <app_constants.h>
 #include <sysutility.h>
 #include <com\FilterSetting_i.c>
 #include <com\FilterSetting.h>

@@ -2,7 +2,6 @@
 #include "sysutility.h"
 #include ".\xinstall.h"
 #include <utility\strutility.h>
-#include <windowtitle.h>
 #include <app_constants.h>
 #include <assert.h>
 #include <process.h>
