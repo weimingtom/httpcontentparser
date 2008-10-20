@@ -21,14 +21,14 @@ int  CBaseDlg::AfterChange() {
 	return 0;
 }
 
-void CBaseDlg::Apply() {
-	OnApply();
-	SetModify(false);
+int CBaseDlg::Apply() {
+	return OnApply();
 }
 // ªÿ∏¥…Ë÷√
-void CBaseDlg::Restore() {
-	restoreSetting();
+int CBaseDlg::Restore() {
 	SetModify(false);
+	restoreSetting();
+	return 0;
 }
 
 int  CBaseDlg::BeforeChange() {

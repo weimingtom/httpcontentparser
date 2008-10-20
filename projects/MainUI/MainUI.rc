@@ -231,23 +231,23 @@ STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
     CONTROL         "Auto Load When system Launch",IDC_CHK_AUTOLOAD,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,45,25,120,10
+                    BS_AUTOCHECKBOX | WS_TABSTOP,44,25,120,10
     GROUPBOX        "System",IDC_STA_SYSTEM,7,7,225,43
     GROUPBOX        "Others",IDC_STA_OTHERS,7,141,223,46
-    LTEXT           "Show Dialog:",IDC_STATIC,17,79,42,8
-    LTEXT           "Switch User:",IDC_STATIC,17,95,41,8
+    LTEXT           "Show Dialog:",IDC_STATIC,40,79,42,8
+    LTEXT           "Switch User:",IDC_STATIC,40,95,41,8
     CONTROL         "",IDC_HOTKEY_SHOWDLG,"msctls_hotkey32",WS_BORDER | 
-                    WS_TABSTOP,78,76,106,14
+                    WS_TABSTOP,101,76,87,14
     CONTROL         "",IDC_HOTKEY_SWITCHUSR,"msctls_hotkey32",WS_BORDER | 
-                    WS_TABSTOP,78,92,106,14
+                    WS_TABSTOP,101,92,87,14
     GROUPBOX        "Hotkeys",IDC_STA_HOTKEY,7,58,223,74
     CONTROL         "Record Web History",IDC_CHECK1,"Button",BS_AUTOCHECKBOX | 
                     WS_TABSTOP,41,151,111,10
     CONTROL         "Enable Imgage Record",IDC_CHECK2,"Button",
                     BS_AUTOCHECKBOX | WS_TABSTOP,41,170,111,10
-    LTEXT           "Lanchu App:",IDC_STATIC,17,111,41,8
+    LTEXT           "Lanchu App:",IDC_STATIC,40,111,41,8
     CONTROL         "",IDC_HOTKEY_LAUNCH,"msctls_hotkey32",WS_BORDER | 
-                    WS_TABSTOP,78,109,106,14
+                    WS_TABSTOP,101,109,87,14
 END
 
 IDD_DLG_TOOLS DIALOGEX 0, 0, 250, 200

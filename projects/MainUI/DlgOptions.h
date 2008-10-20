@@ -50,11 +50,6 @@ protected:
 	BOOL m_bAutoRun;
 	BOOL m_bOld_autorun;
 protected:
-	// ±£´æÈÈ¼ü
-	WORD m_wLaunchKey, m_wLaunchModifier;
-	WORD m_wMainUIKey, m_wMainUIModifier;
-	WORD m_wSwitchUserKey, m_wSwitchUserModifier;
-protected:
 	void SetAutoRun();
-	void setHotKey();
+	int setHotKey();
 };
