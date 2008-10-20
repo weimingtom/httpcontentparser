@@ -37,9 +37,9 @@ private:
 // XML file
 public:
 	virtual int parseConfig(TiXmlElement * item_root);
-	virtual int saveConfig(TiXmlElement * root);
+	virtual TiXmlElement * saveConfig(TiXmlElement * root);
 private:
-	int saveAuthorize(TiXmlElement *app_root);
+	TiXmlElement * saveAuthorize(TiXmlElement *app_root);
 	int getAuthorizeSetting(TiXmlElement *ele);
 	int addUser(const TCHAR *username, const TCHAR *password);
 

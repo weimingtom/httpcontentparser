@@ -41,8 +41,7 @@ public:
 
 public:
 	virtual int parseConfig(TiXmlElement * item_root);
-	virtual int saveConfig(TiXmlElement * root);
-	
+	virtual TiXmlElement * saveConfig(TiXmlElement * root);
 	
 private:
 	// ∂¡»°WebHistory
@@ -52,7 +51,7 @@ private:
 	int setWebHistoryLastCleanTiime(const TCHAR * lastclean);
 	
 	// ±£¥Ê
-	int saveWebHistory(TiXmlElement * app_root);
+	TiXmlElement * saveWebHistory(TiXmlElement * app_root);
 
 	// auto clean
 	int setWebHistoryAutoCleanTimespan(const TCHAR *timespan);

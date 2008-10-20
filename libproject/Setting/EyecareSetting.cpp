@@ -128,9 +128,8 @@ int EyecareSetting::parseConfig(TiXmlElement * item_root) {
 	getEyecareSetting(item_root);
 	return 0;
 }
-int EyecareSetting::saveConfig(TiXmlElement * item_root) {
-	saveEyecare(item_root);
-	return 0;
+TiXmlElement *  EyecareSetting::saveConfig(TiXmlElement * item_root) {
+	return saveEyecare(item_root);
 }
 
 //===============================================================
@@ -197,12 +196,16 @@ int EyecareSetting::getEyecareSetting(TiXmlElement *ele) {
 
 //////////////////////////////////////////////////////////
 // ±£´æ
-int EyecareSetting::saveEyecare(TiXmlElement *app_root) {
+TiXmlElement *  EyecareSetting::saveEyecare(TiXmlElement *app_root) {
 	TCHAR buffer[1024];
 
 	//=========================================
 	// ÉèÖÃÊôÐÔ
 	TiXmlElement * eyecare_root = new TiXmlElement( CONFIG_ITEM_APPSET_EYECARE);
+	if (eyecare_root == NULL) {
+		return NULL;
+	}
+
 	eyecare_root->SetAttribute(CONFIG_CONST_ENABLE, enabledFromBool( isEnabled()));
 	eyecare_root->SetAttribute(CONFIG_APPSET_EYECARE_STATE, Eyecare_state( getState()));
 
@@ -233,5 +236,5 @@ int EyecareSetting::saveEyecare(TiXmlElement *app_root) {
 	eyecare_root->LinkEndChild(eyecare_time);
 
 	app_root->LinkEndChild(eyecare_root);
-	return 0;
+	return eyecare_root;
 }

@@ -25,7 +25,7 @@ private:
 // XML file
 public:
 	virtual int parseConfig(TiXmlElement * item_root);
-	virtual int saveConfig(TiXmlElement * root);
+	virtual TiXmlElement * saveConfig(TiXmlElement * root);
 
 private:
 		// Screensaver
@@ -39,7 +39,7 @@ private:
 	int setScreensaveLastCleanTiime(const TCHAR * lastclean);
 
 	// ±£¥ÊScreen Save
-	int saveScreensave(TiXmlElement * root);
+	TiXmlElement * saveScreensave(TiXmlElement * root);
 
 	// auto clean
 public:

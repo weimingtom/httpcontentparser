@@ -6,10 +6,12 @@
 using namespace std;
 
 
-
+//////////////////////////////////////////////////////
+// class DNSSetting
 DNSSetting::DNSSetting() {
 	defaultSetting();
 }
+
 
 DNSSetting::~DNSSetting(void) {
 }
@@ -153,8 +155,25 @@ void DNSSetting::enableWhiteDNSCheck(const bool checked) {
 	white_dns_list_->enable(checked);
 }
 
-//=================================================================
+//=======================================
+// XML
+int DNSSetting::parseConfig(TiXmlElement * item_root) {
+	const TCHAR *  enable_attr_passed = item_root->Attribute(CONFIG_WHITEURL_JUSTPASSED);
+	justPassWhiteDNS(enabledFromString(enable_attr_passed));
+	return 0;
+}
+
+TiXmlElement * DNSSetting::saveConfig(TiXmlElement * item_root) {
+	item_root->SetAttribute(CONFIG_WHITEURL_JUSTPASSED, enabledFromBool(justPassWhiteDNS()));
+	return item_root;
+}
+
+//////////////////////////////////////////////////
 // class DNSCheck
+DNSList::DNSList(const std::string & name) : ConfigItem("", name) {
+	enabled_ = true;
+}
+
 DNSList::DNSList(void) {
 	enabled_ = true;
 }
@@ -215,4 +234,72 @@ void DNSList::beginEnum(Enumerator1<std::string> *enumerator) {
 	for (; iter != dns_set_.end(); ++iter) {
 		enumerator->Enum(*iter);
 	}
+}
+
+//=======================================
+// XML operation
+int DNSList::parseConfig(TiXmlElement * item_root) {
+	getURLs(item_root);
+	return 0;
+}
+TiXmlElement * DNSList::saveConfig(TiXmlElement * item_root) {
+	return saveWhiteURL(item_root);
+}
+
+namespace {
+// class DNSEnumerator
+class DNSEnum : public Enumerator1<std::string> {
+public:
+	virtual int Enum(const std::string &dns) {
+		TiXmlElement * url_node = new TiXmlElement(CONFIG_NODE_URL);
+		TiXmlText * text = new TiXmlText(dns);
+		url_node->LinkEndChild(text);
+		rule_root_->LinkEndChild(url_node);
+		return 0;
+	}
+public:
+	DNSEnum(TiXmlElement * rule_root) {
+		rule_root_ = rule_root;
+		assert (rule_root_ != NULL);
+	}
+private:
+	TiXmlElement *rule_root_;
+};
+};
+
+TiXmlElement * DNSList::saveWhiteURL(TiXmlElement *root) {
+	TiXmlElement * rule_root = new TiXmlElement(CONFIG_NODE_RULE_ITEM);
+
+	// 设置属性
+	rule_root->SetAttribute(CONFIG_CONST_NAME, name_);
+	rule_root->SetAttribute(CONFIG_CONST_ENABLE, enabledFromBool(isEnabled()));
+	// 添加URL
+	beginEnum(&DNSEnum(rule_root));
+	root->LinkEndChild(rule_root);
+	return rule_root;
+}
+
+
+int DNSList::enableURLcheck(const TCHAR *isenable) {
+	const bool checked = enabledFromString(isenable);
+	enable(checked);
+	return 0;
+}
+
+int DNSList::getURLs(TiXmlElement * rule_root) {
+	// enable?
+	const TCHAR *  enable_attr = rule_root->Attribute(CONFIG_CONST_ENABLE);
+	enableURLcheck(enable_attr);
+
+	// 内容
+	TiXmlNode * node = rule_root->FirstChild();
+	while (NULL != node) {
+		TiXmlElement *ele = node->ToElement();
+		if (NULL != ele) {
+			addDNS(ele->GetText());
+		}
+
+		node = node->NextSibling();
+	}
+	return 0;
 }

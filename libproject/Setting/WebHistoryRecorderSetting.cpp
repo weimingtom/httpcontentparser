@@ -76,9 +76,8 @@ int WebHistoryRecorderSetting::parseConfig(TiXmlElement * item_root) {
 	getWebHistoryRecorder(item_root);
 	return 0;
 }
-int WebHistoryRecorderSetting::saveConfig(TiXmlElement * item_root) {
-	saveWebHistory(item_root);
-	return 0;
+TiXmlElement * WebHistoryRecorderSetting::saveConfig(TiXmlElement * item_root) {
+	return saveWebHistory(item_root);
 }
 
 
@@ -167,7 +166,7 @@ int WebHistoryRecorderSetting::getWebHistoryRecorder(TiXmlElement *ele) {
 }
 
 // ±£´æ
-int WebHistoryRecorderSetting::saveWebHistory(TiXmlElement * app_root) {
+TiXmlElement * WebHistoryRecorderSetting::saveWebHistory(TiXmlElement * app_root) {
 	TiXmlElement * webhistory_root = new TiXmlElement(CONFIG_ITEM_APPSET_WEBHISTORY); 
 	webhistory_root->SetAttribute(CONFIG_CONST_NAME,  enabledFromBool( isEnabled()));
 
@@ -212,5 +211,5 @@ int WebHistoryRecorderSetting::saveWebHistory(TiXmlElement * app_root) {
 	webhistory_root->LinkEndChild(autoclean);
 
 	app_root->LinkEndChild(webhistory_root);
-	return 0;
+	return webhistory_root;
 }

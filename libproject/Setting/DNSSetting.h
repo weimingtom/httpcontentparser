@@ -12,13 +12,17 @@
 #include <string>
 #include <Enumerate.h>
 #include <settingitem.h>
+#include <configitem.h>
+#include <xmldefined.h>
+
 // 目前我们使用的机制有些适应性不高，我们需要增加cache机制。
 
-class DNSList {
+class DNSList : public ConfigItem {
 public:
-	DNSList(void);
+	DNSList(const std::string & name);
 	~DNSList(void);
-
+private:
+	DNSList(void);
 public:
 	bool checkDNS(const std::string &dns_name) const;
 	bool fuzzeCheckDNS(const std::string &dns_name) const;
@@ -37,12 +41,22 @@ protected:
 	DNS_SET dns_set_;
 
 	bool enabled_;
+
+	// 读取XML配置
+public:
+	virtual int parseConfig(TiXmlElement * item_root);
+	virtual TiXmlElement * saveConfig(TiXmlElement * item_root);
+
+private:
+	TiXmlElement * saveWhiteURL(TiXmlElement *root);
+	int getURLs(TiXmlElement * rule_root);
+	int enableURLcheck(const TCHAR *isenable);
 };
 
 // class DNSSetting
 // 负责对所有包进行检测是否应该通过
 // 这个类在COM组件中是哟个
-class DNSSetting  : public SettingItem {
+class DNSSetting  : public SettingItem,  public ConfigItem  {
 public:
 	DNSSetting();
 	~DNSSetting(void);
@@ -83,6 +97,15 @@ private:
 	bool just_pass_white_dns_;
 private:
 	void defaultSetting();
+
+public:
+	virtual int parseConfig(TiXmlElement * item_root);
+	virtual TiXmlElement * saveConfig(TiXmlElement * item_root);
+
+private:
+	TiXmlElement * saveWhiteURL(TiXmlElement *root);
+	int enableURLcheck(const TCHAR *isenable);
+	int getURLs(TiXmlElement * rule_root);
 };
 
 

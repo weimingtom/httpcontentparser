@@ -76,14 +76,13 @@ bool SearchRule::checkWord(const std::string &word) const {
 
 
 //============================================================
-//
+// XML
 int SearchRule::parseConfig(TiXmlElement * item_root) {
 	getSearchRule(item_root);
 	return 0;
 }
-int SearchRule::saveConfig(TiXmlElement * item_root) {
-	saveSearchRule(item_root);	// 保存Search rules
-	return 0;
+TiXmlElement * SearchRule::saveConfig(TiXmlElement * item_root) {
+	return saveSearchRule(item_root);	// 保存Search rules
 }
 
 //========================================================
@@ -183,8 +182,11 @@ private:
 	TiXmlElement * rule_root_;
 };
 };
-int SearchRule::saveSearchRule(TiXmlElement *root) {
+TiXmlElement *  SearchRule::saveSearchRule(TiXmlElement *root) {
 	TiXmlElement * rule_root = new TiXmlElement(CONFIG_NODE_RULE_ITEM);
+	if (NULL == rule_root) {
+		return NULL;
+	}
 
 	// 设置属性
 	rule_root->SetAttribute(CONFIG_CONST_NAME, CONFIG_NODE_NAME_SEARCH);
@@ -200,5 +202,5 @@ int SearchRule::saveSearchRule(TiXmlElement *root) {
 	rule_root->LinkEndChild(search_engine);
 
 	root->LinkEndChild(rule_root);
-	return 0;
+	return rule_root;
 }
