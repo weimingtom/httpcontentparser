@@ -14,7 +14,20 @@ ContentSettingTest::~ContentSettingTest(void) {
 //
 void ContentSettingTest::TestEnableCheck() {
 }
+void ContentSettingTest::TestTwoWrong() {
+	CPPUNIT_ASSERT(SettingItem::MODE_CHILD == SettingItem::getModel());
 
+	ContentCheckSetting contentSetting;
+	contentSetting.enableCheck(IMAGE_TYPE_BMP, true);
+	contentSetting.enableCheck(IMAGE_TYPE_JPEG, true);
+	contentSetting.enableCheck(IMAGE_TYPE_GIF, false);
+	contentSetting.enableCheck(IMAGE_TYPE_PNG, false);
+
+	CPPUNIT_ASSERT(true == contentSetting.needCheck(IMAGE_TYPE_BMP));
+	CPPUNIT_ASSERT(true == contentSetting.needCheck(IMAGE_TYPE_JPEG));
+	CPPUNIT_ASSERT(false == contentSetting.needCheck(IMAGE_TYPE_GIF));
+	CPPUNIT_ASSERT(false == contentSetting.needCheck(IMAGE_TYPE_PNG));
+}
 void ContentSettingTest::TestTwoModel() {
 	CPPUNIT_ASSERT(SettingItem::MODE_CHILD == SettingItem::getModel());
 

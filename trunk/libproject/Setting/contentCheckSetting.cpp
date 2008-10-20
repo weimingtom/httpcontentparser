@@ -16,7 +16,7 @@ void ContentCheckSetting::enableCheck(const unsigned type, const bool checked) {
 	if (checked == true) {
 		content_type_ |= type;
 	} else {
-		content_type_ ^= type;
+		content_type_ &= ~type;
 	}
 }
 
@@ -90,6 +90,7 @@ int ContentCheckSetting::setImageCheck(const TCHAR *imagetype, const TCHAR *enab
 	if (NULL == imagetype || NULL == enable)
 		return -1;
 
+	bool a = enabledFromString(enable);
 	if (0 == _tcscmp(imagetype, CONFIG_NODE_IMAGETYPE_JPG)) {
 		enableCheck(IMAGE_TYPE_JPEG, enabledFromString(enable));
 	} else if (0 == _tcscmp(imagetype, CONFIG_NODE_IMAGETYPE_BMP)) {
