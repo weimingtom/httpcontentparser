@@ -14,6 +14,6 @@ HotkeySetting::~HotkeySetting(void) {
 int HotkeySetting::parseConfig(TiXmlElement * item_root) {
 	return 0;
 }
-int HotkeySetting::saveConfig(TiXmlElement * root) {
+TiXmlElement *  HotkeySetting::saveConfig(TiXmlElement * root) {
 	return 0;
 }

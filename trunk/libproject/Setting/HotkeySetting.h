@@ -12,7 +12,7 @@ public:
 
 public:
 	virtual int parseConfig(TiXmlElement * item_root);
-	virtual int saveConfig(TiXmlElement * root);
+	virtual TiXmlElement *  saveConfig(TiXmlElement * root);
 };
 
 #endif  // _SETTING_HOTKEYSETTING_H__
