@@ -143,11 +143,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 		case WM_REGISTER_HOTKEY: 
 			// 如何进行错误处理
 			UnregisterHotKey(hWnd, (int)lParam);
-			if ( 0 != wParam) {
-				return RegisterHotKey(hWnd, (int)lParam, HIWORD(wParam), LOWORD(wParam));
+			if (0 != wParam) {	// 如果没有设置键
+				if ( 0 != wParam) {
+					return RegisterHotKey(hWnd, (int)lParam, HIWORD(wParam), LOWORD(wParam));
+				}
 			}
+			return TRUE;
 		case WM_DESTROY:
-	
+			UnregisterHotKey(hWnd, HOTKEY_LANUCH_MAINUI);
 			KillTimer(hWnd, ID_TIMER_SAVE_SCREEN);
 			KillTimer(hWnd, ID_TIMER_SAVE_CONFG);
 			KillTimer(hWnd, ID_TIMER_EYECARE_TRY);

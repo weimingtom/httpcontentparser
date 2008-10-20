@@ -56,3 +56,4 @@
 #pragma comment(lib, "GuiTk115.lib")
 #endif 
 
+#pragma warning(disable : 4800)
