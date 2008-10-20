@@ -22,6 +22,6 @@ void ConfigReaderTest::TestReadFromFile() {
 void ConfigReaderTest::TestSaveFile() {
 	XMLConfiguration config;
 	//config.saveConfig(TEXT("c:\\default.xml"));
-	config.loadConfig(TEXT("config.xml"));
+	config.loadConfig(TEXT("D:\\workspace\\current_edition\\debug\\config.xml"));
 	config.saveConfig(TEXT("c:\\hello.xml"));
 }
