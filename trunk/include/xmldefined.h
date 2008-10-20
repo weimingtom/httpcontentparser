@@ -84,6 +84,14 @@
 #define CONFIG_ITEM_APPSET_SCREENSAVER			TEXT("screensave")
 #define CONFIG_APPSET_AUTOCLEAR					TEXT("autoclean")
 
+// HOTKEY
+#define CONFIG_ITEM_APPSET_HOTKEY				TEXT("hotkeys")
+#define CONFIG_APPSET_HOTKEY_ITEM				TEXT("hotkey")
+#define CONFIG_HOTKEY_PROP_KEY					TEXT("key")
+#define CONFIG_HOTKEY_LAUNCH					TEXT("launch")
+#define CONFIG_HOTKEY_SHOWUI					TEXT("showui")
+#define CONFIG_HOTKEY_SWITCHUSER				TEXT("switchuser")
+
 
 inline
 bool enabledFromString(const TCHAR *enable) {

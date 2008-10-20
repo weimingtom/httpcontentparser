@@ -81,9 +81,9 @@
 			<app type="autoload" enable="true"></app>
 		</syssetting>
 		<hotkeys>
-			<hotkey name="Launch"		hokkey="0">
-			<hotkey name="showUI"		hokkey="0">
-			<hotkey name="SwitchUser"	hokkey="0">
+			<hotkey name="launch"		key="0">
+			<hotkey name="showui"		key="0">
+			<hotkey name="switchuser"	key="0">
 		</hotkeys>
 	</appsetting>
 </config>

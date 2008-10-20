@@ -10,5 +10,5 @@ HotkeySettingTest::~HotkeySettingTest(void) {
 }
 
 void HotkeySettingTest::testHotkey() {
-	HotkeySetting hotkey(TEXT(""), TEXT(""));
+	HotkeySetting hotkey();
 }

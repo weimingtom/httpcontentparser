@@ -59,6 +59,7 @@ int XMLConfiguration::saveConfig(const TCHAR * filename) {
 	
 	saveRules(root_element);
 	saveAppSetting(root_element);
+	//getHotkey()->saveConfig(root_element);
 	
 	doc.LinkEndChild(root_element);
 
@@ -77,6 +78,7 @@ int XMLConfiguration::saveRules(TiXmlElement *root) {
 
 	getSearchRule()->saveConfig(rules_root);
 	getContentCheckSetting()->saveConfig(rules_root);
+
 	root->LinkEndChild(rules_root);
 	return 0;
 }
@@ -109,6 +111,8 @@ int XMLConfiguration::parseAppSet(TiXmlNode *appset_root) {
 			} else if (_tcscmp(node->Value(), CONFIG_ITEM_APPSET_SCREENSAVER) == 0) {
 				// 屏幕保存设置功能
 				getScreenSave()->readconfig(element);
+	/*		} else if (_tcscmp(node->Value(), CONFIG_ITEM_APPSET_HOTKEY) == 0) {
+				getHotkey()->readconfig(element);*/
 			}
 		}
 		// 获取下一个
