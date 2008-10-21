@@ -32,6 +32,9 @@ const TCHAR *strnstr(const TCHAR *src, const TCHAR *des, const int len);
 bool beginwith(const TCHAR *src, const TCHAR *header);
 bool endwith(const TCHAR * src, const TCHAR *detail);
 
+void strtolower(TCHAR * src);
+void strtoupper(TCHAR * src);
+
 // 字符是否存与char_set当中
 inline
 bool isin(const TCHAR c, const TCHAR * char_set) {

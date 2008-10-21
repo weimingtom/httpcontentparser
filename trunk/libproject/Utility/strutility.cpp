@@ -6,6 +6,22 @@
 
 namespace strutility {
 
+void strtolower(TCHAR * src) {
+	const int len = _tcslen(src);
+	for (int i = 0; i < len; ++i) {
+		if (isupper(src[i])) {
+			src[i] = _tolower(src[i]);
+		}
+	}
+}
+void strtoupper(TCHAR * src) {
+	const int len = _tcslen(src);
+	for (int i = 0; i < len; ++i) {
+		if (islower(src[i])) {
+			src[i] = _toupper(src[i]);
+		}
+	}
+}
 // 去掉tail之后的
 int remove_after(TCHAR * name, const TCHAR * tail) {
 	const TCHAR * p = _tcsstr(name, tail);
