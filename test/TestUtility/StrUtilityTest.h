@@ -11,6 +11,7 @@ public:
 
 public:
 	CPPUNIT_TEST_SUITE(StrUtilityTest);
+	CPPUNIT_TEST(Test_remove_after);
 	CPPUNIT_TEST(TestSplitString);
 	CPPUNIT_TEST(Teststrnstr);
 	CPPUNIT_TEST(TestEndWith);
@@ -20,6 +21,7 @@ private:
 	void TestSplitString();
 	void Teststrnstr();
 	void Test_extract_string();
+	void Test_remove_after();
 	void TestEndWith();
 };
 

@@ -10,11 +10,43 @@ StrUtilityTest::StrUtilityTest(void) {
 StrUtilityTest::~StrUtilityTest(void) {
 }
 
-void StrUtilityTest::TestSplitString() {
-
+void StrUtilityTest::Test_remove_after() {
+	{
+	TCHAR  unit[] = TEXT("abcdefghijklmn");
+	TCHAR * tail = TEXT("b");
+	TCHAR * result = "a";
+	CPPUNIT_ASSERT (1 == remove_after(unit, tail));
+	CPPUNIT_ASSERT (0 == _tcscmp(unit, result));
+	}
 
 	{
-	TCHAR * unit1 = TEXT("///////////\\\\\\\\\\\\\,.//\\");
+	TCHAR  unit[] = TEXT("abcdefghijklmn");
+	TCHAR * tail = TEXT("c");
+	TCHAR * result = "ab";
+	CPPUNIT_ASSERT (_tcslen(result) == remove_after(unit, tail));
+	CPPUNIT_ASSERT (0 == _tcscmp(unit, result));
+	}
+
+	{
+	TCHAR  unit[] = TEXT("abcdefghijklmn");
+	TCHAR * tail = TEXT("jk");
+	TCHAR * result = "abcdefghi";
+	CPPUNIT_ASSERT (_tcslen(result)  == remove_after(unit, tail));
+	CPPUNIT_ASSERT (0 == _tcscmp(unit, result));
+	}
+
+	{
+	TCHAR  unit[] = TEXT("abcdefghijklmn");
+	TCHAR * tail = TEXT("fghi");
+	TCHAR * result = "abcde";
+	CPPUNIT_ASSERT (_tcslen(result)  == remove_after(unit, tail));
+	CPPUNIT_ASSERT (0 == _tcscmp(unit, result));
+	}
+}
+
+void StrUtilityTest::TestSplitString() {
+	{
+	TCHAR * unit1 = TEXT("///////////\\\\\\\\\\\\\\,.//\\");
 	std::vector<std::string> vec;
 	splitstring(unit1, TEXT("\\.,//"), &vec);
 	CPPUNIT_ASSERT (0 == vec.size());
