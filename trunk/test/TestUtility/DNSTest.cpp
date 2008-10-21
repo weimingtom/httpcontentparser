@@ -3,41 +3,103 @@
 
 
 void DNSTest::GetMainNameTest() {
-}
-
-void GetMultHostName() {
 	TCHAR result[MAX_PATH];
+
 	{
 		const TCHAR * test_unit = "p2.WWW.SINA.com.cn";
 		const TCHAR * expected_result = "sina";
-		get_main_dns_name(result, MAX_PATH,test_unit);
+		CPPUNIT_ASSERT( _tcslen(expected_result) == 
+			get_main_dns_name(result, MAX_PATH,test_unit));
+		CPPUNIT_ASSERT( 0 == _tcscmp(result, expected_result));
+	}
+
+	{
+		const TCHAR * test_unit = "seach.netorg.cn";
+		const TCHAR * expected_result = "netorg";
+		CPPUNIT_ASSERT( _tcslen(expected_result)
+			== get_main_dns_name(result, MAX_PATH,test_unit));
+		CPPUNIT_ASSERT( 0 == _tcscmp(result, expected_result));
+	}
+
+
+	{
+		const TCHAR * test_unit = "www.google.cn";
+		const TCHAR * expected_result = "google";
+		CPPUNIT_ASSERT( _tcslen(expected_result) == 
+			get_main_dns_name(result, MAX_PATH,test_unit));
+		CPPUNIT_ASSERT( 0 == _tcscmp(result, expected_result));
+	}
+
+	{
+		const TCHAR * test_unit = "www.netorg.cn";
+		const TCHAR * expected_result = "netorg";
+		CPPUNIT_ASSERT( _tcslen(expected_result) == 
+			get_main_dns_name(result, MAX_PATH,test_unit));
+		CPPUNIT_ASSERT( 0 == _tcscmp(result, expected_result));
+	}
+
+	{
+		const TCHAR * test_unit = "www.orgkk.cn";
+		const TCHAR * expected_result = "orgkk";
+		CPPUNIT_ASSERT( _tcslen(expected_result) == 
+			get_main_dns_name(result, MAX_PATH,test_unit));
+		CPPUNIT_ASSERT( 0 == _tcscmp(result, expected_result));
+	}
+
+	
+	{
+		const TCHAR * test_unit = "www.comkk.cn";
+		const TCHAR * expected_result = "comkk";
+		CPPUNIT_ASSERT( _tcslen(expected_result) == 
+			get_main_dns_name(result, MAX_PATH,test_unit));
+		CPPUNIT_ASSERT( 0 == _tcscmp(result, expected_result));
+	}
+
+	{
+		const TCHAR * test_unit = "hello1";
+		const TCHAR * expected_result = "hello1";
+		CPPUNIT_ASSERT( _tcslen(expected_result) == 
+			get_main_dns_name(result, MAX_PATH,test_unit));
 		CPPUNIT_ASSERT( 0 == _tcscmp(result, expected_result));
 	}
 
 	{
 		const TCHAR * test_unit = "seach.SINA.com.cn";
 		const TCHAR * expected_result = "sina";
-		get_main_dns_name(result, MAX_PATH,test_unit);
+		CPPUNIT_ASSERT( _tcslen(expected_result) == 
+			get_main_dns_name(result, MAX_PATH,test_unit));
 		CPPUNIT_ASSERT( 0 == _tcscmp(result, expected_result));
 	}
 
 	{
 		const TCHAR * test_unit = "www.google.SINA.com.cn";
 		const TCHAR * expected_result = "sina";
-		get_main_dns_name(result, MAX_PATH,test_unit);
+		CPPUNIT_ASSERT( _tcslen(expected_result) == 
+			get_main_dns_name(result, MAX_PATH,test_unit));
 		CPPUNIT_ASSERT( 0 == _tcscmp(result, expected_result));
 	}
 
 	{
 		const TCHAR * test_unit = "www.bit.edu.cn";
 		const TCHAR * expected_result = "bit";
-		get_main_dns_name(result, MAX_PATH,test_unit);
+		CPPUNIT_ASSERT( _tcslen(expected_result) == 
+			get_main_dns_name(result, MAX_PATH,test_unit));
 		CPPUNIT_ASSERT( 0 == _tcscmp(result, expected_result));
 	}
+
 	{
-		const TCHAR * test_unit = "www.google.cn";
+		const TCHAR * test_unit = "google.cn";
 		const TCHAR * expected_result = "google";
-		get_main_dns_name(result, MAX_PATH,test_unit);
+		CPPUNIT_ASSERT( _tcslen(expected_result) == 
+			get_main_dns_name(result, MAX_PATH,test_unit));
+		CPPUNIT_ASSERT( 0 == _tcscmp(result, expected_result));
+	}
+
+	{
+		const TCHAR * test_unit = "google";
+		const TCHAR * expected_result = "google";
+		CPPUNIT_ASSERT( _tcslen(expected_result) == 
+			get_main_dns_name(result, MAX_PATH,test_unit));
 		CPPUNIT_ASSERT( 0 == _tcscmp(result, expected_result));
 	}
 

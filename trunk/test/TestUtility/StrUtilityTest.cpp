@@ -10,6 +10,37 @@ StrUtilityTest::StrUtilityTest(void) {
 StrUtilityTest::~StrUtilityTest(void) {
 }
 
+void StrUtilityTest::TestToLower() {
+	{
+	TCHAR unit[] = TEXT("idosOIJIFSL1");
+	const TCHAR * result = TEXT("idosoijifsl1");
+	strtolower(unit);
+	CPPUNIT_ASSERT (0 == _tcscmp(unit, result));
+	}
+
+	{
+	TCHAR unit[] = TEXT("hello1");
+	const TCHAR * result = TEXT("hello1");
+	strtolower(unit);
+	CPPUNIT_ASSERT (0 == _tcscmp(unit, result));
+	}
+
+}
+void StrUtilityTest::TestToUpper() {
+	{
+	TCHAR unit[] = TEXT("idosOIJIFSL123");
+	const TCHAR * result = TEXT("IDOSOIJIFSL123");
+	strtoupper(unit);
+	CPPUNIT_ASSERT (0 == _tcscmp(unit, result));
+	}
+	{
+	TCHAR unit[] = TEXT("idos.{}OIJIFSL");
+	const TCHAR * result = TEXT("IDOS.{}OIJIFSL");
+	strtoupper(unit);
+	CPPUNIT_ASSERT (0 == _tcscmp(unit, result));
+	}
+}
+
 void StrUtilityTest::Test_remove_after() {
 	{
 	TCHAR  unit[] = TEXT("abcdefghijklmn");
