@@ -4,6 +4,10 @@
 #include <string>
 #include <vector>
 
+bool beginwidht_www(const TCHAR * fulldns);
+// 获取DNS的主名
+int get_main_dns_name(TCHAR * name, const int len, const TCHAR *fulldns);
+
 /////////////////////////////////////////////////////////////////////////////
 // CDNS definitions
 class CDNS {

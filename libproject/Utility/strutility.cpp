@@ -6,6 +6,18 @@
 
 namespace strutility {
 
+// 去掉tail之后的
+int remove_after(TCHAR * name, const TCHAR * tail) {
+	const TCHAR * p = _tcsstr(name, tail);
+	if (NULL != p) {
+		const int pos = p - name;
+		name[pos] = '\0';
+		return pos;
+	} else {
+		return 0;
+	}
+}
+
 void trim_right(TCHAR * str, const TCHAR* trimed) {
 	const size_t len = _tcslen(str);
 	for (size_t i = len-1; i >=0 && _tcschr(trimed, str[i]); ++i) {
