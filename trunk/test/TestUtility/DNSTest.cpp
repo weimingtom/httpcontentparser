@@ -2,6 +2,65 @@
 #include ".\dnstest.h"
 
 
+void DNSTest::GetMainNameTest() {
+}
+
+void GetMultHostName() {
+	TCHAR result[MAX_PATH];
+	{
+		const TCHAR * test_unit = "p2.WWW.SINA.com.cn";
+		const TCHAR * expected_result = "sina";
+		get_main_dns_name(result, MAX_PATH,test_unit);
+		CPPUNIT_ASSERT( 0 == _tcscmp(result, expected_result));
+	}
+
+	{
+		const TCHAR * test_unit = "seach.SINA.com.cn";
+		const TCHAR * expected_result = "sina";
+		get_main_dns_name(result, MAX_PATH,test_unit);
+		CPPUNIT_ASSERT( 0 == _tcscmp(result, expected_result));
+	}
+
+	{
+		const TCHAR * test_unit = "www.google.SINA.com.cn";
+		const TCHAR * expected_result = "sina";
+		get_main_dns_name(result, MAX_PATH,test_unit);
+		CPPUNIT_ASSERT( 0 == _tcscmp(result, expected_result));
+	}
+
+	{
+		const TCHAR * test_unit = "www.bit.edu.cn";
+		const TCHAR * expected_result = "bit";
+		get_main_dns_name(result, MAX_PATH,test_unit);
+		CPPUNIT_ASSERT( 0 == _tcscmp(result, expected_result));
+	}
+	{
+		const TCHAR * test_unit = "www.google.cn";
+		const TCHAR * expected_result = "google";
+		get_main_dns_name(result, MAX_PATH,test_unit);
+		CPPUNIT_ASSERT( 0 == _tcscmp(result, expected_result));
+	}
+
+}
+void DNSTest::BeginWWWTest() {
+	const TCHAR * test_case1 = TEXT("www.");
+	const TCHAR * test_case2 = TEXT("wwww.");
+	const TCHAR * test_case3 = TEXT("w.ww.sina.");
+	const TCHAR * test_case4 = TEXT("w.www.sina.com");
+	const TCHAR * test_case5 = TEXT("ww.www.");
+	const TCHAR * test_case6 = TEXT("soe.diw");
+	const TCHAR * test_case7 = TEXT("WwW.");
+	const TCHAR * test_case8 = TEXT("Www.");
+
+	CPPUNIT_ASSERT(true == beginwidht_www(test_case1));
+	CPPUNIT_ASSERT(false == beginwidht_www(test_case2));
+	CPPUNIT_ASSERT(false == beginwidht_www(test_case3));
+	CPPUNIT_ASSERT(false == beginwidht_www(test_case4));
+	CPPUNIT_ASSERT(false == beginwidht_www(test_case5));
+	CPPUNIT_ASSERT(false == beginwidht_www(test_case6));
+	CPPUNIT_ASSERT(true == beginwidht_www(test_case7));
+	CPPUNIT_ASSERT(true == beginwidht_www(test_case8));
+}
 void DNSTest::GetMultHostName() {
 	//std::string dnsname = "www.sina.com";
 	//const std::string noneIp = "";
