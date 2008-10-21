@@ -1,6 +1,7 @@
 #include "StdAfx.h"
 #include ".\httprequestpacket.h"
 #include <utility\strutility.h>
+#include <utility\dns.h>
 #include <fstream>
 
 namespace {
@@ -90,8 +91,9 @@ int HTTPRequestPacket::parsePacket(char * buf, const int len) {
 	// 注意p-buf < len, 保证等整个处理完之后，及时退出
 	while (next != NULL) {
 		if (strstr(p, HTTP_REQUEST_HOST) == p) {
+			// 主机地址只留DNS主名
 			const int tab_length = strlen(HTTP_REQUEST_HOST);
-			strncpy(host_, p + tab_length, getWrittenCount(next - p - tab_length));
+			get_main_dns_name(host_, HTTP_REQUEST_ITEM_MAX_LENGTH, p + tab_length);
 			cnt++;
 		} else if (strstr(p, HTTP_REQUEST_REFERER) == p) {
 			const int tab_length = strlen(HTTP_REQUEST_REFERER);
