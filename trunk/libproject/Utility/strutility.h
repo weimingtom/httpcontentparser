@@ -18,6 +18,8 @@ void trim_left(TCHAR * str, const TCHAR* trimed);
 void trim_right(TCHAR * str, const TCHAR* trimed);
 void trim(TCHAR * str, const TCHAR* trimed);
 
+int remove_after(TCHAR * name, const TCHAR * tail);
+
 // 获去一个以begin为开头，以end为结尾的字符串
 // 例如: src = "hello world"; begin = "o" end="o" contain = false
 // result = "w"
