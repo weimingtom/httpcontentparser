@@ -38,7 +38,7 @@ void HttpRequestPacketTest::parseMultiPacket() {
 
 	char buffer[HTTP_REQUEST_ITEM_MAX_LENGTH];
 	request_packet.getHost(buffer, HTTP_REQUEST_ITEM_MAX_LENGTH);
-	CPPUNIT_ASSERT(strcmp("d1.sina.com.cn", buffer) == 0);
+	CPPUNIT_ASSERT(strcmp("sina", buffer) == 0);
 
 
 	request_packet.getReferer(buffer, HTTP_REQUEST_ITEM_MAX_LENGTH);
@@ -69,7 +69,7 @@ void HttpRequestPacketTest::parseMultiPacket() {
 
 	char buffer[HTTP_REQUEST_ITEM_MAX_LENGTH];
 	request_packet.getHost(buffer, HTTP_REQUEST_ITEM_MAX_LENGTH);
-	CPPUNIT_ASSERT(strcmp("d1.sina.com.cn", buffer) == 0);
+	CPPUNIT_ASSERT(strcmp("sina", buffer) == 0);
 
 
 	request_packet.getReferer(buffer, HTTP_REQUEST_ITEM_MAX_LENGTH);
@@ -99,7 +99,7 @@ void HttpRequestPacketTest::parsePacket() {
 
 	char buffer[HTTP_REQUEST_ITEM_MAX_LENGTH];
 	request_packet.getHost(buffer, HTTP_REQUEST_ITEM_MAX_LENGTH);
-	CPPUNIT_ASSERT(strcmp("d1.sina.com.cn", buffer) == 0);
+	CPPUNIT_ASSERT(strcmp("sina", buffer) == 0);
 
 	CPPUNIT_ASSERT(HTTPRequestPacket::HTTP_REQUEST_OPETYPE_GET == request_packet.getRequestType());
 	request_packet.getReferer(buffer, HTTP_REQUEST_ITEM_MAX_LENGTH);
@@ -121,7 +121,7 @@ void HttpRequestPacketTest::parsePacket() {
  	request_packet.parsePacket(packet, strlen(packet));
 	char buffer[HTTP_REQUEST_ITEM_MAX_LENGTH];
 	request_packet.getHost(buffer, HTTP_REQUEST_ITEM_MAX_LENGTH);
-	CPPUNIT_ASSERT(strcmp("d1.sina.com.cn", buffer) == 0);
+	CPPUNIT_ASSERT(strcmp("sina", buffer) == 0);
 
 	CPPUNIT_ASSERT(HTTPRequestPacket::HTTP_REQUEST_OPETYPE_GET == request_packet.getRequestType());
 
