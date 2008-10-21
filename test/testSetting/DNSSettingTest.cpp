@@ -16,26 +16,42 @@ void DNSSettingTest::testJustPassedWhiteDNS() {
 	DNSSetting dns_setting;
 	dns_setting.initialize(&black, &white);
 
+	SettingItem::setModified(false);
 	CPPUNIT_ASSERT(true == dns_setting.addBlackDNS("sina.com"));
 	CPPUNIT_ASSERT(true ==  dns_setting.addBlackDNS("sohu.com"));
 	CPPUNIT_ASSERT(true ==  dns_setting.addWhiteDNS("google.com"));
+	CPPUNIT_ASSERT( true == SettingItem::isModified());
 
+	SettingItem::setModified(false);
 	dns_setting.enableBlackDNSCheck(true);
+	CPPUNIT_ASSERT( true == SettingItem::isModified());
+	
+	SettingItem::setModified(false);
 	dns_setting.enableWhiteDNSCheck(true);
+	CPPUNIT_ASSERT( true == SettingItem::isModified());
+
+	SettingItem::setModified(false);
 	dns_setting.justPassWhiteDNS(false);
+	CPPUNIT_ASSERT( true == SettingItem::isModified());
+
+	SettingItem::setModified(false);
 	CPPUNIT_ASSERT(true  ==  dns_setting.fuzzeCheckDNS("name.google.com"));
 	CPPUNIT_ASSERT(false == dns_setting.fuzzeCheckDNS("news.sohu.com"));
 	CPPUNIT_ASSERT(false == dns_setting.fuzzeCheckDNS("p1.sine.sina.com"));
 	CPPUNIT_ASSERT(true == dns_setting.fuzzeCheckDNS("p1.csdn.com"));
 	CPPUNIT_ASSERT(true == dns_setting.fuzzeCheckDNS("p1.163.com"));
+	CPPUNIT_ASSERT(false == SettingItem::isModified());
 
 	// 启用"仅仅通过白名单之后"
 	dns_setting.justPassWhiteDNS(true);
+
+	SettingItem::setModified(false);
 	CPPUNIT_ASSERT(true ==  dns_setting.fuzzeCheckDNS("name.google.com"));
 	CPPUNIT_ASSERT(false == dns_setting.fuzzeCheckDNS("news.sohu.com"));
 	CPPUNIT_ASSERT(false == dns_setting.fuzzeCheckDNS("news.sina.com"));
 	CPPUNIT_ASSERT(false == dns_setting.fuzzeCheckDNS("p1.csdn.com"));
 	CPPUNIT_ASSERT(false == dns_setting.fuzzeCheckDNS("p1.163.com"));
+	CPPUNIT_ASSERT(false == SettingItem::isModified());
 
 	// 如果"白名单检测"不可用，那么"仅仅通过白名单"的功能也将不可用
 	dns_setting.enableWhiteDNSCheck(false);

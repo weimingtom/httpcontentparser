@@ -6,7 +6,6 @@ public:
 	SettingItem(void);
 	~SettingItem(void);
 
-
 	enum {
 		MODE_PARENT = 0,
 		MODE_CHILD
@@ -25,6 +24,29 @@ public:
 	static void setModel(const int mode);
 private:
 	static int current_mode_;
+
+public:
+	static bool isModified() {
+		return modified_;
+	}
+protected:
+	static void setModified(const bool modified) {
+		modified_ = modified;
+	}
+private:
+	static bool modified_;
+
+private:
+	// for test
+	friend class AutocleanTest;
+	friend class AuthorizeTest;
+	friend class ContentSettingTest;
+	friend class DNSSettingTest;
+	friend class EyecareTest;
+	friend class WebHistoryRecordTest;
+	friend class HotkeySettingTest;
+	friend class OnlineHourSettingTest;
+	friend class SearchRuleTest;
 };
 
 #endif  // _SETTING_SETTINGITEM_H__

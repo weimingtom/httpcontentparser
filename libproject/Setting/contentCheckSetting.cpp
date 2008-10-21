@@ -13,6 +13,7 @@ ContentCheckSetting::~ContentCheckSetting(void) {
 //==========================
 // member functions
 void ContentCheckSetting::enableCheck(const unsigned type, const bool checked) {
+	SettingItem::setModified(true);
 	if (checked == true) {
 		content_type_ |= type;
 	} else {

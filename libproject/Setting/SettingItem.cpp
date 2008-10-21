@@ -11,6 +11,8 @@ void SettingItem::setModel(const int mode) {
 
 int SettingItem::current_mode_ = SettingItem::MODE_CHILD;
 
+bool SettingItem::modified_ = false;
+
 //==========================================
 //
 SettingItem::SettingItem(void) {
@@ -34,4 +36,5 @@ bool SettingItem::isEnabled() const {
 }
 void SettingItem::enable(const bool enable) {
 	enabled_ = enable;
+	setModified(true);
 }

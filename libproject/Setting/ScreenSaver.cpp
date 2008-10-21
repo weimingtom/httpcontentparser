@@ -12,6 +12,7 @@ void ScreenSaver::defaultSetting() {
 
 
 void ScreenSaver::setTimeSpan(const int seconds) {
+	setModified(true); 
 	calcugraph_.setTimespan(seconds);
 }
 

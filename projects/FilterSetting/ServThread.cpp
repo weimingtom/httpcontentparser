@@ -9,10 +9,6 @@
 #define TIME_ESCAPE_SAVE_SCREEN  8000
 #define ID_TIMER_SAVE_SCREEN     1
 
-// 每隔十分钟自动存储一次配置文件
-#define TIME_ESCAPE_SAVE_CONFIG	1000 * 60 * 10	// 10分钟
-#define ID_TIMER_SAVE_CONFG		 2
-
 #define TIME_ESCAPE_SAVE_EYECARE 10000	
 #define ID_TIMER_EYECARE_TRY	3
 
@@ -95,7 +91,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 		case WM_CREATE:
 			// 启动
 			SetTimer(hWnd, ID_TIMER_SAVE_SCREEN,	TIME_ESCAPE_SAVE_SCREEN, NULL);
-			SetTimer(hWnd, ID_TIMER_SAVE_CONFG,		TIME_ESCAPE_SAVE_CONFIG, NULL);
 			SetTimer(hWnd, ID_TIMER_EYECARE_TRY,	TIME_ESCAPE_SAVE_EYECARE, NULL);
 			break;
 		case WM_HOTKEY:
@@ -115,6 +110,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 				}
 			}
 		case WM_TIMER:
+			if (SettingItem::isModified() == true) {
+				TCHAR config_path[MAX_PATH];
+				GetModuleFileName((HMODULE)g_hInstance, config_path, MAX_PATH);
+				g_configuration.saveConfig(config_path);
+			}
 			if (ID_TIMER_SAVE_SCREEN == wParam) {
 				// 自动保存屏幕
 				if (g_configuration.getScreenSave()->shouldSave()) {
@@ -122,10 +122,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 					GenScreenSPFile(fullpath, MAX_PATH, g_hInstance);
 					GetScreen(fullpath);
 				}
-			} else if (ID_TIMER_SAVE_CONFG == wParam) {
-				TCHAR config_path[MAX_PATH];
-				GetModuleFileName((HMODULE)g_hInstance, config_path, MAX_PATH);
-				g_configuration.saveConfig(config_path);
 			} else if (ID_TIMER_EYECARE_TRY == wParam) {
 				// 如果试图改变状态成功，且状态为EYECARE_TIME,
 				g_configuration.getEyecareSetting()->trySwitch();
@@ -151,7 +147,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 		case WM_DESTROY:
 			UnregisterHotKey(hWnd, HOTKEY_LANUCH_MAINUI);
 			KillTimer(hWnd, ID_TIMER_SAVE_SCREEN);
-			KillTimer(hWnd, ID_TIMER_SAVE_CONFG);
 			KillTimer(hWnd, ID_TIMER_EYECARE_TRY);
 			break;
 

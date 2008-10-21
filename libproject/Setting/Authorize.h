@@ -7,13 +7,14 @@
 #include <Enumerate.h>
 #include <configitem.h>
 #include <xmldefined.h>
+#include <settingitem.h>
 
 class XMLConfiguration;
 
 // 此类负责密码的统一管理
 // 包括密码的保存， 验证，修改等
 // 管理密码
-class Authorize :  public ConfigItem  {
+class Authorize :  public ConfigItem, public SettingItem  {
 public:
 	Authorize(void);
 	~Authorize(void);

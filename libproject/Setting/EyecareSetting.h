@@ -38,8 +38,8 @@ public:
 	int getState() const;// 获取目前的状态
 
 	// 设置休息时间和娱乐事件
-	void setEnterTime(const int seconds) { calculagraph_.setTimespan(seconds, ENTERT_TIME);}
-	void setEyecareTime(const int seconds) { calculagraph_.setTimespan(seconds, EYECARE_TIME);}
+	void setEnterTime(const int seconds)   { setModified(true);  calculagraph_.setTimespan(seconds, ENTERT_TIME);}
+	void setEyecareTime(const int seconds) { setModified(true);  calculagraph_.setTimespan(seconds, EYECARE_TIME);}
 	int getEnterTime() const  { return calculagraph_.getTimespan(ENTERT_TIME);}
 	int getEyecareTime() const { return calculagraph_.getTimespan(EYECARE_TIME);}
 

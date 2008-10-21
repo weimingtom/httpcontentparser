@@ -17,17 +17,20 @@ public:
 public:
 	int enableCheck(const std::string &search_host, const bool checked);
 	void addBlackSearchWord(const char *word) {
+		SettingItem::setModified(true);
 		word_set_.insert(word);
 	}
 
 	void removeBlackSeachWord(const char * word) {
 		WORD_SET::iterator iter = word_set_.find(word);
 		if (word_set_.end() != iter) {
+			SettingItem::setModified(true);
 			word_set_.erase(iter);
 		}
 	}
 
 	void addSearchHost(const std::string &search_host) {
+		SettingItem::setModified(true);
 		search_host_.insert(std::make_pair(search_host, true));
 	}
 

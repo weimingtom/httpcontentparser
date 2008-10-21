@@ -64,6 +64,8 @@ int XMLConfiguration::saveConfig(const TCHAR * filename) {
 	doc.LinkEndChild(root_element);
 
 	doc.SaveFile(filename);
+
+	SettingItem::setModified(false);
 	return 0;
 }
 int XMLConfiguration::saveRules(TiXmlElement *root) {

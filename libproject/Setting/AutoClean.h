@@ -6,11 +6,11 @@
 #include <time.h>
 #include <string>
 #include <atltime.h>
-
+#include <settingitem.h>
 
 // 应该能够支持64位时间
 // 此类负责各种自动清空的操作
-class AutoClean {
+class AutoClean : public SettingItem {
 public:
 	AutoClean(void);
 	~AutoClean(void);

@@ -38,6 +38,7 @@ bool DNSSetting::initialize(DNSList *black_dns_list, DNSList *white_dns_list) {
 
 // 仅仅允许通过WHITE DNS
 void DNSSetting::justPassWhiteDNS(const bool checked) {
+	setModified(true);
 	just_pass_white_dns_ = checked;
 
 	if (true == checked)
@@ -53,7 +54,8 @@ bool DNSSetting::justPassWhiteDNS() {
 }
 // DNSlist
 // 添加删除DNS
-bool DNSSetting::addBlackDNS(const std::string &dns){
+bool DNSSetting::addBlackDNS(const std::string &dns) {
+	setModified(true);
 	assert ( black_dns_list_ != NULL);
 	if (check(dns) == IN_WHITE_LIST) {
 		return false;
@@ -63,7 +65,8 @@ bool DNSSetting::addBlackDNS(const std::string &dns){
 	}
 }
 
-bool DNSSetting::addWhiteDNS(const std::string &dns){
+bool DNSSetting::addWhiteDNS(const std::string &dns) {
+	setModified(true);
 	assert ( white_dns_list_ != NULL);
 
 	if (check(dns) == IN_BLACK_LIST) {
@@ -76,11 +79,13 @@ bool DNSSetting::addWhiteDNS(const std::string &dns){
 
 // 移除
 bool DNSSetting::removeBlackDNS(const std::string &dns_name) {
+	setModified(true);
 	assert ( black_dns_list_ != NULL);
 	return black_dns_list_->removeDNS(dns_name); 
 }
 
 bool DNSSetting::removeWhiteDNS(const std::string &dns_name) {
+	setModified(true);
 	assert ( white_dns_list_ != NULL);
 	return white_dns_list_->removeDNS(dns_name);
 }
@@ -148,10 +153,12 @@ bool DNSSetting::dealResult(const int result) {
 }
 
 void DNSSetting::enableBlackDNSCheck(const bool checked) {
+	setModified(true);
 	black_dns_list_->enable(checked);
 }
 
 void DNSSetting::enableWhiteDNSCheck(const bool checked) {
+	setModified(true);
 	white_dns_list_->enable(checked);
 }
 

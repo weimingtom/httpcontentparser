@@ -4,10 +4,11 @@
 #include <configitem.h>
 #include <string>
 #include <map>
+#include <settingitem.h>
 
 
 // 读取热键的设置
-class HotkeySetting : public ConfigItem {
+class HotkeySetting : public ConfigItem, public SettingItem {
 public:
 	HotkeySetting();
 	~HotkeySetting(void);

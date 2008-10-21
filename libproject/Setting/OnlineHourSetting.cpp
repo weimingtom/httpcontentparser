@@ -33,6 +33,8 @@ bool OnlineHourSetting::getHour(const DWORD day, const DWORD hour) {
 }
 
 void OnlineHourSetting::setHour(const DWORD full, const bool allow_access) {
+	setModified(true);
+
 	assert(LOWORD(full) < 7);
 	assert(HIWORD(full) <24);
 	if (allow_access == false) {

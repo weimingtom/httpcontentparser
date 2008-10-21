@@ -1,6 +1,7 @@
 #include "StdAfx.h"
 #include ".\SearchRule.h"
 #include <assert.h>
+#include <utility/strutility.h>
 
 SearchRule::SearchRule(void) {
 	defaultSetting();
@@ -11,12 +12,13 @@ SearchRule::~SearchRule(void) {
 
 // 此函数负责设置对应的搜索引擎是否需要被检测
 int SearchRule::enableCheck(const std::string &search_host, const bool checked) {
-	if (search_host_.find(search_host) == search_host_.end()) {
-		return -1;
-	} else {
-		search_host_[search_host] = checked;
-		return 0;
-	}
+	setModified(true);
+
+	// 如果包含.com等，要去掉，否则会出错啊。
+	assert(search_host.find(".") == -1);
+
+	search_host_[search_host] = checked;
+	return 0;
 }
 
 // 首先检测host_name, 如果不需要检测直接返回

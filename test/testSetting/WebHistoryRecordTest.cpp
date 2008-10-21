@@ -16,12 +16,15 @@ void WebHistoryRecordTest::TestParentMode() {
 	CPPUNIT_ASSERT(SettingItem::MODE_CHILD == SettingItem::getModel());
 
 	WebHistoryRecorderSetting web_history;
+
+	SettingItem::setModified(false);
 	CPPUNIT_ASSERT(web_history.recordAllImage() == false);
 	CPPUNIT_ASSERT(web_history.recordAllPages() == false);
 	CPPUNIT_ASSERT(web_history.recordAllWebsite() == false);
 	CPPUNIT_ASSERT(web_history.recordPornImage() == true);
 	CPPUNIT_ASSERT(web_history.recordPornPages() == true);
 	CPPUNIT_ASSERT(web_history.recordPornWebsite() == true);
+	CPPUNIT_ASSERT(false == SettingItem::isModified());
 
 	SettingItem::setModel(SettingItem::MODE_PARENT);
 	CPPUNIT_ASSERT(web_history.recordAllImage() == false);
@@ -30,6 +33,7 @@ void WebHistoryRecordTest::TestParentMode() {
 	CPPUNIT_ASSERT(web_history.recordPornImage() == false);
 	CPPUNIT_ASSERT(web_history.recordPornPages() == false);
 	CPPUNIT_ASSERT(web_history.recordPornWebsite() == false);
+	CPPUNIT_ASSERT(false == SettingItem::isModified());
 
 	SettingItem::setModel(SettingItem::MODE_CHILD);
 	CPPUNIT_ASSERT(web_history.recordAllImage() == false);
@@ -38,11 +42,13 @@ void WebHistoryRecordTest::TestParentMode() {
 	CPPUNIT_ASSERT(web_history.recordPornImage() == true);
 	CPPUNIT_ASSERT(web_history.recordPornPages() == true);
 	CPPUNIT_ASSERT(web_history.recordPornWebsite() == true);
+	CPPUNIT_ASSERT(false == SettingItem::isModified());
 
 	// 是所有的可哟个
 	web_history.recordAllImage(true);
 	web_history.recordAllPages(true);
 	web_history.recordAllWebsite(true);
+	CPPUNIT_ASSERT(true == SettingItem::isModified());
 	CPPUNIT_ASSERT(web_history.recordAllImage() == true);
 	CPPUNIT_ASSERT(web_history.recordAllPages() == true);
 	CPPUNIT_ASSERT(web_history.recordAllWebsite() == true);
