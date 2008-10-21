@@ -22,8 +22,9 @@
 #	pragma comment(lib, "cppunitd.lib")
 #	pragma comment(lib, "testrunnerd.lib")
 #	pragma comment(lib, "settingd.lib")
+#	pragma comment(lib, "utilityd.lib")
 #else 
 #	pragma comment(lib, "TestRunner.lib")
 #	pragma comment(lib, "cppunit.lib")
-#	pragma comment(lib, "setting.lib")
+#	pragma comment(lib, "utility.lib")
 #endif
