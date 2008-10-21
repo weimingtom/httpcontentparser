@@ -21,17 +21,25 @@ void AutocleanTest::testAutoclean() {
 		t.GetHour(), t.GetMinute());
 	autoclean.setLastTime(buffer);
 
+	SettingItem::setModified(false);
 	autoclean.setTimespan(3);
+	CPPUNIT_ASSERT(true == SettingItem::isModified());
 	CPPUNIT_ASSERT(false == autoclean.shouldExec());
-
-
+	
+	SettingItem::setModified(false);
 	autoclean.setTimespan(2);
+	CPPUNIT_ASSERT(true == SettingItem::isModified());
 	CPPUNIT_ASSERT(false == autoclean.shouldExec());
-
+	
+	SettingItem::setModified(false);
 	autoclean.setTimespan(1);
+	CPPUNIT_ASSERT(true == SettingItem::isModified());
 	CPPUNIT_ASSERT(true == autoclean.shouldExec());
+	
+	SettingItem::setModified(false);
 	autoclean.reset();
 	autoclean.setTimespan(1);
+	CPPUNIT_ASSERT(true == SettingItem::isModified());
 	CPPUNIT_ASSERT(false == autoclean.shouldExec());
 
 }

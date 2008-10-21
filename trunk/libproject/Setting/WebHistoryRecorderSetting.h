@@ -21,14 +21,14 @@ public:
 	bool recordPornImage() const;
 	bool recordPornWebsite() const;
 
-	void recordAllPages(const bool enable)		{ recordPage_ = enable;}
-	void recordAllImage(const bool enable)	{ recordImage_ = enable;}
-	void recordAllWebsite(const bool enable)	{ recordWebsite_ = enable;}
+	void recordAllPages(const bool enable)	{ setModified(true); recordPage_ = enable;}
+	void recordAllImage(const bool enable)	{ setModified(true); recordImage_ = enable;}
+	void recordAllWebsite(const bool enable)	{ setModified(true); recordWebsite_ = enable;}
 
 
-	void recordPornPages(const bool enable)	{ recordPornPage_ = enable;}
-	void recordPornImage(const bool enable) { recordPornImage_ = enable;}
-	void recordPornWebsite(const bool enable) { recordPornWebsite_ = enable;}
+	void recordPornPages(const bool enable)   { setModified(true); recordPornPage_ = enable;}
+	void recordPornImage(const bool enable)   { setModified(true); recordPornImage_ = enable;}
+	void recordPornWebsite(const bool enable) { setModified(true); recordPornWebsite_ = enable;}
 public:
 	void defaultSetting();
 

@@ -24,12 +24,21 @@ void EyecareTest::TestSetLeft() {
 	EyecareSetting setting;
 	setting.initialize(&authorize, EyecareSetting::ENTERT_TIME);
 
+	SettingItem::setModified(false);
 	setting.setEnterTime(60);
 	setting.setEyecareTime(60);
+	CPPUNIT_ASSERT(true == SettingItem::isModified());
 	
-	int a = setting.getRemainTime();
+	SettingItem::setModified(false);
 	CPPUNIT_ASSERT(setting.getRemainTime() > 0);
+	CPPUNIT_ASSERT(false == SettingItem::isModified());
+
+	// 注意设置剩余时间不应视为修改文件，否则修改的就太频繁了 ;(
+	// 此项应该在程序结束的时候存储，或其他项存储的时候进行存储
+	SettingItem::setModified(false);
 	setting.setLeftTime(20);
+	CPPUNIT_ASSERT(false == SettingItem::isModified());
+
 	Sleep(1000);
 	CPPUNIT_ASSERT(setting.getRemainTime() < 20);
 }

@@ -30,6 +30,7 @@ unsigned HotkeySetting::getHotkey(const std::string &name) {
 }
 void HotkeySetting::setHotkey(const std::string &name, const unsigned hotkey) {
 	hotkeys_[name] = hotkey;
+	setModified(true);
 }
 
 //===================================

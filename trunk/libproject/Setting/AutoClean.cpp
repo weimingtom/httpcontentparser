@@ -1,5 +1,6 @@
 #include "StdAfx.h"
 #include ".\autoclean.h"
+#include ".\settingitem.h"
 #include <stdio.h>
 #include <sys/timeb.h>
 #include <time.h>
@@ -38,6 +39,7 @@ bool AutoClean::shouldExec() {
 // 设置时间间隔的范围
 void AutoClean::setTimespan(const int days) {
 	assert (getRangeMax() > getRangeMin());
+	setModified(true); 
 
 	if (days < getRangeMin())
 		timespan_days_ = getRangeMin();
