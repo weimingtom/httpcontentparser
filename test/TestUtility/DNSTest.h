@@ -8,11 +8,11 @@
 class DNSTest : public CPPUNIT_NS::TestFixture {
 public: 
 	CPPUNIT_TEST_SUITE(DNSTest);
+	CPPUNIT_TEST(GetMainNameTest);
 	CPPUNIT_TEST(GetDNS);
 	CPPUNIT_TEST(GetMultHostName);
 	CPPUNIT_TEST(GetMultHostName);
 	CPPUNIT_TEST(BeginWWWTest);
-	CPPUNIT_TEST(GetMainNameTest);
 	CPPUNIT_TEST_SUITE_END();
 
 protected:

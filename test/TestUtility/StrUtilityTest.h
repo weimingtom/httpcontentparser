@@ -11,6 +11,8 @@ public:
 
 public:
 	CPPUNIT_TEST_SUITE(StrUtilityTest);
+	CPPUNIT_TEST(TestToLower);
+	CPPUNIT_TEST(TestToUpper);
 	CPPUNIT_TEST(Test_remove_after);
 	CPPUNIT_TEST(TestSplitString);
 	CPPUNIT_TEST(Teststrnstr);
@@ -23,6 +25,8 @@ private:
 	void Test_extract_string();
 	void Test_remove_after();
 	void TestEndWith();
+	void TestToLower();
+	void TestToUpper();
 };
 
 #endif  // _TEST_UTILITY_STR_UTILITY_H__
