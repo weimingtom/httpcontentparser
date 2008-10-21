@@ -10,6 +10,40 @@ const TCHAR * DNS_POSTFIX_COM = ".com";
 const TCHAR * DNS_POSTFIX_NET = ".net";
 const TCHAR * DNS_POSTFIX_EDU = ".edu";
 const TCHAR * DNS_POSTFIX_GOV = ".gov";
+
+// 之去掉如 .com.cn 或者 .com
+// 对于 www.comdie.cn就不应该去掉.com之后的内容
+int remove_postfix(TCHAR * name) {
+	TCHAR *p = NULL;
+	if (NULL != (p = _tcsstr(name, DNS_POSTFIX_COM))) {
+		if (p[4] == '\0' || p[4] == '.') {
+			p[0] = '\0';
+			return p-name;
+		}
+	} else if (NULL != (p = _tcsstr(name, DNS_POSTFIX_NET))) {
+		if (p[4] == '\0' || p[4] == '.') {
+			p[0] = '\0';
+			return p-name;
+		}
+	} else if (NULL != (p = _tcsstr(name, DNS_POSTFIX_EDU))) {
+		if (p[4] == '\0' || p[4] == '.') {
+			p[0] = '\0';
+			return p-name;
+		}
+	} else if (NULL != (p = _tcsstr(name, DNS_POSTFIX_ORG))) {
+		if (p[4] == '\0' || p[4] == '.') {
+			p[0] = '\0';
+			return p-name;
+		}
+	} else if (NULL != (p = _tcsstr(name, DNS_POSTFIX_GOV))) {
+		if (p[4] == '\0' || p[4] == '.') {
+			p[0] = '\0';
+			return p-name;
+		}
+	}
+
+	return _tcslen(name);
+}
 };
 
 
@@ -37,42 +71,39 @@ int get_main_dns_name(TCHAR * main_name, const int bufsize, const TCHAR *fulldns
 	// 去掉尾部
 	memset(name, 0, sizeof(name));
 	_tcscpy(name, &(fulldns[start_index]));
-	const int len = _tclen(name);	// 获取长度
 
 	// 首先转成小写
-	for (int i = 0; i < len; ++i) {
-		name[i] = _tolower(name[i]);
-	}
+	strtolower(name);
 
 	// 去除掉后缀
-	int len_remove_postfix;
-	if (!(len_remove_postfix = remove_after(name, DNS_POSTFIX_COM))) {
-	} else if (!(len_remove_postfix = remove_after(name, DNS_POSTFIX_NET))) {
-	} else if (!(len_remove_postfix = remove_after(name, DNS_POSTFIX_EDU))) {
-	} else if (!(len_remove_postfix = remove_after(name, DNS_POSTFIX_ORG))) {
-	} else if (!(len_remove_postfix = remove_after(name, DNS_POSTFIX_GOV))) {
-	}
-
+	// 仍然有问题 .net. 或者 .net'\0'才可以，否则的话， www.netconfig.com就只能剩下www了
+	const int len = remove_postfix(name);
+	assert (len == _tcslen(name));
+	int len_remove_postfix = 0;
+	
 	// 去掉国别
 	// 如果此时自首两个是.**， 那么去掉它，因为所有过的二级域名都是两个字符
-	if (name[len_remove_postfix -2] = '.') {
-		name[len_remove_postfix -2 ] = '\0';
+	if (name[len - len_remove_postfix -3] == '.') {
+		name[len - len_remove_postfix -3 ] = '\0';
 
 		// 长度减少3
-		len_remove_postfix -= 3;
+		len_remove_postfix += 3;
 	}
 
 	// 可能域名仍然后两个部分，例如
 	// 从尾部开始向前寻找'.'
-	for (int i = len_remove_postfix - 1; i >=0; ++i) {
+	for (int i = len - len_remove_postfix - 1; i >=0; --i) {
 		if ('.' == name[i]) {
-			assert (len_remove_postfix - i > 3);
+			assert (len - len_remove_postfix - 1 - i > 3);	// main name必然大于3
 			_tcscpy(main_name, &(name[i+1]));
-			return len_remove_postfix - i;
+
+			len_remove_postfix += i+1;	// 有去掉了 i+1个字符
+			return (len - len_remove_postfix);
 		}
 	}
-	_tcscpy(main_name, name);
-	return len_remove_postfix;
+
+	_tcsncpy(main_name, name, MAX_PATH);
+	return len - len_remove_postfix;
 }
 
 /////////////////////////////////////////////////////////////////////////////
