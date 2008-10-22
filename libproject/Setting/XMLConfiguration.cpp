@@ -36,10 +36,12 @@ void XMLConfiguration::defaultSetting() {
 int XMLConfiguration::saveAppSetting(TiXmlElement * root) {
 	TiXmlElement * appsetting_root = new TiXmlElement( CONFIG_NODE_APPSET );
 	
-	getWebHistoryRecordSetting()->saveconfig(appsetting_root);
-	getEyecareSetting()->saveconfig(appsetting_root);
-	getScreenSave()->saveconfig(appsetting_root);
 	getAuthorize()->saveconfig(appsetting_root);
+	getEyecareSetting()->saveconfig(appsetting_root);
+	getWebHistoryRecordSetting()->saveconfig(appsetting_root);
+	
+	getScreenSave()->saveconfig(appsetting_root);
+	getHotkey()->saveconfig(appsetting_root);
 	root->LinkEndChild(appsetting_root);
 	return 0;
 }
@@ -59,7 +61,6 @@ int XMLConfiguration::saveConfig(const TCHAR * filename) {
 	
 	saveRules(root_element);
 	saveAppSetting(root_element);
-	getHotkey()->saveConfig(root_element);
 	
 	doc.LinkEndChild(root_element);
 
