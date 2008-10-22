@@ -54,18 +54,14 @@ TiXmlElement * ScreenSaver::saveConfig(TiXmlElement * item_root) {
 //==========================================================
 // 保存屏幕保存功能
 TiXmlElement * ScreenSaver::saveScreensave(TiXmlElement * root) {
+	TCHAR buffer[MAX_PATH];
 	TiXmlElement * rule_root = new TiXmlElement(CONFIG_ITEM_APPSET_SCREENSAVER);
 	rule_root->SetAttribute(CONFIG_CONST_ENABLE, enabledFromBool(isEnabled()));
-	rule_root->SetAttribute(CONSIG_CONST_TIMESPAN, TEXT("10"));
 
-	TiXmlElement * auto_save = new TiXmlElement(CONFIG_APPSET_AUTOCLEAR);
-	auto_save->SetAttribute(CONFIG_CONST_ENABLE,	enabledFromBool(isEnabled()));
-	auto_save->SetAttribute(CONFIG_CONST_MIN,		enabledFromBool(isEnabled()));
-	auto_save->SetAttribute(CONFIG_CONST_MAX,		enabledFromBool(isEnabled()));
-	auto_save->SetAttribute(CONSIG_CONST_TIMESPAN,	enabledFromBool(isEnabled()));
-	rule_root->LinkEndChild(auto_save);
+	_sntprintf(buffer, MAX_PATH, TEXT("%d"), calcugraph_.getTimespan());
+ 	rule_root->SetAttribute(CONSIG_CONST_TIMESPAN, buffer);
 
-	TCHAR buffer[MAX_PATH];
+	
 	TiXmlElement * autoclean = new TiXmlElement( CONFIG_APPSET_AUTOCLEAR ); 
 	autoclean->SetAttribute(CONFIG_CONST_MAX, _itot(getAutoClean()->getRangeMax(), buffer, 10));
 	autoclean->SetAttribute(CONFIG_CONST_MIN, _itot(getAutoClean()->getRangeMin(), buffer, 10));
@@ -76,6 +72,7 @@ TiXmlElement * ScreenSaver::saveScreensave(TiXmlElement * root) {
 	root->LinkEndChild(rule_root);
 	return rule_root;
 }
+
 
 //===============================================
 // Screensave
@@ -104,6 +101,7 @@ int ScreenSaver::setScreensaveAutoClean(TiXmlElement * ele) {
 		if (element && _tcscmp(element->Value(), CONFIG_APPSET_AUTOCLEAR) == 0) {
 			enableScreenSaveAutoClean(element->Attribute(CONFIG_CONST_ENABLE));
 			setScreensaveAutoCleanTimespan(element->Attribute(CONSIG_CONST_TIMESPAN));
+			const char * p = element->Attribute(CONFIG_CONST_MAX);
 			setScreensaveAutoCleanTimeScale(element->Attribute(CONFIG_CONST_MAX), element->Attribute(CONFIG_CONST_MIN));
 			setScreensaveLastCleanTiime(element->Attribute(CONFIG_CONST_LASTTIME));
 		}
