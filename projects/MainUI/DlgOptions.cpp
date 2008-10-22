@@ -154,6 +154,8 @@ void CDlgOptions::restoreSetting() {
 	m_bAutoRun = isAutoRun((HMODULE)AfxGetInstanceHandle());
 	m_bOld_autorun = m_bAutoRun;
 	UpdateData(FALSE);
+
+	setHotKey();
 }
 
 void CDlgOptions::OnShow() {
