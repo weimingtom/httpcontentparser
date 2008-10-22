@@ -80,10 +80,6 @@ TiXmlElement * WebHistoryRecorderSetting::saveConfig(TiXmlElement * item_root) {
 	return saveWebHistory(item_root);
 }
 
-
-	// 设置它是否可用
-	// enableWebHistoryRecord(ele->Attribute(CONFIG_CONST_ENABLE));
-
 //=========================================================
 // WebHistory
 int WebHistoryRecorderSetting::enableWebHistoryRecord(const TCHAR *isenable) {
@@ -168,7 +164,7 @@ int WebHistoryRecorderSetting::getWebHistoryRecorder(TiXmlElement *ele) {
 // 保存
 TiXmlElement * WebHistoryRecorderSetting::saveWebHistory(TiXmlElement * app_root) {
 	TiXmlElement * webhistory_root = new TiXmlElement(CONFIG_ITEM_APPSET_WEBHISTORY); 
-	webhistory_root->SetAttribute(CONFIG_CONST_NAME,  enabledFromBool( isEnabled()));
+	webhistory_root->SetAttribute(CONFIG_CONST_ENABLE,  enabledFromBool( isEnabled()));
 
 	// All Images
 	TiXmlElement * allimage = new TiXmlElement(CONFIG_APPSET_WEBHISTORY_CONTENT); 
