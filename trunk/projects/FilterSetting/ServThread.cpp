@@ -36,10 +36,6 @@ void startMainUI() {
 		// WinExec(TEXT("Mainui.exe"), SW_SHOW);
 	}
 }
-
-class HotKeyResponse {
-};
-
 };
 
 //==================================
@@ -98,21 +94,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 				OutputDebugString("hotkey.....................");
 				const int hotkey_id = (int)wParam;
 				if (hotkey_id == HOTKEY_LANUCH_MAINUI) {
-					HWND hMainUI =  GetMainUIHWND();
-					if (NULL == hMainUI) {
-						StartMainUI(g_hInstance);
-						::SetWindowPos(GetMainUIHWND(), HWND_TOP, 0, 0, 0, 0,
-							SWP_NOSIZE | SWP_SHOWWINDOW | SWP_NOMOVE);
-					} else {
-						::SetWindowPos(hMainUI, HWND_TOP, 0, 0, 0, 0,
-							SWP_NOSIZE | SWP_SHOWWINDOW | SWP_NOMOVE);
-					}
+					StartMainUI((HMODULE)g_hInstance);
 				}
 			}
 		case WM_TIMER:
 			if (SettingItem::isModified() == true) {
 				TCHAR config_path[MAX_PATH];
-				GetModuleFileName((HMODULE)g_hInstance, config_path, MAX_PATH);
+				GetAppConfigFilename(config_path, MAX_PATH, (HMODULE)g_hInstance);
 				g_configuration.saveConfig(config_path);
 			}
 			if (ID_TIMER_SAVE_SCREEN == wParam) {
