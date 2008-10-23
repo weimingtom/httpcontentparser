@@ -143,7 +143,7 @@ TiXmlElement * OnlineHourSetting::saveOnlineHour(TiXmlElement *root) {
 
 	// ÉèÖÃÊôÐÔ
 	rule_root->SetAttribute(CONFIG_CONST_NAME, CONFIG_NODE_NAME_ONLINETIME);
-	rule_root->SetAttribute(CONFIG_CONST_ENABLE, enabledFromBool(isEnabled()));
+	rule_root->SetAttribute(CONFIG_CONST_ENABLE, enabledFromBool(enabled_));
 
 	enumBlockHour(&EnumOnlineHour(rule_root));
 	

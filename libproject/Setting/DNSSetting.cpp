@@ -171,7 +171,7 @@ int DNSSetting::parseConfig(TiXmlElement * item_root) {
 }
 
 TiXmlElement * DNSSetting::saveConfig(TiXmlElement * item_root) {
-	item_root->SetAttribute(CONFIG_WHITEURL_JUSTPASSED, enabledFromBool(justPassWhiteDNS()));
+	item_root->SetAttribute(CONFIG_WHITEURL_JUSTPASSED, enabledFromBool(just_pass_white_dns_));
 	return item_root;
 }
 
@@ -279,7 +279,7 @@ TiXmlElement * DNSList::saveWhiteURL(TiXmlElement *root) {
 
 	// ÉèÖÃÊôÐÔ
 	rule_root->SetAttribute(CONFIG_CONST_NAME, name_);
-	rule_root->SetAttribute(CONFIG_CONST_ENABLE, enabledFromBool(isEnabled()));
+	rule_root->SetAttribute(CONFIG_CONST_ENABLE, enabledFromBool(enabled_));
 	// Ìí¼ÓURL
 	beginEnum(&DNSEnum(rule_root));
 	root->LinkEndChild(rule_root);

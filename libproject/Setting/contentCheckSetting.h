@@ -38,6 +38,7 @@ public:
 	virtual int parseConfig(TiXmlElement * item_root);
 	virtual TiXmlElement * saveConfig(TiXmlElement * root);
 private:
+	bool typeNeedCheck(const unsigned type) const;
 	// 处理各个规则的具体细节
 	int getImageRule(TiXmlElement * ele);
 	int setImageCheck(const TCHAR *imagetype, const TCHAR *enable);
