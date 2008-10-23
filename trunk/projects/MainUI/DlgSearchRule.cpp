@@ -78,6 +78,9 @@ void CDlgSearchRule::restoreSetting() {
 	g_configuration.getSearchRule()->enumBlackWord((Enumerator1<std::string>*)this);
 	m_bEnableSearchRule = g_configuration.getSearchRule()->isEnabled();
 
+	m_bChkGoogle = g_configuration.getSearchRule()->setting_shouldCheck(TEXT("google"));
+	m_bChkYahoo = g_configuration.getSearchRule()->setting_shouldCheck(TEXT("yahoo"));
+	m_bChkBaidu = g_configuration.getSearchRule()->setting_shouldCheck(TEXT("baidu"));
 	UpdateData(FALSE);
 }
 
