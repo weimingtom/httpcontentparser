@@ -15,6 +15,7 @@ void CBaseDlg::SetModify(const bool changed) {
 	GetParent()->GetDlgItem(IDC_MAIN_APPLY)->EnableWindow(changed);
 }
 
+// 在切换窗口之后
 int  CBaseDlg::AfterChange() {
 	GetParent()->GetDlgItem(IDC_MAIN_OK)->EnableWindow(FALSE);
 	GetParent()->GetDlgItem(IDC_MAIN_APPLY)->EnableWindow(FALSE);
@@ -31,13 +32,17 @@ int CBaseDlg::Restore() {
 	return 0;
 }
 
+// 在改变窗口之前
+// 
 int  CBaseDlg::BeforeChange() {
 	if (Modified() == true) {
 		int result = AfxMessageBox("Setting have been changed, Would you like apply the change?", MB_YESNO);
-		if (result == IDOK) {
+		if (result == IDYES) {
 			Apply();
+			SetModify(false);
 			return 1;
 		} else {
+			SetModify(false);
 			Restore();
 			return 0;
 		}
