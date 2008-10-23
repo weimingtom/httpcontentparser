@@ -274,7 +274,7 @@ bool NoSepcifiedLength::finished() const {
 }
 
 int NoSepcifiedLength::addBuffer(const char *buf, const int len) {
-	assert (false);
+	// assert (false);
 	finished_ = true;
 	// assert(false);
 	return 0;
