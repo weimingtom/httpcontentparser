@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include ".\iaccessnetworktest.h"
-
+#include ".\comtestutility.h"
 #include <com\FilterSetting_i.c>
 #include <com\FilterSetting.h>
 #include <typeconvert.h>
@@ -19,8 +19,36 @@ IAccessNetworkTest::IAccessNetworkTest(void) {
 IAccessNetworkTest::~IAccessNetworkTest(void) {
 }
 
+// 在父子两种模式下运行
+void IAccessNetworkTest::TestTwoModel() {
+	GetInChildMode();
+	time_t t;
+	struct tm * local;
 
+	// 获取时间
+	time(&t);
+	local= localtime(&t);
+
+
+	unsetBlocktime(local->tm_wday, local->tm_hour);
+	bool accessable = accessNetword();
+	CPPUNIT_ASSERT (true == accessable);
+
+	time(&t);
+	local= localtime(&t);
+	setBlocktime(local->tm_wday, local->tm_hour);
+	accessable = accessNetword();
+	CPPUNIT_ASSERT (false == accessable);
+
+	GetInParentModel();
+	accessable = accessNetword();
+	CPPUNIT_ASSERT (true == accessable);
+	GetInChildMode();
+	accessable = accessNetword();
+	CPPUNIT_ASSERT (false == accessable);
+}
 void IAccessNetworkTest::TestSetAndGetBlockTime() {
+	GetInChildMode();
 	time_t t;
 	struct tm * local;
 
@@ -45,7 +73,6 @@ void IAccessNetworkTest::TestSetAndGetBlockTime() {
 	unsetBlocktime(local->tm_wday, local->tm_hour);
 	accessable = accessNetword();
 	CPPUNIT_ASSERT (true == accessable);
-
 }
 
 
