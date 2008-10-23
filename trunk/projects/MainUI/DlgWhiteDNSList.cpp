@@ -111,6 +111,7 @@ void CDlgWhiteDNSList::OnBnClickedChkDenyOthers() {
 		m_bEnableWhiteDNS = TRUE;
 	}
 	UpdateData(FALSE);
+	SetModify(true);
 }
 
 // 当此复选框未被选中时，另外一个复选框也不能被选中
@@ -120,4 +121,5 @@ void CDlgWhiteDNSList::OnBnClickedChkWhiteDnslist() {
 		m_bCheckDenyAllOthers = FALSE;
 	}
 	UpdateData(FALSE);
+	SetModify(true);
 }
