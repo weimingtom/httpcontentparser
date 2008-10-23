@@ -21,12 +21,16 @@ void ContentCheckSetting::enableCheck(const unsigned type, const bool checked) {
 	}
 }
 
+
+bool ContentCheckSetting::typeNeedCheck(const unsigned type) const {
+	if( content_type_ & type )
+		return true;
+	else
+		return false;
+}
 bool ContentCheckSetting::needCheck(const unsigned type) const {
 	if (isEnabled() == true) {
-		if( content_type_ & type )
-			return true;
-		else
-			return false;
+		return typeNeedCheck(type);
 	} else {
 		return false;
 	}
@@ -58,25 +62,25 @@ TiXmlElement * ContentCheckSetting::saveImageRule(TiXmlElement *root) {
 	// jgp
 	TiXmlElement *item_jpg = new TiXmlElement(CONFIG_NODE_IMAGE_CHECK_ITEM);
 	item_jpg->SetAttribute(CONFIG_NODE_IMAGETYPE, CONFIG_NODE_IMAGETYPE_JPG);
-	item_jpg->SetAttribute(CONFIG_CONST_ENABLE, enabledFromBool(needCheck(IMAGE_TYPE_JPEG)));
+	item_jpg->SetAttribute(CONFIG_CONST_ENABLE, enabledFromBool(typeNeedCheck(IMAGE_TYPE_JPEG)));
 	rule_root->LinkEndChild(item_jpg);
 
 	// bmp
 	TiXmlElement *item_bmp = new TiXmlElement(CONFIG_NODE_IMAGE_CHECK_ITEM);
 	item_bmp->SetAttribute(CONFIG_NODE_IMAGETYPE, CONFIG_NODE_IMAGETYPE_BMP);
-	item_bmp->SetAttribute(CONFIG_CONST_ENABLE, enabledFromBool(needCheck(IMAGE_TYPE_BMP)));
+	item_bmp->SetAttribute(CONFIG_CONST_ENABLE, enabledFromBool(typeNeedCheck(IMAGE_TYPE_BMP)));
 	rule_root->LinkEndChild(item_bmp);
 
 	// gif
 	TiXmlElement *item_gif = new TiXmlElement(CONFIG_NODE_IMAGE_CHECK_ITEM);
 	item_gif->SetAttribute(CONFIG_NODE_IMAGETYPE, CONFIG_NODE_IMAGETYPE_GIF);
-	item_gif->SetAttribute(CONFIG_CONST_ENABLE, enabledFromBool(needCheck(IMAGE_TYPE_GIF)));
+	item_gif->SetAttribute(CONFIG_CONST_ENABLE, enabledFromBool(typeNeedCheck(IMAGE_TYPE_GIF)));
 	rule_root->LinkEndChild(item_gif);
 
 	// png
 	TiXmlElement *item_png = new TiXmlElement(CONFIG_NODE_IMAGE_CHECK_ITEM);
 	item_png->SetAttribute(CONFIG_NODE_IMAGETYPE, CONFIG_NODE_IMAGETYPE_PNG);
-	item_png->SetAttribute(CONFIG_CONST_ENABLE, enabledFromBool(needCheck(IMAGE_TYPE_PNG)));
+	item_png->SetAttribute(CONFIG_CONST_ENABLE, enabledFromBool(typeNeedCheck(IMAGE_TYPE_PNG)));
 	rule_root->LinkEndChild(item_png);
 
 	root->LinkEndChild(rule_root);

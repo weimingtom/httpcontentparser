@@ -150,6 +150,7 @@ int WebHistoryRecorderSetting::getWebHistoryRecorder(TiXmlElement *ele) {
 	TiXmlNode * node = ele->FirstChild();
 	while (NULL != node) {
 		TiXmlElement *ele = node->ToElement();
+		const char * a = ele->Value();
 		if (NULL != ele && 0 == _tcscmp(ele->Value(), CONFIG_APPSET_WEBHISTORY_CONTENT)) {
 			setWebHistoryRecord(ele->Attribute(CONFIG_CONST_TYPPE), ele->Attribute(CONFIG_CONST_ENABLE));
 		} else if (NULL != ele && 0 == _tcscmp(ele->Value(), CONFIG_APPSET_AUTOCLEAR)) {
@@ -164,38 +165,38 @@ int WebHistoryRecorderSetting::getWebHistoryRecorder(TiXmlElement *ele) {
 // ±£´æ
 TiXmlElement * WebHistoryRecorderSetting::saveWebHistory(TiXmlElement * app_root) {
 	TiXmlElement * webhistory_root = new TiXmlElement(CONFIG_ITEM_APPSET_WEBHISTORY); 
-	webhistory_root->SetAttribute(CONFIG_CONST_ENABLE,  enabledFromBool( isEnabled()));
+	webhistory_root->SetAttribute(CONFIG_CONST_ENABLE,  enabledFromBool(enabled_));
 
 	// All Images
 	TiXmlElement * allimage = new TiXmlElement(CONFIG_APPSET_WEBHISTORY_CONTENT); 
 	allimage->SetAttribute(CONFIG_CONST_TYPPE, CONFIG_APPSET_WEBHISTORY_ALL_IMAGE);
-	allimage->SetAttribute(CONFIG_CONST_NAME, enabledFromBool( recordAllImage()));
+	allimage->SetAttribute(CONFIG_CONST_ENABLE, enabledFromBool(recordImage_));
 	webhistory_root->LinkEndChild(allimage);
 
 	TiXmlElement * allpages = new TiXmlElement(CONFIG_APPSET_WEBHISTORY_CONTENT); 
 	allpages->SetAttribute(CONFIG_CONST_TYPPE, CONFIG_APPSET_WEBHISTORY_ALL_WEBPAGE);
-	allpages->SetAttribute(CONFIG_CONST_NAME, enabledFromBool( recordAllPages()));
+	allpages->SetAttribute(CONFIG_CONST_ENABLE, enabledFromBool(recordPage_));
 	webhistory_root->LinkEndChild(allpages);
 
 	TiXmlElement * allwebsite = new TiXmlElement(CONFIG_APPSET_WEBHISTORY_CONTENT); 
 	allwebsite->SetAttribute(CONFIG_CONST_TYPPE, CONFIG_APPSET_WEBHISTORY_ALL_WEBSITE);
-	allwebsite->SetAttribute(CONFIG_CONST_NAME, enabledFromBool( recordAllWebsite()));
+	allwebsite->SetAttribute(CONFIG_CONST_ENABLE, enabledFromBool(recordWebsite_));
 	webhistory_root->LinkEndChild(allwebsite);
 
 	// Porn
 	TiXmlElement * porn_Iimage = new TiXmlElement( CONFIG_APPSET_WEBHISTORY_CONTENT ); 
 	porn_Iimage->SetAttribute(CONFIG_CONST_TYPPE, CONFIG_APPSET_WEBHISTORY_PORN_IMAGE);
-	porn_Iimage->SetAttribute(CONFIG_CONST_NAME, enabledFromBool( recordPornImage()));
+	porn_Iimage->SetAttribute(CONFIG_CONST_ENABLE, enabledFromBool(recordPornImage_));
 	webhistory_root->LinkEndChild(porn_Iimage);
 
 	TiXmlElement * porn_pages = new TiXmlElement( CONFIG_APPSET_WEBHISTORY_CONTENT ); 
 	porn_pages->SetAttribute(CONFIG_CONST_TYPPE, CONFIG_APPSET_WEBHISTORY_PORN_WEBPAGE);
-	porn_pages->SetAttribute(CONFIG_CONST_NAME, enabledFromBool( recordPornPages()));
+	porn_pages->SetAttribute(CONFIG_CONST_ENABLE, enabledFromBool(recordPornPage_));
 	webhistory_root->LinkEndChild(porn_pages);
 
 	TiXmlElement * porn_website = new TiXmlElement( CONFIG_APPSET_WEBHISTORY_CONTENT ); 
 	porn_website->SetAttribute(CONFIG_CONST_TYPPE, CONFIG_APPSET_WEBHISTORY_PORN_WEBSITE);
-	porn_website->SetAttribute(CONFIG_CONST_NAME, enabledFromBool( recordPornWebsite()));
+	porn_website->SetAttribute(CONFIG_CONST_ENABLE, enabledFromBool(recordPornWebsite_));
 	webhistory_root->LinkEndChild(porn_website);
 
 	TCHAR buffer[MAX_PATH];

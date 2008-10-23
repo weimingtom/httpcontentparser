@@ -56,7 +56,7 @@ TiXmlElement * ScreenSaver::saveConfig(TiXmlElement * item_root) {
 TiXmlElement * ScreenSaver::saveScreensave(TiXmlElement * root) {
 	TCHAR buffer[MAX_PATH];
 	TiXmlElement * rule_root = new TiXmlElement(CONFIG_ITEM_APPSET_SCREENSAVER);
-	rule_root->SetAttribute(CONFIG_CONST_ENABLE, enabledFromBool(isEnabled()));
+	rule_root->SetAttribute(CONFIG_CONST_ENABLE, enabledFromBool(enabled_));
 
 	_sntprintf(buffer, MAX_PATH, TEXT("%d"), calcugraph_.getTimespan());
  	rule_root->SetAttribute(CONSIG_CONST_TIMESPAN, buffer);

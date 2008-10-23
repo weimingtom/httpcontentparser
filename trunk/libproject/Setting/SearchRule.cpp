@@ -192,7 +192,7 @@ TiXmlElement *  SearchRule::saveSearchRule(TiXmlElement *root) {
 
 	// …Ë÷√ Ù–‘
 	rule_root->SetAttribute(CONFIG_CONST_NAME, CONFIG_NODE_NAME_SEARCH);
-	rule_root->SetAttribute(CONFIG_CONST_ENABLE, enabledFromBool(isEnabled()));
+	rule_root->SetAttribute(CONFIG_CONST_ENABLE, enabledFromBool(enabled_));
 
 	// …Ë÷√black word
 	TiXmlElement * blackword = new TiXmlElement(CONFIG_NODE_BLACK_SEARCHWORD);
