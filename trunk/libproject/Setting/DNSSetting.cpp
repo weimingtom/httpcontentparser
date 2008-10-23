@@ -250,7 +250,7 @@ int DNSList::parseConfig(TiXmlElement * item_root) {
 	return 0;
 }
 TiXmlElement * DNSList::saveConfig(TiXmlElement * item_root) {
-	return saveWhiteURL(item_root);
+	return saveURL(item_root);
 }
 
 namespace {
@@ -274,12 +274,12 @@ private:
 };
 };
 
-TiXmlElement * DNSList::saveWhiteURL(TiXmlElement *root) {
+TiXmlElement * DNSList::saveURL(TiXmlElement *root) {
 	TiXmlElement * rule_root = new TiXmlElement(CONFIG_NODE_RULE_ITEM);
 
 	// ÉèÖÃÊôÐÔ
 	rule_root->SetAttribute(CONFIG_CONST_NAME, name_);
-	rule_root->SetAttribute(CONFIG_CONST_ENABLE, enabledFromBool(enabled_));
+	rule_root->SetAttribute(CONFIG_CONST_ENABLE, enabledFromBool(isSettingEnabled()));
 	// Ìí¼ÓURL
 	beginEnum(&DNSEnum(rule_root));
 	root->LinkEndChild(rule_root);

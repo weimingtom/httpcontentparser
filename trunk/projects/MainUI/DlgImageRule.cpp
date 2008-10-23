@@ -69,10 +69,10 @@ int CDlgImageRule::OnApply() {
 
 void CDlgImageRule::restoreSetting() {
 	// 按照初始化设置
-	m_bCheckGIF = g_configuration.getContentCheckSetting()->needCheck(IMAGE_TYPE_GIF);
-	m_bCheckJPEG = g_configuration.getContentCheckSetting()->needCheck(IMAGE_TYPE_JPEG);
-	m_bCheckBMP = g_configuration.getContentCheckSetting()->needCheck(IMAGE_TYPE_BMP);
-	m_bCheckPNG = g_configuration.getContentCheckSetting()->needCheck(IMAGE_TYPE_PNG);
+	m_bCheckGIF = g_configuration.getContentCheckSetting()->isSettingNeedCheck(IMAGE_TYPE_GIF);
+	m_bCheckJPEG = g_configuration.getContentCheckSetting()->isSettingNeedCheck(IMAGE_TYPE_JPEG);
+	m_bCheckBMP = g_configuration.getContentCheckSetting()->isSettingNeedCheck(IMAGE_TYPE_BMP);
+	m_bCheckPNG = g_configuration.getContentCheckSetting()->isSettingNeedCheck(IMAGE_TYPE_PNG);
 
 	m_sliderImageCheckDegree.SetRange(0, 4);
 	m_sliderImageCheckDegree.SetPos(g_configuration.getContentCheckSetting()->getTightness());

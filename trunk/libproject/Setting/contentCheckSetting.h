@@ -28,6 +28,7 @@ public:
 	// 松紧程度，有0～4五个值，默认为2
 	int getTightness() const { return tightness_;}
 	void setTightness(const int new_tight) { tightness_ = new_tight;}
+	bool isSettingNeedCheck(const unsigned type) const;
 private:
 	unsigned content_type_;
 	int	tightness_;
@@ -38,7 +39,6 @@ public:
 	virtual int parseConfig(TiXmlElement * item_root);
 	virtual TiXmlElement * saveConfig(TiXmlElement * root);
 private:
-	bool typeNeedCheck(const unsigned type) const;
 	// 处理各个规则的具体细节
 	int getImageRule(TiXmlElement * ele);
 	int setImageCheck(const TCHAR *imagetype, const TCHAR *enable);

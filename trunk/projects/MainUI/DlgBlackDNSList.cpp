@@ -55,7 +55,7 @@ void CDlgBlackDNSList::restoreSetting() {
 	ListBox.GetListCtrl()->DeleteAllItems();
 	
 	g_configuration.getBlackURLSet()->beginEnum((Enumerator1<std::string>*)this);
-	m_bEnableBlackDNS = g_configuration.getBlackURLSet()->isEnabled();
+	m_bEnableBlackDNS = g_configuration.getBlackURLSet()->isSettingEnabled();
 	UpdateData(FALSE);
 }
 

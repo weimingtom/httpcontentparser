@@ -88,12 +88,12 @@ void CDlgWebHistory::updateSta() {
 }
 
 void CDlgWebHistory::restoreSetting() {
-	m_bPornImage	= g_configuration.getWebHistoryRecordSetting()->recordPornImage();
-	m_bPornPage		= g_configuration.getWebHistoryRecordSetting()->recordPornPages();
-	m_bPornWebsite	= g_configuration.getWebHistoryRecordSetting()->recordPornWebsite();
-	m_bAllImage		= g_configuration.getWebHistoryRecordSetting()->recordAllImage();
-	m_bAllPages		= g_configuration.getWebHistoryRecordSetting()->recordAllPages();
-	m_bAllWebsite	= g_configuration.getWebHistoryRecordSetting()->recordAllWebsite();
+	m_bPornImage	= g_configuration.getWebHistoryRecordSetting()->pornimages_setting();
+	m_bPornPage		= g_configuration.getWebHistoryRecordSetting()->pornpages_setting();
+	m_bPornWebsite	= g_configuration.getWebHistoryRecordSetting()->pornwebsites_setting();
+	m_bAllImage		= g_configuration.getWebHistoryRecordSetting()->allimages_setting();
+	m_bAllPages		= g_configuration.getWebHistoryRecordSetting()->allpages_setting();
+	m_bAllWebsite	= g_configuration.getWebHistoryRecordSetting()->allwebsites_setting();
 
 	// auto clean
 	m_sliderWebHistoryAutoClean.SetRange(g_configuration.getWebHistoryRecordAutoClean()->getRangeMin(),

@@ -18,6 +18,7 @@ public:
 public:
 	bool isEnable() const { return enable_;}
 	void enable(const bool enabled) { enable_ = enabled;}
+	bool isSettingEnabled() const { return enabled_;}
 
 	// 设置和获取自动清理的时间间隔
 	void setTimespan(const int hours);

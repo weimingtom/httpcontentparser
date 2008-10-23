@@ -16,7 +16,6 @@ public:
 	bool recordAllPages() const	;
 	bool recordAllImage() const;
 	bool recordAllWebsite() const;
-
 	bool recordPornPages() const;
 	bool recordPornImage() const;
 	bool recordPornWebsite() const;
@@ -24,11 +23,16 @@ public:
 	void recordAllPages(const bool enable)	{ setModified(true); recordPage_ = enable;}
 	void recordAllImage(const bool enable)	{ setModified(true); recordImage_ = enable;}
 	void recordAllWebsite(const bool enable)	{ setModified(true); recordWebsite_ = enable;}
-
-
 	void recordPornPages(const bool enable)   { setModified(true); recordPornPage_ = enable;}
 	void recordPornImage(const bool enable)   { setModified(true); recordPornImage_ = enable;}
 	void recordPornWebsite(const bool enable) { setModified(true); recordPornWebsite_ = enable;}
+
+	bool allpages_setting() const {return recordPage_;}
+	bool allimages_setting() const {return recordImage_;}
+	bool allwebsites_setting() const {return recordWebsite_;}
+	bool pornimages_setting() const {return recordPornImage_;}
+	bool pornpages_setting() const {return recordPornPage_;}
+	bool pornwebsites_setting() const {return recordPornWebsite_;}
 public:
 	void defaultSetting();
 

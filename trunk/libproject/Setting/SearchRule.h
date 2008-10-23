@@ -37,6 +37,7 @@ public:
 	bool check(const std::string &host_name, const std::string &search_word) const;
 
 	bool shouldCheck(const std::string &search_host) const;
+	bool setting_shouldCheck(const std::string &search_host) const;
 	// enumerate
 	void enumBlackWord(Enumerator1<std::string> * enumerator);
 	void enumSearchEngine(Enumerator2<std::string, bool> *enumerator);
