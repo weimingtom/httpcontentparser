@@ -206,7 +206,7 @@ TiXmlElement *  EyecareSetting::saveEyecare(TiXmlElement *app_root) {
 		return NULL;
 	}
 
-	eyecare_root->SetAttribute(CONFIG_CONST_ENABLE, enabledFromBool(enabled_));
+	eyecare_root->SetAttribute(CONFIG_CONST_ENABLE, enabledFromBool(isSettingEnabled()));
 	eyecare_root->SetAttribute(CONFIG_APPSET_EYECARE_STATE, Eyecare_state( getState()));
 
 	// ±£¥ÊTerm_mode

@@ -61,12 +61,8 @@ void CDlgScreenSaver::OnShow() {
  
 
 void CDlgScreenSaver::restoreSetting() {
-	//m_sliderAutoclearTimespan.SetRangeMax(g_configuration.getScreenSaveAutoClean()->getRangeMax()/ ( 60 * 60 * 24));
-	//m_sliderAutoclearTimespan.SetRangeMin(g_configuration.getScreenSaveAutoClean()->getRangeMin()/ ( 60 * 60 * 24));
-	//m_sliderAutoclearTimespan.SetPos(g_configuration.getScreenSaveAutoClean()->getTimespan()/ (60 * 60 * 24));
-
-	m_bEnableScreensave = g_configuration.getScreenSave()->isEnabled();
-	m_bEnableAutoclean = g_configuration.getScreenSaveAutoClean()->isEnable();
+	m_bEnableScreensave = g_configuration.getScreenSave()->isSettingEnabled();
+	m_bEnableAutoclean = g_configuration.getScreenSaveAutoClean()->isSettingEnabled();
 
 	// ÉèÖÃ×Ô¶¯´æ´¢
 	m_sliderSaveTimespan.SetRange(1, 120);

@@ -59,7 +59,7 @@ void CDlgWhiteDNSList::restoreSetting() {
 
 	g_configuration.getWhiteURLSet()->beginEnum((Enumerator1<std::string>*)this);
 
-	m_bEnableWhiteDNS = g_configuration.getWhiteURLSet()->isEnabled();
+	m_bEnableWhiteDNS = g_configuration.getWhiteURLSet()->isSettingEnabled();
 	m_bCheckDenyAllOthers = g_configuration.getDNSSetting()->justPassWhiteDNS();
 	UpdateData(FALSE);
 }

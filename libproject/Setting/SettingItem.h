@@ -29,6 +29,9 @@ public:
 	static bool isModified() {
 		return modified_;
 	}
+
+public:
+	bool isSettingEnabled() const { return enabled_;}
 protected:
 	static void setModified(const bool modified) {
 		modified_ = modified;

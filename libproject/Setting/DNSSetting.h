@@ -36,6 +36,8 @@ public:
 public:
 	void enable(const bool check) {enabled_ = check;}
 	bool isEnabled() const { return enabled_;}
+
+	bool isSettingEnabled() const { return enabled_;}
 protected:
 	typedef std::set<std::string> DNS_SET;
 	DNS_SET dns_set_;
@@ -48,7 +50,7 @@ public:
 	virtual TiXmlElement * saveConfig(TiXmlElement * item_root);
 
 private:
-	TiXmlElement * saveWhiteURL(TiXmlElement *root);
+	TiXmlElement * saveURL(TiXmlElement *root);
 	int getURLs(TiXmlElement * rule_root);
 	int enableURLcheck(const TCHAR *isenable);
 };
@@ -101,11 +103,6 @@ private:
 public:
 	virtual int parseConfig(TiXmlElement * item_root);
 	virtual TiXmlElement * saveConfig(TiXmlElement * item_root);
-
-private:
-	TiXmlElement * saveWhiteURL(TiXmlElement *root);
-	int enableURLcheck(const TCHAR *isenable);
-	int getURLs(TiXmlElement * rule_root);
 };
 
 
