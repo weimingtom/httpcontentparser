@@ -10,10 +10,12 @@ public:
 	~IAccessNetworkTest(void);
 
 	CPPUNIT_TEST_SUITE(IAccessNetworkTest);
+	CPPUNIT_TEST(TestTwoModel);
 	CPPUNIT_TEST(TestSetAndGetBlockTime);
 	CPPUNIT_TEST_SUITE_END();
 private:
 	void TestSetAndGetBlockTime();
+	void TestTwoModel();
 };
 
 #endif  // _TEST_FILTER_SETTING_IACCESSNETWORKTEST_H__

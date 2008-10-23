@@ -1,5 +1,6 @@
 #include "StdAfx.h"
 #include ".\iseachruletest.h"
+#include ".\comtestutility.h"
 #include <utility\dns.h>
 #include <utility\strutility.h>
 #include <com\FilterSetting_i.c>
@@ -17,6 +18,8 @@ ISeachRuleTest::~ISeachRuleTest(void)
 
 
 void ISeachRuleTest::TestRemove() {
+	GetInChildMode();
+
 	AutoInitInScale auto_;
 	ISearchRule * seachrule = NULL;
 	CoCreateInstance(CLSID_SearchRule, NULL, CLSCTX_LOCAL_SERVER, IID_ISearchRule, (LPVOID*)&seachrule);
@@ -46,6 +49,8 @@ void ISeachRuleTest::TestRemove() {
 	CPPUNIT_ASSERT (VARIANT_TRUE == passed);
 }
 void ISeachRuleTest::TestISeachRule() {
+	GetInChildMode();
+
 	AutoInitInScale auto_;
 	ISearchRule * seachrule = NULL;
 	CoCreateInstance(CLSID_SearchRule, NULL, CLSCTX_LOCAL_SERVER, IID_ISearchRule, (LPVOID*)&seachrule);
@@ -67,7 +72,6 @@ void ISeachRuleTest::TestISeachRule() {
 
 	seachrule->check(test_string,  _bstr_t(seach_name1), &passed);
 	CPPUNIT_ASSERT (VARIANT_FALSE == passed);
-
 
 	seachrule->check(test_string,  _bstr_t(seach_name2),&passed);
 	CPPUNIT_ASSERT (VARIANT_TRUE == passed);
