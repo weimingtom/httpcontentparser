@@ -9,6 +9,7 @@
 #include <com\FilterSetting.h>
 #include <comdef.h>
 #include <typeconvert.h>
+#include <app_constants.h>
 
 #define MAX_LOADSTRING 100
 #define WM_MY_SHOWDIALOG (WM_USER + 0x0001)
@@ -82,6 +83,13 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
                      LPTSTR    lpCmdLine,
                      int       nCmdShow)
 {
+	// 如果已经有程序启动，则直接推出
+	HANDLE hMutex = CreateMutex(NULL, FALSE, EYECARE_MUTEX_NAME);
+	if (GetLastError() == ERROR_ALREADY_EXISTS) {
+		CloseHandle(hMutex);
+		return 0;
+	}
+
 	// 首先确定应用程序是否已经打开，
 	HWND hOld = GetEyecareApp();
 	if (NULL != hOld) {

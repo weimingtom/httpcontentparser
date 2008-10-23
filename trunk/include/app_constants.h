@@ -69,5 +69,6 @@ TCHAR * getHotkeyname(const int type) {
 // for Eyecare windows
 #define EYECARE_MAIN_WND_CLASS (TEXT("Eyecare_main_wnd_class"))
 #define EYECARE_MAIN_WND_TITLE (TEXT(""))
+#define EYECARE_MUTEX_NAME		TEXT("8EF40F9D-71A7-40d9-A229-599105419DAE")
 
 #endif // _SPI_INSTALLER_SPIDEFINES_H__
