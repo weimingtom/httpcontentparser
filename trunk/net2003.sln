@@ -102,6 +102,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestSysutility", "test\Test
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ServicesUtility", "libproject\ServicesUtility\ServicesUtility.vcproj", "{700712D2-BF15-4AC4-8274-CA4336EEDD0C}"
 	ProjectSection(ProjectDependencies) = postProject
+		{CD11D86D-3173-4945-8215-7450A0D9CB3C} = {CD11D86D-3173-4945-8215-7450A0D9CB3C}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestServicesUtility", "test\TestServicesUtility\TestServicesUtility.vcproj", "{151E6AC1-A099-42DB-B6CC-08456391ED3B}"

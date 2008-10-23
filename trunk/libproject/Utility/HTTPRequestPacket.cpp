@@ -92,8 +92,10 @@ int HTTPRequestPacket::parsePacket(char * buf, const int len) {
 	while (next != NULL) {
 		if (strstr(p, HTTP_REQUEST_HOST) == p) {
 			// 主机地址只留DNS主名
+			TCHAR buffer[HTTP_REQUEST_ITEM_MAX_LENGTH] = {0};
 			const int tab_length = strlen(HTTP_REQUEST_HOST);
-			get_main_dns_name(host_, HTTP_REQUEST_ITEM_MAX_LENGTH, p + tab_length);
+			strncpy(buffer, p + tab_length, getWrittenCount(next - p - tab_length));
+			get_main_dns_name(host_, HTTP_REQUEST_ITEM_MAX_LENGTH, buffer);
 			cnt++;
 		} else if (strstr(p, HTTP_REQUEST_REFERER) == p) {
 			const int tab_length = strlen(HTTP_REQUEST_REFERER);

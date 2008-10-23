@@ -52,7 +52,7 @@ void HttpRequestPacketTest::parseMultiPacket() {
 
 	{
 	char * packet1 = "POST HTTP/1.1\r\n"
-	"Host: d1.sina.com.cn\r\n";
+	"Host: www.google.com\r\n";
 	char * packet2 = "User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.16) Gecko/20080702 Firefox/2.0.0.16 GoogleToolbarFF\r\n"
 	"Connection: keep-alive\r\n"
 	"Referer: http://news.sina.com.cn/c/2008-09-04/202816233711.shtml\r\n";
@@ -69,7 +69,7 @@ void HttpRequestPacketTest::parseMultiPacket() {
 
 	char buffer[HTTP_REQUEST_ITEM_MAX_LENGTH];
 	request_packet.getHost(buffer, HTTP_REQUEST_ITEM_MAX_LENGTH);
-	CPPUNIT_ASSERT(strcmp("sina", buffer) == 0);
+	CPPUNIT_ASSERT(strcmp("google", buffer) == 0);
 
 
 	request_packet.getReferer(buffer, HTTP_REQUEST_ITEM_MAX_LENGTH);
@@ -88,7 +88,7 @@ void HttpRequestPacketTest::parsePacket() {
 	{
 	HTTPRequestPacket request_packet;
 	char * packet = "GET /iframe/gn/9/2007-04-28/17251.html HTTP/1.1\r\n"
-	"Host: d1.sina.com.cn\r\n"
+	"Host: seach.google.com\r\n"
 	"User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.16) Gecko/20080702 Firefox/2.0.0.16 GoogleToolbarFF\r\n"
 	"Connection: keep-alive\r\n"
 	"Referer: http://news.sina.com.cn/c/2008-09-04/202816233711.shtml\r\n";
@@ -99,7 +99,7 @@ void HttpRequestPacketTest::parsePacket() {
 
 	char buffer[HTTP_REQUEST_ITEM_MAX_LENGTH];
 	request_packet.getHost(buffer, HTTP_REQUEST_ITEM_MAX_LENGTH);
-	CPPUNIT_ASSERT(strcmp("sina", buffer) == 0);
+	CPPUNIT_ASSERT(strcmp("google", buffer) == 0);
 
 	CPPUNIT_ASSERT(HTTPRequestPacket::HTTP_REQUEST_OPETYPE_GET == request_packet.getRequestType());
 	request_packet.getReferer(buffer, HTTP_REQUEST_ITEM_MAX_LENGTH);
@@ -113,7 +113,7 @@ void HttpRequestPacketTest::parsePacket() {
 	{
 	HTTPRequestPacket request_packet;
 	char * packet = "GET /iframe/gn/9/2007-04-28/17251.html HTTP/1.1\r\n"
-	"Host: d1.sina.com.cn\r\n"
+	"Host: sAahh1.BAIDU.com\r\n"
 	"Connection: keep-alive\r\n"
 	"Referer: http://news.sina.com.cn/c/2008-09-04/202816233711.shtml\r\n"
 	"User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.16) Gecko/20080702 Firefox/2.0.0.16 GoogleToolbarFF\r\n";
@@ -121,7 +121,7 @@ void HttpRequestPacketTest::parsePacket() {
  	request_packet.parsePacket(packet, strlen(packet));
 	char buffer[HTTP_REQUEST_ITEM_MAX_LENGTH];
 	request_packet.getHost(buffer, HTTP_REQUEST_ITEM_MAX_LENGTH);
-	CPPUNIT_ASSERT(strcmp("sina", buffer) == 0);
+	CPPUNIT_ASSERT(strcmp("baidu", buffer) == 0);
 
 	CPPUNIT_ASSERT(HTTPRequestPacket::HTTP_REQUEST_OPETYPE_GET == request_packet.getRequestType());
 
