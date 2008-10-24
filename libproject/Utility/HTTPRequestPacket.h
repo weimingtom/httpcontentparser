@@ -19,8 +19,9 @@ public:
 	int getHost(char *buffer, const int len);
 	int getReferer(char *buffer, const int len);
 	int getUserAgent(char *buffer, const int len);
+	int getMainHostName(char *buffer, const int len);
 	int getRequestType() { return http_request_type_;}
-
+	
 	enum {
 		HTTP_REQUEST_OPETYPE_GET = 0,
 		HTTP_REQUEST_OPETYPE_POST,
@@ -28,6 +29,7 @@ public:
 private:
 	void reset();
 
+	char main_host_[HTTP_REQUEST_ITEM_MAX_LENGTH];
 	char host_[HTTP_REQUEST_ITEM_MAX_LENGTH];
 	char referer_[HTTP_REQUEST_ITEM_MAX_LENGTH];
 	char useagent_[HTTP_REQUEST_ITEM_MAX_LENGTH];

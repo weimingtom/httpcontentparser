@@ -34,6 +34,10 @@ HTTPRequestPacket::HTTPRequestPacket(void) {
 HTTPRequestPacket::~HTTPRequestPacket(void) {
 }
 
+int HTTPRequestPacket::getMainHostName(char *buffer, const int len) {
+	strncpy(buffer, main_host_, getWrittenCount(len));
+	return strlen(buffer);
+}
 int HTTPRequestPacket::getHost(char *buffer, const int len) {
 	strncpy(buffer, host_, getWrittenCount(len));
 	return strlen(buffer);
@@ -92,10 +96,9 @@ int HTTPRequestPacket::parsePacket(char * buf, const int len) {
 	while (next != NULL) {
 		if (strstr(p, HTTP_REQUEST_HOST) == p) {
 			// 主机地址只留DNS主名
-			TCHAR buffer[HTTP_REQUEST_ITEM_MAX_LENGTH] = {0};
 			const int tab_length = strlen(HTTP_REQUEST_HOST);
-			strncpy(buffer, p + tab_length, getWrittenCount(next - p - tab_length));
-			get_main_dns_name(host_, HTTP_REQUEST_ITEM_MAX_LENGTH, buffer);
+			strncpy(host_, p + tab_length, getWrittenCount(next - p - tab_length));
+			get_main_dns_name(main_host_, HTTP_REQUEST_ITEM_MAX_LENGTH, host_);
 			cnt++;
 		} else if (strstr(p, HTTP_REQUEST_REFERER) == p) {
 			const int tab_length = strlen(HTTP_REQUEST_REFERER);
