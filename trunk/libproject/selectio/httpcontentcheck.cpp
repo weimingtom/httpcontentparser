@@ -13,6 +13,9 @@
 #include <memory>
 #include <comdef.h>
 
+#define IMAGE_LOW_LIMIT (1024 * 5)	//图像的下届是5K
+#define	TEXT_LOW_LIMIT  (1024)		// 网页的下限是1K
+
 /////////////////////////////////////////////
 // class HTTPContentHander
 HTTPContentHander::HTTPContentHander() {
@@ -114,27 +117,31 @@ int HTTPContentHander::checkText(HTTPPacket *packet) {
 int HTTPContentHander::saveImage(HTTPPacket *packet, const int check_result) {
 	assert (isImage(packet->getContentType()) == true);
 	
-	// 生成文件名
-	char fullpath[MAX_PATH];
-	generateImageName(fullpath, MAX_PATH, packet->getContentType());
-	packet->achieve_data(fullpath);
+	if (packet->getDataSize() > IMAGE_LOW_LIMIT) {
+		// 生成文件名
+		char fullpath[MAX_PATH];
+		generateImageName(fullpath, MAX_PATH, packet->getContentType());
+		packet->achieve_data(fullpath);
 
-	// 增加到配置文件当中
-	addToRepostory(fullpath, packet, check_result);
+		// 增加到配置文件当中
+		addToRepostory(fullpath, packet, check_result);
+	}
 	return -1;
 }
 
 // 可能需要解压缩保存
 int HTTPContentHander::saveText(HTTPPacket * packet, const int check_result) {
 	assert (isText(packet->getContentType()) == true);
-	
-	// 生成文件名
-	char fullpath[MAX_PATH];
-	generatePageName(fullpath, MAX_PATH, packet->getContentType());
-	packet->achieve_data(fullpath);
 
-	// 增加到配置文件当中
-	addToRepostory(fullpath, packet, check_result);
+	if (packet->getDataSize() > TEXT_LOW_LIMIT) {
+		// 生成文件名
+		char fullpath[MAX_PATH];
+		generatePageName(fullpath, MAX_PATH, packet->getContentType());
+		packet->achieve_data(fullpath);
+
+		// 增加到配置文件当中
+		addToRepostory(fullpath, packet, check_result);
+	}
 	return -1;
 }
 
