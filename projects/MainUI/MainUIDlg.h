@@ -120,6 +120,7 @@ protected:
 	afx_msg void OnToolsDesktopimage();
 	afx_msg void OnToolsWebhistory();
 	afx_msg void OnMainLockcomputer();
+	afx_msg void OnDestroy();
 
 	virtual void OnOK();
 	virtual void OnCancel();
@@ -127,7 +128,7 @@ protected:
 	// 根据当前状态初始化TrayMenu
 	// 此函数会在每次应用程序启动及状态切换时调用
 	void UpdateUIStateByModel();
-public:
-	afx_msg void OnDestroy();
-	afx_msg void OnSetFocus(CWnd* pOldWnd);
+private:
+	void ShowMainUI();
+	void HideMainUI();
 };
