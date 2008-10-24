@@ -68,7 +68,7 @@ STDMETHODIMP CAppSetting::switchModel(VARIANT_BOOL bParent, BSTR pwd, VARIANT_BO
 		SettingItem::setModel(SettingItem::MODE_CHILD);
 		*bSucc = VARIANT_TRUE;
 
-		if (false == g_configuration.getEyecareSetting()->isTimerStopped()) {
+		if (true == g_configuration.getEyecareSetting()->isTimerStopped()) {
 			g_configuration.getEyecareSetting()->restartTimer();
 		}
 	}
