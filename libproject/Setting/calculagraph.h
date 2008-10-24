@@ -93,7 +93,7 @@ public:
 	void restart() {
 		getCurrentCalcu()->restart();
 	}
-	void isStopper() {
+	bool isStopped() {
 		return getCurrentCalcu()->isStopped();
 	}
 private:
