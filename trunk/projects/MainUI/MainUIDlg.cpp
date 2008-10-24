@@ -89,7 +89,6 @@ BEGIN_MESSAGE_MAP(CMainUIDlg, CDialog)
 	ON_COMMAND(ID_TRAYMENU_LOCKCOMPUTER, OnMainLockcomputer)
 	ON_BN_CLICKED(IDC_MAIN_CANCEL, OnBnClickedMainCancel)
 	ON_WM_DESTROY()
-	ON_WM_SETFOCUS()
 END_MESSAGE_MAP()
 
 // CMainUIDlg 消息处理程序
@@ -128,7 +127,7 @@ void CMainUIDlg::UpdateUIStateByModel() {
 		pMenu->CheckMenuItem(ID_TRAYMENU_MODEL_CHILDREN, MF_CHECKED);
 
 		// 此外还要隐藏著对话框
-		ShowWindow(SW_HIDE);
+		HideMainUI();
 	}
 }
 
@@ -189,7 +188,7 @@ void CMainUIDlg::OnSysCommand(UINT nID, LPARAM lParam)
 		CAboutDlg dlgAbout;
 		dlgAbout.DoModal();
 	} else if (nID == SC_MINIMIZE) {
-		ShowWindow(SW_HIDE);
+		HideMainUI();
 		m_bShowed = FALSE;
 	} else {
 		CDialog::OnSysCommand(nID, lParam);
@@ -203,7 +202,7 @@ void CMainUIDlg::OnTraymenuMainui() {
 	CString strMenuItem;
 	if (m_bShowed) {
 		strMenuItem.LoadString(IDS_TRAYMENU_HIDEUI);
-		ShowWindow(SW_HIDE);
+		HideMainUI();
 		m_bShowed = FALSE;
 	} else {
 		if (Services::isParentModel() == false) {
@@ -226,7 +225,7 @@ void CMainUIDlg::OnTraymenuMainui() {
 
 // 推出按钮
 void CMainUIDlg::OnMainExit() {
-	ShowWindow(SW_SHOW);
+	::SetWindowPos(GetSafeHwnd(), HWND_BOTTOM, 0, 0, 0, 0, SWP_NOSIZE | SWP_NOMOVE);
 	CDialog::OnOK();
 }
 
@@ -261,7 +260,7 @@ LRESULT CMainUIDlg::OnHotKey(WPARAM wParam, LPARAM lParam) {
 		CDlgCheckPassword dlg;
 		if (IDOK == dlg.DoModal()) {
 		} else {
-			ShowWindow(SW_HIDE);
+			HideMainUI();
 		}
 	}
 
@@ -287,12 +286,12 @@ void CMainUIDlg::OnToolsWebhistory() {
 
 // 相应按钮
 void CMainUIDlg::OnOK() {
-	ShowWindow(SW_HIDE);
+	HideMainUI();
 	m_bShowed = FALSE;
 }
 
 void CMainUIDlg::OnCancel() {
-	ShowWindow(SW_HIDE);
+	HideMainUI();
 	m_bShowed = FALSE;
 }
 
@@ -306,13 +305,13 @@ void CMainUIDlg::OnBnClickedOk()
 	
 	m_curDlg->SetModify(false);
 	m_bShowed = FALSE;
-	ShowWindow(SW_HIDE);
+	HideMainUI();
 }
 
 void CMainUIDlg::OnBnClickedMainCancel()
 {
 	m_bShowed = FALSE;
-	ShowWindow(SW_HIDE);	// 隐藏窗口
+	HideMainUI();	// 隐藏窗口
 	m_curDlg->Restore();	// 恢复设置
 	m_curDlg->SetModify(false);
 }
@@ -371,7 +370,7 @@ void CMainUIDlg::OnPaint()
 		dc.DrawIcon(x, y, m_hIcon);
 	} else {
 		if (Services::isParentModel() == false) {
-			ShowWindow(SW_HIDE);
+			HideMainUI();
 			m_bShowed = FALSE;
 			return;
 		} else {
@@ -596,7 +595,11 @@ void CMainUIDlg::OnDestroy()
 	CDialog::OnDestroy();
 }
 
-void CMainUIDlg::OnSetFocus(CWnd* pOldWnd)
-{
-	CDialog::OnSetFocus(pOldWnd);
+void CMainUIDlg::ShowMainUI() {
+	ShowWindow(SW_SHOW);
+	::SetWindowPos(GetSafeHwnd(), HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
+}
+void CMainUIDlg::HideMainUI() {
+	ShowWindow(SW_HIDE);
+	::SetWindowPos(GetSafeHwnd(), HWND_BOTTOM, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
 }
