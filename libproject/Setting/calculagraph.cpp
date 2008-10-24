@@ -74,6 +74,8 @@ void Calculagraph::stop() {
 	stopped_ = true;
 } 
 void Calculagraph::restart() {
-	setTimeEscapeMS(last_time_escape_);
-	stopped_ = false;
+	if (isStopped()) {
+		setTimeEscapeMS(last_time_escape_);
+		stopped_ = false;
+	}
 }
