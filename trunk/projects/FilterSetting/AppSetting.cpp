@@ -56,6 +56,9 @@ STDMETHODIMP CAppSetting::switchModel(VARIANT_BOOL bParent, BSTR pwd, VARIANT_BO
 		if (true == g_configuration.getAuthorize()->checkPassword((TCHAR*)_bstr_t(pwd), PASSWORD_SU)) {
 			SettingItem::setModel(SettingItem::MODE_PARENT);
 			*bSucc = VARIANT_TRUE;
+
+			// 而且还要停止Eyecare 的计数器
+			g_configuration.getEyecareSetting()->stopTimer();
 		} else {
 			// 验证密码失败
 			*bSucc = VARIANT_FALSE;
@@ -64,6 +67,10 @@ STDMETHODIMP CAppSetting::switchModel(VARIANT_BOOL bParent, BSTR pwd, VARIANT_BO
 		// 如果切换到孩子模式，则不需要密码
 		SettingItem::setModel(SettingItem::MODE_CHILD);
 		*bSucc = VARIANT_TRUE;
+
+		if (false == g_configuration.getEyecareSetting()->isTimerStopped()) {
+			g_configuration.getEyecareSetting()->restartTimer();
+		}
 	}
 	return S_OK;
 }
