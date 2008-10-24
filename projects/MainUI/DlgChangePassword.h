@@ -27,11 +27,11 @@ public:
 	CString m_strNew;
 	CString m_strRetype;
 
-	CGuiEdit m_edtOrgin;
-	CGuiEdit m_edtNew;
-	CGuiEdit m_edtRetry;
-	CGuiButton m_btnOk;
-	CGuiButton m_btnCancel;
+	CEdit m_edtOrgin;
+	CEdit m_edtNew;
+	CEdit m_edtRetry;
+	CButton m_btnOk;
+	CButton m_btnCancel;
 	HICON m_hIcon;
 public:
 	virtual BOOL OnInitDialog();

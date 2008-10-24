@@ -84,11 +84,6 @@ BOOL CDlgChangePassword::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 
-	m_btnOk.SetStyleBorder(CGuiButton::STYLEXP);
-	m_btnOk.SetCaption("OK");
-	m_btnCancel.SetStyleBorder(CGuiButton::STYLEXP);
-	m_btnCancel.SetCaption("Cancel");
-
 	// set Icon
 	SetIcon(m_hIcon, TRUE);			// 设置大图标
 	SetIcon(m_hIcon, FALSE);		// 设置小图标
