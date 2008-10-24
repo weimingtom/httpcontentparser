@@ -741,6 +741,7 @@ BEGIN
     IDS_EYECARE_STATE_EYECARE "Eyecare time"
     IDS_EYECARE_STATE_ENTERTAIN "Entertain time"
     IDS_HOTKEY_CONFLICT     "Hotkey Conflict!"
+    IDS_WEB_HISTORY_CLEAR_SUCC "Clear Succeeded."
 END
 
 #endif    // Ó¢Óï(ÃÀ¹ú) resources

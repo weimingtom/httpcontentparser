@@ -37,6 +37,7 @@
 #define IDS_EYECARE_STATE_EYECARE       123
 #define IDS_EYECARE_STATE_ENTERTAIN     124
 #define IDS_HOTKEY_CONFLICT             125
+#define IDS_WEB_HISTORY_CLEAR_SUCC      126
 #define IDR_MAINFRAME                   128
 #define IDD_DLG_HELP                    129
 #define IDD_DLG_ABOUT                   130
@@ -217,7 +218,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        159
 #define _APS_NEXT_COMMAND_VALUE         32808
-#define _APS_NEXT_CONTROL_VALUE         1099
+#define _APS_NEXT_CONTROL_VALUE         1100
 #define _APS_NEXT_SYMED_VALUE           112
 #endif
 #endif

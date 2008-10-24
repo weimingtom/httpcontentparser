@@ -121,6 +121,9 @@ END_MESSAGE_MAP()
 
 void CDlgWebHistory::OnBnClickedBunClearCache() {
 	ClearHistory((HMODULE)AfxGetInstanceHandle());
+	CString str;
+	str.LoadString(IDS_WEB_HISTORY_CLEAR_SUCC);
+	AfxMessageBox(str);
 }
 
 BOOL CDlgWebHistory::OnInitDialog()
