@@ -37,8 +37,10 @@ void HttpRequestPacketTest::parseMultiPacket() {
 	CPPUNIT_ASSERT(item_count == 4);
 
 	char buffer[HTTP_REQUEST_ITEM_MAX_LENGTH];
-	request_packet.getHost(buffer, HTTP_REQUEST_ITEM_MAX_LENGTH);
+	request_packet.getMainHostName(buffer, HTTP_REQUEST_ITEM_MAX_LENGTH);
 	CPPUNIT_ASSERT(strcmp("sina", buffer) == 0);
+	request_packet.getHost(buffer, HTTP_REQUEST_ITEM_MAX_LENGTH);
+	CPPUNIT_ASSERT(strcmp("d1.sina.com.cn", buffer) == 0);
 
 
 	request_packet.getReferer(buffer, HTTP_REQUEST_ITEM_MAX_LENGTH);
@@ -68,8 +70,10 @@ void HttpRequestPacketTest::parseMultiPacket() {
 	CPPUNIT_ASSERT(item_count == 4);
 
 	char buffer[HTTP_REQUEST_ITEM_MAX_LENGTH];
-	request_packet.getHost(buffer, HTTP_REQUEST_ITEM_MAX_LENGTH);
+	request_packet.getMainHostName(buffer, HTTP_REQUEST_ITEM_MAX_LENGTH);
 	CPPUNIT_ASSERT(strcmp("google", buffer) == 0);
+	request_packet.getHost(buffer, HTTP_REQUEST_ITEM_MAX_LENGTH);
+	CPPUNIT_ASSERT(strcmp("www.google.com", buffer) == 0);
 
 
 	request_packet.getReferer(buffer, HTTP_REQUEST_ITEM_MAX_LENGTH);
@@ -98,8 +102,11 @@ void HttpRequestPacketTest::parsePacket() {
 	CPPUNIT_ASSERT(item_count == 4);
 
 	char buffer[HTTP_REQUEST_ITEM_MAX_LENGTH];
-	request_packet.getHost(buffer, HTTP_REQUEST_ITEM_MAX_LENGTH);
+	request_packet.getMainHostName(buffer, HTTP_REQUEST_ITEM_MAX_LENGTH);
 	CPPUNIT_ASSERT(strcmp("google", buffer) == 0);
+	request_packet.getHost(buffer, HTTP_REQUEST_ITEM_MAX_LENGTH);
+	CPPUNIT_ASSERT(strcmp("seach.google.com", buffer) == 0);
+
 
 	CPPUNIT_ASSERT(HTTPRequestPacket::HTTP_REQUEST_OPETYPE_GET == request_packet.getRequestType());
 	request_packet.getReferer(buffer, HTTP_REQUEST_ITEM_MAX_LENGTH);
@@ -119,9 +126,13 @@ void HttpRequestPacketTest::parsePacket() {
 	"User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.16) Gecko/20080702 Firefox/2.0.0.16 GoogleToolbarFF\r\n";
 
  	request_packet.parsePacket(packet, strlen(packet));
+
 	char buffer[HTTP_REQUEST_ITEM_MAX_LENGTH];
-	request_packet.getHost(buffer, HTTP_REQUEST_ITEM_MAX_LENGTH);
+	request_packet.getMainHostName(buffer, HTTP_REQUEST_ITEM_MAX_LENGTH);
 	CPPUNIT_ASSERT(strcmp("baidu", buffer) == 0);
+	request_packet.getHost(buffer, HTTP_REQUEST_ITEM_MAX_LENGTH);
+	CPPUNIT_ASSERT(strcmp("sAahh1.BAIDU.com", buffer) == 0);
+
 
 	CPPUNIT_ASSERT(HTTPRequestPacket::HTTP_REQUEST_OPETYPE_GET == request_packet.getRequestType());
 
