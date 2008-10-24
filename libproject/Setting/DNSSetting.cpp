@@ -1,5 +1,6 @@
 #include "StdAfx.h"
 #include ".\DNSSetting.h"
+#include <utility\dns.h>
 #include <set>
 #include <string>
 #include <assert.h>

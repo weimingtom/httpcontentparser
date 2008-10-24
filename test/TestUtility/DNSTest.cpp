@@ -1,6 +1,59 @@
 #include "StdAfx.h"
 #include ".\dnstest.h"
 
+void DNSTest::GetMainNameFromBrowseAddresss() {
+	TCHAR result[MAX_PATH];
+	{
+		const TCHAR * test_unit = "code.google.com/p/httpcontentparser/issues/detail?id=57";
+		const TCHAR * expected_result = "google";
+		CPPUNIT_ASSERT( _tcslen(expected_result) == 
+			get_main_dns_name(result, MAX_PATH,test_unit));
+		CPPUNIT_ASSERT( 0 == _tcscmp(result, expected_result));
+	}
+
+	{
+		const TCHAR * test_unit = "www.baidu.com/s?ie=gb2312&bs=%B0%C2%B6%FB%C2%B3%CB%E9%C6%AC&sr=&z=&cl=3&f=8&wd=%C4%CE%B6%FB%C2%B3%CB%E9%C6%AC&ct=0";
+		const TCHAR * expected_result = "baidu";
+		CPPUNIT_ASSERT( _tcslen(expected_result) == 
+			get_main_dns_name(result, MAX_PATH,test_unit));
+		CPPUNIT_ASSERT( 0 == _tcscmp(result, expected_result));
+	}
+
+	{
+		const TCHAR * test_unit = "sports.sina.com.cn/nba/";
+		const TCHAR * expected_result = "sina";
+		CPPUNIT_ASSERT( _tcslen(expected_result) == 
+			get_main_dns_name(result, MAX_PATH,test_unit));
+		CPPUNIT_ASSERT( 0 == _tcscmp(result, expected_result));
+	}
+}
+
+void DNSTest::GetMainNameFromBrowseAddressswithProto() {
+	TCHAR result[MAX_PATH];
+	{
+		const TCHAR * test_unit = "http://code.google.com/p/httpcontentparser/issues/detail?id=57";
+		const TCHAR * expected_result = "google";
+		CPPUNIT_ASSERT( _tcslen(expected_result) == 
+			get_main_dns_name(result, MAX_PATH,test_unit));
+		CPPUNIT_ASSERT( 0 == _tcscmp(result, expected_result));
+	}
+
+	{
+		const TCHAR * test_unit = "http://www.baidu.com/s?ie=gb2312&bs=%B0%C2%B6%FB%C2%B3%CB%E9%C6%AC&sr=&z=&cl=3&f=8&wd=%C4%CE%B6%FB%C2%B3%CB%E9%C6%AC&ct=0";
+		const TCHAR * expected_result = "baidu";
+		CPPUNIT_ASSERT( _tcslen(expected_result) == 
+			get_main_dns_name(result, MAX_PATH,test_unit));
+		CPPUNIT_ASSERT( 0 == _tcscmp(result, expected_result));
+	}
+
+	{
+		const TCHAR * test_unit = "http://sports.sina.com.cn/nba/";
+		const TCHAR * expected_result = "sina";
+		CPPUNIT_ASSERT( _tcslen(expected_result) == 
+			get_main_dns_name(result, MAX_PATH,test_unit));
+		CPPUNIT_ASSERT( 0 == _tcscmp(result, expected_result));
+	}
+}
 
 void DNSTest::GetMainNameTest() {
 	TCHAR result[MAX_PATH];
