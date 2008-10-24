@@ -34,7 +34,7 @@ public:
 
 
 	// 获取剩余时间
-	int getRemainTime() const { return calculagraph_.getRemainTime();}
+	int getRemainTime() { return calculagraph_.getRemainTime();}
 	int getState() const;// 获取目前的状态
 
 	// 设置休息时间和娱乐事件
