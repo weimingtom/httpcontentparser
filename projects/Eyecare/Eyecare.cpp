@@ -30,6 +30,22 @@ LRESULT CALLBACK	WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK	About(HWND, UINT, WPARAM, LPARAM);
 
 
+BOOL IsRuninParentModel() {
+	try {
+		VARIANT_BOOL parent_mode = VARIANT_FALSE;
+		IAppSetting *app = NULL;
+		HRESULT hr = CoCreateInstance(CLSID_AppSetting, NULL, CLSCTX_LOCAL_SERVER, IID_IAppSetting, (LPVOID*)&app);
+		if (FAILED(hr)) {
+			return FALSE;
+		}
+
+		app->get_ParentModel(&parent_mode);
+
+		return convert(parent_mode);
+	} catch (_com_error &) {
+		return FALSE;
+	}
+}
 BOOL TRYSwitchMode(LPCTSTR password) {
 	try {
 		VARIANT_BOOL succeeded = FALSE;
@@ -181,17 +197,23 @@ LRESULT CALLBACK InputPasswordDlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM
 		case WM_TIMER:
 			try {
 				_tcscpy(szBuffer, "Login System");
-				pEyeCare->getTimeLeft(&seconds);
-				if (seconds > 60) {
-					_stprintf(szBuffer, "Login System - rest time : %d min", (int)(seconds/60));
-				} else if (seconds > 0){
-					_stprintf(szBuffer, "Login System - rest time : less than one min");
-				} else {
-					pEyeCare->trySwitch(&state);
-					EndDialog(hDlg, 0);
-				}
 
+				// 如果运行在父模式下
+				if (IsRuninParentModel()) {
+					// 为什么不检测是否在父模式下，如果在则退出呢？
+					EndDialog(hDlg, 0);
+				} else {
+					pEyeCare->getTimeLeft(&seconds);
+					if (seconds > 60) {
+						_stprintf(szBuffer, "Rest time : %d min", (int)(seconds/60));
+					} else if (seconds > 0){
+						_stprintf(szBuffer, "Rest time : %d second", seconds);
+					} else {
+						pEyeCare->trySwitch(&state);
+						EndDialog(hDlg, 0);
+					}
 				SetWindowText(hDlg, szBuffer);
+				}
 			} catch (...) {
 				CoCreateInstance(CLSID_Eyecare, NULL, CLSCTX_ALL, IID_IEyecare, (LPVOID*)&pEyeCare);
 			}
