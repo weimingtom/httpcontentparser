@@ -3,7 +3,8 @@
 #include ".\strutility.h"
 #include <tchar.h>
 #include <assert.h>
-  
+#include <fstream>
+using namespace std;
 namespace {
 const TCHAR * DNS_POSTFIX_ORG = ".org";
 const TCHAR * DNS_POSTFIX_COM = ".com";
@@ -92,18 +93,17 @@ int get_main_dns_name(TCHAR * main_name, const int bufsize, const TCHAR *fulldns
 
 	// 可能域名仍然后两个部分，例如
 	// 从尾部开始向前寻找'.'
+	bool a = false;
 	for (int i = len - len_remove_postfix - 1; i >=0; --i) {
 		if ('.' == name[i]) {
-			assert (len - len_remove_postfix - 1 - i > 3);	// main name必然大于3
 			_tcscpy(main_name, &(name[i+1]));
-
-			len_remove_postfix += i+1;	// 有去掉了 i+1个字符
-			return (len - len_remove_postfix);
+			assert(_tcslen(main_name) >= 3);
+			return _tcslen(main_name);
 		}
 	}
 
 	_tcsncpy(main_name, name, MAX_PATH);
-	return len - len_remove_postfix;
+	return  _tcslen(main_name);
 }
 
 /////////////////////////////////////////////////////////////////////////////
