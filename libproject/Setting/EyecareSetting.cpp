@@ -61,13 +61,6 @@ bool EyecareSetting::setPassword(const std::string &password, const std::string 
 
 // 获取剩余时间
 int EyecareSetting::getRemainTime() {
-	if (SettingItem::getModel() == SettingItem::MODE_PARENT) {
-		calculagraph_.stop();
-	} else {
-		if (calculagraph_.isStopped()) {
-			calculagraph_.restart();
-		}
-	}
 	return calculagraph_.getRemainTime();
 }
 

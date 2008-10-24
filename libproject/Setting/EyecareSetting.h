@@ -49,6 +49,11 @@ public:
 	int ForceLockWnd(); // 强制关闭屏幕, 此时只有输入密码才可进入
 
 	void initialize(Authorize *authorize, int state);
+
+	// 停止或重新启动
+	void stopTimer() { return calculagraph_.stop();}
+	void restartTimer() { return calculagraph_.restart();}
+	bool isTimerStopped() { return calculagraph_.isStopped();}
 private:
 	bool checkPassword(const std::string &password);
 
