@@ -16,27 +16,27 @@ const TCHAR * DNS_POSTFIX_GOV = ".gov";
 int remove_postfix(TCHAR * name) {
 	TCHAR *p = NULL;
 	if (NULL != (p = _tcsstr(name, DNS_POSTFIX_COM))) {
-		if (p[4] == '\0' || p[4] == '.') {
+		if (p[4] == '\0' || p[4] == '.' || p[4] == '/') {
 			p[0] = '\0';
 			return p-name;
 		}
 	} else if (NULL != (p = _tcsstr(name, DNS_POSTFIX_NET))) {
-		if (p[4] == '\0' || p[4] == '.') {
+		if (p[4] == '\0' || p[4] == '.'|| p[4] == '/') {
 			p[0] = '\0';
 			return p-name;
 		}
 	} else if (NULL != (p = _tcsstr(name, DNS_POSTFIX_EDU))) {
-		if (p[4] == '\0' || p[4] == '.') {
+		if (p[4] == '\0' || p[4] == '.'|| p[4] == '/') {
 			p[0] = '\0';
 			return p-name;
 		}
 	} else if (NULL != (p = _tcsstr(name, DNS_POSTFIX_ORG))) {
-		if (p[4] == '\0' || p[4] == '.') {
+		if (p[4] == '\0' || p[4] == '.'|| p[4] == '/') {
 			p[0] = '\0';
 			return p-name;
 		}
 	} else if (NULL != (p = _tcsstr(name, DNS_POSTFIX_GOV))) {
-		if (p[4] == '\0' || p[4] == '.') {
+		if (p[4] == '\0' || p[4] == '.'|| p[4] == '/') {
 			p[0] = '\0';
 			return p-name;
 		}
