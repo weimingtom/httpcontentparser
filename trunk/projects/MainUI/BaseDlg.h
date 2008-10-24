@@ -25,6 +25,8 @@ protected:
 	virtual int OnApply() = 0;
 	virtual void restoreSetting() = 0;
 	void OnOK() {}
+
+	virtual void OnCancel() {}
 public:
 	void SetModify(const bool changed);
 

@@ -59,5 +59,5 @@ public:
 	afx_msg void OnBnClickedChkPng();
 	afx_msg void OnEnChangeEdit2();
 	afx_msg void OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
-	
+
 };
