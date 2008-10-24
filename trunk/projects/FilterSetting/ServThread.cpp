@@ -9,7 +9,7 @@
 #define TIME_ESCAPE_SAVE_SCREEN  8000
 #define ID_TIMER_SAVE_SCREEN     1
 
-#define TIME_ESCAPE_SAVE_EYECARE 10000	
+#define TIME_ESCAPE_SAVE_EYECARE 1000	
 #define ID_TIMER_EYECARE_TRY	3
 
 #define WM_USER_SCREEN_SAVE (WM_USER + 0x10)
@@ -92,9 +92,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 			// 设置HOTKEY
 			{
 			DWORD hotkey = g_configuration.getHotkey()->getHotkey(CONFIG_HOTKEY_LAUNCH);
-			if ( 0 != hotkey) {
+			if ( 0 != hotkey) 
 				server->setHotKey(HIWORD(hotkey), LOWORD(hotkey), HOTKEY_LANUCH_MAINUI);
-			}
 			}
 			break;
 		case WM_HOTKEY:
@@ -119,14 +118,17 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 					GetScreen(fullpath);
 				}
 			} else if (ID_TIMER_EYECARE_TRY == wParam) {
-				// 如果试图改变状态成功，且状态为EYECARE_TIME,
-				g_configuration.getEyecareSetting()->trySwitch();
-				if (g_configuration.getEyecareSetting()->getState() == EyecareSetting::EYECARE_TIME) {
-					// 启动进程
-					HWND hwnd = GetEyecareApp();
-					if (NULL == hwnd) {
-						StartEyecare((HMODULE)g_hInstance);
-					};
+				// 只有运行于子模式才执行此操作
+				if (SettingItem::MODE_CHILD == SettingItem::getModel()) {
+					// 如果试图改变状态成功，且状态为EYECARE_TIME,
+					g_configuration.getEyecareSetting()->trySwitch();
+					if (g_configuration.getEyecareSetting()->getState() == EyecareSetting::EYECARE_TIME) {
+						// 启动进程
+						HWND hwnd = GetEyecareApp();
+						if (NULL == hwnd) {
+							StartEyecare((HMODULE)g_hInstance);
+						};
+					}
 				}
 			}
 			// 自动开启
