@@ -128,9 +128,6 @@ copy .\strutility.h ..\..\include\utility
 				RelativePath=".\FileMapping.cpp">
 			</File>
 			<File
-				RelativePath=".\SeachPacket.cpp">
-			</File>
-			<File
 				RelativePath=".\stdafx.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
@@ -206,6 +203,9 @@ copy .\strutility.h ..\..\include\utility
 			</File>
 			<File
 				RelativePath=".\HTTPRequestPacket.h">
+			</File>
+			<File
+				RelativePath=".\SeachPacket.cpp">
 			</File>
 			<File
 				RelativePath=".\SeachPacket.h">
