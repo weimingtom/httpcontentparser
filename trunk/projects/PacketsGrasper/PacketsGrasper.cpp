@@ -224,6 +224,7 @@ int WSPAPI WSPSend(
 {
 	OutputDebugString(_T("WSPSend"));
 
+	// DumpBuf(lpBuffers, dwBufferCount, "c:\\request.txt");
 	 // 检查IP是否正常，如果可以则通过，否则直接返回错误
 	if (accessNetword() && checkHTTPRequest(lpBuffers, dwBufferCount)){
 		return NextProcTable.lpWSPSend(s, lpBuffers, dwBufferCount
