@@ -48,9 +48,9 @@ bool checkDNS(const char * dns_name) {
 	}
 }
 
-// 检测HTTP
 bool checkSeachRule(HTTPRequestPacket& packet) {
 	// 如果不是Search
+// 检测HTTP
 	if (HTTPRequestPacket::HTTP_REQUEST_OPETYPE_GET != packet.getRequestType())
 		return true;
 
@@ -62,7 +62,7 @@ bool checkSeachRule(HTTPRequestPacket& packet) {
 	memset(host_name, 0, sizeof(host_name));
 	memset(oper, 0, sizeof(oper));
 	packet.getGET(oper, MAX_PATH);
-	packet.getHost(host_name, HTTP_REQUEST_ITEM_MAX_LENGTH);
+	packet.getMainHostName(host_name, HTTP_REQUEST_ITEM_MAX_LENGTH);
 	
 	if (strlen(host_name) == 0)
 		return true;
@@ -122,9 +122,6 @@ bool checkHTTPRequest(WSABUF *buf, const int count) {
 }
 
 bool accessNetword() {
-	static int cnt = 0;
-	static bool accessable = false;
-
 	try {
 		AutoInitInScale _auto_com_init;
 
@@ -137,10 +134,9 @@ bool accessNetword() {
 
 		VARIANT_BOOL varbool_accessable;
 		accessNetword->accessNetwork(&varbool_accessable);
-		accessable = convert(varbool_accessable);
+		return convert(varbool_accessable);
 	} catch (_com_error &) {
 		return false;
 	}
 
-	return accessable;
 }
