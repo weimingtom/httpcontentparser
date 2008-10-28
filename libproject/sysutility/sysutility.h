@@ -57,6 +57,7 @@ BOOL isPacketFiltersInstalled(HMODULE hModule);
 UINT InstallPacketsFilter(HMODULE hModule);
 
 UINT RegisterServices(HMODULE hModule);
+UINT UnRegisterServices(HMODULE hModule);
 // 当前的Eyecare是否在运行
 HWND GetEyecareApp();
 #endif  // _FILTER_SETTING_SYS_UTILITY_H__
