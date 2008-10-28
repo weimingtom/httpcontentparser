@@ -123,7 +123,20 @@ UINT RegisterServices(HMODULE hModule) {
 		// 如果文件不存在则返回FALSE
 		return PACKETSFILTERED_FILE_NOT_FOUND;
 	}
+}
 
+UINT UnRegisterServices(HMODULE hModule) {
+	TCHAR install_path[MAX_PATH], fullpath[MAX_PATH], cmd[MAX_PATH];
+	GetInstallPath(install_path, MAX_PATH, hModule);
+
+	_sntprintf(fullpath, MAX_PATH, TEXT("%s%s"), install_path, SERVICE_FILENAME);
+	if (_taccess(fullpath, 0) != -1) {
+		_sntprintf(cmd, MAX_PATH, "%s /unregserver", fullpath);
+		return PACKETSFILTERED_INSTALL_SUCC;
+	} else {
+		// 如果文件不存在则返回FALSE
+		return PACKETSFILTERED_FILE_NOT_FOUND;
+	}
 }
 
 namespace {
