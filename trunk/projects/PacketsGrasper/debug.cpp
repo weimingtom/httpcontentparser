@@ -1,9 +1,11 @@
 #include "stdafx.h"
 #include "debug.h"
-#include "logutility.h"
 #include <utility\syncutility.h>
 #include <utility\debugmessage.h>
+#include <fstream>
+#include <string>
 #include <exception>
+#include <assert.h>
 #ifdef _SHOW_DETAIL
 
 void PrintSocket(SOCKET s, DWORD bytes, TCHAR *sExt)
@@ -221,10 +223,6 @@ void PrintRecvBuffer(char *recv_buf, DWORD dwRecv, SOCKET s, const std::string &
 		_sntprintf(buf, BUF_SIZE, 
 			"=================Recv bytes : %d, socket: %d=============\n", dwRecv, s);
 		ODS("PrintRecvBuffer"); 
-		g_logger.beginWrite(RECV_LOG);
-		g_logger.write(buf, _tcslen(buf), RECV_LOG);
-		g_logger.write(recv_buf, dwRecv, RECV_LOG);
-		//g_logger.endWrite(RECV_LOG);
 	} catch(...) {
 	}
 }
@@ -239,30 +237,6 @@ void PrintProtocolInfo(
 	) {
 	};
 #endif
-
- 
-LogUtility	g_logger;
- 
-void InitializeLog() {
-	g_logger.InitLogger(RECV_LOG, RECV_LOG_FILE);
-	g_logger.InitLogger(EXCEPTION_LOG, EXCEPTION_LOG_FILE);
-}
-void UninitializeLog() {
-	g_logger.destroyAll();
-}
-
-void writeException(const char * func_name, char * exception_descritpion) {
-	using namespace yanglei_utility;
-	static yanglei_utility::CAutoCreateCS cs_;
-	SingleLock<CAutoCreateCS> lock(&cs_);
-
-	char buffer[1024];
-	_snprintf(buffer, 1024, "\nException Occor in %s, Description : %s\n", 
-		func_name, exception_descritpion);
-	g_logger.beginWrite(EXCEPTION_LOG);
-	g_logger.write(buffer, _tcslen(buffer), EXCEPTION_LOG);
-	g_logger.endWrite(EXCEPTION_LOG);
-}
 
 void DumpBuf(WSABUF *buf, const int count, const std::string &filename) {
 	using namespace std;

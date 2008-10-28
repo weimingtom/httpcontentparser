@@ -149,7 +149,7 @@ int WSPAPI WSPRecv(
 
 		return iRet;
 	} catch (...) {
-		writeException("WSPRecv", "unknown");
+		// writeException("WSPRecv", "unknown");
 		return SOCKET_ERROR;
 	}
 }
