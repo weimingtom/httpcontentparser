@@ -393,6 +393,7 @@ void CSelectIO::freeAllCompletedPacket() {
 	COMPLETED_PACKETS::const_iterator iter = completed_packets_.begin();
 	for (; iter != completed_packets_.end(); ++iter) {
 		if (iter->second != NULL) {
+			removeBufferResult(iter->second);	// 移除保存记录
 			delete iter->second;
 		}
 	}
@@ -408,6 +409,8 @@ int CSelectIO::removeCompletedPacket(const SOCKET s, HTTPPacket *p) {
 	COMPLETED_PACKETS::const_iterator iterEnd = completed_packets_.end();
 	for (; iter != iterEnd; ++iter) {
 		if (iter->second->getCode() == p->getCode()) {
+			removeBufferResult(p);
+
 			delete p;		// **** 把这个忘了，导致内存泄漏
 			completed_packets_.erase(iter);
 			return 1;
@@ -423,9 +426,6 @@ HTTPPacket * CSelectIO::getCompletedPacket(const SOCKET s) {
 	if (completed_packets_.end() == iter) {
 		return NULL;
 	} else {
-		//char buffer[1024];
-		//sprintf(buffer, "== get socket complete : %d, code : %d", s, iter->second->getCode());
-		//OutputDebugString(buffer);
 		return iter->second;
 	}
 }
@@ -451,6 +451,7 @@ HTTPPacket * CSelectIO::getSOCKETPacket(const SOCKET s) {
 }
  
 int CSelectIO::removePacket(const SOCKET s, HTTPPacket *p) {
+	OutputDebugString("removeBufferResult");
 	using namespace yanglei_utility;
 	SingleLock<CAutoCreateCS> lock(&cs_);
 
@@ -461,7 +462,6 @@ int CSelectIO::removePacket(const SOCKET s, HTTPPacket *p) {
 			//char buffer[1024];
 			//sprintf(buffer, "== remove socket : %d, code : %d", s, p->getCode());
 			//OutputDebugString(buffer);
-
 			assert(s == iter->first);
 			_sockets_map_.erase(iter);
 			return 1;
@@ -480,10 +480,29 @@ int CSelectIO::removePacket(const SOCKET s, HTTPPacket *p) {
 // 3. 分析不包的内容
 bool CSelectIO::handlePacket(HTTPPacket *packet) {
 	OutputDebugString("handle packet...");
-	const int result =  handler_.handleContent(packet);
+
+	int result;
+	// 首先查找是否已经被处理过了
+	BUFFER_RESULT::iterator iter = content_check_result_.find(packet->getCode());
+	if (content_check_result_.end() == iter) {
+		result =  handler_.handleContent(packet);
+		content_check_result_[packet->getCode()] = result;	// 保存结果
+	} else {
+		result = iter->second;	// 直接返回结果
+	}
+
 	if (CONTENT_CHECK_PORN == result) {
 		return false;
 	} else {
 		return true;
 	}
 }
+
+void CSelectIO::removeBufferResult(HTTPPacket *packet) {
+		BUFFER_RESULT::iterator iter = content_check_result_.find(packet->getCode());
+		if (content_check_result_.end() != iter) {
+			content_check_result_.erase(iter);
+		} else {
+			assert(false);
+		}
+	}

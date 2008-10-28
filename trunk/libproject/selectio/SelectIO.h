@@ -83,6 +83,16 @@ protected:
 
 // 检查包的的内容
 	bool handlePacket(HTTPPacket *packet);
+
+// 保存包检测的结果
+// 如果一个包在完成接受之后，可能还要分成多个包向上层程序传送
+// 这时候会产生一个错误: 这个包的内容会被检测多次， 检测的同时有
+// 会被保存多次。 为了修复这个错误，我们缓存一下这个包的结果。
+// 这个值应该在handlePacket添加或查询
+// 在removePacket时移除
+	typedef std::map<int, int> BUFFER_RESULT;
+	BUFFER_RESULT content_check_result_;
+	void removeBufferResult(HTTPPacket *packet);
 protected:
 	HTTPContentHander handler_;
 };
