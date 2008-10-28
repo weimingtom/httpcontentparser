@@ -61,6 +61,7 @@ BOOL CRepairApp::InitInstance()
 	}
 
 	// ×¢²á¹ýÂË³ÌÐò
+	UnRegisterServices((HMODULE)AfxGetInstanceHandle());
 	result = RegisterServices((HMODULE)AfxGetInstanceHandle());
 	if (result == PACKETSFILTERED_FILE_NOT_FOUND) {
 		CString str;
