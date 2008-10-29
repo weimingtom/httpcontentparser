@@ -26,6 +26,8 @@ private:
 	int saveImage(HTTPPacket *packet, const int check_result);
 	int saveText(HTTPPacket * packet, const int check_result);
 
+	int savezip(HTTPPacket *packet, const char *filename);
+
 	// 将他们的路径写入到配置文件当中
 	void addToRepostory(const TCHAR *fullpath, HTTPPacket * packet, const int check_result);
 
