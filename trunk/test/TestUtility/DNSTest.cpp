@@ -42,6 +42,14 @@ void DNSTest::GetMainNameFromBrowseAddresss() {
 			get_main_dns_name(result, MAX_PATH,test_unit));
 		CPPUNIT_ASSERT( 0 == _tcscmp(result, expected_result));
 	}
+
+	{
+		const TCHAR * test_unit = "www.qq.com";
+		const TCHAR * expected_result = "qq";
+		CPPUNIT_ASSERT( _tcslen(expected_result) == 
+			get_main_dns_name(result, MAX_PATH,test_unit));
+		CPPUNIT_ASSERT( 0 == _tcscmp(result, expected_result));
+	}
 }
 
 void DNSTest::GetMainNameFromBrowseAddressswithProto() {
