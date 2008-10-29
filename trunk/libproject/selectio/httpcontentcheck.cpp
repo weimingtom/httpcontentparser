@@ -3,6 +3,8 @@
 #include ".\webrecordconfig.h"
 #include <webcontenttype.h>
 #include <utility/httppacket.h>
+#include <utility/ZipUtility.h>
+#include <utility/BufferOnStackHeap.h>
 #include <sysutility.h>
 #include <com\comutility.h>
 #include <com\FilterSetting_i.c>
@@ -12,6 +14,7 @@
 #include <io.h>
 #include <memory>
 #include <comdef.h>
+#include <fstream>
 
 #define IMAGE_LOW_LIMIT (1024 * 5)	//图像的下届是5K
 #define	TEXT_LOW_LIMIT  (1024)		// 网页的下限是1K
@@ -137,12 +140,44 @@ int HTTPContentHander::saveText(HTTPPacket * packet, const int check_result) {
 		// 生成文件名
 		char fullpath[MAX_PATH];
 		generatePageName(fullpath, MAX_PATH, packet->getContentType());
-		packet->achieve_data(fullpath);
+
+		// 如果未压缩则直接保存
+		if (HTTP_RESPONSE_HEADER::CONTENCODING_GZIP != packet->getHeader()->getContentEncoding()) {
+			packet->achieve_data(fullpath);
+		} else {
+			// 否则需要解压缩保存
+			savezip(packet, fullpath);
+		}
 
 		// 增加到配置文件当中
 		addToRepostory(fullpath, packet, check_result);
 	}
 	return -1;
+}
+
+int HTTPContentHander::savezip(HTTPPacket *packet, const char *filename) {
+	// 读取数据
+	BufferOnStackHeap<1024 * 8> buffer_on_stack_or_heap;
+	char * active_buffer = buffer_on_stack_or_heap.get_buffer();
+
+	// 将数据读入缓冲区
+	// 读取数据，并移动指针
+	ProtocolPacket<HTTP_PACKET_SIZE> * data = packet->getData();
+	data->read(active_buffer, packet->getDataSize());
+	data->seek_read(0);
+
+	// 解压缩
+	ZipUtility<1024 * 36> zip;
+	zip.uncompress((Bytef*)active_buffer, packet->getDataSize());
+
+	// 保存在文件当中
+	std::fstream f;
+	f.open(filename, std::ios::out | std::ios::app | std::ios::binary);
+	f.write((char*)zip.get_buffer(), zip.get_data_size());
+	f.close();
+
+	// 释放缓冲区
+	return 0;
 }
 
 // 添加到配置文件当中
