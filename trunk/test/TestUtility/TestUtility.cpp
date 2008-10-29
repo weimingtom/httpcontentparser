@@ -13,6 +13,7 @@
 #include ".\ziputilitytest.h"
 #include ".\seachpackettest.h"
 
+CPPUNIT_TEST_SUITE_REGISTRATION(SeachPacketTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(HttpRequestPacketTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(ZipUtilityTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(TimeutilityTest);
