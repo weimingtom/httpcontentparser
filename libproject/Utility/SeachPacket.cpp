@@ -1,5 +1,6 @@
 #include "StdAfx.h"
 #include ".\seachpacket.h"
+#include ".\strutility.h"
 #include <utility\strutility.h>
 #include <assert.h>
 #include <fstream>
@@ -10,7 +11,7 @@
 
 
 #define SEACHWORD_TITLE_GOOGLE		"&q="
-#define SEACHWORD_TITLE_YAHOO		"q="
+#define SEACHWORD_TITLE_YAHOO		"?p="
 #define SEACHWORD_TITLE_BAIDU		"&wd="
 #define SEACHWORD_TAIL				"&"
 
@@ -25,21 +26,21 @@ SeachPacket::~SeachPacket(void) {
 
 // members
 bool SeachPacket::is_google_seach(const char *oper) {
-	if (strstr(oper, SEACH_COMMAND_GOOGLE) == oper) {
+	if (strutility::beginwith(oper, SEACH_COMMAND_GOOGLE)) {
 		return true;
 	} else { 
 		return false;
 	}
 }
 bool SeachPacket::is_baidu_seach(const char *oper) {
-	if (strstr(oper, SEACH_COMMAND_BAIDU) == oper) {
+	if (strutility::beginwith(oper, SEACH_COMMAND_BAIDU)) {
 		return true;
 	} else {
 		return false;
 	}
 }
 bool SeachPacket::is_yahoo_seach(const char *oper) {
-	if (strstr(oper, SEACH_COMMAND_YAHOO) == oper) {
+	if (strutility::beginwith(oper, SEACH_COMMAND_YAHOO)) {
 		return true;
 	} else {
 		return false;
@@ -82,7 +83,6 @@ int SeachPacket::parse_yahoo(const char * oper) {
 		return 0;
 	}
 
-
 	seach_engine_ = SEACH_ENGINE_YAHOO;
 	return (int)strlen(seach_word);
 }
@@ -104,11 +104,12 @@ int SeachPacket::parse(const char * oper, const char * host_name) {
 		return 0;
 	}
 
-	if (NULL != strstr(host_name, "google")) {
+	using namespace strutility;
+	if (true == beginwith(host_name, "www.google")) {
 		return parse_google(buffer);
-	} else if (NULL != strstr(host_name, "yahoo")) {
+	} else if (true == beginwith(host_name, "search.yahoo")) {
 		return parse_yahoo(buffer);
-	} else if (NULL != strstr(host_name, "baidu")) {
+	} else if (true == beginwith(host_name, "www.baidu")) {
 		return parse_baidu(buffer);
 	} else {
 		// 如果不是这几个主机
