@@ -503,6 +503,6 @@ void CSelectIO::removeBufferResult(HTTPPacket *packet) {
 		if (content_check_result_.end() != iter) {
 			content_check_result_.erase(iter);
 		} else {
-			assert(false);
+			// assert(false);	
 		}
 	}
