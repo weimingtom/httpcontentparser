@@ -1,8 +1,8 @@
-#ifndef _UTILITY_BUFFERONSTACKHEEP_H__
-#define _UTILITY_BUFFERONSTACKHEEP_H__
+#ifndef _UTILITY_BUFFERONSTACKHEAP_H__
+#define _UTILITY_BUFFERONSTACKHEAP_H__
 
 template <int STACK_LIMIT = 1024>
-class BufferOnStackHeep {
+class BufferOnStackHeap {
 public:
 	BufferOnStackHeap(const int size) {
 		if (size > STACK_LIMIT) {
@@ -11,12 +11,12 @@ public:
 			effective_buffer_  = heap_buffer_;
 		}
 	}
-	BufferOnStackHeep() {
-		heap_buffer_ = NULL
+	BufferOnStackHeap() {
+		heap_buffer_ = NULL;
 		effective_buffer_  = stack_buffer_;
 		buffer_size_ = STACK_LIMIT;
 	}
-	~BufferOnStackHeep() {
+	~BufferOnStackHeap() {
 		if (NULL != heap_buffer_) {
 			delete heap_buffer_;
 		}
@@ -55,4 +55,4 @@ private:
 	char *heap_buffer_;
 };
 
-#endif  // _UTILITY_BUFFERONSTACKHEEP_H__
+#endif  // _UTILITY_BUFFERONSTACKHEAP_H__
