@@ -62,7 +62,7 @@ bool checkSeachRule(HTTPRequestPacket& packet) {
 	memset(host_name, 0, sizeof(host_name));
 	memset(oper, 0, sizeof(oper));
 	packet.getGET(oper, MAX_PATH);
-	packet.getMainHostName(host_name, HTTP_REQUEST_ITEM_MAX_LENGTH);
+	packet.getHost(host_name, HTTP_REQUEST_ITEM_MAX_LENGTH);
 	
 	if (strlen(host_name) == 0)
 		return true;
@@ -91,8 +91,8 @@ bool checkSeachRule(HTTPRequestPacket& packet) {
 		VARIANT_BOOL passed;
 		seach_rule->check(_bstr_t(search_word), _bstr_t(host_name), &passed);
 		SafeRelease(seach_rule);
-		return convert(passed);
 
+		return convert(passed);
 	} catch (_com_error&) {
 		return false;
 	}
