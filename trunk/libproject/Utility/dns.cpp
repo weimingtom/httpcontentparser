@@ -97,7 +97,7 @@ int get_main_dns_name(TCHAR * main_name, const int bufsize, const TCHAR *fulldns
 	for (int i = len - len_remove_postfix - 1; i >=0; --i) {
 		if ('.' == name[i]) {
 			_tcscpy(main_name, &(name[i+1]));
-			assert(_tcslen(main_name) >= 3);
+			// assert(_tcslen(main_name) >= 3); www.qq.com for exmaple.
 			return _tcslen(main_name);
 		}
 	}
