@@ -22,11 +22,13 @@ public:
 		}
 	}
 
-	// 重新分配内存
-	int realloc() {
+	int realloc(const int newsize) {
+		if (newsize <= get_buffer_size()) {
+			return get_buffer_size();
+		}
 		// 创建缓冲区
-		heap_buffer_ = new char[get_buffer_size() * 2];
-		set_buffer_size(get_buffer_size() * 2);
+		heap_buffer_ = new char[newsize];
+		set_buffer_size(newsize);
 		// 拷贝内容
 		memcpy(heap_buffer_, effective_buffer_, STACK_LIMIT);
 
@@ -37,6 +39,14 @@ public:
 
 		// 修改实际缓冲区
 		effective_buffer_ = heap_buffer_;
+
+		return get_buffer_size();
+	}
+
+	// 重新分配内存
+	int realloc() {
+		realloc(get_buffer_size() * 2);
+		return get_buffer_size();
 	}
 	int get_buffer_size() { return buffer_size_;}
 	char * get_buffer() {return effective_buffer_;}
