@@ -13,7 +13,7 @@
 #include "DlgOptions.h"
 #include "DlgEyecare.h"
 #include "DlgWhiteDNSList.h"
-#include "DlgScreenSaver.h"
+#include "DlgScreenshot.h"
 #include "DlgWebHistory.h"
 #include "DlgBlackDNSList.h"
 #include "Lev1DlgTools.h"
