@@ -74,7 +74,7 @@ private:
 	CDlgImageRule m_dlgImageRules;
 	CDlgOnlineHour m_dlgOnlineHour;
 	CDlgSearchRule m_dlgSearchRule;
-	CDlgScreenSaver m_dlgScreenSaver;
+	CDlgScreenshot m_dlgScreenSaver;
 	CDlgBlackDNSList m_dlgDnsRule;
 	CDlgWhiteDNSList m_dlgWhiteDNS;
 	CDlgAbout m_dlgAbout;

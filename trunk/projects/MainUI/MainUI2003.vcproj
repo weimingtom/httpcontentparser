@@ -231,10 +231,10 @@
 				RelativePath=".\DlgOptions.h">
 			</File>
 			<File
-				RelativePath=".\DlgScreenSaver.cpp">
+				RelativePath=".\DlgScreenshot.cpp">
 			</File>
 			<File
-				RelativePath=".\DlgScreenSaver.h">
+				RelativePath=".\DlgScreenshot.h">
 			</File>
 			<File
 				RelativePath=".\DlgSearchRule.cpp">

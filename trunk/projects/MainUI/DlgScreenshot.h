@@ -15,18 +15,18 @@
 #include <Guilib1.5\GuiComboFont.h>
 #include "afxcmn.h"
 
-// CDlgScreenSaver 对话框
+// CDlgScreenshot 对话框
 
-class CDlgScreenSaver : public CBaseDlg
+class CDlgScreenshot : public CBaseDlg
 {
-	DECLARE_DYNAMIC(CDlgScreenSaver)
+	DECLARE_DYNAMIC(CDlgScreenshot)
 
 public:
-	CDlgScreenSaver(CWnd* pParent = NULL);   // 标准构造函数
-	virtual ~CDlgScreenSaver();
+	CDlgScreenshot(CWnd* pParent = NULL);   // 标准构造函数
+	virtual ~CDlgScreenshot();
 
 // 对话框数据
-	enum { IDD = IDD_DLG_SCREEN_SAVER };
+	enum { IDD = IDD_DLG_SCREENSHOT };
 
 	virtual int OnApply();
 	virtual void OnShow();

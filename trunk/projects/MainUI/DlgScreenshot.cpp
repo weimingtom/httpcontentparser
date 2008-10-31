@@ -3,17 +3,17 @@
 
 #include "stdafx.h"
 #include ".\MainUI.h"
-#include ".\DlgScreenSaver.h"
+#include ".\DlgScreenshot.h"
 #include ".\globalvariable.h"
-#include ".\dlgscreensaver.h"
+#include ".\dlgscreenshot.h"
 #include <sysutility.h>
 #include <typeconvert.h>
 
-// CDlgScreenSaver 对话框
+// CDlgScreenshot 对话框
 
-IMPLEMENT_DYNAMIC(CDlgScreenSaver, CDialog)
-CDlgScreenSaver::CDlgScreenSaver(CWnd* pParent /*=NULL*/)
-	: CBaseDlg(CDlgScreenSaver::IDD, pParent)
+IMPLEMENT_DYNAMIC(CDlgScreenshot, CDialog)
+CDlgScreenshot::CDlgScreenshot(CWnd* pParent /*=NULL*/)
+	: CBaseDlg(CDlgScreenshot::IDD, pParent)
 	, m_bEnableScreensave(FALSE)
 	, m_bEnableAutoclean(FALSE)
 	, m_strAutoCleanHours(_T(""))
@@ -21,11 +21,11 @@ CDlgScreenSaver::CDlgScreenSaver(CWnd* pParent /*=NULL*/)
 {
 }
 
-CDlgScreenSaver::~CDlgScreenSaver()
+CDlgScreenshot::~CDlgScreenshot()
 {
 }
 
-void CDlgScreenSaver::DoDataExchange(CDataExchange* pDX)
+void CDlgScreenshot::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_STA_FUNCTION, m_staFunction);
@@ -37,7 +37,7 @@ void CDlgScreenSaver::DoDataExchange(CDataExchange* pDX)
 	DDX_Check(pDX, IDC_CHK_AUTOCLEAN, m_bEnableAutoclean);
 }
 
-int CDlgScreenSaver::OnApply() {
+int CDlgScreenshot::OnApply() {
 	try {
 		IScreenSave * screensave = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_ScreenSave, NULL, CLSCTX_LOCAL_SERVER, IID_IScreenSave, (LPVOID*)&screensave);
@@ -56,11 +56,11 @@ int CDlgScreenSaver::OnApply() {
 		return -1;
 	}
 }
-void CDlgScreenSaver::OnShow() {
+void CDlgScreenshot::OnShow() {
 }
  
 
-void CDlgScreenSaver::restoreSetting() {
+void CDlgScreenshot::restoreSetting() {
 	m_bEnableScreensave = g_configuration.getScreenSave()->isSettingEnabled();
 	m_bEnableAutoclean = g_configuration.getScreenSaveAutoClean()->isSettingEnabled();
 
@@ -81,25 +81,25 @@ void CDlgScreenSaver::restoreSetting() {
 }
 
 
-void CDlgScreenSaver::enableAutoSave() {
+void CDlgScreenshot::enableAutoSave() {
 	m_sliderSaveTimespan.EnableWindow(m_bEnableScreensave);
 }
-void CDlgScreenSaver::enableAutoclean() {
+void CDlgScreenshot::enableAutoclean() {
 	m_sliderAutoclearTimespan.EnableWindow(m_bEnableAutoclean);
 }
 
 
-void CDlgScreenSaver::setAutoCleanTips() {
+void CDlgScreenshot::setAutoCleanTips() {
 	m_strAutoCleanHours.Format("%d days", m_sliderAutoclearTimespan.GetPos());
 	GetDlgItem(IDC_STA_SCREENSAVE_AUTOCLEN)->SetWindowText(m_strAutoCleanHours);
 }
 
-void CDlgScreenSaver::setTimespanTips() {
+void CDlgScreenshot::setTimespanTips() {
 	m_strTimespanMins.Format("%d Mins", m_sliderSaveTimespan.GetPos());
 	GetDlgItem(IDC_STA_SCREENSAVE_TIMESPAN)->SetWindowText(m_strTimespanMins);
 }
 
-BEGIN_MESSAGE_MAP(CDlgScreenSaver, CDialog)
+BEGIN_MESSAGE_MAP(CDlgScreenshot, CDialog)
 	ON_BN_CLICKED(IDC_CHK_SCREENSAVE, OnBnClickedChkScreensave)
 	ON_BN_CLICKED(IDC_CHK_AUTOCLEAN, OnBnClickedChkAutoclean)
 	ON_BN_CLICKED(IDC_BTN_CLEAR, OnBnClickedBtnClear)
@@ -108,9 +108,9 @@ BEGIN_MESSAGE_MAP(CDlgScreenSaver, CDialog)
 END_MESSAGE_MAP()
 
 
-// CDlgScreenSaver 消息处理程序
+// CDlgScreenshot 消息处理程序
 
-BOOL CDlgScreenSaver::OnInitDialog() {
+BOOL CDlgScreenshot::OnInitDialog() {
 	CBaseDlg::OnInitDialog();
 	
 	Restore();
@@ -122,26 +122,26 @@ BOOL CDlgScreenSaver::OnInitDialog() {
 	// 异常: OCX 属性页应返回 FALSE
 }
 
-void CDlgScreenSaver::OnBnClickedChkScreensave() {
+void CDlgScreenshot::OnBnClickedChkScreensave() {
 	UpdateData(TRUE);
 	enableAutoSave();
 	SetModify(TRUE);
 }
 
-void CDlgScreenSaver::OnBnClickedChkAutoclean() {
+void CDlgScreenshot::OnBnClickedChkAutoclean() {
 	UpdateData(TRUE);
 	enableAutoclean();
 	SetModify(TRUE);
 }
 
-void CDlgScreenSaver::OnBnClickedBtnClear() {
+void CDlgScreenshot::OnBnClickedBtnClear() {
 	ClearScreen((HMODULE)AfxGetInstanceHandle());
 	CString str;
 	str.LoadString(IDS_SCREEN_RECORD_CLEAR_BUTTON);
 	AfxMessageBox(str);
 }
 
-void CDlgScreenSaver::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar) {
+void CDlgScreenshot::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar) {
 	if (pScrollBar->GetSafeHwnd() == m_sliderSaveTimespan.GetSafeHwnd()) {
 		setTimespanTips();
 		SetModify(TRUE);
@@ -153,7 +153,7 @@ void CDlgScreenSaver::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 	CBaseDlg::OnHScroll(nSBCode, nPos, pScrollBar);	
 }
 
-void CDlgScreenSaver::OnBnClickedViewHistory()
+void CDlgScreenshot::OnBnClickedViewHistory()
 {
 	TCHAR images[MAX_PATH];
 	GetScreenRecordPath(images, MAX_PATH, (HMODULE)AfxGetInstanceHandle());

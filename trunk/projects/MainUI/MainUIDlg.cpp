@@ -447,7 +447,7 @@ void CMainUIDlg::initDlgs() {
 	m_dlgEyecare.Create(CDlgEyecare::IDD, this);
 	m_dlgWhiteDNS.Create(CDlgWhiteDNSList::IDD, this);
 	m_lev1Tools.Create(CLev1DlgTools::IDD, this);
-	m_dlgScreenSaver.Create(CDlgScreenSaver::IDD, this);
+	m_dlgScreenSaver.Create(CDlgScreenshot::IDD, this);
 	m_dlgWebHistory.Create(CDlgWebHistory::IDD, this);
 	m_curDlg = &m_lev1Rules;
 	
