@@ -62,6 +62,7 @@
 #define IDD_LEV1_TOOLS                  153
 #define IDD_TEMPLATE                    154
 #define IDD_DLG_SCREEN_SAVER            155
+#define IDD_DLG_SCREENSHOT              155
 #define IDD_DLG_WEB_HISTORY             156
 #define IDB_BMP_ACCESSABLE              157
 #define IDB_BITMAP3                     158
@@ -218,7 +219,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        159
 #define _APS_NEXT_COMMAND_VALUE         32808
-#define _APS_NEXT_CONTROL_VALUE         1100
+#define _APS_NEXT_CONTROL_VALUE         1101
 #define _APS_NEXT_SYMED_VALUE           112
 #endif
 #endif
