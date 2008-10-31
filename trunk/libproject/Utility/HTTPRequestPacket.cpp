@@ -67,8 +67,6 @@ int HTTPRequestPacket::parsePacket(WSABUF * wsabuf, const int count) {
 		cur += wsabuf[i].len;
 	}
 
-	ahieve_buffer(TEXT("c:\\request.log"), buffer, cur);
-
 	return parsePacket(buffer, cur);
 }
 
@@ -85,7 +83,7 @@ int HTTPRequestPacket::parsePacket(char * buf, const int len) {
 
 	const char * HTTP_REQUEST_NEW_LINE = "\r\n";
 	const int  HTTP_REQUEST_NEW_LINE_LENGTH = strlen(HTTP_REQUEST_NEW_LINE);
-	//reset buffer
+	//reset buffer 
 	reset();
 
 	int cnt = 0;
