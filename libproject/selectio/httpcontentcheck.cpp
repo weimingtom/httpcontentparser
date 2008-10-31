@@ -16,8 +16,8 @@
 #include <comdef.h>
 #include <fstream>
 
-#define IMAGE_LOW_LIMIT (1024 * 5)	//图像的下届是5K
-#define	TEXT_LOW_LIMIT  (1024)		// 网页的下限是1K
+#define IMAGE_LOW_LIMIT (1024 * 10)	//图像的下届是5K
+#define	TEXT_LOW_LIMIT  (1024 * 2)		// 网页的下限是1K
 
 /////////////////////////////////////////////
 // class HTTPContentHander
@@ -156,27 +156,35 @@ int HTTPContentHander::saveText(HTTPPacket * packet, const int check_result) {
 }
 
 int HTTPContentHander::savezip(HTTPPacket *packet, const char *filename) {
-	// 读取数据
-	BufferOnStackHeap<1024 * 8> buffer_on_stack_or_heap;
-	char * active_buffer = buffer_on_stack_or_heap.get_buffer();
-
-	// 将数据读入缓冲区
-	// 读取数据，并移动指针
-	ProtocolPacket<HTTP_PACKET_SIZE> * data = packet->getData();
-	data->read(active_buffer, packet->getDataSize());
-	data->seek_read(0);
-
-	// 解压缩
-	ZipUtility<1024 * 36> zip;
-	zip.uncompress((Bytef*)active_buffer, packet->getDataSize());
-
+	const int buf_size = 1024 * 16; 
+	char buffer[buf_size];
+	//  首先将文件保存到一个临时文件当中
+	char tmp_file[MAX_PATH];
+	sprintf(tmp_file, "%s.tmp", filename);
+	packet->achieve_data(tmp_file);
+	
+	// 打开文件
+	gzFile  gzfile = gzopen (tmp_file, "rb"	);
+	if (Z_NULL == gzfile) {
+		return -1;
+	}
+	
 	// 保存在文件当中
 	std::fstream f;
 	f.open(filename, std::ios::out | std::ios::app | std::ios::binary);
-	f.write((char*)zip.get_buffer(), zip.get_data_size());
+
+	int length = 0;
+	while (0 < (length = gzread (gzfile, buffer, buf_size))) {
+		f.write(buffer, length);
+	}
+
 	f.close();
 
 	// 释放缓冲区
+	gzclose(gzfile);
+
+	// 删除临时文件
+	DeleteFile(tmp_file);
 	return 0;
 }
 
