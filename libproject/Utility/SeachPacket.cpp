@@ -10,9 +10,9 @@
 #define SEACH_COMMAND_BAIDU			"/s?"
 
 
-#define SEACHWORD_TITLE_GOOGLE		"&q="
-#define SEACHWORD_TITLE_YAHOO		"?p="
-#define SEACHWORD_TITLE_BAIDU		"&wd="
+#define SEACHWORD_TITLE_GOOGLE		"q="
+#define SEACHWORD_TITLE_YAHOO		"p="
+#define SEACHWORD_TITLE_BAIDU		"wd="
 #define SEACHWORD_TAIL				"&"
 
 
