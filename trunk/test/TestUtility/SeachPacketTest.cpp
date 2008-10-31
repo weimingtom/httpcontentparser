@@ -12,6 +12,18 @@ SeachPacketTest::~SeachPacketTest(void) {
 
 void SeachPacketTest::getContentTest() {
 	{
+	char * oper = "/s?wd=ddddddddddddddddddd HTTP/1.1";
+	char * host_name = "www.baidu.com";
+	char result[HTTP_REQUEST_ITEM_MAX_LENGTH];
+	SeachPacket packet;
+	CPPUNIT_ASSERT(SeachPacket::SEACH_ENGINE_UNKNOWN ==packet.getSeachEngineType());
+	CPPUNIT_ASSERT( 0 != packet.parse(oper, host_name));
+	packet.get_seach_word(result, HTTP_REQUEST_ITEM_MAX_LENGTH);
+	CPPUNIT_ASSERT( 0 == strcmp("ddddddddddddddddddd", result));
+	CPPUNIT_ASSERT(SeachPacket::SEACH_ENGINE_BAIDU == packet.getSeachEngineType());
+	}
+
+	{
 	char * oper = "/search?p=ddddddddddddddd&fr=yfp-t-103&toggle=1&cop=mss&ei=UTF-8&fp_ip=CN HTTP/1.1";
 	char * host_name = "search.yahoo.com";
 	char result[HTTP_REQUEST_ITEM_MAX_LENGTH];
