@@ -744,6 +744,9 @@ BEGIN
     IDS_WEB_HISTORY_CLEAR_SUCC "Clear Succeeded."
 END
 
+// manifest file
+1 24 "MainUI.exe.manifest"
+
 #endif    // Ó¢Óï(ÃÀ¹ú) resources
 /////////////////////////////////////////////////////////////////////////////
 
