@@ -80,6 +80,7 @@ BEGIN_MESSAGE_MAP(CDlgChangePassword, CDialog)
 	ON_BN_CLICKED(IDCANCEL, OnBnClickedCancel)
 	ON_WM_QUERYDRAGICON()
 	ON_WM_DESTROY()
+	ON_WM_SHOWWINDOW()
 END_MESSAGE_MAP()
 
 
@@ -149,4 +150,10 @@ void CDlgChangePassword::OnDestroy()
 {
 	static_dlg_show_cnt--;
 	CDialog::OnDestroy();
+}
+
+void CDlgChangePassword::OnShowWindow(BOOL bShow, UINT nStatus)
+{
+	CDialog::OnShowWindow(bShow, nStatus);
+	m_edtOrgin.SetFocus();
 }

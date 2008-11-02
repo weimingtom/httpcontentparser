@@ -28,11 +28,11 @@ public:
 	HICON m_hIcon;
 
 public:
+	virtual BOOL OnInitDialog();
 	afx_msg void OnBnClickedOk();
 	afx_msg HCURSOR OnQueryDragIcon();
-	virtual BOOL OnInitDialog();
 	afx_msg void OnDestroy();
-
+	afx_msg void OnShowWindow(BOOL bShow, UINT nStatus);
 public:
 	bool checkPassword();
 private:

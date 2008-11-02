@@ -45,6 +45,7 @@ BEGIN_MESSAGE_MAP(CDlgCheckPassword, CDialog)
 	ON_BN_CLICKED(IDOK, OnBnClickedOk)
 	ON_WM_QUERYDRAGICON()
 	ON_WM_DESTROY()
+	ON_WM_SHOWWINDOW()
 END_MESSAGE_MAP()
 
 
@@ -87,4 +88,10 @@ void CDlgCheckPassword::OnDestroy()
 {
 	static_dlg_show_cnt --;
 	CDialog::OnDestroy();
+}
+
+void CDlgCheckPassword::OnShowWindow(BOOL bShow, UINT nStatus)
+{
+	CDialog::OnShowWindow(bShow, nStatus);
+	m_edtPassword.SetFocus();
 }

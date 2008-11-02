@@ -39,6 +39,7 @@ public:
 	afx_msg void OnBnClickedCancel();
 	afx_msg HCURSOR OnQueryDragIcon();
 	afx_msg void OnDestroy();
+	afx_msg void OnShowWindow(BOOL bShow, UINT nStatus);
 private:
 	bool checkOriginalPassword();
 	bool validate();
