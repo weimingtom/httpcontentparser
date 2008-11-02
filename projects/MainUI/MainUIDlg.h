@@ -101,7 +101,7 @@ private:
 	CImageList image_list_;
 
 	//
-	BOOL	m_bShowed; // 当前界面是否显示
+	BOOL	m_bShown; // 当前界面是否显示
 protected:
 	afx_msg void OnNMClickTreeNavig(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnTvnSelchangedTreeNavig(NMHDR *pNMHDR, LRESULT *pResult);
@@ -131,4 +131,5 @@ protected:
 private:
 	void ShowMainUI();
 	void HideMainUI();
+	BOOL isShown() const { return m_bShown;}
 };

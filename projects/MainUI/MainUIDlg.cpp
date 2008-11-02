@@ -55,7 +55,7 @@ CMainUIDlg::CMainUIDlg(CWnd* pParent /*=NULL*/)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 	m_curDlg = NULL;
-	m_bShowed = TRUE;
+	m_bShown = TRUE;
 }
 
 CMainUIDlg::~CMainUIDlg() {
@@ -189,7 +189,6 @@ void CMainUIDlg::OnSysCommand(UINT nID, LPARAM lParam)
 		dlgAbout.DoModal();
 	} else if (nID == SC_MINIMIZE) {
 		HideMainUI();
-		m_bShowed = FALSE;
 	} else {
 		CDialog::OnSysCommand(nID, lParam);
 	}
@@ -200,10 +199,9 @@ void CMainUIDlg::OnSysCommand(UINT nID, LPARAM lParam)
 
 void CMainUIDlg::OnTraymenuMainui() {
 	CString strMenuItem;
-	if (m_bShowed) {
+	if (isShown()) {
 		strMenuItem.LoadString(IDS_TRAYMENU_HIDEUI);
 		HideMainUI();
-		m_bShowed = FALSE;
 	} else {
 		if (Services::isParentModel() == false) {
 			// 如果当前模式不是parent mode, 弹出对话框
@@ -211,14 +209,12 @@ void CMainUIDlg::OnTraymenuMainui() {
 			CDlgCheckPassword dlg;
 			if (IDOK == dlg.DoModal()) {
 				strMenuItem.LoadString(IDS_TRAYMENU_SHOWUI);
-				ShowWindow(SW_SHOW);
-				m_bShowed = TRUE;
+				ShowMainUI();
 			}
 		} else {
 			// 如果用户是parent model,则直接弹出对话框
 			strMenuItem.LoadString(IDS_TRAYMENU_SHOWUI);
-			ShowWindow(SW_SHOW);
-			m_bShowed = TRUE;
+			ShowMainUI();
 		}
 	}
 }
@@ -231,7 +227,7 @@ void CMainUIDlg::OnMainExit() {
 
 void CMainUIDlg::OnMainChangepassword()
 {
-	CDlgChangePassword dlg;
+	CDlgChangePassword dlg; 
 	dlg.DoModal();
 }
 
@@ -287,12 +283,10 @@ void CMainUIDlg::OnToolsWebhistory() {
 // 相应按钮
 void CMainUIDlg::OnOK() {
 	HideMainUI();
-	m_bShowed = FALSE;
 }
 
 void CMainUIDlg::OnCancel() {
 	HideMainUI();
-	m_bShowed = FALSE;
 }
 
 void CMainUIDlg::OnBnClickedOk()
@@ -304,13 +298,11 @@ void CMainUIDlg::OnBnClickedOk()
 	}
 	
 	m_curDlg->SetModify(false);
-	m_bShowed = FALSE;
 	HideMainUI();
 }
 
 void CMainUIDlg::OnBnClickedMainCancel()
 {
-	m_bShowed = FALSE;
 	HideMainUI();	// 隐藏窗口
 	m_curDlg->Restore();	// 恢复设置
 	m_curDlg->SetModify(false);
@@ -371,7 +363,6 @@ void CMainUIDlg::OnPaint()
 	} else {
 		if (Services::isParentModel() == false) {
 			HideMainUI();
-			m_bShowed = FALSE;
 			return;
 		} else {
 			CDialog::OnPaint();
@@ -598,8 +589,10 @@ void CMainUIDlg::OnDestroy()
 void CMainUIDlg::ShowMainUI() {
 	ShowWindow(SW_SHOW);
 	::SetWindowPos(GetSafeHwnd(), HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
+	m_bShown = TRUE;
 }
 void CMainUIDlg::HideMainUI() {
 	ShowWindow(SW_HIDE);
 	::SetWindowPos(GetSafeHwnd(), HWND_BOTTOM, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
+	m_bShown = FALSE;
 }
