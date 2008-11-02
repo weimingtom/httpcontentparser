@@ -140,7 +140,7 @@ BEGIN
     ICON            IDR_MAINFRAME,IDC_STATIC,11,17,20,20
     LTEXT           "MainUI Version 1.0",IDC_STATIC,40,10,119,8,SS_NOPREFIX
     LTEXT           "Copyright (C) 2008",IDC_STATIC,40,25,119,8
-    DEFPUSHBUTTON   "??",IDOK,178,7,50,16,WS_GROUP
+    DEFPUSHBUTTON   "OK",IDOK,178,7,50,16,WS_GROUP
 END
 
 IDD_MAINUI_DIALOG DIALOGEX 0, 0, 424, 271
@@ -688,6 +688,13 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
+// RT_MANIFEST
+//
+
+1                       RT_MANIFEST             "MainUI.exe.manifest"
+
+/////////////////////////////////////////////////////////////////////////////
+//
 // String Table
 //
 
@@ -743,9 +750,6 @@ BEGIN
     IDS_HOTKEY_CONFLICT     "Hotkey Conflict!"
     IDS_WEB_HISTORY_CLEAR_SUCC "Clear Succeeded."
 END
-
-// manifest file
-1 24 "MainUI.exe.manifest"
 
 #endif    // Ó¢Óï(ÃÀ¹ú) resources
 /////////////////////////////////////////////////////////////////////////////
