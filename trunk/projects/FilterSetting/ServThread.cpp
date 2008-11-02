@@ -68,8 +68,11 @@ ServThread::~ServThread(void) {
 }
 
 int ServThread::setHotKey(WORD vKey, WORD fsModifiers, int type) {
-	assert (type == HOTKEY_LANUCH_MAINUI);
-	return (int)SendMessage(hwnd_, WM_REGISTER_HOTKEY, MAKEWPARAM(vKey, fsModifiers), (LPARAM)type);
+	if (type == HOTKEY_LANUCH_MAINUI) {
+		return (int)SendMessage(hwnd_, WM_REGISTER_HOTKEY, MAKEWPARAM(vKey, fsModifiers), (LPARAM)type);
+	} else {
+		return TRUE;
+	} 
 }
 
 void ServThread::initialize() {
@@ -136,10 +139,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 		case WM_REGISTER_HOTKEY: 
 			// 如何进行错误处理
 			UnregisterHotKey(hWnd, (int)lParam);
-			if (0 != wParam) {	// 如果没有设置键
-				if ( 0 != wParam) {
-					return RegisterHotKey(hWnd, (int)lParam, HIWORD(wParam), LOWORD(wParam));
-				}
+			if (0 != wParam && 0 != lParam) {	// 如果没有设置键
+				return RegisterHotKey(hWnd, (int)lParam, HIWORD(wParam), LOWORD(wParam));
 			}
 			return TRUE;
 		case WM_DESTROY:

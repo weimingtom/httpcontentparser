@@ -47,10 +47,10 @@ WORD  getModifierKeyMFC(WORD kModify) {
 	if (kModify & MOD_ALT)
 		vModifiers_mfc |= HOTKEYF_ALT;
 
-	return vModifiers_mfc;
+	return vModifiers_mfc; 
 }
 
-BOOL setLaunchHotkey(WORD vKey, WORD vModifiers, const int type) {
+BOOL notifyCOMServiceHotkey(WORD vKey, WORD vModifiers, const int type) {
 	try {
 		AutoInitInScale auto_init_com;
 		VARIANT_BOOL bSucc;
@@ -66,13 +66,15 @@ BOOL setLaunchHotkey(WORD vKey, WORD vModifiers, const int type) {
 BOOL setHotkey(WORD vKey, WORD vModifiers_mfc, const int type) {
 	WORD vModifier = getModifierKey(vModifiers_mfc);
 	if (0 != vModifier && 0 != vKey) {
-		if (!RegisterHotKey(AfxGetMainWnd()->GetSafeHwnd() ,type, vModifier,vKey)) 
+		if (!RegisterHotKey(AfxGetMainWnd()->GetSafeHwnd(), type, vModifier,vKey)) 
 			return FALSE;
 	} else {
 		UnregisterHotKey(AfxGetMainWnd()->GetSafeHwnd() ,type);
 	}
 
+	// 是COM Service知道信息，以便保存
 	g_configuration.getHotkey()->setHotkey(getHotkeyname(type), (unsigned)MAKELPARAM(vModifier, vKey));
+	notifyCOMServiceHotkey(vKey, vModifier, type);
 	return TRUE;
 }
 };
@@ -115,7 +117,7 @@ int CDlgOptions::setHotKey() {
 	// 设置启动程序， 必须通过COM设置
 	m_hotkeyLaunch.GetHotKey(vKey, vModifiers_mfc);
 	WORD vModifier = getModifierKey(vModifiers_mfc);
-	if (!setLaunchHotkey(vKey, vModifier, HOTKEY_LANUCH_MAINUI)) {
+	if (!notifyCOMServiceHotkey(vKey, vModifier, HOTKEY_LANUCH_MAINUI)) {
 		CString strPrompt;
 		strPrompt.LoadString(IDS_HOTKEY_CONFLICT);
 		MessageBox(strPrompt);

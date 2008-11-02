@@ -34,10 +34,13 @@ STDMETHODIMP CAppSetting::setHotkey(USHORT wVirtualKeyCode, USHORT wModifiers, L
 	*bSuccess = convert(bSucc);
 
 	if (type == HOTKEY_LANUCH_MAINUI && FALSE == bSucc) {
+		// 设置启动主界面失败
+		return S_OK;
 	} else {
 		g_configuration.getHotkey()->setHotkey(getHotkeyname(type), (unsigned)MAKELPARAM(wModifiers,wVirtualKeyCode));
 	}
 
+	*bSuccess = VARIANT_TRUE;
 	return S_OK;
 }
 
