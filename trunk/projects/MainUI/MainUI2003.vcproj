@@ -352,6 +352,9 @@
 			</File>
 		</Filter>
 		<File
+			RelativePath=".\MainUI.exe.manifest">
+		</File>
+		<File
 			RelativePath=".\res\MainUI.manifest">
 		</File>
 		<File
