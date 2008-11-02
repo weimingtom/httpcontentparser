@@ -100,10 +100,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestServicesUtility", "test
 		{700712D2-BF15-4AC4-8274-CA4336EEDD0C} = {700712D2-BF15-4AC4-8274-CA4336EEDD0C}
 	EndProjectSection
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "projects\Setup\Setup.vdproj", "{58AF5804-2590-4138-86DE-47C5D21FFE66}"
-	ProjectSection(ProjectDependencies) = postProject
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfiguration) = preSolution
 		Debug = Debug
@@ -272,10 +268,6 @@ Global
 		{151E6AC1-A099-42DB-B6CC-08456391ED3B}.Release.Build.0 = Release|Win32
 		{151E6AC1-A099-42DB-B6CC-08456391ED3B}.Release Unicode.ActiveCfg = Release|Win32
 		{151E6AC1-A099-42DB-B6CC-08456391ED3B}.Release Unicode.Build.0 = Release|Win32
-		{58AF5804-2590-4138-86DE-47C5D21FFE66}.Debug.ActiveCfg = Debug
-		{58AF5804-2590-4138-86DE-47C5D21FFE66}.Debug Unicode.ActiveCfg = Debug
-		{58AF5804-2590-4138-86DE-47C5D21FFE66}.Release.ActiveCfg = Release
-		{58AF5804-2590-4138-86DE-47C5D21FFE66}.Release Unicode.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 	EndGlobalSection
