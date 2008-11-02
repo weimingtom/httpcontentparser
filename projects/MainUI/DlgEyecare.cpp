@@ -33,10 +33,11 @@ void CDlgEyecare::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_STA_EYECARE_TIME, m_staEyecare);
 	DDX_Control(pDX, IDC_STA_STATE, m_staState);
 	DDX_Control(pDX, IDC_EDT_ENTERTIME, m_edtEnterTime);
+	DDX_Control(pDX, IDC_STA_AFTEREYECARE_TERMINATE, m_staAfterTerm);
 	DDX_Control(pDX, IDC_EDT_RESTTIME, m_edtRestTime);
+	DDX_Text(pDX, IDC_STA_CURRENT_STATE, m_strCurrentState);
 	DDX_Text(pDX, IDC_EDT_ENTERTIME, m_nEnterTime);
 	DDX_Text(pDX, IDC_EDT_RESTTIME, m_nEyecareTime);
-	DDX_Text(pDX, IDC_STA_CURRENT_STATE, m_strCurrentState);
 	DDX_Text(pDX, IDC_STA_TIME_LEFT, m_strTimeLeft);
 }
 
