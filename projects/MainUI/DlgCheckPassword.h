@@ -31,9 +31,14 @@ public:
 	afx_msg void OnBnClickedOk();
 	afx_msg HCURSOR OnQueryDragIcon();
 	virtual BOOL OnInitDialog();
+	afx_msg void OnDestroy();
 
 public:
 	bool checkPassword();
+private:
+	// 此静态变量用于标识对话框是否打开
+	// 在OninitiDialog和OnDestory中使用
+	static int static_dlg_show_cnt;
 };
 
 #endif  // _MAINUI_CDLGCHECKPASSWORD_H__
