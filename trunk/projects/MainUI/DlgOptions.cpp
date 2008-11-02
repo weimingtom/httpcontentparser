@@ -184,6 +184,7 @@ BOOL CDlgOptions::OnInitDialog()
 	CBaseDlg::OnInitDialog();
 
 	Restore();
+	setHotKey();
 	return TRUE;
 }
 
