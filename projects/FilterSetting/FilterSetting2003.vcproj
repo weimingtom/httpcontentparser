@@ -127,10 +127,10 @@ copy .\Debug\FilterSetting.exe ..\..\debug
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="Ö´ÐÐ×¢²á"
-				CommandLine="&quot;$(TargetPath)&quot; /RegServer
-copy .\FilterSetting_i.c ..\..\include\com
+				CommandLine="copy .\FilterSetting_i.c ..\..\include\com
 copy .\filtersetting.h ..\..\include\com
-"/>
+copy .\release\filtersetting.exe ..\..\release
+..\..\release\filtersetting.exe /RegServer"/>
 			<Tool
 				Name="VCPreBuildEventTool"/>
 			<Tool
