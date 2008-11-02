@@ -32,7 +32,7 @@ protected:
 	afx_msg void OnDestroy();
 
 	// controls
-	CGuiGroupBox m_staAfterEyecareTerminate;
+	CGuiGroupBox m_staAfterTerm;
 	CGuiGroupBox m_staEyecare;
 	CGuiGroupBox m_staState;
 	CEdit m_edtEnterTime;
