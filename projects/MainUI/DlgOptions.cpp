@@ -188,3 +188,14 @@ BOOL CDlgOptions::OnInitDialog()
 void CDlgOptions::OnBnClickedChkAutoload() {
 	SetModify(true);
 }
+BOOL CDlgOptions::PreTranslateMessage(MSG* pMsg)
+{
+	if (pMsg->message == WM_KEYDOWN) {
+		if (m_hotkeyLaunch.GetSafeHwnd() == pMsg->hwnd||
+			m_hotKeyShowDlg.GetSafeHwnd() == pMsg->hwnd||
+			m_hotkeySwitchUser.GetSafeHwnd() == pMsg->hwnd) {
+				SetModify(true);
+		}	
+	}
+	return CBaseDlg::PreTranslateMessage(pMsg);
+}

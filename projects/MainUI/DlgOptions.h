@@ -52,4 +52,6 @@ protected:
 protected:
 	void SetAutoRun();
 	int setHotKey();
+public:
+	virtual BOOL PreTranslateMessage(MSG* pMsg);
 };
