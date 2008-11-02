@@ -106,6 +106,7 @@ copy .\Debug\FilterSetting.exe ..\..\debug
 				IgnoreImportLibrary="TRUE"
 				OutputFile="$(OutDir)/FilterSetting.exe"
 				LinkIncremental="1"
+				AdditionalLibraryDirectories="..\..\lib"
 				GenerateDebugInformation="TRUE"
 				SubSystem="2"
 				OptimizeReferences="2"

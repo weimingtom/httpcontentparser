@@ -78,7 +78,7 @@
 				Name="VCMIDLTool"/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy ./release/ServicesUtility.lib ../../lib"/>
+				CommandLine="copy .\release\ServicesUtility.lib  ..\..\lib"/>
 			<Tool
 				Name="VCPreBuildEventTool"/>
 			<Tool

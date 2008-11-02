@@ -82,6 +82,7 @@
 				Name="VCLinkerTool"
 				OutputFile="$(OutDir)/TestFilterSetting.exe"
 				LinkIncremental="1"
+				AdditionalLibraryDirectories="..\..\lib"
 				GenerateDebugInformation="TRUE"
 				SubSystem="1"
 				OptimizeReferences="2"
