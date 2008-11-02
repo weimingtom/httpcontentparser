@@ -9,6 +9,9 @@
 #include <typeconvert.h>
 
 
+// 初始化静态变量
+int CDlgCheckPassword::static_dlg_show_cnt = false;
+
 // CDlgCheckPassword 对话框
 
 IMPLEMENT_DYNAMIC(CDlgCheckPassword, CDialog)
@@ -41,6 +44,7 @@ void CDlgCheckPassword::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(CDlgCheckPassword, CDialog)
 	ON_BN_CLICKED(IDOK, OnBnClickedOk)
 	ON_WM_QUERYDRAGICON()
+	ON_WM_DESTROY()
 END_MESSAGE_MAP()
 
 
@@ -65,10 +69,22 @@ BOOL CDlgCheckPassword::OnInitDialog()
 	SetIcon(m_hIcon, TRUE);			// 设置大图标
 	SetIcon(m_hIcon, FALSE);		// 设置小图标
 
+	static_dlg_show_cnt++;
+	if (static_dlg_show_cnt > 1) {
+		OnCancel();
+		return FALSE;
+	}
+
 	return TRUE;  // return TRUE unless you set the focus to a control
 }
 
 HCURSOR CDlgCheckPassword::OnQueryDragIcon()
 {
 	return static_cast<HCURSOR>(m_hIcon);
+}
+
+void CDlgCheckPassword::OnDestroy()
+{
+	static_dlg_show_cnt --;
+	CDialog::OnDestroy();
 }
