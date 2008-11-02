@@ -37,11 +37,16 @@ public:
 	virtual BOOL OnInitDialog();
 	afx_msg void OnBnClickedOk();
 	afx_msg void OnBnClickedCancel();
-
+	afx_msg HCURSOR OnQueryDragIcon();
+	afx_msg void OnDestroy();
 private:
 	bool checkOriginalPassword();
 	bool validate();
 	void resetFileds();
-public:
-	afx_msg HCURSOR OnQueryDragIcon();
+private:
+	// 此静态变量用于标识对话框是否打开
+	// 在OninitiDialog和OnDestory中使用
+	// 使用int类型，用作窗口打开的基础，每次调用OnInitialize-1, 调用OnDestory就加以
+	// 简单实用boolean是不行的.
+	static int static_dlg_show_cnt;
 };

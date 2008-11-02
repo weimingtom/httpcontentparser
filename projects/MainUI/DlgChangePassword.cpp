@@ -10,6 +10,8 @@
 #include <com\FilterSetting.h>
 #include <comdef.h>
 
+// 初始化静态变量
+int CDlgChangePassword::static_dlg_show_cnt = false;
 // CDlgChangePassword 对话框
 
 IMPLEMENT_DYNAMIC(CDlgChangePassword, CDialog)
@@ -77,6 +79,7 @@ BEGIN_MESSAGE_MAP(CDlgChangePassword, CDialog)
 	ON_BN_CLICKED(IDOK, OnBnClickedOk)
 	ON_BN_CLICKED(IDCANCEL, OnBnClickedCancel)
 	ON_WM_QUERYDRAGICON()
+	ON_WM_DESTROY()
 END_MESSAGE_MAP()
 
 
@@ -87,6 +90,12 @@ BOOL CDlgChangePassword::OnInitDialog()
 	// set Icon
 	SetIcon(m_hIcon, TRUE);			// 设置大图标
 	SetIcon(m_hIcon, FALSE);		// 设置小图标
+
+	static_dlg_show_cnt++;
+	if (static_dlg_show_cnt > 1) {
+		OnCancel();
+		return FALSE;
+	}
 	return TRUE;  // return TRUE unless you set the focus to a control
 }
 
@@ -134,4 +143,10 @@ void CDlgChangePassword::OnBnClickedCancel()
 HCURSOR CDlgChangePassword::OnQueryDragIcon()
 {
 	return static_cast<HCURSOR>(m_hIcon);
+}
+
+void CDlgChangePassword::OnDestroy()
+{
+	static_dlg_show_cnt--;
+	CDialog::OnDestroy();
 }
