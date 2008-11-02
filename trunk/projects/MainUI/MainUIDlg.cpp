@@ -250,8 +250,11 @@ void CMainUIDlg::OnMainChildren()
 LRESULT CMainUIDlg::OnHotKey(WPARAM wParam, LPARAM lParam) {
 	int id = (int)wParam;
 	if (id == HOTKEY_SHOW_MAINUI) {
-		AfxGetMainWnd()->ShowWindow(SW_SHOW);
-		AfxGetMainWnd()->SetFocus();
+		if (isShown()) {
+			HideMainUI();
+		} else {
+			ShowMainUI();
+		}
 	} else if (id == HOTKEY_SHOW_SWITCH_USER) {
 		CDlgCheckPassword dlg;
 		if (IDOK == dlg.DoModal()) {
