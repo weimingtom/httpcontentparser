@@ -80,8 +80,7 @@
 				Name="VCMIDLTool"/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy .\release\ScreenRecord.lib ..\..\lib
-copy .\release\ScreenRecord.dll ..\..\release"/>
+				CommandLine="copy .\release\ScreenRecord.lib ..\..\lib"/>
 			<Tool
 				Name="VCPreBuildEventTool"
 				CommandLine="copy .\Printscreen.h ..\..\include"/>

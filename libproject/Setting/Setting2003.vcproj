@@ -80,7 +80,7 @@ copy .\hotkeysetting.h ..\..\include
 				Name="VCCLCompilerTool"
 				AdditionalIncludeDirectories="..\..\include"
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;TIXML_USE_STL"
-				RuntimeLibrary="4"
+				RuntimeLibrary="2"
 				UsePrecompiledHeader="3"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="TRUE"
