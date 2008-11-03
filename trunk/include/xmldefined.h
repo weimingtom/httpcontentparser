@@ -90,6 +90,8 @@
 #define CONFIG_APPSET_HOTKEY_ITEM				TEXT("hotkey")
 #define CONFIG_HOTKEY_PROP_KEY					TEXT("key")
 
+#define CONFIG_ITEM_MODEL_AUTOSWITCH			TEXT("autoswitch")
+
 
 inline
 bool enabledFromString(const TCHAR *enable) {
