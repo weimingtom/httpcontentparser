@@ -112,6 +112,22 @@ void CDlgOptions::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_SLD_TIMEOUT, m_sldTimeout);
 }
 
+int CDlgOptions::setAutoswitch() {
+	// 是否可用
+	VARIANT_BOOL vb_enabled = IsDlgButtonChecked(IDC_CHK_ENABLE_TIMEOUT_SWITCH) == BST_CHECKED ? VARIANT_TRUE : VARIANT_FALSE;
+
+	try {
+		AutoInitInScale auto_init_com;
+		IAppSetting *app = NULL;
+		CoCreateInstance(CLSID_AppSetting, NULL, CLSCTX_LOCAL_SERVER, IID_IAppSetting, (LPVOID*)&app);
+		app->put_TimeoutSwitchEnabled(vb_enabled);
+		app->setTimeoutValue(m_sldTimeout.GetPos() * 60);
+		return 0;
+	} catch(...) {
+		return -1;
+	}
+}
+
 int CDlgOptions::setHotKey() {
 	CString strPrompt;
 	strPrompt.LoadString(IDS_HOTKEY_CONFLICT);
@@ -154,6 +170,7 @@ int CDlgOptions::setHotKey() {
 
 int CDlgOptions::OnApply() {
 	SetAutoRun();
+	setAutoswitch();
 	if ( -1 == setHotKey()) {
 		// 如果热键冲突
 		Restore();
@@ -161,7 +178,7 @@ int CDlgOptions::OnApply() {
 	}
 	return 0;
 }
-
+ 
 int CDlgOptions::restoreAutoswitchSetting() {
 	m_sldTimeout.SetRange(1, 120);
 	m_sldTimeout.SetTicFreq(10);

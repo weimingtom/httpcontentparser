@@ -57,7 +57,9 @@ protected:
 protected:
 	void SetAutoRun();
 	int setHotKey();
+	int setAutoswitch();
 	int restoreAutoswitchSetting();
 	
+	// ¸üÐÂ×´Ì¬
 	void UpdateAutoswitchState();
 };
