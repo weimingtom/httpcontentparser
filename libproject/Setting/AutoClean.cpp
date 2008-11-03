@@ -23,7 +23,7 @@ AutoClean::~AutoClean(void) {
 bool AutoClean::shouldExec() {
 	assert (NULL != last_time_);
 	// 如果不可用
-	if (isEnable() == false) {
+	if (isEnabled() == false) {
 		return false;
 	}
 
@@ -89,7 +89,7 @@ void AutoClean::defaultSetting() {
 
 	timespan_days_ = min_ * 3;
 
-	enable_ = true;
+	enable(true);
 	last_time_ = new CTime();
 	reset();
 }

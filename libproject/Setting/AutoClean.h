@@ -16,10 +16,6 @@ public:
 	~AutoClean(void);
 
 public:
-	bool isEnable() const { return enable_;}
-	void enable(const bool enabled) { enable_ = enabled;}
-	bool isSettingEnabled() const { return enabled_;}
-
 	// 设置和获取自动清理的时间间隔
 	void setTimespan(const int hours);
 	int getTimespan() const { return timespan_days_;}
@@ -39,10 +35,7 @@ public:
 private:
 	// 默认设置
 	void defaultSetting();
-private:	
-	// 是否可用
-	bool enable_;
-
+private:
 	// 自动清空的范围, 单位天
 	int max_, min_;
 	
