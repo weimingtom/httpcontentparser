@@ -77,7 +77,7 @@ void CDlgScreenshot::restoreSetting() {
 	m_sliderAutoclearTimespan.SetPos(g_configuration.getScreenshotAutoClean()->getTimespan());
 
 	CheckDlgButton(IDC_CHK_AUTOCLEAN, 
-		g_configuration.getScreenshotAutoClean()->isEnable() ? BST_CHECKED : BST_UNCHECKED);
+		g_configuration.getScreenshotAutoClean()->isSettingEnabled() ? BST_CHECKED : BST_UNCHECKED);
 
 	setAutoCleanTips();
 	setTimespanTips();
