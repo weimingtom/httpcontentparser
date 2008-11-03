@@ -26,6 +26,9 @@ public:
 
 	// 如果状态切换到PARENT MODE, 则调用
 	void startTimer();
+
+	// 获取距离切换的时间
+	int getLeftTime() { return calcugraph_.getRemainTime();}
 private:
 	virtual int parseConfig(TiXmlElement * item_root);
 	virtual TiXmlElement * saveConfig(TiXmlElement * root);
