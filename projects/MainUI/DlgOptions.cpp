@@ -66,8 +66,12 @@ BOOL notifyCOMServiceHotkey(WORD vKey, WORD vModifiers, const int type) {
 BOOL setHotkey(WORD vKey, WORD vModifiers_mfc, const int type) {
 	WORD vModifier = getModifierKey(vModifiers_mfc);
 	if (0 != vModifier && 0 != vKey) {
-		if (!RegisterHotKey(AfxGetMainWnd()->GetSafeHwnd(), type, vModifier,vKey)) 
+		if (!RegisterHotKey(AfxGetMainWnd()->GetSafeHwnd(), type, vModifier,vKey)) {
+			// 如果失败，则设置为0
+			g_configuration.getHotkey()->setHotkey(getHotkeyname(type), (unsigned)MAKELPARAM(0, 0));
+			UnregisterHotKey(AfxGetMainWnd()->GetSafeHwnd() ,type);
 			return FALSE;
+		}
 	} else {
 		UnregisterHotKey(AfxGetMainWnd()->GetSafeHwnd() ,type);
 	}
@@ -135,6 +139,8 @@ int CDlgOptions::setHotKey() {
 int CDlgOptions::OnApply() {
 	SetAutoRun();
 	if ( -1 == setHotKey()) {
+		// 如果热键冲突
+		Restore();
 		return -1;
 	}
 	return 0;
@@ -156,8 +162,6 @@ void CDlgOptions::restoreSetting() {
 	m_bAutoRun = isAutoRun((HMODULE)AfxGetInstanceHandle());
 	m_bOld_autorun = m_bAutoRun;
 	UpdateData(FALSE);
-
-	setHotKey();
 }
 
 void CDlgOptions::OnShow() {
@@ -184,7 +188,10 @@ BOOL CDlgOptions::OnInitDialog()
 	CBaseDlg::OnInitDialog();
 
 	Restore();
-	setHotKey();
+	if (-1 == setHotKey()) {
+		// 如果热键冲突
+		Restore();
+	}
 	return TRUE;
 }
 
