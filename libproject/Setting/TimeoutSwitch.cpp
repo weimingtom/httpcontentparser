@@ -27,7 +27,8 @@ bool TimeoutSwitch::shouldSwitch()  {
 	}
 
 	// 处于不可用状态
-	if (isEnabled() == false) {
+	// 这里应该是不受Parent_model的影响
+	if (isSettingEnabled() == false) {
 		return false;
 	}
 
