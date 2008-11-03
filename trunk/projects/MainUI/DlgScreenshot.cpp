@@ -62,7 +62,7 @@ void CDlgScreenshot::OnShow() {
 
 void CDlgScreenshot::restoreSetting() {
 	m_bEnableScreensave = g_configuration.getScreenshotSetting()->isSettingEnabled();
-	m_bEnableAutoclean = g_configuration.getScreenshotAutoClean()->isEnable();
+	m_bEnableAutoclean = g_configuration.getScreenshotAutoClean()->isSettingEnabled();
 
 	// ÉèÖÃ×Ô¶¯´æ´¢
 	m_sliderSaveTimespan.SetRange(1, 120);
