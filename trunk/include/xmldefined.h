@@ -46,7 +46,7 @@
 #define CONFIG_NODE_SEARCH_ENGINES			TEXT("searchengines")
 #define CONDIG_NODE_SEARCH_ENGINE_ITEM		TEXT("searchengine")
 #define CONFIG_NODE_BLACK_SEARCHWORD		TEXT("blackwords")
-#define CONFIG_NODE_BLACK_WORDITER			TEXT("word")
+#define CONFIG_NODE_BLACK_WORDITEM			TEXT("word")
 //#define CONFIG_NODE_BLACK_ENINE
 
 // Autorize

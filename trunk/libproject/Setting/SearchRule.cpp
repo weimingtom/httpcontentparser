@@ -157,7 +157,7 @@ namespace {
 class EnumBlackWord : public Enumerator1<std::string> {
 public:
 	virtual int Enum(const std::string &data1) {
-		TiXmlElement * blackword = new TiXmlElement(CONFIG_NODE_BLACK_SEARCHWORD);
+		TiXmlElement * blackword = new TiXmlElement(CONFIG_NODE_BLACK_WORDITEM);
 		TiXmlText * word = new TiXmlText(data1);
 		blackword->LinkEndChild(word);
 		rule_root_->LinkEndChild(blackword);
