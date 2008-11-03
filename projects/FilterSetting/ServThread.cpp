@@ -113,6 +113,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 				GetAppConfigFilename(config_path, MAX_PATH, (HMODULE)g_hInstance);
 				g_configuration.saveConfig(config_path);
 			}
+
+			// 如果可以切换状态的时候，且当前状态是家长模式
+			if (g_configuration.getTimeoutSwitch()->shouldSwitch() && SettingItem::getModel() == SettingItem::MODE_PARENT) {
+				SettingItem::setModel(SettingItem::MODE_CHILD);
+			}
 			if (ID_TIMER_SAVE_SCREEN == wParam) {
 				// 自动保存屏幕
 				if (g_configuration.getScreenshotSetting()->shouldSave()) {
