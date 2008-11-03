@@ -28,15 +28,17 @@ public:
 
 	void setTimeEscapeMS(const int milseconds);
 	void setTimeEscape(const int seconds);
+
+	// 获取剩余的时间或过去的时间
+	int getTimeEscape() const;
+	int getTimeEscapeMS() const;
+	int getRemainTime() const;
+	int getRemainTimeMS() const;
 private:
 	friend  class MultiCalculagraph;
 	friend  class CalculargraphTest;
 	// 充值当前计时器
 	void Reset();
-	int getTimeEscape() const;
-	int getTimeEscapeMS() const;
-	int getRemainTime() const;
-	int getRemainTimeMS() const;
 
 	int state_begin_;
 	int time_span_;
