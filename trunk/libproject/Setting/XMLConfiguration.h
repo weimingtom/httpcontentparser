@@ -35,11 +35,13 @@
 #include <contentchecksetting.h>
 #include <Screenshot.h>
 #include <autoclean.h>
+#include <timeoutswitch.h>
 #include <hotkeysetting.h>
 #include <xmldefined.h>
 #include <string>
 #include <set>
 #include <map>
+
 
 class TiXmlElement;
 class TiXmlNode;
@@ -65,7 +67,8 @@ public:
 	Screenshot*	getScreenshotSetting() { return &screen_save_;}
 	AutoClean*		getScreenshotAutoClean() { return getScreenshotSetting()->getAutoClean();}
 	AutoClean*		getWebHistoryRecordAutoClean() { return getWebHistoryRecordSetting()->getAutoclean();}
-	HotkeySetting*   getHotkey() { return &hotkey_;}
+	HotkeySetting*  getHotkey() { return &hotkey_;}
+	TimeoutSwitch*  getTimeoutSwitch() { return &timeout_switch_;} 
 private:
 	DNSList						black_url_set_;
 	DNSList						white_url_set_;
@@ -78,6 +81,7 @@ private:
 	Screenshot					screen_save_;
 	DNSSetting					dnssetting_;
 	HotkeySetting				hotkey_;
+	TimeoutSwitch				timeout_switch_;
 
 	// ƒ¨»œ…Ë÷√
 	void defaultSetting();

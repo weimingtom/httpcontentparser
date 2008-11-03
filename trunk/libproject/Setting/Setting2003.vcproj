@@ -56,7 +56,7 @@ copy .\onlinehoursetting.h ..\..\include
 copy .\autoclean.h ..\..\include
 copy .\configitem.h ..\..\include
 copy .\hotkeysetting.h ..\..\include
-"/>
+copy .\timeoutswitch.h ..\..\include"/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
 			<Tool
@@ -108,7 +108,7 @@ copy .\XMLconfiguration.h ..\..\include
 copy .\SearchRule.h ..\..\include
 copy .\onlinehoursetting.h ..\..\include
 copy .\autoclean.h ..\..\include
-"/>
+copy .\timeoutswitch.h ..\..\include"/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
 			<Tool
@@ -293,6 +293,16 @@ copy .\autoclean.h ..\..\include
 			</File>
 			<File
 				RelativePath=".\HotkeySetting.h">
+			</File>
+		</Filter>
+		<Filter
+			Name="TimeoutSwitch"
+			Filter="">
+			<File
+				RelativePath=".\TimeoutSwitch.cpp">
+			</File>
+			<File
+				RelativePath=".\TimeoutSwitch.h">
 			</File>
 		</Filter>
 		<File
