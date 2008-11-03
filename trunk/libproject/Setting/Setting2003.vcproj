@@ -46,7 +46,7 @@
 copy .\webhistoryrecordersetting.h ..\..\include
 copy .\authorize.h ..\..\include
 copy .\eyecaresetting.h ..\..\include
-copy .\screensaver.h ..\..\include
+copy .\screenshot.h ..\..\include
 copy .\calculagraph.h ..\..\include
 copy .\DNSSetting.h ..\..\include
 copy .\contentchecksetting.h ..\..\include
@@ -100,7 +100,7 @@ copy .\hotkeysetting.h ..\..\include
 				CommandLine="copy .\webhistoryrecordersetting.h ..\..\include
 copy .\authorize.h ..\..\include
 copy .\eyecaresetting.h ..\..\include
-copy .\screensaver.h ..\..\include
+copy .\screenshot.h ..\..\include
 copy .\calculagraph.h ..\..\include
 copy .\DNSSetting.h ..\..\include
 copy .\contentchecksetting.h ..\..\include
@@ -176,13 +176,13 @@ copy .\autoclean.h ..\..\include
 			</File>
 		</Filter>
 		<Filter
-			Name="screensaver"
+			Name="screenshot"
 			Filter="">
 			<File
-				RelativePath=".\ScreenSaver.cpp">
+				RelativePath=".\Screenshot.cpp">
 			</File>
 			<File
-				RelativePath=".\ScreenSaver.h">
+				RelativePath=".\Screenshot.h">
 			</File>
 		</Filter>
 		<Filter

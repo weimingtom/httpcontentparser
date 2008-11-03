@@ -7,10 +7,10 @@
 #include <autoclean.h>
 #include "calculagraph.h" 
 
-class ScreenSaver : public SettingItem , public ConfigItem {
+class Screenshot : public SettingItem , public ConfigItem {
 public:
-	ScreenSaver(void);
-	~ScreenSaver(void);
+	Screenshot(void);
+	~Screenshot(void);
 
 	//=====
 	int getTimeSpan() const; // seconds
@@ -28,15 +28,15 @@ public:
 	virtual TiXmlElement * saveConfig(TiXmlElement * root);
 
 private:
-		// Screensaver
-	int getScreensave(TiXmlElement * ele);
-	int enableScreensave(const TCHAR *enable);
-	int setScreensaveTimespan(const TCHAR *timespan);
-	int setScreensaveAutoClean(TiXmlElement * ele);
-	int enableScreenSaveAutoClean(const TCHAR *enabled);
-	int setScreensaveAutoCleanTimespan(const TCHAR *timespan);
-	int setScreensaveAutoCleanTimeScale(const TCHAR *maxt, const TCHAR * mint);
-	int setScreensaveLastCleanTiime(const TCHAR * lastclean);
+		// Screenshot
+	int getScreenshot(TiXmlElement * ele);
+	int enableScreenshot(const TCHAR *enable);
+	int setScreenshotTimespan(const TCHAR *timespan);
+	int setScreenshotAutoClean(TiXmlElement * ele);
+	int enableScreenshotAutoClean(const TCHAR *enabled);
+	int setScreenshotAutoCleanTimespan(const TCHAR *timespan);
+	int setScreenshotAutoCleanTimeScale(const TCHAR *maxt, const TCHAR * mint);
+	int setScreenshotLastCleanTiime(const TCHAR * lastclean);
 
 	// ±£¥ÊScreen Save
 	TiXmlElement * saveScreensave(TiXmlElement * root);

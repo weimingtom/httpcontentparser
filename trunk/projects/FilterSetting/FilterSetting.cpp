@@ -61,8 +61,8 @@ extern "C" int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/
 		ClearHistory((HMODULE)hInstance);
 		
 	}
-	if (g_configuration.getScreenSaveAutoClean()->shouldExec()) {
-		g_configuration.getScreenSaveAutoClean()->reset();
+	if (g_configuration.getScreenshotAutoClean()->shouldExec()) {
+		g_configuration.getScreenshotAutoClean()->reset();
 		ClearScreen((HMODULE)hInstance);
 	}
 

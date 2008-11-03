@@ -24,17 +24,17 @@ STDMETHODIMP CScreenSave::InterfaceSupportsErrorInfo(REFIID riid)
 }
 
 STDMETHODIMP CScreenSave::enableScreenSave(VARIANT_BOOL enabled) {
-	g_configuration.getScreenSave()->enable(convert(enabled));
+	g_configuration.getScreenshotSetting()->enable(convert(enabled));
 	return S_OK;
 }
 
 STDMETHODIMP CScreenSave::setTimeSpan(LONG seconds) {
-	g_configuration.getScreenSave()->setTimeSpan(seconds);
+	g_configuration.getScreenshotSetting()->setTimeSpan(seconds);
 	return S_OK;
 }
 
 STDMETHODIMP CScreenSave::isEnabled(VARIANT_BOOL* enabled) {
-	*enabled = convert(g_configuration.getScreenSave()->isEnabled());
+	*enabled = convert(g_configuration.getScreenshotSetting()->isEnabled());
 	return S_OK;
 }
 

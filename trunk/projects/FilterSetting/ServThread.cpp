@@ -115,7 +115,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 			}
 			if (ID_TIMER_SAVE_SCREEN == wParam) {
 				// ×Ô¶¯±£´æÆÁÄ»
-				if (g_configuration.getScreenSave()->shouldSave()) {
+				if (g_configuration.getScreenshotSetting()->shouldSave()) {
 					TCHAR fullpath[MAX_PATH];
 					GenScreenSPFile(fullpath, MAX_PATH, g_hInstance);
 					GetScreen(fullpath);

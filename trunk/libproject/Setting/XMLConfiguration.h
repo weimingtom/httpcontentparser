@@ -33,7 +33,7 @@
 #include <authorize.h>
 #include <webhistoryrecordersetting.h>
 #include <contentchecksetting.h>
-#include <screensaver.h>
+#include <Screenshot.h>
 #include <autoclean.h>
 #include <hotkeysetting.h>
 #include <xmldefined.h>
@@ -62,8 +62,8 @@ public:
 	WebHistoryRecorderSetting* getWebHistoryRecordSetting() { return &web_history_;}
 	Authorize*		getAuthorize() { return &authorize_;}
 	ContentCheckSetting* getContentCheckSetting() { return &content_check_;}
-	ScreenSaver*	getScreenSave() { return &screen_save_;}
-	AutoClean*		getScreenSaveAutoClean() { return getScreenSave()->getAutoClean();}
+	Screenshot*	getScreenshotSetting() { return &screen_save_;}
+	AutoClean*		getScreenshotAutoClean() { return getScreenshotSetting()->getAutoClean();}
 	AutoClean*		getWebHistoryRecordAutoClean() { return getWebHistoryRecordSetting()->getAutoclean();}
 	HotkeySetting*   getHotkey() { return &hotkey_;}
 private:
@@ -75,7 +75,7 @@ private:
 	WebHistoryRecorderSetting	web_history_;
 	Authorize					authorize_;
 	ContentCheckSetting			content_check_;
-	ScreenSaver					screen_save_;
+	Screenshot					screen_save_;
 	DNSSetting					dnssetting_;
 	HotkeySetting				hotkey_;
 
