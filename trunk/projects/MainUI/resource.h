@@ -181,6 +181,9 @@
 #define IDC_STA_WEBHISTORY_AUTOCLEAN    1096
 #define IDC_STA_ABOUT                   1097
 #define IDC_SLIDER_IMAGECHECK_DEGREE    1098
+#define IDC_CHK_ENABLE_TIMEOUT_SWITCH   1101
+#define IDC_STA_TIMEOUT                 1102
+#define IDC_SLD_TIMEOUT                 1103
 #define IDC_EDIT1                       4011
 #define IDC_EDIT2                       4012
 #define IDC_EDT_RETRY                   4013
@@ -219,7 +222,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        159
 #define _APS_NEXT_COMMAND_VALUE         32808
-#define _APS_NEXT_CONTROL_VALUE         1101
+#define _APS_NEXT_CONTROL_VALUE         1104
 #define _APS_NEXT_SYMED_VALUE           112
 #endif
 #endif
