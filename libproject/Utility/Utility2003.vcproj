@@ -41,8 +41,7 @@
 "/>
 			<Tool
 				Name="VCPreBuildEventTool"
-				CommandLine="copy .\ziputility.h ..\..\include\utility
-copy .\Filemapping.h ..\..\include\utility
+				CommandLine="copy .\Filemapping.h ..\..\include\utility
 copy .\fd_set_utility.h ..\..\include\utility
 copy .\httppacket.h ..\..\include\utility
 copy .\dns.h ..\..\include\utility
@@ -95,8 +94,7 @@ copy .\httppacket.h ..\..\include\utility
 "/>
 			<Tool
 				Name="VCPreBuildEventTool"
-				CommandLine="copy .\ziputility.h ..\..\include
-copy .\Filemapping.h ..\..\include\utility
+				CommandLine="copy .\Filemapping.h ..\..\include\utility
 copy .\fd_set_utility.h ..\..\include\utility
 copy .\httppacket.h ..\..\include\utility
 copy .\dns.h ..\..\include\utility
