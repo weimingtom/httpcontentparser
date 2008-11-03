@@ -47,6 +47,8 @@ public:
 	STDMETHOD(isEnabled)(VARIANT_BOOL* enabled);
 	STDMETHOD(ClearCache)(void);
 	STDMETHOD(setAutoClearTimespan)(LONG seconds);
+	STDMETHOD(get_AutocleanEnabled)(VARIANT_BOOL* pVal);
+	STDMETHOD(put_AutocleanEnabled)(VARIANT_BOOL newVal);
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(ScreenSave), CScreenSave)
