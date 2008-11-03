@@ -11,6 +11,7 @@
 #include <comdef.h>
 #include <com\comutility.h>
 #include <typeconvert.h>
+#include <timeoutswitch.h>
 
 // CDlgOptions 对话框
 
@@ -64,16 +65,19 @@ BOOL notifyCOMServiceHotkey(WORD vKey, WORD vModifiers, const int type) {
 }
 
 BOOL setHotkey(WORD vKey, WORD vModifiers_mfc, const int type) {
+	// 首先注销当前的热键
+	UnregisterHotKey(AfxGetMainWnd()->GetSafeHwnd(), type);
+
 	WORD vModifier = getModifierKey(vModifiers_mfc);
-	if (0 != vModifier && 0 != vKey) {
+	if (0 != vModifier && 0 != vKey) {	
 		if (!RegisterHotKey(AfxGetMainWnd()->GetSafeHwnd(), type, vModifier,vKey)) {
 			// 如果失败，则设置为0
 			g_configuration.getHotkey()->setHotkey(getHotkeyname(type), (unsigned)MAKELPARAM(0, 0));
-			UnregisterHotKey(AfxGetMainWnd()->GetSafeHwnd() ,type);
+			UnregisterHotKey(AfxGetMainWnd()->GetSafeHwnd(), type);
 			return FALSE;
 		}
 	} else {
-		UnregisterHotKey(AfxGetMainWnd()->GetSafeHwnd() ,type);
+		UnregisterHotKey(AfxGetMainWnd()->GetSafeHwnd(), type);
 	}
 
 	// 是COM Service知道信息，以便保存
@@ -82,6 +86,16 @@ BOOL setHotkey(WORD vKey, WORD vModifiers_mfc, const int type) {
 	return TRUE;
 }
 };
+
+
+// 如过CHECK_BOX选中，则Sliderbar可用，反之则不可用
+void CDlgOptions::UpdateAutoswitchState() {
+	if (BST_CHECKED == IsDlgButtonChecked(IDC_CHK_ENABLE_TIMEOUT_SWITCH)) {
+		m_sldTimeout.EnableWindow(TRUE);
+	} else {
+		m_sldTimeout.EnableWindow(FALSE);
+	}
+}
 
 void CDlgOptions::DoDataExchange(CDataExchange* pDX)
 {
@@ -94,6 +108,8 @@ void CDlgOptions::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_HOTKEY_SWITCHUSR, m_hotkeySwitchUser);
 	DDX_Check(pDX, IDC_CHK_AUTOLOAD, m_bAutoRun);
 	DDX_Control(pDX, IDC_HOTKEY_LAUNCH, m_hotkeyLaunch);
+	DDX_Control(pDX, IDC_STA_TIMEOUT, m_staTimeoutValue);
+	DDX_Control(pDX, IDC_SLD_TIMEOUT, m_sldTimeout);
 }
 
 int CDlgOptions::setHotKey() {
@@ -146,6 +162,21 @@ int CDlgOptions::OnApply() {
 	return 0;
 }
 
+int CDlgOptions::restoreAutoswitchSetting() {
+	m_sldTimeout.SetRange(1, 120);
+	m_sldTimeout.SetTicFreq(10);
+	int pos = g_configuration.getTimeoutSwitch()->getTimeoutValue() / 60;
+	m_sldTimeout.SetPos(pos);
+
+	CString str;
+	str.Format("%d", pos);
+	m_staTimeoutValue.SetWindowText(str);
+
+	CheckDlgButton(IDC_CHK_ENABLE_TIMEOUT_SWITCH, 
+		g_configuration.getTimeoutSwitch()->isEnabled() ? BST_CHECKED : BST_UNCHECKED);
+	return 0;
+}
+
 // 恢复设置
 void CDlgOptions::restoreSetting() {	
 	// 热键
@@ -161,6 +192,8 @@ void CDlgOptions::restoreSetting() {
 	// 自动运行
 	m_bAutoRun = isAutoRun((HMODULE)AfxGetInstanceHandle());
 	m_bOld_autorun = m_bAutoRun;
+
+	restoreAutoswitchSetting();
 	UpdateData(FALSE);
 }
 
@@ -179,6 +212,8 @@ void CDlgOptions::SetAutoRun() {
 
 BEGIN_MESSAGE_MAP(CDlgOptions, CDialog)
 	ON_BN_CLICKED(IDC_CHK_AUTOLOAD, OnBnClickedChkAutoload)
+	ON_BN_CLICKED(IDC_CHK_ENABLE_TIMEOUT_SWITCH, OnBnClickedChkEnableTimeoutSwitch)
+	ON_WM_HSCROLL()
 END_MESSAGE_MAP()
 
 
@@ -192,12 +227,17 @@ BOOL CDlgOptions::OnInitDialog()
 		// 如果热键冲突
 		Restore();
 	}
+
+	UpdateAutoswitchState();
 	return TRUE;
 }
 
 void CDlgOptions::OnBnClickedChkAutoload() {
 	SetModify(true);
 }
+
+// 当有按键按下且相应消息的是HOTKEY CONTROL
+// 则是button 'OK' and 'Cancel' 可用
 BOOL CDlgOptions::PreTranslateMessage(MSG* pMsg)
 {
 	if (pMsg->message == WM_KEYDOWN) {
@@ -208,4 +248,21 @@ BOOL CDlgOptions::PreTranslateMessage(MSG* pMsg)
 		}	
 	}
 	return CBaseDlg::PreTranslateMessage(pMsg);
+}
+
+void CDlgOptions::OnBnClickedChkEnableTimeoutSwitch()
+{
+	UpdateAutoswitchState();
+	SetModify(true);
+}
+
+void CDlgOptions::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
+{
+	if (pScrollBar->GetSafeHwnd() == m_sldTimeout.GetSafeHwnd()) {
+		CString str;
+		str.Format("%d", m_sldTimeout.GetPos());
+		m_staTimeoutValue.SetWindowText(str);
+		SetModify(true);
+	}
+	CBaseDlg::OnHScroll(nSBCode, nPos, pScrollBar);
 }
