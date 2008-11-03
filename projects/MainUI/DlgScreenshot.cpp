@@ -39,18 +39,18 @@ void CDlgScreenshot::DoDataExchange(CDataExchange* pDX)
 
 int CDlgScreenshot::OnApply() {
 	try {
-		IScreenSave * screensave = NULL;
-		HRESULT hr = CoCreateInstance(CLSID_ScreenSave, NULL, CLSCTX_LOCAL_SERVER, IID_IScreenSave, (LPVOID*)&screensave);
-		screensave->enableScreenSave(convert(m_bEnableScreensave));
-		screensave->setTimeSpan(m_sliderSaveTimespan.GetPos() * 60);
-		// screensave->enable
-
 		// 保存设置
 		g_configuration.getScreenshotAutoClean()->enable(m_bEnableAutoclean);
 		g_configuration.getScreenshotAutoClean()->setTimespan(m_sliderAutoclearTimespan.GetPos());
 
 		g_configuration.getScreenshotSetting()->enable(m_bEnableScreensave);
 		g_configuration.getScreenshotSetting()->setTimeSpan(m_sliderSaveTimespan.GetPos() * 60);
+
+		IScreenSave * screensave = NULL;
+		HRESULT hr = CoCreateInstance(CLSID_ScreenSave, NULL, CLSCTX_LOCAL_SERVER, IID_IScreenSave, (LPVOID*)&screensave);
+		screensave->enableScreenSave(convert(m_bEnableScreensave));
+		screensave->setTimeSpan(m_sliderSaveTimespan.GetPos() * 60);
+		screensave->put_AutocleanEnabled(convert(m_bEnableAutoclean));
 		return 0;
 	} catch (_com_error& ) {
 		return -1;
@@ -62,7 +62,7 @@ void CDlgScreenshot::OnShow() {
 
 void CDlgScreenshot::restoreSetting() {
 	m_bEnableScreensave = g_configuration.getScreenshotSetting()->isSettingEnabled();
-	m_bEnableAutoclean = g_configuration.getScreenshotAutoClean()->isSettingEnabled();
+	m_bEnableAutoclean = g_configuration.getScreenshotAutoClean()->isEnable();
 
 	// 设置自动存储
 	m_sliderSaveTimespan.SetRange(1, 120);
@@ -75,6 +75,9 @@ void CDlgScreenshot::restoreSetting() {
 		g_configuration.getScreenshotAutoClean()->getRangeMax());
 	m_sliderAutoclearTimespan.SetTicFreq(1);
 	m_sliderAutoclearTimespan.SetPos(g_configuration.getScreenshotAutoClean()->getTimespan());
+
+	CheckDlgButton(IDC_CHK_AUTOCLEAN, 
+		g_configuration.getScreenshotAutoClean()->isEnable() ? BST_CHECKED : BST_UNCHECKED);
 
 	setAutoCleanTips();
 	setTimespanTips();
