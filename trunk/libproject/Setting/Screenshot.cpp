@@ -67,7 +67,8 @@ TiXmlElement * Screenshot::saveScreensave(TiXmlElement * root) {
 	autoclean->SetAttribute(CONFIG_CONST_MIN, _itot(getAutoClean()->getRangeMin(), buffer, 10));
 	autoclean->SetAttribute(CONSIG_CONST_TIMESPAN, _itot(getAutoClean()->getTimespan(), buffer, 10));
 	autoclean->SetAttribute(CONFIG_CONST_LASTTIME, getAutoClean()->getLastTime());
-	rule_root->LinkEndChild(autoclean);
+	autoclean->SetAttribute(CONFIG_CONST_ENABLE, enabledFromBool(getAutoClean()->isEnable()));
+	rule_root->LinkEndChild(autoclean); 
 
 	root->LinkEndChild(rule_root);
 	return rule_root;
