@@ -42,6 +42,7 @@ int XMLConfiguration::saveAppSetting(TiXmlElement * root) {
 	
 	getScreenshotSetting()->saveconfig(appsetting_root);
 	getHotkey()->saveconfig(appsetting_root);
+	getTimeoutSwitch()->saveconfig(appsetting_root);
 	root->LinkEndChild(appsetting_root);
 	return 0;
 }
@@ -116,6 +117,8 @@ int XMLConfiguration::parseAppSet(TiXmlNode *appset_root) {
 				getScreenshotSetting()->readconfig(element);
 			} else if (_tcscmp(node->Value(), CONFIG_ITEM_APPSET_HOTKEY) == 0) {
 				getHotkey()->readconfig(element);
+			} else if (_tcscmp(node->Value(), CONFIG_ITEM_MODEL_AUTOSWITCH) == 0) {
+				getTimeoutSwitch()->readconfig(element);
 			}
 		}
 		// 获取下一个
