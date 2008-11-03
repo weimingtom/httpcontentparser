@@ -41,8 +41,7 @@
 "/>
 			<Tool
 				Name="VCPreBuildEventTool"
-				CommandLine="copy .\Filemapping.h ..\..\include\utility
-copy .\fd_set_utility.h ..\..\include\utility
+				CommandLine="copy .\fd_set_utility.h ..\..\include\utility
 copy .\httppacket.h ..\..\include\utility
 copy .\dns.h ..\..\include\utility
 copy .\httprequestpacket.h ..\..\include\utility
@@ -94,8 +93,7 @@ copy .\httppacket.h ..\..\include\utility
 "/>
 			<Tool
 				Name="VCPreBuildEventTool"
-				CommandLine="copy .\Filemapping.h ..\..\include\utility
-copy .\fd_set_utility.h ..\..\include\utility
+				CommandLine="copy .\fd_set_utility.h ..\..\include\utility
 copy .\httppacket.h ..\..\include\utility
 copy .\dns.h ..\..\include\utility
 copy .\httprequestpacket.h ..\..\include\utility
