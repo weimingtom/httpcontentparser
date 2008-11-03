@@ -40,7 +40,7 @@ int XMLConfiguration::saveAppSetting(TiXmlElement * root) {
 	getEyecareSetting()->saveconfig(appsetting_root);
 	getWebHistoryRecordSetting()->saveconfig(appsetting_root);
 	
-	getScreenSave()->saveconfig(appsetting_root);
+	getScreenshotSetting()->saveconfig(appsetting_root);
 	getHotkey()->saveconfig(appsetting_root);
 	root->LinkEndChild(appsetting_root);
 	return 0;
@@ -113,7 +113,7 @@ int XMLConfiguration::parseAppSet(TiXmlNode *appset_root) {
 				// getSystemSetting(element);
 			} else if (_tcscmp(node->Value(), CONFIG_ITEM_APPSET_SCREENSAVER) == 0) {
 				// 屏幕保存设置功能
-				getScreenSave()->readconfig(element);
+				getScreenshotSetting()->readconfig(element);
 			} else if (_tcscmp(node->Value(), CONFIG_ITEM_APPSET_HOTKEY) == 0) {
 				getHotkey()->readconfig(element);
 			}

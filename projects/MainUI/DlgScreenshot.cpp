@@ -46,11 +46,11 @@ int CDlgScreenshot::OnApply() {
 		// screensave->enable
 
 		// 保存设置
-		g_configuration.getScreenSaveAutoClean()->enable(m_bEnableAutoclean);
-		g_configuration.getScreenSaveAutoClean()->setTimespan(m_sliderAutoclearTimespan.GetPos());
+		g_configuration.getScreenshotAutoClean()->enable(m_bEnableAutoclean);
+		g_configuration.getScreenshotAutoClean()->setTimespan(m_sliderAutoclearTimespan.GetPos());
 
-		g_configuration.getScreenSave()->enable(m_bEnableScreensave);
-		g_configuration.getScreenSave()->setTimeSpan(m_sliderSaveTimespan.GetPos() * 60);
+		g_configuration.getScreenshotSetting()->enable(m_bEnableScreensave);
+		g_configuration.getScreenshotSetting()->setTimeSpan(m_sliderSaveTimespan.GetPos() * 60);
 		return 0;
 	} catch (_com_error& ) {
 		return -1;
@@ -61,20 +61,20 @@ void CDlgScreenshot::OnShow() {
  
 
 void CDlgScreenshot::restoreSetting() {
-	m_bEnableScreensave = g_configuration.getScreenSave()->isSettingEnabled();
-	m_bEnableAutoclean = g_configuration.getScreenSaveAutoClean()->isSettingEnabled();
+	m_bEnableScreensave = g_configuration.getScreenshotSetting()->isSettingEnabled();
+	m_bEnableAutoclean = g_configuration.getScreenshotAutoClean()->isSettingEnabled();
 
 	// 设置自动存储
 	m_sliderSaveTimespan.SetRange(1, 120);
 	m_sliderSaveTimespan.SetTicFreq(10);
-	int pos = g_configuration.getScreenSave()->getTimeSpan() / 60;
+	int pos = g_configuration.getScreenshotSetting()->getTimeSpan() / 60;
 	m_sliderSaveTimespan.SetPos(pos);
 
 	// 设置自动清理
-	m_sliderAutoclearTimespan.SetRange(g_configuration.getScreenSaveAutoClean()->getRangeMin(),
-		g_configuration.getScreenSaveAutoClean()->getRangeMax());
+	m_sliderAutoclearTimespan.SetRange(g_configuration.getScreenshotAutoClean()->getRangeMin(),
+		g_configuration.getScreenshotAutoClean()->getRangeMax());
 	m_sliderAutoclearTimespan.SetTicFreq(1);
-	m_sliderAutoclearTimespan.SetPos(g_configuration.getScreenSaveAutoClean()->getTimespan());
+	m_sliderAutoclearTimespan.SetPos(g_configuration.getScreenshotAutoClean()->getTimespan());
 
 	setAutoCleanTips();
 	setTimespanTips();
