@@ -69,6 +69,8 @@ interface IScreenSave : IDispatch{
 	[id(3), helpstring("Method isEnabled")] HRESULT isEnabled([out,retval] VARIANT_BOOL* enabled);
 	[id(4), helpstring("Method ClearCache")] HRESULT ClearCache(void);
 	[id(5), helpstring("Method setAutoClearTimespan")] HRESULT setAutoClearTimespan([in] LONG seconds);
+	[propget, id(6), helpstring("Property AutocleanEnabled")] HRESULT AutocleanEnabled([out, retval] VARIANT_BOOL* pVal);
+	[propput, id(6), helpstring("Property AutocleanEnabled")] HRESULT AutocleanEnabled([in] VARIANT_BOOL newVal);
 };
 [
 	object,

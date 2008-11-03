@@ -47,3 +47,15 @@ STDMETHODIMP CScreenSave::setAutoClearTimespan(LONG seconds)
 {
 	return S_OK;
 }
+
+STDMETHODIMP CScreenSave::get_AutocleanEnabled(VARIANT_BOOL* pVal)
+{
+	*pVal = convert(g_configuration.getScreenshotAutoClean()->isEnable());
+	return S_OK;
+}
+
+STDMETHODIMP CScreenSave::put_AutocleanEnabled(VARIANT_BOOL newVal)
+{
+	g_configuration.getScreenshotAutoClean()->enable(convert(newVal));
+	return S_OK;
+}
