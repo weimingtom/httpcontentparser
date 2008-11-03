@@ -54,6 +54,10 @@ interface IAppSetting : IDispatch{
 	[id(3), helpstring("Method GetInstallPath")] HRESULT GetInstallPath([out,retval] BSTR* path);
 	[id(4), helpstring("Method switchModel")] HRESULT switchModel([in] VARIANT_BOOL bParent, [in] BSTR pwd, [out,retval] VARIANT_BOOL* bSucc);
 	[propget, id(5), helpstring("Property ParentModel")] HRESULT ParentModel([out, retval] VARIANT_BOOL* pVal);
+	[id(6), helpstring("方法setTimeoutValue")] HRESULT setTimeoutValue([in] LONG seconds);
+	[propget, id(7), helpstring("属性 TimeoutSwitchEnabled")] HRESULT TimeoutSwitchEnabled([out, retval] VARIANT_BOOL* pVal);
+	[propput, id(7), helpstring("属性 TimeoutSwitchEnabled")] HRESULT TimeoutSwitchEnabled([in] VARIANT_BOOL newVal);
+	[propget, id(8), helpstring("属性 LefttimeToSwitch")] HRESULT LefttimeToSwitch([out, retval] LONG* pVal);
 };
 [
 	object,

@@ -45,6 +45,10 @@ public:
 	STDMETHOD(GetInstallPath)(BSTR* path);
 	STDMETHOD(switchModel)(VARIANT_BOOL bParent, BSTR pwd, VARIANT_BOOL* bSucc);
 	STDMETHOD(get_ParentModel)(VARIANT_BOOL* pVal);
+	STDMETHOD(setTimeoutValue)(LONG seconds);
+	STDMETHOD(get_TimeoutSwitchEnabled)(VARIANT_BOOL* pVal);
+	STDMETHOD(put_TimeoutSwitchEnabled)(VARIANT_BOOL newVal);
+	STDMETHOD(get_LefttimeToSwitch)(LONG* pVal);
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(AppSetting), CAppSetting)

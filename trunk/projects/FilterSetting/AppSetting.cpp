@@ -62,6 +62,9 @@ STDMETHODIMP CAppSetting::switchModel(VARIANT_BOOL bParent, BSTR pwd, VARIANT_BO
 
 			// 而且还要停止Eyecare 的计数器
 			g_configuration.getEyecareSetting()->stopTimer();
+
+			// 开启TIMEOUT SWITCH 功能
+			g_configuration.getTimeoutSwitch()->startTimer();
 		} else {
 			// 验证密码失败
 			*bSucc = VARIANT_FALSE;
@@ -85,5 +88,35 @@ STDMETHODIMP CAppSetting::get_ParentModel(VARIANT_BOOL* pVal) {
 	} else {
 		*pVal = VARIANT_FALSE;
 	}
+	return S_OK;
+}
+
+STDMETHODIMP CAppSetting::setTimeoutValue(LONG seconds)
+{
+	g_configuration.getTimeoutSwitch()->setTimeoutValue(seconds);
+	return S_OK;
+}
+
+STDMETHODIMP CAppSetting::get_TimeoutSwitchEnabled(VARIANT_BOOL* pVal)
+{
+	*pVal = convert(g_configuration.getTimeoutSwitch()->isEnabled());
+	return S_OK;
+}
+
+STDMETHODIMP CAppSetting::put_TimeoutSwitchEnabled(VARIANT_BOOL newVal)
+{
+	g_configuration.getTimeoutSwitch()->enable(convert(newVal));
+	// 如果当前正处于PARENT_MODE, 则开启
+	if (SettingItem::MODE_PARENT == SettingItem::getModel()) {
+		// 此函数会自动确认功能是否可用
+		g_configuration.getTimeoutSwitch()->startTimer();
+	}
+	return S_OK;
+}
+
+// 获取距离切换状态的时间
+STDMETHODIMP CAppSetting::get_LefttimeToSwitch(LONG* pVal)
+{
+	*pVal = (LONG)g_configuration.getTimeoutSwitch()->getLeftTime();
 	return S_OK;
 }
