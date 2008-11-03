@@ -14,7 +14,7 @@ TimeoutSwitch::~TimeoutSwitch(void) {
 
 // 启动计时器
 void TimeoutSwitch::startTimer() {
-	if (isEnabled() == true) {
+	if (isSettingEnabled() == true) {
 		calcugraph_.initialize();
 		calcugraph_.setTimespan(timespan_);	
 	}
@@ -39,7 +39,7 @@ void TimeoutSwitch::defaultSetting() {
 	enable(true);
 	min_ = 60;		// 最小值一分钟
 	max_ = 60 * 60;
-	setTimeoutValue(60);
+	setTimeoutValue(60); 
 	startTimer();
 }
 
@@ -50,7 +50,15 @@ int TimeoutSwitch::getTimeoutValue() const {
 }
 void TimeoutSwitch::setTimeoutValue(const int seconds) {
 	setModified(true); 
-	timespan_ = seconds;
+
+	// 使用取值范围内的值
+	if (seconds > max_)
+		timespan_ = max_;
+	else if (seconds  < min_) 
+		timespan_ = min_;
+	else 
+		timespan_ = seconds;
+
 	calcugraph_.setTimespan(seconds);
 }
 
@@ -69,7 +77,7 @@ TiXmlElement * TimeoutSwitch::saveConfig(TiXmlElement * root) {
 	rule_root->SetAttribute(CONFIG_CONST_MAX, _itot(getRangeMax(), buffer, 10));
 	rule_root->SetAttribute(CONFIG_CONST_MIN, _itot(getRangeMin(), buffer, 10));
 	rule_root->SetAttribute(CONSIG_CONST_TIMESPAN, _itot(getTimeoutValue(), buffer, 10));
-	rule_root->SetAttribute(CONFIG_CONST_ENABLE, enabledFromBool(isEnabled()));
+	rule_root->SetAttribute(CONFIG_CONST_ENABLE, enabledFromBool(isSettingEnabled()));
 
 	root->LinkEndChild(rule_root);
 	return rule_root;

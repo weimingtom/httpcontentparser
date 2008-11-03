@@ -106,6 +106,7 @@ STDMETHODIMP CAppSetting::get_TimeoutSwitchEnabled(VARIANT_BOOL* pVal)
 STDMETHODIMP CAppSetting::put_TimeoutSwitchEnabled(VARIANT_BOOL newVal)
 {
 	g_configuration.getTimeoutSwitch()->enable(convert(newVal));
+	bool a = convert(newVal);
 	// 如果当前正处于PARENT_MODE, 则开启
 	if (SettingItem::MODE_PARENT == SettingItem::getModel()) {
 		// 此函数会自动确认功能是否可用
