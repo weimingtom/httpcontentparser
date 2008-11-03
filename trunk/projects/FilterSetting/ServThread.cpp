@@ -115,7 +115,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 			}
 
 			// 如果可以切换状态的时候，且当前状态是家长模式
-			if (g_configuration.getTimeoutSwitch()->shouldSwitch() && SettingItem::getModel() == SettingItem::MODE_PARENT) {
+			if (g_configuration.getTimeoutSwitch()->shouldSwitch()) {
 				SettingItem::setModel(SettingItem::MODE_CHILD);
 			}
 			if (ID_TIMER_SAVE_SCREEN == wParam) {
