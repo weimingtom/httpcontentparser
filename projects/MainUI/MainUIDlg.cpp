@@ -17,6 +17,8 @@
 
 #define CALLMESSAGE WM_USER + 0x10
 
+#define ID_TIMER    100
+#define TIME_ESCPSE	500
 
 // 用于应用程序“关于”菜单项的 CAboutDlg 对话框
 
@@ -90,6 +92,7 @@ BEGIN_MESSAGE_MAP(CMainUIDlg, CDialog)
 	ON_BN_CLICKED(IDC_MAIN_CANCEL, OnBnClickedMainCancel)
 	ON_WM_DESTROY()
 	ON_WM_INITMENUPOPUP()
+	ON_WM_TIMER()
 END_MESSAGE_MAP()
 
 // CMainUIDlg 消息处理程序
@@ -177,6 +180,7 @@ BOOL CMainUIDlg::OnInitDialog()
 
 	setupTrayMenu();
 
+	SetTimer(ID_TIMER, TIME_ESCPSE, NULL);
 	return TRUE;  // 除非设置了控件的焦点，否则返回 TRUE
 }
 
@@ -600,3 +604,12 @@ void CMainUIDlg::OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu)
 	CDialog::OnInitMenuPopup(pPopupMenu, nIndex, bSysMenu);
 }
 
+
+void CMainUIDlg::OnTimer(UINT nIDEvent)
+{
+	// 是否是子状态，如果是则隐藏窗口
+	if (isShown() &&Services::isParentModel() == false) {
+		HideMainUI();
+	}
+	CDialog::OnTimer(nIDEvent);
+}
