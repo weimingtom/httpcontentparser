@@ -121,7 +121,7 @@ protected:
 	afx_msg void OnToolsWebhistory();
 	afx_msg void OnMainLockcomputer();
 	afx_msg void OnDestroy();
-
+	afx_msg void OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu);
 	virtual void OnOK();
 	virtual void OnCancel();
 protected:
