@@ -89,6 +89,7 @@ BEGIN_MESSAGE_MAP(CMainUIDlg, CDialog)
 	ON_COMMAND(ID_TRAYMENU_LOCKCOMPUTER, OnMainLockcomputer)
 	ON_BN_CLICKED(IDC_MAIN_CANCEL, OnBnClickedMainCancel)
 	ON_WM_DESTROY()
+	ON_WM_INITMENUPOPUP()
 END_MESSAGE_MAP()
 
 // CMainUIDlg 消息处理程序
@@ -137,8 +138,6 @@ void CMainUIDlg::setupTrayMenu() {
 	m_trayMenu.LoadMenu(IDC_MENU_TRAY_PARENT);
 	m_sysTray.Create(this,10200, CALLMESSAGE, AfxGetApp()->LoadIcon(IDR_MAINFRAME),_T("Hola"));
 	m_sysTray.SetSysMenu(&m_trayMenu);
-
-	UpdateUIStateByModel();
 }
 
 BOOL CMainUIDlg::OnInitDialog()
@@ -194,9 +193,6 @@ void CMainUIDlg::OnSysCommand(UINT nID, LPARAM lParam)
 	}
 }
 
-
-
-
 void CMainUIDlg::OnTraymenuMainui() {
 	CString strMenuItem;
 	if (isShown()) {
@@ -236,14 +232,11 @@ void CMainUIDlg::OnMainChangepassword()
 void CMainUIDlg::OnMainParents()
 {
 	CDlgCheckPassword dlg;
-	if (IDOK == dlg.DoModal()) {
-		UpdateUIStateByModel();
-	}
+	dlg.DoModal();
 }
 void CMainUIDlg::OnMainChildren()
 {
 	Services::switchChildModel();
-	UpdateUIStateByModel();
 }
 
 // 相应热键消息
@@ -599,3 +592,11 @@ void CMainUIDlg::HideMainUI() {
 	::SetWindowPos(GetSafeHwnd(), HWND_BOTTOM, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
 	m_bShown = FALSE;
 }
+
+
+void CMainUIDlg::OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu)
+{
+	UpdateUIStateByModel();
+	CDialog::OnInitMenuPopup(pPopupMenu, nIndex, bSysMenu);
+}
+
