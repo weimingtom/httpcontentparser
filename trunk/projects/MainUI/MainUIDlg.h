@@ -132,4 +132,6 @@ private:
 	void ShowMainUI();
 	void HideMainUI();
 	BOOL isShown() const { return m_bShown;}
+public:
+	afx_msg void OnTimer(UINT nIDEvent);
 };
