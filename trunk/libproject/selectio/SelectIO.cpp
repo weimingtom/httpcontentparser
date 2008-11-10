@@ -350,9 +350,10 @@ bool CSelectIO::needStored(const SOCKET s) {
 		// XML, BMP, JEPG, PNG, HTML
 		// all other things we should pass it without storing.
 		if (isImage(header.getContentType()) || isText(header.getContentType())) {
+			return true;
+		} else {
 			return false;
 		}
-		return true;
 	} else {
 		// 如果不是以HTTP开头 
 		// 注意：在开始的时候我们已经处理了可能是一个HTTP协议部分的情况
