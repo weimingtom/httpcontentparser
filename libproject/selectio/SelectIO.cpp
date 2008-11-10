@@ -315,7 +315,7 @@ bool CSelectIO::needStored(const SOCKET s) {
 
 	// 提取前四个字节，查看是否是'http', 不过不是则不处理
 	const char HTTP_PACHET_HEADER[] = "HTTP";
-	const int buf_size = 1024 * 64;
+	const int buf_size = 1024;
 	char buf[buf_size] = {0};	
 	WSABUF wsabuf;		// buffer
 	wsabuf.buf = buf;
