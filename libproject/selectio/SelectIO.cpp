@@ -346,8 +346,12 @@ bool CSelectIO::needStored(const SOCKET s) {
 			return false;
 		}
 		
-		// TODO: you can add code here to check content.
-		// if you return false, the packet will be dropped.
+		// we should check the content here, we just store the 
+		// XML, BMP, JEPG, PNG, HTML
+		// all other things we should pass it without storing.
+		if (isImage(header.getContentType()) || isText(header.getContentType())) {
+			return false;
+		}
 		return true;
 	} else {
 		// 如果不是以HTTP开头 
