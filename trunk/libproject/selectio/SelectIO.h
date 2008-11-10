@@ -47,10 +47,7 @@ public:
 	void onCloseSocket(const SOCKET s);
 
 	void setRecv(MYWSPRECV *recv);
-protected:
-	// 是否需要处理
-	bool isneedToDeal(HTTP_RESPONSE_HEADER * header);
-	// 
+protected: 
 	bool isThereUncompletePacket(const SOCKET s);
 	//==========================================
 	// 处理正在传输的包
