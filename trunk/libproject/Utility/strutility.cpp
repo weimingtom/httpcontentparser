@@ -97,7 +97,25 @@ const TCHAR *strnstr(const TCHAR *src, const TCHAR *des, const int len) {
 bool beginwith(const TCHAR *src, const TCHAR *header) {
 	assert (src != NULL);
 	assert (header != NULL);
-	return  (src == _tcsstr(src, header)) ? true : false;
+
+	const TCHAR * p = src, *q = header;
+	while (1) {
+		// 如果子串比母串还长
+		if (*p == '\0' && *q != '\0')
+			return false;
+
+		// 测试结束
+		if (*q == '\0') 
+			return true;
+
+		// 如果不同，直接返回
+		if (*p != *q)
+			return false;
+
+		// 增加1
+		p++;
+		q++;
+	}
 }
 
 bool endwith(const TCHAR * src, const TCHAR *detail) {
