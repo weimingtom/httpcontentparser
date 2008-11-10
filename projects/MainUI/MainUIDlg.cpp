@@ -8,8 +8,10 @@
 #include ".\dlgchangepassword.h"
 #include ".\dlgcheckpassword.h"
 #include ".\services.h"
+#include ".\globalvariable.h"
 #include <app_constants.h>
 #include <sysutility.h>
+#include <comdef.h>
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -376,6 +378,7 @@ HCURSOR CMainUIDlg::OnQueryDragIcon()
 	return static_cast<HCURSOR>(m_hIcon);
 }
 void CMainUIDlg::OnMainLockcomputer() {
+	// Ëø¶¨¼ÆËã»ú
 }
 
 //===================================================
