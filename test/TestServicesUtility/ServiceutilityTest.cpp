@@ -24,7 +24,7 @@ void ServiceutilityTest::TestCheckSeachRule() {
 			"Keep-Alive: 300\r\n"
 			"Connection: keep-alive\r\n";
 	HTTPRequestPacket packet;
-	packet.parsePacket(require, strlen(require));
+	packet.parsePacket(require, (int)strlen(require));
 
 	CPPUNIT_ASSERT(false ==  checkSeachRule(packet));
 	}
@@ -39,7 +39,7 @@ void ServiceutilityTest::TestCheckSeachRule() {
 			"Keep-Alive: 300\r\n"
 			"Connection: keep-alive\r\n";
 	HTTPRequestPacket packet;
-	packet.parsePacket(require, strlen(require));
+	packet.parsePacket(require, (int)strlen(require));
 
 	CPPUNIT_ASSERT(true ==  checkSeachRule(packet));
 	}
