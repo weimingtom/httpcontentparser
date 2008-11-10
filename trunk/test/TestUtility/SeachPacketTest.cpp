@@ -84,7 +84,6 @@ void SeachPacketTest::getContentTest() {
 	// 次测试用例的主机地址错误
 	char * oper = "/s?ie=gb2312&bs=hhhhhhhhhhhhhhhhhhhhhh&sr=&z=&cl=3&f=8&wd=hhhhhhhhhhhhhhhhhhhhhh&ct=0 HTTP/1.1";
 	char * host_name = "c.baidu.com";
-	char result[HTTP_REQUEST_ITEM_MAX_LENGTH];
 	SeachPacket packet;
 	CPPUNIT_ASSERT(SeachPacket::SEACH_ENGINE_UNKNOWN ==packet.getSeachEngineType());
 	CPPUNIT_ASSERT( 0 == packet.parse(oper, host_name));
