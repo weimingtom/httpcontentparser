@@ -14,7 +14,7 @@ void HttpRequestPacketTest::NoteHTTPRequest() {
 	{
 	HTTPRequestPacket request_packet;
 	char * packet = "8";
- 	int x = request_packet.parsePacket(packet, strlen(packet));
+ 	int x = (int)request_packet.parsePacket(packet, strlen(packet));
 	CPPUNIT_ASSERT(0 == x);
 	}
 }
@@ -29,7 +29,7 @@ void HttpRequestPacketTest::parseMultiPacket() {
 	"Referer: http://news.sina.com.cn/c/2008-09-04/202816233711.shtml\r\n";
 	WSABUF wsabuf[1];
 	wsabuf[0].buf = packet;
-	wsabuf[0].len = strlen(packet);
+	wsabuf[0].len = (u_long)strlen(packet);
 
 	// 测试解析后的可识别的项数
 	HTTPRequestPacket request_packet;
@@ -60,9 +60,9 @@ void HttpRequestPacketTest::parseMultiPacket() {
 	"Referer: http://news.sina.com.cn/c/2008-09-04/202816233711.shtml\r\n";
 	WSABUF wsabuf[2];
 	wsabuf[0].buf = packet1;
-	wsabuf[0].len = strlen(packet1);
+	wsabuf[0].len = (u_long)strlen(packet1);
 	wsabuf[1].buf = packet2;
-	wsabuf[1].len = strlen(packet2);
+	wsabuf[1].len = (u_long)strlen(packet2);
 
 	// 测试解析后的可识别的项数
 	HTTPRequestPacket request_packet;
@@ -98,7 +98,7 @@ void HttpRequestPacketTest::parsePacket() {
 	"Referer: http://news.sina.com.cn/c/2008-09-04/202816233711.shtml\r\n";
 
 	// 测试解析后的可识别的项数
- 	const int item_count = request_packet.parsePacket(packet, strlen(packet));
+ 	const int item_count = request_packet.parsePacket(packet, (int)strlen(packet));
 	CPPUNIT_ASSERT(item_count == 4);
 
 	char buffer[HTTP_REQUEST_ITEM_MAX_LENGTH];
@@ -125,7 +125,7 @@ void HttpRequestPacketTest::parsePacket() {
 	"Referer: http://news.sina.com.cn/c/2008-09-04/202816233711.shtml\r\n"
 	"User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.16) Gecko/20080702 Firefox/2.0.0.16 GoogleToolbarFF\r\n";
 
- 	request_packet.parsePacket(packet, strlen(packet));
+ 	request_packet.parsePacket(packet, (int)strlen(packet));
 
 	char buffer[HTTP_REQUEST_ITEM_MAX_LENGTH];
 	request_packet.getMainHostName(buffer, HTTP_REQUEST_ITEM_MAX_LENGTH);
