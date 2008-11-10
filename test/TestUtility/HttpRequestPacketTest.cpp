@@ -14,7 +14,7 @@ void HttpRequestPacketTest::NoteHTTPRequest() {
 	{
 	HTTPRequestPacket request_packet;
 	char * packet = "8";
- 	int x = (int)request_packet.parsePacket(packet, strlen(packet));
+ 	int x = (int)request_packet.parsePacket(packet, (int)strlen(packet));
 	CPPUNIT_ASSERT(0 == x);
 	}
 }
