@@ -46,7 +46,7 @@ void FDUtilityTest::testFDAdd() {
 		CPPUNIT_ASSERT(s1.fd_count == num_of_socket + 2);
 		CPPUNIT_ASSERT(s2.fd_count == num_of_socket);
 
-		for(int i = 0; i < s2.fd_count; ++i) {
+		for(int i = 0; i < (int)s2.fd_count; ++i) {
 			CPPUNIT_ASSERT(FD_ISSET(s2.fd_array[i], &s1));
 		}
 	}
@@ -83,7 +83,7 @@ void FDUtilityTest::testFDSet() {
 	}
 	FDSET_Set(&s1, &s2);
 	CPPUNIT_ASSERT(s2.fd_count == 5);
-	for(int i = 0; i < s2.fd_count; ++i) {
+	for(int i = 0; i < (int)s2.fd_count; ++i) {
 		CPPUNIT_ASSERT(FD_ISSET(s2.fd_array[i], &s1));
 	}
 	}

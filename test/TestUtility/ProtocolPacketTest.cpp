@@ -38,7 +38,7 @@ void ProtocolPacketTest::testSeekRead() {
 
 		CPPUNIT_ASSERT(0 == packet->read(buf_read, 11));
 		char buffer[] = "hello world";
-		unsigned len = strlen(buffer);
+		unsigned len = (int)strlen(buffer);
 		int loop_cnt = 8;
 		for(int i = 0; i < loop_cnt; i++) { 
 			packet->write(buffer, len);
@@ -66,7 +66,7 @@ void ProtocolPacketTest::testSeekRead() {
 		const unsigned buf_size = 18;
 		ProtocolPacket<buf_size> *packet = new ProtocolPacket<buf_size>();
 		char buffer[] = "hello world";
-		unsigned len = strlen(buffer);
+		unsigned len = (int)strlen(buffer);
 		int loop_cnt = 8;
 		for(int i = 0; i < loop_cnt; i++) { 
 			packet->write(buffer, len);
@@ -91,7 +91,7 @@ void ProtocolPacketTest::testSeekRead() {
 		const unsigned buf_size = 11;
 		ProtocolPacket<buf_size> *packet = new ProtocolPacket<buf_size>();
 		char buffer[] = "hello world";
-		unsigned len = strlen(buffer);
+		int len = (int)strlen(buffer);
 		int loop_cnt = 8;
 		for(int i = 0; i < loop_cnt; i++) { 
 			packet->write(buffer, len);
@@ -119,7 +119,7 @@ void ProtocolPacketTest::testSeekRead() {
 		const unsigned buf_size = 2;
 		ProtocolPacket<buf_size> *packet = new ProtocolPacket<buf_size>();
 		char buffer[] = "hello world";
-		unsigned len = strlen(buffer);
+		int len = (int)strlen(buffer);
 		int loop_cnt = 8;
 		for(int i = 0; i < loop_cnt; i++) { 
 			packet->write(buffer, len);
@@ -154,7 +154,7 @@ void ProtocolPacketTest::testSeekRead() {
 		const unsigned buf_size = 2;
 		ProtocolPacket<buf_size> *packet = new ProtocolPacket<buf_size>();
 		char buffer[] = "hello world";
-		unsigned len = strlen(buffer);
+		int len = (int)strlen(buffer);
 		int loop_cnt = 1;
 		for(int i = 0; i < loop_cnt; i++) { 
 			packet->write(buffer, len);
@@ -174,7 +174,7 @@ void ProtocolPacketTest::testSeekWrite() {
 	ProtocolPacket<buf_size> *packet = new ProtocolPacket<buf_size>();
 
 	char buffer[] = "hello world";
-	unsigned len = strlen(buffer);
+	int len = (int)strlen(buffer);
 	int loop_cnt = 8;
 	for(int i = 0; i < loop_cnt; i++) { 
 		packet->write(buffer, len);
@@ -189,7 +189,7 @@ void ProtocolPacketTest::testWrite() {
 	ProtocolPacket<buf_size> *packet = new ProtocolPacket<buf_size>();
 
 	char buffer[] = "hello world";
-	unsigned len = strlen(buffer);
+	int len = (int)strlen(buffer);
 	int loop_cnt = 8;
 	for(int i = 0; i < loop_cnt; i++) { 
 		packet->write(buffer, len);
@@ -202,7 +202,7 @@ void ProtocolPacketTest::testWrite() {
 		ProtocolPacket<buf_size> *packet = new ProtocolPacket<buf_size>();
 
 		char buffer[] = "hello world";
-		unsigned len = strlen(buffer);
+		int len = (int)strlen(buffer);
 		int loop_cnt = 8;
 		for(int i = 0; i < loop_cnt; i++) { 
 			packet->write(buffer, len);
@@ -216,7 +216,7 @@ void ProtocolPacketTest::testWrite() {
 		ProtocolPacket<buf_size> *packet = new ProtocolPacket<buf_size>();
 
 		char buffer[] = "hello world";
-		unsigned len = strlen(buffer);
+		int len = (int)strlen(buffer);
 		int loop_cnt = 8;
 		for(int i = 0; i < loop_cnt; i++) { 
 			packet->write(buffer, len);
@@ -245,7 +245,7 @@ void ProtocolPacketTest::testLoopRead() {
 		const unsigned buf_size = 3;
 		ProtocolPacket<buf_size> *packet = new ProtocolPacket<buf_size>();
 		char buffer[] = "abc";
-		unsigned len = strlen(buffer);
+		int len = (int)strlen(buffer);
 		int loop_cnt = 1 ;
 		for(int i = 0; i < loop_cnt; i++) { 
 			packet->write(buffer, len);
@@ -272,7 +272,7 @@ void ProtocolPacketTest::testLoopRead() {
 		const unsigned buf_size = 3;
 		ProtocolPacket<buf_size> *packet = new ProtocolPacket<buf_size>();
 		char buffer[] = "abcdefghijklmnopqrstuvwxyz";
-		unsigned len = strlen(buffer);
+		int len = (int)strlen(buffer);
 		int loop_cnt = 1 ;
 		for(int i = 0; i < loop_cnt; i++) { 
 			packet->write(buffer, len);
@@ -301,7 +301,7 @@ void ProtocolPacketTest::testRead() {
 	const unsigned buf_size = 10;
 	ProtocolPacket<buf_size> *packet = new ProtocolPacket<buf_size>();
 	char buffer[] = "hello world";
-	unsigned len = strlen(buffer);
+	int len = (int)strlen(buffer);
 	int loop_cnt = 8;
 	for(int i = 0; i < loop_cnt; i++) { 
 		packet->write(buffer, len);
@@ -311,7 +311,7 @@ void ProtocolPacketTest::testRead() {
 	memset(buf_read, 0, sizeof(buf_read));
 	packet->read(buf_read, 33);
 	buf_read[33]  = '\0';
-	len = strlen(buffer);
+	len = (int)strlen(buffer);
 	for (int i = 0; i < 3; ++i) {
 		strcpy(&(buf_gen[len*i]), buffer); 
 	}
@@ -322,7 +322,7 @@ void ProtocolPacketTest::testRead() {
 	const unsigned buf_size = 1024;
 	ProtocolPacket<buf_size> *packet = new ProtocolPacket<buf_size>();
 	char buffer[] = "hello world";
-	unsigned len = strlen(buffer);
+	int len = (int)strlen(buffer);
 	int loop_cnt = 8;
 	for(int i = 0; i < loop_cnt; i++) { 
 		packet->write(buffer, len);
@@ -332,7 +332,7 @@ void ProtocolPacketTest::testRead() {
 	memset(buf_read, 0, sizeof(buf_read));
 	packet->read(buf_read, 33);
 	buf_read[33]  = '\0';
-	len = strlen(buffer);
+	len = (int)strlen(buffer);
 	for (int i = 0; i < 3; ++i) {
 		strcpy(&(buf_gen[len*i]), buffer); 
 	}
@@ -343,7 +343,7 @@ void ProtocolPacketTest::testRead() {
 	const unsigned buf_size = 1;
 	ProtocolPacket<buf_size> *packet = new ProtocolPacket<buf_size>();
 	char buffer[] = "hello world";
-	unsigned len = strlen(buffer);
+	int len = (int)strlen(buffer);
 	int loop_cnt = 8;
 	for(int i = 0; i < loop_cnt; i++) { 
 		packet->write(buffer, len);
@@ -353,7 +353,7 @@ void ProtocolPacketTest::testRead() {
 	memset(buf_read, 0, sizeof(buf_read));
 	packet->read(buf_read, 33);
 	buf_read[33]  = '\0';
-	len = strlen(buffer);
+	len = (int)strlen(buffer);
 	for (int i = 0; i < 3; ++i) {
 		strcpy(&(buf_gen[len*i]), buffer); 
 	}
@@ -364,7 +364,7 @@ void ProtocolPacketTest::testRead() {
 	const unsigned buf_size = 11;
 	ProtocolPacket<buf_size> *packet = new ProtocolPacket<buf_size>();
 	char buffer[] = "hello world";
-	unsigned len = strlen(buffer);
+	int len = (int)strlen(buffer);
 	int loop_cnt = 8;
 	for(int i = 0; i < loop_cnt; i++) { 
 		packet->write(buffer, len);
@@ -374,7 +374,7 @@ void ProtocolPacketTest::testRead() {
 	memset(buf_read, 0, sizeof(buf_read));
 	packet->read(buf_read, 33);
 	buf_read[33]  = '\0';
-	len = strlen(buffer);
+	len = (int)strlen(buffer);
 	for (int i = 0; i < 3; ++i) {
 		strcpy(&(buf_gen[len*i]), buffer); 
 	}
