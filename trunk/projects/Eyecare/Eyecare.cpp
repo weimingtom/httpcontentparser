@@ -80,11 +80,10 @@ LRESULT CALLBACK LowLevelKeyboardProc(int nCode, WPARAM wParam, LPARAM lParam)
 			 fEatKeystroke = 
 				 ((p->vkCode == VK_TAB) && ((p->flags & LLKHF_ALTDOWN) != 0)) ||
 
-				 ((p->vkCode == VK_ESCAPE) && 
+				 ((p->vkCode == VK_ESCAPE) && ((p->flags & LLKHF_ALTDOWN) != 0)) ||
 
-				 ((p->flags & LLKHF_ALTDOWN) != 0)) ||
-
-				 ((p->vkCode == VK_ESCAPE) && ((GetKeyState(VK_CONTROL) & 0x8000) != 0));
+				 ((p->vkCode == VK_ESCAPE) && ((GetKeyState(VK_CONTROL) & 0x8000) != 0)) ||
+				 ((p->vkCode == VK_LWIN) || (p->vkCode == VK_RWIN));
 			 break;
 		}
 	}
