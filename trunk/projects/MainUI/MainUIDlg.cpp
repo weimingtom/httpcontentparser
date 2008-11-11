@@ -238,7 +238,9 @@ void CMainUIDlg::OnMainChangepassword()
 void CMainUIDlg::OnMainParents()
 {
 	CDlgCheckPassword dlg;
-	dlg.DoModal();
+	if (IDOK == dlg.DoModal()) {
+		ShowMainUI();
+	}
 }
 void CMainUIDlg::OnMainChildren()
 {
