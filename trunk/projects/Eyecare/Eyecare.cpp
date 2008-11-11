@@ -260,6 +260,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	HDC hdc;
 	HHOOK hhkLowLevelKybd;
 
+	static bool bShowDialog = false;
 	switch (message)
 	{
 	case WM_CREATE:
@@ -268,6 +269,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		PostMessage(hWnd,WM_MY_SHOWDIALOG , 0, 0);
 		break;
 	case WM_MY_SHOWDIALOG:
+		if (bShowDialog)
+			break;
+
+		bShowDialog  = true;
 		hhkLowLevelKybd  = SetWindowsHookEx(WH_KEYBOARD_LL, LowLevelKeyboardProc, hInst, 0);
 		DialogBox(hInst, (LPCTSTR)IDD_PASSWORD, hWnd, (DLGPROC)InputPasswordDlg);
 		UnhookWindowsHookEx(hhkLowLevelKybd);
