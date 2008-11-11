@@ -195,8 +195,11 @@ bool DNSList::checkDNS(const std::string &dns_name) const {
 	if ( false == isEnabled())	
 		return false;
 
+	TCHAR buffer[1024];
+	get_main_dns_name(buffer, 1024, dns_name.c_str());
+
 	// 表明不在此名单内
-	if (dns_set_.end() != dns_set_.find(dns_name)) {
+	if (dns_set_.end() != dns_set_.find(buffer)) {
 		return true;
 	} else {
 		return false;
@@ -211,7 +214,7 @@ bool DNSList::fuzzeCheckDNS(const std::string &dns_name) const {
 
 	DNS_SET::const_iterator iter = dns_set_.begin();
 	for (; iter != dns_set_.end(); ++iter) {
-		if (dns_name.find(*iter) != -1) {
+		if (dns_name.find(iter->first) != -1) {
 			return true;
 		}
 	}
@@ -231,7 +234,10 @@ bool DNSList::removeDNS(const std::string &dns_name) {
 }
 
 void DNSList::addDNS(const std::string &dns_name) {
-	dns_set_.insert(dns_name);
+	// 去除DNS MAIN name
+	TCHAR buffer[1024];
+	get_main_dns_name(buffer, 1024, dns_name.c_str());
+	dns_set_.insert(std::make_pair(buffer, dns_name));
 }
 
 
@@ -240,7 +246,7 @@ void DNSList::beginEnum(Enumerator1<std::string> *enumerator) {
 
 	DNS_SET::const_iterator iter = dns_set_.begin();
 	for (; iter != dns_set_.end(); ++iter) {
-		enumerator->Enum(*iter);
+		enumerator->Enum(iter->second);
 	}
 }
 
