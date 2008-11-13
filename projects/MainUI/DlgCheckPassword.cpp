@@ -59,6 +59,9 @@ void CDlgCheckPassword::OnBnClickedOk()
 		CString strAlert;
 		strAlert.LoadString(IDS_CHECK_PASSWORD_WRONG);
 		AfxMessageBox(strAlert, MB_OK | MB_ICONSTOP | MB_APPLMODAL );
+
+		m_strPassword = "";
+		UpdateData(FALSE);
 	}
 }
 
