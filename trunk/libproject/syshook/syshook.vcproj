@@ -43,7 +43,8 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				CommandLine="copy .\debug\syshook.dll ..\..\debug
-copy .\debug\syshook.lib ..\..\debug\syshookd.lib"/>
+copy .\debug\syshook.lib ..\..\lib\syshookd.lib
+"/>
 			<Tool
 				Name="VCPreBuildEventTool"
 				CommandLine="copy .\WinLockDll.h ..\..\include"/>
@@ -93,7 +94,8 @@ copy .\debug\syshook.lib ..\..\debug\syshookd.lib"/>
 			<Tool
 				Name="VCPostBuildEventTool"
 				CommandLine="copy .\release\syshook.dll ..\..\release
-copy .\release\syshook.lib ..\..\release\syshook.lib"/>
+copy .\release\syshook.lib ..\..\lib\syshook.lib
+"/>
 			<Tool
 				Name="VCPreBuildEventTool"
 				CommandLine="copy .\WinLockDll.h ..\..\include"/>
