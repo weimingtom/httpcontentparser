@@ -1,17 +1,22 @@
 #ifndef WINLOCKDLL_H
 #define WINLOCKDLL_H
 
-typedef struct _THREAD_DATA
-{
-	HDESK hDesk;
-	char  szDesktopName[20];
-} THREAD_DATA;
 
 #ifdef  SYSHOOK_EXPORTS
 #define DLL_EXP_IMP __declspec(dllexport)
 #else
 #define DLL_EXP_IMP __declspec(dllimport)
 #endif
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
+typedef struct _THREAD_DATA
+{
+	HDESK hDesk;
+	char  szDesktopName[20];
+} THREAD_DATA;
 
 DLL_EXP_IMP int WINAPI Desktop_Show_Hide(BOOL bShowHide);
 DLL_EXP_IMP int WINAPI StartButton_Show_Hide(BOOL bShowHide);
@@ -25,5 +30,10 @@ DLL_EXP_IMP int WINAPI TaskManager_Enable_Disable(BOOL bEnableDisable);
 DLL_EXP_IMP int WINAPI CtrlAltDel_Enable_Disable(BOOL bEnableDisable);
 DLL_EXP_IMP int WINAPI Thread_Desktop(LPTHREAD_START_ROUTINE ThreadFunc, THREAD_DATA *td);
 DLL_EXP_IMP int WINAPI Process_Desktop(char *szDesktopName, char *szPath);
+
+#ifdef __cplusplus
+}
+#endif
+
 
 #endif
