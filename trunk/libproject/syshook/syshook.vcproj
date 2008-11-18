@@ -33,6 +33,7 @@
 				Name="VCLinkerTool"
 				OutputFile="$(OutDir)/syshook.dll"
 				LinkIncremental="2"
+				ModuleDefinitionFile="syshook.def"
 				GenerateDebugInformation="TRUE"
 				ProgramDatabaseFile="$(OutDir)/syshook.pdb"
 				SubSystem="2"
@@ -83,6 +84,7 @@ copy .\debug\syshook.lib ..\..\lib\syshookd.lib
 				Name="VCLinkerTool"
 				OutputFile="$(OutDir)/syshook.dll"
 				LinkIncremental="1"
+				ModuleDefinitionFile="syshook.def"
 				GenerateDebugInformation="TRUE"
 				SubSystem="2"
 				OptimizeReferences="2"
@@ -187,6 +189,9 @@ copy .\release\syshook.lib ..\..\lib\syshook.lib
 		</Filter>
 		<File
 			RelativePath=".\ReadMe.txt">
+		</File>
+		<File
+			RelativePath=".\syshook.def">
 		</File>
 	</Files>
 	<Globals>
