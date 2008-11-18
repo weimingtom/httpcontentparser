@@ -10,6 +10,7 @@
 #include <comdef.h>
 #include <typeconvert.h>
 #include <app_constants.h>
+#include <winlockdll.h>
 
 #define MAX_LOADSTRING 100
 #define WM_MY_SHOWDIALOG (WM_USER + 0x0001)
@@ -29,6 +30,53 @@ BOOL				InitInstance(HINSTANCE, int);
 LRESULT CALLBACK	WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK	About(HWND, UINT, WPARAM, LPARAM);
 
+
+namespace {
+
+LRESULT CALLBACK LowLevelKeyboardProc(int nCode, WPARAM wParam, LPARAM lParam) 
+{
+	BOOL fEatKeystroke = FALSE;
+	if (nCode == HC_ACTION) {
+		switch (wParam) {
+		 case WM_KEYDOWN:
+		 case WM_SYSKEYDOWN:
+		 case WM_KEYUP:
+		 case WM_SYSKEYUP: 
+			 PKBDLLHOOKSTRUCT p = (PKBDLLHOOKSTRUCT) lParam;
+
+			 fEatKeystroke = 
+				 ((p->vkCode == VK_TAB) && ((p->flags & LLKHF_ALTDOWN) != 0)) ||
+
+				 ((p->vkCode == VK_ESCAPE) && ((p->flags & LLKHF_ALTDOWN) != 0)) ||
+
+				 ((p->vkCode == VK_ESCAPE) && ((GetKeyState(VK_CONTROL) & 0x8000) != 0)) ||
+				 ((p->vkCode == VK_LWIN) || (p->vkCode == VK_RWIN));
+			 break;
+		}
+	}
+
+	return(fEatKeystroke ? 1 : CallNextHookEx(NULL, nCode, wParam, 	lParam));
+}
+HHOOK hhkLowLevelKybd = NULL;
+// 锁定电脑
+// 主要指禁用 ATL+CTRL+DEL, ATL+ESC, SWITCH, WIN...
+void LockScreen() {
+	hhkLowLevelKybd  = SetWindowsHookEx(WH_KEYBOARD_LL, LowLevelKeyboardProc, hInst, 0);
+
+	CtrlAltDel_Enable_Disable(FALSE);
+	Taskbar_Show_Hide(FALSE); 
+}
+
+void UnlockScreen() {
+	assert (NULL != hhkLowLevelKybd);
+	UnhookWindowsHookEx(hhkLowLevelKybd);
+	hhkLowLevelKybd = NULL;
+
+	CtrlAltDel_Enable_Disable(TRUE);
+	Taskbar_Show_Hide(TRUE); 
+}
+
+};
 
 BOOL IsRuninParentModel() {
 	try {
@@ -63,34 +111,6 @@ BOOL TRYSwitchMode(LPCTSTR password) {
 		return FALSE;
 	}
 }
-
-
-
-LRESULT CALLBACK LowLevelKeyboardProc(int nCode, WPARAM wParam, LPARAM lParam) 
-{
-	BOOL fEatKeystroke = FALSE;
-	if (nCode == HC_ACTION) {
-		switch (wParam) {
-		 case WM_KEYDOWN:
-		 case WM_SYSKEYDOWN:
-		 case WM_KEYUP:
-		 case WM_SYSKEYUP: 
-			 PKBDLLHOOKSTRUCT p = (PKBDLLHOOKSTRUCT) lParam;
-
-			 fEatKeystroke = 
-				 ((p->vkCode == VK_TAB) && ((p->flags & LLKHF_ALTDOWN) != 0)) ||
-
-				 ((p->vkCode == VK_ESCAPE) && ((p->flags & LLKHF_ALTDOWN) != 0)) ||
-
-				 ((p->vkCode == VK_ESCAPE) && ((GetKeyState(VK_CONTROL) & 0x8000) != 0)) ||
-				 ((p->vkCode == VK_LWIN) || (p->vkCode == VK_RWIN));
-			 break;
-		}
-	}
-
-	return(fEatKeystroke ? 1 : CallNextHookEx(NULL, nCode, wParam, 	lParam));
-}
-
  
 
 int APIENTRY _tWinMain(HINSTANCE hInstance,
@@ -258,7 +278,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	PAINTSTRUCT ps;
 	HDC hdc;
-	HHOOK hhkLowLevelKybd;
 
 	static bool bShowDialog = false;
 	switch (message)
@@ -273,10 +292,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			break;
 
 		bShowDialog  = true;
-		hhkLowLevelKybd  = SetWindowsHookEx(WH_KEYBOARD_LL, LowLevelKeyboardProc, hInst, 0);
+
+		LockScreen();
+
 		DialogBox(hInst, (LPCTSTR)IDD_PASSWORD, hWnd, (DLGPROC)InputPasswordDlg);
-		UnhookWindowsHookEx(hhkLowLevelKybd);
 		DestroyWindow(hWnd);
+
+		UnlockScreen();
 		break;
 	case WM_PAINT:
 		hdc = BeginPaint(hWnd, &ps);
