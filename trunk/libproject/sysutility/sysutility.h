@@ -4,6 +4,7 @@
 
 #define CONFIG_FILE_NAME					TEXT("config.xml")
 #define EYECARE_APP_FILENAME				TEXT("Eyecare.exe")
+#define LOCKPC_APP_FILENAME					TEXT("LockPC.exe")
 
 // 保存屏幕
 DWORD GenScreenSPFile(TCHAR *fullpath, const int len, HMODULE hModule);
@@ -15,6 +16,9 @@ void ClearScreen(HMODULE hModule);
 
 // 启动眼睛保护程序
 void StartEyecare(HMODULE hModule);
+
+// 锁定计算机
+void LockComputer(HMODULE hModule);
 
 // 获取主界面的路径
 HWND GetMainUIHWND();

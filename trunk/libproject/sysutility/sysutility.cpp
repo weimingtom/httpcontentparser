@@ -67,7 +67,7 @@ INT RegisterAutoRun(const TCHAR * fullpath, BOOL auto_run) {
 
 	// 生成注册表项
 	if ( TRUE == auto_run) {
-		if (ERROR_SUCCESS == RegSetValueEx( hKey,REGISTER_MAINUI_KEY , 0, REG_SZ, (const BYTE*)(LPCSTR)fullpath, _tcslen(fullpath))) {
+		if (ERROR_SUCCESS == RegSetValueEx( hKey,REGISTER_MAINUI_KEY , 0, REG_SZ, (const BYTE*)(LPCSTR)fullpath, (DWORD)_tcslen(fullpath))) {
 			RegCloseKey(hKey);
 			return 0;
 		} else {
@@ -176,6 +176,14 @@ void StartMainUI(HMODULE hModule) {
 	WinExec(fullpath, SW_SHOW);
 }
 
+void LockComputer(HMODULE hModule) {
+	TCHAR install_path[MAX_PATH], fullpath[MAX_PATH];
+	GetInstallPath(install_path, MAX_PATH, hModule);
+
+	_sntprintf(fullpath, MAX_PATH, "%s%s", install_path, LOCKPC_APP_FILENAME);
+	WinExec(fullpath, SW_MAXIMIZE);
+}
+
 void StartEyecare(HMODULE hModule) {
 	// 首先检测应用程序是否已经打开了
 	HWND hOld = GetEyecareApp();
@@ -192,7 +200,7 @@ void StartEyecare(HMODULE hModule) {
 
 DWORD GetScreenRecordPath(TCHAR * fullpath, const int len, HMODULE hModule) {
 	GetScreenRecordDir(fullpath, MAX_PATH, hModule);
-	return strlen (fullpath);
+	return (DWORD) strlen (fullpath);
 }
 DWORD GenScreenSPFile(TCHAR *fullpath, const int len, HMODULE hModule) {
 	TCHAR dir[MAX_PATH];
