@@ -48,7 +48,7 @@ int CXInstall::InstallProvider(TCHAR *sPathName)
 	if((iRet = EnumHookKey(FALSE)) != XERR_SUCCESS)
 		return iRet;
 
-	if(!SaveReg(REG_INSTALL_PATH_ITEM, (BYTE*)sPathName, _tcslen(sPathName),
+	if(!SaveReg(REG_INSTALL_PATH_ITEM, (BYTE*)sPathName, (DWORD)_tcslen(sPathName),
 			HKEY_LOCAL_MACHINE, REG_INSTALL_KEY, REG_SZ))
 		return XERR_PROVIDER_SAVE_PATH_FAILED;
 
@@ -130,7 +130,7 @@ int CXInstall::SaveHookKey(HKEY hkey, LPCTSTR sSubKey, BOOL IsRemove)
 			_stprintf(sItem, _T("%u"), mProtocolInfo->dwCatalogEntryId);
 			if(!IsRemove)
 			{
-				if(!SaveReg(sItem, ItemValue, _tcslen((TCHAR*)ItemValue), 
+				if(!SaveReg(sItem, ItemValue, (DWORD)_tcslen((TCHAR*)ItemValue), 
 						HKEY_LOCAL_MACHINE, REG_INSTALL_KEY, REG_SZ))
 					return XERR_PROVIDER_CREATE_ITEM_FAILED;
 				_tcscpy((TCHAR*)ItemValue, m_sPathName);
