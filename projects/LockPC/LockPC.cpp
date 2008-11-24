@@ -15,11 +15,6 @@
 #define MAX_LOADSTRING 100
 #define WM_MY_SHOWDIALOG (WM_USER + 0x0001)
 
-#define ID_TIMER   1
-#define TIME_SPAN  1000
-
-IEyecare *pEyeCare = NULL;
-
 // Global Variables:
 HINSTANCE hInst;								// current instance
 TCHAR szTitle[MAX_LOADSTRING];					// The title bar text
@@ -78,33 +73,17 @@ void UnlockScreen() {
 
 };
 
-BOOL IsRuninParentModel() {
-	try {
-		VARIANT_BOOL parent_mode = VARIANT_FALSE;
-		IAppSetting *app = NULL;
-		HRESULT hr = CoCreateInstance(CLSID_AppSetting, NULL, CLSCTX_LOCAL_SERVER, IID_IAppSetting, (LPVOID*)&app);
-		if (FAILED(hr)) {
-			return FALSE;
-		}
-
-		app->get_ParentModel(&parent_mode);
-
-		return convert(parent_mode);
-	} catch (_com_error &) {
-		return FALSE;
-	}
-}
-BOOL TRYSwitchMode(LPCTSTR password) {
+BOOL ValidatePassword(LPCTSTR password) {
 	try {
 		VARIANT_BOOL succeeded = FALSE;
-		IEyecare *eyecare = NULL;
-		HRESULT hr = CoCreateInstance(CLSID_Eyecare, NULL, CLSCTX_LOCAL_SERVER, IID_IEyecare, (LPVOID*)&eyecare);
+		IAuthorize *authorize = NULL;
+		HRESULT hr = CoCreateInstance(CLSID_Authorize, NULL, CLSCTX_LOCAL_SERVER, IID_IAuthorize, (LPVOID*)&authorize);
 		if (FAILED(hr)) {
 			return FALSE;
 		}
 
-		eyecare->swithToEntertainment(_bstr_t(password), &succeeded);
-		eyecare->Release();
+		authorize->checkPassword(_bstr_t(password), &succeeded);
+		authorize->Release();
 
 		return convert(succeeded);
 	} catch (_com_error &) {
@@ -136,10 +115,6 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 	UNREFERENCED_PARAMETER(hPrevInstance);
 	UNREFERENCED_PARAMETER(lpCmdLine);
 
-	// 创建
-	CoCreateInstance(CLSID_Eyecare, NULL, CLSCTX_ALL, IID_IEyecare, (LPVOID*)&pEyeCare);
-
- 	// TODO: Place code here.
 	MSG msg;
 	// Initialize global strings
 	MyRegisterClass(hInstance);
@@ -173,7 +148,7 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 	wcex.cbClsExtra		= 0;
 	wcex.cbWndExtra		= 0;
 	wcex.hInstance		= hInstance;
-	wcex.hIcon			= LoadIcon(hInstance, MAKEINTRESOURCE(IDI_EYECARE));
+	wcex.hIcon			= LoadIcon(hInstance, MAKEINTRESOURCE(IDI_LOCKPC));
 	wcex.hCursor		= LoadCursor(NULL, IDC_ARROW);
 	wcex.hbrBackground	= ::CreateSolidBrush(RGB(58, 110, 165));
 	wcex.lpszMenuName	= NULL;
@@ -209,54 +184,19 @@ LRESULT CALLBACK InputPasswordDlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM
 {
 	try {
 		TCHAR szBuffer[MAX_PATH];
-		LONG state;
-		LONG seconds;
+
 		switch (message)
 		{
-		case WM_TIMER:
-			try {
-				_tcscpy(szBuffer, "Login System");
-
-				// 如果运行在父模式下
-				if (IsRuninParentModel()) {
-					// 为什么不检测是否在父模式下，如果在则退出呢？
-					EndDialog(hDlg, 0);
-				} else {
-					pEyeCare->getTimeLeft(&seconds);
-					if (seconds > 60) {
-						_stprintf(szBuffer, "Rest time : %d min", (int)(seconds/60));
-					} else if (seconds > 0){
-						_stprintf(szBuffer, "Rest time : %d second", seconds);
-					} else {
-						pEyeCare->trySwitch(&state);
-						EndDialog(hDlg, 0);
-					}
-				SetWindowText(hDlg, szBuffer);
-				}
-			} catch (...) {
-				CoCreateInstance(CLSID_Eyecare, NULL, CLSCTX_ALL, IID_IEyecare, (LPVOID*)&pEyeCare);
-			}
-			break;
 		case WM_KILLFOCUS:
 			SetFocus(hDlg);
 			break;
 		case WM_INITDIALOG:
-			try {
-				_tcscpy(szBuffer, "Login System");
-				pEyeCare->getTimeLeft(&seconds);
-			}
-			catch (...) {
-				CoCreateInstance(CLSID_Eyecare, NULL, CLSCTX_ALL, IID_IEyecare, (LPVOID*)&pEyeCare);
-			}
-
-			SetWindowText(hDlg, szBuffer);
-			SetTimer(hDlg, ID_TIMER, TIME_SPAN, NULL);
 			return TRUE;
 		// 验证代码
 		case WM_COMMAND:
 			GetDlgItemText(hDlg, IDC_PASSWORD, szBuffer, MAX_PATH);
 			if (LOWORD(wParam) == IDOK) {
-				if (TRYSwitchMode(szBuffer)) {
+				if (ValidatePassword(szBuffer)) {
 					EndDialog(hDlg, LOWORD(wParam));
 					return TRUE;
 				} else {
@@ -265,7 +205,6 @@ LRESULT CALLBACK InputPasswordDlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM
 			}
 			break;
 		case WM_DESTROY:
-			KillTimer(hDlg, ID_TIMER);
 			break;
 		}
 		return FALSE;

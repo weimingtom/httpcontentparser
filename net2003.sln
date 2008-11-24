@@ -105,6 +105,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "syshook", "libproject\sysho
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LockPC", "projects\LockPC\LockPC.vcproj", "{E4AA2F92-28F1-4568-A04A-9212C435BDAB}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfiguration) = preSolution
 		Debug = Debug
@@ -281,6 +285,14 @@ Global
 		{47055545-23BA-4151-8BAD-5119D259DB6A}.Release.Build.0 = Release|Win32
 		{47055545-23BA-4151-8BAD-5119D259DB6A}.Release Unicode.ActiveCfg = Release|Win32
 		{47055545-23BA-4151-8BAD-5119D259DB6A}.Release Unicode.Build.0 = Release|Win32
+		{E4AA2F92-28F1-4568-A04A-9212C435BDAB}.Debug.ActiveCfg = Debug|Win32
+		{E4AA2F92-28F1-4568-A04A-9212C435BDAB}.Debug.Build.0 = Debug|Win32
+		{E4AA2F92-28F1-4568-A04A-9212C435BDAB}.Debug Unicode.ActiveCfg = Debug|Win32
+		{E4AA2F92-28F1-4568-A04A-9212C435BDAB}.Debug Unicode.Build.0 = Debug|Win32
+		{E4AA2F92-28F1-4568-A04A-9212C435BDAB}.Release.ActiveCfg = Release|Win32
+		{E4AA2F92-28F1-4568-A04A-9212C435BDAB}.Release.Build.0 = Release|Win32
+		{E4AA2F92-28F1-4568-A04A-9212C435BDAB}.Release Unicode.ActiveCfg = Release|Win32
+		{E4AA2F92-28F1-4568-A04A-9212C435BDAB}.Release Unicode.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 	EndGlobalSection
