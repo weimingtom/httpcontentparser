@@ -381,6 +381,7 @@ HCURSOR CMainUIDlg::OnQueryDragIcon()
 }
 void CMainUIDlg::OnMainLockcomputer() {
 	// Ëø¶¨¼ÆËã»ú
+	LockComputer((HMODULE)AfxGetInstanceHandle());
 }
 
 //===================================================
