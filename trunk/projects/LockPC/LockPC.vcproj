@@ -43,7 +43,7 @@
 				Name="VCMIDLTool"/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy ./debug/LockPC.exe ../../debug"/>
+				CommandLine="copy .\debug\LOCKPC.exe ..\..\debug"/>
 			<Tool
 				Name="VCPreBuildEventTool"/>
 			<Tool
@@ -90,7 +90,7 @@
 				Name="VCMIDLTool"/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy ./release/LockPC.exe ../../release"/>
+				CommandLine="copy .\release\LOCKPC.exe ..\..\release"/>
 			<Tool
 				Name="VCPreBuildEventTool"/>
 			<Tool
