@@ -30,7 +30,6 @@ EyecareSetting::~EyecareSetting(void) {
 // Ä¬ÈÏÉèÖÃ
 void EyecareSetting::defaultSetting() {
 	authorize_ = NULL;
-	force_locked_ = false;
 	setState(EYECARE_TIME);
 
 	setEnterTime(45 * 60);
@@ -94,20 +93,9 @@ void EyecareSetting::initialize(Authorize *authorize, int state) {
 }
 
 bool EyecareSetting::trySwitch() {
-	if (force_locked_ == true) {
-		setState(EYECARE_TIME);
-		return false;
-	} else {
-		return calculagraph_.trySwitch();
-	}
+	return calculagraph_.trySwitch();
 }
 
-// Ç¿ÖÆ¹Ø±ÕÆÁÄ»
-int EyecareSetting::ForceLockWnd() {
-	force_locked_ = true;
-	setState(EYECARE_TIME);
-	return 0;
-}
 
 // ÇÐ»»×´Ì¬
 int EyecareSetting::switchState(const std::string &password) {
@@ -115,7 +103,6 @@ int EyecareSetting::switchState(const std::string &password) {
 	if (getState() == ENTERT_TIME) {
 		setState(EYECARE_TIME);
 	} else if (true == checkPassword(password)) {
-		force_locked_ = false;
 		setState(ENTERT_TIME);
 
 		if (getTerminatedMode() == EYECARE_TERMIN_RESETTIMER) {

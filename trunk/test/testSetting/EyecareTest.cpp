@@ -134,25 +134,4 @@ void EyecareTest::TextForceSwitch() {
 	Sleep(1000 * (entertain+1));
 	CPPUNIT_ASSERT (setting.trySwitch() == true);
 	CPPUNIT_ASSERT (setting.getState() == EyecareSetting::ENTERT_TIME);
-
-
-	// 强制锁定
-	setting.ForceLockWnd();
-	Sleep(1000 * (entertain+1));
-	CPPUNIT_ASSERT (setting.trySwitch() == false);
-	CPPUNIT_ASSERT (setting.getState() == EyecareSetting::EYECARE_TIME);
-	CPPUNIT_ASSERT (setting.trySwitch() == false);
-	Sleep(1000 * (entertain+1));
-	CPPUNIT_ASSERT (setting.trySwitch() == false);
-	CPPUNIT_ASSERT (setting.getState() == EyecareSetting::EYECARE_TIME);
-	CPPUNIT_ASSERT (setting.trySwitch() == false);
-
-	// 使用密码释放
-	CPPUNIT_ASSERT (setting.switchState("123") == EyecareSetting::ENTERT_TIME);
-	Sleep(1000 * (restTime+1));
-	CPPUNIT_ASSERT (setting.trySwitch() ==true);
-	CPPUNIT_ASSERT (setting.getState() == EyecareSetting::EYECARE_TIME);
-	Sleep(1000 * (entertain+1));
-	CPPUNIT_ASSERT (setting.trySwitch() == true);
-	CPPUNIT_ASSERT (setting.getState() == EyecareSetting::ENTERT_TIME);	
 }
