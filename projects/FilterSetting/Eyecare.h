@@ -47,7 +47,7 @@ public:
 	STDMETHOD(getEnterTime)(LONG* second);	// 获取娱乐事件的长度
 	STDMETHOD(getTimeLeft)(LONG* second);			// 状态切换的剩余时间
 	STDMETHOD(getState)(LONG* state);				// 获取状态
-	STDMETHOD(swithToEntertainment)(BSTR password, VARIANT_BOOL *bSuccess); // 切换到娱乐状体
+	STDMETHOD(endEyecare)(BSTR password, VARIANT_BOOL *bSuccess); // 切换到娱乐状体
 	STDMETHOD(trySwitch)(LONG* state);
 	STDMETHOD(LockScreen)(void);
 	STDMETHOD(setTermMode)(LONG mode);

@@ -62,7 +62,7 @@ STDMETHODIMP CEyecare::getState(LONG* state) {
 	return S_OK;
 }
 
-STDMETHODIMP CEyecare::swithToEntertainment(BSTR password, VARIANT_BOOL *bSuccess) {
+STDMETHODIMP CEyecare::endEyecare(BSTR password, VARIANT_BOOL *bSuccess) {
 	int old_state = g_configuration.getEyecareSetting()->getState();
 	int state = g_configuration.getEyecareSetting()->switchState((char*)_bstr_t(password));
 	*bSuccess = (state != old_state) ? VARIANT_TRUE : VARIANT_FALSE;
