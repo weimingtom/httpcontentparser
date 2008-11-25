@@ -493,3 +493,13 @@ int DLL_EXP_IMP WINAPI Process_Desktop(char *szDesktopName, char *szPath)
 	return 0;
 }
 
+
+/************************
+ * Library entry point. *
+ ************************/
+BOOL WINAPI DllMain(HINSTANCE hInstDll, DWORD fdwReason, LPVOID lpReserved)
+{
+    hInst = hInstDll;
+
+	return TRUE;
+}
