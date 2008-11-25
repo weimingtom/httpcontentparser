@@ -46,8 +46,6 @@ public:
 	bool trySwitch(); // 尝试切换状态，如果时间已经达标则自动切换，否则不改变
 	int switchState(const std::string &password); // 切换状态
 
-	int ForceLockWnd(); // 强制关闭屏幕, 此时只有输入密码才可进入
-
 	void initialize(Authorize *authorize, int state);
 
 	// 停止或重新启动
@@ -68,8 +66,6 @@ private:
 	// 因为密码可以使用两种类型，一种直接使用，另外一个使用全局的密码
 	Authorize * authorize_;
 	int password_type;
-
-	bool force_locked_;
 
 	friend class XMLConfiguration;
 
