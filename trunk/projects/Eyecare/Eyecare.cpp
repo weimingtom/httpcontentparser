@@ -94,7 +94,7 @@ BOOL IsRuninParentModel() {
 		return FALSE;
 	}
 }
-BOOL TRYSwitchMode(LPCTSTR password) {
+BOOL TRYEndEyecare(LPCTSTR password) {
 	try {
 		VARIANT_BOOL succeeded = FALSE;
 		IEyecare *eyecare = NULL;
@@ -103,7 +103,7 @@ BOOL TRYSwitchMode(LPCTSTR password) {
 			return FALSE;
 		}
 
-		eyecare->swithToEntertainment(_bstr_t(password), &succeeded);
+		eyecare->endEyecare(_bstr_t(password), &succeeded);
 		eyecare->Release();
 
 		return convert(succeeded);
@@ -256,7 +256,7 @@ LRESULT CALLBACK InputPasswordDlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM
 		case WM_COMMAND:
 			GetDlgItemText(hDlg, IDC_PASSWORD, szBuffer, MAX_PATH);
 			if (LOWORD(wParam) == IDOK) {
-				if (TRYSwitchMode(szBuffer)) {
+				if (TRYEndEyecare(szBuffer)) {
 					EndDialog(hDlg, LOWORD(wParam));
 					return TRUE;
 				} else {

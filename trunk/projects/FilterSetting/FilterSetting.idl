@@ -35,7 +35,7 @@ interface IEyecare : IDispatch{
 	[id(6),  helpstring("Method getEnterTime")] HRESULT getEnterTime([out,retval] LONG* second);
 	[id(7),  helpstring("Method getTimeLeft")] HRESULT getTimeLeft([out,retval] LONG* second);
 	[id(8),  helpstring("Method getState")] HRESULT getState([out,retval] LONG* state);
-	[id(9),  helpstring("Method swithToEntertainment")] HRESULT swithToEntertainment([in] BSTR password,  [out,retval] VARIANT_BOOL* bSuccess);
+	[id(9),  helpstring("Method endEyecare")] HRESULT endEyecare([in] BSTR password,  [out,retval] VARIANT_BOOL* bSuccess);
 	[id(10), helpstring("Method trySwitch")] HRESULT trySwitch([out,retval] LONG* state);
 	[id(11), helpstring("Method LockScreen")] HRESULT LockScreen(void);
 	[id(12), helpstring("Method setTermMode")] HRESULT setTermMode([in] LONG mode);
