@@ -58,8 +58,8 @@ HHOOK hhkLowLevelKybd = NULL;
 void LockScreen() {
 	hhkLowLevelKybd  = SetWindowsHookEx(WH_KEYBOARD_LL, LowLevelKeyboardProc, hInst, 0);
 
-	// CtrlAltDel_Enable_Disable(FALSE);
-	// Taskbar_Show_Hide(FALSE); 
+	CtrlAltDel_Enable_Disable(FALSE);
+	Taskbar_Show_Hide(FALSE); 
 }
 
 void UnlockScreen() {
@@ -67,8 +67,8 @@ void UnlockScreen() {
 	UnhookWindowsHookEx(hhkLowLevelKybd);
 	hhkLowLevelKybd = NULL;
 
-	// CtrlAltDel_Enable_Disable(TRUE);
-	// Taskbar_Show_Hide(TRUE); 
+	CtrlAltDel_Enable_Disable(TRUE);
+	Taskbar_Show_Hide(TRUE); 
 }
 
 };
