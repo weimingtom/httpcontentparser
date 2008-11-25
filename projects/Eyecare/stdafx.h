@@ -20,8 +20,8 @@
 
 #ifdef _DEBUG
 #	pragma comment(lib, "sysutilityd.lib")
-#	pragma comment(lib, "syshookd.lib")
+#	pragma comment(lib, "winlockd.lib")
 #else
 #	pragma comment(lib, "sysutility.lib")
-#	pragma comment(lib, "syshook.lib")
+#	pragma comment(lib, "winlock.lib")
 #endif
