@@ -110,28 +110,37 @@ void EyecareTest::TestSwitchState() {
 	CPPUNIT_ASSERT (setting.getState() == EyecareSetting::ENTERT_TIME);
 }
 
-void EyecareTest::TextForceSwitch() {
+void EyecareTest::TestAfterModelSwitch() {
 	CPPUNIT_ASSERT(SettingItem::MODE_CHILD == SettingItem::getModel());
 
 	Authorize authorize;
 	string supassword = "123", eyecarePassword = "456";
 	CPPUNIT_ASSERT(authorize.setNewPassword(eyecarePassword, PASSWORD_EYECARE));
 
-	const int restTime = 1;
-	const int entertain = 1;
 	EyecareSetting setting;
 	setting.initialize(&authorize, EyecareSetting::ENTERT_TIME);
-	setting.setEyecareTime(restTime);
-	setting.setEnterTime(entertain);
-	setting.setPasswordType(PASSWORD_SU);
+	setting.setEyecareTime(2);
+	setting.setEnterTime(5);
 
-	// 正常切换
+	// 首先设置转变状态为“充值计时器”
+	setting.setTerimatedMode(EyecareSetting::EYECARE_TERMIN_RESETTIMER);
 	CPPUNIT_ASSERT (setting.getState() == EyecareSetting::ENTERT_TIME);
-	CPPUNIT_ASSERT (setting.trySwitch() == false);
-	Sleep(1000 * (restTime+1));
-	CPPUNIT_ASSERT (setting.trySwitch() == true);
+	setting.switchState("123");		// 进入EYECARE_MODE
 	CPPUNIT_ASSERT (setting.getState() == EyecareSetting::EYECARE_TIME);
-	Sleep(1000 * (entertain+1));
-	CPPUNIT_ASSERT (setting.trySwitch() == true);
+	setting.switchState("123");		// 结束"EYECARE", 此时只是重置计时器 
+	CPPUNIT_ASSERT(SettingItem::MODE_CHILD == SettingItem::getModel());
+
+	// 至其为"进入管理员状态"
+	setting.setTerimatedMode(EyecareSetting::EYECARE_TERMIN_ENTERSU);
 	CPPUNIT_ASSERT (setting.getState() == EyecareSetting::ENTERT_TIME);
+
+	// 进入EYECARE_MODE
+	setting.switchState("123");
+
+	// 
+	setting.switchState("123"); 
+	CPPUNIT_ASSERT (setting.getState() == EyecareSetting::ENTERT_TIME);
+	CPPUNIT_ASSERT(SettingItem::MODE_PARENT == SettingItem::getModel());
+
+	SettingItem::setModel(SettingItem::MODE_CHILD);
 }
