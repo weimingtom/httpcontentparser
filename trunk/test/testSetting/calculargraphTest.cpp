@@ -8,8 +8,6 @@ CalculargraphTest::CalculargraphTest(void) {
 CalculargraphTest::~CalculargraphTest(void) {
 }
 
-
-
 void CalculargraphTest::testMulitSetTimeLeft() {
 	const int type = 3;
 	MultiCalculagraph<type> calculargraph;
