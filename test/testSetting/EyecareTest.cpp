@@ -128,6 +128,7 @@ void EyecareTest::TestAfterModelSwitch() {
 	setting.switchState("123");		// 进入EYECARE_MODE
 	CPPUNIT_ASSERT (setting.getState() == EyecareSetting::EYECARE_TIME);
 	setting.switchState("123");		// 结束"EYECARE", 此时只是重置计时器 
+	CPPUNIT_ASSERT (setting.getState() == EyecareSetting::ENTERT_TIME);
 	CPPUNIT_ASSERT(SettingItem::MODE_CHILD == SettingItem::getModel());
 
 	// 至其为"进入管理员状态"
