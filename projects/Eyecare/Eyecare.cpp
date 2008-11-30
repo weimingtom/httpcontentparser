@@ -7,6 +7,7 @@
 #include <sysutility.h>
 #include <com\FilterSetting_i.c>
 #include <com\FilterSetting.h>
+#include <EyecareSetting.h>
 #include <comdef.h>
 #include <typeconvert.h>
 #include <app_constants.h>
@@ -78,6 +79,23 @@ void UnlockScreen() {
 
 };
 
+BOOL IsRunInEnterModel() {
+	try {
+		IEyecare *pEyeCare = NULL;
+		HRESULT hr = CoCreateInstance(CLSID_Eyecare, NULL, CLSCTX_ALL, IID_IEyecare, (LPVOID*)&pEyeCare);
+		if (FAILED(hr)) {
+			return FALSE;
+		}
+
+		LONG state;
+		pEyeCare->getState(&state);
+	
+		pEyeCare->Release();
+		return state == EyecareSetting::ENTERT_TIME ? TRUE : FALSE;
+	} catch (_com_error &) {
+		return FALSE;
+	}
+}
 BOOL IsRuninParentModel() {
 	try {
 		VARIANT_BOOL parent_mode = VARIANT_FALSE;
@@ -135,6 +153,11 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 	CoInitialize(NULL);
 	UNREFERENCED_PARAMETER(hPrevInstance);
 	UNREFERENCED_PARAMETER(lpCmdLine);
+
+	// 如果运行于Enter模式， 则直接退出
+	if (IsRunInEnterModel()) {
+		return 0;
+	}
 
 	// 创建
 	CoCreateInstance(CLSID_Eyecare, NULL, CLSCTX_ALL, IID_IEyecare, (LPVOID*)&pEyeCare);

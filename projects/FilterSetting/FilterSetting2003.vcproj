@@ -130,7 +130,8 @@ copy .\Debug\FilterSetting.exe ..\..\debug
 				CommandLine="copy .\FilterSetting_i.c ..\..\include\com
 copy .\filtersetting.h ..\..\include\com
 copy .\release\filtersetting.exe ..\..\release
-..\..\release\filtersetting.exe /RegServer"/>
+..\..\release\filtersetting.exe /RegServer
+"/>
 			<Tool
 				Name="VCPreBuildEventTool"/>
 			<Tool
@@ -233,23 +234,23 @@ copy .\release\filtersetting.exe ..\..\release
 						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
 			</File>
+			<Filter
+				Name="Eyecare"
+				Filter="">
+				<File
+					RelativePath=".\Eyecare.cpp">
+				</File>
+				<File
+					RelativePath=".\Eyecare.h">
+				</File>
+				<File
+					RelativePath=".\Eyecare.rgs">
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="setting"
 			Filter="">
-		</Filter>
-		<Filter
-			Name="Eyecare"
-			Filter="">
-			<File
-				RelativePath=".\Eyecare.cpp">
-			</File>
-			<File
-				RelativePath=".\Eyecare.h">
-			</File>
-			<File
-				RelativePath=".\Eyecare.rgs">
-			</File>
 		</Filter>
 		<Filter
 			Name="servThread"
