@@ -34,6 +34,7 @@ private:
 private:
 	WebRecordConfig * record_config_;
 	TCHAR installpath_[MAX_PATH];
+	TCHAR content_file_path[MAX_PATH];
 
 private:
 	const TCHAR * genRandomName(TCHAR * filename, const int bufsize, const int content_type);

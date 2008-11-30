@@ -122,12 +122,11 @@ int HTTPContentHander::saveImage(HTTPPacket *packet, const int check_result) {
 	
 	if (packet->getDataSize() > IMAGE_LOW_LIMIT) {
 		// 生成文件名
-		char fullpath[MAX_PATH];
-		generateImageName(fullpath, MAX_PATH, packet->getContentType());
-		packet->achieve_data(fullpath);
+		generateImageName(content_file_path, MAX_PATH, packet->getContentType());
+		packet->achieve_data(content_file_path);
 
 		// 增加到配置文件当中
-		addToRepostory(fullpath, packet, check_result);
+		addToRepostory(content_file_path, packet, check_result);
 	}
 	return -1;
 }
@@ -139,14 +138,14 @@ int HTTPContentHander::saveText(HTTPPacket * packet, const int check_result) {
 	if (packet->getDataSize() > TEXT_LOW_LIMIT) {
 		// 生成文件名
 		char fullpath[MAX_PATH];
-		generatePageName(fullpath, MAX_PATH, packet->getContentType());
+		generatePageName(content_file_path, MAX_PATH, packet->getContentType());
 
 		// 如果未压缩则直接保存
 		if (HTTP_RESPONSE_HEADER::CONTENCODING_GZIP != packet->getHeader()->getContentEncoding()) {
-			packet->achieve_data(fullpath);
+			packet->achieve_data(content_file_path);
 		} else {
 			// 否则需要解压缩保存
-			savezip(packet, fullpath);
+			savezip(packet, content_file_path);
 		}
 
 		// 增加到配置文件当中
