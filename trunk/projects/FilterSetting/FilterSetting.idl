@@ -37,7 +37,6 @@ interface IEyecare : IDispatch{
 	[id(8),  helpstring("Method getState")] HRESULT getState([out,retval] LONG* state);
 	[id(9),  helpstring("Method endEyecare")] HRESULT endEyecare([in] BSTR password,  [out,retval] VARIANT_BOOL* bSuccess);
 	[id(10), helpstring("Method trySwitch")] HRESULT trySwitch([out,retval] LONG* state);
-	[id(11), helpstring("Method LockScreen")] HRESULT LockScreen(void);
 	[id(12), helpstring("Method setTermMode")] HRESULT setTermMode([in] LONG mode);
 	[id(13), helpstring("Method getTermMode")] HRESULT getTermMode([out,retval] LONG* mode);
 };

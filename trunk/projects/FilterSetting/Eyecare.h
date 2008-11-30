@@ -49,7 +49,6 @@ public:
 	STDMETHOD(getState)(LONG* state);				// 获取状态
 	STDMETHOD(endEyecare)(BSTR password, VARIANT_BOOL *bSuccess); // 切换到娱乐状体
 	STDMETHOD(trySwitch)(LONG* state);
-	STDMETHOD(LockScreen)(void);
 	STDMETHOD(setTermMode)(LONG mode);
 	STDMETHOD(getTermMode)(LONG* mode);
 };

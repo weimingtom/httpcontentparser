@@ -74,11 +74,6 @@ STDMETHODIMP CEyecare::trySwitch(LONG* state) {
 	return S_OK;
 }
 
-STDMETHODIMP CEyecare::LockScreen(void) {
-	g_configuration.getEyecareSetting()->ForceLockWnd();
-	return S_OK;
-}
-
 STDMETHODIMP CEyecare::setTermMode(LONG mode) {
 	assert(mode == EyecareSetting::EYECARE_TERMIN_ENTERSU || 
 		mode == EyecareSetting::EYECARE_TERMIN_RESETTIMER);
