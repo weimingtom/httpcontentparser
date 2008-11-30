@@ -122,6 +122,7 @@ int HTTPContentHander::saveImage(HTTPPacket *packet, const int check_result) {
 	
 	if (packet->getDataSize() > IMAGE_LOW_LIMIT) {
 		// 生成文件名
+		TCHAR content_file_path[MAX_PATH];
 		generateImageName(content_file_path, MAX_PATH, packet->getContentType());
 		packet->achieve_data(content_file_path);
 
@@ -137,7 +138,7 @@ int HTTPContentHander::saveText(HTTPPacket * packet, const int check_result) {
 
 	if (packet->getDataSize() > TEXT_LOW_LIMIT) {
 		// 生成文件名
-		char fullpath[MAX_PATH];
+		TCHAR content_file_path[MAX_PATH];
 		generatePageName(content_file_path, MAX_PATH, packet->getContentType());
 
 		// 如果未压缩则直接保存
@@ -149,7 +150,7 @@ int HTTPContentHander::saveText(HTTPPacket * packet, const int check_result) {
 		}
 
 		// 增加到配置文件当中
-		addToRepostory(fullpath, packet, check_result);
+		addToRepostory(content_file_path, packet, check_result);
 	}
 	return -1;
 }
