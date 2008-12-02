@@ -61,12 +61,12 @@
 			OutputDirectory="Release"
 			IntermediateDirectory="Release"
 			ConfigurationType="4"
-			UseOfMFC="1"
+			UseOfMFC="2"
 			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB"
-				RuntimeLibrary="0"
+				RuntimeLibrary="2"
 				UsePrecompiledHeader="3"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="TRUE"
