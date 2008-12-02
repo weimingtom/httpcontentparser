@@ -43,7 +43,7 @@
 				OutputFile="$(OutDir)/WinLock.dll"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
-				ModuleDefinitionFile=".\WinLockDll.def"
+				ModuleDefinitionFile=""
 				ProgramDatabaseFile=".\Release/WinLock.pdb"
 				ImportLibrary=".\Release/WinLock.lib"
 				TargetMachine="1"/>
@@ -58,7 +58,8 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				CommandLine="copy .\release\Winlock.lib ..\..\lib
-copy .\release\Winlock.dll ..\..\release"/>
+copy .\release\Winlock.dll ..\..\release
+"/>
 			<Tool
 				Name="VCPreBuildEventTool"/>
 			<Tool
@@ -122,7 +123,8 @@ copy .\release\Winlock.dll ..\..\release"/>
 			<Tool
 				Name="VCPostBuildEventTool"
 				CommandLine="copy .\Debug\Winlock.lib ..\..\lib\Winlockd.lib
-copy .\Debug\Winlock.dll ..\..\debug"/>
+copy .\Debug\Winlock.dll ..\..\debug
+"/>
 			<Tool
 				Name="VCPreBuildEventTool"
 				CommandLine="copy .\winlockdll.h ..\..\include"/>
