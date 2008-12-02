@@ -8,7 +8,6 @@
 #include "sysutility.h"
 #include <app_constants.h>
 #include <passwordtype.h>
-#include <screensaver.h>
 #include <webhistoryrecordersetting.h>
 #include <xmlconfiguration.h>
 #include <string>

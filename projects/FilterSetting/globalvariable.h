@@ -3,7 +3,6 @@
 
 #include "FilterSetting.h"
 #include <authorize.h>
-#include <screensaver.h>
 #include <eyecaresetting.h>
 #include <webhistoryrecordersetting.h>
 #include <dnssetting.h>
