@@ -7,6 +7,8 @@
 #define ANTIPORNDLL_API __declspec(dllimport)
 #endif
 
+typedef unsigned char uint8;
+
 class PornDetectorBase {
 public:
 	// Detect porn from a raw RGB image in memory. NOTE: RGB, NOT BGR!
