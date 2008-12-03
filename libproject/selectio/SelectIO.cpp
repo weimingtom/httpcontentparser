@@ -242,7 +242,8 @@ int CSelectIO::graspData(const SOCKET s, char *buf, const int len) {
 		// 如果接收到了长度为0
 		if (len == 0) {
 			// 将包表示为完整的
-			assert ( 0 == sock_data->addBuffer(buf, len));
+			const int result = sock_data->addBuffer(buf, len);
+			assert ( 0 == result);
 			removePacket(s, sock_data);
 			addCompletedPacket(s, sock_data);				
 			completed_generated = true;
