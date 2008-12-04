@@ -188,8 +188,11 @@ void HTTPPacketTest::testSeriesPacket() {
 	"Connection: keep-alive\r\n\r\n"
 	"aaaaaa";
 
+	int result;
 	HTTPPacket *packet = new HTTPPacket;
-	const int bytes1 = (int)packet->addBuffer(packet1, (int)strlen(packet1));
+	int bytes1;
+	result = packet->addBuffer(packet1, (int)strlen(packet1), &bytes1);
+	CPPUNIT_ASSERT (0 == result);
 	CPPUNIT_ASSERT(true == packet->isComplete());
 	const char * packet2 = &(packet1[bytes1]);
 	CPPUNIT_ASSERT(packet2 == strstr(packet2, "HTTP"));
@@ -197,7 +200,9 @@ void HTTPPacketTest::testSeriesPacket() {
 	delete packet;
 
 	packet = new HTTPPacket;
-	const int bytes2 = (int)packet->addBuffer(packet2, (int)strlen(packet2));
+	int bytes2;
+	result = packet->addBuffer(packet2, (int)strlen(packet2), &bytes2);
+	CPPUNIT_ASSERT (0 == result);
 	CPPUNIT_ASSERT(true == packet->isComplete());
 	const char * packet3 = &(packet2[bytes2]);
 	CPPUNIT_ASSERT(packet3 == strstr(packet3, "HTTP"));
@@ -205,14 +210,18 @@ void HTTPPacketTest::testSeriesPacket() {
 	delete packet;
 
 	packet = new HTTPPacket;
-	const int bytes3 = (int)packet->addBuffer(packet3, (int)strlen(packet3));
+	int bytes3;
+	result = packet->addBuffer(packet3, (int)strlen(packet3), &bytes3);
+	CPPUNIT_ASSERT (0 == result);
 	CPPUNIT_ASSERT(true == packet->isComplete());
 	const char * packet4 = &(packet3[bytes3]);
 	CPPUNIT_ASSERT(packet->getContentType()==CONTYPE_HTML);
 	delete packet;
 
 	packet = new HTTPPacket;
-	const int bytes4 = packet->addBuffer(packet4, (int)strlen(packet4));
+	int bytes4;
+	result = packet->addBuffer(packet4, (int)strlen(packet4), &bytes4);
+	// assert (0 == result);
 	CPPUNIT_ASSERT(bytes4 == 0);
 	CPPUNIT_ASSERT(true == packet->isComplete());
 }
@@ -221,19 +230,33 @@ void HTTPPacketTest::testWrongHeader() {
 	HTTPPacket *packet = new HTTPPacket;
 	char buffer1[] = "HTTP"; 
 	char buffer2[] = "HTTP aidji8vz2\r\noaijdfoin\r\n\r\n";
-	CPPUNIT_ASSERT(0 == (int)packet->addBuffer(buffer1, (int)strlen(buffer1)));
+	int length;
+	CPPUNIT_ASSERT(0 == (int)packet->addBuffer(buffer1, (int)strlen(buffer1), &length));
+	CPPUNIT_ASSERT(0 == length);
 	// CPPUNIT_ASSERT(0 == packet->addBuffer(buffer2, strlen(buffer2)));
 }
 
 // 测试获取原始数据包
 void HTTPPacketTest::testRawPacket() {
 	HTTPPacket *packet = new HTTPPacket;
-	CPPUNIT_ASSERT((int)strlen(chunk1) == packet->addBuffer(chunk1, (int)strlen(chunk1)));
-	CPPUNIT_ASSERT((int)strlen(chunk2) == packet->addBuffer(chunk2, (int)strlen(chunk2)));
-	CPPUNIT_ASSERT((int)strlen(chunk3) == packet->addBuffer(chunk3, (int)strlen(chunk3)));
-	CPPUNIT_ASSERT((int)strlen(chunk4) == packet->addBuffer(chunk4, (int)strlen(chunk4)));
-	CPPUNIT_ASSERT((int)strlen(chunk5) == packet->addBuffer(chunk5, (int)strlen(chunk5)));
-	CPPUNIT_ASSERT((int)strlen(chunk6) == packet->addBuffer(chunk6, (int)strlen(chunk6)));
+	int added_length;
+	CPPUNIT_ASSERT(0 == packet->addBuffer(chunk1, (int)strlen(chunk1), &added_length));
+	CPPUNIT_ASSERT((int)strlen(chunk1) == added_length);
+
+	CPPUNIT_ASSERT(0 == packet->addBuffer(chunk2, (int)strlen(chunk2), &added_length));
+	CPPUNIT_ASSERT((int)strlen(chunk2) == added_length);
+
+	CPPUNIT_ASSERT(0== packet->addBuffer(chunk3, (int)strlen(chunk3), &added_length));
+	CPPUNIT_ASSERT((int)strlen(chunk3) == added_length);
+
+	CPPUNIT_ASSERT(0 == packet->addBuffer(chunk4, (int)strlen(chunk4), &added_length));
+	CPPUNIT_ASSERT((int)strlen(chunk4) == added_length);
+
+	CPPUNIT_ASSERT(0 == packet->addBuffer(chunk5, (int)strlen(chunk5), &added_length));
+	CPPUNIT_ASSERT((int)strlen(chunk5) == added_length);
+
+	CPPUNIT_ASSERT(0 == packet->addBuffer(chunk6, (int)strlen(chunk6), &added_length));
+	CPPUNIT_ASSERT((int)strlen(chunk6) == added_length);
 
 	const int buf_len = 1024 * 64;
 	char buffer[buf_len];
@@ -258,8 +281,10 @@ void HTTPPacketTest::testZeroChunk() {
 	"Transfer-Encoding: chunked\r\n\r\n"
 	"0\r\n\r\n";
 
+	int added_length;
 	HTTPPacket *packet = new HTTPPacket;
-	CPPUNIT_ASSERT(strlen(data1) == packet->addBuffer(data1, (int)strlen(data1)));
+	CPPUNIT_ASSERT(0 == packet->addBuffer(data1, (int)strlen(data1), &added_length));
+	CPPUNIT_ASSERT((int)strlen(data1) == added_length);
 	CPPUNIT_ASSERT(packet->isComplete() == true);
 }
 
@@ -267,29 +292,42 @@ void HTTPPacketTest::testZeroChunk() {
 void HTTPPacketTest::testChunk() {
 	{ 
 	// 添加一个连续的
+	int added_length;
 	HTTPPacket *packet = new HTTPPacket;
-	CPPUNIT_ASSERT((int)strlen(chunk1) == packet->addBuffer(chunk1, (int)strlen(chunk1)));
+	CPPUNIT_ASSERT(0 == packet->addBuffer(chunk1, (int)strlen(chunk1), &added_length));
+	CPPUNIT_ASSERT((int)strlen(chunk1) == added_length);
 	CPPUNIT_ASSERT(packet->getDataSize() == 0);
 	CPPUNIT_ASSERT(packet->isComplete() == false);
-	CPPUNIT_ASSERT((int)strlen(chunk2) == packet->addBuffer(chunk2, (int)strlen(chunk2)));
+
+	CPPUNIT_ASSERT(0 == packet->addBuffer(chunk2, (int)strlen(chunk2), &added_length));
+	CPPUNIT_ASSERT((int)strlen(chunk2) == added_length);
 	CPPUNIT_ASSERT(packet->getDataSize() == 0x32);
 	CPPUNIT_ASSERT(packet->isComplete() == false);
-	CPPUNIT_ASSERT((int)strlen(chunk3) == packet->addBuffer(chunk3, (int)strlen(chunk3)));
+
+	CPPUNIT_ASSERT(0 == packet->addBuffer(chunk3, (int)strlen(chunk3), &added_length));
+	CPPUNIT_ASSERT((int)strlen(chunk3) == added_length);
 	CPPUNIT_ASSERT(packet->getDataSize() == 0x32 * 2);
 	CPPUNIT_ASSERT(packet->isComplete() == false);
-	CPPUNIT_ASSERT((int)strlen(chunk4) == packet->addBuffer(chunk4, (int)strlen(chunk4)));
+
+	CPPUNIT_ASSERT(0 == packet->addBuffer(chunk4, (int)strlen(chunk4), &added_length));
+	CPPUNIT_ASSERT((int)strlen(chunk4) == added_length);
 	CPPUNIT_ASSERT(packet->getDataSize() == 0x32 * 3);
 	CPPUNIT_ASSERT(packet->isComplete() == false);
-	CPPUNIT_ASSERT((int)strlen(chunk5) == packet->addBuffer(chunk5, (int)strlen(chunk5)));
+
+	CPPUNIT_ASSERT(0 == packet->addBuffer(chunk5, (int)strlen(chunk5), &added_length));
+	CPPUNIT_ASSERT((int)strlen(chunk5) == added_length);
 	CPPUNIT_ASSERT(packet->getDataSize() == 0x32 * 4);
 	CPPUNIT_ASSERT(packet->isComplete() == false);
-	CPPUNIT_ASSERT((int)strlen(chunk6) == packet->addBuffer(chunk6, (int)strlen(chunk6)));
+
+	CPPUNIT_ASSERT(0 == packet->addBuffer(chunk6, (int)strlen(chunk6), &added_length));
+	CPPUNIT_ASSERT((int)strlen(chunk6) == added_length);
 	CPPUNIT_ASSERT(packet->getDataSize() == 200);
 	CPPUNIT_ASSERT(packet->isComplete() == true);
 	delete packet;
 	}
 
 	{
+	int added_length;
 	// test complex chunk
 	const char complex_chunk1[] = "HTTP/1.1 200 OK\r\n"
 		"Date: Thu, 24 Apr 2008 02:37:48 GMT\r\n"
@@ -307,60 +345,100 @@ void HTTPPacketTest::testChunk() {
 	const char complex_chunk4[] = "12345678901234567890123456789012345678901234567890";
 	const char complex_chunk5[] = "12345678901234567890123456789012345678901234567890\r\n0\r\n\r\n";
 	HTTPPacket *packet = new HTTPPacket;
-	CPPUNIT_ASSERT((int)strlen(complex_chunk1) == packet->addBuffer(complex_chunk1, (int)strlen(complex_chunk1)));
+	CPPUNIT_ASSERT(0 == packet->addBuffer(complex_chunk1, (int)strlen(complex_chunk1), &added_length));
+	CPPUNIT_ASSERT((int)strlen(complex_chunk1) == added_length);
 	CPPUNIT_ASSERT(packet->getDataSize() == 0);
 	CPPUNIT_ASSERT(packet->isComplete() == false);
-	CPPUNIT_ASSERT((int)strlen(complex_chunk2) == packet->addBuffer(complex_chunk2, (int)strlen(complex_chunk2)));
+
+	CPPUNIT_ASSERT(0 == packet->addBuffer(complex_chunk2, (int)strlen(complex_chunk2), &added_length));
+	CPPUNIT_ASSERT((int)strlen(complex_chunk2) == added_length);
 	CPPUNIT_ASSERT(packet->getDataSize() == 0x32);
 	CPPUNIT_ASSERT(packet->isComplete() == false);
-	CPPUNIT_ASSERT((int)strlen(complex_chunk3) == packet->addBuffer(complex_chunk3, (int)strlen(complex_chunk3)));
+
+	CPPUNIT_ASSERT(0 == packet->addBuffer(complex_chunk3, (int)strlen(complex_chunk3), &added_length));
+	CPPUNIT_ASSERT((int)strlen(complex_chunk3) == added_length);
 	CPPUNIT_ASSERT(packet->getDataSize() == 300);
 	CPPUNIT_ASSERT(packet->isComplete() == false);
-	CPPUNIT_ASSERT((int)strlen(complex_chunk4) == packet->addBuffer(complex_chunk4, (int)strlen(complex_chunk4)));
-	CPPUNIT_ASSERT((int)strlen(complex_chunk5) == packet->addBuffer(complex_chunk5, (int)strlen(complex_chunk5)));
+
+	CPPUNIT_ASSERT(0 == packet->addBuffer(complex_chunk4, (int)strlen(complex_chunk4), &added_length));
+	CPPUNIT_ASSERT((int)strlen(complex_chunk4) == added_length);
+
+	CPPUNIT_ASSERT(0 == packet->addBuffer(complex_chunk5, (int)strlen(complex_chunk5), &added_length));
+	CPPUNIT_ASSERT((int)strlen(complex_chunk5) == added_length);
 	CPPUNIT_ASSERT(packet->getDataSize() == 400);
 	CPPUNIT_ASSERT(packet->isComplete() == true);
 	delete packet;
 
 	packet = new HTTPPacket;
-	CPPUNIT_ASSERT((int)strlen(chunk1) == packet->addBuffer(chunk1, (int)strlen(chunk1)));
-	CPPUNIT_ASSERT((int)strlen(chunk2) == packet->addBuffer(chunk2, (int)strlen(chunk2)));
-	CPPUNIT_ASSERT((int)strlen(chunk3) == packet->addBuffer(chunk3, (int)strlen(chunk3)));
-	CPPUNIT_ASSERT((int)strlen(chunk4) == packet->addBuffer(chunk4, (int)strlen(chunk4)));
-	CPPUNIT_ASSERT((int)strlen(chunk5) == packet->addBuffer(chunk5, (int)strlen(chunk5)));
-	CPPUNIT_ASSERT((int)strlen(chunk6) == packet->addBuffer(chunk6, (int)strlen(chunk6)));
+	int expected_length;
+	CPPUNIT_ASSERT(0 == packet->addBuffer(chunk1, (int)strlen(chunk1), &expected_length));
+	CPPUNIT_ASSERT((int)strlen(chunk1) == expected_length);
+
+	CPPUNIT_ASSERT(0 == packet->addBuffer(chunk2, (int)strlen(chunk2), &expected_length));
+	CPPUNIT_ASSERT((int)strlen(chunk2) == expected_length);
+
+	CPPUNIT_ASSERT(0 == packet->addBuffer(chunk3, (int)strlen(chunk3), &expected_length));
+	CPPUNIT_ASSERT((int)strlen(chunk3) == expected_length);
+
+	CPPUNIT_ASSERT(0 == packet->addBuffer(chunk4, (int)strlen(chunk4), &expected_length));
+	CPPUNIT_ASSERT((int)strlen(chunk4) == expected_length);
+
+	CPPUNIT_ASSERT(0 == packet->addBuffer(chunk5, (int)strlen(chunk5), &expected_length));
+	CPPUNIT_ASSERT((int)strlen(chunk5) == expected_length);
+
+	CPPUNIT_ASSERT(0 == packet->addBuffer(chunk6, (int)strlen(chunk6), &expected_length));
+	CPPUNIT_ASSERT((int)strlen(chunk6) == expected_length);
+
 	delete packet;
 	} 
 }
 
 void HTTPPacketTest::testAddSeriesPacket() {
 	{
+	int added_length;
 	// 添加一个连续的
 	HTTPPacket *packet = new HTTPPacket;
-	CPPUNIT_ASSERT(strlen(series1) == packet->addBuffer(series1, (int)strlen(series1)));
+	CPPUNIT_ASSERT(0 == packet->addBuffer(series1, (int)strlen(series1), &added_length));
+	CPPUNIT_ASSERT((int)strlen(series1) == added_length);
 	CPPUNIT_ASSERT(false == packet->isComplete());
-	CPPUNIT_ASSERT(strlen(series2) == packet->addBuffer(series2, (int)strlen(series2)));
+
+	CPPUNIT_ASSERT(0 == packet->addBuffer(series2, (int)strlen(series2), &added_length));
 	CPPUNIT_ASSERT(false == packet->isComplete());
-	CPPUNIT_ASSERT(strlen(series3) == packet->addBuffer(series3, (int)strlen(series3)));
+	CPPUNIT_ASSERT((int)strlen(series2) == added_length);
+
+	CPPUNIT_ASSERT(0 == packet->addBuffer(series3, (int)strlen(series3), &added_length));
 	CPPUNIT_ASSERT(false == packet->isComplete());
-	CPPUNIT_ASSERT(strlen(series4) == packet->addBuffer(series4, (int)strlen(series4)));
+	CPPUNIT_ASSERT((int)strlen(series3) == added_length);
+
+	CPPUNIT_ASSERT(0 == packet->addBuffer(series4, (int)strlen(series4), &added_length));
 	CPPUNIT_ASSERT(false == packet->isComplete());
-	CPPUNIT_ASSERT(strlen(series5) == packet->addBuffer(series5, (int)strlen(series5)));
+	CPPUNIT_ASSERT((int)strlen(series4) == added_length);
+
+	CPPUNIT_ASSERT(0 == packet->addBuffer(series5, (int)strlen(series5), &added_length));
 	CPPUNIT_ASSERT(false == packet->isComplete());
-	CPPUNIT_ASSERT(strlen(series6) == packet->addBuffer(series5, (int)strlen(series6)));
+	CPPUNIT_ASSERT((int)strlen(series5) == added_length);
+
+	CPPUNIT_ASSERT(0 == packet->addBuffer(series5, (int)strlen(series6), &added_length));
 	CPPUNIT_ASSERT(true == packet->isComplete());
+	CPPUNIT_ASSERT((int)strlen(series6) == added_length);
 	CPPUNIT_ASSERT(packet->getDataSize() == 234);
 	delete packet;
 	}
 }
 
 void HTTPPacketTest::testAddSinglePacket() {
+	int added_length;
 	HTTPPacket *httppacket1 = new HTTPPacket;
-	CPPUNIT_ASSERT(strlen(packet1) == httppacket1->addBuffer(packet1, (int)strlen(packet1)));
+	CPPUNIT_ASSERT(0 == httppacket1->addBuffer(packet1, (int)strlen(packet1), &added_length));
+	CPPUNIT_ASSERT((int)strlen(packet1) == added_length);
+
 	HTTPPacket *httppacket2 = new HTTPPacket;
-	CPPUNIT_ASSERT(strlen(packet2) == httppacket2->addBuffer(packet2, (int)strlen(packet2)));
+	CPPUNIT_ASSERT(0 == httppacket2->addBuffer(packet2, (int)strlen(packet2), &added_length));
+	CPPUNIT_ASSERT((int)strlen(packet2) == added_length);
+
 	HTTPPacket *httppacket3 = new HTTPPacket;
-	CPPUNIT_ASSERT(strlen(packet3) == httppacket3->addBuffer(packet3, (int)strlen(packet3)));
+	CPPUNIT_ASSERT(0 == httppacket3->addBuffer(packet3, (int)strlen(packet3), &added_length));
+	CPPUNIT_ASSERT((int)strlen(packet3) == added_length);
 
 	CPPUNIT_ASSERT(httppacket1->getContentType()==CONTYPE_HTML);
 	CPPUNIT_ASSERT(httppacket2->getContentType()==CONTYPE_GIF);
@@ -489,8 +567,10 @@ void HTTPPacketTest::testZeorLengthPacket() {
 		"Server: TrustRank Frontend\r\n"
 		"Content-Length: 0\r\n\r\n";
 		
+	int added_length;
 	HTTPPacket *packet = new HTTPPacket;
-	CPPUNIT_ASSERT((int)strlen(data) == packet->addBuffer(data, (int)strlen(data)));
+	CPPUNIT_ASSERT(0 == packet->addBuffer(data, (int)strlen(data), &added_length));
+	CPPUNIT_ASSERT((int)strlen(data) == added_length);
 	CPPUNIT_ASSERT(packet->isComplete() == true);
 	delete packet;
 }
@@ -503,8 +583,10 @@ void HTTPPacketTest::testConnectionState() {
 		"Transfer-Encoding: chunked\r\n"
 		"Connection: close\r\n\r\n0\r\n\r\n";
 
+	int added_length;
 	HTTPPacket *packet = new HTTPPacket;
-	CPPUNIT_ASSERT(strlen(p1) == packet->addBuffer(p1, (int)strlen(p1)));
+	CPPUNIT_ASSERT(0 == packet->addBuffer(p1, (int)strlen(p1), &added_length));
+	CPPUNIT_ASSERT((int)strlen(p1) == added_length);
 	CPPUNIT_ASSERT(HTTP_RESPONSE_HEADER::CONNECT_CLOSE == packet->getHeader()->getConnectionState());
 	delete packet;
 
@@ -516,7 +598,8 @@ void HTTPPacketTest::testConnectionState() {
 		"Connection: keep-alive\r\n\r\n0\r\n\r\n";
 
 	packet = new HTTPPacket;
-	CPPUNIT_ASSERT(strlen(p2) == packet->addBuffer(p2, (int)strlen(p2)));
+	CPPUNIT_ASSERT(0 == packet->addBuffer(p2, (int)strlen(p2), &added_length));
+	CPPUNIT_ASSERT((int)strlen(p2) == added_length);
 	CPPUNIT_ASSERT(HTTP_RESPONSE_HEADER::CONNECT_KEEP_ALIVE == packet->getHeader()->getConnectionState());
 	delete packet;
 }
@@ -529,9 +612,10 @@ void HTTPPacketTest::testNoContentChunk() {
 		"Transfer-Encoding: chunked\r\n"
 		"Connection: keep-alive\r\n\r\n0\r\n\r\n";
 
+	int added_length;
 	HTTPPacket *packet = new HTTPPacket;
-	CPPUNIT_ASSERT(strlen(complex_chunk1) == packet->addBuffer(complex_chunk1,
-		(int)strlen(complex_chunk1)));
+	CPPUNIT_ASSERT(0 == packet->addBuffer(complex_chunk1,(int)strlen(complex_chunk1), &added_length));
+	CPPUNIT_ASSERT((int)strlen(complex_chunk1) == added_length);
 	CPPUNIT_ASSERT(HTTP_RESPONSE_HEADER::CONNECT_KEEP_ALIVE == packet->getHeader()->getConnectionState());
 	CPPUNIT_ASSERT(true == packet->isComplete());
 	delete packet;
@@ -552,14 +636,16 @@ void HTTPPacketTest::testNoContentPacket() {
 	CPPUNIT_ASSERT(header1.isChunk()== false);
 	CPPUNIT_ASSERT(header1.getResponseCode() == 304);
 
+	int added_length;
 	HTTPPacket *packet = new HTTPPacket;
-	packet->addBuffer(no_content, (int)strlen(no_content));
+	CPPUNIT_ASSERT(0 == packet->addBuffer(no_content, (int)strlen(no_content), &added_length));
 	CPPUNIT_ASSERT(packet->isComplete() == true);
 	delete packet;
 }
 
 //  在一个包为结束的时候收到一个长度为0的包
 void HTTPPacketTest::testAdd0LengthPacket() {
+	int added_length;
 	{
 	const char length_specified[] = "HTTP/1.1 302 Found\r\n"
 		"Date: Thu, 24 Apr 2008 02:37:48 GMT\r\n"
@@ -568,9 +654,11 @@ void HTTPPacketTest::testAdd0LengthPacket() {
 		"Connection: keep-alive\r\n\r\n"
 		"123456789012";
 	HTTPPacket *packet = new HTTPPacket;
-	CPPUNIT_ASSERT(strlen(length_specified) == packet->addBuffer(length_specified, (int)strlen(length_specified)));
+	CPPUNIT_ASSERT(0 == packet->addBuffer(length_specified, (int)strlen(length_specified), &added_length));
+	CPPUNIT_ASSERT(strlen(length_specified) == added_length);
 	CPPUNIT_ASSERT(packet->isComplete() == false);
-	CPPUNIT_ASSERT(0 == packet->addBuffer(length_specified, 0));
+	CPPUNIT_ASSERT(0 == packet->addBuffer(length_specified, 0, &added_length));
+	CPPUNIT_ASSERT(0 == added_length);
 	CPPUNIT_ASSERT(packet->isComplete() == true);
 	delete packet;
 	}
@@ -585,9 +673,11 @@ void HTTPPacketTest::testAdd0LengthPacket() {
 		"Connection: close\r\n\r\n"
 		"123456789012";
 	HTTPPacket *packet = new HTTPPacket;
-	CPPUNIT_ASSERT(strlen(length_specified) == packet->addBuffer(length_specified, (int)strlen(length_specified)));
+	CPPUNIT_ASSERT(0 == packet->addBuffer(length_specified, (int)strlen(length_specified), &added_length));
+	CPPUNIT_ASSERT(strlen(length_specified) == added_length);
 	CPPUNIT_ASSERT(packet->isComplete() == false);
-	CPPUNIT_ASSERT(0 == packet->addBuffer(length_specified, 0));
+	CPPUNIT_ASSERT(0 == packet->addBuffer(length_specified, 0, &added_length));
+	CPPUNIT_ASSERT(0 == added_length);
 	CPPUNIT_ASSERT(packet->isComplete() == false);
 	delete packet;
 	}
@@ -609,19 +699,27 @@ void HTTPPacketTest::testAdd0LengthPacket() {
 	const char complex_chunk4[] = "12345678901234567890123456789012345678901234567890";
 	const char complex_chunk5[] = "12345678901234567890123456789012345678901234567890\r\n0\r\n\r\n";
 	HTTPPacket *packet = new HTTPPacket;
-	CPPUNIT_ASSERT((int)strlen(complex_chunk1) == packet->addBuffer(complex_chunk1, (int)strlen(complex_chunk1)));
+	CPPUNIT_ASSERT(0 == packet->addBuffer(complex_chunk1, (int)strlen(complex_chunk1), &added_length));
+	CPPUNIT_ASSERT(strlen(complex_chunk1) == added_length);
 	CPPUNIT_ASSERT(packet->getDataSize() == 0);
 	CPPUNIT_ASSERT(packet->isComplete() == false);
-	CPPUNIT_ASSERT((int)strlen(complex_chunk2) == packet->addBuffer(complex_chunk2, (int)strlen(complex_chunk2)));
+
+	CPPUNIT_ASSERT(0 == packet->addBuffer(complex_chunk2, (int)strlen(complex_chunk2), &added_length));
+	CPPUNIT_ASSERT(strlen(complex_chunk2) == added_length);
 	CPPUNIT_ASSERT(packet->getDataSize() == 0x32);
 	CPPUNIT_ASSERT(packet->isComplete() == false);
-	CPPUNIT_ASSERT((int)strlen(complex_chunk3) == packet->addBuffer(complex_chunk3, (int)strlen(complex_chunk3)));
+
+	CPPUNIT_ASSERT(0 == packet->addBuffer(complex_chunk3, (int)strlen(complex_chunk3), &added_length));
+	CPPUNIT_ASSERT(strlen(complex_chunk3) == added_length);
 	CPPUNIT_ASSERT(packet->getDataSize() == 300);
 	CPPUNIT_ASSERT(packet->isComplete() == false);
-	CPPUNIT_ASSERT((int)strlen(complex_chunk4) == packet->addBuffer(complex_chunk4, (int)strlen(complex_chunk4)));
+
+	CPPUNIT_ASSERT(0 == packet->addBuffer(complex_chunk4, (int)strlen(complex_chunk4), &added_length));
+	CPPUNIT_ASSERT(strlen(complex_chunk4) == added_length);
 
 	// 增加一个长度为0的包
-	CPPUNIT_ASSERT(0 == packet->addBuffer(complex_chunk5, 0));
+	CPPUNIT_ASSERT(0 == packet->addBuffer(complex_chunk5, 0, &added_length));
+	CPPUNIT_ASSERT(0 == added_length);
 	CPPUNIT_ASSERT(packet->isComplete() == true);
 	delete packet;
 	}

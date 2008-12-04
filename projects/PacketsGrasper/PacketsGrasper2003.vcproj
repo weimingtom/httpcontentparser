@@ -209,6 +209,13 @@
 				RelativePath=".\Overlapped.h">
 			</File>
 		</Filter>
+		<Filter
+			Name="logger"
+			Filter="">
+			<File
+				RelativePath=".\logger.h">
+			</File>
+		</Filter>
 	</Files>
 	<Globals>
 	</Globals>

@@ -139,8 +139,9 @@ ProtocolPacket<HTTP_PACKET_SIZE> * HTTPPacket::getRawPacket() {
 ////////////////////////////////////////////
 // 验证HTTP包，并将其加入到保重
 // 如果返回0, 则表示不是HTTP包
-int HTTPPacket::addBuffer(const char *buf, const int len) {
+int HTTPPacket::addBuffer(const char *buf, const int len, int * written_length) {
 	try {
+		assert (written_length != NULL);
 		using namespace yanglei_utility;
 		SingleLock<CAutoCreateCS> lock(&cs_);
 		
@@ -169,21 +170,24 @@ int HTTPPacket::addBuffer(const char *buf, const int len) {
 			}
 		}
 		assert(bytes <= len);
-		return bytes;
+		*written_length = bytes;
+		return 0;
 	} catch(int) {
 		//WriteLog("E:\\workspace\\debuglog\\bbbb.log", 0, getCode(), buf, len);
 		DEBUG_MESSAGE("addBuffer int exception...");
 		// 如果不是一个HTTP协议，那么直接保存，并将其表示为已经完成的包
 		dataextractor_ = HttpDataExtractor::Create(NULL, NULL);
 		addRawPacket(buf, len);
-		return 0;
+		*written_length = 0;
+		return -1;
 	} catch (std::bad_alloc &) {
 		// 如果内存不足，交给上层程序来处理
 		throw; 
 	} catch (...) {
 		//WriteLog("E:\\workspace\\debuglog\\xxx.log", 0, getCode(), buf, len);
 		DEBUG_MESSAGE("addBuffer exception...");
-		return 0;
+		*written_length = 0;
+		return -1;
 	}
 }
 
