@@ -227,10 +227,7 @@ int CSelectIO::graspData(const SOCKET s, char *buf, const int len) {
 		bool completed_generated = false; 
 		int total_size = 0; 
 
-		//char buffer[1024];
-		//sprintf(buffer, "grasp Data socket %d", s);
-		//OutputDebugString(buffer);
-
+		// 获取相关的包
 		HTTPPacket* sock_data  = getSOCKETPacket(s);
 		assert( sock_data != NULL);
 
@@ -239,11 +236,19 @@ int CSelectIO::graspData(const SOCKET s, char *buf, const int len) {
 		//WriteRawData(filename, buf, len);
 
 
+		bool store_to_log = false;
 		// 如果接收到了长度为0
 		if (len == 0) {
 			// 将包表示为完整的
-			const int result = sock_data->addBuffer(buf, len);
-			assert ( 0 == result);
+			int added_length;
+			const int result = sock_data->addBuffer(buf, len, &added_length);
+
+			// 如果出现了错误
+			if (0 != result) {
+				store_to_log = true;
+			}
+
+			assert ( added_length == result);
 			removePacket(s, sock_data);
 			addCompletedPacket(s, sock_data);				
 			completed_generated = true;
@@ -259,8 +264,14 @@ int CSelectIO::graspData(const SOCKET s, char *buf, const int len) {
 			while (total_size < len) {
 				// 由于这里可能出现头部，所以在这里也应该进行头部验证啊....
 				// 但是这里是已经接收到的包，所以受到了必须将它直接送上去，不能放弃
-				const int bytes_written = sock_data->addBuffer(&(buf[total_size]), len - total_size);
+				int bytes_written;
+				const int result = sock_data->addBuffer(&(buf[total_size]), len - total_size, &bytes_written);
 				total_size += bytes_written;
+
+				// 如果出现了错误
+				if (0 != result) {
+					store_to_log = true;
+				}
 
 				// 如果当前包已经完成，则从map中移除，并放入到完成队列当中 
 				// 如果一些条件不符合约束，也应该放入完成队列

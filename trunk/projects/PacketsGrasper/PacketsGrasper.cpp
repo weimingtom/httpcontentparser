@@ -2,16 +2,19 @@
 #include "selectio.h"
 #include "debug.h" 
 #include ".\overlapped.h"
+#include ".\globaldata.h"
+#include ".\logger.h"
 
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <tchar.h>
 #include <serviceUtility.h>
 #include <utility\debugmessage.h>
 #include <utility\fd_set_utility.h>
 #include <utility\HttpPacket.h>
 #include <app_constants.h>
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <tchar.h>
+
 
 #pragma data_seg(".inidata")
 	int				m_iRefCount		= 0;
@@ -27,6 +30,7 @@ CRITICAL_SECTION	gCriticalSection;			// 代码段保护变量
 WSPPROC_TABLE		NextProcTable;				// 保存30个服务提供者指针
 TCHAR				m_sProcessName[MAX_PATH];	// 保存当前进程名称
 
+// 处理使用SelectIO的模型.
 CSelectIO g_select;
 
 void ShowAllSOCKET(const char *buf, fd_set *readfds) {
@@ -98,7 +102,7 @@ int WSPAPI WSPSelect (
   LPINT			lpErrno                         
 ) 
 {
-	DebugStringNoDres(_T("WSPSelect ..."));
+	LOG_OPER(_T("WSPSelect ..."));
 	// 直接返回，自身填入select
 	if (g_select.preselect(readfds) == 0) {
 		// firefox都是NULL
@@ -130,7 +134,7 @@ int WSPAPI WSPRecv(
 	LPINT			lpErrno
 )
 {
-	DebugStringNoDres(_T("WSPRecv ..."));
+	LOG_OPER(_T("WSPRecv ..."));
 	try {
 		// 对于使用MSG_PEEK抓取的方式
 		if ((*lpFlags) & MSG_PEEK) {
@@ -166,7 +170,7 @@ SOCKET WSPAPI WSPSocket(
 	LPINT		lpErrno
 )
 {
-	DebugStringNoDres(_T("WSPSocket ..."));
+	LOG_OPER(_T("WSPSocket ..."));
 	return NextProcTable.lpWSPSocket(af, type
 		, protocol, lpProtocolInfo, g, dwFlags, lpErrno);
 }
@@ -176,7 +180,7 @@ int WSPAPI WSPCloseSocket(
 	LPINT		lpErrno
 ) 
 {
-	DebugStringNoDres(_T("WSPCloseSocket ..."));
+	LOG_OPER(_T("WSPCloseSocket ..."));
 	return NextProcTable.lpWSPCloseSocket(s, lpErrno);
 }
 
@@ -191,7 +195,7 @@ int WSPAPI WSPConnect(
 	LPINT			lpErrno
 )
 {
-	DebugStringNoDres(_T("WSPConnect ..."));
+	LOG_OPER(_T("WSPConnect ..."));
 	return NextProcTable.lpWSPConnect(s, name, namelen, lpCallerData
 		, lpCalleeData, lpSQOS, lpGQOS, lpErrno);
 }
@@ -205,7 +209,7 @@ SOCKET WSPAPI WSPAccept(
 	LPINT			lpErrno
 )
 {
-	DebugStringNoDres(_T("WSPAccept ..."));
+	LOG_OPER(_T("WSPAccept ..."));
 	return NextProcTable.lpWSPAccept(s, addr, addrlen, lpfnCondition
 		, dwCallbackData, lpErrno);
 }
@@ -292,7 +296,7 @@ int WSPAPI WSPAddressToString (
   LPINT			lpErrno                      
 )
 {
-	DebugStringNoDres(_T("WSPAddressToString ..."));
+	LOG_OPER(_T("WSPAddressToString ..."));
 	return NextProcTable.lpWSPAddressToString(lpsaAddress
 		, dwAddressLength, lpProtocolInfo
 		, lpszAddressString, lpdwAddressStringLength, lpErrno);
@@ -306,7 +310,7 @@ int WSPAPI WSPAsyncSelect (
   LPINT			lpErrno        
 )
 {
-	DebugStringNoDres(_T("WSPAsyncSelect ..."));
+	LOG_OPER(_T("WSPAsyncSelect ..."));
 	return NextProcTable.lpWSPAsyncSelect(s, hWnd, wMsg, lEvent, lpErrno);
 }
  
@@ -317,7 +321,7 @@ int WSPAPI WSPBind (
   LPINT			lpErrno                       
 )
 {
-	DebugStringNoDres(_T("WSPBind ..."));
+	LOG_OPER(_T("WSPBind ..."));
 	return NextProcTable.lpWSPBind(s, name, namelen, lpErrno);
 }
 
@@ -325,7 +329,7 @@ int WSPAPI WSPCancelBlockingCall (
   LPINT			lpErrno  
 )
 {
-	DebugStringNoDres(_T("WSPCancelBlockingCall ..."));
+	LOG_OPER(_T("WSPCancelBlockingCall ..."));
 	return NextProcTable.lpWSPCancelBlockingCall(lpErrno);
 }
 
@@ -333,7 +337,7 @@ int WSPAPI WSPCleanup (
   LPINT			lpErrno  
 )
 {
-	DebugStringNoDres(_T("WSPCleanup ..."));
+	LOG_OPER(_T("WSPCleanup ..."));
 	return NextProcTable.lpWSPCleanup(lpErrno);
 }
  
@@ -344,7 +348,7 @@ int WSPAPI WSPDuplicateSocket (
   LPINT			lpErrno                         
 )
 {
-	DebugStringNoDres(_T("WSPDuplicateSocket ..."));
+	LOG_OPER(_T("WSPDuplicateSocket ..."));
 	return NextProcTable.lpWSPDuplicateSocket(
 		s, dwProcessId, lpProtocolInfo, lpErrno);
 }
@@ -356,7 +360,7 @@ int WSPAPI WSPEnumNetworkEvents (
   LPINT			lpErrno                         
 )
 {
-	DebugStringNoDres(_T("WSPEnumNetworkEvents ..."));
+	LOG_OPER(_T("WSPEnumNetworkEvents ..."));
 	return NextProcTable.lpWSPEnumNetworkEvents(
 		s, hEventObject, lpNetworkEvents, lpErrno);
 }
@@ -368,7 +372,7 @@ int WSPAPI WSPEventSelect (
   LPINT			lpErrno          
 )
 {
-	DebugStringNoDres(_T("WSPEventSelect ..."));
+	LOG_OPER(_T("WSPEventSelect ..."));
 	return NextProcTable.lpWSPEventSelect(
 		s, hEventObject, lNetworkEvents, lpErrno);
 }
@@ -382,7 +386,7 @@ BOOL WSPAPI WSPGetOverlappedResult (
   LPINT			lpErrno                   
 )
 {
-	DebugStringNoDres(_T("WSPGetOverlappedResult ..."));
+	LOG_OPER(_T("WSPGetOverlappedResult ..."));
 	return NextProcTable.lpWSPGetOverlappedResult(s, lpOverlapped
 		, lpcbTransfer, fWait, lpdwFlags, lpErrno);
 }
@@ -394,7 +398,7 @@ int WSPAPI WSPGetPeerName (
   LPINT			lpErrno                 
 )
 {
-	DebugStringNoDres(_T("WSPGetPeerName ..."));
+	LOG_OPER(_T("WSPGetPeerName ..."));
 	return NextProcTable.lpWSPGetPeerName(s, name, namelen, lpErrno);
 }
 
@@ -405,7 +409,7 @@ int WSPAPI WSPGetSockName (
   LPINT			lpErrno                 
 )
 {
-	DebugStringNoDres(_T("WSPGetSockName ..."));
+	LOG_OPER(_T("WSPGetSockName ..."));
 	return NextProcTable.lpWSPGetSockName(s, name, namelen, lpErrno);
 }
 
@@ -418,7 +422,7 @@ int WSPAPI WSPGetSockOpt (
   LPINT			lpErrno        
 ) 
 {
-	DebugStringNoDres(_T("WSPGetSockOpt ..."));
+	LOG_OPER(_T("WSPGetSockOpt ..."));
 	return NextProcTable.lpWSPGetSockOpt(
 		s, level, optname, optval, optlen, lpErrno);
 }
@@ -430,7 +434,7 @@ BOOL WSPAPI WSPGetQOSByName (
   LPINT			lpErrno         
 )
 {
-	DebugStringNoDres(_T("WSPGetQOSByName ..."));
+	LOG_OPER(_T("WSPGetQOSByName ..."));
 	return NextProcTable.lpWSPGetQOSByName(s, lpQOSName, lpQOS, lpErrno);
 }
 
@@ -448,7 +452,7 @@ int WSPAPI WSPIoctl (
   LPINT			lpErrno                                            
 )
 {
-	DebugStringNoDres(_T("WSPIoctl ..."));
+	LOG_OPER(_T("WSPIoctl ..."));
 	return NextProcTable.lpWSPIoctl(s, dwIoControlCode, lpvInBuffer
 		, cbInBuffer, lpvOutBuffer, cbOutBuffer, lpcbBytesReturned
 		, lpOverlapped, lpCompletionRoutine, lpThreadId, lpErrno);
@@ -466,7 +470,7 @@ SOCKET WSPAPI WSPJoinLeaf (
   LPINT			lpErrno                       
 )
 {
-	DebugStringNoDres(_T("WSPJoinLeaf ..."));
+	LOG_OPER(_T("WSPJoinLeaf ..."));
 	return NextProcTable.lpWSPJoinLeaf(s, name, namelen, lpCallerData
 		, lpCalleeData, lpSQOS, lpGQOS, dwFlags, lpErrno);
 }
@@ -477,7 +481,7 @@ int WSPAPI WSPListen (
   LPINT			lpErrno  
 )
 {
-	DebugStringNoDres(_T("WSPListen ..."));
+	LOG_OPER(_T("WSPListen ..."));
 	return NextProcTable.lpWSPListen(s, backlog, lpErrno);
 }
 
@@ -487,7 +491,7 @@ int WSPAPI WSPRecvDisconnect (
   LPINT			lpErrno                       
 )
 {
-	DebugStringNoDres(_T("WSPRecvDisconnect ..."));
+	LOG_OPER(_T("WSPRecvDisconnect ..."));
 	return NextProcTable.lpWSPRecvDisconnect(s, lpInboundDisconnectData, lpErrno);
 }
 
@@ -498,7 +502,7 @@ int WSPAPI WSPSendDisconnect (
   LPINT			lpErrno                        
 )
 {
-	DebugStringNoDres(_T("WSPSendDisconnect ..."));
+	LOG_OPER(_T("WSPSendDisconnect ..."));
 	return NextProcTable.lpWSPSendDisconnect(
 		s, lpOutboundDisconnectData, lpErrno);
 }
@@ -512,7 +516,7 @@ int WSPAPI WSPSetSockOpt (
   LPINT			lpErrno              
 )
 {
-	DebugStringNoDres(_T("WSPSetSockOpt ..."));
+	LOG_OPER(_T("WSPSetSockOpt ..."));
 	return NextProcTable.lpWSPSetSockOpt(
 		s, level, optname, optval, optlen, lpErrno);
 }
@@ -523,7 +527,7 @@ int WSPAPI WSPShutdown (
   LPINT			lpErrno  
 )
 {
-	DebugStringNoDres(_T("WSPShutdown ..."));
+	LOG_OPER(_T("WSPShutdown ..."));
 	return NextProcTable.lpWSPShutdown(s, how, lpErrno);
 }
 
@@ -536,6 +540,7 @@ int WSPAPI WSPStringToAddress (
   LPINT			lpErrno                         
 )
 { 
+	LOG_OPER(_T("WSPStringToAddress ..."));
 	return NextProcTable.lpWSPStringToAddress(AddressString, AddressFamily
 		, lpProtocolInfo, lpAddress, lpAddressLength, lpErrno);
 }
@@ -552,7 +557,7 @@ BOOL WINAPI DllMain(
 )
 {
 	if(ul_reason_for_call == DLL_PROCESS_ATTACH) {
-		//InitializeLog();
+		LOG_INIT("TEXT");
  		GetModuleFileName(NULL, m_sProcessName, MAX_PATH);
 
 		InitializeCriticalSection(&gCriticalSection);
@@ -567,6 +572,7 @@ BOOL WINAPI DllMain(
 	} else if (ul_reason_for_call == DLL_THREAD_ATTACH) {
 	} else if (ul_reason_for_call == DLL_THREAD_DETACH) {
 	} else if (ul_reason_for_call == DLL_PROCESS_DETACH) { 
+
 		EnterCriticalSection(&gCriticalSection);
 		{
 			m_iRefCount -- ;
@@ -575,7 +581,8 @@ BOOL WINAPI DllMain(
 		LeaveCriticalSection(&gCriticalSection);
 
 		//UninitializeLog();
-		ODS2(m_sProcessName,_T(" Exit ..."));
+		LOG_OPER(" Exit ...");
+		LOG_UNINIT();
 	}
 
 	return TRUE;

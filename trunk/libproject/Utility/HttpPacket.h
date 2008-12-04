@@ -103,7 +103,7 @@ public:
 	unsigned getDataSize() const;
 	unsigned getHeaderSize() const;
 
-	int addBuffer(const char *buf, const int len);
+	int addBuffer(const char *buf, const int len, int * written_length);
 	int read(char *buf, const int bufsize, int &bytedread);
 	
 	unsigned getContentType() const { return http_header_.getContentType();}
