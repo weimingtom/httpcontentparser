@@ -212,9 +212,6 @@
 		<Filter
 			Name="logger"
 			Filter="">
-			<File
-				RelativePath=".\logger.h">
-			</File>
 		</Filter>
 	</Files>
 	<Globals>
