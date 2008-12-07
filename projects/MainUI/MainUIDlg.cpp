@@ -183,6 +183,7 @@ BOOL CMainUIDlg::OnInitDialog()
 	setupTrayMenu();
 
 	SetTimer(ID_TIMER, TIME_ESCPSE, NULL);
+	HideMainUI();
 	return TRUE;  // 除非设置了控件的焦点，否则返回 TRUE
 }
 
