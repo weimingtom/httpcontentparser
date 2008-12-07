@@ -4,9 +4,10 @@
 #include "Eyecare.h"
 #include ".\eyecare.h"
 
+
 #include "FilterSetting.h"
 #include "globalvariable.h"
-
+#include <typeconvert.h>
 #include <eyecaresetting.h>
 // CEyecare
 
@@ -83,5 +84,10 @@ STDMETHODIMP CEyecare::setTermMode(LONG mode) {
 
 STDMETHODIMP CEyecare::getTermMode(LONG* mode) {
 	*mode = g_configuration.getEyecareSetting()->getTerminatedMode();
+	return S_OK;
+}
+
+STDMETHODIMP CEyecare::enableEyecare(VARIANT_BOOL enabled) {
+	g_configuration.getEyecareSetting()->enable(convert(enabled));
 	return S_OK;
 }

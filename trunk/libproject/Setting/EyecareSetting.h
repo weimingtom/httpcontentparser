@@ -52,6 +52,17 @@ public:
 	void stopTimer() { return calculagraph_.stop();}
 	void restartTimer() { return calculagraph_.restart();}
 	bool isTimerStopped() { return calculagraph_.isStopped();}
+
+	void enable(const bool enabled) {
+		if (false == enabled) {
+			stopTimer();
+		} else {
+			isTimerStopped() ? restartTimer() : false ;
+		}
+
+		SettingItem::enable(enabled);
+	}
+
 private:
 	bool checkPassword(const std::string &password);
 
