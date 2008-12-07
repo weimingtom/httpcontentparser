@@ -226,13 +226,18 @@ void HTTPPacketTest::testSeriesPacket() {
 	CPPUNIT_ASSERT(true == packet->isComplete());
 }
 
+// 当接受到一个错误的HTTP包时
+// packet->addBuffer会返回一个-1
+// 并且该包会被标记为一个已经完成的包。
 void HTTPPacketTest::testWrongHeader() {
 	HTTPPacket *packet = new HTTPPacket;
 	char buffer1[] = "HTTP"; 
 	char buffer2[] = "HTTP aidji8vz2\r\noaijdfoin\r\n\r\n";
 	int length;
-	CPPUNIT_ASSERT(0 == (int)packet->addBuffer(buffer1, (int)strlen(buffer1), &length));
-	CPPUNIT_ASSERT(0 == length);
+
+	// 解析失败， 不知如何是好了
+	CPPUNIT_ASSERT(-1 == (int)packet->addBuffer(buffer1, (int)strlen(buffer1), &length));
+	CPPUNIT_ASSERT(packet->isComplete() == true);	// 这时候标记为完成的
 	// CPPUNIT_ASSERT(0 == packet->addBuffer(buffer2, strlen(buffer2)));
 }
 
@@ -243,7 +248,7 @@ void HTTPPacketTest::testRawPacket() {
 	CPPUNIT_ASSERT(0 == packet->addBuffer(chunk1, (int)strlen(chunk1), &added_length));
 	CPPUNIT_ASSERT((int)strlen(chunk1) == added_length);
 
-	CPPUNIT_ASSERT(0 == packet->addBuffer(chunk2, (int)strlen(chunk2), &added_length));
+  	CPPUNIT_ASSERT(0 == packet->addBuffer(chunk2, (int)strlen(chunk2), &added_length));
 	CPPUNIT_ASSERT((int)strlen(chunk2) == added_length);
 
 	CPPUNIT_ASSERT(0== packet->addBuffer(chunk3, (int)strlen(chunk3), &added_length));
