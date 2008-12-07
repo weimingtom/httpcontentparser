@@ -6,6 +6,7 @@
 #include "DlgEyecare.h"
 #include ".\dlgeyecare.h"
 #include ".\globalvariable.h"
+#include <typeconvert.h>
 #include <comdef.h>
 
 #define ID_TIME_UPDATE_STATE  1010
@@ -39,6 +40,7 @@ void CDlgEyecare::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_EDT_ENTERTIME, m_nEnterTime);
 	DDX_Text(pDX, IDC_EDT_RESTTIME, m_nEyecareTime);
 	DDX_Text(pDX, IDC_STA_TIME_LEFT, m_strTimeLeft);
+	DDX_Control(pDX, IDC_CHK_ENABLE_EYECARE, m_chkEnabled);
 }
 
 // 设置时间间隔
@@ -49,6 +51,7 @@ void CDlgEyecare::setEyecareTimespan() {
 		CoCreateInstance(CLSID_Eyecare, NULL, CLSCTX_LOCAL_SERVER, IID_IEyecare, (LPVOID*)&pEyeCare);
 		pEyeCare->setEnterTime(m_nEnterTime * 60);
 		pEyeCare->setEyecareTime(m_nEyecareTime * 60);
+		pEyeCare->enableEyecare(convert(m_chkEnabled.GetCheck() == BST_CHECKED ? true : false));
 		pEyeCare->Release();
 	} catch (_com_error&) {
 		// AfxMessageBox("");
@@ -83,6 +86,7 @@ int CDlgEyecare::OnApply() {
 	g_configuration.getEyecareSetting()->setEnterTime(m_nEnterTime * 60);
 	g_configuration.getEyecareSetting()->setEyecareTime(m_nEyecareTime * 60);
 	g_configuration.getEyecareSetting()->setTerimatedMode(mode);
+	g_configuration.getEyecareSetting()->enable(m_chkEnabled.GetCheck() == BST_CHECKED ? true : false);
 	return 0;
 }
 
@@ -99,6 +103,9 @@ void CDlgEyecare::restoreSetting() {
 	
 	UINT checked = (mode == EyecareSetting::EYECARE_TERMIN_RESETTIMER) ? IDC_RAD_JUST_RESET_TIMER : IDC_RAD_ENTER_SU_MODE;
 	CheckRadioButton(IDC_RAD_ENTER_SU_MODE, IDC_RAD_JUST_RESET_TIMER, checked);
+
+	UINT enabled = g_configuration.getEyecareSetting()->isSettingEnabled() ? BST_CHECKED : BST_UNCHECKED;
+	m_chkEnabled.SetCheck(enabled);
 	
 	UpdateData(FALSE);
 }
@@ -110,7 +117,9 @@ BEGIN_MESSAGE_MAP(CDlgEyecare, CDialog)
 	ON_BN_CLICKED(IDC_RAD_ENTER_SU_MODE, OnBnClickedRadEnterSuMode)
 	ON_EN_CHANGE(IDC_EDT_RESTTIME, OnEnChangeEdtResttime)
 	ON_EN_CHANGE(IDC_EDT_ENTERTIME, OnEnChangeEdtEntertime)
+	ON_BN_CLICKED(IDC_CHK_ENABLE_EYECARE, OnBnClickedEnableEyecare)
 	ON_WM_VSCROLL()
+	
 END_MESSAGE_MAP()
 
 
@@ -185,6 +194,11 @@ void CDlgEyecare::OnEnChangeEdtEntertime()
 }
 
 void CDlgEyecare::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
+{
+	SetModify(true);
+}
+
+void CDlgEyecare::OnBnClickedEnableEyecare()
 {
 	SetModify(true);
 }

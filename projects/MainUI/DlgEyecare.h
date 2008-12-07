@@ -37,6 +37,7 @@ protected:
 	CGuiGroupBox m_staState;
 	CEdit m_edtEnterTime;
 	CEdit m_edtRestTime;
+	CButton m_chkEnabled;
 	CString m_strCurrentState;
 	CString m_strTimeLeft;
 	int m_nEnterTime;
@@ -57,4 +58,5 @@ public:
 	afx_msg void OnEnChangeEdtResttime();
 	afx_msg void OnEnChangeEdtEntertime();
 	afx_msg void OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
+	afx_msg void OnBnClickedEnableEyecare();
 };
