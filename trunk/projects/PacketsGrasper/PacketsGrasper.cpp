@@ -99,6 +99,8 @@ int WSPAPI WSPSelect (
 ) 
 {
 	DebugStringNoDres(_T("WSPSelect ..."));
+	
+	// 如果在White DNS List, 我们也应该直接返回 ;)
 	// 直接返回，自身填入select
 	if (g_select.preselect(readfds) == 0) {
 		// firefox都是NULL
@@ -224,9 +226,20 @@ int WSPAPI WSPSend(
 {
 	OutputDebugString(_T("WSPSend"));
 
+	HTTPRequestPacket packet;
+	int item_count = packet.parsePacket(buf, count);
+
+	// 如果小于2，那么他就不是一个HTTP请求
+	if (item_count < 2) {	
+		return NextProcTable.lpWSPSend(s, lpBuffers, dwBufferCount
+			, lpNumberOfBytesSent, dwFlags, lpOverlapped
+			, lpCompletionRoutine, lpThreadId, lpErrno);
+	}
+	
+	
 	// DumpBuf(lpBuffers, dwBufferCount, "c:\\request.txt");
 	 // 检查IP是否正常，如果可以则通过，否则直接返回错误
-	if (accessNetword() && checkHTTPRequest(lpBuffers, dwBufferCount)){
+	if (accessNetword() && checkHTTPRequest(&packet)){
 		return NextProcTable.lpWSPSend(s, lpBuffers, dwBufferCount
 			, lpNumberOfBytesSent, dwFlags, lpOverlapped
 			, lpCompletionRoutine, lpThreadId, lpErrno);

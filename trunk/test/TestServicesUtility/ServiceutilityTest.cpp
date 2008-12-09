@@ -26,7 +26,7 @@ void ServiceutilityTest::TestCheckSeachRule() {
 	HTTPRequestPacket packet;
 	packet.parsePacket(require, (int)strlen(require));
 
-	CPPUNIT_ASSERT(false ==  checkSeachRule(packet));
+	CPPUNIT_ASSERT(false ==  checkSeachRule(&packet));
 	}
 
 	{
@@ -41,6 +41,6 @@ void ServiceutilityTest::TestCheckSeachRule() {
 	HTTPRequestPacket packet;
 	packet.parsePacket(require, (int)strlen(require));
 
-	CPPUNIT_ASSERT(true ==  checkSeachRule(packet));
+	CPPUNIT_ASSERT(true ==  checkSeachRule(&packet));
 	}
 }
