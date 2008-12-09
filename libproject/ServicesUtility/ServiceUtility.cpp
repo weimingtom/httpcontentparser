@@ -48,10 +48,11 @@ bool checkDNS(const char * dns_name) {
 	}
 }
 
-bool checkSeachRule(HTTPRequestPacket& packet) {
+bool checkSeachRule(HTTPRequestPacket* packet) {
+	assert (NULL != packet);
 	// 如果不是Search
-// 检测HTTP
-	if (HTTPRequestPacket::HTTP_REQUEST_OPETYPE_GET != packet.getRequestType())
+	// 检测HTTP
+	if (HTTPRequestPacket::HTTP_REQUEST_OPETYPE_GET != packet->getRequestType())
 		return true;
 
 	// 获取操作
@@ -61,8 +62,8 @@ bool checkSeachRule(HTTPRequestPacket& packet) {
 
 	memset(host_name, 0, sizeof(host_name));
 	memset(oper, 0, sizeof(oper));
-	packet.getGET(oper, MAX_PATH);
-	packet.getHost(host_name, HTTP_REQUEST_ITEM_MAX_LENGTH);
+	packet->getGET(oper, MAX_PATH);
+	packet->getHost(host_name, HTTP_REQUEST_ITEM_MAX_LENGTH);
 	
 	if (strlen(host_name) == 0)
 		return true;
@@ -100,18 +101,9 @@ bool checkSeachRule(HTTPRequestPacket& packet) {
 	return true;
 }
 
-bool checkHTTPRequest(WSABUF *buf, const int count) {
-	HTTPRequestPacket packet;
-	int item_count = packet.parsePacket(buf, count);
-
-	// 如果小于2，那么他就不是一个HTTP请求
-	if (item_count < 2) {	
-		return true;
-	}
-	
-	
+bool checkHTTPRequest(HTTPRequestPacket * packet) {
 	char buffer[HTTP_REQUEST_ITEM_MAX_LENGTH] = {0};
-	packet.getHost(buffer, HTTP_REQUEST_ITEM_MAX_LENGTH);
+	packet->getHost(buffer, HTTP_REQUEST_ITEM_MAX_LENGTH);
 	
 	// 如果DNS不可达
 	if (false == checkDNS(buffer)) 

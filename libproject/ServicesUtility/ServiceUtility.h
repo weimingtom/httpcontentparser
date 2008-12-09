@@ -8,8 +8,8 @@
 class HTTPRequestPacket;
 
 bool accessNetword();
-bool checkHTTPRequest(WSABUF *buf, const int count);
-bool checkSeachRule(HTTPRequestPacket & packet);
+bool checkHTTPRequest(HTTPRequestPacket * packet);
+bool checkSeachRule(HTTPRequestPacket * packet);
 bool checkDNS(const char * dns_name);
 
 #endif  // _SERVICE_UTILITY_SERVICEUTILITY_H__
