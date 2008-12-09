@@ -11,6 +11,7 @@
 #include <utility\debugmessage.h>
 #include <utility\fd_set_utility.h>
 #include <utility\HttpPacket.h>
+#include <utility\HTTPRequestPacket.h>
 #include <app_constants.h>
 
 #pragma data_seg(".inidata")
@@ -227,7 +228,7 @@ int WSPAPI WSPSend(
 	OutputDebugString(_T("WSPSend"));
 
 	HTTPRequestPacket packet;
-	int item_count = packet.parsePacket(buf, count);
+	int item_count = packet.parsePacket(lpBuffers, dwBufferCount);
 
 	// 如果小于2，那么他就不是一个HTTP请求
 	if (item_count < 2) {	
@@ -264,8 +265,19 @@ int WSPAPI WSPSendTo(
 )
 {
 	OutputDebugString("WSPSendTo ...");
+
+	HTTPRequestPacket packet;
+	int item_count = packet.parsePacket(lpBuffers, dwBufferCount);
+
+	// 如果小于2，那么他就不是一个HTTP请求
+	if (item_count < 2) {	
+		return NextProcTable.lpWSPSendTo(s, lpBuffers, dwBufferCount
+			, lpNumberOfBytesSent, dwFlags, lpTo, iTolen, lpOverlapped
+			, lpCompletionRoutine, lpThreadId, lpErrno);
+	}
+
 	// 检查IP是否正常，如果可以则通过，否则直接返回错误
-	if (accessNetword() && checkHTTPRequest(lpBuffers, dwBufferCount)){
+	if (accessNetword() && checkHTTPRequest(&packet)){
 		return NextProcTable.lpWSPSendTo(s, lpBuffers, dwBufferCount
 			, lpNumberOfBytesSent, dwFlags, lpTo, iTolen, lpOverlapped
 			, lpCompletionRoutine, lpThreadId, lpErrno);
