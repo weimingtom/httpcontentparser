@@ -150,13 +150,16 @@
 			Name="资源文件"
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx"
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}">
-			<File
-				RelativePath=".\ZipUtilityTest.cpp">
-			</File>
 		</Filter>
 		<Filter
 			Name="test"
 			Filter="">
+			<File
+				RelativePath=".\BufferCallerTest.cpp">
+			</File>
+			<File
+				RelativePath=".\BufferCallerTest.h">
+			</File>
 			<File
 				RelativePath=".\DNSTest.cpp">
 			</File>
@@ -210,6 +213,9 @@
 			</File>
 			<File
 				RelativePath=".\WebContentTest.h">
+			</File>
+			<File
+				RelativePath=".\ZipUtilityTest.cpp">
 			</File>
 			<File
 				RelativePath=".\ZipUtilityTest.h">
