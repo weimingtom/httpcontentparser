@@ -213,6 +213,9 @@ copy .\release\filtersetting.exe ..\..\release
 				RelativePath=".\FilterSetting.rgs">
 			</File>
 			<File
+				RelativePath=".\ImageCheck.rgs">
+			</File>
+			<File
 				RelativePath=".\SearchRule.rgs">
 			</File>
 		</Filter>
@@ -342,6 +345,19 @@ copy .\release\filtersetting.exe ..\..\release
 			</File>
 			<File
 				RelativePath=".\SearchRule.h">
+			</File>
+		</Filter>
+		<Filter
+			Name="webcontentcheck"
+			Filter="">
+			<File
+				RelativePath=".\WebContentCheck.cpp">
+			</File>
+			<File
+				RelativePath=".\WebContentCheck.h">
+			</File>
+			<File
+				RelativePath=".\WebContentCheck.rgs">
 			</File>
 		</Filter>
 		<File
