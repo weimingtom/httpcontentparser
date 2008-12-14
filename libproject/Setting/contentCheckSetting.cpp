@@ -4,6 +4,8 @@
 ContentCheckSetting::ContentCheckSetting(void) {
 	content_type_ = 0;
 	defaultSetting();
+	min_check_size_ = 1024;
+	max_check_size_ = 1024 * 64;
 }
 
 ContentCheckSetting::~ContentCheckSetting(void) {
@@ -34,6 +36,18 @@ bool ContentCheckSetting::needCheck(const unsigned type) const {
 	} else {
 		return false;
 	}
+}
+
+bool ContentCheckSetting::needCheckBySize(const unsigned size) const {
+	if (size < min_check_size_) 
+		return false;
+
+	// 如果最大的值为0， 则不限制最大值
+	if (0 == max_check_size_) 
+		return true;
+
+	if (size > max_check_size_)
+		return false;
 }
 
 void ContentCheckSetting::defaultSetting() {
