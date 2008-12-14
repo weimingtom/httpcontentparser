@@ -16,8 +16,8 @@ import "ocidl.idl";
 	pointer_default(unique)
 ]
 interface IAuthorize : IDispatch{
-	[id(1), helpstring("Method checkPassword")] HRESULT checkPassword([in] BSTR password, [out,retval] VARIANT_BOOL* bSuccess);
-	[id(2), helpstring("Method setPassword")] HRESULT changePassword([in] BSTR password, [in] BSTR oldPassword, [out,retval] VARIANT_BOOL* bSuccess);
+	[id(1), helpstring("Method checkPassword")]		HRESULT checkPassword([in] BSTR password, [out,retval] VARIANT_BOOL* bSuccess);
+	[id(2), helpstring("Method setPassword")]		HRESULT changePassword([in] BSTR password, [in] BSTR oldPassword, [out,retval] VARIANT_BOOL* bSuccess);
 };
 [
 	object,
@@ -28,18 +28,18 @@ interface IAuthorize : IDispatch{
 	pointer_default(unique)
 ]
 interface IEyecare : IDispatch{
-	[id(1),  helpstring("Method setPassword")] HRESULT setPassword([in] BSTR password);
-	[id(2),  helpstring("Method setEyecareTime")] HRESULT setEyecareTime([in] LONG mintues);
-	[id(3),  helpstring("Method setEnterTime")] HRESULT setEnterTime([in] LONG mintues);
-	[id(5),  helpstring("Method getEyecareTime")] HRESULT getEyecareTime([out,retval] LONG* mintues);
-	[id(6),  helpstring("Method getEnterTime")] HRESULT getEnterTime([out,retval] LONG* second);
-	[id(7),  helpstring("Method getTimeLeft")] HRESULT getTimeLeft([out,retval] LONG* second);
-	[id(8),  helpstring("Method getState")] HRESULT getState([out,retval] LONG* state);
-	[id(9),  helpstring("Method endEyecare")] HRESULT endEyecare([in] BSTR password,  [out,retval] VARIANT_BOOL* bSuccess);
-	[id(10), helpstring("Method trySwitch")] HRESULT trySwitch([out,retval] LONG* state);
-	[id(12), helpstring("Method setTermMode")] HRESULT setTermMode([in] LONG mode);
-	[id(13), helpstring("Method getTermMode")] HRESULT getTermMode([out,retval] LONG* mode);
-	[id(14), helpstring("方法enableEyecare")] HRESULT enableEyecare([in] VARIANT_BOOL enabled);
+	[id(1),  helpstring("Method setPassword")]		HRESULT setPassword([in] BSTR password);
+	[id(2),  helpstring("Method setEyecareTime")]	HRESULT setEyecareTime([in] LONG mintues);
+	[id(3),  helpstring("Method setEnterTime")]		HRESULT setEnterTime([in] LONG mintues);
+	[id(5),  helpstring("Method getEyecareTime")]	HRESULT getEyecareTime([out,retval] LONG* mintues);
+	[id(6),  helpstring("Method getEnterTime")]		HRESULT getEnterTime([out,retval] LONG* second);
+	[id(7),  helpstring("Method getTimeLeft")]		HRESULT getTimeLeft([out,retval] LONG* second);
+	[id(8),  helpstring("Method getState")]			HRESULT getState([out,retval] LONG* state);
+	[id(9),  helpstring("Method endEyecare")]		HRESULT endEyecare([in] BSTR password,  [out,retval] VARIANT_BOOL* bSuccess);
+	[id(10), helpstring("Method trySwitch")]		HRESULT trySwitch([out,retval] LONG* state);
+	[id(12), helpstring("Method setTermMode")]		HRESULT setTermMode([in] LONG mode);
+	[id(13), helpstring("Method getTermMode")]		HRESULT getTermMode([out,retval] LONG* mode);
+	[id(14), helpstring("Method enableEyecare")]	HRESULT enableEyecare([in] VARIANT_BOOL enabled);
 };
 [
 	object,
@@ -50,14 +50,14 @@ interface IEyecare : IDispatch{
 	pointer_default(unique)
 ]
 interface IAppSetting : IDispatch{
-	[id(1), helpstring("Method setHotkey")] HRESULT setHotkey([in] USHORT wVirtualKeyCode, [in] USHORT wModifiers, [in] LONG type, [out,retval] VARIANT_BOOL* bSuccess);
-	[id(3), helpstring("Method GetInstallPath")] HRESULT GetInstallPath([out,retval] BSTR* path);
-	[id(4), helpstring("Method switchModel")] HRESULT switchModel([in] VARIANT_BOOL bParent, [in] BSTR pwd, [out,retval] VARIANT_BOOL* bSucc);
+	[id(1), helpstring("Method setHotkey")]				 HRESULT setHotkey([in] USHORT wVirtualKeyCode, [in] USHORT wModifiers, [in] LONG type, [out,retval] VARIANT_BOOL* bSuccess);
+	[id(3), helpstring("Method GetInstallPath")]		 HRESULT GetInstallPath([out,retval] BSTR* path);
+	[id(4), helpstring("Method switchModel")]			 HRESULT switchModel([in] VARIANT_BOOL bParent, [in] BSTR pwd, [out,retval] VARIANT_BOOL* bSucc);
 	[propget, id(5), helpstring("Property ParentModel")] HRESULT ParentModel([out, retval] VARIANT_BOOL* pVal);
-	[id(6), helpstring("方法setTimeoutValue")] HRESULT setTimeoutValue([in] LONG seconds);
-	[propget, id(7), helpstring("属性 TimeoutSwitchEnabled")] HRESULT TimeoutSwitchEnabled([out, retval] VARIANT_BOOL* pVal);
-	[propput, id(7), helpstring("属性 TimeoutSwitchEnabled")] HRESULT TimeoutSwitchEnabled([in] VARIANT_BOOL newVal);
-	[propget, id(8), helpstring("属性 LefttimeToSwitch")] HRESULT LefttimeToSwitch([out, retval] LONG* pVal);
+	[id(6), helpstring("Method setTimeoutValue")]		 HRESULT setTimeoutValue([in] LONG seconds);
+	[propget, id(7), helpstring("Property TimeoutSwitchEnabled")] HRESULT TimeoutSwitchEnabled([out, retval] VARIANT_BOOL* pVal);
+	[propput, id(7), helpstring("Property TimeoutSwitchEnabled")] HRESULT TimeoutSwitchEnabled([in] VARIANT_BOOL newVal);
+	[propget, id(8), helpstring("Property LefttimeToSwitch")]	  HRESULT LefttimeToSwitch([out, retval] LONG* pVal);
 };
 [
 	object,
@@ -68,11 +68,11 @@ interface IAppSetting : IDispatch{
 	pointer_default(unique)
 ]
 interface IScreenSave : IDispatch{
-	[id(1), helpstring("Method enableScreenSave")] HRESULT enableScreenSave([in] VARIANT_BOOL enabled);
-	[id(2), helpstring("Method setTimeSpan")] HRESULT setTimeSpan([in] LONG seconds);
-	[id(3), helpstring("Method isEnabled")] HRESULT isEnabled([out,retval] VARIANT_BOOL* enabled);
-	[id(4), helpstring("Method ClearCache")] HRESULT ClearCache(void);
-	[id(5), helpstring("Method setAutoClearTimespan")] HRESULT setAutoClearTimespan([in] LONG seconds);
+	[id(1), helpstring("Method enableScreenSave")]			  HRESULT enableScreenSave([in] VARIANT_BOOL enabled);
+	[id(2), helpstring("Method setTimeSpan")]				  HRESULT setTimeSpan([in] LONG seconds);
+	[id(3), helpstring("Method isEnabled")]				      HRESULT isEnabled([out,retval] VARIANT_BOOL* enabled);
+	[id(4), helpstring("Method ClearCache")]				  HRESULT ClearCache(void);
+	[id(5), helpstring("Method setAutoClearTimespan")]		  HRESULT setAutoClearTimespan([in] LONG seconds);
 	[propget, id(6), helpstring("Property AutocleanEnabled")] HRESULT AutocleanEnabled([out, retval] VARIANT_BOOL* pVal);
 	[propput, id(6), helpstring("Property AutocleanEnabled")] HRESULT AutocleanEnabled([in] VARIANT_BOOL newVal);
 };
@@ -107,14 +107,14 @@ interface IWebHistoryRecorder : IDispatch{
 	pointer_default(unique)
 ]
 interface IDNSSetting : IDispatch{
-	[id(1),  helpstring("method addBlackDNS")] HRESULT addBlackDNS([in] BSTR dns);
-	[id(2),  helpstring("method addWhiteDNS")] HRESULT addWhiteDNS([in] BSTR dns);
-	[id(4),  helpstring("method removeBlackDNS")] HRESULT removeBlackDNS([in] BSTR blackDNS);
-	[id(5),  helpstring("method removeWhiteDNS")] HRESULT removeWhiteDNS([in] BSTR whiteDNS);
-	[id(10), helpstring("method enableWhiteDNSCheck")] HRESULT enableWhiteDNSCheck([in] VARIANT_BOOL enable);
-	[id(11), helpstring("method enableBlackDNSCheck")] HRESULT enableBlackDNSCheck([in] VARIANT_BOOL enable);
-	[id(12), helpstring("method checkDNS")] HRESULT checkDNS([in] BSTR dns_name, [out,retval] VARIANT_BOOL* passed);
-	[id(13), helpstring("Method justEnableWhiteDNS")] HRESULT justEnableWhiteDNS([in] VARIANT_BOOL enabled);
+	[id(1),  helpstring("method addBlackDNS")]			HRESULT addBlackDNS([in] BSTR dns);
+	[id(2),  helpstring("method addWhiteDNS")]			HRESULT addWhiteDNS([in] BSTR dns);
+	[id(4),  helpstring("method removeBlackDNS")]		HRESULT removeBlackDNS([in] BSTR blackDNS);
+	[id(5),  helpstring("method removeWhiteDNS")]		HRESULT removeWhiteDNS([in] BSTR whiteDNS);
+	[id(10), helpstring("method enableWhiteDNSCheck")]  HRESULT enableWhiteDNSCheck([in] VARIANT_BOOL enable);
+	[id(11), helpstring("method enableBlackDNSCheck")]  HRESULT enableBlackDNSCheck([in] VARIANT_BOOL enable);
+	[id(12), helpstring("method checkDNS")]				HRESULT checkDNS([in] BSTR dns_name, [out,retval] VARIANT_BOOL* passed);
+	[id(13), helpstring("Method justEnableWhiteDNS")]	HRESULT justEnableWhiteDNS([in] VARIANT_BOOL enabled);
 };
 [
 	object,
@@ -125,9 +125,9 @@ interface IDNSSetting : IDispatch{
 	pointer_default(unique)
 ]
 interface IAccessNetwork : IDispatch{
-	[id(1), helpstring("Method accessNetwork")] HRESULT accessNetwork([out,retval] VARIANT_BOOL* bAccessable);
-	[id(2), helpstring("Method setBlockTime")] HRESULT setBlockTime([in] LONG day, [in] LONG hour);
-	[id(3), helpstring("Method removeBlockTime")] HRESULT removeBlockTime([in] LONG day, [in] LONG hour);
+	[id(1), helpstring("Method accessNetwork")]		HRESULT accessNetwork([out,retval] VARIANT_BOOL* bAccessable);
+	[id(2), helpstring("Method setBlockTime")]		HRESULT setBlockTime([in] LONG day, [in] LONG hour);
+	[id(3), helpstring("Method removeBlockTime")]	HRESULT removeBlockTime([in] LONG day, [in] LONG hour);
 };
 [
 	object,
@@ -138,10 +138,24 @@ interface IAccessNetwork : IDispatch{
 	pointer_default(unique)
 ]
 interface ISearchRule : IDispatch{
-	[id(1), helpstring("Method check")] HRESULT check([in] BSTR seach_word, [in] BSTR host_name, [out,retval] VARIANT_BOOL* pass);
-	[id(2), helpstring("Method addBlackSeachword")] HRESULT addBlackSeachword([in] BSTR seachword);
-	[id(3), helpstring("Method enableCheckSeachEngine")] HRESULT enableCheckSeachEngine(BSTR seachengine, [in] VARIANT_BOOL enabled);
-	[id(4), helpstring("方法removeBlackSeachWord")] HRESULT removeBlackSeachWord([in] BSTR blackword);
+	[id(1), helpstring("Method check")]						HRESULT check([in] BSTR seach_word, [in] BSTR host_name, [out,retval] VARIANT_BOOL* pass);
+	[id(2), helpstring("Method addBlackSeachword")]			HRESULT addBlackSeachword([in] BSTR seachword);
+	[id(3), helpstring("Method enableCheckSeachEngine")]	HRESULT enableCheckSeachEngine(BSTR seachengine, [in] VARIANT_BOOL enabled);
+	[id(4), helpstring("Method removeBlackSeachWord")]		HRESULT removeBlackSeachWord([in] BSTR blackword);
+};
+[
+	object,
+	uuid(AC224D46-02AF-4BEB-972C-EC290406E619),
+	dual,
+	nonextensible,
+	helpstring("IWebContentCheck interface"),
+	pointer_default(unique)
+]
+interface IWebContentCheck : IDispatch {
+	[id(1), helpstring("Method shouldCheck")]		HRESULT shouldCheck([in] LONG type, [out,retval] VARIANT_BOOL* check);
+	[id(2), helpstring("Method setCheckScope")]		HRESULT setCheckScope([in] LONG min, [in] LONG max);
+	[id(3), helpstring("Method enableCheck")]  HRESULT enableCheck([in] VARIANT_BOOL enabled, [in] LONG type);
+	[id(4), helpstring("Method shouldCheckBySize")] HRESULT shouldCheckBySize([in] LONG size, [out,retval] VARIANT_BOOL* check);
 };
 [
 	uuid(42F932B5-F5CB-4F0D-8925-1B6BE5FECD1B),
@@ -215,5 +229,13 @@ library FilterSettingLib {
 	coclass SearchRule
 	{
 		[default] interface ISearchRule;
+	};
+	[
+		uuid(43C2359E-4550-4EA4-AEFD-78E973C5A006),
+		helpstring("WebContentCheck Class")
+	]
+	coclass WebContentCheck
+	{
+		[default] interface IWebContentCheck;
 	};
 };
