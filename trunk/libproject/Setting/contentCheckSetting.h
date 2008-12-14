@@ -20,10 +20,14 @@ public:
 	~ContentCheckSetting(void);
 public:
 	void enableCheck(const unsigned type, const bool checked);
-
+	void setCheckScope(const int min_size, const int max_size) {
+		min_check_size_ = min_size;
+		max_check_size_ = max_size;
+	}
 	// 此函数会根据网站及图片类型进行判断
 	// 如果网站在白名单之内，就不会检测了
 	bool needCheck(const unsigned type) const;
+	bool needCheckBySize(const unsigned size) const;
 
 	// 松紧程度，有0～4五个值，默认为2
 	int getTightness() const { return tightness_;}
@@ -33,6 +37,8 @@ private:
 	unsigned content_type_;
 	int	tightness_;
 
+
+	int	min_check_size_, max_check_size_;
 	void defaultSetting();
 // XML file
 public:
