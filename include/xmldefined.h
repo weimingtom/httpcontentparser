@@ -42,6 +42,7 @@
 #define CONFIG_NODE_IMAGETYPE_GIF			TEXT("gif")
 #define CONFIG_NODE_IMAGETYPE_PNG			TEXT("png")
 #define CONFIG_NODE_IMAGETYPE_JPG			TEXT("jpg")
+#define CONFIG_NODE_IMAGESCOPE				TEXT("scope")
 
 #define CONFIG_NODE_SEARCH_ENGINES			TEXT("searchengines")
 #define CONDIG_NODE_SEARCH_ENGINE_ITEM		TEXT("searchengine")
