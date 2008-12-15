@@ -4,8 +4,6 @@
 ContentCheckSetting::ContentCheckSetting(void) {
 	content_type_ = 0;
 	defaultSetting();
-	min_check_size_ = 1024;
-	max_check_size_ = 1024 * 64;
 }
 
 ContentCheckSetting::~ContentCheckSetting(void) {
@@ -38,7 +36,7 @@ bool ContentCheckSetting::needCheck(const unsigned type) const {
 	}
 }
 
-bool ContentCheckSetting::needCheckBySize(const unsigned size) const {
+bool ContentCheckSetting::needCheckBySize(const int size) const {
 	if (size < min_check_size_) 
 		return false;
 
@@ -53,8 +51,24 @@ bool ContentCheckSetting::needCheckBySize(const unsigned size) const {
 void ContentCheckSetting::defaultSetting() {
 	SettingItem::defaultSetting();
 	tightness_ = 2;
+
+	min_check_size_ = 1024;
+	max_check_size_ = 1024 * 64;
+	enabled_check_by_size_ = true;
 }
 
+void ContentCheckSetting::getCheckedScope(long * scope_min, long * scope_max) {
+	assert (scope_min && scope_max);
+	*scope_min = min_check_size_;
+	*scope_max = max_check_size_;
+}
+
+bool ContentCheckSetting::enabledCheckBySize() const {
+	return enabled_check_by_size_;
+}
+void ContentCheckSetting::enableCheckBySize(const bool enabled) {
+	enabled_check_by_size_ = enabled;
+}
 //============================
 // XML
 int ContentCheckSetting::parseConfig(TiXmlElement * item_root) {
