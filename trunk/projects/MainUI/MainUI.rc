@@ -414,20 +414,33 @@ IDD_DLG_IMAGERULES DIALOGEX 0, 0, 257, 199
 STYLE DS_SETFONT | WS_CHILD | WS_SYSMENU
 FONT 8, "Microsoft Sans Serif", 400, 0, 0x0
 BEGIN
-    GROUPBOX        "Image Type",IDC_STA_IMAGETYPE,7,73,199,58,BS_FLAT
+    GROUPBOX        "Image Type",IDC_STA_IMAGETYPE,7,68,199,58,BS_FLAT
     CONTROL         " JPEG",IDC_CHK_JPEG,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,32,89,51,10
+                    WS_TABSTOP,28,85,51,10
     CONTROL         " BMP",IDC_CHK_BMP,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
-                    33,105,62,10
+                    28,101,62,10
     CONTROL         " GIF",IDC_CHK_GIF,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
-                    119,90,69,10
+                    115,86,69,10
     CONTROL         " PNG",IDC_CHK_PNG,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
-                    118,105,72,10
-    GROUPBOX        "Image Size",IDC_STA_IMAGESIZE,7,138,201,54,BS_FLAT
-    GROUPBOX        "Image Check",IDC_STA_IMAGE_CHECK,7,7,200,57,BS_FLAT
-    EDITTEXT        IDC_EDIT2,19,159,176,14,ES_CENTER | ES_AUTOHSCROLL
+                    115,101,72,10
+    GROUPBOX        "Image Size",IDC_STA_IMAGESIZE,7,137,201,55,BS_FLAT
+    GROUPBOX        "Image Check",IDC_STA_IMAGE_CHECK,7,7,200,49,BS_FLAT
     CONTROL         "",IDC_SLIDER_IMAGECHECK_DEGREE,"msctls_trackbar32",
-                    TBS_AUTOTICKS | TBS_TOP | WS_TABSTOP,18,24,181,20
+                    TBS_AUTOTICKS | TBS_TOP | WS_TABSTOP,18,23,181,20
+    CONTROL         "Enable Size Check",IDC_CHK_ENABLE_SIZE_CHECK,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,17,150,76,10
+    LTEXT           "Min:",IDC_STATIC,15,169,14,8
+    LTEXT           "Max:",IDC_STATIC,105,169,16,8
+    EDITTEXT        IDC_EDIT_SCOPE_MIN,35,167,40,14,ES_AUTOHSCROLL | 
+                    ES_NUMBER
+    CONTROL         "",IDC_SPIN_MIN,"msctls_updown32",UDS_SETBUDDYINT | 
+                    UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_HOTTRACK,75,167,10,
+                    14
+    EDITTEXT        IDC_EDIT_SCOPE_MAX,127,167,40,14,ES_AUTOHSCROLL | 
+                    ES_NUMBER
+    CONTROL         "",IDC_SPIN_MAX,"msctls_updown32",UDS_SETBUDDYINT | 
+                    UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_HOTTRACK,167,167,11,
+                    14
 END
 
 IDD_DLG_DNS_WHITELIST DIALOGEX 0, 0, 250, 199
