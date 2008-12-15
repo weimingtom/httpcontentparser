@@ -8,7 +8,6 @@
 #include <Guilib1.5\GuiButton.h>
 #include <Guilib1.5\GuiSliderCtrl.h>
 #include <Guilib1.5\GuiMiniTool.h>
-#include <Guilib1.5\GuiEdit.h>
 #include <Guilib1.5\GuiGroupBox.h>
 #include <Guilib1.5\GuiRadioButton.h>
 #include <Guilib1.5\GuiComboFont.h>
@@ -45,13 +44,20 @@ protected:
 	CGuiGroupBox m_staImageCheck;
 	CGuiGroupBox m_staImageSize;
 	CGuiGroupBox m_staImageType;
-	CGuiEdit m_editImageScale;
 	CSliderCtrl m_sliderImageCheckDegree;
+	CEdit m_editMin;
+	CEdit m_editMax;
+	CButton m_chkEnableScopeCheck;
+	CSpinButtonCtrl m_spinBtnMin;
+	CSpinButtonCtrl m_spinBtnMax;
 
 	BOOL m_bCheckGIF;
 	BOOL m_bCheckJPEG;
 	BOOL m_bCheckBMP;
 	BOOL m_bCheckPNG;
+
+	long scope_min_;
+	long scope_max_;
 public:
 	afx_msg void OnBnClickedChkJpeg();
 	afx_msg void OnBnClickedChkGif();
@@ -59,5 +65,10 @@ public:
 	afx_msg void OnBnClickedChkPng();
 	afx_msg void OnEnChangeEdit2();
 	afx_msg void OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
+	afx_msg void OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
+	afx_msg void OnBnClickedChkEnableSizeCheck();
 
+protected:
+	// 使相关控件可用
+	void enableScopeCheck(bool enabled);
 };
