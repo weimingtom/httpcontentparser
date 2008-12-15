@@ -6,9 +6,10 @@
 #include ".\DlgImageRule.h"
 #include ".\globalvariable.h"
 #include ".\dlgimagerule.h"
-
 #include <utility\HTTPPacket.h>
 #include <webcontenttype.h>
+#include <typeconvert.h>
+#include <comdef.h>
 
 // CDlgImageRule ¶Ô»°¿ò
 
@@ -67,6 +68,24 @@ int CDlgImageRule::OnApply() {
 	g_configuration.getContentCheckSetting()->enableCheckBySize(m_chkEnableScopeCheck.GetCheck() == BST_CHECKED);
 
 	g_configuration.getContentCheckSetting()->setCheckScope(scope_min_, scope_max_);
+
+	// apply to COM Services
+	try {
+		IWebContentCheck *contentCheck = NULL;
+		HRESULT hr = CoCreateInstance(CLSID_WebContentCheck, NULL, CLSCTX_LOCAL_SERVER, IID_IWebContentCheck, (LPVOID*)&contentCheck);
+		if (FAILED(hr)) {
+			return -1;
+		}
+
+		contentCheck->setCheckScope(scope_min_, scope_max_);
+		contentCheck->enableCheck(convert(m_bCheckGIF),  IMAGE_TYPE_GIF);
+		contentCheck->enableCheck(convert(m_bCheckJPEG), IMAGE_TYPE_JPEG);
+		contentCheck->enableCheck(convert(m_bCheckBMP),  IMAGE_TYPE_BMP);
+		contentCheck->enableCheck(convert(m_bCheckPNG),  IMAGE_TYPE_PNG);
+	} catch (_com_error&) {
+	} catch (...) {
+	}
+	
 	return 0;
 }
 
