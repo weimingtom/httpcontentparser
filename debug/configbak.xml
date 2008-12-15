@@ -40,7 +40,7 @@
 			<check imagetype="jpg" enable="true"/>
 			<check imagetype="gif" enable="true"/>
 			<check imagetype="png" enable="true"/>
-			<boudard low="" hight="" />
+			<scope enabled="true" low="" hight="" />
 		</rule>
 		
 		<rule name="textrule">
