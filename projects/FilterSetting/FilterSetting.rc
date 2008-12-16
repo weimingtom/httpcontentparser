@@ -100,7 +100,6 @@ IDR_WEBHISTORYRECORDER  REGISTRY                "WebHistoryRecorder.rgs"
 IDR_DNSSETTING          REGISTRY                "DNSSetting.rgs"
 IDR_ACCESSNETWORK       REGISTRY                "AccessNetwork.rgs"
 IDR_SEARCHRULE          REGISTRY                "SearchRule.rgs"
-IDR_IMAGECHECK          REGISTRY                "ImageCheck.rgs"
 IDR_WEBCONTENTCHECK     REGISTRY                "WebContentCheck.rgs"
 
 /////////////////////////////////////////////////////////////////////////////
