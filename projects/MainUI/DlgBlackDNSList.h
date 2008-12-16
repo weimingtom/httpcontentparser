@@ -34,7 +34,7 @@ protected:
 	virtual int Enum(const std::string &dns) ;  // member of DNSEnumerator
 public:
 	virtual BOOL OnInitDialog();
-
+	afx_msg void OnBnClickedChkBlackDnslist();
 public:
 	virtual void OnAddItem(const CString &str);
 	virtual void OnDelItem(const CString &str);

@@ -82,6 +82,7 @@ bool CDlgBlackDNSList::ValidateItem(const CString & str, CString &output) {
 
 
 BEGIN_MESSAGE_MAP(CDlgBlackDNSList, CDialog)
+	ON_BN_CLICKED(IDC_CHK_ENABLE_DNS, OnBnClickedChkBlackDnslist)
 END_MESSAGE_MAP()
 
 
@@ -96,3 +97,8 @@ BOOL CDlgBlackDNSList::OnInitDialog()
 
 	return TRUE;  // return TRUE unless you set the focus to a control
 }
+
+void CDlgBlackDNSList::OnBnClickedChkBlackDnslist() {
+	SetModify(true);
+}
+
