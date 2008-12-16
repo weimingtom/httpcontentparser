@@ -225,7 +225,10 @@ bool DNSList::fuzzeCheckDNS(const std::string &dns_name) const {
 //=====================================
 // ´ÓDNSÖÐÒÆ³ý
 bool DNSList::removeDNS(const std::string &dns_name) {
-	DNS_SET::iterator iter = dns_set_.find(dns_name);
+	TCHAR buffer[1024];
+	get_main_dns_name(buffer, 1024, dns_name.c_str());
+
+	DNS_SET::iterator iter = dns_set_.find(buffer);
 	if (dns_set_.end() != iter) {
 		dns_set_.erase(iter);
 		return true;
