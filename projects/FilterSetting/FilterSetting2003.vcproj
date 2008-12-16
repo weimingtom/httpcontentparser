@@ -201,22 +201,10 @@ copy .\release\filtersetting.exe ..\..\release
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx"
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}">
 			<File
-				RelativePath=".\AccessNetwork.rgs">
-			</File>
-			<File
-				RelativePath=".\AppSetting.rgs">
-			</File>
-			<File
 				RelativePath=".\FilterSetting.rc">
 			</File>
 			<File
 				RelativePath=".\FilterSetting.rgs">
-			</File>
-			<File
-				RelativePath=".\ImageCheck.rgs">
-			</File>
-			<File
-				RelativePath=".\SearchRule.rgs">
 			</File>
 		</Filter>
 		<Filter
@@ -326,6 +314,9 @@ copy .\release\filtersetting.exe ..\..\release
 			<File
 				RelativePath=".\AccessNetwork.h">
 			</File>
+			<File
+				RelativePath=".\AccessNetwork.rgs">
+			</File>
 		</Filter>
 		<Filter
 			Name="AppSetting"
@@ -336,6 +327,9 @@ copy .\release\filtersetting.exe ..\..\release
 			<File
 				RelativePath=".\AppSetting.h">
 			</File>
+			<File
+				RelativePath=".\AppSetting.rgs">
+			</File>
 		</Filter>
 		<Filter
 			Name="seachrule"
@@ -345,6 +339,9 @@ copy .\release\filtersetting.exe ..\..\release
 			</File>
 			<File
 				RelativePath=".\SearchRule.h">
+			</File>
+			<File
+				RelativePath=".\SearchRule.rgs">
 			</File>
 		</Filter>
 		<Filter
