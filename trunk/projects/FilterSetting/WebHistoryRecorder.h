@@ -43,8 +43,8 @@ END_COM_MAP()
 	}
 
 public:
-	STDMETHOD(get_RecordPronPages)(VARIANT_BOOL* pVal);
-	STDMETHOD(put_RecordPronPages)(VARIANT_BOOL newVal);
+	STDMETHOD(get_RecordPornPages)(VARIANT_BOOL* pVal);
+	STDMETHOD(put_RecordPornPages)(VARIANT_BOOL newVal);
 	STDMETHOD(get_RecordAllPages)(VARIANT_BOOL* pVal);
 	STDMETHOD(put_RecordAllPages)(VARIANT_BOOL newVal);
 
@@ -53,10 +53,10 @@ public:
 	STDMETHOD(get_RecordAllImage)(VARIANT_BOOL* pVal);
 	STDMETHOD(put_RecordAllImage)(VARIANT_BOOL newVal);
 
-	STDMETHOD(get_RecordPornWebsite)(VARIANT_BOOL* pVal);
-	STDMETHOD(put_RecordPornWebsite)(VARIANT_BOOL newVal);
-	STDMETHOD(get_RecordAllWebsite)(VARIANT_BOOL* pVal);
-	STDMETHOD(put_RecordAllWebsite)(VARIANT_BOOL newVal);
+	STDMETHOD(get_RecordPornURLs)(VARIANT_BOOL* pVal);
+	STDMETHOD(put_RecordPornURLs)(VARIANT_BOOL newVal);
+	STDMETHOD(get_RecordAllURLs)(VARIANT_BOOL* pVal);
+	STDMETHOD(put_RecordAllURLs)(VARIANT_BOOL newVal);
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(WebHistoryRecorder), CWebHistoryRecorder)
