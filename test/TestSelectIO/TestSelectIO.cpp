@@ -3,7 +3,9 @@
 
 #include "stdafx.h"
 #include ".\selectiotest.h"
+#include ".\buffercomcallertest.h"
 
+CPPUNIT_TEST_SUITE_REGISTRATION(BufferCOMCallerTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(SelectIOTest);
 
 int _tmain(int argc, _TCHAR* argv[])

@@ -155,6 +155,12 @@
 			Name="test"
 			Filter="">
 			<File
+				RelativePath=".\BufferCOMCallerTest.cpp">
+			</File>
+			<File
+				RelativePath=".\BufferCOMCallerTest.h">
+			</File>
+			<File
 				RelativePath=".\SelectIOTest.cpp">
 			</File>
 			<File
