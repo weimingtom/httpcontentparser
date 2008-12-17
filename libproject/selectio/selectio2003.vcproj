@@ -45,7 +45,7 @@ copy .\Debug\selectiod.lib ..\..\lib
 				CommandLine="copy .\selectio.h ..\..\include
 copy .\webrecordconfig.h ..\..\include
 copy .\httpcontentcheck.h ..\..\include
-"/>
+copy .\BufferCallCOM.h ..\..\include"/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
 			<Tool
