@@ -1,11 +1,13 @@
 #ifndef _SELECTIO_HTTPCONETENTCHECK_H__
 #define _SELECTIO_HTTPCONETENTCHECK_H__
 
-
+#include ".\BufferCallCOM.h"
 #include <webcontenttype.h>
+#include <utility\BufferCaller.h>
 class WebRecordConfig;
 class HTTPPacket;
 
+#define BUFFER_CALL_CNT 80
 
 class HTTPContentHander {
 public:
@@ -38,6 +40,13 @@ private:
 	const TCHAR * generateImageName(TCHAR *fullpath, const int bufsize, const int content_type);
 	const TCHAR * generatePageName(TCHAR *fullpath, const int bufsize, const int content_type);
 	const TCHAR * getInstallDir();
+
+	// COM Buffer Callers
+	BufferCaller<WebContentRecordCaller, BUFFER_CALL_CNT> record_caller_;
+	BufferCaller<WebContentCheckCaller, BUFFER_CALL_CNT> check_caller_;
+
+	WebContentRecordCaller recorder_;
+	WebContentCheckCaller checker_;
 };
 
 

@@ -6,9 +6,6 @@
 #include <utility/ZipUtility.h>
 #include <utility/BufferOnStackHeap.h>
 #include <sysutility.h>
-#include <com\comutility.h>
-#include <com\FilterSetting_i.c>
-#include <com\FilterSetting.h>
 #include <assert.h>
 #include <stdlib.h>
 #include <io.h>
@@ -77,9 +74,12 @@ bool HTTPContentHander::needHandle(HTTPPacket *packet) {
 }
 
 int HTTPContentHander::saveContent(HTTPPacket *packet, const int check_result) {
-	if (isImage(packet->getContentType()) == true) {
+	record_caller_.Call(recorder_);
+	check_caller_.Call(checker_);
+
+	if (isImage(packet->getContentType())  && recorder_.shouldRecord(check_result, packet->getContentType())) {
 		return saveImage(packet, check_result);
-	} else if (isText(packet->getContentType()) == true) {
+	} else if (isText(packet->getContentType()) && recorder_.shouldRecord(check_result, packet->getContentType())) {
 		return saveText(packet, check_result);
 	}
 	return check_result;
