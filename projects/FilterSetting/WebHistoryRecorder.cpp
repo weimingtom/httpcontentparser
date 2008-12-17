@@ -29,7 +29,7 @@ STDMETHODIMP CWebHistoryRecorder::InterfaceSupportsErrorInfo(REFIID riid)
 // Pages
 STDMETHODIMP CWebHistoryRecorder::get_RecordPornPages(VARIANT_BOOL* pVal)
 {
-	*pVal = g_configuration.getWebHistoryRecordSetting()->recordPornPages();
+	*pVal = convert(g_configuration.getWebHistoryRecordSetting()->recordPornPages());
 	return S_OK;
 }
 
@@ -41,7 +41,7 @@ STDMETHODIMP CWebHistoryRecorder::put_RecordPornPages(VARIANT_BOOL newVal)
 
 STDMETHODIMP CWebHistoryRecorder::get_RecordAllPages(VARIANT_BOOL* pVal)
 {
-	*pVal = g_configuration.getWebHistoryRecordSetting()->recordAllPages();
+	*pVal = convert(g_configuration.getWebHistoryRecordSetting()->recordAllPages());
 	return S_OK;
 }
 
@@ -55,7 +55,7 @@ STDMETHODIMP CWebHistoryRecorder::put_RecordAllPages(VARIANT_BOOL newVal)
 // Images
 STDMETHODIMP CWebHistoryRecorder::get_RecordPornImage(VARIANT_BOOL* pVal)
 {
-	*pVal = g_configuration.getWebHistoryRecordSetting()->recordPornImage();
+	*pVal = convert(g_configuration.getWebHistoryRecordSetting()->recordPornImage());
 	return S_OK;
 }
 
@@ -67,7 +67,7 @@ STDMETHODIMP CWebHistoryRecorder::put_RecordPornImage(VARIANT_BOOL newVal)
 
 STDMETHODIMP CWebHistoryRecorder::get_RecordAllImage(VARIANT_BOOL* pVal)
 {
-	*pVal = g_configuration.getWebHistoryRecordSetting()->recordAllImage();
+	*pVal = convert(g_configuration.getWebHistoryRecordSetting()->recordAllImage());
 	return S_OK;
 }
 
@@ -84,7 +84,7 @@ STDMETHODIMP CWebHistoryRecorder::put_RecordAllImage(VARIANT_BOOL newVal)
 
 STDMETHODIMP CWebHistoryRecorder::get_RecordPornURLs(VARIANT_BOOL* pVal)
 {
-	*pVal = g_configuration.getWebHistoryRecordSetting()->recordPornWebsite();
+	*pVal = convert(g_configuration.getWebHistoryRecordSetting()->recordPornWebsite());
 	return S_OK;
 }
 
@@ -96,7 +96,7 @@ STDMETHODIMP CWebHistoryRecorder::put_RecordPornURLs(VARIANT_BOOL newVal)
 
 STDMETHODIMP CWebHistoryRecorder::get_RecordAllURLs(VARIANT_BOOL* pVal)
 {
-	*pVal = g_configuration.getWebHistoryRecordSetting()->recordAllWebsite();
+	*pVal = convert(g_configuration.getWebHistoryRecordSetting()->recordAllWebsite());
 	return S_OK;
 }
 
