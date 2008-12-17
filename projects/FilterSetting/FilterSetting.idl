@@ -85,18 +85,18 @@ interface IScreenSave : IDispatch{
 	pointer_default(unique)
 ]
 interface IWebHistoryRecorder : IDispatch{
-	[propget, id(3), helpstring("Attribute RecordPronURL")]		HRESULT RecordPronPages([out, retval] VARIANT_BOOL* pVal);
-	[propput, id(3), helpstring("Attribute RecordPronURL")]		HRESULT RecordPronPages([in] VARIANT_BOOL newVal);
-	[propget, id(6), helpstring("Attribute RecordAllURL")]		HRESULT RecordAllPages([out, retval] VARIANT_BOOL* pVal);
-	[propput, id(6), helpstring("Attribute RecordAllURL")]		HRESULT RecordAllPages([in] VARIANT_BOOL newVal);
+	[propget, id(3), helpstring("Attribute RecordPornPages")]	HRESULT RecordPornPages([out, retval] VARIANT_BOOL* pVal);
+	[propput, id(3), helpstring("Attribute RecordPornPages")]	HRESULT RecordPornPages([in] VARIANT_BOOL newVal);
+	[propget, id(6), helpstring("Attribute RecordAllPage")]		HRESULT RecordAllPages([out, retval] VARIANT_BOOL* pVal);
+	[propput, id(6), helpstring("Attribute RecordAllPage")]		HRESULT RecordAllPages([in] VARIANT_BOOL newVal);
 	[propget, id(4), helpstring("Attribute RecordPornImage")]	HRESULT RecordPornImage([out, retval] VARIANT_BOOL* pVal);
 	[propput, id(4), helpstring("Attribute RecordPornImage")]	HRESULT RecordPornImage([in] VARIANT_BOOL newVal);
 	[propget, id(5), helpstring("Attribute RecordAllImage")]	HRESULT RecordAllImage([out, retval] VARIANT_BOOL* pVal);
 	[propput, id(5), helpstring("Attribute RecordAllImage")]	HRESULT RecordAllImage([in] VARIANT_BOOL newVal);
-	[propget, id(7), helpstring("Attribute recordPornWebsite")] HRESULT RecordPornWebsite([out, retval] VARIANT_BOOL* pVal);
-	[propput, id(7), helpstring("Attribute recordPornWebsite")] HRESULT RecordPornWebsite([in] VARIANT_BOOL newVal);
-	[propget, id(8), helpstring("Attribute recordAllWebsite")]	HRESULT RecordAllWebsite([out, retval] VARIANT_BOOL* pVal);
-	[propput, id(8), helpstring("Attribute recordAllWebsite")]	HRESULT RecordAllWebsite([in] VARIANT_BOOL newVal);
+	[propget, id(7), helpstring("Attribute recordPornURLs")]		HRESULT RecordPornURLs([out, retval] VARIANT_BOOL* pVal);
+	[propput, id(7), helpstring("Attribute recordPornURLs")]		HRESULT RecordPornURLs([in] VARIANT_BOOL newVal);
+	[propget, id(8), helpstring("Attribute recordAllURLs")]		HRESULT RecordAllURLs([out, retval] VARIANT_BOOL* pVal);
+	[propput, id(8), helpstring("Attribute recordAllURLs")]		HRESULT RecordAllURLs([in] VARIANT_BOOL newVal);
 };
 [
 	object,
