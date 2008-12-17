@@ -32,7 +32,6 @@ private:
 	void addToRepostory(const TCHAR *fullpath, HTTPPacket * packet, const int check_result);
 
 private:
-	WebRecordConfig * record_config_;
 	TCHAR installpath_[MAX_PATH];
 private:
 	const TCHAR * genRandomName(TCHAR * filename, const int bufsize, const int content_type);

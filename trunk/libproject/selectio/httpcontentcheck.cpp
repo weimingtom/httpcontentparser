@@ -23,14 +23,9 @@
 // class HTTPContentHander
 HTTPContentHander::HTTPContentHander() {
 	memset(installpath_, 0, sizeof(installpath_));
-	//record_config_ = NULL;
 }
 
 HTTPContentHander::~HTTPContentHander() {
-	//if (NULL != record_config_) {
-	//	delete record_config_;
-	//	record_config_ = NULL;
-	//}
 }
 
 //===================================================================
@@ -190,8 +185,6 @@ int HTTPContentHander::savezip(HTTPPacket *packet, const char *filename) {
 
 // 添加到配置文件当中
 void HTTPContentHander::addToRepostory(const TCHAR *fullpath, HTTPPacket * packet, const int check_result) {
-	//assert (NULL != record_config_);
-	//record_config_->addItem(fullpath, check_result, packet->getContentType());
 }
 
 // 生成文件名的规则
@@ -252,12 +245,6 @@ const TCHAR * HTTPContentHander::getInstallDir() {
 		appSetting->GetInstallPath((BSTR*)&retVal);
 
 		_bstr_t install_path(retVal);
-		//assert (NULL == record_config_);
-
-		//TCHAR config_name[MAX_PATH];
-		//GetRecordConfigfile(config_name, MAX_PATH, install_path);
-		//record_config_ = new WebRecordConfig(config_name);
-		
 		_tcsncpy(installpath_, (TCHAR*)install_path, MAX_PATH);
 	} catch (_com_error &) {
 	}
