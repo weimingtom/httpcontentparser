@@ -53,10 +53,10 @@ void CDlgWebHistory::ChangeRecordType() {
 		CoCreateInstance(CLSID_WebHistoryRecorder, NULL, CLSCTX_ALL, IID_IWebHistoryRecorder, (LPVOID*)&pWebHistory);
 		pWebHistory->put_RecordAllImage(convert(m_bAllImage));
 		pWebHistory->put_RecordAllPages(convert(m_bAllPages));
-		pWebHistory->put_RecordAllWebsite(convert(m_bAllWebsite));
+		pWebHistory->put_RecordAllURLs(convert(m_bAllWebsite));
 		pWebHistory->put_RecordPornImage(convert(m_bPornImage));
-		pWebHistory->put_RecordPronPages(convert(m_bPornPage));
-		pWebHistory->put_RecordPornWebsite(convert(m_bPornWebsite));
+		pWebHistory->put_RecordPornPages(convert(m_bPornPage));
+		pWebHistory->put_RecordPornURLs(convert(m_bPornWebsite));
 		pWebHistory->Release();
 
 		g_configuration.getWebHistoryRecordSetting()->recordPornImage(m_bPornImage);

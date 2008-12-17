@@ -32,7 +32,7 @@ public:
 			pRecorder->get_RecordPornImage(&should_recorded);
 			porn_image = convert(should_recorded);
 
-			pRecorder->get_RecordPronPages(&should_recorded);
+			pRecorder->get_RecordPornPages(&should_recorded);
 			porn_webpage = convert(should_recorded);
 
 			pRecorder->get_RecordAllPages(&should_recorded);
