@@ -238,8 +238,12 @@ void CMainUIDlg::OnMainChangepassword()
 // Ä£Ê½ÇÐ»»
 void CMainUIDlg::OnMainParents()
 {
-	CDlgCheckPassword dlg;
-	if (IDOK == dlg.DoModal()) {
+	if (Services::isParentModel() == false) {
+		CDlgCheckPassword dlg;
+		if (IDOK == dlg.DoModal()) {
+			ShowMainUI();
+		}
+	} else {
 		ShowMainUI();
 	}
 }
