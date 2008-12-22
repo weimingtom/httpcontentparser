@@ -5,6 +5,7 @@
 #include <utility/httppacket.h>
 #include <utility/ZipUtility.h>
 #include <utility/BufferOnStackHeap.h>
+#include <antiporn/antiporndll.h>
 #include <sysutility.h>
 #include <assert.h>
 #include <stdlib.h>
