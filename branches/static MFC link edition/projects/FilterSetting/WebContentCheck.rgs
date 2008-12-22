@@ -1,0 +1,24 @@
+HKCR
+{
+	FilterSetting.WebContentCheck.1 = s 'WebContentCheck Class'
+	{
+		CLSID = s '{43C2359E-4550-4EA4-AEFD-78E973C5A006}'
+	}
+	FilterSetting.WebContentCheck = s 'WebContentCheck Class'
+	{
+		CLSID = s '{43C2359E-4550-4EA4-AEFD-78E973C5A006}'
+		CurVer = s 'FilterSetting.WebContentCheck.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {43C2359E-4550-4EA4-AEFD-78E973C5A006} = s 'WebContentCheck Class'
+		{
+			ProgID = s 'FilterSetting.WebContentCheck.1'
+			VersionIndependentProgID = s 'FilterSetting.WebContentCheck'
+			ForceRemove 'Programmable'
+			LocalServer32 = s '%MODULE%'
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{42F932B5-F5CB-4F0D-8925-1B6BE5FECD1B}'
+		}
+	}
+}

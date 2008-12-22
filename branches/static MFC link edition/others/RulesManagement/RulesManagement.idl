@@ -1,0 +1,57 @@
+// RulesManagement.idl : RulesManagement idl source
+//
+
+
+import "oaidl.idl";
+import "ocidl.idl";
+
+[
+	object,
+	uuid(1923DFB6-2FA8-469A-A3B2-C494A8EEA205),
+	dual,
+	nonextensible,
+	helpstring("IRulesSettings 接口"),
+	pointer_default(unique)
+]
+interface IRulesSettings : IDispatch{
+	[id(1), helpstring("Method Initialize")] HRESULT initialize(void);
+	[id(2), helpstring("Method addFiltederDNS")] HRESULT addFiltederDNS([in] BSTR dns);
+	[id(3), helpstring("Method enableIpCheck")] HRESULT enableIpCheck([in] VARIANT_BOOL enable);
+	[id(4), helpstring("方法removeFilteredDNS")] HRESULT removeFilteredDNS(BSTR dns);
+};
+[
+	object,
+	uuid(06EEABB5-577F-4D04-9672-DFF1636A6454),
+	dual,
+	nonextensible,
+	helpstring("IRulesChecker 接口"),
+	pointer_default(unique)
+]
+interface IRulesChecker : IDispatch{
+	[id(1), helpstring("方法checkIp")] HRESULT checkIp([in] ULONG ip, [out,retval] VARIANT_BOOL* bFiltered);
+};
+[
+	uuid(415ED9C8-F251-47EC-B5E8-8BE516ED11F8),
+	version(1.0),
+	helpstring("RulesManagement 1.0")
+]
+library RulesManagementLib
+{
+	importlib("stdole2.tlb");
+	[
+		uuid(510EB138-2FF8-4AA3-89FD-8167A8D0DEA4),
+		helpstring("RulesSettings Class")
+	]
+	coclass RulesSettings
+	{
+		[default] interface IRulesSettings;
+	};
+	[
+		uuid(57DBEF45-71BC-4E84-8474-99F0223EFF9A),
+		helpstring("RulesChecker Class")
+	]
+	coclass RulesChecker
+	{
+		[default] interface IRulesChecker;
+	};
+};

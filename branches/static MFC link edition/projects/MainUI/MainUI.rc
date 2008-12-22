@@ -1,0 +1,795 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// 中文(中华人民共和国) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+#ifdef _WIN32
+LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
+#pragma code_page(936)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)\r\n"
+    "LANGUAGE 4, 2\r\n"
+    "#pragma code_page(936)\r\n"
+    "#include ""res\\MainUI.rc2""  // 非 Microsoft Visual C++ 编辑过的资源\r\n"
+    "#include ""afxres.rc""         // 标准组件\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON                    "res\\MainUI.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,1
+ PRODUCTVERSION 1,0,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "080003a8"
+        BEGIN
+            VALUE "CompanyName", "Kaka"
+            VALUE "FileDescription", "TODO: <文件说明>"
+            VALUE "FileVersion", "1.0.0.1"
+            VALUE "InternalName", "MainUI.exe"
+            VALUE "LegalCopyright", "TODO: (C) <公司名>。保留所有权利。"
+            VALUE "OriginalFilename", "MainUI.exe"
+            VALUE "ProductName", "Net..."
+            VALUE "ProductVersion", "1.0.0.1"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x800, 936
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_BITMAP_CHECKMARK    BITMAP                  "res\\optionmarks.bmp"
+IDB_BMP_ACCESSABLE      BITMAP                  "res\\accessable.bmp"
+IDB_BMP_BLOCK           BITMAP                  "res\\block.bmp"
+#endif    // 中文(中华人民共和国) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// 英语(美国) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUTBOX DIALOGEX 0, 0, 235, 55
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | 
+    WS_SYSMENU
+CAPTION " "
+FONT 9, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+    ICON            IDR_MAINFRAME,IDC_STATIC,11,17,20,20
+    LTEXT           "MainUI Version 1.0",IDC_STATIC,40,10,119,8,SS_NOPREFIX
+    LTEXT           "Copyright (C) 2008",IDC_STATIC,40,25,119,8
+    DEFPUSHBUTTON   "OK",IDOK,178,7,50,16,WS_GROUP
+END
+
+IDD_MAINUI_DIALOG DIALOGEX 0, 0, 424, 271
+STYLE DS_SETFONT | DS_MODALFRAME | WS_MINIMIZEBOX | WS_POPUP | WS_VISIBLE | 
+    WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_APPWINDOW
+CAPTION "MainUI"
+FONT 8, "Microsoft Sans Serif", 400, 0, 0x0
+BEGIN
+    CONTROL         "",IDC_POSITION_LEFT,"Static",SS_BLACKFRAME | NOT 
+                    WS_VISIBLE,7,7,87,257
+    CONTROL         "",IDC_STA_FRAME,"Static",SS_BLACKFRAME,149,7,268,257
+    LTEXT           "Title",IDC_RIGHT_TITLE,165,18,237,11
+    CONTROL         "",IDC_STATIC,"Static",SS_BLACKFRAME,161,31,244,1
+    CONTROL         "",IDC_TREE_NAVIG,"SysTreeView32",TVS_HASBUTTONS | 
+                    TVS_HASLINES | TVS_NOSCROLL | WS_TABSTOP,7,7,136,257,
+                    WS_EX_STATICEDGE
+    CONTROL         "",IDC_POSITION_RIGHT,"Static",SS_BLACKFRAME | NOT 
+                    WS_VISIBLE,156,40,254,194
+    PUSHBUTTON      "Apply",IDC_MAIN_APPLY,359,243,49,14
+    PUSHBUTTON      "OK",IDC_MAIN_OK,240,243,49,14
+    PUSHBUTTON      "OK",IDC_OK2,169,242,49,14,NOT WS_VISIBLE
+    PUSHBUTTON      "Cancel",IDC_MAIN_CANCEL,299,243,49,14
+END
+
+IDD_DLG_HELP DIALOGEX 0, 0, 266, 177
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    GROUPBOX        "??",IDC_STATIC,7,7,252,163
+END
+
+IDD_DLG_ABOUT DIALOGEX 0, 0, 222, 195
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    LTEXT           "About",IDC_STA_ABOUT,7,7,208,181
+END
+
+IDD_DLG_DNS_BLACKLIST DIALOGEX 0, 0, 250, 200
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    LTEXT           "Position",IDC_DNS_LIST,7,25,236,158
+    CONTROL         "Enable DNS Check",IDC_CHK_ENABLE_DNS,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,7,7,114,10
+END
+
+IDD_DLG_SEARCH_RULE DIALOGEX 0, 0, 250, 200
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    LTEXT           "??",IDC_SEARCH_LIST,7,25,184,158
+    CONTROL         "Enable Search Check",IDC_CHK_ENABLE_SEARCH,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,7,7,114,10
+    CONTROL         "google",IDC_CHK_GOOGLE,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,203,27,37,10
+    CONTROL         "baidu",IDC_CHK_BAIDU,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,203,59,33,10
+    CONTROL         "yahoo",IDC_CHK_YAHOO,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,203,43,36,10
+END
+
+IDD_DLG_CONTENT DIALOGEX 0, 0, 250, 200
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    LTEXT           "Position",IDC_STA_CELLS,34,30,209,163,NOT WS_VISIBLE
+END
+
+IDD_LEV1_RULE DIALOGEX 0, 0, 250, 197
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    GROUPBOX        "",IDC_STA_COMMENT,7,7,236,183
+    EDITTEXT        IDC_COMMENT,18,25,212,151,ES_MULTILINE | ES_READONLY | 
+                    NOT WS_BORDER,WS_EX_STATICEDGE
+END
+
+IDD_DLG_TEXT DIALOGEX 0, 0, 250, 172
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+END
+
+IDD_DLG_OPTION DIALOGEX 0, 0, 250, 194
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CONTROL         "Enable Timeout switch",IDC_CHK_ENABLE_TIMEOUT_SWITCH,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,25,40,87,10
+    CONTROL         "Auto Load When system Launch",IDC_CHK_AUTOLOAD,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,25,24,120,10
+    GROUPBOX        "System",IDC_STA_SYSTEM,7,7,223,54
+    LTEXT           "Show Dialog:",IDC_STATIC,40,87,42,8
+    LTEXT           "Switch User:",IDC_STATIC,40,103,41,8
+    CONTROL         "",IDC_HOTKEY_SHOWDLG,"msctls_hotkey32",WS_BORDER | 
+                    WS_TABSTOP,101,84,87,14
+    CONTROL         "",IDC_HOTKEY_SWITCHUSR,"msctls_hotkey32",WS_BORDER | 
+                    WS_TABSTOP,101,100,87,14
+    GROUPBOX        "Hotkeys",IDC_STA_HOTKEY,7,65,223,74
+    LTEXT           "Lanchu App:",IDC_STATIC,40,119,41,8
+    CONTROL         "",IDC_HOTKEY_LAUNCH,"msctls_hotkey32",WS_BORDER | 
+                    WS_TABSTOP,101,116,87,14
+    GROUPBOX        "Others",IDC_STA_OTHERS,7,143,223,44
+    CONTROL         "",IDC_SLD_TIMEOUT,"msctls_trackbar32",TBS_AUTOTICKS | 
+                    TBS_TOP | WS_TABSTOP,15,154,197,21
+    RTEXT           "",IDC_STA_TIMEOUT,171,175,17,8
+    LTEXT           "Min.",IDC_STATIC,193,175,17,8
+END
+
+IDD_DLG_TOOLS DIALOGEX 0, 0, 250, 200
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    GROUPBOX        "Screen Saver",IDC_STA_IMAGE_SAVE,7,7,236,51
+    GROUPBOX        "Web content",IDC_STA_WEBCONTENT,7,71,236,57
+    CONTROL         "",IDC_SLIDER1,"msctls_trackbar32",TBS_BOTH | WS_TABSTOP,
+                    77,25,148,19
+    LTEXT           "Time Span",IDC_STATIC,30,33,34,8
+    CONTROL         "Save porn Image",IDC_CHECK1,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,28,90,88,10
+    CONTROL         "Save porn Web Page",IDC_CHECK2,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,28,108,88,10
+    CONTROL         "Save Website List",IDC_CHECK3,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,143,89,88,10
+    GROUPBOX        "Program History",IDC_STA_PROGRAMHISTORY,7,138,236,55
+    CONTROL         "Save Program History",IDC_CHECK4,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,29,163,88,10
+END
+
+IDD_DLG_EYECARE DIALOGEX 0, 0, 250, 190
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    LTEXT           "Entertainment",IDC_STATIC,40,43,46,8
+    EDITTEXT        IDC_EDT_ENTERTIME,95,40,81,14,ES_AUTOHSCROLL | ES_NUMBER
+    CONTROL         "",IDC_SPIN1,"msctls_updown32",UDS_SETBUDDYINT | 
+                    UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS,177,41,11,
+                    14
+    LTEXT           "Rest Time",IDC_STATIC,53,67,32,8
+    EDITTEXT        IDC_EDT_RESTTIME,95,63,81,14,ES_AUTOHSCROLL | ES_NUMBER
+    CONTROL         "",IDC_SPIN2,"msctls_updown32",UDS_SETBUDDYINT | 
+                    UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS,177,64,11,
+                    14
+    GROUPBOX        "Time Setting",IDC_STA_EYECARE_TIME,7,23,236,68
+    LTEXT           "Mins.",IDC_STATIC,181,46,18,8
+    LTEXT           "Mins.",IDC_STATIC,181,64,18,8
+    GROUPBOX        "After Terminate Eyecare",IDC_STA_AFTEREYECARE_TERMINATE,
+                    7,97,236,45
+    CONTROL         "Just Reset Timer",IDC_RAD_JUST_RESET_TIMER,"Button",
+                    BS_AUTORADIOBUTTON | WS_GROUP,131,118,69,10
+    CONTROL         "Enter Parent Mode",IDC_RAD_ENTER_SU_MODE,"Button",
+                    BS_AUTORADIOBUTTON,35,118,76,10
+    GROUPBOX        "State",IDC_STA_STATE,7,148,236,35
+    LTEXT           "Current State:",IDC_STATIC,16,164,48,8
+    LTEXT           "Left Time:",IDC_STATIC,131,164,33,8
+    LTEXT           "静态",IDC_STA_CURRENT_STATE,72,164,51,8
+    LTEXT           "静态",IDC_STA_TIME_LEFT,176,163,47,8
+    CONTROL         "Enable Eyecare Function",IDC_CHK_ENABLE_EYECARE,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,7,7,95,10
+END
+
+IDD_LEV1_TIME_RULE DIALOGEX 0, 0, 281, 198
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_POPUP | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+END
+
+IDD_CHANGE_PASSWORD DIALOGEX 0, 0, 156, 79
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | 
+    WS_SYSMENU
+CAPTION "Change Password"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,7,58,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,99,58,50,14
+    LTEXT           "Original Password",IDC_STATIC,7,10,58,8
+    EDITTEXT        IDC_EDT_ORGIN,68,7,81,14,ES_PASSWORD | ES_AUTOHSCROLL
+    LTEXT           "New Password",IDC_STATIC,7,25,48,8
+    EDITTEXT        IDC_EDT_NEW,68,23,81,14,ES_PASSWORD | ES_AUTOHSCROLL
+    LTEXT           "Confirm Password",IDC_STATIC,7,42,58,8
+    EDITTEXT        IDC_EDT_RETRY,68,39,81,14,ES_PASSWORD | ES_AUTOHSCROLL
+END
+
+IDD_DLG_CHKPASSWORD DIALOGEX 0, 0, 145, 70
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | 
+    WS_SYSMENU
+CAPTION "Are you?"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,7,49,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,88,49,50,14
+    EDITTEXT        IDC_EDT_PASSWORD,52,18,86,14,ES_PASSWORD | 
+                    ES_AUTOHSCROLL
+    LTEXT           "Password",IDC_STATIC,7,20,38,8
+END
+
+IDD_TOOLS DIALOGEX 0, 0, 186, 95
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | 
+    WS_SYSMENU
+CAPTION "Dialog"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,129,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,129,24,50,14
+END
+
+IDD_LEV1_TOOLS DIALOGEX 0, 0, 250, 202
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+END
+
+IDD_TEMPLATE DIALOGEX 0, 0, 250, 200
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+END
+
+IDD_DLG_SCREENSHOT DIALOGEX 0, 0, 250, 200
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    PUSHBUTTON      "Clear",IDC_BTN_CLEAR,184,157,50,14
+    CONTROL         "",IDC_SLIDER_SAVE_TIMESPAN,"msctls_trackbar32",
+                    TBS_AUTOTICKS | TBS_TOP | WS_TABSTOP,17,90,141,22
+    CONTROL         "Enable Screenshot",IDC_CHK_SCREENSAVE,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,21,26,75,10
+    GROUPBOX        "Function",IDC_STA_FUNCTION,7,7,236,51
+    GROUPBOX        "Timespan",IDC_STA_TIMESPAN,7,71,236,55
+    GROUPBOX        "Auto Clear",IDC_STA_AUTOCLEAR,7,136,236,57
+    CONTROL         "Enable Auto Clean",IDC_CHK_AUTOCLEAN,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,142,26,75,10
+    CONTROL         "",IDC_SLIDER_CLEAN_TIMESPAN,"msctls_trackbar32",
+                    TBS_AUTOTICKS | TBS_TOP | WS_TABSTOP,17,155,147,20
+    PUSHBUTTON      "View",IDC_VIEW_HISTORY,189,94,47,14
+    RTEXT           "Mins",IDC_STA_SCREENSAVE_TIMESPAN,119,113,47,8
+    RTEXT           "Hours",IDC_STA_SCREENSAVE_AUTOCLEN,124,176,43,8
+END
+
+IDD_DLG_WEB_HISTORY DIALOGEX 0, 0, 250, 200
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    GROUPBOX        "Types",IDC_STA_TYPES,7,7,236,75
+    CONTROL         "Save Porn Image",IDC_CHK_PRON_IMAGE,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,17,23,88,10
+    CONTROL         "Save Porn Web Page",IDC_CHK_PORN_PAGE,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,17,43,88,10
+    CONTROL         "Save Porn Website",IDC_CHK_PORN_WEBSITES,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,17,64,88,10
+    CONTROL         "Save All Image",IDC_CHK_ALL_IMAGE,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,132,23,88,10
+    CONTROL         "Save All Web Page",IDC_CHK_ALLPAGES,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,132,43,88,10
+    CONTROL         "Save All website",IDC_CHK_ALLWEBSITES,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,132,64,88,10
+    PUSHBUTTON      "Clear",IDC_BUN_CLEAR_CACHE,180,109,50,14
+    PUSHBUTTON      "View the pages",IDC_BTN_HISTORY_PAGES,124,164,92,14
+    GROUPBOX        "History",IDC_STA_HISTORY,7,90,236,47
+    CONTROL         "",IDC_SLIDER_AUTOCLEAR_TIME,"msctls_trackbar32",
+                    TBS_AUTOTICKS | TBS_TOP | WS_TABSTOP,61,104,109,20
+    GROUPBOX        "Tools",IDC_STA_TOOLS,7,146,236,47
+    LTEXT           "Auto Clear",IDC_STATIC,17,112,35,8
+    PUSHBUTTON      "View the Images",IDC_BTN_HISTORY_IMAGE,23,164,85,14
+    RTEXT           "",IDC_STA_WEBHISTORY_AUTOCLEAN,133,126,35,8
+END
+
+IDD_DLG_IMAGERULES DIALOGEX 0, 0, 257, 199
+STYLE DS_SETFONT | WS_CHILD | WS_SYSMENU
+FONT 8, "Microsoft Sans Serif", 400, 0, 0x0
+BEGIN
+    GROUPBOX        "Image Type",IDC_STA_IMAGETYPE,7,68,199,58,BS_FLAT
+    CONTROL         " JPEG",IDC_CHK_JPEG,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,28,85,51,10
+    CONTROL         " BMP",IDC_CHK_BMP,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    28,101,62,10
+    CONTROL         " GIF",IDC_CHK_GIF,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    115,86,69,10
+    CONTROL         " PNG",IDC_CHK_PNG,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    115,101,72,10
+    GROUPBOX        "Image Size",IDC_STA_IMAGESIZE,7,137,201,55,BS_FLAT
+    GROUPBOX        "Image Check",IDC_STA_IMAGE_CHECK,7,7,200,49,BS_FLAT
+    CONTROL         "",IDC_SLIDER_IMAGECHECK_DEGREE,"msctls_trackbar32",
+                    TBS_AUTOTICKS | TBS_TOP | WS_TABSTOP,18,23,181,20
+    CONTROL         "Enable Size Check",IDC_CHK_ENABLE_SIZE_CHECK,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,17,150,76,10
+    LTEXT           "Min:",IDC_STATIC,15,169,14,8
+    LTEXT           "Max:",IDC_STATIC,105,169,16,8
+    EDITTEXT        IDC_EDIT_SCOPE_MIN,35,167,40,14,ES_AUTOHSCROLL | 
+                    ES_NUMBER
+    CONTROL         "",IDC_SPIN_MIN,"msctls_updown32",UDS_SETBUDDYINT | 
+                    UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_HOTTRACK,75,167,10,
+                    14
+    EDITTEXT        IDC_EDIT_SCOPE_MAX,127,167,40,14,ES_AUTOHSCROLL | 
+                    ES_NUMBER
+    CONTROL         "",IDC_SPIN_MAX,"msctls_updown32",UDS_SETBUDDYINT | 
+                    UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_HOTTRACK,167,167,11,
+                    14
+END
+
+IDD_DLG_DNS_WHITELIST DIALOGEX 0, 0, 250, 199
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CONTROL         "Enable White DNS List",IDC_CHK_WHITE_DNSLIST,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,7,7,108,10
+    LTEXT           "static",IDC_STA_WHIE_DNSLIST,7,25,236,159
+    CONTROL         "Pass White Website Only",IDC_CHK_DENY_OTHERS,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,129,7,107,10
+END
+
+IDD_DLG_ONLINE_RULE DIALOGEX 0, 0, 283, 192
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    LTEXT           "",IDC_STA_CELLS,26,28,225,121,NOT WS_VISIBLE
+    LTEXT           "Sun.",IDC_STATIC,7,44,16,8
+    LTEXT           "Tues",IDC_STATIC,7,75,16,8
+    LTEXT           "Wed.",IDC_STATIC,7,90,18,8
+    LTEXT           "Thurs.",IDC_STATIC,7,105,22,8
+    LTEXT           "Fri.",IDC_STATIC,7,119,12,8
+    LTEXT           "Sat.",IDC_STATIC,7,134,15,8
+    LTEXT           "00:00",IDC_STATIC,22,28,20,8
+    LTEXT           "24:00",IDC_STATIC,231,28,20,8
+    CONTROL         "Time Control",IDC_CHK_TIMECTRL,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,7,7,64,10
+    LTEXT           "12:00",IDC_STATIC,126,28,20,8
+    LTEXT           "Mon.",IDC_STATIC,7,59,17,8
+    CONTROL         157,IDC_STATIC,"Static",SS_BITMAP,10,165,9,15
+    CONTROL         158,IDC_STATIC,"Static",SS_BITMAP,103,165,9,15
+    LTEXT           "Internet Available",IDC_STATIC,27,168,58,8
+    LTEXT           "Internet Blocked",IDC_STATIC,126,168,54,8
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO 
+BEGIN
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 228
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 48
+    END
+
+    IDD_MAINUI_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 417
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 264
+    END
+
+    IDD_DLG_HELP, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 259
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 170
+    END
+
+    IDD_DLG_ABOUT, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 215
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 188
+    END
+
+    IDD_DLG_DNS_BLACKLIST, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 243
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 193
+    END
+
+    IDD_DLG_SEARCH_RULE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 243
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 193
+    END
+
+    IDD_DLG_CONTENT, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 243
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 193
+    END
+
+    IDD_LEV1_RULE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 243
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 190
+    END
+
+    IDD_DLG_TEXT, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 243
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 165
+    END
+
+    IDD_DLG_OPTION, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 243
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 187
+    END
+
+    IDD_DLG_TOOLS, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 243
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 193
+    END
+
+    IDD_DLG_EYECARE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 243
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 183
+    END
+
+    IDD_LEV1_TIME_RULE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 274
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 191
+    END
+
+    IDD_CHANGE_PASSWORD, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 149
+        VERTGUIDE, 72
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 72
+    END
+
+    IDD_DLG_CHKPASSWORD, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 138
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 63
+    END
+
+    IDD_TOOLS, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 179
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 88
+    END
+
+    IDD_LEV1_TOOLS, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 243
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 195
+    END
+
+    IDD_TEMPLATE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 243
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 193
+    END
+
+    IDD_DLG_SCREENSHOT, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 243
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 193
+    END
+
+    IDD_DLG_WEB_HISTORY, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 243
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 193
+    END
+
+    IDD_DLG_IMAGERULES, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 250
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 192
+    END
+
+    IDD_DLG_DNS_WHITELIST, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 243
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 192
+    END
+
+    IDD_DLG_ONLINE_RULE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 276
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 185
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDC_MENU_TRAY_PARENT MENU 
+BEGIN
+    POPUP "Main"
+    BEGIN
+        POPUP "Websites"
+        BEGIN
+            MENUITEM "www.sina.com",                ID_WEBSITES_WWW32788
+        END
+        MENUITEM "Web History",                 ID_TRAYMENU_WEBHISTORY
+        MENUITEM "Desktop Image",               ID_TRAYMENU_DESKTOPIMAGE
+        MENUITEM "Lock Computer",               ID_TRAYMENU_LOCKCOMPUTER
+        MENUITEM SEPARATOR
+        MENUITEM "Change Password",             ID_TRAYMENU_CHANGEPASSWORD
+        MENUITEM "Option",                      ID_TRAYMENU_MAINUI
+        MENUITEM SEPARATOR
+        MENUITEM "Children",                    ID_TRAYMENU_MODEL_CHILDREN
+        , CHECKED
+        MENUITEM "Parents",                     ID_TRAYMENU_MODEL_PARENTS
+        MENUITEM SEPARATOR
+        MENUITEM "Exit",                        ID_TRAYMENU_EXIT
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// RT_MANIFEST
+//
+
+1                       RT_MANIFEST             "MainUI.exe.manifest"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE 
+BEGIN
+    IDS_ABOUTBOX            "About "
+    IDS_TREE_LEV1_RULES     "Content Rules"
+    IDS_COMMENT_DNS         "DNS1??ò\r\n    ×è?1ó??§·??êò?D?ò??aμ?2????μí???\r\n"
+    IDS_COMMENT_IMAGE       "í???1??ò\r\n    ?éò??ì2éí???￡?2￠×é?ˉ??é?í???μ???ê?\r\n"
+    IDS_COMMENT_TEXT        "??±?1??ò\r\n    í¨1y????±?μ??ì2aè·?¨í???ê?·?ê???é?í???\r\n"
+    IDS_TREE_OPTIONS        "Options"
+    IDS_TREE_EYECARE        "Eyecare"
+    IDS_TRAYMENU_SHOWUI     "Show Main Dialog"
+    IDS_TRAYMENU_HIDEUI     "Hide Main Dialog"
+    IDS_TREE_TOOLSETTING    "Tools Setting"
+    IDS_TREE_LEV1_TOOLS     "Tools Setting"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_TREE_ROOT           "Main UI"
+    IDS_TREE_DNS_RULE       "DNS Black List"
+    IDS_TREE_IMAGE_RULE     "Image Content"
+    IDS_TREE_SEARCH_RULE    "Black Search Word"
+    IDS_TREE_CONTENT_RULE   "Text Content"
+    IDS_TREE_ONLINE_HOUR    "Time"
+    IDS_TREE_HELP           "Help"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_TREE_ABOUT          "About"
+    IDS_DNS_BLACK_LIST      "DNS Black List"
+    IDS_DNS_WHITE_LIST      "DNS White List"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_TREE_SCREEN_SAVE    "Screenshot"
+    IDS_TREE_WEB_HISTORY    "Web History"
+    IDS_WEB_HISTORY_CLEAR   "Clear"
+    IDS_WEB_HISTORY_VIEW_HISTORY "View the Website History"
+    IDS_WEB_HISTORY_EXPORT_WEBSITE_LIST "Export the website List"
+    IDS_WEB_HISTORY_FILEDLG_DEFAULT "Websites"
+    IDS_WEB_HISTORY_FILEDLG_EXT 
+                            "TXT files (*.txt)|*.txt|All Files (*.*)|*.*||"
+    IDS_ERROR_WEB_SET_FAILED "Set Web Record Failed!"
+    IDS_SCREEN_RECORD_CLEAR_BUTTON "Clear Completed!"
+    IDS_CHECK_PASSWORD_WRONG "Password was not corrected!"
+    IDS_APP_SERVER_INIT_FAILED "Service Launch Failed!"
+    IDS_EYECARE_STATE_EYECARE "Eyecare time"
+    IDS_EYECARE_STATE_ENTERTAIN "Entertain time"
+    IDS_HOTKEY_CONFLICT     "Hotkey Conflict!"
+    IDS_WEB_HISTORY_CLEAR_SUCC "Clear Succeeded."
+END
+
+#endif    // 英语(美国) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+LANGUAGE 4, 2
+#pragma code_page(936)
+#include "res\MainUI.rc2"  // 非 Microsoft Visual C++ 编辑过的资源
+#include "afxres.rc"         // 标准组件
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

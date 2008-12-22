@@ -1,0 +1,28 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: DialogExcelTabs - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\DOCUME~1\fcampos\LOCALS~1\Temp\RSP9D.tmp" with contents
+[
+/nologo /subsystem:windows /incremental:no /pdb:"..\..\bin/DialogExcelTabs.pdb" /machine:I386 /out:"..\..\bin/DialogExcelTabs.exe" /libpath:"..\..\bin" 
+.\Release\DialogExcelTabs.obj
+.\Release\DialogExcelTabsDlg.obj
+.\Release\StdAfx.obj
+.\Release\DialogExcelTabs.res
+\Proyectos\GuiLib1.5\bin\GuiTk115.lib
+]
+Creating command line "link.exe @C:\DOCUME~1\fcampos\LOCALS~1\Temp\RSP9D.tmp"
+<h3>Output Window</h3>
+Linking...
+
+
+
+<h3>Results</h3>
+DialogExcelTabs.exe - 0 error(s), 0 warning(s)
+</pre>
+</body>
+</html>

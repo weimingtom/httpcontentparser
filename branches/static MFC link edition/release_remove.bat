@@ -1,0 +1,1 @@
+.\release\SPIInstaller -remove
