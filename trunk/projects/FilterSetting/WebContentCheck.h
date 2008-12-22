@@ -47,6 +47,8 @@ public:
 	STDMETHOD(setCheckScope)(LONG min, LONG max);
 	STDMETHOD(enableCheck)(VARIANT_BOOL enabled, LONG type);
 	STDMETHOD(shouldCheckBySize)(LONG size, VARIANT_BOOL* check);
+	STDMETHOD(get_ImageCheckTightness)(LONG* pVal);
+	STDMETHOD(put_ImageCheckTightness)(LONG newVal);
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(WebContentCheck), CWebContentCheck)
