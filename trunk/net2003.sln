@@ -38,10 +38,12 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ThreadSync", "libproject\Th
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Utility", "libproject\Utility\Utility2003.vcproj", "{CD11D86D-3173-4945-8215-7450A0D9CB3C}"
 	ProjectSection(ProjectDependencies) = postProject
+		{EC738080-9EB3-45D7-8440-0B79B280ACD7} = {EC738080-9EB3-45D7-8440-0B79B280ACD7}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Eyecare", "projects\Eyecare\Eyecare2003.vcproj", "{964382EA-1D90-46C2-97ED-FB6ACA2DF0F6}"
 	ProjectSection(ProjectDependencies) = postProject
+		{CD11D86D-3173-4945-8215-7450A0D9CB3C} = {CD11D86D-3173-4945-8215-7450A0D9CB3C}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FilterSetting", "projects\FilterSetting\FilterSetting2003.vcproj", "{23244EE6-33D9-4D23-8BA7-3AA7CCDAF177}"
