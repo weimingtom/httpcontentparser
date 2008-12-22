@@ -52,7 +52,7 @@ bool ContentCheckSetting::needCheckBySize(const int size) const {
 
 void ContentCheckSetting::defaultSetting() {
 	SettingItem::defaultSetting();
-	tightness_ = 2;
+	image_tightness_ = 2;
 
 	min_check_size_ = 1024;
 	max_check_size_ = 1024 * 64;

@@ -51,3 +51,16 @@ STDMETHODIMP CWebContentCheck::shouldCheckBySize(LONG size, VARIANT_BOOL* check)
 	*check = convert(checked);
 	return S_OK;
 }
+
+STDMETHODIMP CWebContentCheck::get_ImageCheckTightness(LONG* pVal)
+{
+	*pVal = g_configuration.getContentCheckSetting()->getImageCheckTightness();
+	return S_OK;
+}
+
+STDMETHODIMP CWebContentCheck::put_ImageCheckTightness(LONG newVal)
+{
+	assert (newVal >= 0 && newVal < 5);
+	g_configuration.getContentCheckSetting()->setImageCheckTightness(newVal);
+	return S_OK;
+}

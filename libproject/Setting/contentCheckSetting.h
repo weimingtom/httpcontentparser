@@ -33,12 +33,12 @@ public:
 
 	void getCheckedScope(long * scope_min, long * scope_max);
 	// 松紧程度，有0～4五个值，默认为2
-	int getTightness() const { return tightness_;}
-	void setTightness(const int new_tight) { tightness_ = new_tight;}
+	int getImageCheckTightness() const { return image_tightness_;}
+	void setImageCheckTightness(const int new_tight) { image_tightness_ = new_tight;}
 	bool isSettingNeedCheck(const unsigned type) const;
 private:
 	unsigned content_type_;
-	int	tightness_;
+	int	image_tightness_;
 
 	// 检测大小
 	bool enabled_check_by_size_;

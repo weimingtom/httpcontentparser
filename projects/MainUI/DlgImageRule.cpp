@@ -64,7 +64,7 @@ int CDlgImageRule::OnApply() {
 	g_configuration.getContentCheckSetting()->enableCheck(IMAGE_TYPE_JPEG, m_bCheckJPEG);
 	g_configuration.getContentCheckSetting()->enableCheck(IMAGE_TYPE_BMP, m_bCheckBMP);
 	g_configuration.getContentCheckSetting()->enableCheck(IMAGE_TYPE_PNG, m_bCheckPNG);
-	g_configuration.getContentCheckSetting()->setTightness(m_sliderImageCheckDegree.GetPos());
+	g_configuration.getContentCheckSetting()->setImageCheckTightness(m_sliderImageCheckDegree.GetPos());
 	g_configuration.getContentCheckSetting()->enableCheckBySize(m_chkEnableScopeCheck.GetCheck() == BST_CHECKED);
 
 	g_configuration.getContentCheckSetting()->setCheckScope(scope_min_, scope_max_);
@@ -82,6 +82,7 @@ int CDlgImageRule::OnApply() {
 		contentCheck->enableCheck(convert(m_bCheckJPEG), IMAGE_TYPE_JPEG);
 		contentCheck->enableCheck(convert(m_bCheckBMP),  IMAGE_TYPE_BMP);
 		contentCheck->enableCheck(convert(m_bCheckPNG),  IMAGE_TYPE_PNG);
+		contentCheck->put_ImageCheckTightness(m_sliderImageCheckDegree.GetPos());
 	} catch (_com_error&) {
 	} catch (...) {
 	}
@@ -98,7 +99,7 @@ void CDlgImageRule::restoreSetting() {
 	m_bCheckPNG = g_configuration.getContentCheckSetting()->isSettingNeedCheck(IMAGE_TYPE_PNG);
 
 	m_sliderImageCheckDegree.SetRange(0, 4);
-	m_sliderImageCheckDegree.SetPos(g_configuration.getContentCheckSetting()->getTightness());
+	m_sliderImageCheckDegree.SetPos(g_configuration.getContentCheckSetting()->getImageCheckTightness());
 
 	// 是否允许根据大小进行检查
 	bool enabed_check_by_size = g_configuration.getContentCheckSetting()->enabledCheckBySize();
