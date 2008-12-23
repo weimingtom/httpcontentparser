@@ -33,6 +33,11 @@ STDMETHODIMP CWebContentCheck::shouldCheck(LONG type, VARIANT_BOOL* check)
 	return S_OK;
 }
 
+STDMETHODIMP CWebContentCheck::getCheckScope(LONG* minSize, LONG *maxSize)
+{
+	g_configuration.getContentCheckSetting()->getCheckedScope(minSize, maxSize);
+	return S_OK;
+}
 STDMETHODIMP CWebContentCheck::setCheckScope(LONG min, LONG max)
 {
 	g_configuration.getContentCheckSetting()->setCheckScope(min, max);

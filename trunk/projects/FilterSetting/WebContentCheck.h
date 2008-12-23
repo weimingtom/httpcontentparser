@@ -45,6 +45,7 @@ END_COM_MAP()
 public:
 	STDMETHOD(shouldCheck)(LONG type, VARIANT_BOOL* check);
 	STDMETHOD(setCheckScope)(LONG min, LONG max);
+	STDMETHOD(getCheckScope)(LONG* minSize, LONG *maxSize);
 	STDMETHOD(enableCheck)(VARIANT_BOOL enabled, LONG type);
 	STDMETHOD(shouldCheckBySize)(LONG size, VARIANT_BOOL* check);
 	STDMETHOD(get_ImageCheckTightness)(LONG* pVal);
