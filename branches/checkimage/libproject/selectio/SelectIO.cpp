@@ -83,9 +83,9 @@ int CSelectIO::prerecv(SOCKET s, LPWSABUF lpBuffers,
 	if (packet == NULL) {
 		return 1;
 	}
-
 	// 检查内容
 	// 如果检查失败
+	OutputDebugString("=======================handler select...");
 	if (false == handlePacket(packet)) {
 		removeCompletedPacket(s, packet);
 		return 1;
