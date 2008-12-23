@@ -1,0 +1,21 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PickDNS", "PickDNS.vcproj", "{C5113031-5CE4-42FB-9483-A4F6CF10B6A3}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		Release = Release
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{C5113031-5CE4-42FB-9483-A4F6CF10B6A3}.Debug.ActiveCfg = Debug|Win32
+		{C5113031-5CE4-42FB-9483-A4F6CF10B6A3}.Debug.Build.0 = Debug|Win32
+		{C5113031-5CE4-42FB-9483-A4F6CF10B6A3}.Release.ActiveCfg = Release|Win32
+		{C5113031-5CE4-42FB-9483-A4F6CF10B6A3}.Release.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

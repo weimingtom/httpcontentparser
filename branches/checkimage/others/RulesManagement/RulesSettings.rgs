@@ -1,0 +1,27 @@
+HKCR
+{
+	RulesManagement.RulesSettings.1 = s 'RulesSettings Class'
+	{
+		CLSID = s '{510EB138-2FF8-4AA3-89FD-8167A8D0DEA4}'
+	}
+	RulesManagement.RulesSettings = s 'RulesSettings Class'
+	{
+		CLSID = s '{510EB138-2FF8-4AA3-89FD-8167A8D0DEA4}'
+		CurVer = s 'RulesManagement.RulesSettings.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {510EB138-2FF8-4AA3-89FD-8167A8D0DEA4} = s 'RulesSettings Class'
+		{
+			ProgID = s 'RulesManagement.RulesSettings.1'
+			VersionIndependentProgID = s 'RulesManagement.RulesSettings'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Free'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{415ED9C8-F251-47EC-B5E8-8BE516ED11F8}'
+		}
+	}
+}

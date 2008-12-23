@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+<shape>
+	<circle name="int-based" x="20" y="20" z="20"></circle>
+	<circle name="float-based" x="3.5" y="3.5" z="3.5"/>
+</shape>

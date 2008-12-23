@@ -1,0 +1,1 @@
+.\SPIInstaller -remove
