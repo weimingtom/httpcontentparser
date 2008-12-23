@@ -156,8 +156,9 @@ interface IWebContentCheck : IDispatch {
 	[id(2), helpstring("Method setCheckScope")]		HRESULT setCheckScope([in] LONG min, [in] LONG max);
 	[id(3), helpstring("Method enableCheck")]		HRESULT enableCheck([in] VARIANT_BOOL enabled, [in] LONG type);
 	[id(4), helpstring("Method shouldCheckBySize")] HRESULT shouldCheckBySize([in] LONG size, [out,retval] VARIANT_BOOL* check);
-	[propget, id(5), helpstring(" Ù–‘ ImageCheckTightness")] HRESULT ImageCheckTightness([out, retval] LONG* pVal);
-	[propput, id(5), helpstring(" Ù–‘ ImageCheckTightness")] HRESULT ImageCheckTightness([in] LONG newVal);
+	[propget, id(5), helpstring("Peropery ImageCheckTightness")] HRESULT ImageCheckTightness([out, retval] LONG* pVal);
+	[propput, id(5), helpstring("Peropery ImageCheckTightness")] HRESULT ImageCheckTightness([in] LONG newVal);
+	[id(6), helpstring("Method getCheckScope")] HRESULT getCheckScope([out] LONG* minSize, [out] LONG* maxSize);
 };
 [
 	uuid(42F932B5-F5CB-4F0D-8925-1B6BE5FECD1B),
