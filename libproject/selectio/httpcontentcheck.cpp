@@ -5,6 +5,7 @@
 #include <utility/httppacket.h>
 #include <utility/ZipUtility.h>
 #include <utility/BufferOnStackHeap.h>
+#include <antiporn/antiporndll.h>
 #include <sysutility.h>
 #include <assert.h>
 #include <stdlib.h>
@@ -28,7 +29,9 @@ HTTPContentHander::~HTTPContentHander() {
 //===================================================================
 // 是否是
 int HTTPContentHander::handleContent(HTTPPacket *packet) {
+	OutputDebugString("handleContent");
 	if (false == needHandle(packet)) {
+		OutputDebugString("handleContent needless");
 		return CONTENT_CHECK_UNKNOWN;
 	}
 
@@ -102,6 +105,43 @@ int HTTPContentHander::checkContent(HTTPPacket *packet) {
 // 检测是否应该检查图片内容，如果不应该，则直接返回
 // 检查图片内容，并获取黄色图片的松紧度
 int HTTPContentHander::checkImage(HTTPPacket *packet) {
+	OutputDebugString("checkImage");
+	if (false == checker_.shouldCheck(packet)) {
+		return CONTENT_CHECK_UNKNOWN;
+	}
+
+	// 随机生成一个文件名
+	GUID   m_guid;
+	TCHAR filename[1024];
+	if(SUCCEEDED(CoCreateGuid(&m_guid))) {
+		_sntprintf(filename, 1024, ".\\%08X-%04X-%04x", m_guid.Data1, m_guid.Data2, m_guid.Data3);
+	} else {
+		return CONTENT_CHECK_UNKNOWN;
+	}
+
+	// 保存文件先
+	packet->achieve_data(filename);
+
+	// check Data
+	PornDetectorBase* pPornDetector = NULL;
+	if (!CreateObject(&pPornDetector)) {
+		return CONTENT_CHECK_UNKNOWN;
+	}
+
+	double score;
+	bool flag = pPornDetector->Detection(filename, &score);
+	DeleteObject();
+
+	char buffer[1024];
+	sprintf(buffer, "------------check image scope : %f", score);
+	OutputDebugString(buffer);
+
+	if (score < checker_.getImageVScore()) {
+		return CONTENT_CHECK_PORN;
+	} else {
+		return CONTENT_CHECK_NORMAL;
+	}
+	// 删除文件
 	return CONTENT_CHECK_UNKNOWN;
 }
 

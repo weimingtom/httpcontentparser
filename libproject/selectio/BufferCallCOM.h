@@ -7,6 +7,7 @@
 #include <typeconvert.h>
 #include <comdef.h>
 #include <webcontenttype.h>
+#include <utility/httppacket.h>
 
 // 缓冲COM调用
 // 是否需要保存
@@ -72,8 +73,8 @@ private:
 	bool all_image;
 	bool porn_webpage;
 	bool all_webpage;
-
 };
+
 
 // 是否需要检查
 class WebContentCheckCaller {
@@ -106,13 +107,55 @@ public:
 
 			pCheck->shouldCheck(CONTYPE_HTML, &should_checked);
 			checkHTML= convert(should_checked);
+
+			pCheck->get_ImageCheckTightness(&imageCheckTightness);
+			pCheck->getCheckScope(&minScope, &maxScope);
 		} catch (_com_error &) {
 		} catch (...) {
 		}
 	}
 
 public:
-	bool shouldCheck(const int contenttype) {
+	bool shouldCheck(HTTPPacket *packet) {
+		// 如果不按照大小进行区分直接返回
+		if (! enableImageCheckByScope)
+			return false;
+
+		if (false == shouldCheckByType(packet->getContentType()))
+			return false;
+
+		if (false == shouldCheckBySize(packet->getDataSize()))
+			return false;
+
+		return true;
+	}
+	
+
+	float getImageVScore() const {
+		if (imageCheckTightness < 1) {
+			return -2.0f;
+		} else if (imageCheckTightness < 2) {
+			return -1.0f;
+		} else if (imageCheckTightness < 3) {
+			return 0.0f;
+		} else if (imageCheckTightness < 4) {
+			return 1.0f;
+		} else if (imageCheckTightness > 4) {
+			return 2.0f;
+		} 
+		return 0.0f;
+	}
+
+private:
+	bool shouldCheckBySize(const int size) {
+		if (size > maxScope * 1024) {
+			return false;
+		} else if (size < minScope * 1024) {
+			return false;
+		}
+		return true;
+	}
+	bool shouldCheckByType(const int contenttype) {
 		switch (contenttype) {
 			case CONTYPE_HTML:
 				return checkHTML;
@@ -144,6 +187,9 @@ private:
 	bool checkBMP;
 	bool checkGIF;
 	bool checkHTML;
+	long imageCheckTightness;
+	long minScope, maxScope;
+	bool enableImageCheckByScope;
 };
 
 #endif  // _SELECTIO_BUFFERCALLCOM_H__
