@@ -1,11 +1,7 @@
 #pragma once
 
 #include ".\basedlg.h"
-#include <Guilib1.5\GuiCheckBox.h>
-#include <Guilib1.5\GuiGroupBox.h>
-#include <Guilib1.5\GuiEdit.h>
-#include <Guilib1.5\GuiButton.h>
-#include <Guilib1.5\GuiEdit.h>
+#include  ".\Guilib1.5\GuiGroupBox.h"
 #include "afxwin.h"
 // CDlgEyecare ¶Ô»°¿ò
 

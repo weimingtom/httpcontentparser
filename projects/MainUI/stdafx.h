@@ -43,7 +43,6 @@
 
 
 
-#include <Guilib1.5\Guilib.h>
 #include <afxdhtml.h>
 
 #ifdef _DEBUG

@@ -3,7 +3,6 @@
 #include ".\basedlg.h"
 #include ".\Cells.h"
 #include <afxwin.h>
-#include <Guilib1.5\GuiCheckBox.h>
 #include <Enumerate.h>
 // CDlgOnlineHour ¶Ô»°¿ò
 

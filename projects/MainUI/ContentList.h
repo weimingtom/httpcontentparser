@@ -2,7 +2,7 @@
 
 
 // CContentList
-#include <Guilib1.5\OnTextChanged.h>
+#include ".\Guilib1.5\OnTextChanged.h"
 #include <set>
 #include <string>
 

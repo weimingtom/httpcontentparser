@@ -1,8 +1,7 @@
 #pragma once
 #include ".\basedlg.h"
-#include <Guilib1.5\GuiListEdit.h>
-#include <Guilib1.5\GuiDropDownEdit.h>
-#include <Guilib1.5\GuiCheckBox.h>
+#include ".\Guilib1.5\GuiListEdit.h"
+#include ".\Guilib1.5\GuiDropDownEdit.h"
 #include <Enumerate.h>
 #include <string>
 #include "afxwin.h"

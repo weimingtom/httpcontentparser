@@ -1,6 +1,7 @@
 #pragma once
 #include ".\basedlg.h"
 #include "afxwin.h"
+#include  ".\Guilib1.5\GuiGroupBox.h"
 // CDlgAbout ¶Ô»°¿ò
 
 class CDlgAbout : public CBaseDlg

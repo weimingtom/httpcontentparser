@@ -1,16 +1,7 @@
 #pragma once
 
 #include ".\basedlg.h"
-#include <Guilib1.5\GuiCheckBox.h>
-#include <Guilib1.5\GuiComboBoxExt.h>
-#include <Guilib1.5\GuiLinkButton.h>
-#include <Guilib1.5\GuiButton.h>
-#include <Guilib1.5\GuiSliderCtrl.h>
-#include <Guilib1.5\GuiMiniTool.h>
-#include <Guilib1.5\GuiEdit.h> 
-#include <Guilib1.5\GuiGroupBox.h>
-#include <Guilib1.5\GuiRadioButton.h>
-#include <Guilib1.5\GuiComboFont.h>
+#include  ".\Guilib1.5\GuiGroupBox.h"
 #include <afxcmn.h>
 #include "afxcmn.h"
 #include "afxwin.h"
