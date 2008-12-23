@@ -5,9 +5,8 @@
 #include ".\basedlg.h"
 #include "ContentList.h"
 #include <DNSSetting.h>
-#include <Guilib1.5\GuiListEdit.h>
-#include <Guilib1.5\GuiDropDownEdit.h>
-#include <Guilib1.5\GuiCheckBox.h>
+#include  ".\Guilib1.5\GuiGroupBox.h"
+#include  ".\Guilib1.5\GuiListEdit.h"
 #include <Enumerate.h>
 
 class CDlgWhiteDNSList : public CBaseDlg, Enumerator1<std::string>, RuleChanged {

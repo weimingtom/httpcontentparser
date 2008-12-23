@@ -3,9 +3,8 @@
 #include ".\basedlg.h"
 #include ".\ContentList.h"
 #include <DNSSetting.h>
-#include <Guilib1.5\GuiListEdit.h>
-#include <Guilib1.5\GuiDropDownEdit.h>
-#include <Guilib1.5\GuiCheckBox.h>
+#include  ".\Guilib1.5\GuiGroupBox.h"
+#include  ".\Guilib1.5\GuiListEdit.h"
 #include "afxwin.h"
 
 // CDlgBlackDNSList ¶Ô»°¿ò

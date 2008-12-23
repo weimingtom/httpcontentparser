@@ -67,6 +67,13 @@
 #define IDB_BMP_ACCESSABLE              157
 #define IDB_BITMAP3                     158
 #define IDB_BMP_BLOCK                   158
+#define IDB_BITMAP1                     159
+#define IDB_GUI_DOCKBAR                 160
+#define IDB_GUI_DOCKBAROFFICE           161
+#define IDB_GUI_MDIICONS                162
+#define IDI_GUI_ARROWDOWN               163
+#define IDI_ICON2                       164
+#define IDI_GUI_ARROWRIGHT              164
 #define IDC_TREE_NAVIG                  1000
 #define IDS_TREE_ROOT                   1001
 #define IDS_TREE_DNS_RULE               1002
@@ -191,6 +198,7 @@
 #define IDC_SPIN_MAX                    1109
 #define IDC_SPIN_MIN                    1110
 #define IDC_CHK_ENABLE_SIZE_CHECK       1111
+#define IDB_DOCKBAR                     2004
 #define IDC_EDIT1                       4011
 #define IDC_EDIT2                       4012
 #define IDC_EDT_RETRY                   4013
@@ -227,7 +235,7 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        159
+#define _APS_NEXT_RESOURCE_VALUE        165
 #define _APS_NEXT_COMMAND_VALUE         32808
 #define _APS_NEXT_CONTROL_VALUE         1112
 #define _APS_NEXT_SYMED_VALUE           112

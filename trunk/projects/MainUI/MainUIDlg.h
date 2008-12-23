@@ -20,10 +20,8 @@
 #include ".\basedlg.h"
 #include "afxwin.h"
 
-#include <Guilib1.5\GuiGroupBox.h>
-#include <Guilib1.5\GuiButton.h>
-#include <Guilib1.5\GuisysTray.h>
-#include <Guilib1.5\NewMenu.h>
+#include  ".\Guilib1.5\GuiGroupBox.h"
+#include  ".\Guilib1.5\GuiSysTray.h"
 
 class CBaseDlg;
 

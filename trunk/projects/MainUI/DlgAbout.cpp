@@ -4,7 +4,6 @@
 #include "stdafx.h"
 #include "MainUI.h"
 #include "DlgAbout.h"
-#include <Guilib1.5\GuiGroupBox.h>
 
 // CDlgAbout ¶Ô»°¿ò
 

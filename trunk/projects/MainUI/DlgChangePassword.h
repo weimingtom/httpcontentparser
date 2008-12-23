@@ -1,8 +1,5 @@
 #pragma once
 #include "afxwin.h"
-#include <Guilib1.5\GuiEdit.h> 
-#include <Guilib1.5\GuiGroupBox.h>
-#include <Guilib1.5\GuiButton.h>
 
 // CDlgChangePassword ¶Ô»°¿ò
 
