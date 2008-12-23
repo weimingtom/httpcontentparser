@@ -67,7 +67,6 @@ public:
 	afx_msg void OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
 	afx_msg void OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
 	afx_msg void OnBnClickedChkEnableSizeCheck();
-
 protected:
 	// 使相关控件可用
 	void enableScopeCheck(bool enabled);

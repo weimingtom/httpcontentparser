@@ -53,7 +53,6 @@ void CDlgImageRule::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_EDIT_SCOPE_MAX, scope_max_);
 }
 
-
 void CDlgImageRule::OnShow() {
 }
 
@@ -90,7 +89,10 @@ int CDlgImageRule::OnApply() {
 	return 0;
 }
 
-
+// 所有的配置都保存在类Confiruation中， 因为
+// 每次恢复是都应当从这个类中读取数据
+// 但是这个类的数据有时候是不对的，因此对后能够在OnShow中，从
+// COM Service处获取到数据，然手在现实
 void CDlgImageRule::restoreSetting() {
 	// 按照初始化设置
 	m_bCheckGIF = g_configuration.getContentCheckSetting()->isSettingNeedCheck(IMAGE_TYPE_GIF);
