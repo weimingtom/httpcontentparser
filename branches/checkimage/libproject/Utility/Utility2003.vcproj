@@ -48,7 +48,7 @@ copy .\httprequestpacket.h ..\..\include\utility
 copy .\strutility.h ..\..\include\utility
 copy .\timeutility.h ..\..\include\utility
 copy .\SeachPacket.h ..\..\include\utility
-"/>
+copy .\replacepacket.h ..\..\include\utility"/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
 			<Tool
