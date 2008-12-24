@@ -11,6 +11,8 @@
     <form id="form1" runat="server">
     <div>
     
+        <asp:Image ID="Image6" runat="server" Height="16px" />
+    
         <asp:Image ID="Image1" runat="server" ImageUrl="~/images/holidaytext.gif" />
         <br />
         <asp:Image ID="Image2" runat="server" Height="163px" 
@@ -24,6 +26,9 @@
     
         <br />
         <asp:Image ID="Image5" runat="server" ImageUrl="~/images/holidaytext.jpg" />
+        <br />
+        <asp:Image ID="Image7" runat="server" Height="452px" 
+            ImageUrl="~/images/jdjjd.JPG" Width="324px" />
     
     </div>
     </form>
