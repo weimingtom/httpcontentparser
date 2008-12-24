@@ -11,10 +11,12 @@ public:
 	CPPUNIT_TEST_SUITE(WebContentTest);
 	CPPUNIT_TEST(testImageType);
 	CPPUNIT_TEST(testTextType);
+	CPPUNIT_TEST(testFFFF);
 	CPPUNIT_TEST(textOtherTypes);
 	CPPUNIT_TEST_SUITE_END();
 
 private:
+	void testFFFF();
 	void testImageType();
 	void testTextType();
 	void textOtherTypes();
