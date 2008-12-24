@@ -22,6 +22,9 @@
         <asp:Image ID="Image4" runat="server" Height="158px" 
             ImageUrl="~/images/holiday08_3.gif" Width="297px" />
     
+        <br />
+        <asp:Image ID="Image5" runat="server" ImageUrl="~/images/holidaytext.jpg" />
+    
     </div>
     </form>
 </body>
