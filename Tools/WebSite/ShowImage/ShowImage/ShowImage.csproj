@@ -59,6 +59,7 @@
     <Content Include="images\holiday08_3.gif" />
     <Content Include="images\holidaytext.gif" />
     <Content Include="images\holidaytext.jpg" />
+    <Content Include="images\jdjjd.JPG" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
