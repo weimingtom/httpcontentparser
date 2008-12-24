@@ -453,51 +453,6 @@ void HTTPPacketTest::testAddSinglePacket() {
 	delete httppacket3;
 }
 
-void HTTPPacketTest::testHTTPHeaderParsed() {
-	// 测试头部解析是否正确
-	HTTP_RESPONSE_HEADER header1;
-	header1.parseHeader(packet1, (int)strlen(packet1));
-	CPPUNIT_ASSERT(header1.isChunk()== false);
-	CPPUNIT_ASSERT(header1.getContentType()== CONTYPE_HTML);
-	CPPUNIT_ASSERT(header1.getConnectionState()== HTTP_RESPONSE_HEADER::CONNECT_CLOSE);
-	CPPUNIT_ASSERT(header1.getContentLength() == 682);
-	CPPUNIT_ASSERT(header1.getResponseCode() == 302);
-	CPPUNIT_ASSERT(header1.existContent() == true);
-
-	HTTP_RESPONSE_HEADER header2;
-	header2.parseHeader(packet2, (int)strlen(packet2));
-	CPPUNIT_ASSERT(header2.isChunk()== false);
-	CPPUNIT_ASSERT(header2.getContentType()==  CONTYPE_GIF);
-	CPPUNIT_ASSERT(header2.getConnectionState()==  HTTP_RESPONSE_HEADER::CONNECT_KEEP_ALIVE);
-	CPPUNIT_ASSERT(header2.getContentLength() == 234);
-	CPPUNIT_ASSERT(header2.getResponseCode() == 302);
-	CPPUNIT_ASSERT(header2.existContent() == true);
-
-	HTTP_RESPONSE_HEADER header3;
-	header3.parseHeader(packet3, (int)strlen(packet3));
-	CPPUNIT_ASSERT(header3.isChunk()== false);
-	CPPUNIT_ASSERT(header3.getContentType()== CONTYPE_JPG);
-	CPPUNIT_ASSERT(header3.getConnectionState()== HTTP_RESPONSE_HEADER::CONNECT_CLOSE);
-	CPPUNIT_ASSERT(header3.getContentLength() == 62);
-	CPPUNIT_ASSERT(header3.getResponseCode() == 302);
-	CPPUNIT_ASSERT(header3.existContent() == true);
-
-	HTTP_RESPONSE_HEADER header4;
-	header4.parseHeader(packet4, (int)strlen(packet4));
-	CPPUNIT_ASSERT(header4.getContentType()== CONTYPE_HTML);
-	CPPUNIT_ASSERT(header4.getConnectionState()== HTTP_RESPONSE_HEADER::NO_DESIGNATION);
-	CPPUNIT_ASSERT(header4.isChunk()== true);
-	CPPUNIT_ASSERT(header4.getResponseCode() == 200);
-	CPPUNIT_ASSERT(header4.existContent() == true);
-
-	HTTP_RESPONSE_HEADER header6;
-	header6.parseHeader(packet6, (int)strlen(packet4));
-	CPPUNIT_ASSERT(header6.getContentType()== CONTYPE_HTML);
-	CPPUNIT_ASSERT(header6.getContentLength()== 3);
-	CPPUNIT_ASSERT(header6.isChunk()== false);
-	CPPUNIT_ASSERT(header6.getResponseCode() == 200);
-	CPPUNIT_ASSERT(header6.existContent() == true);
-}
 
 // 测试没有内容的包
 // 对于 204， 304， 1**的包， 他们没有内容
