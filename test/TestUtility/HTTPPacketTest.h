@@ -22,7 +22,6 @@ public:
 	CPPUNIT_TEST(testNoLengthSepecified);
 	CPPUNIT_TEST(testAddSinglePacket);
 	CPPUNIT_TEST(testNoContentChunk);
-	CPPUNIT_TEST(testHTTPHeaderParsed);
 	CPPUNIT_TEST(testWrongHeader);
 	CPPUNIT_TEST(testRawPacket);
 	CPPUNIT_TEST_SUITE_END();
@@ -39,7 +38,6 @@ protected:
 	void testChunk();
 	void testAddSinglePacket();
 	void testAddSeriesPacket();
-	void testHTTPHeaderParsed();
 	void testRawPacket();
 	void testNoContentChunk();
 };

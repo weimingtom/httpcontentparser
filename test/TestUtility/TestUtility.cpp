@@ -7,13 +7,15 @@
 #include ".\fdutilitytest.h"
 #include ".\httppackettest.h"
 #include ".\DNSTEST.h"
-#include ".\httprequestpackettest.h"
+#include ".\HTTPResponseHeaderTest .h"
 #include ".\strutilitytest.h"
 #include ".\webcontenttest.h"
 #include ".\ziputilitytest.h"
 #include ".\seachpackettest.h"
+#include ".\HttpRequestPacketTest.h"
 #include ".\buffercallertest.h"
 
+CPPUNIT_TEST_SUITE_REGISTRATION(HTTPRequestHeaderTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(BufferCallerTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(SeachPacketTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(HttpRequestPacketTest);

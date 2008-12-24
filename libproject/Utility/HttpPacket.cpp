@@ -294,7 +294,7 @@ int HTTPPacket::parseHeader(const char *buffer_recv, const unsigned len) {
 //=================================================
 // class HTTP_HEADER
 const char * HTTP_RESPONSE_HEADER::HEADER_FIRST = "HTTP/";
-const char * HTTP_RESPONSE_HEADER::HEADER_DATA = "Date:";
+const char * HTTP_RESPONSE_HEADER::HEADER_DATE = "Date:";
 const char * HTTP_RESPONSE_HEADER::HEADER_SERVER = "Server:";
 const char * HTTP_RESPONSE_HEADER::HEADER_CONTENT_TYPE = "Content-Type:";
 const char * HTTP_RESPONSE_HEADER::HEADER_LAST_MODIFIY = "Last-modified:";
@@ -347,6 +347,9 @@ HTTP_RESPONSE_HEADER::HTTP_RESPONSE_HEADER() {
 	connection_state    = NO_DESIGNATION;
 	response_code		= NO_DESIGNATION;
 
+	memset(server, 0, sizeof(server));
+	memset(date, 0, sizeof(date));
+	memset(head_line, 0, sizeof(head_line));
 	header_ended_ = false;
 }
 
@@ -408,6 +411,10 @@ void HTTP_RESPONSE_HEADER::parseLine(const char *linedata) {
 		if (NULL != code_ptr) {
 			response_code = atoi(code_ptr);
 		}
+
+		strncpy(head_line, linedata, 128);
+		// 最有一个字符是'\r', 应该去掉
+		head_line[strlen(head_line) - 1] = '\0';
 	} else if (linedata == strstr(linedata, HEADER_CONTENT_TYPE)) {
 		if (strstr(linedata, CONTYPE_GIF_NAME)) {
 			content_type = CONTYPE_GIF;
@@ -422,6 +429,20 @@ void HTTP_RESPONSE_HEADER::parseLine(const char *linedata) {
 		}  else {
 			content_type = CONTYPE_UNKNOWN;
 		}
+	} else if (linedata == strstr(linedata, HEADER_DATE)) {
+		// 保存日期
+		char * code_ptr = strstr(linedata, " ");
+		strncpy(date, code_ptr+1, 128);
+
+		// 最有一个字符是'\r', 应该去掉
+		date[strlen(date) - 1] = '\0';
+	} else if (linedata == strstr(linedata, HEADER_SERVER)) {
+		// 保存服务器
+		char * code_ptr = strstr(linedata, " ");
+		strncpy(server, code_ptr+1, 128);
+
+		// 最有一个字符是'\r', 应该去掉
+		server[strlen(server) - 1] = '\0';
 	} else if (linedata == strstr(linedata, HEADER_TRANSFER_ENCODING)) {
 		if (strstr(linedata, TRANENCODING_CHUNKED_NAME)) {
 			transfer_encoding = TRANENCODING_CHUNKED;

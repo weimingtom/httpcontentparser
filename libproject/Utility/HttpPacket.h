@@ -36,6 +36,10 @@ public:
 
 	// 是否存在内容
 	bool existContent() const ;
+
+	const char * getDate() { return date;}
+	const char * getServer() { return server;}
+	const char * getHeaderLine() { return head_line;}
 private:
 	int transfer_encoding;
 	unsigned content_type;
@@ -43,6 +47,10 @@ private:
 	int content_length;
 	int connection_state;
 	int response_code;	// 返回代码，如404不可达
+
+	char server[128];
+	char date[128];
+	char head_line[128];
 private:
 	// 头部是否已经结束
 	bool header_ended_; 
@@ -54,7 +62,7 @@ private:
 	static const int HTTP_HEADER_ITEMVALUE_LENGTH = 256;
 
 	static const char * HEADER_FIRST ;
-	static const char * HEADER_DATA ;
+	static const char * HEADER_DATE ;
 	static const char * HEADER_SERVER;
 	static const char * HEADER_CONTENT_TYPE;
 	static const char * HEADER_LAST_MODIFIY ;
@@ -169,6 +177,8 @@ private:
 	static int generateCode(); // 生成一个用于唯一标识这个符号的
 	static int cur_code_;
 	yanglei_utility::CAutoCreateCS cs_;
+
+	friend int FillBlankPacket(HTTPPacket *packet);
 };
 
 #endif  // _UTILITY_HTTP_PACKET_H__
