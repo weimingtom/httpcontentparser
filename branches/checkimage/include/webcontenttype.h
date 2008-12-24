@@ -74,10 +74,10 @@ const TCHAR * getExt(const int type) {
 inline
 bool isImage(const unsigned type) {
 	const unsigned actual_type = type & (~CONTYPE_PORN);
-	return (( IMAGE_TYPE_GIF & actual_type ) ||
-			( IMAGE_TYPE_JPEG & actual_type ) ||
-			( IMAGE_TYPE_PNG & actual_type ) ||
-			( IMAGE_TYPE_BMP & actual_type )) ? true : false;
+	return (( IMAGE_TYPE_GIF == actual_type ) ||
+			( IMAGE_TYPE_JPEG == actual_type ) ||
+			( IMAGE_TYPE_PNG == actual_type ) ||
+			( IMAGE_TYPE_BMP == actual_type )) ? true : false;
 }
 
 // 是否是黄色内容
@@ -100,7 +100,7 @@ void resetPorn(unsigned *type) {
 inline
 bool isText(const unsigned type) {
 	const unsigned actual_type = type & (~CONTYPE_PORN);
-	return (CONTYPE_HTML & actual_type) || (CONTYPE_XML & actual_type) ? true : false;
+	return ((CONTYPE_HTML == actual_type) || (CONTYPE_XML == actual_type)) ? true : false;
 }
 
 
