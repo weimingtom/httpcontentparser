@@ -638,7 +638,7 @@ void HTTPPacketTest::testAdd0LengthPacket() {
 	CPPUNIT_ASSERT(packet->isComplete() == false);
 	CPPUNIT_ASSERT(0 == packet->addBuffer(length_specified, 0, &added_length));
 	CPPUNIT_ASSERT(0 == added_length);
-	CPPUNIT_ASSERT(packet->isComplete() == false);
+	CPPUNIT_ASSERT(packet->isComplete() == true);
 	delete packet;
 	}
 

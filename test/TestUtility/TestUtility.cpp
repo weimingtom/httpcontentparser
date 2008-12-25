@@ -14,7 +14,9 @@
 #include ".\seachpackettest.h"
 #include ".\HttpRequestPacketTest.h"
 #include ".\buffercallertest.h"
+#include ".\replacepackettest.h"
 
+CPPUNIT_TEST_SUITE_REGISTRATION(ReplacePacketTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(HTTPRequestHeaderTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(BufferCallerTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(SeachPacketTest);

@@ -197,6 +197,12 @@
 				RelativePath=".\ProtocolPacketTest.h">
 			</File>
 			<File
+				RelativePath=".\ReplacePacketTest.cpp">
+			</File>
+			<File
+				RelativePath=".\ReplacePacketTest.h">
+			</File>
+			<File
 				RelativePath=".\SeachPacketTest.cpp">
 			</File>
 			<File
