@@ -105,7 +105,10 @@ int HTTPContentHander::checkContent(HTTPPacket *packet) {
 // 检测是否应该检查图片内容，如果不应该，则直接返回
 // 检查图片内容，并获取黄色图片的松紧度
 int HTTPContentHander::checkImage(HTTPPacket *packet) {
-	OutputDebugString("checkImage");
+	char buffer1[1024];
+	sprintf(buffer1, "check code : %d, check Image...", packet->getCode());
+	OutputDebugString(buffer1);
+	OutputDebugString("===========checkImage============");
 	if (false == checker_.shouldCheck(packet)) {
 		return CONTENT_CHECK_UNKNOWN;
 	}
@@ -136,11 +139,18 @@ int HTTPContentHander::checkImage(HTTPPacket *packet) {
 	sprintf(buffer, "------------check image scope : %f", score);
 	OutputDebugString(buffer);
 
-	if (score < checker_.getImageVScore()) {
+	if (score > 0.0f) {
+		OutputDebugString("block---------------");
 		return CONTENT_CHECK_PORN;
 	} else {
 		return CONTENT_CHECK_NORMAL;
 	}
+
+	//if (score < checker_.getImageVScore()) {
+	//	return CONTENT_CHECK_PORN;
+	//} else {
+	//	return CONTENT_CHECK_NORMAL;
+	//}
 	// 删除文件
 	return CONTENT_CHECK_UNKNOWN;
 }

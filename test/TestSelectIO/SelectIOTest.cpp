@@ -478,7 +478,7 @@ void SelectIOTest::testRemovePacket() {
 
 	int cnt = static_cast<int>(socket_set.size());
 	for (; iter != socket_set.end(); ++iter) {
-		CPPUNIT_ASSERT(select._sockets_map_.size() == cnt);
+		CPPUNIT_ASSERT(select.socketPackets_._sockets_map_.size() == cnt);
 		FD_ZERO(&readfds);
 		FD_SET(*iter, &readfds);
 
@@ -489,6 +489,6 @@ void SelectIOTest::testRemovePacket() {
 		CPPUNIT_ASSERT(dwNumberOfBytesRecvd == (data1.length()));
 		cnt--;
 	}
-	CPPUNIT_ASSERT(select._sockets_map_.size() == 0);
+	CPPUNIT_ASSERT(select.socketPackets_._sockets_map_.size() == 0);
 	}
 }

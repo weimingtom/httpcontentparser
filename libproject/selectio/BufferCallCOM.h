@@ -118,14 +118,14 @@ public:
 public:
 	bool shouldCheck(HTTPPacket *packet) {
 		// 如果不按照大小进行区分直接返回
-		if (! enableImageCheckByScope)
-			return false;
+		//if (! enableImageCheckByScope)
+		//	return false;
 
 		if (false == shouldCheckByType(packet->getContentType()))
 			return false;
 
-		if (false == shouldCheckBySize(packet->getDataSize()))
-			return false;
+		//if (false == shouldCheckBySize(packet->getDataSize()))
+		//	return false;
 
 		return true;
 	}

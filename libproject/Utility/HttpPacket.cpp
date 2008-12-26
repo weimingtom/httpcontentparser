@@ -21,7 +21,7 @@ int HTTPPacket::generateCode() {
 
 // comstructor 
 HTTPPacket::HTTPPacket(void) {
-	http_data_ = NULL;
+	http_data_ = NULL; 
 	header_exist_ = false;
 	dataextractor_ = NULL;
 
@@ -30,10 +30,9 @@ HTTPPacket::HTTPPacket(void) {
 	http_header_achieve_ = NULL;
 
 	header_read_  = false;
-
-	raw_packets_ = NULL;
-
 	code_ = generateCode();
+
+	raw_packets_ =  new ProtocolPacket<HTTP_PACKET_SIZE>();
 }
 
 HTTPPacket::~HTTPPacket(void) {
@@ -112,15 +111,12 @@ int  HTTPPacket::achieve_header(const char * filename) {
 ///////////////////////////////////////////////
 // 一下函数对原始数据包队列进行操作
 void HTTPPacket::clearRawDeque() {
+	using namespace yanglei_utility;
+	SingleLock<CAutoCreateCS> lock(&cs_);
 	if ( raw_packets_ != NULL)
 		delete raw_packets_;
 }
 
-// 初始化
-void HTTPPacket::InitRawPacket() {
-	if (raw_packets_ == NULL)
-		raw_packets_ = new ProtocolPacket<HTTP_PACKET_SIZE>();
-}
 void HTTPPacket::addRawPacket(const char *buf, const int len) {
 	// 如果此函数分配内存失败，外层程序会处理相应异常
 	assert(raw_packets_ != NULL);
@@ -130,8 +126,6 @@ void HTTPPacket::addRawPacket(const char *buf, const int len) {
 ProtocolPacket<HTTP_PACKET_SIZE> * HTTPPacket::getRawPacket() {
 	using namespace yanglei_utility;
 	SingleLock<CAutoCreateCS> lock(&cs_);
-	if (raw_packets_ == NULL) 
-		OutputDebugString("==========1");
 	assert(raw_packets_ != NULL);
 	return raw_packets_;
 }
@@ -144,9 +138,9 @@ int HTTPPacket::addBuffer(const char *buf, const int len, int * written_length) 
 		assert (written_length != NULL);
 		using namespace yanglei_utility;
 		SingleLock<CAutoCreateCS> lock(&cs_);
-		
-		InitRawPacket();
 
+		// 将处理过的原始数据加入进去
+		addRawPacket(buf, len);
 		// 循环调用指导数据处理完成
 		// 因为chunk编码方式可能多个包存在于一个物理包当中。。
 		// 所以必须不断的提取，知道数据结束
@@ -154,8 +148,6 @@ int HTTPPacket::addBuffer(const char *buf, const int len, int * written_length) 
 		while (bytes <= len) {
 			int bytes_read = extractData(&(buf[bytes]), len - bytes);
 
-			// 将处理过的原始数据加入进去
-			addRawPacket(&(buf[bytes]), bytes_read);
 			bytes += bytes_read;
 
 			// 如果读取为0， 代表获取了一个包
@@ -213,13 +205,10 @@ int HTTPPacket::extractData(const char *buf, const int len) {
 	//OutputDebugString(buffer);
 	// 如果包尚未完成，且不存在头部
 	if (!isComplete() && header_exist_ == false) {
+		// 是否是一个有效的HTTP包
 		if (!testHttpHeaderPacket(buf, len)) {
-			char filename[1024];
-			sprintf(filename, "E:\\workspace\\debuglog\\exception\\%d.txt", getCode());
-			achieve(filename);
-			OutputDebugString("==throw exception...");
+			OutputDebugString("==HTTPPacket Exception in extractData");
 			throw int(0);
-			return 0; 
 		}
 		
 		assert (dataextractor_ == NULL);

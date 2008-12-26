@@ -242,9 +242,10 @@ int NoContent::addBuffer(const char *buf, const int len) {
 }
 
 //===========================
+// 合适close的包应该是完成的呢？？
 CloseConnectionLinkt::CloseConnectionLinkt(ProtocolPacket<HTTP_PACKET_SIZE> *data,
 	const HTTP_RESPONSE_HEADER *header) : data_(data), http_header_(header) {
-	finished_ = false;
+	finished_ = true;
 }	
 
 CloseConnectionLinkt::~CloseConnectionLinkt() {
@@ -295,9 +296,9 @@ HttpDataExtractor * HttpDataExtractor::Create(const HTTP_RESPONSE_HEADER *header
 		return (HttpDataExtractor*)new ChunkPacket(data, header);
 	}
 
-	if (header->getConnectionState() == HTTP_RESPONSE_HEADER::CONNECT_CLOSE) {
-		return (HttpDataExtractor*) new CloseConnectionLinkt(data, header);
-	}
+	//if (header->getConnectionState() == HTTP_RESPONSE_HEADER::CONNECT_CLOSE) {
+	//	return (HttpDataExtractor*) new CloseConnectionLinkt(data, header);
+	//}
 
 	// 如果没有content部分
 	if (header->existContent() == false) {
