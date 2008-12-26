@@ -95,8 +95,6 @@ int CSelectIO::prerecv(SOCKET s, LPWSABUF lpBuffers,
 		//socketPackets_.replacePacket(s, packet, new_packet);
 		//delete packet;
 		//packet = new_packet;
-		 
-		OutputDebugString("replace......============");
 	}
 	
 	// 获取一个
