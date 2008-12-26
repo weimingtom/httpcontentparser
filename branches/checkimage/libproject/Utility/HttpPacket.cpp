@@ -40,8 +40,6 @@ HTTPPacket::~HTTPPacket(void) {
 }
 
 void HTTPPacket::releaseResource() {
-	using namespace yanglei_utility;
-	SingleLock<CAutoCreateCS> lock(&cs_);
 	if (NULL != dataextractor_) {
 		delete dataextractor_;
 		dataextractor_ = NULL;
@@ -59,7 +57,10 @@ void HTTPPacket::releaseResource() {
 	}
 
 	// 释放原始包
-	clearRawDeque();
+	if ( raw_packets_ != NULL) {
+		delete raw_packets_;
+		raw_packets_ = NULL;
+	}
 }
 
 // 获取整个包的大小
@@ -84,15 +85,11 @@ unsigned HTTPPacket::getDataSize() const {
 /////////////////////////////////////////////////////
 // 将数据保存在文件当中
 int HTTPPacket::achieve(const char * filename) {
-	using namespace yanglei_utility;
-	SingleLock<CAutoCreateCS> lock(&cs_);
 	int header_length = achieve_header(filename);
 	int data_length = achieve_data(filename);
 	return header_length + data_length;
 }
 int  HTTPPacket::achieve_data(const char * filename) {
-	using namespace yanglei_utility;
-	SingleLock<CAutoCreateCS> lock(&cs_);
 	if (NULL != http_data_)
 		return http_data_->achieve(filename);
 	else
@@ -100,8 +97,6 @@ int  HTTPPacket::achieve_data(const char * filename) {
 }
 
 int  HTTPPacket::achieve_header(const char * filename) {
-	using namespace yanglei_utility;
-	SingleLock<CAutoCreateCS> lock(&cs_);
 	if (NULL != http_header_achieve_)
 		return http_header_achieve_->achieve(filename);
 	else
@@ -110,12 +105,6 @@ int  HTTPPacket::achieve_header(const char * filename) {
 
 ///////////////////////////////////////////////
 // 一下函数对原始数据包队列进行操作
-void HTTPPacket::clearRawDeque() {
-	using namespace yanglei_utility;
-	SingleLock<CAutoCreateCS> lock(&cs_);
-	if ( raw_packets_ != NULL)
-		delete raw_packets_;
-}
 
 void HTTPPacket::addRawPacket(const char *buf, const int len) {
 	// 如果此函数分配内存失败，外层程序会处理相应异常
@@ -124,8 +113,6 @@ void HTTPPacket::addRawPacket(const char *buf, const int len) {
 }
 
 ProtocolPacket<HTTP_PACKET_SIZE> * HTTPPacket::getRawPacket() {
-	using namespace yanglei_utility;
-	SingleLock<CAutoCreateCS> lock(&cs_);
 	assert(raw_packets_ != NULL);
 	return raw_packets_;
 }
@@ -136,8 +123,6 @@ ProtocolPacket<HTTP_PACKET_SIZE> * HTTPPacket::getRawPacket() {
 int HTTPPacket::addBuffer(const char *buf, const int len, int * written_length) {
 	try {
 		assert (written_length != NULL);
-		using namespace yanglei_utility;
-		SingleLock<CAutoCreateCS> lock(&cs_);
 
 		// 将处理过的原始数据加入进去
 		addRawPacket(buf, len);
@@ -184,8 +169,6 @@ int HTTPPacket::addBuffer(const char *buf, const int len, int * written_length) 
 }
 
 int HTTPPacket::read(char *buf, const int bufsize, int &bytedread) {
-	using namespace yanglei_utility;
-	SingleLock<CAutoCreateCS> lock(&cs_);
 	int head_bytes_read = 0;
 	int data_bytes_read = 0;
 	if (header_read_ == false) {
@@ -261,8 +244,6 @@ int HTTPPacket::extractData(const char *buf, const int len) {
 	return 0; // 其实不会到这里的...
 }
 bool HTTPPacket::testHttpHeaderPacket(const char *buf, int len) {
-	using namespace yanglei_utility;
-	SingleLock<CAutoCreateCS> lock(&cs_);
 	return http_header_.isHttpHeader(buf, len);
 }
 

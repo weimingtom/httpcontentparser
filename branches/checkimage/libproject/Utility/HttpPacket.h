@@ -110,8 +110,8 @@ public:
 
 	// 当前包是一个完整的HTTP包吗？？
 	bool isComplete() const;
-	unsigned getDataSize() const;
-	unsigned getHeaderSize() const;
+	unsigned getDataSize() const;		// 获取数据大小
+	unsigned getHeaderSize() const;		// 获取头部大小
 
 	int addBuffer(const char *buf, const int len, int * written_length);
 	int read(char *buf, const int bufsize, int &bytedread);
@@ -153,7 +153,6 @@ private:
 	
 	// 保存原始的包，按照接收到的顺序
 	ProtocolPacket<HTTP_PACKET_SIZE> *  raw_packets_;
-	void InitRawPacket();
 	void addRawPacket(const char *buf, const int len);
 	void clearRawDeque();
 
@@ -178,7 +177,6 @@ private:
 	int code_;
 	static int generateCode(); // 生成一个用于唯一标识这个符号的
 	static int cur_code_;
-	yanglei_utility::CAutoCreateCS cs_;
 
 	friend int FillBlankPacket(HTTPPacket *packet);
 };
