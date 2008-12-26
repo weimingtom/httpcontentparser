@@ -92,7 +92,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="..\..\include"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_SHOW_DETAIL;_SHOW_DEBUG;__ENABLE_DUMP_HTTP_REQUEST__;__SHOW_SPI_FUNCTION_CALL__"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_SHOW_DETAIL;_SHOW_DEBUG;__ENABLE_DUMP_HTTP_REQUEST__"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="3"

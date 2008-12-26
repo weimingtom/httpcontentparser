@@ -237,7 +237,7 @@ int WSPAPI WSPSend(
 	}
 	
 	
-	DUMP_HTTP_REQUEST(lpBuffers, dwBufferCount, "c:\\request.txt");
+	// DUMP_HTTP_REQUEST(lpBuffers, dwBufferCount, "c:\\request.txt");
 	 // 检查IP是否正常，如果可以则通过，否则直接返回错误
 	if (accessNetword() && checkHTTPRequest(&packet)){
 		return NextProcTable.lpWSPSend(s, lpBuffers, dwBufferCount
@@ -416,7 +416,7 @@ int WSPAPI WSPGetPeerName (
   SOCKET		s,                     
   struct		sockaddr FAR * name,   
   LPINT			namelen,                
-  LPINT			lpErrno                 
+  LPINT			lpErrno                  
 )
 {
 	SPI_FUNCTION_CALL(_T("WSPGetPeerName ..."));

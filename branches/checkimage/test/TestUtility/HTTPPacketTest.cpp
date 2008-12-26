@@ -684,3 +684,26 @@ void HTTPPacketTest::testAdd0LengthPacket() {
 	delete packet;
 	}
 }
+
+void HTTPPacketTest::testActuallyPacket() {
+	const char acutal_data[] = "HTTP/1.0 200 OK\r\n"
+				"Date: Fri, 26 Dec 2008 07:14:39 GMT\r\n"
+				"Server: Apache/2.0.63 (Unix)\r\n"
+				"Last-Modified: Fri, 26 Dec 2008 07:12:29 GMT\r\n"
+				"Accept-Ranges: bytes\r\n"
+				"X-Powered-By: mod_xlayout_jh/0.0.1vhs.markII.remix\r\n"
+				"Cache-Control: max-age=60\r\n"
+				"Expires: Fri, 26 Dec 2008 07:15:39 GMT\r\n"
+				"Vary: Accept-Encoding\r\n"
+				"Content-Encoding: gzip\r\n"
+				"X-UA-Compatible: IE=EmulateIE7\r\n"
+				"Content-Type: text/html\r\n"
+				"X-Cache: MISS from xd33-95.HP08040034.sina.com.cn\r\n"
+				"Via: 1.0 xd33-95.HP08040034.sina.com.cn:80 (squid/2.6.STABLE13)\r\n"
+				"Connection: close\r\n\r\n"
+				"kkdkdkdkdkdkdk";
+	
+	int actual_length;
+	HTTPPacket *packet = new HTTPPacket;
+	CPPUNIT_ASSERT(0 == packet->addBuffer(acutal_data, strlen(acutal_data), &actual_length));
+}
