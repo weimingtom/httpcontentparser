@@ -2,8 +2,6 @@
 #include "selectio.h"
 #include "debug.h" 
 #include ".\overlapped.h"
-
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <tchar.h>
@@ -20,12 +18,6 @@
 
 const int BUF_SIZE = 1024 * 1024;
 char global_buffer[BUF_SIZE] = {0};
-
-#ifdef __SHOW_SPI_FUNCTION_CALL__
-#define SPI_FUNCTION_CALL(msg) OutputDebugString(fmt)
-#else
-#define SPI_FUNCTION_CALL(msg)
-#endif
 
 // 进程内全局变量  
 WSPUPCALLTABLE		MainUpCallTable;
@@ -108,7 +100,8 @@ int WSPAPI WSPSelect (
 	
 	// 如果在White DNS List, 我们也应该直接返回 ;)
 	// 直接返回，自身填入select
-	if (g_select.preselect(readfds) == 0) {
+	int result = g_select.preselect(readfds);
+	if (0 == result) {
 		// firefox都是NULL
 		if (writefds != NULL)
 			FD_ZERO(writefds);
@@ -122,9 +115,9 @@ int WSPAPI WSPSelect (
 	int iRet = NextProcTable.lpWSPSelect(nfds, 
 				readfds, writefds, exceptfds, timeout, lpErrno); 
 
-	g_select.postselect(readfds);
+	g_select.postselect(readfds); 
 	return iRet;
-}
+} 
 
 int WSPAPI WSPRecv(
 	SOCKET			s,
@@ -139,7 +132,7 @@ int WSPAPI WSPRecv(
 )
 {
 	SPI_FUNCTION_CALL(_T("WSPRecv ..."));
-	try {
+	try { 
 		// 对于使用MSG_PEEK抓取的方式
 		if ((*lpFlags) & MSG_PEEK) {
 			return NextProcTable.lpWSPRecv(s, lpBuffers, dwBufferCount
@@ -147,7 +140,8 @@ int WSPAPI WSPRecv(
 				, lpCompletionRoutine, lpThreadId, lpErrno);
 		}
 
-		if (g_select.prerecv(s, lpBuffers, dwBufferCount, lpNumberOfBytesRecvd) == 0) {
+		const int result = g_select.prerecv(s, lpBuffers, dwBufferCount, lpNumberOfBytesRecvd);
+		if (result == 0) {
 			return 0;
 		}
 
@@ -230,7 +224,7 @@ int WSPAPI WSPSend(
 	LPINT			lpErrno
 )
 {
-	OutputDebugString(_T("WSPSend"));
+	SPI_FUNCTION_CALL(_T("WSPSend"));
 
 	HTTPRequestPacket packet;
 	int item_count = packet.parsePacket(lpBuffers, dwBufferCount);
@@ -243,7 +237,7 @@ int WSPAPI WSPSend(
 	}
 	
 	
-	// DumpBuf(lpBuffers, dwBufferCount, "c:\\request.txt");
+	DUMP_HTTP_REQUEST(lpBuffers, dwBufferCount, "c:\\request.txt");
 	 // 检查IP是否正常，如果可以则通过，否则直接返回错误
 	if (accessNetword() && checkHTTPRequest(&packet)){
 		return NextProcTable.lpWSPSend(s, lpBuffers, dwBufferCount
@@ -269,7 +263,7 @@ int WSPAPI WSPSendTo(
 	LPINT			lpErrno
 )
 {
-	OutputDebugString("WSPSendTo ...");
+	SPI_FUNCTION_CALL("WSPSendTo ...");
 
 	HTTPRequestPacket packet;
 	int item_count = packet.parsePacket(lpBuffers, dwBufferCount);
@@ -306,6 +300,7 @@ int WSPAPI WSPRecvFrom (
 	LPINT			lpErrno
 )
 {
+	SPI_FUNCTION_CALL("WSPRecvFrom");
 	int iRet = NextProcTable.lpWSPRecvFrom(s, lpBuffers, dwBufferCount
 		, lpNumberOfBytesRecvd, lpFlags, lpFrom, lpFromlen
 		, lpOverlapped, lpCompletionRoutine, lpThreadId, lpErrno);
@@ -493,7 +488,7 @@ SOCKET WSPAPI WSPJoinLeaf (
   LPQOS			lpSQOS,                       
   LPQOS			lpGQOS,                       
   DWORD			dwFlags,                      
-  LPINT			lpErrno                       
+  LPINT			lpErrno                      
 )
 {
 	SPI_FUNCTION_CALL(_T("WSPJoinLeaf ..."));

@@ -37,9 +37,9 @@ public:
 	// 是否存在内容
 	bool existContent() const ;
 
-	const char * getDate() { return date;}
-	const char * getServer() { return server;}
-	const char * getHeaderLine() { return head_line;}
+	const char * getDate()  const { return date;}
+	const char * getServer() const { return server;}
+	const char * getHeaderLine() const { return head_line;}
 private:
 	int transfer_encoding;
 	unsigned content_type;
@@ -56,6 +56,8 @@ private:
 	bool header_ended_; 
 	// 分析行
 	void parseLine(const char *line);
+
+public:
 	static const int HTTP_HEADER_MAX_LENGTH = 64*1024;
 	// 定义每条信息的最大长度
 	static const int HTTP_HEADER_ITEMNAME_LENGTH = 256;
