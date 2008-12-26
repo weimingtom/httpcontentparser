@@ -114,7 +114,7 @@ int CSelectIO::prerecv(SOCKET s, LPWSABUF lpBuffers,
 	// 所有包都已经发送
 	for (int i = 0; i < static_cast<int>(dwBufferCount); ++i) {
 		const DWORD bytes = raw_packet->read(lpBuffers[i].buf, lpBuffers[i].len);
-		packet->achieve("c:\\aaa.txt");
+		// packet->achieve("c:\\aaa.txt");
 		//char filename[1024];
 		//sprintf(filename, "d:\\workspace\\debuglog\\%d_%dw.log", packet->getCode(), s);
 		//WriteRawData(filename, lpBuffers[i].buf, bytes);
@@ -232,16 +232,13 @@ int CSelectIO::graspData(const SOCKET s, char *buf, const int len) {
 		HTTPPacket* sock_data  = socketPackets_.getSOCKETPacket(s);
 		assert( sock_data != NULL);
 
-		char filename[1024];
-		sprintf(filename, "d:\\debuglog\\s%d_%d.log",  s, sock_data->getCode());
-		OutputDebugString(filename);
-		WriteRawData(filename, buf, len);
+		//char filename[1024];
+		//sprintf(filename, "d:\\debuglog\\s%d_%d.log",  s, sock_data->getCode());
+		//OutputDebugString(filename);
+		//WriteRawData(filename, buf, len);
 
 		// 如果接收到了长度为0
 		if (len == 0) {
-			char b[204];
-			sprintf(b, "==========socket %d recv a 0 length packet!", s);
-			OutputDebugString(b);
 			// 将包表示为完整的
 			int added_length;
 			const int result = sock_data->addBuffer(buf, len, &added_length);
@@ -252,48 +249,35 @@ int CSelectIO::graspData(const SOCKET s, char *buf, const int len) {
 			}
 
 			// 如果出现了错误
-
 			assert ( added_length == result);
 			socketPackets_.removePacket(s, sock_data);
 			socketPackets_.addCompletedPacket(s, sock_data);				
 			completed_generated = true;
 		} else {
-			while (total_size < len) {
-				// 由于这里可能出现头部，所以在这里也应该进行头部验证啊....
-				// 但是这里是已经接收到的包，所以受到了必须将它直接送上去，不能放弃
-				int bytes_written;
-				const int result = sock_data->addBuffer(&(buf[total_size]), len - total_size, &bytes_written);
-				total_size += bytes_written;
+			// 由于这里可能出现头部，所以在这里也应该进行头部验证啊....
+			// 但是这里是已经接收到的包，所以受到了必须将它直接送上去，不能放弃
+			int bytes_written;
+			const int result = sock_data->addBuffer(&(buf[total_size]), len - total_size, &bytes_written);
+			total_size += bytes_written;
 
-				if (0 != result) {
-					char buffer[1024];
-					sprintf(buffer, "2. SOCKET %d, Packet Code %d", s, sock_data->getCode());
-					OutputDebugString(buffer);
-				}
+			//// 出现了问题
+			//if (0 != result) {
+			//	char buffer[1024];
+			//	sprintf(buffer, "2. SOCKET %d, Packet Code %d", s, sock_data->getCode());
+			//	OutputDebugString(buffer);
+			//}
 
 
-				// 如果当前包已经完成，则从map中移除，并放入到完成队列当中 
-				// 如果一些条件不符合约束，也应该放入完成队列
-				//    如：HTTP的类型， 大小等等.....
-				if (sock_data->isComplete()) { 
-					// 放入到完成队列当中
-					
-					socketPackets_.removePacket(s, sock_data);
-					socketPackets_.addCompletedPacket(s, sock_data);
-					completed_generated = true;
+			// 如果当前包已经完成，则从map中移除，并放入到完成队列当中 
+			// 如果一些条件不符合约束，也应该放入完成队列
+			//    如：HTTP的类型， 大小等等.....
+			if (sock_data->isComplete() || result != 0) { 
+				// 放入到完成队列当中
+				socketPackets_.removePacket(s, sock_data);
+				socketPackets_.addCompletedPacket(s, sock_data);
+				completed_generated = true;
+			}
 
-					// 如果在这里移除了， 需要新增加一个包
-					// 如果不加这个条件或者改成<=, 那么当一个HTTP包后面紧跟着一个非HTTP包时，会出现错误
-					if (total_size < len) {
-						sock_data  = socketPackets_.getSOCKETPacket(s);
-					}
-				}
-
-				if (bytes_written == 0) {
-					//assert(false);
-					break;
-				}
-			} // while
 		}
 
 		// 如果有完整的包返回0，否则返回1
@@ -370,11 +354,9 @@ bool CSelectIO::needStored(const SOCKET s) {
 // 2. 分析包的类型, 并确定该包是否应该被检查
 // 3. 分析不包的内容
 bool CSelectIO::handlePacket(HTTPPacket *packet) {
-	OutputDebugString("handle packet...");
-
 	int result;
 	// 首先查找是否已经被处理过了
-	if (bufferResult_.getResult(packet->getCode(), &result)) {
+	if (false == bufferResult_.getResult(packet->getCode(), &result)) {
 		result =  handler_.handleContent(packet);
 		bufferResult_.addResultPair(packet->getCode(), result);
 	}
@@ -540,7 +522,6 @@ int SocketPackets::replacePacket(SOCKET s, HTTPPacket *p, HTTPPacket * new_packe
 	using namespace yanglei_utility;
 	SingleLock<CAutoCreateCS> lock(&cs_);
 
-	OutputDebugString("replacePacket");
 	SOCK_DATA_MAP::iterator iter = _sockets_map_.lower_bound(s);
 	SOCK_DATA_MAP::const_iterator iterEnd = _sockets_map_.upper_bound(s);
 	for (; iter != iterEnd; ++iter) {
@@ -556,8 +537,6 @@ int SocketPackets::replacePacket(SOCKET s, HTTPPacket *p, HTTPPacket * new_packe
 int SocketPackets::removePacket(const SOCKET s, HTTPPacket *p) {
 	using namespace yanglei_utility;
 	SingleLock<CAutoCreateCS> lock(&cs_);
-
-	OutputDebugString("removeBufferResult");
 
 	SOCK_DATA_MAP::iterator iter = _sockets_map_.lower_bound(s);
 	SOCK_DATA_MAP::const_iterator iterEnd = _sockets_map_.upper_bound(s);

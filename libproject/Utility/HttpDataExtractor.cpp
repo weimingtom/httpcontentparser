@@ -264,7 +264,7 @@ int CloseConnectionLinkt::addBuffer(const char *buf, const int len) {
 // class FixContent
 NoSepcifiedLength::NoSepcifiedLength(ProtocolPacket<HTTP_PACKET_SIZE> *data,
 	const HTTP_RESPONSE_HEADER *header) : data_(data), http_header_(header) {
-	finished_ = true;
+	finished_ = false;
 }	
 
 NoSepcifiedLength::~NoSepcifiedLength() {
@@ -275,10 +275,10 @@ bool NoSepcifiedLength::finished() const {
 }
 
 int NoSepcifiedLength::addBuffer(const char *buf, const int len) {
-	// assert (false);
-	finished_ = true;
-	// assert(false);
-	return 0;
+	if (0 == len) {
+		finished_ = true;
+	}
+	return data_->write(buf, len);
 }
 
 };

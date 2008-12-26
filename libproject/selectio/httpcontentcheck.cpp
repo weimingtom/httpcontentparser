@@ -29,7 +29,6 @@ HTTPContentHander::~HTTPContentHander() {
 //===================================================================
 // ÊÇ·ñÊÇ
 int HTTPContentHander::handleContent(HTTPPacket *packet) {
-	OutputDebugString("handleContent");
 	if (false == needHandle(packet)) {
 		OutputDebugString("handleContent needless");
 		return CONTENT_CHECK_UNKNOWN;
@@ -108,6 +107,10 @@ int HTTPContentHander::checkImage(HTTPPacket *packet) {
 	char buffer1[1024];
 	sprintf(buffer1, "check code : %d, check Image...", packet->getCode());
 	OutputDebugString(buffer1);
+
+	if (packet->getDataSize() < 2048) {
+		return CONTENT_CHECK_NORMAL;
+	}
 	OutputDebugString("===========checkImage============");
 	if (false == checker_.shouldCheck(packet)) {
 		return CONTENT_CHECK_UNKNOWN;

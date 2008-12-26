@@ -10,6 +10,7 @@ public:
 	~HTTPPacketTest(void);
 
 	CPPUNIT_TEST_SUITE(HTTPPacketTest);
+	CPPUNIT_TEST(testActuallyPacket);
 	CPPUNIT_TEST(testConnectionState);
 	CPPUNIT_TEST(testZeorLengthPacket);
 	CPPUNIT_TEST(testAdd0LengthPacket);
@@ -26,6 +27,7 @@ public:
 	CPPUNIT_TEST(testRawPacket);
 	CPPUNIT_TEST_SUITE_END();
 protected:
+	void testActuallyPacket();
 	void testConnectionState();
 	void testZeorLengthPacket();
 	void testNoContentHeader();
