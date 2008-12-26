@@ -104,10 +104,6 @@ int HTTPContentHander::checkContent(HTTPPacket *packet) {
 // 检测是否应该检查图片内容，如果不应该，则直接返回
 // 检查图片内容，并获取黄色图片的松紧度
 int HTTPContentHander::checkImage(HTTPPacket *packet) {
-	char buffer1[1024];
-	sprintf(buffer1, "check code : %d, check Image...", packet->getCode());
-	OutputDebugString(buffer1);
-
 	if (packet->getDataSize() < 2048) {
 		return CONTENT_CHECK_NORMAL;
 	}

@@ -27,7 +27,7 @@ HTTPPacket::HTTPPacket(void) {
 
 	header_size_ = 0;
 	data_size_ = 0;
-	http_header_achieve_ = NULL;
+	// http_header_achieve_ = NULL;
 
 	header_read_  = false;
 	code_ = generateCode();
@@ -51,10 +51,10 @@ void HTTPPacket::releaseResource() {
 	}
 
 	// 释放头部
-	if (NULL != http_header_achieve_) {
-		delete http_header_achieve_;
-		http_header_achieve_ = NULL;
-	}
+	//if (NULL != http_header_achieve_) {
+	//	delete http_header_achieve_;
+	//	http_header_achieve_ = NULL;
+	//}
 
 	// 释放原始包
 	if ( raw_packets_ != NULL) {
@@ -85,9 +85,7 @@ unsigned HTTPPacket::getDataSize() const {
 /////////////////////////////////////////////////////
 // 将数据保存在文件当中
 int HTTPPacket::achieve(const char * filename) {
-	int header_length = achieve_header(filename);
-	int data_length = achieve_data(filename);
-	return header_length + data_length;
+	return raw_packets_->achieve(filename);
 }
 int  HTTPPacket::achieve_data(const char * filename) {
 	if (NULL != http_data_)
@@ -96,12 +94,12 @@ int  HTTPPacket::achieve_data(const char * filename) {
 		return 0;
 }
 
-int  HTTPPacket::achieve_header(const char * filename) {
-	if (NULL != http_header_achieve_)
-		return http_header_achieve_->achieve(filename);
-	else
-		return 0;
-}
+//int  HTTPPacket::achieve_header(const char * filename) {
+//	if (NULL != http_header_achieve_)
+//		return http_header_achieve_->achieve(filename);
+//	else
+//		return 0;
+//}
 
 ///////////////////////////////////////////////
 // 一下函数对原始数据包队列进行操作
@@ -173,7 +171,7 @@ int HTTPPacket::read(char *buf, const int bufsize, int &bytedread) {
 	int data_bytes_read = 0;
 	if (header_read_ == false) {
 		header_read_ = true;
-		head_bytes_read = http_header_achieve_->read(buf, bufsize);
+		// head_bytes_read = http_header_achieve_->read(buf, bufsize);
 	}
 
 	data_bytes_read = http_data_->read(buf, bufsize - head_bytes_read);
@@ -197,7 +195,7 @@ int HTTPPacket::extractData(const char *buf, const int len) {
 		assert (dataextractor_ == NULL);
 		assert ( len >= header_size_);
 		assert ( http_data_ == NULL);
-		assert ( http_header_achieve_ == NULL);
+		// assert ( http_header_achieve_ == NULL);
 
 
 		// 如果还没有初始化，且传入的数据是HTTP协议
@@ -209,11 +207,11 @@ int HTTPPacket::extractData(const char *buf, const int len) {
 
 
 		http_data_ = new ProtocolPacket<HTTP_PACKET_SIZE>(); // 存储空间
-		http_header_achieve_ = new ProtocolPacket<HTTP_PACKET_SIZE>();// 存储头部
-				
+		
 		// 保存头部
-		const int header_written = http_header_achieve_->write(buf, header_size_);
-		assert (header_written == header_size_);
+		// http_header_achieve_ = new ProtocolPacket<HTTP_PACKET_SIZE>();// 存储头部
+		// const int header_written = http_header_achieve_->write(buf, header_size_);
+		// assert (header_written == header_size_);
 
 		// 创建内容解析器
 		dataextractor_ = HttpDataExtractor::Create(&http_header_, http_data_);
