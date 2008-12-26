@@ -22,15 +22,15 @@ int FillBlankPacket(HTTPPacket *packet, HTTPPacket *new_packet) {
 	char buffer[2048] = {0};
 	// header line;
 	strcpy(buffer, packet->getHeader()->getHeaderLine());
-	iIndex += strlen(packet->getHeader()->getHeaderLine());
+	iIndex += (int)strlen(packet->getHeader()->getHeaderLine());
 	strcpy(buffer+iIndex, new_line);
 	iIndex += new_line_length;
 
 	// 增加日期信息
-	const int date_length = strlen(packet->getHeader()->getDate());
+	const int date_length = (int)strlen(packet->getHeader()->getDate());
 	if (0 != date_length) {
 		strcpy(buffer+iIndex, HTTP_RESPONSE_HEADER::HEADER_DATE);
-		iIndex += strlen(HTTP_RESPONSE_HEADER::HEADER_DATE);
+		iIndex += (int)strlen(HTTP_RESPONSE_HEADER::HEADER_DATE);
 		strcpy(buffer +iIndex, " ");
 		iIndex += 1;
 		strcpy(buffer+iIndex, packet->getHeader()->getDate());
@@ -40,7 +40,7 @@ int FillBlankPacket(HTTPPacket *packet, HTTPPacket *new_packet) {
 	}
 
 	// 增加服务器信息
-	const int server_length = strlen(packet->getHeader()->getServer());
+	const int server_length = (int)strlen(packet->getHeader()->getServer());
 	if (0 != server_length) {
 		strcpy(buffer+iIndex, HTTP_RESPONSE_HEADER::HEADER_SERVER);
 		iIndex += strlen(HTTP_RESPONSE_HEADER::HEADER_SERVER);
@@ -65,11 +65,11 @@ int FillBlankPacket(HTTPPacket *packet, HTTPPacket *new_packet) {
 		HTTP_RESPONSE_HEADER::CONNECTION_KEEP_ALIVE_NAME : HTTP_RESPONSE_HEADER::CONNECTION_CLOSE_NAME;
 
 	strcpy(buffer+iIndex, HTTP_RESPONSE_HEADER::HEADER_CONNECTION);
-	iIndex += strlen(HTTP_RESPONSE_HEADER::HEADER_CONNECTION);
+	iIndex += (int)strlen(HTTP_RESPONSE_HEADER::HEADER_CONNECTION);
 	strcpy(buffer +iIndex, " ");
 	iIndex += 1;
 	strcpy(buffer+iIndex, connection);
-	iIndex += strlen(connection);
+	iIndex += (int)strlen(connection);
 
 	// 尾部
 	strcpy(buffer+iIndex, header_tail);
@@ -80,5 +80,7 @@ int FillBlankPacket(HTTPPacket *packet, HTTPPacket *new_packet) {
 	iIndex += data_size;
 
 	new_packet->addBuffer(buffer, iIndex+1, &written);
+	assert (new_packet->getRawPacket() != NULL);
+	assert (new_packet->isComplete() == true);
 	return 0;
 }

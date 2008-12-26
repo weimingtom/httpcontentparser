@@ -251,6 +251,10 @@ bool HTTPPacket::existHeader() const {
 	return header_size_ != 0;
 }
 
+bool HTTPPacket::transfefTail() {
+	return dataextractor_->transferTail();
+}
+
 // 分析HTTP协议头
 // 保存HTTP协议的内容，而后获取头
 int HTTPPacket::parseHeader(const char *buffer_recv, const unsigned len) {
