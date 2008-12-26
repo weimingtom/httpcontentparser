@@ -120,7 +120,7 @@ public:
 
 	// 将..保存到文件当中
 	int  achieve_data(const char * filename);
-	int  achieve_header(const char * filename);
+	// int  achieve_header(const char * filename);
 	int  achieve(const char * filename);
 
 	// 此函数会返回一个原始的包，当然如果已经不存在了他会返回NULL
@@ -150,7 +150,7 @@ private:
 	
 
 	ProtocolPacket<HTTP_PACKET_SIZE> * http_data_;
-	ProtocolPacket<HTTP_PACKET_SIZE> * http_header_achieve_;
+	// ProtocolPacket<HTTP_PACKET_SIZE> * http_header_achieve_;
 
 	
 	// 保存原始的包，按照接收到的顺序
@@ -179,8 +179,6 @@ private:
 	int code_;
 	static int generateCode(); // 生成一个用于唯一标识这个符号的
 	static int cur_code_;
-
-	friend int FillBlankPacket(HTTPPacket *packet);
 };
 
 #endif  // _UTILITY_HTTP_PACKET_H__
