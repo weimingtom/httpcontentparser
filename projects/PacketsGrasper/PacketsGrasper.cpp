@@ -10,7 +10,7 @@
 #include <utility\fd_set_utility.h>
 #include <utility\HttpPacket.h>
 #include <utility\HTTPRequestPacket.h>
-#include <app_constants.h>
+#include <app_constants.h> 
 
 #pragma data_seg(".inidata")
 	int				m_iRefCount		= 0;
@@ -127,7 +127,7 @@ int WSPAPI WSPRecv(
 	LPDWORD			lpFlags,
 	LPWSAOVERLAPPED	lpOverlapped,
 	LPWSAOVERLAPPED_COMPLETION_ROUTINE lpCompletionRoutine,
-	LPWSATHREADID	lpThreadId,
+	LPWSATHREADID	lpThreadId, 
 	LPINT			lpErrno
 )
 {
@@ -142,17 +142,18 @@ int WSPAPI WSPRecv(
 
 		const int result = g_select.prerecv(s, lpBuffers, dwBufferCount, lpNumberOfBytesRecvd);
 		if (result == 0) {
-			return 0;
+			// 如果受到了包，就直接返回
+			return 0; 
 		}
 
 		int iRet = NextProcTable.lpWSPRecv(s, lpBuffers, dwBufferCount
 				, lpNumberOfBytesRecvd, lpFlags, lpOverlapped
 				, lpCompletionRoutine, lpThreadId, lpErrno);
-
+ 
 		return iRet;
-	} catch (...) {
+	} catch (...) { 
 		// writeException("WSPRecv", "unknown");
-		return SOCKET_ERROR;
+		return SOCKET_ERROR; 
 	}
 }
 
@@ -230,7 +231,7 @@ int WSPAPI WSPSend(
 	int item_count = packet.parsePacket(lpBuffers, dwBufferCount);
 
 	// 如果小于2，那么他就不是一个HTTP请求
-	if (item_count < 2) {	
+	if (item_count < 2) {
 		return NextProcTable.lpWSPSend(s, lpBuffers, dwBufferCount
 			, lpNumberOfBytesSent, dwFlags, lpOverlapped
 			, lpCompletionRoutine, lpThreadId, lpErrno);
@@ -579,6 +580,9 @@ BOOL WINAPI DllMain(
 	if(ul_reason_for_call == DLL_PROCESS_ATTACH) {
 		//InitializeLog();
  		GetModuleFileName(NULL, m_sProcessName, MAX_PATH);
+		char buffer[1024];
+		sprintf(buffer, "New Process Load : %s ====", m_sProcessName);
+		OutputDebugString(buffer);
 
 		InitializeCriticalSection(&gCriticalSection);
 		EnterCriticalSection(&gCriticalSection); 

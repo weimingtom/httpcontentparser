@@ -86,14 +86,16 @@ int CSelectIO::prerecv(SOCKET s, LPWSABUF lpBuffers,
 	// 如果检查失败
 	
 	if (false == handlePacket(packet)) {
-		// removeCompletedPacket(s, packet);
+		socketPackets_.removeCompletedPacket(s, packet);
+		*recv_bytes = 0;
+		return 0;
 		// 应该替换包
-		HTTPPacket *new_packet = new HTTPPacket;
-		FillBlankPacket(packet, new_packet);
-		socketPackets_.replacePacket(s, packet, new_packet);
-		delete packet;
-		packet = new_packet;
-
+		//HTTPPacket *new_packet = new HTTPPacket;
+		//FillBlankPacket(packet, new_packet);
+		//socketPackets_.replacePacket(s, packet, new_packet);
+		//delete packet;
+		//packet = new_packet;
+		 
 		OutputDebugString("replace......============");
 	}
 	
@@ -112,26 +114,24 @@ int CSelectIO::prerecv(SOCKET s, LPWSABUF lpBuffers,
 	//OutputDebugString(data);
 
 	// 所有包都已经发送
-	for (int i = 0; i < static_cast<int>(dwBufferCount); ++i) {
-		const DWORD bytes = raw_packet->read(lpBuffers[i].buf, lpBuffers[i].len);
-		// packet->achieve("c:\\aaa.txt");
-		//char filename[1024];
-		//sprintf(filename, "d:\\workspace\\debuglog\\%d_%dw.log", packet->getCode(), s);
-		//WriteRawData(filename, lpBuffers[i].buf, bytes);
+	// 如果收到长度为0的包呢
+	if (packet->transfefTail() && raw_packet->getBytesCanRead() == 0) {
+		*recv_bytes = 0;
+	} else {
+		for (int i = 0; i < static_cast<int>(dwBufferCount); ++i) {
+			const DWORD bytes = raw_packet->read(lpBuffers[i].buf, lpBuffers[i].len);
 		
-
-		*recv_bytes += bytes;
-		if (bytes == 0 || raw_packet->getBytesCanRead() == 0) {
-			socketPackets_.removeCompletedPacket(s, packet);
+			*recv_bytes += bytes;
+			if (bytes == 0 || raw_packet->getBytesCanRead() == 0) {
+				if (packet->transfefTail() == false)
+					socketPackets_.removeCompletedPacket(s, packet);
+			}
 		}
+
+		assert (*recv_bytes != 0);
 	}
 	
-	if (*recv_bytes == 0) {
-		return 1;
-	} else {
-		return 0;
-	}
-
+	return 0;
 }
 
 // 函数： preselect

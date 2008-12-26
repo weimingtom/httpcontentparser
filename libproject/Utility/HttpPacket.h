@@ -136,6 +136,8 @@ public:
 		return p1.getCode() == p2.getCode();
 	}
 
+	bool transfefTail();
+
 	// สอทลืสิด
 	void releaseResource();
 	ProtocolPacket<HTTP_PACKET_SIZE> * getData() { return http_data_; }

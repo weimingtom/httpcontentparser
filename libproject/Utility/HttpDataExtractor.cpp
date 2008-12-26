@@ -265,6 +265,7 @@ int CloseConnectionLinkt::addBuffer(const char *buf, const int len) {
 NoSepcifiedLength::NoSepcifiedLength(ProtocolPacket<HTTP_PACKET_SIZE> *data,
 	const HTTP_RESPONSE_HEADER *header) : data_(data), http_header_(header) {
 	finished_ = false;
+	transfer_tail_ = true;
 }	
 
 NoSepcifiedLength::~NoSepcifiedLength() {

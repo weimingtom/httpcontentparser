@@ -17,11 +17,17 @@ public:
 	virtual int addBuffer(const char * buf, const int len) = 0;
 	virtual bool finished() const = 0;
 	int getExtractorTypeCode();
+
+	// 对于没有指定长度的包，他可能是主动关闭连接的，
+	// 这时候需要我们传送一个0长度的包
+	bool transferTail() { return transfer_tail_;}
 public:
 	static HttpDataExtractor * Create(const HTTP_RESPONSE_HEADER *,
 		ProtocolPacket<HTTP_PACKET_SIZE> *data);
 protected:
-	HttpDataExtractor() {}
+	HttpDataExtractor() { transfer_tail_ = false;}
+
+	bool transfer_tail_;
 };
 
 #endif  // _UTILITY_HTTPDATAEXTRACTOR_H__
