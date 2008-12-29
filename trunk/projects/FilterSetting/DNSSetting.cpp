@@ -66,3 +66,9 @@ STDMETHODIMP CDNSSetting::justEnableWhiteDNS(VARIANT_BOOL enabled) {
 	g_configuration.getDNSSetting()->justPassWhiteDNS(convert(enabled));
 	return S_OK;
 }
+
+// 检测是否是白名单
+STDMETHODIMP CDNSSetting::isWhiteDNS(BSTR dns, VARIANT_BOOL* White)
+{
+	return S_OK;
+}

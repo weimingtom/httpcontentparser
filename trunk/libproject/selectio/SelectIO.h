@@ -7,6 +7,7 @@
 #include <map>
 #include <set>
 #include <utility\protocolpacket.h>
+#include <dnsmap.h>
 
 typedef int WSPAPI MYWSPRECV(
 	SOCKET			s,
@@ -97,6 +98,11 @@ public:
 	void onCloseSocket(const SOCKET s);
 
 	void setRecv(MYWSPRECV *recv);
+
+	// 设置DNS Map
+	// 如果包是来自White DNS List的
+	void setDNS(DNSMap	* dnsmap) { this->dnsmap_ = dnsmap;}
+	bool checkWhiteDNS(SOCKET s);
 protected: 
 	
 	//==========================================
@@ -107,6 +113,7 @@ protected:
 	// 保存WSPRecv的函数指针
 	MYWSPRECV * lpWSPRecv;
 	friend class SelectIOTest;
+	DNSMap	* dnsmap_;
 
 // 检查包的的内容
 	bool handlePacket(HTTPPacket *packet);
