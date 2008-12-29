@@ -21,19 +21,18 @@ int HTTPPacket::generateCode() {
 
 // comstructor 
 HTTPPacket::HTTPPacket(void) {
-	http_data_ = NULL;
+	http_data_ = NULL; 
 	header_exist_ = false;
 	dataextractor_ = NULL;
 
 	header_size_ = 0;
 	data_size_ = 0;
-	http_header_achieve_ = NULL;
+	// http_header_achieve_ = NULL;
 
 	header_read_  = false;
-
-	raw_packets_ = NULL;
-
 	code_ = generateCode();
+
+	raw_packets_ =  new ProtocolPacket<HTTP_PACKET_SIZE>();
 }
 
 HTTPPacket::~HTTPPacket(void) {
@@ -41,8 +40,6 @@ HTTPPacket::~HTTPPacket(void) {
 }
 
 void HTTPPacket::releaseResource() {
-	using namespace yanglei_utility;
-	SingleLock<CAutoCreateCS> lock(&cs_);
 	if (NULL != dataextractor_) {
 		delete dataextractor_;
 		dataextractor_ = NULL;
@@ -54,13 +51,16 @@ void HTTPPacket::releaseResource() {
 	}
 
 	// 释放头部
-	if (NULL != http_header_achieve_) {
-		delete http_header_achieve_;
-		http_header_achieve_ = NULL;
-	}
+	//if (NULL != http_header_achieve_) {
+	//	delete http_header_achieve_;
+	//	http_header_achieve_ = NULL;
+	//}
 
 	// 释放原始包
-	clearRawDeque();
+	if ( raw_packets_ != NULL) {
+		delete raw_packets_;
+		raw_packets_ = NULL;
+	}
 }
 
 // 获取整个包的大小
@@ -85,42 +85,25 @@ unsigned HTTPPacket::getDataSize() const {
 /////////////////////////////////////////////////////
 // 将数据保存在文件当中
 int HTTPPacket::achieve(const char * filename) {
-	using namespace yanglei_utility;
-	SingleLock<CAutoCreateCS> lock(&cs_);
-	int header_length = achieve_header(filename);
-	int data_length = achieve_data(filename);
-	return header_length + data_length;
+	return raw_packets_->achieve(filename);
 }
 int  HTTPPacket::achieve_data(const char * filename) {
-	using namespace yanglei_utility;
-	SingleLock<CAutoCreateCS> lock(&cs_);
 	if (NULL != http_data_)
 		return http_data_->achieve(filename);
 	else
 		return 0;
 }
 
-int  HTTPPacket::achieve_header(const char * filename) {
-	using namespace yanglei_utility;
-	SingleLock<CAutoCreateCS> lock(&cs_);
-	if (NULL != http_header_achieve_)
-		return http_header_achieve_->achieve(filename);
-	else
-		return 0;
-}
+//int  HTTPPacket::achieve_header(const char * filename) {
+//	if (NULL != http_header_achieve_)
+//		return http_header_achieve_->achieve(filename);
+//	else
+//		return 0;
+//}
 
 ///////////////////////////////////////////////
 // 一下函数对原始数据包队列进行操作
-void HTTPPacket::clearRawDeque() {
-	if ( raw_packets_ != NULL)
-		delete raw_packets_;
-}
 
-// 初始化
-void HTTPPacket::InitRawPacket() {
-	if (raw_packets_ == NULL)
-		raw_packets_ = new ProtocolPacket<HTTP_PACKET_SIZE>();
-}
 void HTTPPacket::addRawPacket(const char *buf, const int len) {
 	// 如果此函数分配内存失败，外层程序会处理相应异常
 	assert(raw_packets_ != NULL);
@@ -128,10 +111,6 @@ void HTTPPacket::addRawPacket(const char *buf, const int len) {
 }
 
 ProtocolPacket<HTTP_PACKET_SIZE> * HTTPPacket::getRawPacket() {
-	using namespace yanglei_utility;
-	SingleLock<CAutoCreateCS> lock(&cs_);
-	if (raw_packets_ == NULL) 
-		OutputDebugString("==========1");
 	assert(raw_packets_ != NULL);
 	return raw_packets_;
 }
@@ -142,11 +121,9 @@ ProtocolPacket<HTTP_PACKET_SIZE> * HTTPPacket::getRawPacket() {
 int HTTPPacket::addBuffer(const char *buf, const int len, int * written_length) {
 	try {
 		assert (written_length != NULL);
-		using namespace yanglei_utility;
-		SingleLock<CAutoCreateCS> lock(&cs_);
-		
-		InitRawPacket();
 
+		// 将处理过的原始数据加入进去
+		addRawPacket(buf, len);
 		// 循环调用指导数据处理完成
 		// 因为chunk编码方式可能多个包存在于一个物理包当中。。
 		// 所以必须不断的提取，知道数据结束
@@ -154,8 +131,6 @@ int HTTPPacket::addBuffer(const char *buf, const int len, int * written_length) 
 		while (bytes <= len) {
 			int bytes_read = extractData(&(buf[bytes]), len - bytes);
 
-			// 将处理过的原始数据加入进去
-			addRawPacket(&(buf[bytes]), bytes_read);
 			bytes += bytes_read;
 
 			// 如果读取为0， 代表获取了一个包
@@ -192,13 +167,11 @@ int HTTPPacket::addBuffer(const char *buf, const int len, int * written_length) 
 }
 
 int HTTPPacket::read(char *buf, const int bufsize, int &bytedread) {
-	using namespace yanglei_utility;
-	SingleLock<CAutoCreateCS> lock(&cs_);
 	int head_bytes_read = 0;
 	int data_bytes_read = 0;
 	if (header_read_ == false) {
 		header_read_ = true;
-		head_bytes_read = http_header_achieve_->read(buf, bufsize);
+		// head_bytes_read = http_header_achieve_->read(buf, bufsize);
 	}
 
 	data_bytes_read = http_data_->read(buf, bufsize - head_bytes_read);
@@ -213,19 +186,16 @@ int HTTPPacket::extractData(const char *buf, const int len) {
 	//OutputDebugString(buffer);
 	// 如果包尚未完成，且不存在头部
 	if (!isComplete() && header_exist_ == false) {
+		// 是否是一个有效的HTTP包
 		if (!testHttpHeaderPacket(buf, len)) {
-			char filename[1024];
-			sprintf(filename, "E:\\workspace\\debuglog\\exception\\%d.txt", getCode());
-			achieve(filename);
-			OutputDebugString("==throw exception...");
+			OutputDebugString("==HTTPPacket Exception in extractData");
 			throw int(0);
-			return 0; 
 		}
 		
 		assert (dataextractor_ == NULL);
 		assert ( len >= header_size_);
 		assert ( http_data_ == NULL);
-		assert ( http_header_achieve_ == NULL);
+		// assert ( http_header_achieve_ == NULL);
 
 
 		// 如果还没有初始化，且传入的数据是HTTP协议
@@ -237,11 +207,11 @@ int HTTPPacket::extractData(const char *buf, const int len) {
 
 
 		http_data_ = new ProtocolPacket<HTTP_PACKET_SIZE>(); // 存储空间
-		http_header_achieve_ = new ProtocolPacket<HTTP_PACKET_SIZE>();// 存储头部
-				
+		
 		// 保存头部
-		const int header_written = http_header_achieve_->write(buf, header_size_);
-		assert (header_written == header_size_);
+		// http_header_achieve_ = new ProtocolPacket<HTTP_PACKET_SIZE>();// 存储头部
+		// const int header_written = http_header_achieve_->write(buf, header_size_);
+		// assert (header_written == header_size_);
 
 		// 创建内容解析器
 		dataextractor_ = HttpDataExtractor::Create(&http_header_, http_data_);
@@ -272,13 +242,15 @@ int HTTPPacket::extractData(const char *buf, const int len) {
 	return 0; // 其实不会到这里的...
 }
 bool HTTPPacket::testHttpHeaderPacket(const char *buf, int len) {
-	using namespace yanglei_utility;
-	SingleLock<CAutoCreateCS> lock(&cs_);
 	return http_header_.isHttpHeader(buf, len);
 }
 
 bool HTTPPacket::existHeader() const {
 	return header_size_ != 0;
+}
+
+bool HTTPPacket::transfefTail() {
+	return dataextractor_->transferTail();
 }
 
 // 分析HTTP协议头
@@ -294,7 +266,7 @@ int HTTPPacket::parseHeader(const char *buffer_recv, const unsigned len) {
 //=================================================
 // class HTTP_HEADER
 const char * HTTP_RESPONSE_HEADER::HEADER_FIRST = "HTTP/";
-const char * HTTP_RESPONSE_HEADER::HEADER_DATA = "Date:";
+const char * HTTP_RESPONSE_HEADER::HEADER_DATE = "Date:";
 const char * HTTP_RESPONSE_HEADER::HEADER_SERVER = "Server:";
 const char * HTTP_RESPONSE_HEADER::HEADER_CONTENT_TYPE = "Content-Type:";
 const char * HTTP_RESPONSE_HEADER::HEADER_LAST_MODIFIY = "Last-modified:";
@@ -347,6 +319,9 @@ HTTP_RESPONSE_HEADER::HTTP_RESPONSE_HEADER() {
 	connection_state    = NO_DESIGNATION;
 	response_code		= NO_DESIGNATION;
 
+	memset(server, 0, sizeof(server));
+	memset(date, 0, sizeof(date));
+	memset(head_line, 0, sizeof(head_line));
 	header_ended_ = false;
 }
 
@@ -408,6 +383,10 @@ void HTTP_RESPONSE_HEADER::parseLine(const char *linedata) {
 		if (NULL != code_ptr) {
 			response_code = atoi(code_ptr);
 		}
+
+		strncpy(head_line, linedata, 128);
+		// 最有一个字符是'\r', 应该去掉
+		head_line[strlen(head_line) - 1] = '\0';
 	} else if (linedata == strstr(linedata, HEADER_CONTENT_TYPE)) {
 		if (strstr(linedata, CONTYPE_GIF_NAME)) {
 			content_type = CONTYPE_GIF;
@@ -422,6 +401,20 @@ void HTTP_RESPONSE_HEADER::parseLine(const char *linedata) {
 		}  else {
 			content_type = CONTYPE_UNKNOWN;
 		}
+	} else if (linedata == strstr(linedata, HEADER_DATE)) {
+		// 保存日期
+		char * code_ptr = strstr(linedata, " ");
+		strncpy(date, code_ptr+1, 128);
+
+		// 最有一个字符是'\r', 应该去掉
+		date[strlen(date) - 1] = '\0';
+	} else if (linedata == strstr(linedata, HEADER_SERVER)) {
+		// 保存服务器
+		char * code_ptr = strstr(linedata, " ");
+		strncpy(server, code_ptr+1, 128);
+
+		// 最有一个字符是'\r', 应该去掉
+		server[strlen(server) - 1] = '\0';
 	} else if (linedata == strstr(linedata, HEADER_TRANSFER_ENCODING)) {
 		if (strstr(linedata, TRANENCODING_CHUNKED_NAME)) {
 			transfer_encoding = TRANENCODING_CHUNKED;

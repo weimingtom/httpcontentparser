@@ -36,6 +36,10 @@ public:
 
 	// 是否存在内容
 	bool existContent() const ;
+
+	const char * getDate()  const { return date;}
+	const char * getServer() const { return server;}
+	const char * getHeaderLine() const { return head_line;}
 private:
 	int transfer_encoding;
 	unsigned content_type;
@@ -43,18 +47,24 @@ private:
 	int content_length;
 	int connection_state;
 	int response_code;	// 返回代码，如404不可达
+
+	char server[128];
+	char date[128];
+	char head_line[128];
 private:
 	// 头部是否已经结束
 	bool header_ended_; 
 	// 分析行
 	void parseLine(const char *line);
+
+public:
 	static const int HTTP_HEADER_MAX_LENGTH = 64*1024;
 	// 定义每条信息的最大长度
 	static const int HTTP_HEADER_ITEMNAME_LENGTH = 256;
 	static const int HTTP_HEADER_ITEMVALUE_LENGTH = 256;
 
 	static const char * HEADER_FIRST ;
-	static const char * HEADER_DATA ;
+	static const char * HEADER_DATE ;
 	static const char * HEADER_SERVER;
 	static const char * HEADER_CONTENT_TYPE;
 	static const char * HEADER_LAST_MODIFIY ;
@@ -100,8 +110,8 @@ public:
 
 	// 当前包是一个完整的HTTP包吗？？
 	bool isComplete() const;
-	unsigned getDataSize() const;
-	unsigned getHeaderSize() const;
+	unsigned getDataSize() const;		// 获取数据大小
+	unsigned getHeaderSize() const;		// 获取头部大小
 
 	int addBuffer(const char *buf, const int len, int * written_length);
 	int read(char *buf, const int bufsize, int &bytedread);
@@ -110,7 +120,7 @@ public:
 
 	// 将..保存到文件当中
 	int  achieve_data(const char * filename);
-	int  achieve_header(const char * filename);
+	// int  achieve_header(const char * filename);
 	int  achieve(const char * filename);
 
 	// 此函数会返回一个原始的包，当然如果已经不存在了他会返回NULL
@@ -126,6 +136,8 @@ public:
 		return p1.getCode() == p2.getCode();
 	}
 
+	bool transfefTail();
+
 	// 释放资源
 	void releaseResource();
 	ProtocolPacket<HTTP_PACKET_SIZE> * getData() { return http_data_; }
@@ -138,12 +150,11 @@ private:
 	
 
 	ProtocolPacket<HTTP_PACKET_SIZE> * http_data_;
-	ProtocolPacket<HTTP_PACKET_SIZE> * http_header_achieve_;
+	// ProtocolPacket<HTTP_PACKET_SIZE> * http_header_achieve_;
 
 	
 	// 保存原始的包，按照接收到的顺序
 	ProtocolPacket<HTTP_PACKET_SIZE> *  raw_packets_;
-	void InitRawPacket();
 	void addRawPacket(const char *buf, const int len);
 	void clearRawDeque();
 
@@ -168,7 +179,6 @@ private:
 	int code_;
 	static int generateCode(); // 生成一个用于唯一标识这个符号的
 	static int cur_code_;
-	yanglei_utility::CAutoCreateCS cs_;
 };
 
 #endif  // _UTILITY_HTTP_PACKET_H__

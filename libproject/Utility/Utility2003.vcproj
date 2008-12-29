@@ -48,6 +48,7 @@ copy .\httprequestpacket.h ..\..\include\utility
 copy .\strutility.h ..\..\include\utility
 copy .\timeutility.h ..\..\include\utility
 copy .\SeachPacket.h ..\..\include\utility
+copy .\replacepacket.h ..\..\include\utility
 "/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
@@ -192,6 +193,12 @@ copy .\strutility.h ..\..\include\utility
 			</File>
 			<File
 				RelativePath=".\HTTPRequestPacket.h">
+			</File>
+			<File
+				RelativePath=".\ReplacePacket.cpp">
+			</File>
+			<File
+				RelativePath=".\ReplacePacket.h">
 			</File>
 			<File
 				RelativePath=".\SeachPacket.cpp">

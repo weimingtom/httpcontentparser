@@ -14,10 +14,12 @@
 #	pragma comment(lib, "tinyxmld.lib")
 #	pragma comment(lib, "utilityd.lib")
 #	pragma comment(lib, "sysutilityd.lib")
+#	pragma comment(lib, "antiporndll.lib")
 #else
 #	pragma comment(lib, "tinyxml.lib")
 #	pragma comment(lib, "utility.lib")
 #	pragma comment(lib, "sysutility.lib")
+#	pragma comment(lib, "antiporndll.lib")
 #endif
 
 // TODO: 在此处引用程序要求的附加头文件

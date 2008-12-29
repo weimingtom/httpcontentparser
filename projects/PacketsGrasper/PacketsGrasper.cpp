@@ -2,8 +2,6 @@
 #include "selectio.h"
 #include "debug.h" 
 #include ".\overlapped.h"
-
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <tchar.h>
@@ -12,7 +10,7 @@
 #include <utility\fd_set_utility.h>
 #include <utility\HttpPacket.h>
 #include <utility\HTTPRequestPacket.h>
-#include <app_constants.h>
+#include <app_constants.h> 
 
 #pragma data_seg(".inidata")
 	int				m_iRefCount		= 0;
@@ -20,7 +18,6 @@
 
 const int BUF_SIZE = 1024 * 1024;
 char global_buffer[BUF_SIZE] = {0};
- 
 
 // 进程内全局变量  
 WSPUPCALLTABLE		MainUpCallTable;
@@ -99,11 +96,12 @@ int WSPAPI WSPSelect (
   LPINT			lpErrno                         
 ) 
 {
-	DebugStringNoDres(_T("WSPSelect ..."));
+	SPI_FUNCTION_CALL(_T("WSPSelect ..."));
 	
 	// 如果在White DNS List, 我们也应该直接返回 ;)
 	// 直接返回，自身填入select
-	if (g_select.preselect(readfds) == 0) {
+	int result = g_select.preselect(readfds);
+	if (0 == result) {
 		// firefox都是NULL
 		if (writefds != NULL)
 			FD_ZERO(writefds);
@@ -117,9 +115,9 @@ int WSPAPI WSPSelect (
 	int iRet = NextProcTable.lpWSPSelect(nfds, 
 				readfds, writefds, exceptfds, timeout, lpErrno); 
 
-	g_select.postselect(readfds);
+	g_select.postselect(readfds); 
 	return iRet;
-}
+} 
 
 int WSPAPI WSPRecv(
 	SOCKET			s,
@@ -129,12 +127,12 @@ int WSPAPI WSPRecv(
 	LPDWORD			lpFlags,
 	LPWSAOVERLAPPED	lpOverlapped,
 	LPWSAOVERLAPPED_COMPLETION_ROUTINE lpCompletionRoutine,
-	LPWSATHREADID	lpThreadId,
+	LPWSATHREADID	lpThreadId, 
 	LPINT			lpErrno
 )
 {
-	DebugStringNoDres(_T("WSPRecv ..."));
-	try {
+	SPI_FUNCTION_CALL(_T("WSPRecv ..."));
+	try { 
 		// 对于使用MSG_PEEK抓取的方式
 		if ((*lpFlags) & MSG_PEEK) {
 			return NextProcTable.lpWSPRecv(s, lpBuffers, dwBufferCount
@@ -142,18 +140,20 @@ int WSPAPI WSPRecv(
 				, lpCompletionRoutine, lpThreadId, lpErrno);
 		}
 
-		if (g_select.prerecv(s, lpBuffers, dwBufferCount, lpNumberOfBytesRecvd) == 0) {
-			return 0;
+		const int result = g_select.prerecv(s, lpBuffers, dwBufferCount, lpNumberOfBytesRecvd);
+		if (result == 0) {
+			// 如果受到了包，就直接返回
+			return 0; 
 		}
 
 		int iRet = NextProcTable.lpWSPRecv(s, lpBuffers, dwBufferCount
 				, lpNumberOfBytesRecvd, lpFlags, lpOverlapped
 				, lpCompletionRoutine, lpThreadId, lpErrno);
-
+ 
 		return iRet;
-	} catch (...) {
+	} catch (...) { 
 		// writeException("WSPRecv", "unknown");
-		return SOCKET_ERROR;
+		return SOCKET_ERROR; 
 	}
 }
 
@@ -169,7 +169,7 @@ SOCKET WSPAPI WSPSocket(
 	LPINT		lpErrno
 )
 {
-	DebugStringNoDres(_T("WSPSocket ..."));
+	SPI_FUNCTION_CALL(_T("WSPSocket ..."));
 	return NextProcTable.lpWSPSocket(af, type
 		, protocol, lpProtocolInfo, g, dwFlags, lpErrno);
 }
@@ -179,7 +179,7 @@ int WSPAPI WSPCloseSocket(
 	LPINT		lpErrno
 ) 
 {
-	DebugStringNoDres(_T("WSPCloseSocket ..."));
+	SPI_FUNCTION_CALL(_T("WSPCloseSocket ..."));
 	return NextProcTable.lpWSPCloseSocket(s, lpErrno);
 }
 
@@ -194,7 +194,7 @@ int WSPAPI WSPConnect(
 	LPINT			lpErrno
 )
 {
-	DebugStringNoDres(_T("WSPConnect ..."));
+	SPI_FUNCTION_CALL(_T("WSPConnect ..."));
 	return NextProcTable.lpWSPConnect(s, name, namelen, lpCallerData
 		, lpCalleeData, lpSQOS, lpGQOS, lpErrno);
 }
@@ -208,7 +208,7 @@ SOCKET WSPAPI WSPAccept(
 	LPINT			lpErrno
 )
 {
-	DebugStringNoDres(_T("WSPAccept ..."));
+	SPI_FUNCTION_CALL(_T("WSPAccept ..."));
 	return NextProcTable.lpWSPAccept(s, addr, addrlen, lpfnCondition
 		, dwCallbackData, lpErrno);
 }
@@ -225,20 +225,20 @@ int WSPAPI WSPSend(
 	LPINT			lpErrno
 )
 {
-	OutputDebugString(_T("WSPSend"));
+	SPI_FUNCTION_CALL(_T("WSPSend"));
 
 	HTTPRequestPacket packet;
 	int item_count = packet.parsePacket(lpBuffers, dwBufferCount);
 
 	// 如果小于2，那么他就不是一个HTTP请求
-	if (item_count < 2) {	
+	if (item_count < 2) {
 		return NextProcTable.lpWSPSend(s, lpBuffers, dwBufferCount
 			, lpNumberOfBytesSent, dwFlags, lpOverlapped
 			, lpCompletionRoutine, lpThreadId, lpErrno);
 	}
 	
 	
-	// DumpBuf(lpBuffers, dwBufferCount, "c:\\request.txt");
+	// DUMP_HTTP_REQUEST(lpBuffers, dwBufferCount, "c:\\request.txt");
 	 // 检查IP是否正常，如果可以则通过，否则直接返回错误
 	if (accessNetword() && checkHTTPRequest(&packet)){
 		return NextProcTable.lpWSPSend(s, lpBuffers, dwBufferCount
@@ -264,7 +264,7 @@ int WSPAPI WSPSendTo(
 	LPINT			lpErrno
 )
 {
-	OutputDebugString("WSPSendTo ...");
+	SPI_FUNCTION_CALL("WSPSendTo ...");
 
 	HTTPRequestPacket packet;
 	int item_count = packet.parsePacket(lpBuffers, dwBufferCount);
@@ -301,6 +301,7 @@ int WSPAPI WSPRecvFrom (
 	LPINT			lpErrno
 )
 {
+	SPI_FUNCTION_CALL("WSPRecvFrom");
 	int iRet = NextProcTable.lpWSPRecvFrom(s, lpBuffers, dwBufferCount
 		, lpNumberOfBytesRecvd, lpFlags, lpFrom, lpFromlen
 		, lpOverlapped, lpCompletionRoutine, lpThreadId, lpErrno);
@@ -317,7 +318,7 @@ int WSPAPI WSPAddressToString (
   LPINT			lpErrno                      
 )
 {
-	DebugStringNoDres(_T("WSPAddressToString ..."));
+	SPI_FUNCTION_CALL(_T("WSPAddressToString ..."));
 	return NextProcTable.lpWSPAddressToString(lpsaAddress
 		, dwAddressLength, lpProtocolInfo
 		, lpszAddressString, lpdwAddressStringLength, lpErrno);
@@ -331,7 +332,7 @@ int WSPAPI WSPAsyncSelect (
   LPINT			lpErrno        
 )
 {
-	DebugStringNoDres(_T("WSPAsyncSelect ..."));
+	SPI_FUNCTION_CALL(_T("WSPAsyncSelect ..."));
 	return NextProcTable.lpWSPAsyncSelect(s, hWnd, wMsg, lEvent, lpErrno);
 }
  
@@ -342,7 +343,7 @@ int WSPAPI WSPBind (
   LPINT			lpErrno                       
 )
 {
-	DebugStringNoDres(_T("WSPBind ..."));
+	SPI_FUNCTION_CALL(_T("WSPBind ..."));
 	return NextProcTable.lpWSPBind(s, name, namelen, lpErrno);
 }
 
@@ -350,7 +351,7 @@ int WSPAPI WSPCancelBlockingCall (
   LPINT			lpErrno  
 )
 {
-	DebugStringNoDres(_T("WSPCancelBlockingCall ..."));
+	SPI_FUNCTION_CALL(_T("WSPCancelBlockingCall ..."));
 	return NextProcTable.lpWSPCancelBlockingCall(lpErrno);
 }
 
@@ -358,7 +359,7 @@ int WSPAPI WSPCleanup (
   LPINT			lpErrno  
 )
 {
-	DebugStringNoDres(_T("WSPCleanup ..."));
+	SPI_FUNCTION_CALL(_T("WSPCleanup ..."));
 	return NextProcTable.lpWSPCleanup(lpErrno);
 }
  
@@ -369,7 +370,7 @@ int WSPAPI WSPDuplicateSocket (
   LPINT			lpErrno                         
 )
 {
-	DebugStringNoDres(_T("WSPDuplicateSocket ..."));
+	SPI_FUNCTION_CALL(_T("WSPDuplicateSocket ..."));
 	return NextProcTable.lpWSPDuplicateSocket(
 		s, dwProcessId, lpProtocolInfo, lpErrno);
 }
@@ -381,7 +382,7 @@ int WSPAPI WSPEnumNetworkEvents (
   LPINT			lpErrno                         
 )
 {
-	DebugStringNoDres(_T("WSPEnumNetworkEvents ..."));
+	SPI_FUNCTION_CALL(_T("WSPEnumNetworkEvents ..."));
 	return NextProcTable.lpWSPEnumNetworkEvents(
 		s, hEventObject, lpNetworkEvents, lpErrno);
 }
@@ -393,7 +394,7 @@ int WSPAPI WSPEventSelect (
   LPINT			lpErrno          
 )
 {
-	DebugStringNoDres(_T("WSPEventSelect ..."));
+	SPI_FUNCTION_CALL(_T("WSPEventSelect ..."));
 	return NextProcTable.lpWSPEventSelect(
 		s, hEventObject, lNetworkEvents, lpErrno);
 }
@@ -407,7 +408,7 @@ BOOL WSPAPI WSPGetOverlappedResult (
   LPINT			lpErrno                   
 )
 {
-	DebugStringNoDres(_T("WSPGetOverlappedResult ..."));
+	SPI_FUNCTION_CALL(_T("WSPGetOverlappedResult ..."));
 	return NextProcTable.lpWSPGetOverlappedResult(s, lpOverlapped
 		, lpcbTransfer, fWait, lpdwFlags, lpErrno);
 }
@@ -416,10 +417,10 @@ int WSPAPI WSPGetPeerName (
   SOCKET		s,                     
   struct		sockaddr FAR * name,   
   LPINT			namelen,                
-  LPINT			lpErrno                 
+  LPINT			lpErrno                  
 )
 {
-	DebugStringNoDres(_T("WSPGetPeerName ..."));
+	SPI_FUNCTION_CALL(_T("WSPGetPeerName ..."));
 	return NextProcTable.lpWSPGetPeerName(s, name, namelen, lpErrno);
 }
 
@@ -430,7 +431,7 @@ int WSPAPI WSPGetSockName (
   LPINT			lpErrno                 
 )
 {
-	DebugStringNoDres(_T("WSPGetSockName ..."));
+	SPI_FUNCTION_CALL(_T("WSPGetSockName ..."));
 	return NextProcTable.lpWSPGetSockName(s, name, namelen, lpErrno);
 }
 
@@ -443,7 +444,7 @@ int WSPAPI WSPGetSockOpt (
   LPINT			lpErrno        
 ) 
 {
-	DebugStringNoDres(_T("WSPGetSockOpt ..."));
+	SPI_FUNCTION_CALL(_T("WSPGetSockOpt ..."));
 	return NextProcTable.lpWSPGetSockOpt(
 		s, level, optname, optval, optlen, lpErrno);
 }
@@ -455,7 +456,7 @@ BOOL WSPAPI WSPGetQOSByName (
   LPINT			lpErrno         
 )
 {
-	DebugStringNoDres(_T("WSPGetQOSByName ..."));
+	SPI_FUNCTION_CALL(_T("WSPGetQOSByName ..."));
 	return NextProcTable.lpWSPGetQOSByName(s, lpQOSName, lpQOS, lpErrno);
 }
 
@@ -473,7 +474,7 @@ int WSPAPI WSPIoctl (
   LPINT			lpErrno                                            
 )
 {
-	DebugStringNoDres(_T("WSPIoctl ..."));
+	SPI_FUNCTION_CALL(_T("WSPIoctl ..."));
 	return NextProcTable.lpWSPIoctl(s, dwIoControlCode, lpvInBuffer
 		, cbInBuffer, lpvOutBuffer, cbOutBuffer, lpcbBytesReturned
 		, lpOverlapped, lpCompletionRoutine, lpThreadId, lpErrno);
@@ -488,10 +489,10 @@ SOCKET WSPAPI WSPJoinLeaf (
   LPQOS			lpSQOS,                       
   LPQOS			lpGQOS,                       
   DWORD			dwFlags,                      
-  LPINT			lpErrno                       
+  LPINT			lpErrno                      
 )
 {
-	DebugStringNoDres(_T("WSPJoinLeaf ..."));
+	SPI_FUNCTION_CALL(_T("WSPJoinLeaf ..."));
 	return NextProcTable.lpWSPJoinLeaf(s, name, namelen, lpCallerData
 		, lpCalleeData, lpSQOS, lpGQOS, dwFlags, lpErrno);
 }
@@ -502,7 +503,7 @@ int WSPAPI WSPListen (
   LPINT			lpErrno  
 )
 {
-	DebugStringNoDres(_T("WSPListen ..."));
+	SPI_FUNCTION_CALL(_T("WSPListen ..."));
 	return NextProcTable.lpWSPListen(s, backlog, lpErrno);
 }
 
@@ -512,7 +513,7 @@ int WSPAPI WSPRecvDisconnect (
   LPINT			lpErrno                       
 )
 {
-	DebugStringNoDres(_T("WSPRecvDisconnect ..."));
+	SPI_FUNCTION_CALL(_T("WSPRecvDisconnect ..."));
 	return NextProcTable.lpWSPRecvDisconnect(s, lpInboundDisconnectData, lpErrno);
 }
 
@@ -523,7 +524,7 @@ int WSPAPI WSPSendDisconnect (
   LPINT			lpErrno                        
 )
 {
-	DebugStringNoDres(_T("WSPSendDisconnect ..."));
+	SPI_FUNCTION_CALL(_T("WSPSendDisconnect ..."));
 	return NextProcTable.lpWSPSendDisconnect(
 		s, lpOutboundDisconnectData, lpErrno);
 }
@@ -537,7 +538,7 @@ int WSPAPI WSPSetSockOpt (
   LPINT			lpErrno              
 )
 {
-	DebugStringNoDres(_T("WSPSetSockOpt ..."));
+	SPI_FUNCTION_CALL(_T("WSPSetSockOpt ..."));
 	return NextProcTable.lpWSPSetSockOpt(
 		s, level, optname, optval, optlen, lpErrno);
 }
@@ -548,7 +549,7 @@ int WSPAPI WSPShutdown (
   LPINT			lpErrno  
 )
 {
-	DebugStringNoDres(_T("WSPShutdown ..."));
+	SPI_FUNCTION_CALL(_T("WSPShutdown ..."));
 	return NextProcTable.lpWSPShutdown(s, how, lpErrno);
 }
 
@@ -579,6 +580,9 @@ BOOL WINAPI DllMain(
 	if(ul_reason_for_call == DLL_PROCESS_ATTACH) {
 		//InitializeLog();
  		GetModuleFileName(NULL, m_sProcessName, MAX_PATH);
+		char buffer[1024];
+		sprintf(buffer, "New Process Load : %s ====", m_sProcessName);
+		OutputDebugString(buffer);
 
 		InitializeCriticalSection(&gCriticalSection);
 		EnterCriticalSection(&gCriticalSection); 
