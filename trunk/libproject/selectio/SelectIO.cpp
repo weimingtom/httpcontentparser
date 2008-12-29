@@ -4,9 +4,12 @@
 #include "buffercallCOM.h"
 #include <webcontenttype.h>
 #include <logdebug.h>
+#include <utility\replacepacket.h>
 #include <utility\HTTPPacket.h>
 #include <utility\fd_set_utility.h>
 
+
+const char * HTTP404_PACKET = "HTTP/1.1 404 Not Found\r\n\r\n";
 
 ////////////////////////////////////////////////
 int getBufferTotalSize(LPWSABUF lpBuffers, DWORD dwBufferCount) {
@@ -52,26 +55,22 @@ CSelectIO::CSelectIO() {
 }
 
 CSelectIO::~CSelectIO(void) {
-	using namespace yanglei_utility;
-	SingleLock<CAutoCreateCS> lock(&cs_);
-	freeAllCompletedPacket();
-	clearAllPackets();
+	socketPackets_.freeAllCompletedPacket();
+	socketPackets_.clearAllPackets();
+	bufferResult_.removeAllBufferResult();
 }
 
 /////////////////////////////////////////////
 // public members
 
 void CSelectIO::setRecv(MYWSPRECV *recv) { 
-	using namespace yanglei_utility;
-	SingleLock<CAutoCreateCS> lock(&cs_); 
 	lpWSPRecv = recv;
 }
 // 在调用WSPRecv时使用
 // 如果给定的SOCKET 不能处理则返回1 
+// 如果返回-1表示有错
 int CSelectIO::prerecv(SOCKET s, LPWSABUF lpBuffers, 
 					   DWORD dwBufferCount, DWORD *recv_bytes) {
-    using namespace yanglei_utility;
-	SingleLock<CAutoCreateCS> lock(&cs_);
 
 	*recv_bytes = 0;
 	assert (lpWSPRecv != NULL);
@@ -79,16 +78,23 @@ int CSelectIO::prerecv(SOCKET s, LPWSABUF lpBuffers,
 	// 如果没有完成的socket
 	const int TotalbufferSize = getBufferTotalSize(lpBuffers, dwBufferCount);
 
-	HTTPPacket * packet = getCompletedPacket(s);
+	HTTPPacket * packet = socketPackets_.getCompletedPacket(s);
 	if (packet == NULL) {
 		return 1;
 	}
-
 	// 检查内容
 	// 如果检查失败
+	
 	if (false == handlePacket(packet)) {
-		removeCompletedPacket(s, packet);
-		return 1;
+		socketPackets_.removeCompletedPacket(s, packet);
+		*recv_bytes = 0;
+		return 0;
+		// 应该替换包
+		//HTTPPacket *new_packet = new HTTPPacket;
+		//FillBlankPacket(packet, new_packet);
+		//socketPackets_.replacePacket(s, packet, new_packet);
+		//delete packet;
+		//packet = new_packet;
 	}
 	
 	// 获取一个
@@ -97,7 +103,8 @@ int CSelectIO::prerecv(SOCKET s, LPWSABUF lpBuffers,
 
 	if (raw_packet->getBytesCanRead() == 0) {
 		*recv_bytes = 0;
-		removeCompletedPacket(s, packet);
+		bufferResult_.removeBufferResult(packet);
+		socketPackets_.removeCompletedPacket(s, packet);
 	}
 
 	//char data[1024];
@@ -105,48 +112,43 @@ int CSelectIO::prerecv(SOCKET s, LPWSABUF lpBuffers,
 	//OutputDebugString(data);
 
 	// 所有包都已经发送
-	for (int i = 0; i < static_cast<int>(dwBufferCount); ++i) {
-		const DWORD bytes = raw_packet->read(lpBuffers[i].buf, lpBuffers[i].len);
-
-		//char filename[1024];
-		//sprintf(filename, "E:\\workspace\\debuglog\\%d_%dw.log", packet->getCode(), s);
-		//WriteRawData(filename, lpBuffers[i].buf, bytes);
-
-		*recv_bytes += bytes;
-		if (bytes == 0 || raw_packet->getBytesCanRead() == 0) {
-			removeCompletedPacket(s, packet);
+	// 如果收到长度为0的包呢
+	if (packet->transfefTail() && raw_packet->getBytesCanRead() == 0) {
+		*recv_bytes = 0;
+	} else {
+		for (int i = 0; i < static_cast<int>(dwBufferCount); ++i) {
+			const DWORD bytes = raw_packet->read(lpBuffers[i].buf, lpBuffers[i].len);
+		
+			*recv_bytes += bytes;
+			if (bytes == 0 || raw_packet->getBytesCanRead() == 0) {
+				if (packet->transfefTail() == false)
+					socketPackets_.removeCompletedPacket(s, packet);
+			}
 		}
+
+		assert (*recv_bytes != 0);
 	}
 	
-	if (*recv_bytes == 0) {
-		return 1;
-	} else {
-		return 0;
-	}
-
+	return 0;
 }
 
 // 函数： preselect
 // 这个函数在SPI中调用下一层的select之前调用
 // 如果返回0，则不再调用select,直接返回
 int CSelectIO::preselect(fd_set *readfds) {
-	using namespace yanglei_utility;
-	SingleLock<CAutoCreateCS> lock(&cs_);
-
- 
 	assert( lpWSPRecv != NULL);
 
 	if (readfds == NULL)
 		return 1;
 
 	// 如果没有已经完成的IO
-	if (isAnyCompleteSOCKET() == false) {
+	if (socketPackets_.isAnyCompleteSOCKET() == false) {
 		return 1;
 	}
 
 	fd_set complete_readfds, new_readfds;
 	FD_ZERO(&new_readfds);FD_ZERO(&complete_readfds);
-	getAllCompleteSOCKET(&complete_readfds);
+	socketPackets_.getAllCompleteSOCKET(&complete_readfds);
 
 	// 如果SOCKET同时存在于complete_readfds和readfds时
 	// 我们将这样的socket放入到new_readfds;
@@ -173,9 +175,6 @@ int CSelectIO::preselect(fd_set *readfds) {
 // 然手从fd_set中移除(如果上未完成传输)
 // 如果已经完成传输，则将他放入到已完成的队列中
 int CSelectIO::postselect(fd_set *readfds) {
-	using namespace yanglei_utility;
-	SingleLock<CAutoCreateCS> lock(&cs_);
-
 	assert( lpWSPRecv != NULL);
 	if (readfds == NULL)
 		return 0;
@@ -223,83 +222,60 @@ int CSelectIO::postselect(fd_set *readfds) {
 // 返回0代表是一个完整的包
 // 返回1代表不是一个完整的包
 int CSelectIO::graspData(const SOCKET s, char *buf, const int len) {
-	try {
+	try { 
 		bool completed_generated = false; 
 		int total_size = 0; 
 
 		// 获取相关的包
-		HTTPPacket* sock_data  = getSOCKETPacket(s);
+		HTTPPacket* sock_data  = socketPackets_.getSOCKETPacket(s);
 		assert( sock_data != NULL);
 
 		//char filename[1024];
-		//sprintf(filename, "E:\\workspace\\debuglog\\%d_%d.log", sock_data->getCode(), s);
+		//sprintf(filename, "d:\\debuglog\\s%d_%d.log",  s, sock_data->getCode());
+		//OutputDebugString(filename);
 		//WriteRawData(filename, buf, len);
 
-
-		bool store_to_log = false;
 		// 如果接收到了长度为0
 		if (len == 0) {
 			// 将包表示为完整的
 			int added_length;
 			const int result = sock_data->addBuffer(buf, len, &added_length);
-
-			// 如果出现了错误
 			if (0 != result) {
-				store_to_log = true;
+				char buffer[1024];
+				sprintf(buffer, "1. SOCKET %d, Packet Code %d", s, sock_data->getCode());
+				OutputDebugString(buffer);
 			}
 
+			// 如果出现了错误
 			assert ( added_length == result);
-			removePacket(s, sock_data);
-			addCompletedPacket(s, sock_data);				
+			socketPackets_.removePacket(s, sock_data);
+			socketPackets_.addCompletedPacket(s, sock_data);				
 			completed_generated = true;
-
-			// 将所有接受
-			//char buffer[1024];			
-			//sprintf(buffer, "%d finished with 0 tail", sock_data->getCode());
-			//OutputDebugString(buffer);
-
-			//sprintf(buffer, "E:\\workspace\\debuglog\\0recv%d.log", s);
-			//sock_data->achieve(buffer);
 		} else {
-			while (total_size < len) {
-				// 由于这里可能出现头部，所以在这里也应该进行头部验证啊....
-				// 但是这里是已经接收到的包，所以受到了必须将它直接送上去，不能放弃
-				int bytes_written;
-				const int result = sock_data->addBuffer(&(buf[total_size]), len - total_size, &bytes_written);
-				total_size += bytes_written;
+			// 由于这里可能出现头部，所以在这里也应该进行头部验证啊....
+			// 但是这里是已经接收到的包，所以受到了必须将它直接送上去，不能放弃
+			int bytes_written;
+			const int result = sock_data->addBuffer(&(buf[total_size]), len - total_size, &bytes_written);
+			total_size += bytes_written;
 
-				// 如果出现了错误
-				if (0 != result) {
-					store_to_log = true;
-				}
+			//// 出现了问题
+			//if (0 != result) {
+			//	char buffer[1024];
+			//	sprintf(buffer, "2. SOCKET %d, Packet Code %d", s, sock_data->getCode());
+			//	OutputDebugString(buffer);
+			//}
 
-				// 如果当前包已经完成，则从map中移除，并放入到完成队列当中 
-				// 如果一些条件不符合约束，也应该放入完成队列
-				//    如：HTTP的类型， 大小等等.....
-				if (sock_data->isComplete()) { 
-					// 放入到完成队列当中
-					
-					removePacket(s, sock_data);
-					addCompletedPacket(s, sock_data);
-					completed_generated = true;
 
-					// achieve
-					//char buffer[200];
-					//sprintf(buffer, "%d finished=", sock_data->getCode());
-					//OutputDebugString(buffer);
+			// 如果当前包已经完成，则从map中移除，并放入到完成队列当中 
+			// 如果一些条件不符合约束，也应该放入完成队列
+			//    如：HTTP的类型， 大小等等.....
+			if (sock_data->isComplete() || result != 0) { 
+				// 放入到完成队列当中
+				socketPackets_.removePacket(s, sock_data);
+				socketPackets_.addCompletedPacket(s, sock_data);
+				completed_generated = true;
+			}
 
-					// 如果在这里移除了， 学要新增加一个包
-					// 如果不加这个条件或者改成<=, 那么当一个HTTP包后面紧跟着一个非HTTP包时，会出现错误
-					if (total_size < len) {
-						sock_data  = getSOCKETPacket(s);
-					}
-				}
-
-				if (bytes_written == 0) {
-					//assert(false);
-					break;
-				}
-			} // while
 		}
 
 		// 如果有完整的包返回0，否则返回1
@@ -312,16 +288,13 @@ int CSelectIO::graspData(const SOCKET s, char *buf, const int len) {
 	}
 }
 
-bool CSelectIO::isThereUncompletePacket(const SOCKET s) {
-	return _sockets_map_.find(s) != _sockets_map_.end();
-}
 // 验证对应SOCKET的包是否应该被存储
 // 首先我们会查看临时保存的SOCKET当中是否存在, 如果存在则学要保存
 // 而后我们使用PEEK_MESSAGE调用recv, 查看对应的SOCKET是不是HTTP协议，
 //  如果是则保存，否则放弃
 bool CSelectIO::needStored(const SOCKET s) {
 	// SOCKET s是否包含不完整的包，如果包含则直接返回true, 否则继续向下处理
-	if (isThereUncompletePacket(s)) {
+	if (socketPackets_.isThereUncompletePacket(s)) {
 		return true;
 	}
 
@@ -373,26 +346,77 @@ bool CSelectIO::needStored(const SOCKET s) {
 	}
 }
 
-// 删除掉所有保存的临时包
-void CSelectIO::clearAllPackets() {
-	char buffer[1024];
-	SOCK_DATA_MAP::iterator iter = _sockets_map_.begin();
-	for (; iter != _sockets_map_.end(); ++iter) {
-		if (iter->second != NULL) {
-			sprintf(buffer, "E:\\workspace\\debuglog\\uncomplete\\%d.txt", iter->second->getCode());
-			iter->second->achieve(buffer);
-			delete iter->second;
-		}
+
+// 此函数负责检查包的内容
+// 1. 检查这个包是否来自白名单中的网站
+// 2. 分析包的类型, 并确定该包是否应该被检查
+// 3. 分析不包的内容
+bool CSelectIO::handlePacket(HTTPPacket *packet) {
+	int result;
+	// 首先查找是否已经被处理过了
+	if (false == bufferResult_.getResult(packet->getCode(), &result)) {
+		result =  handler_.handleContent(packet);
+		bufferResult_.addResultPair(packet->getCode(), result);
 	}
-	_sockets_map_.clear();
+
+	if (CONTENT_CHECK_PORN == result) {
+		return false;
+	} else {
+		return true;
+	}
 }
 
-/////////////////////////////////////////////
-// 处理已经完成的IO
+
+//===================================
+// class BufferResult
+void BufferResult::addResultPair(int code, int result) {
+	using namespace yanglei_utility;
+	SingleLock<CAutoCreateCS> lock(&cs_);
+
+	content_check_result_.insert(std::make_pair(code, result));
+}
+bool BufferResult::getResult(int code, int * result) {
+	using namespace yanglei_utility;
+	SingleLock<CAutoCreateCS> lock(&cs_);
+
+	BUFFER_RESULT::iterator iter = content_check_result_.find(code);
+	if (content_check_result_.end() == iter) {
+		return false;
+	} else {
+		*result = iter->second;	// 直接返回结果
+		return true;
+	}
+}
+void BufferResult::removeBufferResult(HTTPPacket *packet) {
+	using namespace yanglei_utility;
+	SingleLock<CAutoCreateCS> lock(&cs_);
+
+
+	BUFFER_RESULT::iterator iter = content_check_result_.find(packet->getCode());
+	if (content_check_result_.end() != iter) {
+		content_check_result_.erase(iter);
+	} else {
+		// assert(false);	
+	}
+}
+
+
+//=================================================
+// class SocketPackets;
+// 查看是否存在已经完成的包
+bool SocketPackets::isAnyCompleteSOCKET() {
+	using namespace yanglei_utility;
+	SingleLock<CAutoCreateCS> lock(&cs_);
+
+	return completed_packets_.size() != 0;
+}
 
 // 将所有已经有完成包的socket存放在fd_set当中
 // 此函数一般会在preselect中调用
-void CSelectIO::getAllCompleteSOCKET(fd_set *readfds) {
+void SocketPackets::getAllCompleteSOCKET(fd_set *readfds) {
+	using namespace yanglei_utility;
+	SingleLock<CAutoCreateCS> lock(&cs_);
+
 	COMPLETED_PACKETS::const_iterator iter = completed_packets_.begin();
 	while ( iter != completed_packets_.end()) {
 		FD_SET(iter->first, readfds);
@@ -400,45 +424,20 @@ void CSelectIO::getAllCompleteSOCKET(fd_set *readfds) {
 	}
 }
 
-// 查看是否存在已经完成的包
-bool CSelectIO::isAnyCompleteSOCKET() {
-	return completed_packets_.size() != 0;
-}
-
-// 释放所有完成的包
-void CSelectIO::freeAllCompletedPacket() {
-	COMPLETED_PACKETS::const_iterator iter = completed_packets_.begin();
-	for (; iter != completed_packets_.end(); ++iter) {
-		if (iter->second != NULL) {
-			removeBufferResult(iter->second);	// 移除保存记录
-			delete iter->second;
-		}
-	}
-	completed_packets_.clear();
-}
-
-int CSelectIO::removeCompletedPacket(const SOCKET s, HTTPPacket *p) {
+// 将与SOCKET对应HTTPPacket的包添加到完成队列当中
+int SocketPackets::addCompletedPacket(const SOCKET s, HTTPPacket *p) {
 	using namespace yanglei_utility;
 	SingleLock<CAutoCreateCS> lock(&cs_);
 
-	// OutputDebugString("remove complete socket");
-	COMPLETED_PACKETS::iterator iter = completed_packets_.begin();
-	COMPLETED_PACKETS::const_iterator iterEnd = completed_packets_.end();
-	for (; iter != iterEnd; ++iter) {
-		if (iter->second->getCode() == p->getCode()) {
-			removeBufferResult(p);
-
-			delete p;		// **** 把这个忘了，导致内存泄漏
-			completed_packets_.erase(iter);
-			return 1;
-		}
-	}
-	return 0; 
+	completed_packets_.insert(std::make_pair(s, p));
+	return 0;
 }
 
-
 // 获取与SOCKET对应第一个已经完成的包
-HTTPPacket * CSelectIO::getCompletedPacket(const SOCKET s) {
+HTTPPacket * SocketPackets::getCompletedPacket(const SOCKET s) {
+	using namespace yanglei_utility;
+	SingleLock<CAutoCreateCS> lock(&cs_);
+
 	COMPLETED_PACKETS::iterator iter = completed_packets_.find(s);
 	if (completed_packets_.end() == iter) {
 		return NULL;
@@ -447,16 +446,67 @@ HTTPPacket * CSelectIO::getCompletedPacket(const SOCKET s) {
 	}
 }
 
-// 将与SOCKET对应HTTPPacket的包添加到完成队列当中
-int CSelectIO::addCompletedPacket(const SOCKET s, HTTPPacket *p) {
-	completed_packets_.insert(std::make_pair(s, p));
-	return 0;
+int SocketPackets::removeCompletedPacket(const SOCKET s, HTTPPacket *p) {
+	using namespace yanglei_utility;
+	//SingleLock<CAutoCreateCS> lock(&cs_);
+
+	// OutputDebugString("remove complete socket");
+	COMPLETED_PACKETS::iterator iter = completed_packets_.begin();
+	COMPLETED_PACKETS::const_iterator iterEnd = completed_packets_.end();
+	for (; iter != iterEnd; ++iter) {
+		if (iter->second->getCode() == p->getCode()) {
+			delete p;		// **** 把这个忘了，导致内存泄漏
+			completed_packets_.erase(iter);
+			return 1;
+		}
+	}
+	return 0; 
 }
 
-HTTPPacket * CSelectIO::getSOCKETPacket(const SOCKET s) {
+void SocketPackets::freeAllCompletedPacket() {
+	using namespace yanglei_utility;
+	SingleLock<CAutoCreateCS> lock(&cs_);
+
+	COMPLETED_PACKETS::const_iterator iter = completed_packets_.begin();
+	for (; iter != completed_packets_.end(); ++iter) {
+		if (iter->second != NULL) {
+			delete iter->second;
+		}
+	}
+	completed_packets_.clear();
+}
+
+// 删除掉所有保存的临时包
+void SocketPackets::clearAllPackets() {
+	using namespace yanglei_utility;
+	SingleLock<CAutoCreateCS> lock(&cs_);
+
+	// char buffer[1024];
+	SOCK_DATA_MAP::iterator iter = _sockets_map_.begin();
+	for (; iter != _sockets_map_.end(); ++iter) {
+		if (iter->second != NULL) {
+			delete iter->second;
+		}
+	}
+	_sockets_map_.clear();
+}
+
+bool SocketPackets::isThereUncompletePacket(const SOCKET s) {
+	using namespace yanglei_utility;
+	SingleLock<CAutoCreateCS> lock(&cs_);
+
+	return _sockets_map_.find(s) != _sockets_map_.end();
+}
+
+// 获取与SOCKET相关的未完成的包
+HTTPPacket * SocketPackets::getSOCKETPacket(const SOCKET s) {
+	using namespace yanglei_utility;
+	SingleLock<CAutoCreateCS> lock(&cs_);
+
 	SOCK_DATA_MAP::iterator iter = _sockets_map_.lower_bound(s);
 	SOCK_DATA_MAP::iterator iterEnd = _sockets_map_.upper_bound(s);
 	for (; iter != iterEnd; ++iter) {
+		// 这里为什么会出现完成的包呢 ??
 		assert (iter->second->isComplete() == false);
 		return iter->second;
 	}
@@ -466,9 +516,23 @@ HTTPPacket * CSelectIO::getSOCKETPacket(const SOCKET s) {
 
 	return packet;	
 }
- 
-int CSelectIO::removePacket(const SOCKET s, HTTPPacket *p) {
-	OutputDebugString("removeBufferResult");
+int SocketPackets::replacePacket(SOCKET s, HTTPPacket *p, HTTPPacket * new_packet) {
+	using namespace yanglei_utility;
+	SingleLock<CAutoCreateCS> lock(&cs_);
+
+	SOCK_DATA_MAP::iterator iter = _sockets_map_.lower_bound(s);
+	SOCK_DATA_MAP::const_iterator iterEnd = _sockets_map_.upper_bound(s);
+	for (; iter != iterEnd; ++iter) {
+		if (iter->second->getCode() == p->getCode()) {
+			assert(s == iter->first);
+			iter->second = new_packet;
+			return 1;
+		}
+	}
+
+	return 0;
+}
+int SocketPackets::removePacket(const SOCKET s, HTTPPacket *p) {
 	using namespace yanglei_utility;
 	SingleLock<CAutoCreateCS> lock(&cs_);
 
@@ -488,38 +552,3 @@ int CSelectIO::removePacket(const SOCKET s, HTTPPacket *p) {
 	assert(false);
 	return 0; 
 }
-
-
-
-// 此函数负责检查包的内容
-// 1. 检查这个包是否来自白名单中的网站
-// 2. 分析包的类型, 并确定该包是否应该被检查
-// 3. 分析不包的内容
-bool CSelectIO::handlePacket(HTTPPacket *packet) {
-	OutputDebugString("handle packet...");
-
-	int result;
-	// 首先查找是否已经被处理过了
-	BUFFER_RESULT::iterator iter = content_check_result_.find(packet->getCode());
-	if (content_check_result_.end() == iter) {
-		result =  handler_.handleContent(packet);
-		content_check_result_[packet->getCode()] = result;	// 保存结果
-	} else {
-		result = iter->second;	// 直接返回结果
-	}
-
-	if (CONTENT_CHECK_PORN == result) {
-		return false;
-	} else {
-		return true;
-	}
-}
-
-void CSelectIO::removeBufferResult(HTTPPacket *packet) {
-		BUFFER_RESULT::iterator iter = content_check_result_.find(packet->getCode());
-		if (content_check_result_.end() != iter) {
-			content_check_result_.erase(iter);
-		} else {
-			// assert(false);	
-		}
-	}

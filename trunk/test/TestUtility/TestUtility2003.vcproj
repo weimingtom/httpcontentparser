@@ -185,10 +185,22 @@
 				RelativePath=".\HttpRequestPacketTest.h">
 			</File>
 			<File
+				RelativePath=".\HTTPResponseHeaderTest .h">
+			</File>
+			<File
+				RelativePath=".\HTTPResponseHeaderTest.cpp">
+			</File>
+			<File
 				RelativePath=".\ProtocolPacketTest.cpp">
 			</File>
 			<File
 				RelativePath=".\ProtocolPacketTest.h">
+			</File>
+			<File
+				RelativePath=".\ReplacePacketTest.cpp">
+			</File>
+			<File
+				RelativePath=".\ReplacePacketTest.h">
 			</File>
 			<File
 				RelativePath=".\SeachPacketTest.cpp">

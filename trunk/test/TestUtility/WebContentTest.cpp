@@ -108,6 +108,11 @@ void  WebContentTest::textOtherTypes() {
 	}
 }
 
+void WebContentTest::testFFFF() {
+
+	CPPUNIT_ASSERT (false == (isImage(0xFFFFFFFF) || isText(0xFFFFFFF)));
+}
+
 void WebContentTest::testTextType() {
 		// CONTYPE_HTML
 	{

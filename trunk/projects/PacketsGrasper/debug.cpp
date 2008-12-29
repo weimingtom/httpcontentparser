@@ -6,8 +6,8 @@
 #include <string>
 #include <exception>
 #include <assert.h>
-#ifdef _SHOW_DETAIL
 
+#ifdef _SHOW_DETAIL
 void PrintSocket(SOCKET s, DWORD bytes, TCHAR *sExt)
 {
 	SOCKADDR_IN local_addr, remote_addr;
@@ -222,7 +222,7 @@ void PrintRecvBuffer(char *recv_buf, DWORD dwRecv, SOCKET s, const std::string &
 		TCHAR buf[BUF_SIZE];
 		_sntprintf(buf, BUF_SIZE, 
 			"=================Recv bytes : %d, socket: %d=============\n", dwRecv, s);
-		ODS("PrintRecvBuffer"); 
+		OutputDebugString("PrintRecvBuffer"); 
 	} catch(...) {
 	}
 }
@@ -238,37 +238,37 @@ void PrintProtocolInfo(
 	};
 #endif
 
-//void DumpBuf(WSABUF *buf, const int count, const std::string &filename) {
-//	using namespace std;
-//	try {
-//		// 打开文件
-//		fstream out;
-//		out.open(filename.c_str(), std::ios::out | std::ios::app | std::ios::binary);
-//
-//		// 写入缓冲区
-//		assert (buf != NULL);
-//		for (int i = 0; i < count; ++i) {
-//			out.write(buf[i].buf, buf[i].len);
-//		}
-//		
-//		// 关闭文件
-//		out.clear();
-//	} catch(exception&) {
-//	}
-//}
-//
-//// 将字符串写入文件
-//void DumpToFile(const char * buf, const int len, const std::string &filename) {
-//	using namespace yanglei_utility;
-//	using namespace std;
-//	static yanglei_utility::CAutoCreateCS cs_;
-//	SingleLock<CAutoCreateCS> lock(&cs_);
-//
-//	try {
-//		fstream out;
-//		out.open(filename.c_str(), std::ios::out | std::ios::app | std::ios::binary);
-//		out.write(buf, len);
-//		out.clear();
-//	} catch(exception&) {
-//	}
-//}
+void DumpBuf(WSABUF *buf, const int count, const std::string &filename) {
+	using namespace std;
+	try {
+		// 打开文件
+		fstream out;
+		out.open(filename.c_str(), std::ios::out | std::ios::app | std::ios::binary);
+
+		// 写入缓冲区
+		assert (buf != NULL);
+		for (int i = 0; i < count; ++i) {
+			out.write(buf[i].buf, buf[i].len);
+		}
+		
+		// 关闭文件
+		out.clear();
+	} catch(exception&) {
+	}
+}
+
+// 将字符串写入文件
+void DumpToFile(const char * buf, const int len, const std::string &filename) {
+	using namespace yanglei_utility;
+	using namespace std;
+	static yanglei_utility::CAutoCreateCS cs_;
+	SingleLock<CAutoCreateCS> lock(&cs_);
+
+	try {
+		fstream out;
+		out.open(filename.c_str(), std::ios::out | std::ios::app | std::ios::binary);
+		out.write(buf, len);
+		out.clear();
+	} catch(exception&) {
+	}
+}
