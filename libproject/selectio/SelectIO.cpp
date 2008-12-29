@@ -63,6 +63,7 @@ CSelectIO::~CSelectIO(void) {
 /////////////////////////////////////////////
 // public members
 
+
 void CSelectIO::setRecv(MYWSPRECV *recv) { 
 	lpWSPRecv = recv;
 }
@@ -346,6 +347,37 @@ bool CSelectIO::needStored(const SOCKET s) {
 	}
 }
 
+bool checkDNS(const std::string &dns) {
+	AutoInitInScale _auto_com_init;
+	try {
+		_VARIANT_BOOL passed;
+
+		// create Instance
+		IDNSSetting *dnssetting = NULL;
+		HRESULT hr = CoCreateInstance(CLSID_DNSSetting, NULL, CLSCTX_LOCAL_SERVER, IID_IDNSSetting, (LPVOID*)&dnssetting);
+		if (FAILED(hr)) {
+			return FALSE;
+		}
+
+		// 检测是否是白名单
+		VARIANT_BOOL enabled;
+		dnssetting->checkDNS(_bstr_t(dns_name), &enabled);
+		dnssetting->Release();
+		CoUninitialize();
+	} catch (_com_error &) {
+	}
+}
+
+bool CSelectIO::checkWhiteDNS(SOCKET s) {
+	if (dnsmap_ == NULL)
+		return false;
+
+	std::string dns = dnsmap_->get(s);
+	if (dns == "")
+		return false;
+
+	
+}
 
 // 此函数负责检查包的内容
 // 1. 检查这个包是否来自白名单中的网站

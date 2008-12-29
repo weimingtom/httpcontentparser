@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <tchar.h>
+#include <dnsmap.h>
 #include <serviceUtility.h>
 #include <utility\debugmessage.h>
 #include <utility\fd_set_utility.h>
@@ -25,6 +26,7 @@ CRITICAL_SECTION	gCriticalSection;			// 代码段保护变量
 WSPPROC_TABLE		NextProcTable;				// 保存30个服务提供者指针
 TCHAR				m_sProcessName[MAX_PATH];	// 保存当前进程名称
 
+DNSMap	  g_dnsmap;
 CSelectIO g_select;
 
 void ShowAllSOCKET(const char *buf, fd_set *readfds) {
@@ -230,6 +232,11 @@ int WSPAPI WSPSend(
 	HTTPRequestPacket packet;
 	int item_count = packet.parsePacket(lpBuffers, dwBufferCount);
 
+	// 将DNS保存在DNS MAP当中
+	char host[256];
+	packet.getHost(host, 256);
+	g_dnsmap.add(s, host);
+
 	// 如果小于2，那么他就不是一个HTTP请求
 	if (item_count < 2) {
 		return NextProcTable.lpWSPSend(s, lpBuffers, dwBufferCount
@@ -239,7 +246,7 @@ int WSPAPI WSPSend(
 	
 	
 	// DUMP_HTTP_REQUEST(lpBuffers, dwBufferCount, "c:\\request.txt");
-	 // 检查IP是否正常，如果可以则通过，否则直接返回错误
+	// 检查IP是否正常，如果可以则通过，否则直接返回错误
 	if (accessNetword() && checkHTTPRequest(&packet)){
 		return NextProcTable.lpWSPSend(s, lpBuffers, dwBufferCount
 			, lpNumberOfBytesSent, dwFlags, lpOverlapped
