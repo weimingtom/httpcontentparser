@@ -17,6 +17,8 @@ void DNSMapTest::TestDNSMap() {
 	int data1 = 1;
 	string dns1 = "google";
 	dnsmap.add(data1, dns1);
+	dnsmap.add(data1, dns1);
+	dnsmap.add(data1, dns1);
 
 	int data2 = 2;
 	string dns2 = "sina";
