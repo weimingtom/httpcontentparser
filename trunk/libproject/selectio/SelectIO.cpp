@@ -299,6 +299,12 @@ bool CSelectIO::needStored(const SOCKET s) {
 		return true;
 	}
 
+	// 如果存在于白名单当中
+	if (checkWhiteDNS(s)) {
+		return false;
+	}
+
+
 	// 提取前四个字节，查看是否是'http', 不过不是则不处理
 	const char HTTP_PACHET_HEADER[] = "HTTP";
 	const int buf_size = 1024;
@@ -361,22 +367,29 @@ bool checkDNS(const std::string &dns) {
 
 		// 检测是否是白名单
 		VARIANT_BOOL enabled;
-		dnssetting->checkDNS(_bstr_t(dns_name), &enabled);
+		dnssetting->isWhiteDNS(_bstr_t(dns.c_str()), &enabled);
 		dnssetting->Release();
+		return convert(enabled);
 		CoUninitialize();
 	} catch (_com_error &) {
+		return false;
 	}
 }
 
 bool CSelectIO::checkWhiteDNS(SOCKET s) {
-	if (dnsmap_ == NULL)
-		return false;
-
-	std::string dns = dnsmap_->get(s);
+	std::string dns = dnsmap_.get(s);
 	if (dns == "")
 		return false;
 
-	
+	return checkDNS(dns);
+}
+
+void CSelectIO::removeDNSMap(SOCKET s) {
+	dnsmap_.remove(s);
+}
+
+void CSelectIO::addDNS(SOCKET s, const std::string &addr) {
+	dnsmap_.add(s, addr);
 }
 
 // 此函数负责检查包的内容

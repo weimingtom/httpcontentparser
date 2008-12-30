@@ -12,34 +12,41 @@ const TCHAR * DNS_POSTFIX_NET = ".net";
 const TCHAR * DNS_POSTFIX_EDU = ".edu";
 const TCHAR * DNS_POSTFIX_GOV = ".gov";
 
+bool isPostfix(TCHAR * postfix) {
+	if (postfix[4] == '\0' || postfix[4] == '.' || postfix[4] == '/' || postfix[4] == ':')
+		return true;
+	else
+		return false;
+}
+
 // 之去掉如 .com.cn 或者 .com
 // 对于 www.comdie.cn就不应该去掉.com之后的内容
 int remove_postfix(TCHAR * name) {
 	TCHAR *p = NULL;
 	if (NULL != (p = _tcsstr(name, DNS_POSTFIX_COM))) {
-		if (p[4] == '\0' || p[4] == '.' || p[4] == '/') {
+		if (isPostfix(p)) {
 			p[0] = '\0';
-			return p-name;
+			return (int)(p-name);
 		}
 	} else if (NULL != (p = _tcsstr(name, DNS_POSTFIX_NET))) {
-		if (p[4] == '\0' || p[4] == '.'|| p[4] == '/') {
+		if (isPostfix(p)) {
 			p[0] = '\0';
-			return p-name;
+			return (int)(p-name);
 		}
 	} else if (NULL != (p = _tcsstr(name, DNS_POSTFIX_EDU))) {
-		if (p[4] == '\0' || p[4] == '.'|| p[4] == '/') {
+		if (isPostfix(p)) {
 			p[0] = '\0';
-			return p-name;
+			return (int)(p-name);
 		}
 	} else if (NULL != (p = _tcsstr(name, DNS_POSTFIX_ORG))) {
-		if (p[4] == '\0' || p[4] == '.'|| p[4] == '/') {
+		if (isPostfix(p)) {
 			p[0] = '\0';
-			return p-name;
+			return (int)(p-name);
 		}
 	} else if (NULL != (p = _tcsstr(name, DNS_POSTFIX_GOV))) {
-		if (p[4] == '\0' || p[4] == '.'|| p[4] == '/') {
+		if (isPostfix(p)) {
 			p[0] = '\0';
-			return p-name;
+			return (int)(p-name);
 		}
 	}
 
@@ -63,13 +70,14 @@ bool beginwidht_www(const TCHAR * fulldns) {
 }
 
 int get_main_dns_name(TCHAR * main_name, const int bufsize, const TCHAR *fulldns) {
-	assert (bufsize >= MAX_PATH);
+	const int min_buf_size = MAX_PATH;
+	assert (bufsize >= min_buf_size);
 	using namespace strutility;
 
-	TCHAR name[MAX_PATH];
+	TCHAR name[min_buf_size];
 	// 确定拷贝函数的其实位置，不过一www.开头就向后移动四个，否则就从0开始
 	const int start_index = beginwidht_www(fulldns) ? 4 : 0;
-	// 去掉尾部
+	// 去掉头部
 	memset(name, 0, sizeof(name));
 	_tcscpy(name, &(fulldns[start_index]));
 
@@ -102,7 +110,7 @@ int get_main_dns_name(TCHAR * main_name, const int bufsize, const TCHAR *fulldns
 		}
 	}
 
-	_tcsncpy(main_name, name, MAX_PATH);
+	_tcsncpy(main_name, name, min_buf_size);
 	return  _tcslen(main_name);
 }
 

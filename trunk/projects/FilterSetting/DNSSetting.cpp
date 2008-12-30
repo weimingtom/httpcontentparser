@@ -70,5 +70,6 @@ STDMETHODIMP CDNSSetting::justEnableWhiteDNS(VARIANT_BOOL enabled) {
 // 检测是否是白名单
 STDMETHODIMP CDNSSetting::isWhiteDNS(BSTR dns, VARIANT_BOOL* White)
 {
+	*White = convert(g_configuration.getDNSSetting()->inWhiteList((char*)_bstr_t(dns)));
 	return S_OK;
 }

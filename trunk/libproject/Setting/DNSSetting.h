@@ -78,6 +78,7 @@ public:
 	// ¶ÔDNSµÄCHECK
 	bool checkDNS(const std::string &dns);
 	bool fuzzeCheckDNS(const std::string &dns);
+	bool inWhiteList(const std::string &dns);
 
 	// enable
 	void justPassWhiteDNS(const bool checked);

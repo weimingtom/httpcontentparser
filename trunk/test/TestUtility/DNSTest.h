@@ -8,9 +8,10 @@
 class DNSTest : public CPPUNIT_NS::TestFixture {
 public: 
 	CPPUNIT_TEST_SUITE(DNSTest);
+	CPPUNIT_TEST(GetMainNameWithPort);
+	CPPUNIT_TEST(GetMainNameTest);
 	CPPUNIT_TEST(GetMainNameFromBrowseAddresss);
 	CPPUNIT_TEST(GetMainNameFromBrowseAddressswithProto);
-	CPPUNIT_TEST(GetMainNameTest);
 	CPPUNIT_TEST(GetDNS);
 	CPPUNIT_TEST(GetMultHostName);
 	CPPUNIT_TEST(GetMultHostName);
@@ -20,7 +21,8 @@ public:
 protected:
 	void GetMultHostName();
 	void GetDNS();
-	void GetMainNameTest();
+	void GetMainNameWithPort();	// 测试带有端口号的地址
+	void GetMainNameTest();	
 	void BeginWWWTest();
 	void GetMainNameFromBrowseAddresss();
 	void GetMainNameFromBrowseAddressswithProto();
