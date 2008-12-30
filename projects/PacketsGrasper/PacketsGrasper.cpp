@@ -11,6 +11,7 @@
 #include <utility\fd_set_utility.h>
 #include <utility\HttpPacket.h>
 #include <utility\HTTPRequestPacket.h>
+#include <utility\dns.h>
 #include <app_constants.h> 
 
 #pragma data_seg(".inidata")
@@ -26,7 +27,6 @@ CRITICAL_SECTION	gCriticalSection;			// 代码段保护变量
 WSPPROC_TABLE		NextProcTable;				// 保存30个服务提供者指针
 TCHAR				m_sProcessName[MAX_PATH];	// 保存当前进程名称
 
-DNSMap	  g_dnsmap;
 CSelectIO g_select;
 
 void ShowAllSOCKET(const char *buf, fd_set *readfds) {
@@ -218,7 +218,7 @@ SOCKET WSPAPI WSPAccept(
 int WSPAPI WSPSend(
 	SOCKET			s,
 	LPWSABUF		lpBuffers,
-	DWORD			dwBufferCount,
+	DWORD			dwBufferCount, 
 	LPDWORD			lpNumberOfBytesSent,
 	DWORD			dwFlags,
 	LPWSAOVERLAPPED	lpOverlapped,
@@ -233,9 +233,10 @@ int WSPAPI WSPSend(
 	int item_count = packet.parsePacket(lpBuffers, dwBufferCount);
 
 	// 将DNS保存在DNS MAP当中
-	char host[256];
-	packet.getHost(host, 256);
-	g_dnsmap.add(s, host);
+	char host[MAX_PATH], main_host[MAX_PATH];
+	packet.getHost(host, MAX_PATH);
+	get_main_dns_name(main_host, MAX_PATH, host);
+	g_select.addDNS(s, main_host);
 
 	// 如果小于2，那么他就不是一个HTTP请求
 	if (item_count < 2) {
