@@ -63,11 +63,11 @@ bool beginwidht_www(const TCHAR * fulldns) {
 }
 
 int get_main_dns_name(TCHAR * main_name, const int bufsize, const TCHAR *fulldns) {
-	const int min_buf_size = 64;
+	const int min_buf_size = MAX_PATH;
 	assert (bufsize >= min_buf_size);
 	using namespace strutility;
 
-	TCHAR name[MAX_PATH];
+	TCHAR name[min_buf_size];
 	// 确定拷贝函数的其实位置，不过一www.开头就向后移动四个，否则就从0开始
 	const int start_index = beginwidht_www(fulldns) ? 4 : 0;
 	// 去掉尾部
