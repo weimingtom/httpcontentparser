@@ -19,7 +19,7 @@ public:
 	std::string get(SOCKET s);
 private:
 	typedef std::map<SOCKET, std::string> SOCK_DNS_MAP;
-	SOCK_DNS_MAP socketsAddrs;
+	SOCK_DNS_MAP * socketsAddrs;
 
 	// ÁÙ½çÇø
 	yanglei_utility::CAutoCreateCS cs_;

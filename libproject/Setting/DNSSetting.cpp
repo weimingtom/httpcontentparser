@@ -101,6 +101,10 @@ int DNSSetting::check(const std::string &dns) {
 	}
 }
 
+bool DNSSetting::inWhiteList(const std::string &dns) {
+	return white_dns_list_->checkDNS(dns);
+}
+
 int DNSSetting::fuzzeCheck(const std::string &dns) {
 	if (true == white_dns_list_->fuzzeCheckDNS(dns)) {	// 如果在白名单中
 		return (IN_WHITE_LIST);
