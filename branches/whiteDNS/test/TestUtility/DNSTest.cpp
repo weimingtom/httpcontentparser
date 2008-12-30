@@ -1,6 +1,17 @@
 #include "StdAfx.h"
 #include ".\dnstest.h"
 
+
+void DNSTest::GetMainNameWithPort() {
+	TCHAR result[MAX_PATH];
+	{
+		const TCHAR * test_unit = "www.sina.com:80";
+		const TCHAR * expected_result = "sina";
+		int result_length = get_main_dns_name(result, MAX_PATH, test_unit);
+		CPPUNIT_ASSERT( result_length == _tcslen(expected_result));
+		CPPUNIT_ASSERT( 0 == _tcscmp(result, expected_result));
+	}
+}
 void DNSTest::GetMainNameFromBrowseAddresss() {
 	TCHAR result[MAX_PATH];
 	{
