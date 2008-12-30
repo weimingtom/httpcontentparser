@@ -99,9 +99,6 @@ public:
 
 	void setRecv(MYWSPRECV *recv);
 
-	// 设置DNS Map
-	// 如果包是来自White DNS List的
-	void setDNS(DNSMap	* dnsmap) { this->dnsmap_ = dnsmap;}
 	bool checkWhiteDNS(SOCKET s);
 protected: 
 	
@@ -113,7 +110,6 @@ protected:
 	// 保存WSPRecv的函数指针
 	MYWSPRECV * lpWSPRecv;
 	friend class SelectIOTest;
-	DNSMap	* dnsmap_;
 
 // 检查包的的内容
 	bool handlePacket(HTTPPacket *packet);
@@ -122,6 +118,14 @@ protected:
 	BufferResult   bufferResult_;
 protected:
 	HTTPContentHander handler_;
+
+public:
+	void addDNS(SOCKET s, const std::string &addr);
+private:
+		// dns MAP
+	DNSMap	dnsmap_;
+	// 移除dns MAP
+	void removeDNSMap(SOCKET s);
 };
 
 // utility functions

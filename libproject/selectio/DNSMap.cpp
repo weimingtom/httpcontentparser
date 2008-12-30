@@ -20,7 +20,7 @@ void DNSMap::add(SOCKET s, const std::string &addr) {
 	try {
 		using namespace yanglei_utility;
 		SingleLock<CAutoCreateCS> lock(&cs_);
-		socketsAddrs->insert(std::make_pair(s, "google"));
+		socketsAddrs->insert(std::make_pair(s, addr));
 	} catch (...) {
 		OutputDebugString("excetpion");
 	}
