@@ -63,7 +63,8 @@ bool beginwidht_www(const TCHAR * fulldns) {
 }
 
 int get_main_dns_name(TCHAR * main_name, const int bufsize, const TCHAR *fulldns) {
-	assert (bufsize >= MAX_PATH);
+	const int min_buf_size = 64;
+	assert (bufsize >= min_buf_size);
 	using namespace strutility;
 
 	TCHAR name[MAX_PATH];
@@ -102,7 +103,7 @@ int get_main_dns_name(TCHAR * main_name, const int bufsize, const TCHAR *fulldns
 		}
 	}
 
-	_tcsncpy(main_name, name, MAX_PATH);
+	_tcsncpy(main_name, name, min_buf_size);
 	return  _tcslen(main_name);
 }
 
