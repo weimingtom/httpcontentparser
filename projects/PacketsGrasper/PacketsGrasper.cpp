@@ -230,32 +230,33 @@ int WSPAPI WSPSend(
 	SPI_FUNCTION_CALL(_T("WSPSend"));
 
 	HTTPRequestPacket packet;
-	int item_count = packet.parsePacket(lpBuffers, dwBufferCount);
 
+	int item_count = packet.parsePacket(lpBuffers, dwBufferCount);
+	if (item_count < 2) {
+		goto return_dir;
+	}
+
+	
 	// 将DNS保存在DNS MAP当中
 	char host[MAX_PATH], main_host[MAX_PATH];
 	packet.getHost(host, MAX_PATH);
 	get_main_dns_name(main_host, MAX_PATH, host);
 	g_select.addDNS(s, main_host);
-
-	// 如果小于2，那么他就不是一个HTTP请求
-	if (item_count < 2) {
-		return NextProcTable.lpWSPSend(s, lpBuffers, dwBufferCount
-			, lpNumberOfBytesSent, dwFlags, lpOverlapped
-			, lpCompletionRoutine, lpThreadId, lpErrno);
-	}
 	
 	
 	// DUMP_HTTP_REQUEST(lpBuffers, dwBufferCount, "c:\\request.txt");
 	// 检查IP是否正常，如果可以则通过，否则直接返回错误
 	if (accessNetword() && checkHTTPRequest(&packet)){
-		return NextProcTable.lpWSPSend(s, lpBuffers, dwBufferCount
-			, lpNumberOfBytesSent, dwFlags, lpOverlapped
-			, lpCompletionRoutine, lpThreadId, lpErrno);
+		goto return_dir;
 	} else {
 		*lpErrno = WSAETIMEDOUT;
 		return SOCKET_ERROR;
 	}
+
+return_dir:
+	return NextProcTable.lpWSPSend(s, lpBuffers, dwBufferCount
+			, lpNumberOfBytesSent, dwFlags, lpOverlapped
+			, lpCompletionRoutine, lpThreadId, lpErrno);
 }
  
 int WSPAPI WSPSendTo(

@@ -8,6 +8,7 @@
 #include <utility\debugmessage.h>
 #include <utility\strutility.h>
 #include <utility\seachpacket.h>
+#include <utility\dns.h>
 #include <typeconvert.h>
 #include <string>
 #include <comdef.h>
@@ -105,9 +106,16 @@ bool checkHTTPRequest(HTTPRequestPacket * packet) {
 	char buffer[HTTP_REQUEST_ITEM_MAX_LENGTH] = {0};
 	packet->getHost(buffer, HTTP_REQUEST_ITEM_MAX_LENGTH);
 	
+	// 如果不存在IP在DNS地址当中
 	// 如果DNS不可达
-	if (false == checkDNS(buffer)) 
-		return false;
+	OutputDebugString(buffer);
+	if (!isContainsIP(buffer)) {
+		OutputDebugString("not contain ip .....");
+		if (false == checkDNS(buffer)) 
+			return false;
+	} else {
+		OutputDebugString("contain ip .....");
+	}
 
 	// check search rule
 	return checkSeachRule(packet);
