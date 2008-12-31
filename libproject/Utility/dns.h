@@ -8,6 +8,12 @@ bool beginwidht_www(const TCHAR * fulldns);
 // 获取DNS的主名
 int get_main_dns_name(TCHAR * name, const int len, const TCHAR *fulldns);
 
+// 检测DNS中是否包含IP地址
+bool isContainsIP(TCHAR * dns);
+
+bool validateStringIP(TCHAR * dns);
+bool validateStringIP(TCHAR * dns,  char ** e);
+
 /////////////////////////////////////////////////////////////////////////////
 // CDNS definitions
 class CDNS {

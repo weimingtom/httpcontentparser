@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include ".\dns.h"
 #include ".\strutility.h"
+#include "strutility.h"
 #include <tchar.h>
 #include <assert.h>
 #include <fstream>
@@ -67,6 +68,63 @@ bool beginwidht_www(const TCHAR * fulldns) {
 	else if (fulldns[3] != '.' && fulldns[0] != '.') return false;
 
 	return true;
+}
+
+bool validateStringIP(TCHAR * dns) {
+	char * end;
+	return validateStringIP(dns, &end);
+}
+// 是否是一个有效的IP地址
+bool validateStringIP(TCHAR * dns, char ** e) {
+	char * start = dns, *end;
+
+	// 获取第一个数字
+	long a = strtol(start, &end, 10);
+	if (end == NULL || a > 255 || a < 0|| end[0] != '.' || start == end)
+		return false;
+
+	// 获取第二个数字
+	start = end + 1;
+	long b = strtol(start, &end, 10);
+	if (end == NULL || b > 255 || b < 0 || end[0] != '.' || start == end)
+		return false;
+
+	// 获取第三个数字
+	start = end + 1;
+	long c = strtol(start, &end, 10);
+	if (end == NULL || c > 255 || c < 0 || end[0] != '.' || start == end)
+		return false;
+
+	// 第四个数字
+	start = end + 1;
+	long d = strtol(start, &end, 10);
+	if (end == NULL || start == end || d > 255 || d < 0)
+		return false;
+
+	*e = end;
+
+	return true;
+}
+
+bool isContainsIP(TCHAR * dns) {
+	// 如果dns以HTTP开头
+	char * start = dns;
+	const char * http = "http://";
+	const int http_len = 7;
+	if (strutility::beginwith(dns, http)) {
+		start += 7;
+	}
+
+	char * end;
+	bool validate =  validateStringIP(start, &end);
+
+	if (false == validate)
+		return validate;
+	
+	if (end == NULL || end[0] == '\0' || end[0] == '/' || end[0] == ':')
+		return true;
+	else
+		return false;
 }
 
 int get_main_dns_name(TCHAR * main_name, const int bufsize, const TCHAR *fulldns) {
