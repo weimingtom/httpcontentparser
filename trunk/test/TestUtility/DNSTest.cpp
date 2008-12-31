@@ -1,6 +1,91 @@
 #include "StdAfx.h"
 #include ".\dnstest.h"
 
+void DNSTest::TestContainIPinDNS() {
+	{
+	char *dns1 = "www.sina.com";
+	CPPUNIT_ASSERT(! isContainsIP(dns1));
+
+	char *dns2 = "http:\\www.sina.com";
+	CPPUNIT_ASSERT(! isContainsIP(dns2));
+	}
+
+	{
+	char *dns1 = "9.186.118.34:80/index.html";
+	CPPUNIT_ASSERT( isContainsIP(dns1));
+
+	char *dns2 = "http://9.186.118.34:80/index.html";
+	CPPUNIT_ASSERT( isContainsIP(dns2));
+
+	char *dns3 = "http://288.186.118.34:80/index.html";
+	CPPUNIT_ASSERT(! isContainsIP(dns3));
+
+	char *dns4 = "http://288.186.118.3480/index.html";
+	CPPUNIT_ASSERT(! isContainsIP(dns4));
+
+	char *dns5 = "http://288.186.118.34index.html";
+	CPPUNIT_ASSERT(! isContainsIP(dns5));
+	}
+	
+}
+void DNSTest::TestValidateIPWithEnd() {
+	// 结尾包含其他字母
+	{
+	char * end;
+	TCHAR * ip1 = "9.186.181.1dfe";
+	CPPUNIT_ASSERT(validateStringIP(ip1, &end));
+	CPPUNIT_ASSERT(end[0] == 'd');
+	CPPUNIT_ASSERT(end[1] == 'f');
+
+	TCHAR * ip2 = "9.186.1.1d";
+	CPPUNIT_ASSERT(validateStringIP(ip2, &end));
+	CPPUNIT_ASSERT(*end == 'd');
+
+	TCHAR * ip3 = "9.1.11.34b";
+	CPPUNIT_ASSERT(validateStringIP(ip3, &end));
+	CPPUNIT_ASSERT(*end == 'b');
+
+	TCHAR * ip4 = "1.82.255.34a";
+	CPPUNIT_ASSERT(validateStringIP(ip4, &end));
+	CPPUNIT_ASSERT(*end == 'a');
+	}
+}
+void DNSTest::TestvalidateIP() {
+	{
+	TCHAR * ip1 = "9.186.181.34";
+	CPPUNIT_ASSERT(validateStringIP(ip1));
+	}
+
+	// 数字超限
+	{
+	TCHAR * ip1 = "738.186.181.34";
+	CPPUNIT_ASSERT(!validateStringIP(ip1));
+
+	TCHAR * ip2 = "38.286.181.34";
+	CPPUNIT_ASSERT(!validateStringIP(ip2));
+
+	TCHAR * ip3 = "38.186.281.34";
+	CPPUNIT_ASSERT(!validateStringIP(ip3));
+
+	TCHAR * ip4 = "38.186.181.334";
+	CPPUNIT_ASSERT(!validateStringIP(ip4));
+	}
+
+	// 包含字母
+	{
+	TCHAR * ip1 = "9.186.181.aa";
+	CPPUNIT_ASSERT(!validateStringIP(ip1));
+
+	TCHAR * ip2 = "9.186.aa.34";
+	CPPUNIT_ASSERT(!validateStringIP(ip2));
+
+	TCHAR * ip3 = "9.aa.11.34";
+	CPPUNIT_ASSERT(!validateStringIP(ip3));
+
+	TCHAR * ip4 = "a.82.255.34";
+	CPPUNIT_ASSERT(!validateStringIP(ip4));
+	}
+}
 
 void DNSTest::GetMainNameWithPort() {
 	TCHAR result[MAX_PATH];
