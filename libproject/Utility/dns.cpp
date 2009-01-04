@@ -13,6 +13,13 @@ const TCHAR * DNS_POSTFIX_NET = ".net";
 const TCHAR * DNS_POSTFIX_EDU = ".edu";
 const TCHAR * DNS_POSTFIX_GOV = ".gov";
 
+
+const char * HTTP = "http://";
+const int HTTP_LENGTH = 7;
+
+const char * HTTPS = "https://";
+const int HTTPS_LENGTH = 8;
+
 bool isPostfix(TCHAR * postfix) {
 	if (postfix[4] == '\0' || postfix[4] == '.' || postfix[4] == '/' || postfix[4] == ':')
 		return true;
@@ -109,9 +116,8 @@ bool validateStringIP(TCHAR * dns, char ** e) {
 bool isContainsIP(TCHAR * dns) {
 	// 如果dns以HTTP开头
 	char * start = dns;
-	const char * http = "http://";
-	const int http_len = 7;
-	if (strutility::beginwith(dns, http)) {
+	
+	if (strutility::beginwith(dns, HTTP)) {
 		start += 7;
 	}
 
@@ -125,6 +131,40 @@ bool isContainsIP(TCHAR * dns) {
 		return true;
 	else
 		return false;
+}
+
+char * get_main_serv_name(TCHAR * name, const int len, const TCHAR * fulldns) {
+	const int min_buf_size = MAX_PATH;
+	assert (len >= min_buf_size);
+	using namespace strutility;
+
+	memset(name, 0, len);
+
+	TCHAR buffer[MAX_PATH] = {0};
+	strncpy(buffer, fulldns, MAX_PATH-1);
+	strtolower(buffer);
+
+	// 去掉HTTP://
+	int begin = 0;
+	if (strutility::beginwith(fulldns, HTTP)) {
+		begin += HTTP_LENGTH;
+	}
+
+	if (strutility::beginwith(fulldns, HTTPS)) {
+		begin += HTTPS_LENGTH;
+	}
+
+
+	// remove tail
+	const char * tail = strstr(buffer + begin,  "/");	// 所有的DNS后面都一次结尾
+	assert (len > tail - buffer - begin);
+	if (tail != NULL) {
+		strncpy(name, buffer + begin,  tail - buffer - begin);
+	} else {
+		strcpy(name, buffer + begin);
+	}
+
+	return name;
 }
 
 int get_main_dns_name(TCHAR * main_name, const int bufsize, const TCHAR *fulldns) {
