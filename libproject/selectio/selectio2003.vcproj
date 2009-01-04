@@ -47,7 +47,7 @@ copy .\webrecordconfig.h ..\..\include
 copy .\httpcontentcheck.h ..\..\include
 copy .\BufferCallCOM.h ..\..\include
 copy .\DNSMap.H ..\..\include
-"/>
+copy .\WebsiteRecorder.h ..\..\include"/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
 			<Tool
@@ -93,7 +93,7 @@ copy .\release\selectio.lib ..\..\lib
 				CommandLine="copy .\selectio.h ..\..\include
 copy .\webrecordconfig.h ..\..\include
 copy .\httpcontentcheck.h ..\..\include
-"/>
+copy .\WebsiteRecorder.h ..\..\include"/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
 			<Tool
@@ -187,6 +187,16 @@ copy .\httpcontentcheck.h ..\..\include
 			</File>
 			<File
 				RelativePath=".\DNSMap.h">
+			</File>
+		</Filter>
+		<Filter
+			Name="Website Recorder"
+			Filter="">
+			<File
+				RelativePath=".\WebsiteRecorder.cpp">
+			</File>
+			<File
+				RelativePath=".\WebsiteRecorder.h">
 			</File>
 		</Filter>
 	</Files>
