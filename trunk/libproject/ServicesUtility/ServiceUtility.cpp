@@ -97,11 +97,11 @@ bool checkHTTPRequest(HTTPRequestPacket * packet) {
 	// 如果DNS不可达
 	OutputDebugString(buffer);
 	if (!isContainsIP(buffer)) {
-		OutputDebugString("not contain ip .....");
+		// OutputDebugString("not contain ip .....");
 		if (false == checkDNS(buffer)) 
 			return false;
 	} else {
-		OutputDebugString("contain ip .....");
+		; // OutputDebugString("contain ip .....");
 	}
 
 	// check search rule
