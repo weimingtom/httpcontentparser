@@ -60,6 +60,9 @@ CSelectIO::~CSelectIO(void) {
 	bufferResult_.removeAllBufferResult();
 }
 
+void CSelectIO::finalize() {
+	website_recorder_.saveWebsites();
+}
 /////////////////////////////////////////////
 // public members
 
@@ -87,6 +90,7 @@ int CSelectIO::prerecv(SOCKET s, LPWSABUF lpBuffers,
 	// 如果检查失败
 	
 	if (false == handlePacket(packet)) {
+		website_recorder_.updateWebsites(dnsmap_.get(s), CONTENT_CHECK_PORN);
 		socketPackets_.removeCompletedPacket(s, packet);
 		*recv_bytes = 0;
 		return 0;
@@ -96,6 +100,8 @@ int CSelectIO::prerecv(SOCKET s, LPWSABUF lpBuffers,
 		//socketPackets_.replacePacket(s, packet, new_packet);
 		//delete packet;
 		//packet = new_packet;
+	} else {
+		website_recorder_.updateWebsites(dnsmap_.get(s), CONTENT_CHECK_NORMAL);
 	}
 	
 	// 获取一个

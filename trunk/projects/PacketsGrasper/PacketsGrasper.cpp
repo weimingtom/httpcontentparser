@@ -599,7 +599,7 @@ BOOL WINAPI DllMain(
 			m_iRefCount ++; 
 			DP1("DllMain Attach Count %d", m_iRefCount);
 		} 
-		LeaveCriticalSection(&gCriticalSection); 
+		LeaveCriticalSection(&gCriticalSection);
  
 		ODS2(m_sProcessName,_T(" Loading ..."));
 	} else if (ul_reason_for_call == DLL_THREAD_ATTACH) {
@@ -611,6 +611,8 @@ BOOL WINAPI DllMain(
 			DP1("DllMain Attach Count %d", m_iRefCount);
 		}
 		LeaveCriticalSection(&gCriticalSection);
+
+		g_select.finalize();
 
 		//UninitializeLog();
 		ODS2(m_sProcessName,_T(" Exit ..."));

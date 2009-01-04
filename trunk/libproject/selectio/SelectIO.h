@@ -8,6 +8,7 @@
 #include <set>
 #include <utility\protocolpacket.h>
 #include <dnsmap.h>
+#include <WebsiteRecorder.h>
 
 typedef int WSPAPI MYWSPRECV(
 	SOCKET			s,
@@ -119,8 +120,13 @@ protected:
 protected:
 	HTTPContentHander handler_;
 
+	// 用于记录网站地址
+	WebsiteRecorder website_recorder_;
 public:
 	void addDNS(SOCKET s, const std::string &addr);
+	
+	// 在DLL卸载时调用
+	void finalize();
 private:
 		// dns MAP
 	DNSMap	dnsmap_;

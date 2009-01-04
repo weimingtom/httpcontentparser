@@ -228,7 +228,10 @@ void ClearHistory(HMODULE hModule) {
 	DeleteFiles(dir, TEXT("*.*"));
 
 	GetInstallPath(dir, MAX_PATH, hModule);
-	GetWebSiteRecordPath(filepath, MAX_PATH, dir);
+	GetWebSiteFile(filepath, MAX_PATH, dir);
+	DeleteFile(filepath);
+
+	GetPornWebSiteFile(filepath, MAX_PATH, dir);
 	DeleteFile(filepath);
 }
 
@@ -269,11 +272,16 @@ const TCHAR * GetImageDirectory(TCHAR * filename, const unsigned len, const TCHA
 	return filename;
 }
 
-
-const TCHAR * GetWebSiteRecordPath(TCHAR *filename, const unsigned len, const TCHAR * installPath) {
+const TCHAR * GetWebSiteFile(TCHAR *filename, const unsigned len, const TCHAR * installPath) {
 	assert (filename != NULL);
 	assert ( true == strutility::endwith(installPath, "\\"));
 	GenerateFullPath(filename, MAX_PATH, installPath, TEXT("History\\websites\\websites.txt"));
+	return filename;
+}
+const TCHAR * GetPornWebSiteFile(TCHAR *filename, const unsigned len, const TCHAR * installPath) {
+	assert (filename != NULL);
+	assert ( true == strutility::endwith(installPath, "\\"));
+	GenerateFullPath(filename, MAX_PATH, installPath, TEXT("History\\websites\\pornwebsites.txt"));
 	return filename;
 }
 

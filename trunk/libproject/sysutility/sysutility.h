@@ -46,7 +46,8 @@ const TCHAR * GetImageDirectory(TCHAR * filename, const unsigned len, const TCHA
 const TCHAR * GetPageDirectory(TCHAR * filename, const unsigned len, const TCHAR * installPath);
 
 // 获取保存网址的文件
-const TCHAR * GetWebSiteRecordPath(TCHAR *filename, const unsigned len, const TCHAR * installPath);
+const TCHAR * GetWebSiteFile(TCHAR *filename, const unsigned len, const TCHAR * installPath);
+const TCHAR * GetPornWebSiteFile(TCHAR *filename, const unsigned len, const TCHAR * installPath);
 
 // 获取历史的文件
 const TCHAR * GetRecordConfigfile(TCHAR *filename, const unsigned len, const TCHAR * installPath);
