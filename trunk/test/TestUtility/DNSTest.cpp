@@ -1,6 +1,47 @@
 #include "StdAfx.h"
 #include ".\dnstest.h"
 
+void DNSTest::TestGetMainServName() {
+	char buffer[1024];
+	{
+	char *dns1 = "www.sina.com";
+	get_main_serv_name(buffer, 1024, dns1);
+	CPPUNIT_ASSERT(0 == strcmp(buffer, dns1));
+
+	char *dns2 = "http:\\www.sina.com";
+	char * result2 = "www.sina.com";
+	get_main_serv_name(buffer, 1024, dns1);
+	CPPUNIT_ASSERT(0 == strcmp(buffer, result2));
+	}
+
+	{
+	char *dns1 = "9.186.118.34:80/index.html";
+	char * result1 = "9.186.118.34:80";
+	get_main_serv_name(buffer, 1024, dns1);
+	CPPUNIT_ASSERT(0 == strcmp(buffer, result1));
+	}
+
+	{
+	char *dns1 = "http://www.hao123.com/jinshi.htm";
+	char * result1 = "www.hao123.com";
+	get_main_serv_name(buffer, 1024, dns1);
+	CPPUNIT_ASSERT(0 == strcmp(buffer, result1));
+	}
+
+	{
+	char *dns = "http://www.google.com/coop/cse/";
+	char * result = "www.google.com";
+	get_main_serv_name(buffer, 1024, dns);
+	CPPUNIT_ASSERT(0 == strcmp(buffer, result));
+	}
+
+	{
+	char *dns = "https://www.google.com/accounts/ManageAccount";
+	char * result = "www.google.com";
+	get_main_serv_name(buffer, 1024, dns);
+	CPPUNIT_ASSERT(0 == strcmp(buffer, result));
+	}
+}
 void DNSTest::TestContainIPinDNS() {
 	{
 	char *dns1 = "www.sina.com";
@@ -25,8 +66,10 @@ void DNSTest::TestContainIPinDNS() {
 
 	char *dns5 = "http://288.186.118.34index.html";
 	CPPUNIT_ASSERT(! isContainsIP(dns5));
+
+	char *dns6 = "https://288.186.118.34index.html";
+	CPPUNIT_ASSERT(! isContainsIP(dns6));
 	}
-	
 }
 void DNSTest::TestValidateIPWithEnd() {
 	// 结尾包含其他字母
@@ -168,6 +211,14 @@ void DNSTest::GetMainNameFromBrowseAddressswithProto() {
 
 	{
 		const TCHAR * test_unit = "http://sports.sina.com.cn/nba/";
+		const TCHAR * expected_result = "sina";
+		CPPUNIT_ASSERT( _tcslen(expected_result) == 
+			get_main_dns_name(result, MAX_PATH,test_unit));
+		CPPUNIT_ASSERT( 0 == _tcscmp(result, expected_result));
+	}
+
+	{
+		const TCHAR * test_unit = "https://sports.sina.com.cn/nba/";
 		const TCHAR * expected_result = "sina";
 		CPPUNIT_ASSERT( _tcslen(expected_result) == 
 			get_main_dns_name(result, MAX_PATH,test_unit));
