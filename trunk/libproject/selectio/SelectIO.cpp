@@ -69,6 +69,9 @@ void CSelectIO::finalize() {
 
 void CSelectIO::setRecv(MYWSPRECV *recv) { 
 	lpWSPRecv = recv;
+
+	// 初始化
+	website_recorder_.initialize();
 }
 // 在调用WSPRecv时使用
 // 如果给定的SOCKET 不能处理则返回1 

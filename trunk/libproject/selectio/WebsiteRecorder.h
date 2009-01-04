@@ -16,6 +16,7 @@ public:
 	~WebsiteRecorder(void);
 
 public:
+	void initialize();
 	void saveWebsites();
 
 	// 新增增加一个website

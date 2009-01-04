@@ -12,31 +12,40 @@
 
 WebsiteRecorder::WebsiteRecorder(void)
 {
-	porn_path[0] = '\0';
-	normal_path[0] = '\0';
+	memset(porn_path, 0, sizeof(porn_path));
+	memset(normal_path, 0, sizeof(normal_path));
 
 	save_porn_url_ = false;
 	save_url_ = false;
-	initialized_ = false;
 }
 
 WebsiteRecorder::~WebsiteRecorder(void)
 {
 }
 
+void WebsiteRecorder::initialize() {
+	getServiceSetting();
+}
 // 此函数会在函数updateWebsites()中调用
 // 之所以不再saveWebsites中调用， 是因为在DLL卸载时
 // COM初始化可能会失败
 void WebsiteRecorder::getServiceSetting() {
 	// 此函数之调用一次
-	if (initialized_)
-		return;
-	else {
-		initialized_ = true;
-	}
-
 	try {
 		AutoInitInScale _auto_com_init;
+
+		// 获取路径
+		if (_tcslen(normal_path) == 0 || _tcslen(porn_path) == 0) {
+			OutputDebugString("get porn");
+
+			BSTR retVal;
+			IAppSetting * appSetting = NULL;
+			HRESULT hr = CoCreateInstance(CLSID_AppSetting, NULL, CLSCTX_LOCAL_SERVER, IID_IAppSetting, (LPVOID*)&appSetting);
+			appSetting->GetInstallPath((BSTR*)&retVal);
+			
+			GetPornWebSiteFile(porn_path, MAX_PATH, (TCHAR*)_bstr_t(retVal));
+			GetWebSiteFile(normal_path, MAX_PATH, (TCHAR*)_bstr_t(retVal));
+		}
 
 		// 是否应该保存
 		VARIANT_BOOL recorded;
@@ -48,17 +57,6 @@ void WebsiteRecorder::getServiceSetting() {
 
 		webHistory->get_RecordPornURLs(&recorded);
 		save_porn_url_ = convert(recorded);
-
-		// 获取路径
-		if (porn_path[0] == '\0' || normal_path[0] == '\0') {
-			BSTR retVal;
-			IAppSetting * appSetting = NULL;
-			HRESULT hr = CoCreateInstance(CLSID_AppSetting, NULL, CLSCTX_LOCAL_SERVER, IID_IAppSetting, (LPVOID*)&appSetting);
-			appSetting->GetInstallPath((BSTR*)&retVal);
-			
-			GetPornWebSiteFile(porn_path, MAX_PATH, (TCHAR*)_bstr_t(retVal));
-			GetWebSiteFile(normal_path, MAX_PATH, (TCHAR*)_bstr_t(retVal));
-		}
 	} catch(...) {
 		porn_path[0] = '\0';
 		normal_path[0] = '\0';
@@ -67,8 +65,6 @@ void WebsiteRecorder::getServiceSetting() {
 
 // 
 void WebsiteRecorder::updateWebsites(const std::string &main_dns, const int score) {
-	getServiceSetting();
-
 	if (score != CONTENT_CHECK_PORN) {
 		ADDRESS_SCORE::iterator iter = address_score_.find(main_dns);
 		if (iter == address_score_.end()) {
@@ -89,8 +85,7 @@ void WebsiteRecorder::updateWebsites(const std::string &main_dns, const int scor
 void WebsiteRecorder::saveWebsites() {
 	// 获取设置
 	// getServiceSetting();
-
-	if (normal_path[0] != '\0' || porn_path[0] != '\0')
+	if (_tcslen(normal_path) == 0 || _tcslen(porn_path) == 0)
 		return;
 
 	std::fstream porn, normal;
