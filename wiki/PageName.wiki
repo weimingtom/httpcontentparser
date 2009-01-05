@@ -7,6 +7,8 @@ just execute the com exe with the arguement '/Service'
 
 if you just want to register a COM server, with '/regserver'.
 
+if you want to unregister the com, execute 'aa.exe /UnRegServer'
+
 = Details =
 
 Add your content here.  Format your content with:
