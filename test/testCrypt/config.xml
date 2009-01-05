@@ -30,7 +30,7 @@
         <authorize>
             <user username="su" password="123" />
         </authorize>
-        <eyecare enable="true" state="enter_time" term_mode="1" timeleft="430">
+        <eyecare enable="true" state="enter_time" term_mode="1" timeleft="426">
             <time name="enter_time" timespan="2700" />
             <time name="eyecare_time" timespan="2700" />
         </eyecare>
@@ -52,5 +52,6 @@
             <hotkey name="switchuser" key="0" />
         </hotkeys>
         <autoswitch max="3600" min="60" timespan="60" enable="false" />
+        <install key="2008-09-08 12:20:34"/>
     </appsetting>
 </config>
