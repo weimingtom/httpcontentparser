@@ -154,6 +154,16 @@ copy .\debug\sysutility.lib ..\..\lib\sysutility.lib
 				RelativePath=".\XInstall.h">
 			</File>
 		</Filter>
+		<Filter
+			Name="registry"
+			Filter="">
+			<File
+				RelativePath=".\registryinfo.cpp">
+			</File>
+			<File
+				RelativePath=".\registryinfo.h">
+			</File>
+		</Filter>
 		<File
 			RelativePath=".\ReadMe.txt">
 		</File>
