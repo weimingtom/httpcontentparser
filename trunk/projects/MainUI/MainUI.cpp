@@ -51,6 +51,10 @@ BOOL CMainUIApp::InitInstance()
 	if (!isPacketFiltersInstalled((HMODULE)AfxGetInstanceHandle()))
 		InstallPacketsFilter((HMODULE)AfxGetInstanceHandle());
 
+	// 修复COM组件
+	if (!ServicesWorking((HMODULE)AfxGetInstanceHandle()))
+		RepairCOMServices((HMODULE)AfxGetInstanceHandle());
+
 	// 读取配置信息
 	TCHAR config_path[MAX_PATH];
 	GetAppConfigFilename(config_path, MAX_PATH, AfxGetInstanceHandle());
