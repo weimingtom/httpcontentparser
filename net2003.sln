@@ -114,6 +114,14 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Register", "libproject\Regi
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "crypt", "libproject\crypt\crypt.vcproj", "{C99B0EB6-4E0D-48A0-A3A6-CF82F903AB5A}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "testCrypt", "test\testCrypt\testCrypt.vcproj", "{42C9DD20-2E26-4EEA-9091-E3C0C2AB93B4}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfiguration) = preSolution
 		Debug = Debug
@@ -306,6 +314,22 @@ Global
 		{983A564C-7A5D-4088-9113-CD1E7FDAC29A}.Release.Build.0 = Release|Win32
 		{983A564C-7A5D-4088-9113-CD1E7FDAC29A}.Release Unicode.ActiveCfg = Release|Win32
 		{983A564C-7A5D-4088-9113-CD1E7FDAC29A}.Release Unicode.Build.0 = Release|Win32
+		{C99B0EB6-4E0D-48A0-A3A6-CF82F903AB5A}.Debug.ActiveCfg = Debug|Win32
+		{C99B0EB6-4E0D-48A0-A3A6-CF82F903AB5A}.Debug.Build.0 = Debug|Win32
+		{C99B0EB6-4E0D-48A0-A3A6-CF82F903AB5A}.Debug Unicode.ActiveCfg = Debug|Win32
+		{C99B0EB6-4E0D-48A0-A3A6-CF82F903AB5A}.Debug Unicode.Build.0 = Debug|Win32
+		{C99B0EB6-4E0D-48A0-A3A6-CF82F903AB5A}.Release.ActiveCfg = Release|Win32
+		{C99B0EB6-4E0D-48A0-A3A6-CF82F903AB5A}.Release.Build.0 = Release|Win32
+		{C99B0EB6-4E0D-48A0-A3A6-CF82F903AB5A}.Release Unicode.ActiveCfg = Release|Win32
+		{C99B0EB6-4E0D-48A0-A3A6-CF82F903AB5A}.Release Unicode.Build.0 = Release|Win32
+		{42C9DD20-2E26-4EEA-9091-E3C0C2AB93B4}.Debug.ActiveCfg = Debug|Win32
+		{42C9DD20-2E26-4EEA-9091-E3C0C2AB93B4}.Debug.Build.0 = Debug|Win32
+		{42C9DD20-2E26-4EEA-9091-E3C0C2AB93B4}.Debug Unicode.ActiveCfg = Debug|Win32
+		{42C9DD20-2E26-4EEA-9091-E3C0C2AB93B4}.Debug Unicode.Build.0 = Debug|Win32
+		{42C9DD20-2E26-4EEA-9091-E3C0C2AB93B4}.Release.ActiveCfg = Release|Win32
+		{42C9DD20-2E26-4EEA-9091-E3C0C2AB93B4}.Release.Build.0 = Release|Win32
+		{42C9DD20-2E26-4EEA-9091-E3C0C2AB93B4}.Release Unicode.ActiveCfg = Release|Win32
+		{42C9DD20-2E26-4EEA-9091-E3C0C2AB93B4}.Release Unicode.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 	EndGlobalSection

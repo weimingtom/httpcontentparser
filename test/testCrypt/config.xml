@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<config>
+    <rules>
+        <rule name="onlinetime" enable="true" />
+        <rule name="blackurl" enable="true" />
+        <rule name="whiteurl" enable="true" justpass="false">
+            <url>hello</url>
+            <url>www.sina.com</url>
+            <url>www.sohu.com</url>
+        </rule>
+        <rule name="search" enable="true">
+            <blackwords>
+                <word>skype</word>
+            </blackwords>
+            <searchengines>
+                <searchengine name="baidu" enable="true" />
+                <searchengine name="google" enable="true" />
+                <searchengine name="yahoo" enable="true" />
+            </searchengines>
+        </rule>
+        <rule name="imagecheck">
+            <check imagetype="jpg" enable="true" />
+            <check imagetype="bmp" enable="true" />
+            <check imagetype="gif" enable="true" />
+            <check imagetype="png" enable="true" />
+            <scope enable="true" min="0" max="0" />
+        </rule>
+    </rules>
+    <appsetting>
+        <authorize>
+            <user username="su" password="123" />
+        </authorize>
+        <eyecare enable="true" state="enter_time" term_mode="1" timeleft="430">
+            <time name="enter_time" timespan="2700" />
+            <time name="eyecare_time" timespan="2700" />
+        </eyecare>
+        <webhistory enable="true">
+            <content type="all_images" enable="false" />
+            <content type="all_webpage" enable="true" />
+            <content type="all_website" enable="false" />
+            <content type="porn_images" enable="true" />
+            <content type="porn_webpage" enable="true" />
+            <content type="porn_website" enable="true" />
+            <autoclean max="30" min="1" timespan="3" lastclean="2009-01-04 19:52:26" />
+        </webhistory>
+        <screensave enable="true" timespan="1200">
+            <autoclean max="30" min="1" timespan="3" lastclean="2008-12-23 10:06:27" enable="false" />
+        </screensave>
+        <hotkeys>
+            <hotkey name="launch" key="0" />
+            <hotkey name="showui" key="0" />
+            <hotkey name="switchuser" key="0" />
+        </hotkeys>
+        <autoswitch max="3600" min="60" timespan="60" enable="false" />
+    </appsetting>
+</config>
