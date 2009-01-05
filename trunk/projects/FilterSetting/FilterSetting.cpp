@@ -51,6 +51,10 @@ extern "C" int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/
 
 	g_hInstance = hInstance;
 
+	// 检测SPI是否安装如果没有则安装
+	if (!isPacketFiltersInstalled((HMODULE)hInstance))
+		InstallPacketsFilter((HMODULE)hInstance));
+
 	// 初始化配置
 	TCHAR config_path[MAX_PATH];
 	GetAppConfigFilename(config_path, MAX_PATH, hInstance);
