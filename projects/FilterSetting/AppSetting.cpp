@@ -5,6 +5,7 @@
 #include ".\appsetting.h"
 #include ".\servthread.h"
 #include ".\globalvariable.h"
+#include ".\registerinfo.h"
 #include <app_constants.h>
 #include <typeconvert.h>
 #include <sysutility.h>
@@ -119,5 +120,15 @@ STDMETHODIMP CAppSetting::put_TimeoutSwitchEnabled(VARIANT_BOOL newVal)
 STDMETHODIMP CAppSetting::get_LefttimeToSwitch(LONG* pVal)
 {
 	*pVal = (LONG)g_configuration.getTimeoutSwitch()->getLeftTime();
+	return S_OK;
+}
+
+STDMETHODIMP CAppSetting::Registered(VARIANT_BOOL* registeded)
+{
+	return S_OK;
+}
+
+STDMETHODIMP CAppSetting::Register(BSTR bstr, VARIANT_BOOL* bSucc)
+{
 	return S_OK;
 }

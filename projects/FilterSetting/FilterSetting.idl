@@ -58,6 +58,8 @@ interface IAppSetting : IDispatch{
 	[propget, id(7), helpstring("Property TimeoutSwitchEnabled")] HRESULT TimeoutSwitchEnabled([out, retval] VARIANT_BOOL* pVal);
 	[propput, id(7), helpstring("Property TimeoutSwitchEnabled")] HRESULT TimeoutSwitchEnabled([in] VARIANT_BOOL newVal);
 	[propget, id(8), helpstring("Property LefttimeToSwitch")]	  HRESULT LefttimeToSwitch([out, retval] LONG* pVal);
+	[id(9), helpstring("方法Registered")] HRESULT Registered([out,retval] VARIANT_BOOL* registeded);
+	[id(10), helpstring("方法Register")] HRESULT Register(BSTR bstr, [out,retval] VARIANT_BOOL* bSucc);
 };
 [
 	object,
