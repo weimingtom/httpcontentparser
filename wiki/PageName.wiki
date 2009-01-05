@@ -2,7 +2,7 @@
 
 = Register the COM Service as a windows Service=
 
-just execute the com exe with the arguement '/server'
+just execute the com exe with the arguement '/Service'
 
 
 if you just want to register a COM server, with '/regserver'.
