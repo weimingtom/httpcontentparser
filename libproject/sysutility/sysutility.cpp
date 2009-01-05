@@ -111,6 +111,32 @@ UINT InstallPacketsFilter(HMODULE hModule) {
 	return m_Install.InstallProvider(fullpath);
 }
 
+// COM服务是否注册
+BOOL ServicesWorking(HMODULE hModule) {
+	// 打开
+	SC_HANDLE handle = OpenSCManager(NULL, NULL,
+		SC_MANAGER_ALL_ACCESS);
+
+	if(NULL == handle)
+		return FALSE;
+
+	// 如果没能打开服务
+	SC_HANDLE service_handle = OpenService(handle, SERVICE_FILENAME, SC_MANAGER_ALL_ACCESS);
+	if (NULL == service_handle) {
+		CloseServiceHandle(handle);
+		return FALSE;
+	}
+
+	// 如果启动失败
+	if (!StartService(service_handle, 0, NULL))
+		return FALSE;
+
+
+	CloseServiceHandle(service_handle);
+	CloseServiceHandle(handle);
+	return TRUE;
+}
+
 UINT RegisterServices(HMODULE hModule) {	
 	TCHAR install_path[MAX_PATH], fullpath[MAX_PATH], cmd[MAX_PATH];
 	GetInstallPath(install_path, MAX_PATH, hModule);
@@ -139,6 +165,11 @@ UINT UnRegisterServices(HMODULE hModule) {
 	}
 }
 
+// 取消在注册
+VOID RepairCOMServices(HMODULE hModule) {
+	UnRegisterServices(hModule);
+	RegisterServices(hModule);
+}
 namespace {
 BOOL CALLBACK EnumWndProc(HWND hwnd, LPARAM lParam)
 {

@@ -61,8 +61,13 @@ BOOL isAutoRun(HMODULE hModule);
 BOOL isPacketFiltersInstalled(HMODULE hModule);
 UINT InstallPacketsFilter(HMODULE hModule);
 
+// 针对COM的函数
+BOOL ServicesWorking(HMODULE hModule);	// COM服务是否已经注册
 UINT RegisterServices(HMODULE hModule);
 UINT UnRegisterServices(HMODULE hModule);
+VOID RepairCOMServices(HMODULE hModule);
+
+
 // 当前的Eyecare是否在运行
 HWND GetEyecareApp();
 #endif  // _FILTER_SETTING_SYS_UTILITY_H__
