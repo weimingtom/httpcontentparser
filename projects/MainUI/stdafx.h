@@ -45,12 +45,16 @@
 
 #include <afxdhtml.h>
 
+#include <crypt.h>
+
 #ifdef _DEBUG
 #pragma comment(lib, "settingd.lib")
+#pragma comment(lib, "cryptd.lib")
 #pragma comment(lib, "sysutilityd.lib")
 #else
 #pragma comment(lib, "setting.lib")
 #pragma comment(lib, "sysutility.lib")
+#pragma comment(lib, "crypt.lib")
 #endif 
 
 #pragma warning(disable : 4800)
