@@ -1,0 +1,15 @@
+#summary One-sentence summary of this page.
+
+= Register the COM Service as a windows Service=
+
+just execute the com exe with the arguement '/server'
+
+
+if you just want to register a COM server, with '/regserver'.
+
+= Details =
+
+Add your content here.  Format your content with:
+  * Text in *bold* or _italic_
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages
