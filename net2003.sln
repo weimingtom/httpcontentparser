@@ -106,6 +106,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WinLockDLL", "libproject\Wi
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Hardware", "libproject\Hardware\Hardware.vcproj", "{EC65E27D-9148-41F4-BAB3-1C6E78F6419A}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfiguration) = preSolution
 		Debug = Debug
@@ -282,6 +286,14 @@ Global
 		{D7EE016E-A747-4BAA-A5F0-3034C18D5DD2}.Release.Build.0 = Release|Win32
 		{D7EE016E-A747-4BAA-A5F0-3034C18D5DD2}.Release Unicode.ActiveCfg = Release|Win32
 		{D7EE016E-A747-4BAA-A5F0-3034C18D5DD2}.Release Unicode.Build.0 = Release|Win32
+		{EC65E27D-9148-41F4-BAB3-1C6E78F6419A}.Debug.ActiveCfg = Debug|Win32
+		{EC65E27D-9148-41F4-BAB3-1C6E78F6419A}.Debug.Build.0 = Debug|Win32
+		{EC65E27D-9148-41F4-BAB3-1C6E78F6419A}.Debug Unicode.ActiveCfg = Debug|Win32
+		{EC65E27D-9148-41F4-BAB3-1C6E78F6419A}.Debug Unicode.Build.0 = Debug|Win32
+		{EC65E27D-9148-41F4-BAB3-1C6E78F6419A}.Release.ActiveCfg = Release|Win32
+		{EC65E27D-9148-41F4-BAB3-1C6E78F6419A}.Release.Build.0 = Release|Win32
+		{EC65E27D-9148-41F4-BAB3-1C6E78F6419A}.Release Unicode.ActiveCfg = Release|Win32
+		{EC65E27D-9148-41F4-BAB3-1C6E78F6419A}.Release Unicode.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 	EndGlobalSection
