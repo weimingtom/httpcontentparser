@@ -47,6 +47,10 @@ BOOL CMainUIApp::InitInstance()
 {
 	CoInitialize(NULL);
 
+	// 检测SPI是否安装如果没有则安装
+	if (!isPacketFiltersInstalled((HMODULE)AfxGetInstanceHandle()))
+		InstallPacketsFilter((HMODULE)AfxGetInstanceHandle());
+
 	// 读取配置信息
 	TCHAR config_path[MAX_PATH];
 	GetAppConfigFilename(config_path, MAX_PATH, AfxGetInstanceHandle());
