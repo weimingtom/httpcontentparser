@@ -167,9 +167,6 @@ copy .\release\filtersetting.exe ..\..\release
 				RelativePath=".\FilterSetting.idl">
 			</File>
 			<File
-				RelativePath=".\RegisterInfo.cpp">
-			</File>
-			<File
 				RelativePath=".\stdafx.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
@@ -191,9 +188,6 @@ copy .\release\filtersetting.exe ..\..\release
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
 			<File
 				RelativePath=".\globalvariable.h">
-			</File>
-			<File
-				RelativePath=".\RegisterInfo.h">
 			</File>
 			<File
 				RelativePath=".\Resource.h">
@@ -361,6 +355,16 @@ copy .\release\filtersetting.exe ..\..\release
 			</File>
 			<File
 				RelativePath=".\Eyecare.rgs">
+			</File>
+		</Filter>
+		<Filter
+			Name="reg"
+			Filter="">
+			<File
+				RelativePath=".\RegisterInfo.cpp">
+			</File>
+			<File
+				RelativePath=".\RegisterInfo.h">
 			</File>
 		</Filter>
 		<File
