@@ -14,5 +14,5 @@ void RegisterInfo::initialize() {
 
 
 bool RegisterInfo::registerSoft(const std::string & register_info) {
-	return true;
+	return false;
 }
