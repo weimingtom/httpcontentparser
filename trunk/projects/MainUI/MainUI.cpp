@@ -43,6 +43,21 @@ CMainUIApp theApp;
 
 // CMainUIApp 初始化
 
+void initializeSetting() {
+		// 初始化配置
+	TCHAR config_path[MAX_PATH];
+	GetAppConfigFilename(config_path, MAX_PATH, AfxGetInstanceHandle());
+
+	
+	// 解密文件
+	TCHAR file[] = ".\\.configg.xml";
+	DecryptFile(config_path, file);
+	g_configuration.loadConfig(file);
+
+	// 删除文件
+	DeleteFile(file);
+}
+
 BOOL CMainUIApp::InitInstance()
 {
 	CoInitialize(NULL);
@@ -56,9 +71,7 @@ BOOL CMainUIApp::InitInstance()
 		RepairCOMServices((HMODULE)AfxGetInstanceHandle());
 
 	// 读取配置信息
-	TCHAR config_path[MAX_PATH];
-	GetAppConfigFilename(config_path, MAX_PATH, AfxGetInstanceHandle());
-	g_configuration.loadConfig(config_path);
+	initializeSetting();
 
 	HWND hwnd = GetMainUIHWND();
 	if (hwnd != NULL) {

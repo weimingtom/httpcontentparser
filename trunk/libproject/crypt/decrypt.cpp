@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include ".\crypt.h"
-
+#include ".\debug.h"
 
 #define KEYLENGTH  0x00800000
 #define ENCRYPT_ALGORITHM CALG_RC4 
@@ -19,7 +19,6 @@ bool DecryptFile(LPTSTR pszSourceFile,  LPTSTR pszDestinationFile) {
 
 
 namespace {
-void MyHandleError(LPTSTR psz, int nErrorNumber) {}
 //-------------------------------------------------------------------
 // Code for the function MyDecryptFile called by main.
 //-------------------------------------------------------------------

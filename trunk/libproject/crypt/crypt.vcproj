@@ -124,6 +124,9 @@
 				RelativePath=".\crypt.h">
 			</File>
 			<File
+				RelativePath=".\debug.h">
+			</File>
+			<File
 				RelativePath=".\decrypt.cpp">
 			</File>
 			<File

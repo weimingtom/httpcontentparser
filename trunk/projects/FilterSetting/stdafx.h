@@ -38,15 +38,19 @@
 #include "resource.h"
 #include <atlbase.h>
 #include <atlcom.h>
+#include <crypt.h>
 
 #ifdef _DEBUG
 #	pragma comment(lib, "settingd.lib")
 #	pragma comment(lib, "sysutilityd.lib")
 #	pragma comment(lib, "ScreenRecord_d.lib")
+#pragma comment(lib, "cryptd.lib")
 #else 
 #	pragma comment(lib, "setting.lib")
 #	pragma comment(lib, "sysutility.lib")
 #	pragma comment(lib, "ScreenRecord.lib")
+#pragma comment(lib, "crypt.lib")
 #endif
+
 
 using namespace ATL;
