@@ -5,7 +5,8 @@
 #include "globalvariable.h"
 #include "FilterSetting.h"
 #include ".\servthread.h"
-#include "sysutility.h"
+#include ".\registerinfo.h"
+#include <sysutility.h>
 #include <app_constants.h>
 #include <passwordtype.h>
 #include <webhistoryrecordersetting.h>
@@ -34,7 +35,7 @@ CFilterSettingModule _AtlModule;
 
 // DNS Rules
 XMLConfiguration g_configuration;
-
+RegisterInfo g_registerInfo;
 HINSTANCE g_hInstance;
 
 
