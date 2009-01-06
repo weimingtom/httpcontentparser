@@ -155,6 +155,7 @@ void SelectIOTest::testMax() {
 	CPPUNIT_ASSERT( 1 == select.preselect(&readfds));
 	select.postselect(&readfds);
 	CPPUNIT_ASSERT( 0 == select.preselect(&readfds));
+	Sleep(100);
 	CPPUNIT_ASSERT(select.prerecv(s, &wsabuf,
 		1, &dwNumberOfBytesRecvd) == 0);
 	CPPUNIT_ASSERT(dwNumberOfBytesRecvd == (data1.length()));
@@ -231,19 +232,21 @@ void SelectIOTest::testMulitPacket() {
 	CPPUNIT_ASSERT( 1 == select.preselect(&readfds));
 	select.postselect(&readfds);
 	
-	CPPUNIT_ASSERT(select.prerecv(s, &wsabuf,
-		1, &dwNumberOfBytesRecvd) == 1);
+	// 不完整
+	CPPUNIT_ASSERT(select.prerecv(s, &wsabuf, 1, &dwNumberOfBytesRecvd) == 1);
 	CPPUNIT_ASSERT(dwNumberOfBytesRecvd == 0);
-	CPPUNIT_ASSERT(select.prerecv(s, &wsabuf,
-		1, &dwNumberOfBytesRecvd) == 1);
+	CPPUNIT_ASSERT(select.prerecv(s, &wsabuf, 1, &dwNumberOfBytesRecvd) == 1);
 	CPPUNIT_ASSERT(dwNumberOfBytesRecvd == 0);
 
 	g_SockData.insert(make_pair(s, data2));
 	CPPUNIT_ASSERT( 1 == select.preselect(&readfds));
 	FD_SET(s, &readfds);
 	select.postselect(&readfds);
-	CPPUNIT_ASSERT(select.prerecv(s, &wsabuf,
-		1, &dwNumberOfBytesRecvd) == 0);
+
+	while (1 == select.preselect(&readfds)) {
+	}
+
+	CPPUNIT_ASSERT(select.prerecv(s, &wsabuf,1, &dwNumberOfBytesRecvd) == 0);
 	CPPUNIT_ASSERT(dwNumberOfBytesRecvd == data2.length() + data1.length());
 	}
 }
@@ -325,6 +328,11 @@ void SelectIOTest::testPostSelect() {
 	FD_SET(s, &readfds);
 	CPPUNIT_ASSERT( 1 == select.preselect(&readfds));
 	select.postselect(&readfds);
+
+	// 等待知道数据处理完毕
+	while (1 == select.preselect(&readfds)) {
+	}
+
 	// 验证数据
 	const int buf_size = 1024 * 64;
 	char buffer[buf_size];
@@ -332,11 +340,9 @@ void SelectIOTest::testPostSelect() {
 	wsabuf.buf = buffer;
 	wsabuf.len = buf_size;
 	DWORD dwNumberOfBytesRecvd;
-	CPPUNIT_ASSERT(select.prerecv(s, &wsabuf,
-		1, &dwNumberOfBytesRecvd) == 0);
+	CPPUNIT_ASSERT(select.prerecv(s, &wsabuf, 1, &dwNumberOfBytesRecvd) == 0);
 	CPPUNIT_ASSERT(dwNumberOfBytesRecvd == (data1.length()));
-	CPPUNIT_ASSERT(select.prerecv(s, &wsabuf,
-		1, &dwNumberOfBytesRecvd) == 1);
+	CPPUNIT_ASSERT(select.prerecv(s, &wsabuf, 1, &dwNumberOfBytesRecvd) == 1);
 	CPPUNIT_ASSERT(dwNumberOfBytesRecvd == 0);
 	}
 
@@ -392,21 +398,31 @@ void SelectIOTest::testPostSelect() {
 
 	CPPUNIT_ASSERT( 1 == select.preselect(&readfds));
 	select.postselect(&readfds);
-	CPPUNIT_ASSERT(select.prerecv(s, &wsabuf,
-		1, &dwNumberOfBytesRecvd) == 0);
+
+	while (1 == select.preselect(&readfds)) {
+	}
+
+
+	CPPUNIT_ASSERT(select.prerecv(s, &wsabuf, 1, &dwNumberOfBytesRecvd) == 0);
 	CPPUNIT_ASSERT(dwNumberOfBytesRecvd == (data1.length()));
 
 	// 在包没有完成时，应该直接返回1
 	CPPUNIT_ASSERT( 1 == select.preselect(&readfds));
 	select.postselect(&readfds);
-	CPPUNIT_ASSERT(select.prerecv(s, &wsabuf,
-		1, &dwNumberOfBytesRecvd) == 0);
+
+	while (1 == select.preselect(&readfds)) {
+	}
+
+	CPPUNIT_ASSERT(select.prerecv(s, &wsabuf, 1, &dwNumberOfBytesRecvd) == 0);
 	CPPUNIT_ASSERT(dwNumberOfBytesRecvd == (data2.length()));
 
 	CPPUNIT_ASSERT( 1 == select.preselect(&readfds));
 	select.postselect(&readfds);
-	CPPUNIT_ASSERT(select.prerecv(s, &wsabuf,
-		1, &dwNumberOfBytesRecvd) == 0);
+
+	while (1 == select.preselect(&readfds)) {
+	}
+
+	CPPUNIT_ASSERT(select.prerecv(s, &wsabuf, 1, &dwNumberOfBytesRecvd) == 0);
 	CPPUNIT_ASSERT(dwNumberOfBytesRecvd == (data3.length()));
 	}
 }
@@ -478,7 +494,7 @@ void SelectIOTest::testRemovePacket() {
 
 	int cnt = static_cast<int>(socket_set.size());
 	for (; iter != socket_set.end(); ++iter) {
-		CPPUNIT_ASSERT(select.socketPackets_._sockets_map_.size() == cnt);
+		CPPUNIT_ASSERT(select.packet_handle_queue_.socketPackets_._sockets_map_.size() == cnt);
 		FD_ZERO(&readfds);
 		FD_SET(*iter, &readfds);
 
@@ -489,6 +505,6 @@ void SelectIOTest::testRemovePacket() {
 		CPPUNIT_ASSERT(dwNumberOfBytesRecvd == (data1.length()));
 		cnt--;
 	}
-	CPPUNIT_ASSERT(select.socketPackets_._sockets_map_.size() == 0);
+	CPPUNIT_ASSERT(select.packet_handle_queue_.socketPackets_._sockets_map_.size() == 0);
 	}
 }
