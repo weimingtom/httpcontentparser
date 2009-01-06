@@ -37,6 +37,7 @@
 #include <autoclean.h>
 #include <timeoutswitch.h>
 #include <hotkeysetting.h>
+#include <installDate.h>
 #include <xmldefined.h>
 #include <string>
 #include <set>
@@ -69,6 +70,7 @@ public:
 	AutoClean*		getWebHistoryRecordAutoClean() { return getWebHistoryRecordSetting()->getAutoclean();}
 	HotkeySetting*  getHotkey() { return &hotkey_;}
 	TimeoutSwitch*  getTimeoutSwitch() { return &timeout_switch_;} 
+	InstallDate *	getInstallDate() { return &install_date_;}
 private:
 	DNSList						black_url_set_;
 	DNSList						white_url_set_;
@@ -82,6 +84,7 @@ private:
 	DNSSetting					dnssetting_;
 	HotkeySetting				hotkey_;
 	TimeoutSwitch				timeout_switch_;
+	InstallDate					install_date_;
 
 	// ƒ¨»œ…Ë÷√
 	void defaultSetting();
