@@ -91,7 +91,7 @@ int CSelectIO::prerecv(SOCKET s, LPWSABUF lpBuffers,
 
 	int result;
 	bool succ = packet_handle_queue_.getResult(packet, &result);
-	assert (succ);
+	// assert (succ);
 	if (!succ) {
 		return 1;
 	}
@@ -157,7 +157,9 @@ int CSelectIO::preselect(fd_set *readfds) {
 		return 1;
 
 	fd_set complete_readfds, new_readfds;
-	FD_ZERO(&new_readfds);FD_ZERO(&complete_readfds);
+	FD_ZERO(&new_readfds);
+	FD_ZERO(&complete_readfds);
+
 	packet_handle_queue_.getAllCompleteSOCKET(&complete_readfds);
 
 	// 如果SOCKET同时存在于complete_readfds和readfds时

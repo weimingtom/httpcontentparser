@@ -57,6 +57,7 @@ private:
 
 	// Ïß³Ìid
 	DWORD dwThreadId_;
+	HANDLE hThread_;
 
 	friend DWORD CALLBACK HandlePacket(LPVOID lParam);
 	friend class SelectIOTest;
