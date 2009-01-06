@@ -57,7 +57,7 @@ CSelectIO::CSelectIO() {
 CSelectIO::~CSelectIO(void) {
 	socketPackets_.freeAllCompletedPacket();
 	socketPackets_.clearAllPackets();
-	bufferResult_.removeAllBufferResult();
+	// packet_handle_queue_.finialize();
 }
 
 void CSelectIO::finalize() {
@@ -89,10 +89,15 @@ int CSelectIO::prerecv(SOCKET s, LPWSABUF lpBuffers,
 	if (packet == NULL) {
 		return 1;
 	}
+
+	int result;
+	if (!packet_handle_queue_.getResult(packet, &result)) {
+		return 1;
+	}
 	// 检查内容
 	// 如果检查失败
 	
-	if (false == handlePacket(packet)) {
+	if (CONTENT_CHECK_PORN == result) {
 		website_recorder_.updateWebsites(dnsmap_.get(s), CONTENT_CHECK_PORN);
 		socketPackets_.removeCompletedPacket(s, packet);
 		*recv_bytes = 0;
@@ -113,7 +118,7 @@ int CSelectIO::prerecv(SOCKET s, LPWSABUF lpBuffers,
 
 	if (raw_packet->getBytesCanRead() == 0) {
 		*recv_bytes = 0;
-		bufferResult_.removeBufferResult(packet);
+		packet_handle_queue_.removeCompletePacket(packet);
 		socketPackets_.removeCompletedPacket(s, packet);
 	}
 
@@ -259,7 +264,8 @@ int CSelectIO::graspData(const SOCKET s, char *buf, const int len) {
 			// 如果出现了错误
 			assert ( added_length == result);
 			socketPackets_.removePacket(s, sock_data);
-			socketPackets_.addCompletedPacket(s, sock_data);				
+	 		socketPackets_.addCompletedPacket(s, sock_data);
+			packet_handle_queue_.addPacket(sock_data);
 			completed_generated = true;
 		} else {
 			// 由于这里可能出现头部，所以在这里也应该进行头部验证啊....
@@ -283,6 +289,7 @@ int CSelectIO::graspData(const SOCKET s, char *buf, const int len) {
 				// 放入到完成队列当中
 				socketPackets_.removePacket(s, sock_data);
 				socketPackets_.addCompletedPacket(s, sock_data);
+				packet_handle_queue_.addPacket(sock_data);
 				completed_generated = true;
 			}
 
@@ -401,58 +408,7 @@ void CSelectIO::addDNS(SOCKET s, const std::string &addr) {
 	dnsmap_.add(s, addr);
 }
 
-// 此函数负责检查包的内容
-// 1. 检查这个包是否来自白名单中的网站
-// 2. 分析包的类型, 并确定该包是否应该被检查
-// 3. 分析不包的内容
-bool CSelectIO::handlePacket(HTTPPacket *packet) {
-	int result;
-	// 首先查找是否已经被处理过了
-	if (false == bufferResult_.getResult(packet->getCode(), &result)) {
-		result =  handler_.handleContent(packet);
-		bufferResult_.addResultPair(packet->getCode(), result);
-	}
 
-	if (CONTENT_CHECK_PORN == result) {
-		return false;
-	} else {
-		return true;
-	}
-}
-
-
-//===================================
-// class BufferResult
-void BufferResult::addResultPair(int code, int result) {
-	using namespace yanglei_utility;
-	SingleLock<CAutoCreateCS> lock(&cs_);
-
-	content_check_result_.insert(std::make_pair(code, result));
-}
-bool BufferResult::getResult(int code, int * result) {
-	using namespace yanglei_utility;
-	SingleLock<CAutoCreateCS> lock(&cs_);
-
-	BUFFER_RESULT::iterator iter = content_check_result_.find(code);
-	if (content_check_result_.end() == iter) {
-		return false;
-	} else {
-		*result = iter->second;	// 直接返回结果
-		return true;
-	}
-}
-void BufferResult::removeBufferResult(HTTPPacket *packet) {
-	using namespace yanglei_utility;
-	SingleLock<CAutoCreateCS> lock(&cs_);
-
-
-	BUFFER_RESULT::iterator iter = content_check_result_.find(packet->getCode());
-	if (content_check_result_.end() != iter) {
-		content_check_result_.erase(iter);
-	} else {
-		// assert(false);	
-	}
-}
 
 
 //=================================================
