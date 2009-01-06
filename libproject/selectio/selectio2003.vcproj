@@ -49,7 +49,8 @@ copy .\BufferCallCOM.h ..\..\include
 copy .\DNSMap.H ..\..\include
 copy .\WebsiteRecorder.h ..\..\include
 copy .\bufferresult.h ..\..\include
-copy .\handlequeue.h ..\..\include"/>
+copy .\handlequeue.h ..\..\include
+copy .\socketpackets.h ..\..\include"/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
 			<Tool
@@ -223,6 +224,16 @@ copy .\handlequeue.h ..\..\include"/>
 			</File>
 			<File
 				RelativePath=".\HandleQueue.h">
+			</File>
+		</Filter>
+		<Filter
+			Name="SocketPackets"
+			Filter="">
+			<File
+				RelativePath=".\SocketPackets.cpp">
+			</File>
+			<File
+				RelativePath=".\SocketPackets.h">
 			</File>
 		</Filter>
 	</Files>

@@ -9,8 +9,9 @@
 #include <utility\protocolpacket.h>
 #include <dnsmap.h>
 #include <WebsiteRecorder.h>
-#include ".\bufferresult.h"
-#include ".\HandleQueue.h"
+#include <bufferresult.h>
+#include <HandleQueue.h>
+#include <socketpackets.h>
 
 typedef int WSPAPI MYWSPRECV(
 	SOCKET			s,
@@ -31,36 +32,6 @@ class SelectIOTest;
 
 // buffer count
 #define BUFFER_COM_ALL_COUNT 10
-
-class SocketPackets {
-public:
-	typedef std::multimap<SOCKET, HTTPPacket*> SOCK_DATA_MAP;
-	typedef std::multimap<SOCKET, HTTPPacket *> COMPLETED_PACKETS;
-public:
-	bool isAnyCompleteSOCKET();			// 是否已经有完成的IO
-	void freeAllCompletedPacket(); // 释放所有已经完成的包
-	int addCompletedPacket(const SOCKET s, HTTPPacket *p);
-	int removeCompletedPacket(const SOCKET s, HTTPPacket *p);
-	HTTPPacket * getCompletedPacket(const SOCKET s);
-
-	void getAllCompleteSOCKET(fd_set *readfds);	// 获取所有已经完成的IO的SOCKET
-	HTTPPacket * getSOCKETPacket(const SOCKET s);
-	int  removePacket(const SOCKET s, HTTPPacket *p);
-	void clearAllPackets();		// 释放所有的包
-
-	bool isThereUncompletePacket(const SOCKET s);
-
-	// 使用新的包代替旧的包
-	int replacePacket(SOCKET s, HTTPPacket *packet, HTTPPacket * new_packet);
-protected:
-	COMPLETED_PACKETS completed_packets_;	// 保存于SOCKET对应已经完成的数据包
-	SOCK_DATA_MAP _sockets_map_;			// 保存正在处理的数据包
-
-	// 临界区
-	yanglei_utility::CAutoCreateCS cs_;
-
-	friend class SelectIOTest;
-};
 
 class CSelectIO {
 public:
@@ -95,11 +66,8 @@ protected:
 
 // 检查包的的内容
 	bool handlePacket(HTTPPacket *packet);
-
-	SocketPackets socketPackets_;
 protected:
 	HandleQueue	packet_handle_queue_;
-
 
 	// 用于记录网站地址
 	WebsiteRecorder website_recorder_;
@@ -113,8 +81,6 @@ private:
 	DNSMap	dnsmap_;
 	// 移除dns MAP
 	void removeDNSMap(SOCKET s);
-
-	friend DWORD CALLBACK HandlePacket(LPVOID);
 };
 
 // utility functions
