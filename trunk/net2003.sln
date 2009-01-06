@@ -122,6 +122,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "testCrypt", "test\testCrypt
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestSyncObject", "test\TestSyncObject\TestSyncObject.vcproj", "{D187898C-368D-4F22-ABA9-354935B5D798}"
+	ProjectSection(ProjectDependencies) = postProject
+		{CD11D86D-3173-4945-8215-7450A0D9CB3C} = {CD11D86D-3173-4945-8215-7450A0D9CB3C}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfiguration) = preSolution
 		Debug = Debug
@@ -330,6 +335,14 @@ Global
 		{42C9DD20-2E26-4EEA-9091-E3C0C2AB93B4}.Release.Build.0 = Release|Win32
 		{42C9DD20-2E26-4EEA-9091-E3C0C2AB93B4}.Release Unicode.ActiveCfg = Release|Win32
 		{42C9DD20-2E26-4EEA-9091-E3C0C2AB93B4}.Release Unicode.Build.0 = Release|Win32
+		{D187898C-368D-4F22-ABA9-354935B5D798}.Debug.ActiveCfg = Debug|Win32
+		{D187898C-368D-4F22-ABA9-354935B5D798}.Debug.Build.0 = Debug|Win32
+		{D187898C-368D-4F22-ABA9-354935B5D798}.Debug Unicode.ActiveCfg = Debug|Win32
+		{D187898C-368D-4F22-ABA9-354935B5D798}.Debug Unicode.Build.0 = Debug|Win32
+		{D187898C-368D-4F22-ABA9-354935B5D798}.Release.ActiveCfg = Release|Win32
+		{D187898C-368D-4F22-ABA9-354935B5D798}.Release.Build.0 = Release|Win32
+		{D187898C-368D-4F22-ABA9-354935B5D798}.Release Unicode.ActiveCfg = Release|Win32
+		{D187898C-368D-4F22-ABA9-354935B5D798}.Release Unicode.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 	EndGlobalSection
