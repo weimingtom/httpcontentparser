@@ -32,6 +32,9 @@ int HandleQueue::dequeSize() {
 	return (int)handle_deque_.size();
 }
 
+void HandleQueue::removeSOCKET(SOCKET s) {
+	// socketPackets_.removeSocketRel(s, &result_);
+}
 
 void HandleQueue::addPacket(HTTPPacket * packet) {
 	using namespace yanglei_utility;
