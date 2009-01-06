@@ -95,7 +95,6 @@ bool checkHTTPRequest(HTTPRequestPacket * packet) {
 	
 	// 如果不存在IP在DNS地址当中
 	// 如果DNS不可达
-	OutputDebugString(buffer);
 	if (!isContainsIP(buffer)) {
 		// OutputDebugString("not contain ip .....");
 		if (false == checkDNS(buffer)) 
