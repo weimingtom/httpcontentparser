@@ -10,6 +10,8 @@
 #include <dnsmap.h>
 #include <WebsiteRecorder.h>
 
+
+class BufferResult;
 class HandleQueue;
 
 class SocketPackets {
@@ -26,6 +28,9 @@ public:
 	void clearAllPackets();		// 释放所有的包
 
 	bool isThereUncompletePacket(const SOCKET s);
+
+	// 移除所有与S相关的包
+	void removeSocketRel(const SOCKET s, BufferResult * result);
 
 	// 使用新的包代替旧的包
 	// int replacePacket(SOCKET s, HTTPPacket *packet, HTTPPacket * new_packet);

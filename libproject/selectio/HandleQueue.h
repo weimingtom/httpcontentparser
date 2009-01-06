@@ -40,6 +40,9 @@ public:
 	void getAllCompleteSOCKET(fd_set *readfds);	// 获取所有已经完成的IO的SOCKET
 	HTTPPacket * getSOCKETPacket(const SOCKET s);
 	bool isThereUncompletePacket(const SOCKET s);
+
+	// 
+	void removeSOCKET(SOCKET s);
 private:
 	HTTPPacket* removeFront();
 	int dequeSize();

@@ -1,6 +1,7 @@
 #include "StdAfx.h"
 #include ".\socketpackets.h"
 #include ".\handlequeue.h"
+#include ".\bufferresult.h"
 
 //=================================================
 // class SocketPackets;
@@ -10,6 +11,36 @@ bool SocketPackets::isAnyCompleteSOCKET() {
 	SingleLock<CAutoCreateCS> lock(&cs_);
 
 	return completed_packets_.size() != 0;
+}
+
+void SocketPackets::removeSocketRel(const SOCKET s, BufferResult * result) {
+	assert (NULL != result);
+
+	using namespace yanglei_utility;
+	SingleLock<CAutoCreateCS> lock(&cs_);
+
+	{// 删除所有完成的包
+	COMPLETED_PACKETS::iterator iter = completed_packets_.find(s);
+	while (completed_packets_.end() != iter) {
+		result->removeBufferResult(iter->second);
+		delete iter->second;
+
+		completed_packets_.erase(iter);
+		// 获取下一个
+		iter = completed_packets_.find(s);
+	}
+	}
+
+	{// 删除所有未完成的包
+	SOCK_DATA_MAP::iterator iter = _sockets_map_.find(s);
+	while (_sockets_map_.end() != iter) {
+		delete iter->second;
+		_sockets_map_.erase(iter);
+		
+		// 获取下一个
+		iter = _sockets_map_.begin();
+	}
+	}
 }
 
 // 将所有已经有完成包的socket存放在fd_set当中

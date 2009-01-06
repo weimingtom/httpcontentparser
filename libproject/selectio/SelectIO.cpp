@@ -63,8 +63,6 @@ void CSelectIO::finalize() {
 }
 /////////////////////////////////////////////
 // public members
-
-
 void CSelectIO::setRecv(MYWSPRECV *recv) { 
 	lpWSPRecv = recv;
 
@@ -99,16 +97,16 @@ int CSelectIO::prerecv(SOCKET s, LPWSABUF lpBuffers,
 	// 如果检查失败
 	
 	if (CONTENT_CHECK_PORN == result) {
-		website_recorder_.updateWebsites(dnsmap_.get(s), CONTENT_CHECK_PORN);
-		packet_handle_queue_.removeCompletedPacket(s, packet);
-		*recv_bytes = 0;
-		return 0;
-		// 应该替换包
+		// 应该替换包, 之前的方法是使用一个图片替代包
 		//HTTPPacket *new_packet = new HTTPPacket;
 		//FillBlankPacket(packet, new_packet);
 		//socketPackets_.replacePacket(s, packet, new_packet);
 		//delete packet;
 		//packet = new_packet;
+		website_recorder_.updateWebsites(dnsmap_.get(s), CONTENT_CHECK_PORN);
+		packet_handle_queue_.removeCompletedPacket(s, packet);
+		*recv_bytes = 0;
+		return 0;
 	} else {
 		website_recorder_.updateWebsites(dnsmap_.get(s), CONTENT_CHECK_NORMAL);
 	}
@@ -122,10 +120,6 @@ int CSelectIO::prerecv(SOCKET s, LPWSABUF lpBuffers,
 		packet_handle_queue_.removeCompletedPacket(s, packet);
 	}
 
-	//char data[1024];
-	//sprintf(data, "totalbuf size: %d", TotalbufferSize);
-	//OutputDebugString(data);
-
 	// 所有包都已经发送
 	// 如果收到长度为0的包呢
 	if (packet->transfefTail() && raw_packet->getBytesCanRead() == 0) {
@@ -136,8 +130,16 @@ int CSelectIO::prerecv(SOCKET s, LPWSABUF lpBuffers,
 		
 			*recv_bytes += bytes;
 			if (bytes == 0 || raw_packet->getBytesCanRead() == 0) {
-				if (packet->transfefTail() == false)
+				if (packet->transfefTail() == false) {
+					char filename[1024];
+					sprintf(filename, "d:\\debuglog\\up\\%d.log",  s);
+					packet->achieve(filename);
+
+					sprintf(filename, "recv upward : %d", s);
+					OutputDebugString(filename);
+
 					packet_handle_queue_.removeCompletedPacket(s, packet);
+				}
 			}
 		}
 
@@ -242,51 +244,48 @@ int CSelectIO::graspData(const SOCKET s, char *buf, const int len) {
 		HTTPPacket* sock_data  = packet_handle_queue_.getSOCKETPacket(s);
 		assert( sock_data != NULL);
 
-		//char filename[1024];
-		//sprintf(filename, "d:\\debuglog\\s%d_%d.log",  s, sock_data->getCode());
-		//OutputDebugString(filename);
-		//WriteRawData(filename, buf, len);
+		char filename[1024];
+		sprintf(filename, "d:\\debuglog\\s%d.log",  s);
+		WriteRawData(filename, buf, len);
 
 		// 如果接收到了长度为0
-		if (len == 0) {
-			// 将包表示为完整的
-			int added_length;
-			const int result = sock_data->addBuffer(buf, len, &added_length);
-			if (0 != result) {
-				char buffer[1024];
-				sprintf(buffer, "1. SOCKET %d, Packet Code %d", s, sock_data->getCode());
-				OutputDebugString(buffer);
-			}
+		//if (len == 0) {
+		//	// 将包表示为完整的
+		//	int added_length;
+		//	const int result = sock_data->addBuffer(buf, len, &added_length);
+		//	if (0 != result) {
+		//		char buffer[1024];
+		//		sprintf(buffer, "1. SOCKET %d, Packet Code %d", s, sock_data->getCode());
+		//		OutputDebugString(buffer);
+		//	}
+		//	// 如果出现了错误
+		//	assert ( added_length == result);
+		//	packet_handle_queue_.packetIntact(s, sock_data);
+		//	completed_generated = true;
+		//} else {
+		// 由于这里可能出现头部，所以在这里也应该进行头部验证啊....
+		// 但是这里是已经接收到的包，所以受到了必须将它直接送上去，不能放弃
+		int bytes_written;
+		const int result = sock_data->addBuffer(&(buf[total_size]), len - total_size, &bytes_written);
+		total_size += bytes_written;
 
-			// 如果出现了错误
-			assert ( added_length == result);
+		//// 出现了问题
+		//if (0 != result) {
+		//	char buffer[1024];
+		//	sprintf(buffer, "2. SOCKET %d, Packet Code %d", s, sock_data->getCode());
+		//	OutputDebugString(buffer);
+		//}
+
+
+		// 如果当前包已经完成，则从map中移除，并放入到完成队列当中 
+		// 如果一些条件不符合约束，也应该放入完成队列
+		//    如：HTTP的类型， 大小等等.....
+		if (sock_data->isComplete() /*|| result != 0*/) { 
+			// 放入到完成队列当中
 			packet_handle_queue_.packetIntact(s, sock_data);
 			completed_generated = true;
-		} else {
-			// 由于这里可能出现头部，所以在这里也应该进行头部验证啊....
-			// 但是这里是已经接收到的包，所以受到了必须将它直接送上去，不能放弃
-			int bytes_written;
-			const int result = sock_data->addBuffer(&(buf[total_size]), len - total_size, &bytes_written);
-			total_size += bytes_written;
-
-			//// 出现了问题
-			//if (0 != result) {
-			//	char buffer[1024];
-			//	sprintf(buffer, "2. SOCKET %d, Packet Code %d", s, sock_data->getCode());
-			//	OutputDebugString(buffer);
-			//}
-
-
-			// 如果当前包已经完成，则从map中移除，并放入到完成队列当中 
-			// 如果一些条件不符合约束，也应该放入完成队列
-			//    如：HTTP的类型， 大小等等.....
-			if (sock_data->isComplete() || result != 0) { 
-				// 放入到完成队列当中
-				packet_handle_queue_.packetIntact(s, sock_data);
-				completed_generated = true;
-			}
-
 		}
+		//}
 
 		// 如果有完整的包返回0，否则返回1
 		if (completed_generated)
@@ -296,6 +295,12 @@ int CSelectIO::graspData(const SOCKET s, char *buf, const int len) {
 	} catch (...) {
 		return 1;
 	}
+}
+
+// 关闭SOCKET
+// 移除所有与SOCKET相关的信息
+void CSelectIO::onCloseSocket(const SOCKET s) {
+	packet_handle_queue_.removeSOCKET(s);
 }
 
 // 验证对应SOCKET的包是否应该被存储
