@@ -10,7 +10,6 @@ public:
 	void lock();
 	void unlock();
 private:
-	bool locked_;
 	::CRITICAL_SECTION cs_;
 };
 
@@ -19,7 +18,6 @@ class SingleLock {
 public:
 	SingleLock(T * sync_object, bool autolock = true) {
 		sync_object_ = sync_object;
-		locked_ = false;
 		if (autolock) {
 			lock();
 		}
@@ -29,22 +27,15 @@ public:
 	}
 
 	void lock() {
-		if ( locked_ == false) {
-			locked_ = true;
-			sync_object_->lock();
-		}
+		sync_object_->lock();
 	}
 
 	void unlock() {
-		if(locked_ == true) {
-			sync_object_->unlock();
-			locked_ = false;
-		}
+		sync_object_->unlock();
 	}
 
 private:
 	T *sync_object_;
-	bool locked_;
 };
 };
 #endif  // _UTILITY_SYNC_UTILITY_H__
