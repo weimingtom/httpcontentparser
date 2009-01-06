@@ -30,7 +30,6 @@ HTTPContentHander::~HTTPContentHander() {
 //  «∑Ò «
 int HTTPContentHander::handleContent(HTTPPacket *packet) {
 	if (false == needHandle(packet)) {
-		OutputDebugString("handleContent needless");
 		return CONTENT_CHECK_UNKNOWN;
 	}
 
