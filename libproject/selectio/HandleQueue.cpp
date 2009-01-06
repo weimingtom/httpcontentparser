@@ -42,8 +42,8 @@ void HandleQueue::addPacket(HTTPPacket * packet) {
 }
 
 void HandleQueue::initialize() {
-	HANDLE hThread = CreateThread(NULL, 1, HandlePacket, (LPVOID)this, 0, &dwThreadId_);
-	if (NULL == hThread) {
+	hThread_ = CreateThread(NULL, 1, HandlePacket, (LPVOID)this, 0, &dwThreadId_);
+	if (NULL == hThread_) {
 		//TODO: ¼ÇÂ¼
 	}
 }
@@ -52,6 +52,8 @@ void HandleQueue::finialize() {
 	result_.removeAllBufferResult();
 	socketPackets_.clearAllPackets();
 	socketPackets_.freeAllCompletedPacket();
+
+	TerminateThread(hThread_, 0);
 }
 
 bool HandleQueue::getResult(HTTPPacket * packet, int * result) {
