@@ -8,6 +8,7 @@
 #include <utility\replacepacket.h>
 #include <utility\HTTPPacket.h>
 #include <utility\fd_set_utility.h>
+#include <socketpackets.h>
 #include ".\bufferresult.h"
 
 class HTTPPacket;
@@ -28,7 +29,17 @@ public:
 
 	// 获取结果
 	bool getResult(HTTPPacket * packet, int * result);
-	void removeCompletePacket(HTTPPacket * packet);
+
+	// 包已经完整
+	void packetIntact(const SOCKET s, HTTPPacket *p);
+
+	//=============================
+	int addCompletedPacket(const SOCKET s, HTTPPacket *p);
+	int removeCompletedPacket(const SOCKET s, HTTPPacket *p);
+	HTTPPacket * getCompletedPacket(const SOCKET s);
+	void getAllCompleteSOCKET(fd_set *readfds);	// 获取所有已经完成的IO的SOCKET
+	HTTPPacket * getSOCKETPacket(const SOCKET s);
+	bool isThereUncompletePacket(const SOCKET s);
 private:
 	HTTPPacket* removeFront();
 	int dequeSize();
@@ -40,8 +51,13 @@ private:
 	// 处理数据
 	void handlePacket(HTTPPacket *);
 
-	BufferResult result_;		// 保存结果
-	HTTPContentHander handler_;	// 出来包
+	BufferResult result_;			// 保存结果
+	HTTPContentHander handler_;		// 出来包
+	SocketPackets socketPackets_;	// 保存包等
+
+	// 线程id
+	DWORD dwThreadId_;
 
 	friend DWORD CALLBACK HandlePacket(LPVOID lParam);
+	friend class SelectIOTest;
 };

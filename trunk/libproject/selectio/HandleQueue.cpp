@@ -36,22 +36,24 @@ int HandleQueue::dequeSize() {
 void HandleQueue::addPacket(HTTPPacket * packet) {
 	using namespace yanglei_utility;
 	SingleLock<CAutoCreateCS> lock(&cs_);
-
 	handle_deque_.push_back(packet);
+
+	PostThreadMessage(dwThreadId_, WM_NEW_PACKET, 0, 0);
 }
 
 void HandleQueue::initialize() {
-	DWORD dwThreadId;
-	HANDLE hHanlde = CreateThread(NULL, 1, HandlePacket, (LPVOID)this, 0, &dwThreadId);
+	HANDLE hThread = CreateThread(NULL, 1, HandlePacket, (LPVOID)this, 0, &dwThreadId_);
+	if (NULL == hThread) {
+		//TODO: 记录
+	}
 }
 
 void HandleQueue::finialize() {
 	result_.removeAllBufferResult();
+	socketPackets_.clearAllPackets();
+	socketPackets_.freeAllCompletedPacket();
 }
 
-void HandleQueue::removeCompletePacket(HTTPPacket * packet) {
-	return result_.removeBufferResult(packet);
-}
 bool HandleQueue::getResult(HTTPPacket * packet, int * result) {
 	assert (NULL != result);
 	return result_.getResult(packet->getCode(), result);
@@ -65,6 +67,32 @@ void HandleQueue::handlePacket(HTTPPacket *packet) {
 		result =  handler_.handleContent(packet);
 		result_.addResultPair(packet->getCode(), result);
 	}
+}
+
+void HandleQueue::packetIntact(const SOCKET s, HTTPPacket *p) {
+	socketPackets_.removePacket(s, p);
+	socketPackets_.addCompletedPacket(s, p);
+	addPacket(p);
+}
+//=========================================
+
+int HandleQueue::removeCompletedPacket(const SOCKET s, HTTPPacket *p) {
+	result_.removeBufferResult(p);
+	return socketPackets_.removeCompletedPacket(s, p);
+}
+HTTPPacket * HandleQueue::getCompletedPacket(const SOCKET s) {
+	return socketPackets_.getCompletedPacket(s);
+}
+void HandleQueue::getAllCompleteSOCKET(fd_set *readfds) {
+	return socketPackets_.getAllCompleteSOCKET(readfds, this);
+}
+
+HTTPPacket * HandleQueue::getSOCKETPacket(const SOCKET s) {
+	return socketPackets_.getSOCKETPacket(s);
+}
+
+bool HandleQueue::isThereUncompletePacket(const SOCKET s) {
+	return socketPackets_.isThereUncompletePacket(s);
 }
 
 // 处理数据的线程
