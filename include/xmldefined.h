@@ -93,6 +93,9 @@
 
 #define CONFIG_ITEM_MODEL_AUTOSWITCH			TEXT("autoswitch")
 
+#define CONFIG_ITEM_MODEL_INSTALL				TEXT("install")
+#define CONFIG_ITEM_MODEL_DATE					TEXT("key")
+
 
 inline
 bool enabledFromString(const TCHAR *enable) {
