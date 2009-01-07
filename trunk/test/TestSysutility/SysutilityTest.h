@@ -10,7 +10,6 @@ public:
 	~SysutilityTest(void);
 public:
 	CPPUNIT_TEST_SUITE(SysutilityTest);
-	CPPUNIT_TEST(testRegInfo);
 	CPPUNIT_TEST(testGetMainUIName);
 	CPPUNIT_TEST(testGetInstallPath);
 	CPPUNIT_TEST(testGetAppConfigFilename);
@@ -21,7 +20,6 @@ public:
 	CPPUNIT_TEST(testRegisterOper);
 	CPPUNIT_TEST_SUITE_END();
 protected:
-	void testRegInfo();
 	void testGetMainUIName();
 	void testGetInstallPath();
 	void testGetAppConfigFilename();

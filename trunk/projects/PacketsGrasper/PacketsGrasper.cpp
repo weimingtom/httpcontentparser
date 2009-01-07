@@ -13,7 +13,8 @@
 #include <utility\HTTPRequestPacket.h>
 #include <utility\dns.h>
 #include <logdebug.h>
-#include <app_constants.h> 
+#include <app_constants.h>
+#include <AppinstallValidate.h>
 
 #pragma data_seg(".inidata")
 	int				m_iRefCount		= 0;
@@ -614,6 +615,9 @@ BOOL WINAPI DllMain(
 			DP1("DllMain Attach Count %d", m_iRefCount);
 		} 
 		LeaveCriticalSection(&gCriticalSection);
+
+		AppInstallValidate validator(VALIDATE_SPI);
+		validator.repair((HMODULE)hModule);
  
 		ODS2(m_sProcessName,_T(" Loading ..."));
 	} else if (ul_reason_for_call == DLL_THREAD_ATTACH) {

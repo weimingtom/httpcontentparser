@@ -6,12 +6,16 @@
 #include "FilterSetting.h"
 #include ".\servthread.h"
 #include ".\registerinfo.h"
+#include <utility\timeutility.h>
+#include <AppinstallValidate.h>
 #include <sysutility.h>
 #include <app_constants.h>
 #include <passwordtype.h>
 #include <webhistoryrecordersetting.h>
 #include <xmlconfiguration.h>
 #include <string>
+#include <time.h>
+
 
 class CFilterSettingModule : public CAtlServiceModuleT< CFilterSettingModule, IDS_SERVICENAME >
 {
@@ -53,7 +57,6 @@ void initializeSetting() {
 	DeleteFile(file);
 }
 
-
 extern "C" int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, 
                                 LPTSTR /*lpCmdLine*/, int nShowCmd)
 {
@@ -66,11 +69,11 @@ extern "C" int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/
 
 	g_hInstance = hInstance;
 
-	// 检测SPI是否安装如果没有则安装
-	if (!isPacketFiltersInstalled((HMODULE)hInstance))
-		InstallPacketsFilter((HMODULE)hInstance);
+	AppInstallValidate validator(VALIDATE_COM);
+	validator.repair((HMODULE)hInstance);
 
 	initializeSetting();
+	g_registerInfo.initialize();
 
 	if (g_configuration.getWebHistoryRecordAutoClean()->shouldExec()) {
 		g_configuration.getWebHistoryRecordAutoClean()->reset();
@@ -81,7 +84,6 @@ extern "C" int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/
 		g_configuration.getScreenshotAutoClean()->reset();
 		ClearScreen((HMODULE)hInstance);
 	}
-
 
 	 // 开启服务线程
 	ServThread::getInstance();

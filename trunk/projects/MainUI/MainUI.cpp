@@ -11,6 +11,7 @@
 #include <typeconvert.h>
 #include <app_constants.h>
 #include <com\comutility.h>
+#include <AppinstallValidate.h>
 
 
 IDNSSetting *g_dnssetting = NULL;
@@ -61,14 +62,9 @@ void initializeSetting() {
 BOOL CMainUIApp::InitInstance()
 {
 	CoInitialize(NULL);
-
-	// 检测SPI是否安装如果没有则安装
-	if (!isPacketFiltersInstalled((HMODULE)AfxGetInstanceHandle()))
-		InstallPacketsFilter((HMODULE)AfxGetInstanceHandle());
-
-	// 修复COM组件
-	if (!ServicesWorking((HMODULE)AfxGetInstanceHandle()))
-		RepairCOMServices((HMODULE)AfxGetInstanceHandle());
+	
+	AppInstallValidate validator(VLAIDATE_NONE);
+	validator.repair((HMODULE)AfxGetInstanceHandle());
 
 	// 读取配置信息
 	initializeSetting();

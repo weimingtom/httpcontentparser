@@ -14,11 +14,13 @@
 
 class AppInstallValidate {
 public:
-	AppInstallValidate(void);
+	AppInstallValidate(int type);
 	~AppInstallValidate(void);
 
 	int repair(HMODULE hModule);		// ÐÞ¸´
 	bool validateIntact(HMODULE hModule);
+
+	void getErrorMessage(TCHAR * msg, const int len);
 private:
 	bool validateReigstrInstallPath(const TCHAR *path);
 	bool repairRegistryInstallPath(const TCHAR * path);
@@ -33,13 +35,14 @@ private:
 	bool serviceWorking(HMODULE hModule);
 	void repairCOM(HMODULE hModule);
 	bool shouldRepairCOM();
-
-	void getErrorMessage(TCHAR * msg, const int len);
 private:
 	int type_;
 
 	void setErrNo(int new_error);
 	UINT errno_;
+
+private:
+	AppInstallValidate(void);
 };
 
 #endif  // _SYSUTILITY_APPINSTALLVALIDATE_H__
