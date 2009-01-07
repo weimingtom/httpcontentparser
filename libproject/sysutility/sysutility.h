@@ -33,7 +33,6 @@ void ClearHistory(HMODULE hModule);
 // 获取安装路径
 const TCHAR * GetInstallPath(TCHAR *install_path, const int len, HMODULE hModule);
 const TCHAR * GetInstallPathFromRegistry(TCHAR * install_path, const DWORD len);
-INT	  RepairRelRegistry(TCHAR * path);
 
 // 获取配置文件的路径
 const TCHAR * GetAppConfigFilename(TCHAR *fullpath, const int len, HMODULE);
@@ -58,17 +57,6 @@ const TCHAR * GetRecordConfigfile(TCHAR *filename, const unsigned len, const TCH
 INT RegisterAutoRun(const TCHAR * fullpath, BOOL auto_run);
 
 BOOL isAutoRun(HMODULE hModule);
-
-// 过滤包是否已经安装
-BOOL isPacketFiltersInstalled(HMODULE hModule);
-UINT InstallPacketsFilter(HMODULE hModule);
-
-// 针对COM的函数
-BOOL ServicesWorking(HMODULE hModule);	// COM服务是否已经注册
-UINT RegisterServices(HMODULE hModule);
-UINT UnRegisterServices(HMODULE hModule);
-VOID RepairCOMServices(HMODULE hModule);
-
 
 // 当前的Eyecare是否在运行
 HWND GetEyecareApp();
