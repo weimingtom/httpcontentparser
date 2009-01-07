@@ -12,6 +12,7 @@
 #include <utility\HttpPacket.h>
 #include <utility\HTTPRequestPacket.h>
 #include <utility\dns.h>
+#include <logdebug.h>
 #include <app_constants.h> 
 
 #pragma data_seg(".inidata")
@@ -99,12 +100,14 @@ int WSPAPI WSPSelect (
 ) 
 {
 	SPI_FUNCTION_CALL(_T("WSPSelect ..."));
-	
+
 	// 如果在White DNS List, 我们也应该直接返回 ;)
 	// 直接返回，自身填入select
 	int result = g_select.preselect(readfds);
 	if (0 == result) {
 		// firefox都是NULL
+		// 为何要清空？
+		// 清空也没事情，最多延缓写操作以及异常操作
 		if (writefds != NULL)
 			FD_ZERO(writefds);
 		if (exceptfds != NULL)
@@ -134,6 +137,9 @@ int WSPAPI WSPRecv(
 )
 {
 	SPI_FUNCTION_CALL(_T("WSPRecv ..."));
+	//char buffer[1024];
+	//sprintf(buffer, "WSPRecv %d", s);
+	//OutputDebugString(buffer);
 	try { 
 		// 对于使用MSG_PEEK抓取的方式
 		if ((*lpFlags) & MSG_PEEK) {
@@ -141,7 +147,7 @@ int WSPAPI WSPRecv(
 				, lpNumberOfBytesRecvd, lpFlags, lpOverlapped
 				, lpCompletionRoutine, lpThreadId, lpErrno);
 		}
-
+		
 		const int result = g_select.prerecv(s, lpBuffers, dwBufferCount, lpNumberOfBytesRecvd);
 		if (result == 0) {
 			// 如果受到了包，就直接返回
@@ -182,6 +188,10 @@ int WSPAPI WSPCloseSocket(
 ) 
 {
 	SPI_FUNCTION_CALL(_T("WSPCloseSocket ..."));
+	g_select.onCloseSocket(s);
+	//char buffer[1024];
+	//sprintf(buffer, "CloseSocket %d", s);
+	//OutputDebugString(buffer);
 	return NextProcTable.lpWSPCloseSocket(s, lpErrno);
 }
 
@@ -242,9 +252,13 @@ int WSPAPI WSPSend(
 	packet.getHost(host, MAX_PATH);
 	get_main_dns_name(main_host, MAX_PATH, host);
 	g_select.addDNS(s, main_host);
-	
-	
-	// DUMP_HTTP_REQUEST(lpBuffers, dwBufferCount, "c:\\request.txt");
+
+	//sprintf(host, "D:\\debuglog\\req\\%d.log", s);
+	//DUMP_HTTP_REQUEST(lpBuffers, dwBufferCount, host);
+
+	//sprintf(host, "send request %d", s);
+	//OutputDebugString(host);
+
 	// 检查IP是否正常，如果可以则通过，否则直接返回错误
 	if (accessNetword() && checkHTTPRequest(&packet)){
 		goto return_dir;
