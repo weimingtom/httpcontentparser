@@ -19,3 +19,12 @@
 [3188] send request 1312
 [3188] WSPRecv 1312
 [3188] recv upward : 1312
+
+应该是收到完整的包，但却么有结果，所以prerecv只能返回1， 去调用SPI下层的WSPRecv, 而此时并无数据， 最终导致获取0长度数据，因此调用了CloseSocket.
+// 以下为log
+[4504] send request 936
+[4504] WSPRecv 936
+[4504] =================== result is -1
+[4504] didn't get completed packet
+[4504] CloseSocket 936
+
