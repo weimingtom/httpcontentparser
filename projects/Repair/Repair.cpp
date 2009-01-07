@@ -6,6 +6,7 @@
 #include ".\RepairDlg.h"
 #include <sysutility.h>
 #include <app_constants.h>
+#include <AppinstallValidate.h>
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -45,28 +46,13 @@ BOOL CRepairApp::InitInstance()
 	AfxEnableControlContainer();
 
 	
-	// 注册应用程序
-	UINT result = InstallPacketsFilter((HMODULE)AfxGetInstanceHandle());
-	if (result == PACKETSFILTERED_FILE_NOT_FOUND) {
-		CString str;
-		str.LoadString(IDS_FILENOT_FOUNT);
-		AfxMessageBox(str, MB_ICONSTOP | MB_OK );
-		return FALSE;
-	} else if (result != PACKETSFILTERED_INSTALL_SUCC &&
-		result != PACKETSFILTERED_ALREADY_INSTALL) {
-		CString strFailed;
-		strFailed.LoadString(IDS_INSTALL_FAILED);
-		AfxMessageBox(strFailed, MB_ICONSTOP | MB_OK);
-		return FALSE;
-	}
+	AppInstallValidate validator(VLAIDATE_NONE);
+	validator.repair((HMODULE)AfxGetInstanceHandle());
 
-	// 注册过滤程序
-	UnRegisterServices((HMODULE)AfxGetInstanceHandle());
-	result = RegisterServices((HMODULE)AfxGetInstanceHandle());
-	if (result == PACKETSFILTERED_FILE_NOT_FOUND) {
-		CString str;
-		str.LoadString(IDS_FILENOT_FOUNT);
-		AfxMessageBox(str, MB_ICONSTOP | MB_OK);
+	TCHAR errMsg[MAX_PATH];
+	validator.getErrorMessage(errMsg, MAX_PATH);
+	if (_tcslen(errMsg) > 0) {
+		AfxMessageBox(errMsg);
 		return FALSE;
 	}
 

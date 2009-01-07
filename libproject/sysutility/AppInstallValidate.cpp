@@ -21,7 +21,7 @@ namespace {
 	UINT UnRegisterServices(TCHAR * install_path);
 };
 
-AppInstallValidate::AppInstallValidate(void)
+AppInstallValidate::AppInstallValidate(int type) : type_(type)
 {
 }
 
