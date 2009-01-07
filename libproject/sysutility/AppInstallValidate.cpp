@@ -1,5 +1,5 @@
 #include "StdAfx.h"
-#include ".\registryinfo.h"
+#include ".\AppinstallValidate.h"
 #include ".\xinstall.h"
 #include ".\sysutility.h"
 #include <app_constants.h>
@@ -21,16 +21,16 @@ namespace {
 	UINT UnRegisterServices(TCHAR * install_path);
 };
 
-RegisterInfo::RegisterInfo(void)
+AppInstallValidate::AppInstallValidate(void)
 {
 }
 
-RegisterInfo::~RegisterInfo(void)
+AppInstallValidate::~AppInstallValidate(void)
 {
 }
 
 
-int RegisterInfo::repair(HMODULE hModule) {
+int AppInstallValidate::repair(HMODULE hModule) {
 	// 获取当前路径
 	TCHAR currentPath[MAX_PATH], currentProcess[MAX_PATH];
 	GetModuleFileName(hModule, currentProcess, MAX_PATH);
@@ -50,7 +50,7 @@ int RegisterInfo::repair(HMODULE hModule) {
 	return 0;
 }
 
-bool RegisterInfo::shouldRepairRegistry() {
+bool AppInstallValidate::shouldRepairRegistry() {
 	// 当用户是SPI时， 安装路径一定不对。因此不能用来修复
 	if (type_ == VALIDATE_SPI)
 		return false;
@@ -58,7 +58,7 @@ bool RegisterInfo::shouldRepairRegistry() {
 		return true;
 }
 // 修复注册表项
-bool RegisterInfo::repairRegistryInstallPath(const TCHAR * path) {
+bool AppInstallValidate::repairRegistryInstallPath(const TCHAR * path) {
 	HKEY hKey;
 	long   ret = ::RegOpenKeyEx(HKEY_LOCAL_MACHINE, REG_SOFTWARE_DIR,  0,   KEY_READ,   &hKey);
 	if (ERROR_SUCCESS != ret) {
@@ -76,7 +76,7 @@ bool RegisterInfo::repairRegistryInstallPath(const TCHAR * path) {
 }
 
 // 验证注册表中的安装路径是否正确
-bool RegisterInfo::validateReigstrInstallPath(const TCHAR *currentPath) {
+bool AppInstallValidate::validateReigstrInstallPath(const TCHAR *currentPath) {
 	// 获取路径
 	TCHAR pathInReg[MAX_PATH];
 	GetInstallPathFromRegistry(pathInReg, MAX_PATH);
@@ -91,7 +91,7 @@ bool RegisterInfo::validateReigstrInstallPath(const TCHAR *currentPath) {
 
 //==================================================
 // 修复SPI
-bool RegisterInfo::shouldRepairSPI() {
+bool AppInstallValidate::shouldRepairSPI() {
 	// 只有当验证程序是SPI时，不需要修复此项
 	if (type_ == VALIDATE_SPI)
 		return false;
@@ -99,7 +99,7 @@ bool RegisterInfo::shouldRepairSPI() {
 		return true;
 }
 
-void RegisterInfo::repairSPI(HMODULE hModule) {
+void AppInstallValidate::repairSPI(HMODULE hModule) {
 	if (false == shouldRepairSPI())
 		return;
 
@@ -112,7 +112,7 @@ void RegisterInfo::repairSPI(HMODULE hModule) {
 }
 
 // 安装SPI
-void RegisterInfo::installSPI(HMODULE hModule) {
+void AppInstallValidate::installSPI(HMODULE hModule) {
 	TCHAR install_path[MAX_PATH], fullpath[MAX_PATH];
 	GetInstallPath(install_path, MAX_PATH, hModule);
 
@@ -131,7 +131,7 @@ void RegisterInfo::installSPI(HMODULE hModule) {
 //=========================================
 // COM服务
 // COM服务是否注册
-bool RegisterInfo::serviceWorking(HMODULE hModule) {
+bool AppInstallValidate::serviceWorking(HMODULE hModule) {
 	if (!shouldRepairCOM())
 		return true;
 
@@ -159,7 +159,7 @@ bool RegisterInfo::serviceWorking(HMODULE hModule) {
 	return true;
 }
 
-void RegisterInfo::repairCOM(HMODULE hModule) {
+void AppInstallValidate::repairCOM(HMODULE hModule) {
 	if (type_ != VALIDATE_SPI) {
 		setErrNo(UnRegisterServices(hModule));
 		setErrNo(RegisterServices(hModule));
@@ -171,7 +171,7 @@ void RegisterInfo::repairCOM(HMODULE hModule) {
 	}
 }
 
-bool RegisterInfo::shouldRepairCOM() {
+bool AppInstallValidate::shouldRepairCOM() {
 	// 只要不是COM，
 	if (type_ == VALIDATE_COM)
 		return false;
@@ -180,12 +180,12 @@ bool RegisterInfo::shouldRepairCOM() {
 }
 
 // 设置当前错误号
-void RegisterInfo::setErrNo(int new_error) {
+void AppInstallValidate::setErrNo(int new_error) {
 	if (new_error != 0)
 		errno_ = new_error;
 }
 
-void RegisterInfo::getErrorMessage(TCHAR * msg, const int len) {
+void AppInstallValidate::getErrorMessage(TCHAR * msg, const int len) {
 	switch (errno_) {
 		case PACKETSFILTERED_FILE_NOT_FOUND:
 			_tcsncpy(msg, "", len);
