@@ -66,6 +66,15 @@ HMODULE GetModule(const TCHAR * exefilename) {
 }
 };
 
+void SysutilityTest::testRegInfo() {
+	TCHAR path[] = "c:\\program files\\family007";
+	RepairRelRegistry(path);
+
+	TCHAR result[MAX_PATH];
+
+	GetInstallPathFromRegistry(path, MAX_PATH);
+}
+
 void SysutilityTest::testGetMainUIName() {
 	HMODULE handle = GetModule(TEXT("TestSysutility.exe"));
 	TCHAR workdir[MAX_PATH], fullpath[MAX_PATH], expected[MAX_PATH], installpath[MAX_PATH];

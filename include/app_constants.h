@@ -10,8 +10,9 @@
 #define REG_PROTOCOL_CATALOG_ITEM	_T("PackedCatalogItem")
 
 // 保存软件安装的注册表信息
-#define REG_SOFTWARE_INSTALLPATH	_T("SOFTWARE\\family007\\InstallPath")
-#define REG_SOFTWARE_INSTALLDATE	_T("SOFTWARE\\family007\\InstallKey")		// 安装日期
+#define REG_SOFTWARE_DIR			_T("SOFTWARE\\family007")
+#define REG_SOFTWARE_INSTALLPATH	_T("InstallPath")
+#define REG_SOFTWARE_INSTALLDATE	_T("InstallKey")		// 安装日期
 
 #define MAX_PROTOCOL_CATALOG_LENTH	sizeof(WSAPROTOCOL_INFOW) + MAX_PATH
 
