@@ -81,6 +81,9 @@ private:
 	DNSMap	dnsmap_;
 	// ÒÆ³ýdns MAP
 	void removeDNSMap(SOCKET s);
+
+	yanglei_utility::CAutoCreateCS cs_;
+
 };
 
 // utility functions

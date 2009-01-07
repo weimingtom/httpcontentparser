@@ -75,6 +75,8 @@ void CSelectIO::setRecv(MYWSPRECV *recv) {
 // 如果返回-1表示有错
 int CSelectIO::prerecv(SOCKET s, LPWSABUF lpBuffers, 
 					   DWORD dwBufferCount, DWORD *recv_bytes) {
+	using namespace yanglei_utility;
+	SingleLock<CAutoCreateCS> lock(&cs_);
 
 	*recv_bytes = 0;
 	assert (lpWSPRecv != NULL);
@@ -155,6 +157,9 @@ int CSelectIO::prerecv(SOCKET s, LPWSABUF lpBuffers,
 int CSelectIO::preselect(fd_set *readfds) {
 	assert( lpWSPRecv != NULL);
 
+	using namespace yanglei_utility;
+	SingleLock<CAutoCreateCS> lock(&cs_);
+
 	if (readfds == NULL)
 		return 1;
 
@@ -189,6 +194,9 @@ int CSelectIO::preselect(fd_set *readfds) {
 // 然手从fd_set中移除(如果上未完成传输)
 // 如果已经完成传输，则将他放入到已完成的队列中
 int CSelectIO::postselect(fd_set *readfds) {
+	using namespace yanglei_utility;
+	SingleLock<CAutoCreateCS> lock(&cs_);
+
 	assert( lpWSPRecv != NULL);
 	if (readfds == NULL)
 		return 0;
@@ -292,6 +300,9 @@ int CSelectIO::graspData(const SOCKET s, char *buf, const int len) {
 // 关闭SOCKET
 // 移除所有与SOCKET相关的信息
 void CSelectIO::onCloseSocket(const SOCKET s) {
+	using namespace yanglei_utility;
+	SingleLock<CAutoCreateCS> lock(&cs_);
+
 	packet_handle_queue_.removeSOCKET(s);
 }
 
