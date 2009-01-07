@@ -2,6 +2,7 @@
 #define _FILTERSETTING_REGISTERINFO_H__
 
 #include <string>
+#include <atltime.h>
 
 #define SOFTWARE_EDITION_TRIAL		 0x100000F
 #define SOFTWARE_EDITION_REGISTERED  0x1000000
@@ -22,14 +23,22 @@ public:
 		return edition_type_;
 	}
 
+	bool trial_ended();
+
 	// 注册信息是否成功
 	bool registerSoft(const std::string & register_info);
 public:
 	// 从计算机信息中读取注册信息
 	void initialize();
+
+private:
+	bool trialEdition();
+	void getInstallTime();
 private:
 	// 时间日期
 	int edition_type_; // 版本内容
+
+	CTime install_date; // 安装日期
 };
 
 #endif  // _FILTERSETTING_REGISTERINFO_H__
