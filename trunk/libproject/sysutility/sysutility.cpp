@@ -82,94 +82,9 @@ INT RegisterAutoRun(const TCHAR * fullpath, BOOL auto_run) {
 		}
 	}
 }
-// 注册服务
-// returns : 0 代表成功
-//			 -1 代表文件不存在
-BOOL isPacketFiltersInstalled(HMODULE hModule) {
-	TCHAR install_path[MAX_PATH], fullpath[MAX_PATH];
-	GetInstallPath(install_path, MAX_PATH, hModule);
-
-	_sntprintf(fullpath, MAX_PATH, TEXT("%s%s"), install_path, PACKETSGRASPER_DLL_NAME);
 
 
-	CXInstall	m_Install;
-	return m_Install.IsInstalled(fullpath);
-}
 
-UINT InstallPacketsFilter(HMODULE hModule) {
-	TCHAR install_path[MAX_PATH], fullpath[MAX_PATH];
-	GetInstallPath(install_path, MAX_PATH, hModule);
-
-	_sntprintf(fullpath, MAX_PATH, TEXT("%s%s"), install_path, PACKETSGRASPER_DLL_NAME);
-
-	// 文件不存在
-	if (_taccess(fullpath, 0) == -1) {
-		return PACKETSFILTERED_FILE_NOT_FOUND;
-	}
-
-	CXInstall	m_Install;
-	return m_Install.InstallProvider(fullpath);
-}
-
-// COM服务是否注册
-BOOL ServicesWorking(HMODULE hModule) {
-	// 打开
-	SC_HANDLE handle = OpenSCManager(NULL, NULL,
-		SC_MANAGER_ALL_ACCESS);
-
-	if(NULL == handle)
-		return FALSE;
-
-	// 如果没能打开服务
-	SC_HANDLE service_handle = OpenService(handle, SERVICE_FILENAME, SC_MANAGER_ALL_ACCESS);
-	if (NULL == service_handle) {
-		CloseServiceHandle(handle);
-		return FALSE;
-	}
-
-	// 如果启动失败
-	if (!StartService(service_handle, 0, NULL))
-		return FALSE;
-
-
-	CloseServiceHandle(service_handle);
-	CloseServiceHandle(handle);
-	return TRUE;
-}
-
-UINT RegisterServices(HMODULE hModule) {	
-	TCHAR install_path[MAX_PATH], fullpath[MAX_PATH], cmd[MAX_PATH];
-	GetInstallPath(install_path, MAX_PATH, hModule);
-
-	_sntprintf(fullpath, MAX_PATH, TEXT("%s%s"), install_path, SERVICE_FILENAME);
-	if (_taccess(fullpath, 0) != -1) {
-		_sntprintf(cmd, MAX_PATH, "%s /service", fullpath);
-		return PACKETSFILTERED_INSTALL_SUCC;
-	} else {
-		// 如果文件不存在则返回FALSE
-		return PACKETSFILTERED_FILE_NOT_FOUND;
-	}
-}
-
-UINT UnRegisterServices(HMODULE hModule) {
-	TCHAR install_path[MAX_PATH], fullpath[MAX_PATH], cmd[MAX_PATH];
-	GetInstallPath(install_path, MAX_PATH, hModule);
-
-	_sntprintf(fullpath, MAX_PATH, TEXT("%s%s"), install_path, SERVICE_FILENAME);
-	if (_taccess(fullpath, 0) != -1) {
-		_sntprintf(cmd, MAX_PATH, "%s /unregserver", fullpath);
-		return PACKETSFILTERED_INSTALL_SUCC;
-	} else {
-		// 如果文件不存在则返回FALSE
-		return PACKETSFILTERED_FILE_NOT_FOUND;
-	}
-}
-
-// 取消在注册
-VOID RepairCOMServices(HMODULE hModule) {
-	UnRegisterServices(hModule);
-	RegisterServices(hModule);
-}
 namespace {
 BOOL CALLBACK EnumWndProc(HWND hwnd, LPARAM lParam)
 {
@@ -324,6 +239,13 @@ const TCHAR * GetRecordConfigfile(TCHAR *filename, const unsigned len, const TCH
 	return filename;
 }
 
+// 获取软件所在目录
+const TCHAR * GetInstallPath(TCHAR *install_path, const int len, HMODULE hModule) {
+	TCHAR moduleName[MAX_PATH];
+	DWORD length = GetModuleFileName(hModule, moduleName, MAX_PATH);
+	GetFileNameDir(moduleName, install_path, MAX_PATH);
+	return install_path;
+}
 
 const TCHAR * GetInstallPathFromRegistry(TCHAR * install_path, const DWORD len) {
 	HKEY hKey;
@@ -345,28 +267,8 @@ const TCHAR * GetInstallPathFromRegistry(TCHAR * install_path, const DWORD len) 
 		return NULL;
 	}
 }
-// 获取软件所在目录
-const TCHAR * GetInstallPath(TCHAR *install_path, const int len, HMODULE hModule) {
-	TCHAR moduleName[MAX_PATH];
-	DWORD length = GetModuleFileName(hModule, moduleName, MAX_PATH);
-	GetFileNameDir(moduleName, install_path, MAX_PATH);
-	return install_path;
-}
 
-// 修复注册表项
-INT	  RepairRelRegistry(TCHAR * path) {
-	HKEY hKey;
-	long   ret = ::RegOpenKeyEx(HKEY_LOCAL_MACHINE, REG_SOFTWARE_DIR,  0,   KEY_READ,   &hKey);
-	if (ERROR_SUCCESS != ret)
-		return NULL;
 
-	if (ERROR_SUCCESS == RegSetValueEx( hKey, REG_SOFTWARE_INSTALLPATH , 0, REG_SZ, (const BYTE*)(LPCSTR)path, (DWORD)_tcslen(path))) {
-		RegCloseKey(hKey);
-		return 0;
-	} else {
-		return -1;
-	}
-}
 
 // 当前的Eyecare是否在运行
 HWND GetEyecareApp() {

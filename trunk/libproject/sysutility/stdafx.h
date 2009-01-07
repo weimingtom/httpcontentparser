@@ -22,6 +22,12 @@
 #include <assert.h>
 #include <winsock2.h>
 
+#include <vector>
+#include <map>
+#include <set>
+#include <string>
+
+
 #pragma comment(lib, "ws2_32.lib")
 #ifdef _DEBUG
 #	pragma comment(lib, "utilityd.lib")
