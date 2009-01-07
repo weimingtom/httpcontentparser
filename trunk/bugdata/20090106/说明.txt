@@ -1,0 +1,21 @@
+有时候打开一个网页的时候， 会没有显示已经打开，但却没有任何内容。
+原因为 上层程序发出了两个请求1216和1312， 但是当SPI执行完WSPRecv之后1216执行了CloseSocket, 而没有将数据上送， 只上送了1312于是导致了接下来的问题。
+
+// 以下为DebugView的log
+[3188] send request 1312
+[3188] WSPRecv 1312
+[3188] recv upward : 1312
+[3188] WSPRecv 1312
+[3188] WSPRecv 548
+[3188] WSPRecv 548
+[3188] WSPRecv 548
+[3188] WSPRecv 548
+[3188] send request 1216
+[3188] WSPRecv 1216
+[3188] CloseSocket 1216
+[3188] WSPRecv 548
+[3188] WSPRecv 548
+[3188] WSPRecv 1312
+[3188] send request 1312
+[3188] WSPRecv 1312
+[3188] recv upward : 1312
