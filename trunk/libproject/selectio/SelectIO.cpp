@@ -89,7 +89,7 @@ int CSelectIO::prerecv(SOCKET s, LPWSABUF lpBuffers,
 
 	int result;
 	bool succ = packet_handle_queue_.getResult(packet, &result);
-	// assert (succ);
+	assert (succ);
 	if (!succ) {
 		return 1;
 	}
@@ -131,12 +131,12 @@ int CSelectIO::prerecv(SOCKET s, LPWSABUF lpBuffers,
 			*recv_bytes += bytes;
 			if (bytes == 0 || raw_packet->getBytesCanRead() == 0) {
 				if (packet->transfefTail() == false) {
-					char filename[1024];
-					sprintf(filename, "d:\\debuglog\\up\\%d.log",  s);
-					packet->achieve(filename);
+					//char filename[1024];
+					//sprintf(filename, "d:\\debuglog\\up\\%d.log",  s);
+					//packet->achieve(filename);
 
-					sprintf(filename, "recv upward : %d", s);
-					OutputDebugString(filename);
+					//sprintf(filename, "recv upward : %d", s);
+					//OutputDebugString(filename);
 
 					packet_handle_queue_.removeCompletedPacket(s, packet);
 				}
@@ -219,8 +219,8 @@ int CSelectIO::postselect(fd_set *readfds) {
 			// 如果graspData处理的是一个完整的包， 则返回0
 			// 如果返回1，代表不是一个完整的包，那么就不需要放入到
 			// need_to_remove当中
-			if (completed == 1)
-				FD_SET(s, &need_to_remove);
+			// 所有的包都应该被处理，所以应该从可读队列中移除
+			FD_SET(s, &need_to_remove);
 		}
 	}
 
@@ -248,7 +248,7 @@ int CSelectIO::graspData(const SOCKET s, char *buf, const int len) {
 		sprintf(filename, "d:\\debuglog\\s%d.log",  s);
 		WriteRawData(filename, buf, len);
 
-		// 如果接收到了长度为0
+		//如果接收到了长度为0
 		//if (len == 0) {
 		//	// 将包表示为完整的
 		//	int added_length;
@@ -269,18 +269,10 @@ int CSelectIO::graspData(const SOCKET s, char *buf, const int len) {
 		const int result = sock_data->addBuffer(&(buf[total_size]), len - total_size, &bytes_written);
 		total_size += bytes_written;
 
-		//// 出现了问题
-		//if (0 != result) {
-		//	char buffer[1024];
-		//	sprintf(buffer, "2. SOCKET %d, Packet Code %d", s, sock_data->getCode());
-		//	OutputDebugString(buffer);
-		//}
-
-
 		// 如果当前包已经完成，则从map中移除，并放入到完成队列当中 
 		// 如果一些条件不符合约束，也应该放入完成队列
 		//    如：HTTP的类型， 大小等等.....
-		if (sock_data->isComplete() /*|| result != 0*/) { 
+		if (sock_data->isComplete() || result != 0 /*如果出现了问题*/) { 
 			// 放入到完成队列当中
 			packet_handle_queue_.packetIntact(s, sock_data);
 			completed_generated = true;
