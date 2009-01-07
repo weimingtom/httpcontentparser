@@ -1,0 +1,12 @@
+GET / HTTP/1.1
+Host: news.sina.com.cn
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.0.5) Gecko/2008120122 Firefox/3.0.5
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: x-gbk,utf-8;q=0.7,*;q=0.7
+Keep-Alive: 300
+Connection: keep-alive
+Referer: http://www.sina.com.cn/
+Cookie: vjlast=1231292640; Iask2_visitID=202.108.130.138.279351222309455922; SINA_NEWS_CUSTOMIZE_city=%u5317%u4EAC; vjuids=555d2090.11c4b104004.0.5c8b1ec7ae7388; userId=C0qd1LO1TAJPFoJPQqK5MrJDx7JA8qJo8pI548SpCnKP0s; SINAPUID=123.117.42.172.147131224777923545; __utma=269849203.48148616.1230277362.1231221089.1231237482.4; __utmz=269849203.1231237482.4.3.utmccn=(referral)|utmcsr=finance.sina.com.cn|utmcct=/money/index.shtml|utmcmd=referral; sinaRotatorDL/=10; SINAGLOBAL=61.48.175.140.127261217005591886; Apache=202.108.130.138.71371231293617394
+

@@ -1,0 +1,11 @@
+GET /search?sourceid=navclient-ff&features=Rank&client=navclient-auto-ff&googleip=O;null;514&ch=8a113ef18&q=info:http%3A%2F%2Fnews.sina.com.cn%2F HTTP/1.1
+Host: toolbarqueries.google.com
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.0.5) Gecko/2008120122 Firefox/3.0.5 GoogleToolbarFF 3.1.20081127
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: x-gbk,utf-8;q=0.7,*;q=0.7
+Keep-Alive: 300
+Connection: keep-alive
+Cookie: NID=18=MqpI2kOk5majxTYvyU_Y8gI9W86jRUwMY0rzd4KpNlEDQbk8M9wPGU4aTDV9oxXrG4w_iXvNilOIruEzpQ7RRjMzHW_Q2GFZzaox3KGZQtbA0aKQgdy4fVGtdYRTmOIo; rememberme=true; PREF=ID=e4970e2412a7e9f0:TB=2:TM=1226421127:LM=1226480025:DV=AA:GM=1:S=w05SazOTcotg79eE; SID=DQAAAH4AAADpNDN-wRXTzinTJIvO1PFGbW06pMA_5cHY_TBT93PzBXcuFkO8bYt5_MkrWJ-va8Q_nxE1WgNdKpb3Tc3BngwbrX9y6tkBWap0aJG9MQxAoLTkRQEqZcxmGWslCWP-g89ApAWPfLkdeaGhTwBEy9uzRww9lmGXBaf9xE36aaaswA
+
