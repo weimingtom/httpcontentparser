@@ -52,11 +52,11 @@ void SocketPackets::getAllCompleteSOCKET(fd_set *readfds, HandleQueue * handler)
 	int handle_result;
 	COMPLETED_PACKETS::const_iterator iter = completed_packets_.begin();
 	while ( iter != completed_packets_.end()) {
-		FD_SET(iter->first, readfds);
-		
 		// 不只包完整， 且数据需要处理完全
-		if (handler->getResult(iter->second, &handle_result))
+		if (handler->getResult(iter->second, &handle_result)) {
+			FD_SET(iter->first, readfds);
 			iter = completed_packets_.upper_bound(iter->first);
+		}
 	}
 }
 

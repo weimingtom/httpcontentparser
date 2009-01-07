@@ -88,6 +88,7 @@ int HandleQueue::removeCompletedPacket(const SOCKET s, HTTPPacket *p) {
 HTTPPacket * HandleQueue::getCompletedPacket(const SOCKET s) {
 	return socketPackets_.getCompletedPacket(s);
 }
+
 void HandleQueue::getAllCompleteSOCKET(fd_set *readfds) {
 	return socketPackets_.getAllCompleteSOCKET(readfds, this);
 }
