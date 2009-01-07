@@ -43,7 +43,7 @@
 			<Tool
 				Name="VCPreBuildEventTool"
 				CommandLine="copy .\sysutility.h ..\..\include
-
+copy .\AppInstallValidate.h ..\..\include
 "/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
@@ -158,10 +158,10 @@ copy .\debug\sysutility.lib ..\..\lib\sysutility.lib
 			Name="registry"
 			Filter="">
 			<File
-				RelativePath=".\registryinfo.cpp">
+				RelativePath=".\AppInstallValidate.cpp">
 			</File>
 			<File
-				RelativePath=".\registryinfo.h">
+				RelativePath=".\AppInstallValidate.h">
 			</File>
 		</Filter>
 		<File

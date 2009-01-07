@@ -1,5 +1,5 @@
-#ifndef _SYSUTILITY_REGISTERINFO_H__
-#define _SYSUTILITY_REGISTERINFO_H__
+#ifndef _SYSUTILITY_APPINSTALLVALIDATE_H__
+#define _SYSUTILITY_APPINSTALLVALIDATE_H__
 
 
 #define INTACT_VALIDATE_REGISTRY_ERROR		0
@@ -12,10 +12,10 @@
 #define VALIDATE_SPI	  0x000000004
 #define VLAIDATE_NONE	  0x000000000
 
-class RegisterInfo {
+class AppInstallValidate {
 public:
-	RegisterInfo(void);
-	~RegisterInfo(void);
+	AppInstallValidate(void);
+	~AppInstallValidate(void);
 
 	int repair(HMODULE hModule);		// ÐÞ¸´
 	bool validateIntact(HMODULE hModule);
@@ -42,4 +42,4 @@ private:
 	UINT errno_;
 };
 
-#endif  // _SYSUTILITY_REGISTERINFO_H__
+#endif  // _SYSUTILITY_APPINSTALLVALIDATE_H__
