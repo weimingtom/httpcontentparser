@@ -143,7 +143,7 @@ UINT RegisterServices(HMODULE hModule) {
 
 	_sntprintf(fullpath, MAX_PATH, TEXT("%s%s"), install_path, SERVICE_FILENAME);
 	if (_taccess(fullpath, 0) != -1) {
-		_sntprintf(cmd, MAX_PATH, "%s /RegServer", fullpath);
+		_sntprintf(cmd, MAX_PATH, "%s /service", fullpath);
 		return PACKETSFILTERED_INSTALL_SUCC;
 	} else {
 		// 如果文件不存在则返回FALSE
@@ -324,12 +324,48 @@ const TCHAR * GetRecordConfigfile(TCHAR *filename, const unsigned len, const TCH
 	return filename;
 }
 
+
+const TCHAR * GetInstallPathFromRegistry(TCHAR * install_path, const DWORD len) {
+	HKEY hKey;
+	long   ret = ::RegOpenKeyEx(HKEY_LOCAL_MACHINE, REG_SOFTWARE_DIR,  0,   KEY_READ,   &hKey);
+	if (ERROR_SUCCESS != ret)
+		return NULL;
+
+	TCHAR value[MAX_PATH] = {0};
+	DWORD length = MAX_PATH;
+	DWORD type = REG_SZ;
+	LONG result = RegQueryValueEx (hKey, REG_SOFTWARE_INSTALLPATH, NULL, &type, (LPBYTE)value, &length);
+	RegCloseKey(hKey);
+
+	if (length > 0) {
+		assert (len > length);
+		_tcsncpy(install_path, value, len);
+		return install_path;
+	} else {
+		return NULL;
+	}
+}
 // 获取软件所在目录
 const TCHAR * GetInstallPath(TCHAR *install_path, const int len, HMODULE hModule) {
 	TCHAR moduleName[MAX_PATH];
 	DWORD length = GetModuleFileName(hModule, moduleName, MAX_PATH);
 	GetFileNameDir(moduleName, install_path, MAX_PATH);
 	return install_path;
+}
+
+// 修复注册表项
+INT	  RepairRelRegistry(TCHAR * path) {
+	HKEY hKey;
+	long   ret = ::RegOpenKeyEx(HKEY_LOCAL_MACHINE, REG_SOFTWARE_DIR,  0,   KEY_READ,   &hKey);
+	if (ERROR_SUCCESS != ret)
+		return NULL;
+
+	if (ERROR_SUCCESS == RegSetValueEx( hKey, REG_SOFTWARE_INSTALLPATH , 0, REG_SZ, (const BYTE*)(LPCSTR)path, (DWORD)_tcslen(path))) {
+		RegCloseKey(hKey);
+		return 0;
+	} else {
+		return -1;
+	}
 }
 
 // 当前的Eyecare是否在运行

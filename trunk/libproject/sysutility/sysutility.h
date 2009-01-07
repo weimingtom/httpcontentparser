@@ -32,6 +32,8 @@ void ClearHistory(HMODULE hModule);
 
 // 获取安装路径
 const TCHAR * GetInstallPath(TCHAR *install_path, const int len, HMODULE hModule);
+const TCHAR * GetInstallPathFromRegistry(TCHAR * install_path, const DWORD len);
+INT	  RepairRelRegistry(TCHAR * path);
 
 // 获取配置文件的路径
 const TCHAR * GetAppConfigFilename(TCHAR *fullpath, const int len, HMODULE);
