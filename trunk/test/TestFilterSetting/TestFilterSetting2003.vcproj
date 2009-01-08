@@ -206,6 +206,16 @@
 				RelativePath=".\ISeachRuleTest.h">
 			</File>
 		</Filter>
+		<Filter
+			Name="ImageCheck"
+			Filter="">
+			<File
+				RelativePath=".\ImageCheckTest.cpp">
+			</File>
+			<File
+				RelativePath=".\ImageCheckTest.h">
+			</File>
+		</Filter>
 		<File
 			RelativePath=".\ReadMe.txt">
 		</File>
