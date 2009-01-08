@@ -7,7 +7,9 @@
 #include ".\eyecaretest.h"
 #include ".\iaccessnetworktest.h"
 #include ".\iseachruletest.h"
+#include ".\imagechecktest.h"
 
+CPPUNIT_TEST_SUITE_REGISTRATION(ImageCheckTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(ISeachRuleTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(IAccessNetworkTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(EyecareTest);
