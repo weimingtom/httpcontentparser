@@ -62,4 +62,6 @@ protected:
 	// 使相关控件可用
 	void enableScopeCheck(bool enabled);
 	void ApplyCOMService();
+public:
+	virtual BOOL PreTranslateMessage(MSG* pMsg);
 };

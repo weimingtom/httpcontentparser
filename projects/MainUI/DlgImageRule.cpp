@@ -187,3 +187,14 @@ void CDlgImageRule::enableScopeCheck(bool enabled) {
 	m_spinBtnMax.EnableWindow(enabled);
 	m_spinBtnMin.EnableWindow(enabled);
 }
+
+BOOL CDlgImageRule::PreTranslateMessage(MSG* pMsg)
+{
+	if (pMsg->message == WM_KEYDOWN) {
+		if (m_editMin.GetSafeHwnd() == pMsg->hwnd||
+			m_editMax.GetSafeHwnd() == pMsg->hwnd) {
+				SetModify(true);
+			}	
+	}
+	return CBaseDlg::PreTranslateMessage(pMsg);
+}
