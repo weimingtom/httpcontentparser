@@ -2,7 +2,7 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="7.10"
-	Name="TestSysutility"
+	Name="TestAppUtility"
 	ProjectGUID="{82442190-6EDE-4A41-8282-119A5F796AA8}"
 	Keyword="Win32Proj">
 	<Platforms>
@@ -134,7 +134,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\TestSysutility.cpp">
+				RelativePath=".\TestApputility.cpp">
 			</File>
 		</Filter>
 		<Filter
@@ -160,10 +160,10 @@
 				RelativePath=".\AppInstallValTest.h">
 			</File>
 			<File
-				RelativePath=".\SysutilityTest.cpp">
+				RelativePath=".\AppUtilityTest.cpp">
 			</File>
 			<File
-				RelativePath=".\SysutilityTest.h">
+				RelativePath=".\AppUtilityTest.h">
 			</File>
 		</Filter>
 		<File

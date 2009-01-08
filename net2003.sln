@@ -76,12 +76,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PacketsGrasper", "projects\
 		{950E97E5-8DCB-44E9-9237-9A4DEF89E925} = {950E97E5-8DCB-44E9-9237-9A4DEF89E925}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestSysutility", "test\TestSysutility\TestSysutility.vcproj", "{82442190-6EDE-4A41-8282-119A5F796AA8}"
-	ProjectSection(ProjectDependencies) = postProject
-		{CD11D86D-3173-4945-8215-7450A0D9CB3C} = {CD11D86D-3173-4945-8215-7450A0D9CB3C}
-		{950E97E5-8DCB-44E9-9237-9A4DEF89E925} = {950E97E5-8DCB-44E9-9237-9A4DEF89E925}
-	EndProjectSection
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ServicesUtility", "libproject\ServicesUtility\ServicesUtility.vcproj", "{700712D2-BF15-4AC4-8274-CA4336EEDD0C}"
 	ProjectSection(ProjectDependencies) = postProject
 		{CD11D86D-3173-4945-8215-7450A0D9CB3C} = {CD11D86D-3173-4945-8215-7450A0D9CB3C}
@@ -123,6 +117,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestSyncObject", "test\Test
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AppUtility", "libproject\Apputility\Apputility2003.vcproj", "{950E97E5-8DCB-44E9-9237-9A4DEF89E925}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestAppUtility", "test\TestAppUtility\TestApputility.vcproj", "{82442190-6EDE-4A41-8282-119A5F796AA8}"
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
 EndProject
@@ -254,14 +252,6 @@ Global
 		{AC87FE40-8934-49B5-8353-942817AED586}.Release.Build.0 = Release|Win32
 		{AC87FE40-8934-49B5-8353-942817AED586}.Release Unicode.ActiveCfg = Release|Win32
 		{AC87FE40-8934-49B5-8353-942817AED586}.Release Unicode.Build.0 = Release|Win32
-		{82442190-6EDE-4A41-8282-119A5F796AA8}.Debug.ActiveCfg = Debug|Win32
-		{82442190-6EDE-4A41-8282-119A5F796AA8}.Debug.Build.0 = Debug|Win32
-		{82442190-6EDE-4A41-8282-119A5F796AA8}.Debug Unicode.ActiveCfg = Debug|Win32
-		{82442190-6EDE-4A41-8282-119A5F796AA8}.Debug Unicode.Build.0 = Debug|Win32
-		{82442190-6EDE-4A41-8282-119A5F796AA8}.Release.ActiveCfg = Release|Win32
-		{82442190-6EDE-4A41-8282-119A5F796AA8}.Release.Build.0 = Release|Win32
-		{82442190-6EDE-4A41-8282-119A5F796AA8}.Release Unicode.ActiveCfg = Release|Win32
-		{82442190-6EDE-4A41-8282-119A5F796AA8}.Release Unicode.Build.0 = Release|Win32
 		{700712D2-BF15-4AC4-8274-CA4336EEDD0C}.Debug.ActiveCfg = Debug|Win32
 		{700712D2-BF15-4AC4-8274-CA4336EEDD0C}.Debug.Build.0 = Debug|Win32
 		{700712D2-BF15-4AC4-8274-CA4336EEDD0C}.Debug Unicode.ActiveCfg = Debug|Win32
@@ -342,6 +332,14 @@ Global
 		{950E97E5-8DCB-44E9-9237-9A4DEF89E925}.Release.Build.0 = Release|Win32
 		{950E97E5-8DCB-44E9-9237-9A4DEF89E925}.Release Unicode.ActiveCfg = Release|Win32
 		{950E97E5-8DCB-44E9-9237-9A4DEF89E925}.Release Unicode.Build.0 = Release|Win32
+		{82442190-6EDE-4A41-8282-119A5F796AA8}.Debug.ActiveCfg = Debug|Win32
+		{82442190-6EDE-4A41-8282-119A5F796AA8}.Debug.Build.0 = Debug|Win32
+		{82442190-6EDE-4A41-8282-119A5F796AA8}.Debug Unicode.ActiveCfg = Debug|Win32
+		{82442190-6EDE-4A41-8282-119A5F796AA8}.Debug Unicode.Build.0 = Debug|Win32
+		{82442190-6EDE-4A41-8282-119A5F796AA8}.Release.ActiveCfg = Release|Win32
+		{82442190-6EDE-4A41-8282-119A5F796AA8}.Release.Build.0 = Release|Win32
+		{82442190-6EDE-4A41-8282-119A5F796AA8}.Release Unicode.ActiveCfg = Release|Win32
+		{82442190-6EDE-4A41-8282-119A5F796AA8}.Release Unicode.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 	EndGlobalSection

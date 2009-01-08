@@ -1,15 +1,15 @@
 #include "StdAfx.h"
-#include ".\sysutilitytest.h"
+#include ".\AppUtilitytest.h"
 #include <apputility.h>
 #include <utility\strutility.h>
 #include <app_constants.h>
 #include <iostream>
 
 
-SysutilityTest::SysutilityTest(void) {
+AppUtilityTest::AppUtilityTest(void) {
 }
 
-SysutilityTest::~SysutilityTest(void) {
+AppUtilityTest::~AppUtilityTest(void) {
 }
 
 namespace {
@@ -62,7 +62,7 @@ HMODULE GetModule(const TCHAR * exefilename) {
 };
 
 
-void SysutilityTest::testGetMainUIName() {
+void AppUtilityTest::testGetMainUIName() {
 	HMODULE handle = GetModule(TEXT("TestSysutility.exe"));
 	TCHAR workdir[MAX_PATH], fullpath[MAX_PATH], expected[MAX_PATH], installpath[MAX_PATH];
 	GetCurrentDirectory(MAX_PATH, workdir);
@@ -83,7 +83,7 @@ void SysutilityTest::testGetMainUIName() {
 	std::cout<<"MainUI fullpath: " << fullpath << std::endl;
 
 }
-void SysutilityTest::testGetFileNameDir() {
+void AppUtilityTest::testGetFileNameDir() {
 	const TCHAR * name = TEXT("WAHT.EXE");
 	const TCHAR * dir = TEXT("c:\\program files\\hello\\");
 	TCHAR fullpath[MAX_PATH], result[MAX_PATH];
@@ -94,7 +94,7 @@ void SysutilityTest::testGetFileNameDir() {
 }
 
 // 保存历史的配置文件
-void SysutilityTest::testGetRecordConfigfile() {
+void AppUtilityTest::testGetRecordConfigfile() {
 	HMODULE handle = GetModule(TEXT("TestSysutility.exe"));
 	TCHAR workdir[MAX_PATH], fullpath[MAX_PATH], configfile[MAX_PATH], installpath[MAX_PATH];
 	GetCurrentDirectory(MAX_PATH, workdir);
@@ -112,7 +112,7 @@ void SysutilityTest::testGetRecordConfigfile() {
 }
 
 // 保存网页的路径
-void SysutilityTest::testGetPageDirectory() {
+void AppUtilityTest::testGetPageDirectory() {
 	HMODULE handle = GetModule(TEXT("TestSysutility.exe"));
 	TCHAR workdir[MAX_PATH], fullpath[MAX_PATH], pageseDir[MAX_PATH], installpath[MAX_PATH];;
 	GetCurrentDirectory(MAX_PATH, workdir);
@@ -130,7 +130,7 @@ void SysutilityTest::testGetPageDirectory() {
 	std::cout<<"Page directory : " << fullpath << std::endl;
 }
 // 保存图片的路径
-void SysutilityTest::testGetImageDirectory() {
+void AppUtilityTest::testGetImageDirectory() {
 	HMODULE handle = GetModule(TEXT("TestSysutility.exe"));
 	TCHAR workdir[MAX_PATH], fullpath[MAX_PATH], imageDir[MAX_PATH], installpath[MAX_PATH];
 	GetCurrentDirectory(MAX_PATH, workdir);
@@ -148,7 +148,7 @@ void SysutilityTest::testGetImageDirectory() {
 	std::cout<<"Image directory : " << fullpath << std::endl;
 }
 
-void SysutilityTest::testGetInstallPath() {
+void AppUtilityTest::testGetInstallPath() {
 	HMODULE handle = GetModule(TEXT("TestSysutility.exe"));
 	TCHAR workdir[MAX_PATH], install_path[MAX_PATH];
 	GetCurrentDirectory(MAX_PATH, workdir);
@@ -169,7 +169,7 @@ void SysutilityTest::testGetInstallPath() {
 	std::cout<<"Install directory : " << install_path << std::endl;
 }
 
-void SysutilityTest::testGetAppConfigFilename() {
+void AppUtilityTest::testGetAppConfigFilename() {
 	HMODULE handle = GetModule(TEXT("TestSysutility.exe"));
 	TCHAR workdir[MAX_PATH], fullpath[MAX_PATH], configfilename[MAX_PATH];
 	GetCurrentDirectory(MAX_PATH, workdir);
@@ -186,7 +186,7 @@ void SysutilityTest::testGetAppConfigFilename() {
 	std::cout<<"App config : " << fullpath << std::endl;
 }
 
-void SysutilityTest::testRegisterOper() {
+void AppUtilityTest::testRegisterOper() {
 	//HMODULE handle = GetModule(TEXT("TestSysutility.exe"));
 	//BOOL isAuto_run = isAutoRun(handle);
 }
