@@ -1,2 +1,2 @@
 .\debug\SPIInstaller -install
-.\debug\FilterSetting.exe /RegServer
+.\debug\nwrs.exe /RegServer
