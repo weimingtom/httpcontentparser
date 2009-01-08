@@ -1,9 +1,8 @@
 #include "StdAfx.h"
 #include ".\AppinstallValidate.h"
 #include ".\xinstall.h"
-#include ".\sysutility.h"
+#include ".\apputility.h"
 #include <app_constants.h>
-#include <sysutility.h>
 #include <process.h>
 #include <stdlib.h>
 #include <io.h>
@@ -193,13 +192,13 @@ void AppInstallValidate::setErrNo(int new_error) {
 void AppInstallValidate::getErrorMessage(TCHAR * msg, const int len) {
 	switch (errno_) {
 		case PACKETSFILTERED_FILE_NOT_FOUND:
-			_tcsncpy(msg, "", len);
+			_tcsncpy(msg, "Fail to repair! Pleas try to reinstall.", len);
 			break;
 		case F_COM_FILE_NOT_FOUND:
-			_tcsncpy(msg, "", len);
+			_tcsncpy(msg, "Fail to repair! Pleas try to reinstall.", len);
 			break;
 		case F_REGISTRY_OPR_FAILED:
-			_tcsncpy(msg, "", len);
+			_tcsncpy(msg, "Fail to repair! Pleas try to reinstall.", len);
 			break;
 		default:
 			msg[0] = '\0';
