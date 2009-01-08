@@ -265,6 +265,10 @@ LRESULT CMainUIDlg::OnHotKey(WPARAM wParam, LPARAM lParam) {
 			ShowMainUI();
 		}
 	} else if (id == HOTKEY_SHOW_SWITCH_USER) {
+		// 如果工作在父模式下，直接返回
+		if (Services::isParentModel() == true)
+			return -1;
+
 		CDlgCheckPassword dlg;
 		if (IDOK == dlg.DoModal()) {
 		} else {
