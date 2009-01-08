@@ -256,6 +256,9 @@ void CMainUIDlg::OnMainChildren()
 LRESULT CMainUIDlg::OnHotKey(WPARAM wParam, LPARAM lParam) {
 	int id = (int)wParam;
 	if (id == HOTKEY_SHOW_MAINUI) {
+		// 如果工作在子模式下， 则不相应
+		if (Services::isParentModel() == false)
+			return -1;
 		if (isShown()) {
 			HideMainUI();
 		} else {
