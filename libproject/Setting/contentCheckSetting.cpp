@@ -54,8 +54,8 @@ void ContentCheckSetting::defaultSetting() {
 	SettingItem::defaultSetting();
 	image_tightness_ = 2;
 
-	min_check_size_ = 1024;
-	max_check_size_ = 1024 * 64;
+	min_check_size_ = 1;
+	max_check_size_ = 64;
 	enabled_check_by_size_ = true;
 }
 
@@ -117,8 +117,8 @@ TiXmlElement * ContentCheckSetting::saveImageRule(TiXmlElement *root) {
 	TCHAR buffer[MAX_PATH];
 	TiXmlElement *item_scope = new TiXmlElement(CONFIG_NODE_IMAGESCOPE);
 	item_scope->SetAttribute(CONFIG_CONST_ENABLE, enabledFromBool(enabledCheckBySize()));
-	item_scope->SetAttribute(CONFIG_CONST_MIN, _itot(min_check_size_, buffer, MAX_PATH));
-	item_scope->SetAttribute(CONFIG_CONST_MAX, _itot(max_check_size_, buffer, MAX_PATH));
+	item_scope->SetAttribute(CONFIG_CONST_MIN, _itot(min_check_size_, buffer, 10));
+	item_scope->SetAttribute(CONFIG_CONST_MAX, _itot(max_check_size_, buffer, 10));
 	rule_root->LinkEndChild(item_scope);
 
 	root->LinkEndChild(rule_root);
@@ -153,6 +153,7 @@ int ContentCheckSetting::getImageRule(TiXmlElement * rule_root) {
 	TiXmlNode * node = rule_root->FirstChild();
 	while (NULL != node) {
 		TiXmlElement *ele = node->ToElement();
+		const char * p = ele->Value();
 		if (NULL != ele && 0 == _tcscmp(ele->Value(), CONFIG_NODE_IMAGE_CHECK_ITEM)) {// 如果是check
 			setImageCheck(ele->Attribute(CONFIG_NODE_IMAGETYPE), ele->Attribute(CONFIG_CONST_ENABLE));
 		} else if (NULL != ele && 0 == _tcscmp(ele->Value(), CONFIG_NODE_IMAGESCOPE)) {// 如果是scope

@@ -125,19 +125,19 @@ copy .\handlequeue.h ..\..\include
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
 			<File
+				RelativePath=".\BufferCallCOM.h">
+			</File>
+			<File
 				RelativePath=".\DomainAddress.cpp">
+			</File>
+			<File
+				RelativePath=".\DomainAddress.h">
 			</File>
 		</Filter>
 		<Filter
 			Name="precomp"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
-			<File
-				RelativePath=".\BufferCallCOM.h">
-			</File>
-			<File
-				RelativePath=".\DomainAddress.h">
-			</File>
 			<File
 				RelativePath=".\stdafx.cpp">
 				<FileConfiguration
