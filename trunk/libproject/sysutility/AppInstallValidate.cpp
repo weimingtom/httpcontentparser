@@ -9,9 +9,7 @@
 #include <io.h>
 
 
-#define SUCCESS 0
-#define F_COM_FILE_NOT_FOUND	1
-#define F_REGISTRY_OPR_FAILED	2
+
 
 
 namespace {
