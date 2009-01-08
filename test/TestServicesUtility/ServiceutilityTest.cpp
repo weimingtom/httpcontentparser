@@ -26,6 +26,8 @@ void ServiceutilityTest::TestCheckSeachRule() {
 	HTTPRequestPacket packet;
 	packet.parsePacket(require, (int)strlen(require));
 
+	// 注意: 要使此测试成功， 需要在BLACK WORD中添加'hello1'.
+	// 否则将会失败
 	CPPUNIT_ASSERT(false ==  checkSeachRule(&packet));
 	}
 
