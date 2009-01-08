@@ -41,7 +41,7 @@
 #endif // _AFX_NO_AFXCMN_SUPPORT
 
 #ifdef _DEBUG
-#pragma comment(lib, "sysutilityd.lib")
+#pragma comment(lib, "apputilityd.lib")
 #else
-#pragma comment(lib, "sysutility.lib")
+#pragma comment(lib, "apputility.lib")
 #endif 

@@ -7,7 +7,7 @@
 #include ".\dlgwebhistory.h"
 #include ".\globalvariable.h"
 #include <typeconvert.h>
-#include <sysutility.h>
+#include <apputility.h>
 #include <comdef.h>
 
 // CDlgWebHistory ¶Ô»°¿ò

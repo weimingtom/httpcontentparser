@@ -8,7 +8,7 @@
 #include ".\registerinfo.h"
 #include <app_constants.h>
 #include <typeconvert.h>
-#include <sysutility.h>
+#include <apputility.h>
 #include <assert.h>
 #include <comdef.h>
 

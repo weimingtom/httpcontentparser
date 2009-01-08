@@ -4,7 +4,7 @@
 #include "stdafx.h"
 #include "resource.h"
 #include <app_constants.h>
-#include <sysutility.h>
+#include <apputility.h>
 #include <com\FilterSetting_i.c>
 #include <com\FilterSetting.h>
 #include <EyecareSetting.h>

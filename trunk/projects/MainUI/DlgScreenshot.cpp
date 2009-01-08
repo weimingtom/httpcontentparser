@@ -6,7 +6,7 @@
 #include ".\DlgScreenshot.h"
 #include ".\globalvariable.h"
 #include ".\dlgscreenshot.h"
-#include <sysutility.h>
+#include <apputility.h>
 #include <typeconvert.h>
 
 // CDlgScreenshot ¶Ô»°¿ò

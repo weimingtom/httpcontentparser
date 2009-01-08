@@ -10,7 +10,7 @@
 #include ".\services.h"
 #include ".\globalvariable.h"
 #include <app_constants.h>
-#include <sysutility.h>
+#include <apputility.h>
 #include <comdef.h>
 
 #ifdef _DEBUG

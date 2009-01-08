@@ -3,7 +3,7 @@
 #include "assert.h"
 #include "globalvariable.h"
 #include <app_constants.h>
-#include <sysutility.h>
+#include <apputility.h>
 #include <PrintScreen.h>
 
 #define TIME_ESCAPE_SAVE_SCREEN  8000

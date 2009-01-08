@@ -7,7 +7,7 @@
 #include ".\globalvariable.h"
 #include ".\mainui.h"
 #include ".\services.h"
-#include <sysutility.h>
+#include <apputility.h>
 #include <typeconvert.h>
 #include <app_constants.h>
 #include <com\comutility.h>

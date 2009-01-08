@@ -8,7 +8,7 @@
 #include ".\registerinfo.h"
 #include <utility\timeutility.h>
 #include <AppinstallValidate.h>
-#include <sysutility.h>
+#include <apputility.h>
 #include <app_constants.h>
 #include <passwordtype.h>
 #include <webhistoryrecordersetting.h>

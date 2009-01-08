@@ -1,7 +1,7 @@
 #include "StdAfx.h"
 #include ".\websiterecorder.h"
 #include <webcontenttype.h>
-#include <sysutility.h>
+#include <apputility.h>
 #include <com\FilterSetting.h>
 #include <com\FilterSetting_i.c>
 #include <com\comutility.h>
