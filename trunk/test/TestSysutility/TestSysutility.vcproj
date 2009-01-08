@@ -134,9 +134,6 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\SysutilityTest.cpp">
-			</File>
-			<File
 				RelativePath=".\TestSysutility.cpp">
 			</File>
 		</Filter>
@@ -147,14 +144,27 @@
 			<File
 				RelativePath=".\stdafx.h">
 			</File>
-			<File
-				RelativePath=".\SysutilityTest.h">
-			</File>
 		</Filter>
 		<Filter
 			Name="资源文件"
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx"
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}">
+		</Filter>
+		<Filter
+			Name="test"
+			Filter="">
+			<File
+				RelativePath=".\AppInstallValTest.cpp">
+			</File>
+			<File
+				RelativePath=".\AppInstallValTest.h">
+			</File>
+			<File
+				RelativePath=".\SysutilityTest.cpp">
+			</File>
+			<File
+				RelativePath=".\SysutilityTest.h">
+			</File>
 		</Filter>
 		<File
 			RelativePath=".\ReadMe.txt">
