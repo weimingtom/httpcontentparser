@@ -4,7 +4,7 @@
 #include "stdafx.h"
 #include ".\Repair.h"
 #include ".\RepairDlg.h"
-#include <sysutility.h>
+#include <apputility.h>
 #include <app_constants.h>
 #include <AppinstallValidate.h>
 

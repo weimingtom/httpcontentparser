@@ -7,7 +7,7 @@
 #include <passwordtype.h>
 #include <tinyXML\tinyxml.h>
 #include <webcontenttype.h>
-#include <sysutility.h>
+#include <apputility.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <tchar.h>

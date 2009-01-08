@@ -172,6 +172,12 @@ copy .\release\Apputility.lib ..\..\lib\Apputility.lib
 		<Filter
 			Name="apputility"
 			Filter="">
+			<File
+				RelativePath=".\apputility.cpp">
+			</File>
+			<File
+				RelativePath=".\apputility.h">
+			</File>
 		</Filter>
 		<File
 			RelativePath=".\ReadMe.txt">

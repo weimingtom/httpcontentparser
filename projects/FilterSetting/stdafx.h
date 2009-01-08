@@ -42,12 +42,12 @@
 
 #ifdef _DEBUG
 #	pragma comment(lib, "settingd.lib")
-#	pragma comment(lib, "sysutilityd.lib")
+#	pragma comment(lib, "apputilityd.lib")
 #	pragma comment(lib, "ScreenRecord_d.lib")
 #pragma comment(lib, "cryptd.lib")
 #else 
 #	pragma comment(lib, "setting.lib")
-#	pragma comment(lib, "sysutility.lib")
+#	pragma comment(lib, "apputility.lib")
 #	pragma comment(lib, "ScreenRecord.lib")
 #pragma comment(lib, "crypt.lib")
 #endif

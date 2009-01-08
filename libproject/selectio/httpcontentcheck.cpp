@@ -6,7 +6,7 @@
 #include <utility/ZipUtility.h>
 #include <utility/BufferOnStackHeap.h>
 #include <antiporn/antiporndll.h>
-#include <sysutility.h>
+#include <apputility.h>
 #include <assert.h>
 #include <stdlib.h>
 #include <io.h>

@@ -50,11 +50,11 @@
 #ifdef _DEBUG
 #pragma comment(lib, "settingd.lib")
 #pragma comment(lib, "cryptd.lib")
-#pragma comment(lib, "sysutilityd.lib")
+#pragma comment(lib, "apputilityd.lib")
 #else
 #pragma comment(lib, "setting.lib")
 #pragma comment(lib, "sysutility.lib")
-#pragma comment(lib, "crypt.lib")
+#pragma comment(lib, "apputility.lib")
 #endif 
 
 #pragma warning(disable : 4800)

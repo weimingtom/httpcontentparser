@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include ".\sysutilitytest.h"
-#include <sysutility.h>
+#include <apputility.h>
 #include <utility\strutility.h>
 #include <app_constants.h>
 #include <iostream>

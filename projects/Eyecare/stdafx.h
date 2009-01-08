@@ -19,9 +19,9 @@
 #include   <commctrl.h>
 
 #ifdef _DEBUG
-#	pragma comment(lib, "sysutilityd.lib")
+#	pragma comment(lib, "apputilityd.lib")
 #	pragma comment(lib, "winlockd.lib")
 #else
-#	pragma comment(lib, "sysutility.lib")
+#	pragma comment(lib, "apputility.lib")
 #	pragma comment(lib, "winlock.lib")
 #endif
