@@ -43,6 +43,8 @@ private:
 
 private:
 	AppInstallValidate(void);
+
+	friend class AppInstallValTest;
 };
 
 #endif  // _SYSUTILITY_APPINSTALLVALIDATE_H__
