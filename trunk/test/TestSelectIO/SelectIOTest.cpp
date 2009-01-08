@@ -154,7 +154,11 @@ void SelectIOTest::testMax() {
 
 	CPPUNIT_ASSERT( 1 == select.preselect(&readfds));
 	select.postselect(&readfds);
-	CPPUNIT_ASSERT( 0 == select.preselect(&readfds));
+	
+	while (1 == select.preselect(&readfds)) {
+		FD_SET(s, &readfds);
+	}
+
 	Sleep(100);
 	CPPUNIT_ASSERT(select.prerecv(s, &wsabuf,
 		1, &dwNumberOfBytesRecvd) == 0);
@@ -244,6 +248,7 @@ void SelectIOTest::testMulitPacket() {
 	select.postselect(&readfds);
 
 	while (1 == select.preselect(&readfds)) {
+		FD_SET(s, &readfds);
 	}
 
 	CPPUNIT_ASSERT(select.prerecv(s, &wsabuf,1, &dwNumberOfBytesRecvd) == 0);
@@ -331,6 +336,7 @@ void SelectIOTest::testPostSelect() {
 
 	// 等待知道数据处理完毕
 	while (1 == select.preselect(&readfds)) {
+		FD_SET(s, &readfds);
 	}
 
 	// 验证数据
@@ -400,6 +406,7 @@ void SelectIOTest::testPostSelect() {
 	select.postselect(&readfds);
 
 	while (1 == select.preselect(&readfds)) {
+		FD_SET(s, &readfds);
 	}
 
 
@@ -411,6 +418,7 @@ void SelectIOTest::testPostSelect() {
 	select.postselect(&readfds);
 
 	while (1 == select.preselect(&readfds)) {
+		FD_SET(s, &readfds);
 	}
 
 	CPPUNIT_ASSERT(select.prerecv(s, &wsabuf, 1, &dwNumberOfBytesRecvd) == 0);
@@ -420,6 +428,7 @@ void SelectIOTest::testPostSelect() {
 	select.postselect(&readfds);
 
 	while (1 == select.preselect(&readfds)) {
+		FD_SET(s, &readfds);
 	}
 
 	CPPUNIT_ASSERT(select.prerecv(s, &wsabuf, 1, &dwNumberOfBytesRecvd) == 0);

@@ -50,7 +50,8 @@ copy .\DNSMap.H ..\..\include
 copy .\WebsiteRecorder.h ..\..\include
 copy .\bufferresult.h ..\..\include
 copy .\handlequeue.h ..\..\include
-copy .\socketpackets.h ..\..\include"/>
+copy .\socketpackets.h ..\..\include
+"/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
 			<Tool
@@ -100,7 +101,8 @@ copy .\BufferCallCOM.h ..\..\include
 copy .\DNSMap.H ..\..\include
 copy .\WebsiteRecorder.h ..\..\include
 copy .\bufferresult.h ..\..\include
-copy .\handlequeue.h ..\..\include"/>
+copy .\handlequeue.h ..\..\include
+"/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
 			<Tool
@@ -124,12 +126,6 @@ copy .\handlequeue.h ..\..\include"/>
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
 			<File
 				RelativePath=".\DomainAddress.cpp">
-			</File>
-			<File
-				RelativePath=".\SelectIO.cpp">
-			</File>
-			<File
-				RelativePath=".\SelectIO.h">
 			</File>
 		</Filter>
 		<Filter
@@ -234,6 +230,16 @@ copy .\handlequeue.h ..\..\include"/>
 			</File>
 			<File
 				RelativePath=".\SocketPackets.h">
+			</File>
+		</Filter>
+		<Filter
+			Name="SelectIO"
+			Filter="">
+			<File
+				RelativePath=".\SelectIO.cpp">
+			</File>
+			<File
+				RelativePath=".\SelectIO.h">
 			</File>
 		</Filter>
 	</Files>
