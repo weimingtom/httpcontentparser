@@ -59,7 +59,14 @@ bool AppInstallValidate::shouldRepairRegistry() {
 bool AppInstallValidate::repairRegistryInstallPath(const TCHAR * path) {
 	HKEY hKey;
 	long   ret = ::RegOpenKeyEx(HKEY_LOCAL_MACHINE, REG_SOFTWARE_DIR,  0,   KEY_READ,   &hKey);
-	if (ERROR_SUCCESS != ret) {
+	if (ERROR_FILE_NOT_FOUND == ret) {
+		// 如果没有键值， 则创建
+		ret = ::RegCreateKey(HKEY_LOCAL_MACHINE, REG_SOFTWARE_DIR, &hKey);
+		if (ret != ERROR_SUCCESS){
+			setErrNo(F_REGISTRY_OPR_FAILED);
+			return false;
+		}
+	} else if (ERROR_SUCCESS != ret) {
 		setErrNo(F_REGISTRY_OPR_FAILED);
 		return false;
 	}

@@ -19,7 +19,9 @@
 #include <objbase.h>
 #include <windows.h>
 #include <comdef.h>
-
+#include <tlhelp32.h>
+#include <psapi.h>
+#pragma comment(lib, "Psapi.lib")
 
 #ifdef _DEBUG
 #	pragma comment(lib, "cppunitd.lib")

@@ -2,8 +2,10 @@
 //
 
 #include "stdafx.h"
+#include ".\appinstallvaltest.h"
 #include ".\sysutilitytest.h"
 
+CPPUNIT_TEST_SUITE_REGISTRATION(AppInstallValTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(SysutilityTest);
 
 int _tmain(int argc, _TCHAR* argv[])
