@@ -1,15 +1,15 @@
-#ifndef _TESTUTILITY_SYSUTILITYTEST_H__
-#define _TESTUTILITY_SYSUTILITYTEST_H__
+#ifndef _TESTUTILITY_APPUTILITYTEST_H__
+#define _TESTUTILITY_APPUTILITYTEST_H__
 
 
 #include <cppunit/extensions/HelperMacros.h>
 
-class SysutilityTest : public CPPUNIT_NS::TestFixture {
+class AppUtilityTest : public CPPUNIT_NS::TestFixture {
 public:
-	SysutilityTest(void);
-	~SysutilityTest(void);
+	AppUtilityTest(void);
+	~AppUtilityTest(void);
 public:
-	CPPUNIT_TEST_SUITE(SysutilityTest);
+	CPPUNIT_TEST_SUITE(AppUtilityTest);
 	CPPUNIT_TEST(testGetMainUIName);
 	CPPUNIT_TEST(testGetInstallPath);
 	CPPUNIT_TEST(testGetAppConfigFilename);
@@ -30,4 +30,4 @@ protected:
 	void testRegisterOper();
 };
 
-#endif  // _TESTUTILITY_SYSUTILITYTEST_H__
+#endif  // _TESTUTILITY_APPUTILITYTEST_H__
