@@ -3,7 +3,7 @@
 
 #include <string>
 
-#ifdef __SHOW_SPI_FUNCTION_CALL__
+#ifndef __HIDE_SPI_FUNCTION_CALL__
 #define SPI_FUNCTION_CALL(msg) OutputDebugString(msg)
 #else
 #define SPI_FUNCTION_CALL(msg)
