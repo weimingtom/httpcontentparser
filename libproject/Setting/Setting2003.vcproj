@@ -199,7 +199,7 @@ copy .\timeoutswitch.h ..\..\include
 			</File>
 		</Filter>
 		<Filter
-			Name="WebHistoryRecordSettting"
+			Name="HistoryRecord"
 			Filter="">
 			<File
 				RelativePath=".\WebHistoryRecorderSetting.cpp">
