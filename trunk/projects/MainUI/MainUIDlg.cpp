@@ -414,11 +414,6 @@ void CMainUIDlg::InitTreeNodes() {
 	HTREEITEM hItem;
 	CString strItem;
 	// 规则对话框
-
-	strItem.LoadString(IDS_TREE_ONLINE_HOUR);
-	hItem = m_treeNavigation.InsertItem(strItem, hRoot);
-	m_treeNavigation.SetItemData(hItem, IDS_TREE_ONLINE_HOUR);
-
 	strItem.LoadString(IDS_TREE_OPTIONS);
 	hItem = m_treeNavigation.InsertItem(strItem, hRoot);
 	m_treeNavigation.SetItemData(hItem, IDS_TREE_OPTIONS);
@@ -478,9 +473,9 @@ void CMainUIDlg::setToolsDlg() {
 	hItem = m_treeNavigation.InsertItem(strItem, hItemTools);
 	m_treeNavigation.SetItemData(hItem, IDS_TREE_SCREEN_SAVE);
 
-	strItem.LoadString(IDS_TREE_WEB_HISTORY);
+	strItem.LoadString(IDS_TREE_ONLINE_HOUR);
 	hItem = m_treeNavigation.InsertItem(strItem, hItemTools);
-	m_treeNavigation.SetItemData(hItem, IDS_TREE_WEB_HISTORY);
+	m_treeNavigation.SetItemData(hItem, IDS_TREE_ONLINE_HOUR);
 }
 
 void CMainUIDlg::setRulesDlg() {
@@ -507,6 +502,10 @@ void CMainUIDlg::setRulesDlg() {
 	strItem.LoadString(IDS_TREE_SEARCH_RULE); 
 	hItem = m_treeNavigation.InsertItem(strItem, hItemRules);
 	m_treeNavigation.SetItemData(hItem, IDS_TREE_SEARCH_RULE);
+
+	strItem.LoadString(IDS_TREE_WEB_HISTORY);
+	hItem = m_treeNavigation.InsertItem(strItem, hItemRules);
+	m_treeNavigation.SetItemData(hItem, IDS_TREE_WEB_HISTORY);
 
 	m_treeNavigation.SelectItem(hItemRules);
 }
