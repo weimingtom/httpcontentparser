@@ -204,18 +204,34 @@ const TCHAR* GetFileNameDir(const TCHAR *filename, TCHAR *directory, const unsig
 }
 
 
-const TCHAR * GetPageDirectory(TCHAR * filename, const unsigned len, const TCHAR * installPath) {
-	assert (filename != NULL);
+const TCHAR * GetPageDirectory(TCHAR * pagePath, const unsigned len, const TCHAR * installPath) {
+	assert (pagePath != NULL);
 	assert ( true == strutility::endwith(installPath, TEXT("\\")));
-	GenerateFullPath(filename, MAX_PATH, installPath, TEXT("History\\text\\"));
-	return filename;
+	GenerateFullPath(pagePath, MAX_PATH, installPath, TEXT("History\\text\\"));
+
+	// 如果路径不存在则创建
+	if (_taccess(pagePath, 0) == -1) {
+		TCHAR parent_dir[MAX_PATH];
+		GenerateFullPath(parent_dir, MAX_PATH, installPath, TEXT("History\\"));
+		_mkdir(parent_dir);
+		_mkdir(pagePath);
+	}
+	return pagePath;
 }
 
-const TCHAR * GetImageDirectory(TCHAR * filename, const unsigned len, const TCHAR * installPath) {
-	assert (filename != NULL);
+const TCHAR * GetImageDirectory(TCHAR * imagepath, const unsigned len, const TCHAR * installPath) {
+	assert (imagepath != NULL);
 	assert ( true == strutility::endwith(installPath, "\\"));
-	GenerateFullPath(filename, MAX_PATH, installPath, TEXT("History\\images\\"));
-	return filename;
+	GenerateFullPath(imagepath, MAX_PATH, installPath, TEXT("History\\images\\"));
+
+	// 如果路径不存在则创建
+	if (_taccess(imagepath, 0) == -1) {
+		TCHAR parent_dir[MAX_PATH];
+		GenerateFullPath(parent_dir, MAX_PATH, installPath, TEXT("History\\"));
+		_mkdir(parent_dir);
+		_mkdir(imagepath);
+	}
+	return imagepath;
 }
 
 const TCHAR * GetWebSiteFile(TCHAR *filename, const unsigned len, const TCHAR * installPath) {
