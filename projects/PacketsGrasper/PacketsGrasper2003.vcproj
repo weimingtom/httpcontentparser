@@ -166,6 +166,9 @@
 				RelativePath=".\PacketsGrasper.cpp">
 			</File>
 			<File
+				RelativePath=".\ProgressCheck.cpp">
+			</File>
+			<File
 				RelativePath="StdAfx.cpp">
 				<FileConfiguration
 					Name="Release|Win32">
@@ -191,6 +194,9 @@
 			Filter="h;hpp;hxx;hm;inl">
 			<File
 				RelativePath=".\debug.h">
+			</File>
+			<File
+				RelativePath=".\ProgressCheck.h">
 			</File>
 			<File
 				RelativePath="StdAfx.h">
