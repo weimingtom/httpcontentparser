@@ -689,6 +689,7 @@ IDC_MENU_TRAY_PARENT MENU
 BEGIN
     POPUP "Main"
     BEGIN
+        MENUITEM "Register",                    ID_MAIN_REGISTER
         POPUP "Websites"
         BEGIN
             MENUITEM "www.sina.com",                ID_WEBSITES_WWW32788
