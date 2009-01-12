@@ -230,13 +230,14 @@
 #define ID_TRAYMENU_MODEL_CHILDREN      32805
 #define ID_TRAYMENU_EXIT                32806
 #define ID_TRAYMENU_CHANGEPASSWORD      32807
+#define ID_MAIN_REGISTER                32808
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        165
-#define _APS_NEXT_COMMAND_VALUE         32808
+#define _APS_NEXT_COMMAND_VALUE         32809
 #define _APS_NEXT_CONTROL_VALUE         1112
 #define _APS_NEXT_SYMED_VALUE           112
 #endif
