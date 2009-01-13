@@ -5,8 +5,8 @@
 
 int _tmain(int argc, _TCHAR* argv[])
 {
-	EncryptFile(".\\config.xml", ".\\result.txt");
-	DecryptFile(".\\result.txt", ".\\deresult.txt");
+	yanglei_utility::EncryptFile(".\\config.xml", ".\\result.txt");
+	yanglei_utility::DecryptFile(".\\result.txt", ".\\deresult.txt");
 	return 0;
 }
 
