@@ -1,6 +1,8 @@
 #ifndef _UTILITY_SYNC_UTILITY_H__
 #define _UTILITY_SYNC_UTILITY_H__
 
+#include <string>
+
 namespace yanglei_utility {
 class CAutoCreateCS {
 public:
@@ -19,8 +21,8 @@ public:
 	CSysMutex(const std::string &name);
 	~CSysMutex(void);
 
-	void Lock();
-	void Unlock();
+	void lock();
+	void unlock();
 private:
 	HANDLE getMutex();
 	HANDLE hMutex_;

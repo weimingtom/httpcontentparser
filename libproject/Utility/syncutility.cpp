@@ -35,19 +35,19 @@ CSysMutex::~CSysMutex(void) {
 	}
 }
 
-void CSysMutex::Lock() {
+void CSysMutex::lock() {
 	::WaitForSingleObject(getMutex(), INFINITE);
 }
-void CSysMutex::Unlock() {
+void CSysMutex::unlock() {
 	::ReleaseMutex(getMutex());
 }
 
 HANDLE CSysMutex::getMutex() {
-	if (NULL != hMutex_) {
+	if (NULL == hMutex_) {
 		hMutex_ = CreateMutex(NULL, FALSE, name_.length() == 0 ? NULL : name_.c_str());
 		return hMutex_;
 	} else {
-		return NULL;
+		return hMutex_;
 	}
 }
 
