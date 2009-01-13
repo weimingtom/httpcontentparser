@@ -122,9 +122,6 @@ copy .\strutility.h ..\..\include\utility
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
 			<File
-				RelativePath=".\FileMapping.cpp">
-			</File>
-			<File
 				RelativePath=".\stdafx.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
@@ -139,22 +136,13 @@ copy .\strutility.h ..\..\include\utility
 						UsePrecompiledHeader="1"/>
 				</FileConfiguration>
 			</File>
-			<File
-				RelativePath=".\syncutility.cpp">
-			</File>
 		</Filter>
 		<Filter
 			Name="Í·ÎÄ¼þ"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
 			<File
-				RelativePath=".\FileMapping.h">
-			</File>
-			<File
 				RelativePath=".\stdafx.h">
-			</File>
-			<File
-				RelativePath=".\syncutility.h">
 			</File>
 		</Filter>
 		<Filter
@@ -225,6 +213,16 @@ copy .\strutility.h ..\..\include\utility
 			</File>
 			<File
 				RelativePath=".\timeutility.h">
+			</File>
+		</Filter>
+		<Filter
+			Name="SyncUtility"
+			Filter="">
+			<File
+				RelativePath=".\syncutility.cpp">
+			</File>
+			<File
+				RelativePath=".\syncutility.h">
 			</File>
 		</Filter>
 	</Files>
