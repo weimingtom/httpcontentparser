@@ -46,15 +46,7 @@ void initializeSetting() {
 		// 初始化配置
 	TCHAR config_path[MAX_PATH];
 	GetAppConfigFilename(config_path, MAX_PATH, g_hInstance);
-
-	
-	// 解密文件
-	TCHAR file[] = ".\\.configg.xml";
-	DecryptFile(config_path, file);
-	g_configuration.loadConfig(file);
-
-	// 删除文件
-	DeleteFile(file);
+	g_configuration.loadConfig(config_path);
 }
 
 extern "C" int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, 

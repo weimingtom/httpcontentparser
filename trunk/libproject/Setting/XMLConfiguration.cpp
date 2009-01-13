@@ -3,7 +3,9 @@
 #include ".\SearchRule.h"
 #include ".\eyecaresetting.h"
 #include ".\autoclean.h"
+#include <utility\syncutility.h>
 #include <webcontenttype.h>
+#include <crypt.h>
 #include <passwordtype.h>
 #include <tinyXML\tinyxml.h>
 #include <webcontenttype.h>
@@ -13,6 +15,8 @@
 #include <tchar.h>
 #include <string>
 #include <zlib\zlib.h>
+
+#define CONFIG_FILE_MUTEX_NAME	TEXT("24483F0A-A8B1-4a37-8E47-26E256C10884")
 
 //=====================================================
 // constructor and deconstructor
@@ -52,7 +56,13 @@ int XMLConfiguration::saveAppSetting(TiXmlElement * root) {
 // 保存规则
 //==========================================================
 // XML 保存函数
-int XMLConfiguration::saveConfig(const TCHAR * filename) {
+int XMLConfiguration::saveConfig(const TCHAR * configpath) {
+	using namespace yanglei_utility;
+	CSysMutex mutex(CONFIG_FILE_MUTEX_NAME);
+	SingleLock<CSysMutex> lock(&mutex);
+
+	TCHAR encryptfile[] = ".\\.configka.xml";
+
 	// Create XML
 	TiXmlDocument doc;
 	TiXmlDeclaration * decl = new TiXmlDeclaration( "1.0", "UTF-8", "" );
@@ -66,7 +76,10 @@ int XMLConfiguration::saveConfig(const TCHAR * filename) {
 	
 	doc.LinkEndChild(root_element);
 
-	doc.SaveFile(filename);
+	
+	doc.SaveFile(encryptfile);
+	yanglei_utility::EncryptFile((LPTSTR)encryptfile, (LPTSTR)configpath);
+	DeleteFile(encryptfile);
 
 	SettingItem::setModified(false);
 	return 0;
@@ -183,8 +196,16 @@ int XMLConfiguration::parseConfiguration(TiXmlElement * root) {
 	return 0;
 }
 
-int XMLConfiguration::readConfigFromFile(const TCHAR *filename) {
-	TiXmlDocument doc(filename);
+int XMLConfiguration::readConfigFromFile(const TCHAR *encrpytedfile) {
+	using namespace yanglei_utility;
+	CSysMutex mutex(CONFIG_FILE_MUTEX_NAME);
+	SingleLock<CSysMutex> lock(&mutex);
+	
+	TCHAR decryptfile[] = ".\\.configg.xml";
+	yanglei_utility::DecryptFile((LPTSTR)encrpytedfile, decryptfile);
+
+
+	TiXmlDocument doc(decryptfile);
 	if (!doc.LoadFile()) {
 		readDefaultConfig();
 		return -1;
@@ -192,6 +213,8 @@ int XMLConfiguration::readConfigFromFile(const TCHAR *filename) {
 
 	TiXmlElement * root = doc.RootElement();
 	parseConfiguration(root);
+
+	DeleteFile(decryptfile);
 
 	return 0;
 }
@@ -209,3 +232,4 @@ int XMLConfiguration::loadConfig(const TCHAR * filename) {
 	readConfigFromFile(filename);
 	return 0;
 }
+

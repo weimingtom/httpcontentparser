@@ -115,12 +115,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 
 				// 保存文件
 				g_configuration.saveConfig(file);
-
-				DeleteFile(config_path);
-				// 加密后
-				EncryptFile(file, config_path);
-
-				DeleteFile(file);
 			}
 
 			// 如果可以切换状态的时候，且当前状态是家长模式
