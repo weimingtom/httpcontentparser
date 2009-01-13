@@ -37,7 +37,7 @@ bool TimeoutSwitch::shouldSwitch()  {
 
 // 默认设置
 void TimeoutSwitch::defaultSetting() {
-	enable(true);
+	enable(false);
 	min_ = 60;		// 最小值一分钟
 	max_ = 60 * 60;
 	setTimeoutValue(60); 
