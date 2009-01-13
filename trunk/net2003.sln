@@ -27,13 +27,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Setting", "libproject\Setti
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ThreadSync", "libproject\ThreadSync\ThreadSync2003.vcproj", "{EC738080-9EB3-45D7-8440-0B79B280ACD7}"
-	ProjectSection(ProjectDependencies) = postProject
-	EndProjectSection
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Utility", "libproject\Utility\Utility2003.vcproj", "{CD11D86D-3173-4945-8215-7450A0D9CB3C}"
 	ProjectSection(ProjectDependencies) = postProject
-		{EC738080-9EB3-45D7-8440-0B79B280ACD7} = {EC738080-9EB3-45D7-8440-0B79B280ACD7}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Eyecare", "projects\Eyecare\Eyecare2003.vcproj", "{964382EA-1D90-46C2-97ED-FB6ACA2DF0F6}"
@@ -176,14 +171,6 @@ Global
 		{CCEEE3B2-3B59-4DE4-B088-2093F3582E42}.Release.Build.0 = Release|Win32
 		{CCEEE3B2-3B59-4DE4-B088-2093F3582E42}.Release Unicode.ActiveCfg = Release|Win32
 		{CCEEE3B2-3B59-4DE4-B088-2093F3582E42}.Release Unicode.Build.0 = Release|Win32
-		{EC738080-9EB3-45D7-8440-0B79B280ACD7}.Debug.ActiveCfg = Debug|Win32
-		{EC738080-9EB3-45D7-8440-0B79B280ACD7}.Debug.Build.0 = Debug|Win32
-		{EC738080-9EB3-45D7-8440-0B79B280ACD7}.Debug Unicode.ActiveCfg = Debug|Win32
-		{EC738080-9EB3-45D7-8440-0B79B280ACD7}.Debug Unicode.Build.0 = Debug|Win32
-		{EC738080-9EB3-45D7-8440-0B79B280ACD7}.Release.ActiveCfg = Release|Win32
-		{EC738080-9EB3-45D7-8440-0B79B280ACD7}.Release.Build.0 = Release|Win32
-		{EC738080-9EB3-45D7-8440-0B79B280ACD7}.Release Unicode.ActiveCfg = Release|Win32
-		{EC738080-9EB3-45D7-8440-0B79B280ACD7}.Release Unicode.Build.0 = Release|Win32
 		{CD11D86D-3173-4945-8215-7450A0D9CB3C}.Debug.ActiveCfg = Debug|Win32
 		{CD11D86D-3173-4945-8215-7450A0D9CB3C}.Debug.Build.0 = Debug|Win32
 		{CD11D86D-3173-4945-8215-7450A0D9CB3C}.Debug Unicode.ActiveCfg = Debug|Win32

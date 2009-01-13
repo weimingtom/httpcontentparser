@@ -13,6 +13,21 @@ private:
 	::CRITICAL_SECTION cs_;
 };
 
+class CSysMutex {
+public:
+	CSysMutex();
+	CSysMutex(const std::string &name);
+	~CSysMutex(void);
+
+	void Lock();
+	void Unlock();
+private:
+	HANDLE getMutex();
+	HANDLE hMutex_;
+
+	std::string name_;
+};
+
 template <class T>
 class SingleLock {
 public:
