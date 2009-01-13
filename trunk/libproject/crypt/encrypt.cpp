@@ -6,19 +6,18 @@
 #define ENCRYPT_ALGORITHM CALG_RC4 
 #define ENCRYPT_BLOCK_SIZE 8
 
-namespace {
 
 bool EncryptFile(LPTSTR pszSourceFile, 
 				   LPTSTR pszDestinationFile, 
 				   LPTSTR pszPassword);
-}
 
+
+namespace yanglei_utility {
 bool EncryptFile(LPTSTR pszSourceFile, 
 				 LPTSTR pszDestinationFile) {
-	 return EncryptFile(pszSourceFile, pszDestinationFile, PASSWORD);
+	return ::EncryptFile(pszSourceFile, pszDestinationFile, PASSWORD);
 }
-
-namespace {
+};
 
 //-------------------------------------------------------------------
 // Code for the function MyEncryptFile called by main.
@@ -532,4 +531,3 @@ Exit_MyEncryptFile:
     return fReturn; 
 } // End Encryptfile.
 
-};
