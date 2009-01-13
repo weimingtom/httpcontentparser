@@ -15,7 +15,9 @@
 #include ".\HttpRequestPacketTest.h"
 #include ".\buffercallertest.h"
 #include ".\replacepackettest.h"
+#include ".\syncobjecttest.h"
 
+CPPUNIT_TEST_SUITE_REGISTRATION(SyncObjectTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(DNSTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(ReplacePacketTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(HTTPRequestHeaderTest);
