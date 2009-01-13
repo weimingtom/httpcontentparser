@@ -110,11 +110,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 		case WM_TIMER:
 			if (SettingItem::isModified() == true) {
 				TCHAR config_path[MAX_PATH];
-				TCHAR file[] = ".\\.confige.xml";
 				GetAppConfigFilename(config_path, MAX_PATH, (HMODULE)g_hInstance);
 
 				// 保存文件
-				g_configuration.saveConfig(file);
+				g_configuration.saveConfig(config_path);
 			}
 
 			// 如果可以切换状态的时候，且当前状态是家长模式
