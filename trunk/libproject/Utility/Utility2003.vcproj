@@ -49,7 +49,7 @@ copy .\strutility.h ..\..\include\utility
 copy .\timeutility.h ..\..\include\utility
 copy .\SeachPacket.h ..\..\include\utility
 copy .\replacepacket.h ..\..\include\utility
-"/>
+copy .\syncutility.h ..\..\include\utility"/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
 			<Tool
@@ -99,7 +99,10 @@ copy .\httppacket.h ..\..\include\utility
 copy .\dns.h ..\..\include\utility
 copy .\httprequestpacket.h ..\..\include\utility
 copy .\strutility.h ..\..\include\utility
-"/>
+copy .\timeutility.h ..\..\include\utility
+copy .\SeachPacket.h ..\..\include\utility
+copy .\replacepacket.h ..\..\include\utility
+copy .\syncutility.h ..\..\include\utility"/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
 			<Tool
