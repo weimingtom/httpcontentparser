@@ -233,6 +233,16 @@
 				UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}">
 			</Filter>
 		</Filter>
+		<Filter
+			Name="SyncObjectTest"
+			Filter="">
+			<File
+				RelativePath=".\SyncObjectTest.cpp">
+			</File>
+			<File
+				RelativePath=".\SyncObjectTest.h">
+			</File>
+		</Filter>
 		<File
 			RelativePath=".\ReadMe.txt">
 		</File>
