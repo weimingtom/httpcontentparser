@@ -6,19 +6,20 @@
 #define ENCRYPT_ALGORITHM CALG_RC4 
 #define ENCRYPT_BLOCK_SIZE 8
 
-namespace {
-	bool DecryptFile(
+
+bool DecryptFile(
     LPTSTR pszSourceFile, 
     LPTSTR pszDestinationFile, 
     LPTSTR pszPassword);
-}
 
+namespace yanglei_utility {
 bool DecryptFile(LPTSTR pszSourceFile,  LPTSTR pszDestinationFile) {
-	return DecryptFile(pszSourceFile, pszDestinationFile, PASSWORD);
+	return ::DecryptFile(pszSourceFile, pszDestinationFile, PASSWORD);
 }
+};
 
 
-namespace {
+
 //-------------------------------------------------------------------
 // Code for the function MyDecryptFile called by main.
 //-------------------------------------------------------------------
@@ -380,4 +381,4 @@ Exit_MyDecryptFile:
     return fReturn;
 }
 
-};
+
