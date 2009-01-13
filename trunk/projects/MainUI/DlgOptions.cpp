@@ -88,44 +88,16 @@ BOOL setHotkey(WORD vKey, WORD vModifiers_mfc, const int type) {
 };
 
 
-// 如过CHECK_BOX选中，则Sliderbar可用，反之则不可用
-void CDlgOptions::UpdateAutoswitchState() {
-	if (BST_CHECKED == IsDlgButtonChecked(IDC_CHK_ENABLE_TIMEOUT_SWITCH)) {
-		m_sldTimeout.EnableWindow(TRUE);
-	} else {
-		m_sldTimeout.EnableWindow(FALSE);
-	}
-}
-
 void CDlgOptions::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_CHK_AUTOLOAD, m_chkAutoLoad);
 	DDX_Control(pDX, IDC_STA_SYSTEM, m_staSystemOption);
-	DDX_Control(pDX, IDC_STA_OTHERS, m_staOthers);
 	DDX_Control(pDX, IDC_STA_HOTKEY, m_staHotkey);
 	DDX_Control(pDX, IDC_HOTKEY_SHOWDLG, m_hotKeyShowDlg);
 	DDX_Control(pDX, IDC_HOTKEY_SWITCHUSR, m_hotkeySwitchUser);
 	DDX_Check(pDX, IDC_CHK_AUTOLOAD, m_bAutoRun);
 	DDX_Control(pDX, IDC_HOTKEY_LAUNCH, m_hotkeyLaunch);
-	DDX_Control(pDX, IDC_STA_TIMEOUT, m_staTimeoutValue);
-	DDX_Control(pDX, IDC_SLD_TIMEOUT, m_sldTimeout);
-}
-
-int CDlgOptions::setAutoswitch() {
-	// 是否可用
-	VARIANT_BOOL vb_enabled = IsDlgButtonChecked(IDC_CHK_ENABLE_TIMEOUT_SWITCH) == BST_CHECKED ? VARIANT_TRUE : VARIANT_FALSE;
-
-	try {
-		AutoInitInScale auto_init_com;
-		IAppSetting *app = NULL;
-		CoCreateInstance(CLSID_AppSetting, NULL, CLSCTX_LOCAL_SERVER, IID_IAppSetting, (LPVOID*)&app);
-		app->put_TimeoutSwitchEnabled(vb_enabled);
-		app->setTimeoutValue(m_sldTimeout.GetPos() * 60);
-		return 0;
-	} catch(...) {
-		return -1;
-	}
 }
 
 int CDlgOptions::setHotKey() {
@@ -170,7 +142,6 @@ int CDlgOptions::setHotKey() {
 
 int CDlgOptions::OnApply() {
 	SetAutoRun();
-	setAutoswitch();
 	if ( -1 == setHotKey()) {
 		// 如果热键冲突
 		Restore();
@@ -179,20 +150,6 @@ int CDlgOptions::OnApply() {
 	return 0;
 }
  
-int CDlgOptions::restoreAutoswitchSetting() {
-	m_sldTimeout.SetRange(1, 120);
-	m_sldTimeout.SetTicFreq(10);
-	int pos = g_configuration.getTimeoutSwitch()->getTimeoutValue() / 60;
-	m_sldTimeout.SetPos(pos);
-
-	CString str;
-	str.Format("%d", pos);
-	m_staTimeoutValue.SetWindowText(str);
-
-	CheckDlgButton(IDC_CHK_ENABLE_TIMEOUT_SWITCH, 
-		g_configuration.getTimeoutSwitch()->isEnabled() ? BST_CHECKED : BST_UNCHECKED);
-	return 0;
-}
 
 // 恢复设置
 void CDlgOptions::restoreSetting() {	
@@ -210,7 +167,6 @@ void CDlgOptions::restoreSetting() {
 	m_bAutoRun = isAutoRun((HMODULE)AfxGetInstanceHandle());
 	m_bOld_autorun = m_bAutoRun;
 
-	restoreAutoswitchSetting();
 	UpdateData(FALSE);
 }
 
@@ -229,8 +185,6 @@ void CDlgOptions::SetAutoRun() {
 
 BEGIN_MESSAGE_MAP(CDlgOptions, CDialog)
 	ON_BN_CLICKED(IDC_CHK_AUTOLOAD, OnBnClickedChkAutoload)
-	ON_BN_CLICKED(IDC_CHK_ENABLE_TIMEOUT_SWITCH, OnBnClickedChkEnableTimeoutSwitch)
-	ON_WM_HSCROLL()
 END_MESSAGE_MAP()
 
 
@@ -244,8 +198,6 @@ BOOL CDlgOptions::OnInitDialog()
 		// 如果热键冲突
 		Restore();
 	}
-
-	UpdateAutoswitchState();
 	return TRUE;
 }
 
@@ -267,19 +219,3 @@ BOOL CDlgOptions::PreTranslateMessage(MSG* pMsg)
 	return CBaseDlg::PreTranslateMessage(pMsg);
 }
 
-void CDlgOptions::OnBnClickedChkEnableTimeoutSwitch()
-{
-	UpdateAutoswitchState();
-	SetModify(true);
-}
-
-void CDlgOptions::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
-{
-	if (pScrollBar->GetSafeHwnd() == m_sldTimeout.GetSafeHwnd()) {
-		CString str;
-		str.Format("%d", m_sldTimeout.GetPos());
-		m_staTimeoutValue.SetWindowText(str);
-		SetModify(true);
-	}
-	CBaseDlg::OnHScroll(nSBCode, nPos, pScrollBar);
-}

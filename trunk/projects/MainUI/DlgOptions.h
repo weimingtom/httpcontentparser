@@ -28,29 +28,19 @@ protected:
 	virtual BOOL OnInitDialog();
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
 	afx_msg void OnBnClickedChkAutoload();
-	afx_msg void OnBnClickedChkEnableTimeoutSwitch();
-	afx_msg void OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
 	DECLARE_MESSAGE_MAP()
 protected:
 	// control variables
 	CButton m_chkAutoLoad;
 	CGuiGroupBox m_staSystemOption;
-	CGuiGroupBox m_staOthers;
 	CGuiGroupBox m_staHotkey;
 	CHotKeyCtrl m_hotkeyLaunch;
 	CHotKeyCtrl m_hotKeyShowDlg;
 	CHotKeyCtrl m_hotkeySwitchUser;
-	CStatic m_staTimeoutValue;
-	CSliderCtrl m_sldTimeout;
 
 	BOOL m_bAutoRun;
 	BOOL m_bOld_autorun;
 protected:
 	void SetAutoRun();
 	int setHotKey();
-	int setAutoswitch();
-	int restoreAutoswitchSetting();
-	
-	// ¸üÐÂ×´Ì¬
-	void UpdateAutoswitchState();
 };
