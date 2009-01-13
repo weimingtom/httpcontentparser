@@ -8,12 +8,16 @@ public:
 
 	CPPUNIT_TEST_SUITE(SyncObjectTest);
 	CPPUNIT_TEST(testCase1);
-	CPPUNIT_TEST(testCase2);
+	CPPUNIT_TEST(testAutoCriticalSection);
+	CPPUNIT_TEST(testSysMutexWithName);
+	CPPUNIT_TEST(testSysMutexWithoutName);
 	CPPUNIT_TEST_SUITE_END();
 
 private:
-	void testCase2();
 	void testCase1();
+	void testAutoCriticalSection();
+	void testSysMutexWithName();
+	void testSysMutexWithoutName();
 };
 
 #endif  // _TESTSYNCOBJECT_SYNCOBJECTTEST_H__
