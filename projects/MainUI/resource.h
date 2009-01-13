@@ -130,6 +130,8 @@
 #define IDC_CHK_ALLWEBSITES             1030
 #define IDC_OK                          1031
 #define IDC_MAIN_OK                     1031
+#define IDC_CHK_AUTOLOAD2               1031
+#define IDC_CHK_ALWAYSSHOW              1031
 #define IDC_OK2                         1032
 #define IDC_HOTKEY1                     1033
 #define IDC_HOTKEY_SHOWDLG              1033
