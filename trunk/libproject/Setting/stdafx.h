@@ -14,10 +14,12 @@
 #pragma comment(lib, "zlib.lib")
 
 #ifdef _DEBUG
+#	pragma comment(lib, "cryptd.lib")
 #	pragma comment(lib, "utilityd.lib")
 #	pragma comment(lib, "apputilityd.lib")
 #	pragma comment(lib, "tinyxmld_STL.lib")
 #else
+#	pragma comment(lib, "crypt.lib")
 #	pragma comment(lib, "utility.lib")
 #	pragma comment(lib, "apputility.lib")
 #	pragma comment(lib, "tinyxml_STL.lib")
