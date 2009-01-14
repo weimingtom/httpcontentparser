@@ -2,7 +2,7 @@
 #define _FILTER_SETTING_SYS_UTILITY_H__
 
 
-#define CONFIG_FILE_NAME					TEXT("config.xml")
+#define CONFIG_FILE_NAME					TEXT("nwist.dll")
 #define EYECARE_APP_FILENAME				TEXT("Eyecare.exe")
 #define LOCKPC_APP_FILENAME					TEXT("LockPC.exe")
 
