@@ -2,6 +2,7 @@
 #include "selectio.h"
 #include "debug.h" 
 #include ".\overlapped.h"
+#include ".\progresscheck.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <tchar.h>
@@ -30,6 +31,9 @@ WSPPROC_TABLE		NextProcTable;				// 保存30个服务提供者指针
 TCHAR				m_sProcessName[MAX_PATH];	// 保存当前进程名称
 
 CSelectIO g_select;
+
+ProgressCheck progress_check;
+
 
 void ShowAllSOCKET(const char *buf, fd_set *readfds) {
 	if (readfds == NULL) return;
@@ -102,6 +106,11 @@ int WSPAPI WSPSelect (
 {
 	SPI_FUNCTION_CALL(_T("WSPSelect ..."));
 
+	// 如果应用程序是一个不应该被拦截的应用程序
+	if (progress_check.isEnabled())
+		return NextProcTable.lpWSPSelect(nfds, 
+				readfds, writefds, exceptfds, timeout, lpErrno);
+
 	// 如果在White DNS List, 我们也应该直接返回 ;)
 	// 直接返回，自身填入select
 	int result = g_select.preselect(readfds);
@@ -138,6 +147,13 @@ int WSPAPI WSPRecv(
 )
 {
 	SPI_FUNCTION_CALL(_T("WSPRecv ..."));
+
+	// 如果应用程序是一个不应该被拦截的应用程序
+	if (progress_check.isEnabled())
+		return NextProcTable.lpWSPRecv(s, lpBuffers, dwBufferCount
+				, lpNumberOfBytesRecvd, lpFlags, lpOverlapped
+				, lpCompletionRoutine, lpThreadId, lpErrno);
+
 	//char buffer[1024];
 	//sprintf(buffer, "WSPRecv %d", s);
 	//OutputDebugString(buffer);
@@ -616,6 +632,8 @@ BOOL WINAPI DllMain(
 		} 
 		LeaveCriticalSection(&gCriticalSection);
 
+		// 注意hModule不能传NULL,  应该如果传NULL，
+		// 应为NULL则获取到的线程为调用者线程的exe
 		AppInstallValidate validator(VALIDATE_SPI);
 		validator.repair((HMODULE)hModule);
  
