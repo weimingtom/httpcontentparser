@@ -499,6 +499,22 @@
 				RelativePath=".\GuiLib1.5\VisualStylesXP.h">
 			</File>
 		</Filter>
+		<Filter
+			Name="tools"
+			Filter="">
+			<File
+				RelativePath=".\DlgImageBrowser.cpp">
+			</File>
+			<File
+				RelativePath=".\DlgImageBrowser.h">
+			</File>
+			<File
+				RelativePath=".\thumbctrl.cpp">
+			</File>
+			<File
+				RelativePath=".\thumbctrl.h">
+			</File>
+		</Filter>
 		<File
 			RelativePath=".\MainUI.exe.manifest">
 		</File>
