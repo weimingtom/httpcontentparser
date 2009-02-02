@@ -1,6 +1,7 @@
 #ifndef _FILTER_SETTING_SYS_UTILITY_H__
 #define _FILTER_SETTING_SYS_UTILITY_H__
 
+#include <utility\strutility.h>
 
 #define CONFIG_FILE_NAME					TEXT("nwist.dll")
 #define EYECARE_APP_FILENAME				TEXT("Eyecare.exe")
@@ -60,4 +61,10 @@ BOOL isAutoRun(HMODULE hModule);
 
 // 当前的Eyecare是否在运行
 HWND GetEyecareApp();
+
+// 获取目录下的文件
+void GetFilespathInDir(const TCHAR * dir, const TCHAR *exp, std::vector<strutility::_tstring> * files);
+
+void DeleteFiles(const TCHAR * dir, const TCHAR * exp);
+
 #endif  // _FILTER_SETTING_SYS_UTILITY_H__

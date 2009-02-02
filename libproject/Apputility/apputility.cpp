@@ -18,9 +18,6 @@ namespace {
 	void GenerateImageFile(TCHAR *file, const int len, HMODULE hModule);	// 自动生成文件名
 	void GetHistoryRecordDir(TCHAR *moduleDir, const int len, HMODULE hModule);
 	void GenerateFullPath(TCHAR *fullpath, const int len, const TCHAR * dir, const TCHAR * filename);
-	void GetFilespathInDir(const TCHAR * dir, const TCHAR *exp, std::vector<strutility::_tstring> * files);
-
-	void DeleteFiles(const TCHAR * dir, const TCHAR * exp);
 	
 	HKEY GetAutoRunKey();
 };
@@ -286,18 +283,55 @@ const TCHAR * GetInstallPathFromRegistry(TCHAR * install_path, const DWORD len) 
 
 
 
+
+void GetFilespathInDir(const TCHAR * dir,  const TCHAR *exp, 
+					   std::vector<strutility::_tstring> * files) {
+	using namespace std;
+	using namespace strutility;
+
+	TCHAR fileexp[MAX_PATH];
+	_sntprintf(fileexp, MAX_PATH, TEXT("%s%s"), dir, exp);
+	WIN32_FIND_DATA find_data;
+	HANDLE hFind = FindFirstFile(fileexp, &find_data);
+
+	if (INVALID_HANDLE_VALUE == hFind) {
+		return;
+	}
+
+	// 记得将第一个文件添加进去
+	do {
+		files->push_back(find_data.cFileName);
+	} while (FindNextFile(hFind, &find_data));
+
+	FindClose(hFind);
+}
+
+void DeleteFiles(const TCHAR * dir, const TCHAR * exp) {
+	// 获取所有文件
+	using namespace std;
+	using namespace strutility;
+
+	vector<_tstring> vecfilepaths;
+	GetFilespathInDir(dir, exp, &vecfilepaths);
+
+	vector<_tstring>::iterator iter = vecfilepaths.begin();
+	for (; iter != vecfilepaths.end(); ++iter) {
+		DeleteFile(iter->c_str());
+	}
+}
+
 // 当前的Eyecare是否在运行
 HWND GetEyecareApp() {
 	HWND hwnd = FindWindow(EYECARE_MAIN_WND_CLASS, NULL);
 	return hwnd;
 }
-
-
-
 //////////////////////////////////////////////////
 // utility functions
 
 namespace {
+
+
+
 void GenerateFullPath(TCHAR *fullpath, const int len, const TCHAR * dir, const TCHAR * filename) {
 	assert(strutility::endwith(dir, "\\") == true);
 	_sntprintf(fullpath, len, TEXT("%s%s"), dir, filename);
@@ -337,41 +371,6 @@ void GetTextRecordDir(TCHAR *textdir, const int len, HMODULE hModule) {
 		_tmkdir(textdir);
 }
 
-void GetFilespathInDir(const TCHAR * dir,  const TCHAR *exp, 
-					   std::vector<strutility::_tstring> * files) {
-	using namespace std;
-	using namespace strutility;
-
-	TCHAR fileexp[MAX_PATH];
-	_sntprintf(fileexp, MAX_PATH, TEXT("%s%s"), dir, exp);
-	WIN32_FIND_DATA find_data;
-	HANDLE hFind = FindFirstFile(fileexp, &find_data);
-
-	if (INVALID_HANDLE_VALUE == hFind) {
-		return;
-	}
-
-	// 记得将第一个文件添加进去
-	do {
-		files->push_back(find_data.cFileName);
-	} while (FindNextFile(hFind, &find_data));
-
-	FindClose(hFind);
-}
-
-void DeleteFiles(const TCHAR * dir, const TCHAR * exp) {
-	// 获取所有文件
-	using namespace std;
-	using namespace strutility;
-
-	vector<_tstring> vecfilepaths;
-	GetFilespathInDir(dir, exp, &vecfilepaths);
-
-	vector<_tstring>::iterator iter = vecfilepaths.begin();
-	for (; iter != vecfilepaths.end(); ++iter) {
-		DeleteFile(iter->c_str());
-	}
-}
 
 // 获取自动运行的表项
 HKEY GetAutoRunKey() {
