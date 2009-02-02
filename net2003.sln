@@ -110,6 +110,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestAppUtility", "test\Test
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SPIInstaller", "projects\SPIInstaller\SPIInstaller2003.vcproj", "{D02BBF90-CC5B-4AD3-B637-2B9C8A790C6E}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfiguration) = preSolution
 		Debug = Debug
@@ -302,6 +306,14 @@ Global
 		{82442190-6EDE-4A41-8282-119A5F796AA8}.Release.Build.0 = Release|Win32
 		{82442190-6EDE-4A41-8282-119A5F796AA8}.Release Unicode.ActiveCfg = Release|Win32
 		{82442190-6EDE-4A41-8282-119A5F796AA8}.Release Unicode.Build.0 = Release|Win32
+		{D02BBF90-CC5B-4AD3-B637-2B9C8A790C6E}.Debug.ActiveCfg = Debug|Win32
+		{D02BBF90-CC5B-4AD3-B637-2B9C8A790C6E}.Debug.Build.0 = Debug|Win32
+		{D02BBF90-CC5B-4AD3-B637-2B9C8A790C6E}.Debug Unicode.ActiveCfg = Debug|Win32
+		{D02BBF90-CC5B-4AD3-B637-2B9C8A790C6E}.Debug Unicode.Build.0 = Debug|Win32
+		{D02BBF90-CC5B-4AD3-B637-2B9C8A790C6E}.Release.ActiveCfg = Release|Win32
+		{D02BBF90-CC5B-4AD3-B637-2B9C8A790C6E}.Release.Build.0 = Release|Win32
+		{D02BBF90-CC5B-4AD3-B637-2B9C8A790C6E}.Release Unicode.ActiveCfg = Release|Win32
+		{D02BBF90-CC5B-4AD3-B637-2B9C8A790C6E}.Release Unicode.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 	EndGlobalSection
