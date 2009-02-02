@@ -74,6 +74,7 @@
 #define IDI_GUI_ARROWDOWN               163
 #define IDI_ICON2                       164
 #define IDI_GUI_ARROWRIGHT              164
+#define IDD_DLG_IMAGEBROWSER            165
 #define IDC_TREE_NAVIG                  1000
 #define IDS_TREE_ROOT                   1001
 #define IDS_TREE_DNS_RULE               1002
@@ -130,7 +131,6 @@
 #define IDC_CHK_ALLWEBSITES             1030
 #define IDC_OK                          1031
 #define IDC_MAIN_OK                     1031
-#define IDC_CHK_AUTOLOAD2               1031
 #define IDC_CHK_ALWAYSSHOW              1031
 #define IDC_OK2                         1032
 #define IDC_HOTKEY1                     1033
@@ -200,6 +200,7 @@
 #define IDC_SPIN_MAX                    1109
 #define IDC_SPIN_MIN                    1110
 #define IDC_CHK_ENABLE_SIZE_CHECK       1111
+#define IDC_IMAGES_POS                  1112
 #define IDB_DOCKBAR                     2004
 #define IDC_EDIT1                       4011
 #define IDC_EDIT2                       4012
@@ -238,9 +239,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        165
+#define _APS_NEXT_RESOURCE_VALUE        166
 #define _APS_NEXT_COMMAND_VALUE         32809
-#define _APS_NEXT_CONTROL_VALUE         1112
+#define _APS_NEXT_CONTROL_VALUE         1113
 #define _APS_NEXT_SYMED_VALUE           112
 #endif
 #endif
