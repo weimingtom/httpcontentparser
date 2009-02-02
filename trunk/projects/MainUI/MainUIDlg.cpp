@@ -7,6 +7,7 @@
 #include ".\mainuidlg.h"
 #include ".\dlgchangepassword.h"
 #include ".\dlgcheckpassword.h"
+#include ".\DlgImageBrowser.h"
 #include ".\services.h"
 #include ".\globalvariable.h"
 #include <app_constants.h>
@@ -285,7 +286,10 @@ LRESULT CMainUIDlg::OnHotKey(WPARAM wParam, LPARAM lParam) {
 void CMainUIDlg::OnToolsDesktopimage() {
 	TCHAR images[MAX_PATH];
 	GetScreenRecordPath(images, MAX_PATH, (HMODULE)AfxGetInstanceHandle());
-	ShellExecute(NULL, TEXT("open"), NULL, NULL, images, SW_SHOWNORMAL);
+
+	CDlgImageBrowser dlg;
+	dlg.setImageDir(images);
+	dlg.DoModal();
 }
 
 void CMainUIDlg::OnToolsWebhistory() {
