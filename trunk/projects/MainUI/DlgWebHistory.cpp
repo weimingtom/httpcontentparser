@@ -6,6 +6,7 @@
 #include ".\DlgWebHistory.h"
 #include ".\dlgwebhistory.h"
 #include ".\globalvariable.h"
+#include ".\dlgimagebrowser.h"
 #include <typeconvert.h>
 #include <apputility.h>
 #include <comdef.h>
@@ -149,7 +150,10 @@ void CDlgWebHistory::OnBnClickedBtnHistoryImage() {
 	TCHAR webimages[MAX_PATH], installpath[MAX_PATH];
 	GetInstallPath(installpath, MAX_PATH, (HMODULE)AfxGetInstanceHandle());
 	GetImageDirectory(webimages, MAX_PATH, installpath);
-	ShellExecute(NULL, TEXT("open"), NULL, NULL, webimages, SW_SHOWNORMAL);
+
+	CDlgImageBrowser dlg;
+	dlg.setImageDir(webimages);
+	dlg.DoModal();
 }
 
 void CDlgWebHistory::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar) {
