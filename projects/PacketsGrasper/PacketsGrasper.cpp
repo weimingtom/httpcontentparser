@@ -265,10 +265,9 @@ int WSPAPI WSPSend(
 
 	
 	// 将DNS保存在DNS MAP当中
-	char host[MAX_PATH], main_host[MAX_PATH];
+	char host[MAX_PATH];
 	packet.getHost(host, MAX_PATH);
-	get_main_dns_name(main_host, MAX_PATH, host);
-	g_select.addDNS(s, main_host);
+	g_select.addDNS(s, host);
 
 	//sprintf(host, "D:\\debuglog\\req\\%d.log", s);
 	//DUMP_HTTP_REQUEST(lpBuffers, dwBufferCount, host);
@@ -634,8 +633,8 @@ BOOL WINAPI DllMain(
 
 		// 注意hModule不能传NULL,  应该如果传NULL，
 		// 应为NULL则获取到的线程为调用者线程的exe
-		AppInstallValidate validator(VALIDATE_SPI);
-		validator.repair((HMODULE)hModule);
+		// AppInstallValidate validator(VALIDATE_SPI);
+		// validator.repair((HMODULE)hModule);
  
 		ODS2(m_sProcessName,_T(" Loading ..."));
 	} else if (ul_reason_for_call == DLL_THREAD_ATTACH) {
