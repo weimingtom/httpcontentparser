@@ -29,6 +29,8 @@ public:
 	virtual int ExitInstance();
 protected:
 	BOOL Initialize(void);
+
+	ULONG_PTR m_GdiplusToken;
 };
 
 extern CMainUIApp theApp;

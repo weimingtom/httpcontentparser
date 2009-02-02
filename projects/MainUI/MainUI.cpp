@@ -72,6 +72,10 @@ BOOL CMainUIApp::InitInstance()
 		return FALSE;
 	}
 
+	m_GdiplusToken = NULL;
+	GdiplusStartupInput gdiplusStartupInput;
+	Status status = GdiplusStartup( &m_GdiplusToken, &gdiplusStartupInput, NULL);
+
 	// 如果一个运行在 Windows XP 上的应用程序清单指定要
 	// 使用 ComCtl32.dll 版本 6 或更高版本来启用可视化方式，
 	//则需要 InitCommonControls()。否则，将无法创建窗口。
@@ -95,8 +99,10 @@ BOOL CMainUIApp::InitInstance()
 
 int CMainUIApp::ExitInstance()
 {
+	GdiplusShutdown( m_GdiplusToken);
 	SafeRelease(g_dnssetting);
 	CoUninitialize();
+
 	return CWinApp::ExitInstance();
 }
 
