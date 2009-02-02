@@ -58,3 +58,8 @@
 #endif 
 
 #pragma warning(disable : 4800)
+
+#include "Gdiplus.h"
+using namespace Gdiplus;
+#pragma comment(lib, "gdiplus.lib")
+
