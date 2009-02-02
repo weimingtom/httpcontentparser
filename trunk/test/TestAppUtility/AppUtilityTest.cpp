@@ -63,18 +63,18 @@ HMODULE GetModule(const TCHAR * exefilename) {
 
 
 void AppUtilityTest::testGetMainUIName() {
-	HMODULE handle = GetModule(TEXT("TestSysutility.exe"));
-	TCHAR workdir[MAX_PATH], fullpath[MAX_PATH], expected[MAX_PATH], installpath[MAX_PATH];
-	GetCurrentDirectory(MAX_PATH, workdir);
-	_sntprintf(expected, MAX_PATH, TEXT("%s\\%s"), workdir, APPLICATION_MAINUI_NAME);
-	GetMainUIPath(fullpath, MAX_PATH, handle);
+	TCHAR workdir[MAX_PATH], fullpath[MAX_PATH], expected[MAX_PATH], installpath[MAX_PATH], exefile[MAX_PATH];
+	GetModuleFileName(NULL, exefile, MAX_PATH);
+	GetFileNameDir(exefile, workdir, MAX_PATH);
+	_sntprintf(expected, MAX_PATH, TEXT("%s%s"), workdir, APPLICATION_MAINUI_NAME);
+	GetMainUIPath(fullpath, MAX_PATH, (HMODULE)NULL);
 
 	_tcslwr(expected);
 	_tcslwr(fullpath);
 	CPPUNIT_ASSERT( expected == _tcsstr(expected, fullpath));
 	CPPUNIT_ASSERT( 0 == _tcscmp(fullpath, expected));
 
-	GetInstallPath(installpath, MAX_PATH, handle);
+	GetInstallPath(installpath, MAX_PATH, (HMODULE)NULL);
 	GetMainUIPath(fullpath, MAX_PATH, installpath);
 	_tcslwr(fullpath);
 	CPPUNIT_ASSERT( expected == _tcsstr(expected, fullpath));
@@ -95,12 +95,12 @@ void AppUtilityTest::testGetFileNameDir() {
 
 // 保存历史的配置文件
 void AppUtilityTest::testGetRecordConfigfile() {
-	HMODULE handle = GetModule(TEXT("TestSysutility.exe"));
-	TCHAR workdir[MAX_PATH], fullpath[MAX_PATH], configfile[MAX_PATH], installpath[MAX_PATH];
-	GetCurrentDirectory(MAX_PATH, workdir);
-	_sntprintf(configfile, MAX_PATH, TEXT("%s\\%s"), workdir, TEXT("history\\config.xml"));
+	TCHAR workdir[MAX_PATH], fullpath[MAX_PATH], configfile[MAX_PATH], installpath[MAX_PATH], exefile[MAX_PATH];
+	GetModuleFileName(NULL, exefile, MAX_PATH);
+	GetFileNameDir(exefile, workdir, MAX_PATH);
+	_sntprintf(configfile, MAX_PATH, TEXT("%s%s"), workdir, TEXT("history\\config.xml"));
 
-	GetInstallPath(installpath, MAX_PATH, handle);
+	GetInstallPath(installpath, MAX_PATH, NULL);
 	GetRecordConfigfile(fullpath, MAX_PATH, installpath);
 
 	_tcslwr(configfile);
@@ -113,12 +113,12 @@ void AppUtilityTest::testGetRecordConfigfile() {
 
 // 保存网页的路径
 void AppUtilityTest::testGetPageDirectory() {
-	HMODULE handle = GetModule(TEXT("TestSysutility.exe"));
-	TCHAR workdir[MAX_PATH], fullpath[MAX_PATH], pageseDir[MAX_PATH], installpath[MAX_PATH];;
-	GetCurrentDirectory(MAX_PATH, workdir);
-	_sntprintf(pageseDir, MAX_PATH, TEXT("%s\\%s"), workdir, TEXT("history\\text\\"));
+	TCHAR workdir[MAX_PATH], fullpath[MAX_PATH], pageseDir[MAX_PATH], installpath[MAX_PATH], exefile[MAX_PATH];
+	GetModuleFileName(NULL, exefile, MAX_PATH);
+	GetFileNameDir(exefile, workdir, MAX_PATH);
+	_sntprintf(pageseDir, MAX_PATH, TEXT("%s%s"), workdir, TEXT("history\\text\\"));
 
-	GetInstallPath(installpath, MAX_PATH, handle);
+	GetInstallPath(installpath, MAX_PATH, NULL);
 	GetPageDirectory(fullpath, MAX_PATH, installpath);
 
 	CPPUNIT_ASSERT( true == strutility::endwith(pageseDir, "\\"));
@@ -131,12 +131,12 @@ void AppUtilityTest::testGetPageDirectory() {
 }
 // 保存图片的路径
 void AppUtilityTest::testGetImageDirectory() {
-	HMODULE handle = GetModule(TEXT("TestSysutility.exe"));
-	TCHAR workdir[MAX_PATH], fullpath[MAX_PATH], imageDir[MAX_PATH], installpath[MAX_PATH];
-	GetCurrentDirectory(MAX_PATH, workdir);
-	_sntprintf(imageDir, MAX_PATH, TEXT("%s\\%s"), workdir, TEXT("history\\images\\"));
+	TCHAR workdir[MAX_PATH], fullpath[MAX_PATH], imageDir[MAX_PATH], installpath[MAX_PATH], exefile[MAX_PATH];
+	GetModuleFileName(NULL, exefile, MAX_PATH);
+	GetFileNameDir(exefile, workdir, MAX_PATH);
+	_sntprintf(imageDir, MAX_PATH, TEXT("%s%s"), workdir, TEXT("history\\images\\"));
 
-	GetInstallPath(installpath, MAX_PATH, handle);
+	GetInstallPath(installpath, MAX_PATH, NULL);
 	GetImageDirectory(fullpath, MAX_PATH, installpath);
 
 	_tcslwr(fullpath);
@@ -150,9 +150,12 @@ void AppUtilityTest::testGetImageDirectory() {
 
 void AppUtilityTest::testGetInstallPath() {
 	HMODULE handle = GetModule(TEXT("TestSysutility.exe"));
-	TCHAR workdir[MAX_PATH], install_path[MAX_PATH];
-	GetCurrentDirectory(MAX_PATH, workdir);
-	GetInstallPath(install_path, MAX_PATH, handle);
+	TCHAR workdir[MAX_PATH], install_path[MAX_PATH], exefile[MAX_PATH];
+
+	GetModuleFileName(NULL, exefile, MAX_PATH);
+	GetFileNameDir(exefile, workdir, MAX_PATH);
+
+	GetInstallPath(install_path, MAX_PATH, NULL);
 
 	if (false == strutility::endwith(workdir, "\\")) {
 		int len = _tcslen(workdir);
@@ -170,17 +173,17 @@ void AppUtilityTest::testGetInstallPath() {
 }
 
 void AppUtilityTest::testGetAppConfigFilename() {
-	HMODULE handle = GetModule(TEXT("TestSysutility.exe"));
-	TCHAR workdir[MAX_PATH], fullpath[MAX_PATH], configfilename[MAX_PATH];
-	GetCurrentDirectory(MAX_PATH, workdir);
-	_sntprintf(configfilename, MAX_PATH, TEXT("%s\\%s"), workdir, TEXT("config.xml"));
+	TCHAR workdir[MAX_PATH], fullpath[MAX_PATH], configfilename[MAX_PATH], exefile[MAX_PATH];
+	GetModuleFileName(NULL, exefile, MAX_PATH);
+	GetFileNameDir(exefile, workdir, MAX_PATH);
+	_sntprintf(configfilename, MAX_PATH, TEXT("%s%s"), workdir, TEXT("nwist.dll"));
 
-	GetAppConfigFilename(fullpath, MAX_PATH, handle);
+	GetAppConfigFilename(fullpath, MAX_PATH, NULL);
 
-	_tcslwr(workdir);
+	_tcslwr(configfilename);
 	_tcslwr(fullpath);
 
-	CPPUNIT_ASSERT( fullpath == _tcsstr(fullpath, workdir));
+	CPPUNIT_ASSERT( fullpath == _tcsstr(fullpath, configfilename));
 	CPPUNIT_ASSERT( 0 == _tcscmp(fullpath, configfilename));
 
 	std::cout<<"App config : " << fullpath << std::endl;
