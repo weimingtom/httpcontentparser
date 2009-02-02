@@ -2,7 +2,7 @@
 #ifndef _SPI_INSTALLER_XINSTALL_H__
 #define _SPI_INSTALLER_XINSTALL_H__
 
-#include "spidefines.h"
+#include <app_constants.h>
 
 #define	XERR_SUCCESS						0
 #define XERR_PROVIDER_NOT_INSTALL			-801
