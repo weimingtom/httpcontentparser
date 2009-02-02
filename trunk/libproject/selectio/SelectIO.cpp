@@ -7,6 +7,7 @@
 #include <utility\replacepacket.h>
 #include <utility\HTTPPacket.h>
 #include <utility\fd_set_utility.h>
+#include <utility\dns.h>
 
 
 const char * HTTP404_PACKET = "HTTP/1.1 404 Not Found\r\n\r\n";
@@ -406,6 +407,11 @@ void CSelectIO::removeDNSMap(SOCKET s) {
 }
 
 void CSelectIO::addDNS(SOCKET s, const std::string &addr) {
-	dnsmap_.add(s, addr);
+	// 提取住要部分
+	TCHAR main_host[MAX_PATH];
+	get_main_dns_name(main_host, MAX_PATH, addr.c_str());
+
+	dnsmap_.add(s, main_host);
+	website_recorder_.addDNS(main_host, addr);
 }
 

@@ -97,13 +97,11 @@ void WebsiteRecorder::saveWebsites() {
 	for (; iter != address_score_.end(); ++iter) {
 		if (iter->second  > PORN_SCORE) {
 			if (savePornURLs()) {
-				porn.write(iter->first.c_str(), (std::streamsize)iter->first.length());
-				porn.write("\r\n", (std::streamsize)strlen("\r\n"));
+				saveDNSItem(iter->first, porn);
 			}
 		} else {
 			if (saveURLs()) {
-				normal.write(iter->first.c_str(), (std::streamsize)iter->first.length());
-				normal.write("\r\n", (std::streamsize)strlen("\r\n"));
+				saveDNSItem(iter->first, normal);
 			}
 		}
 	}
@@ -112,4 +110,28 @@ void WebsiteRecorder::saveWebsites() {
 	normal.close();
 
 	address_score_.clear();
+}
+
+void WebsiteRecorder::saveDNSItem(const std::string &main_dns, std::fstream &s) {
+	FULL_DNS_MAP::iterator iter = fullDNS.lower_bound(main_dns);
+	FULL_DNS_MAP::iterator iterEnd = fullDNS.upper_bound(main_dns);
+
+	TCHAR info[MAX_PATH];
+	sprintf(info, "main dns : %s", main_dns.c_str());
+	OutputDebugString(info);
+
+	for (; iter != iterEnd; ++iter) {
+		OutputDebugString(iter->second.c_str());
+		s.write(iter->second.c_str(), iter->second.length());
+		s.write("\r\n", (std::streamsize)strlen("\r\n"));
+	}
+}
+void WebsiteRecorder::addDNS(const std::string &main_dns, const std::string &full) {
+	fullDNS.insert(make_pair(main_dns, full));
+
+	// 如果不存在则添加
+	ADDRESS_SCORE::iterator iter = address_score_.find(main_dns);
+	if (iter == address_score_.end()) {
+		address_score_.insert(std::make_pair(main_dns, 0));
+	}
 }
