@@ -21,14 +21,22 @@ public:
 
 	// 新增增加一个website
 	void updateWebsites(const std::string &main_dns, const int score);
+	void addDNS(const std::string &main_dns, const std::string &full);
 private:
 	void getServiceSetting();
 
 	bool savePornURLs() const { return save_porn_url_; }
 	bool saveURLs() const { return save_url_; }
+
+	void saveDNSItem(const std::string &main_dns, std::fstream &s);
 private:
 	typedef std::map<std::string, int> ADDRESS_SCORE;
 	ADDRESS_SCORE address_score_;
+
+	// 每一个DNS对应的网址
+	typedef std::multimap<std::string, std::string> FULL_DNS_MAP;
+	FULL_DNS_MAP fullDNS;
+
 
 	// 安装目录
 	TCHAR porn_path[MAX_PATH];
