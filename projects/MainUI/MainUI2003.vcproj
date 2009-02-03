@@ -509,6 +509,12 @@
 				RelativePath=".\DlgImageBrowser.h">
 			</File>
 			<File
+				RelativePath=".\DlgWebsites.cpp">
+			</File>
+			<File
+				RelativePath=".\DlgWebsites.h">
+			</File>
+			<File
 				RelativePath=".\thumbctrl.cpp">
 			</File>
 			<File

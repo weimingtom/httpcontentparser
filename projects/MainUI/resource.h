@@ -75,6 +75,8 @@
 #define IDI_ICON2                       164
 #define IDI_GUI_ARROWRIGHT              164
 #define IDD_DLG_IMAGEBROWSER            165
+#define IDD_DIALOG2                     166
+#define IDD_DLG_WEBSITES                167
 #define IDC_TREE_NAVIG                  1000
 #define IDS_TREE_ROOT                   1001
 #define IDS_TREE_DNS_RULE               1002
@@ -239,7 +241,7 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        166
+#define _APS_NEXT_RESOURCE_VALUE        168
 #define _APS_NEXT_COMMAND_VALUE         32809
 #define _APS_NEXT_CONTROL_VALUE         1113
 #define _APS_NEXT_SYMED_VALUE           112
