@@ -144,10 +144,10 @@ void CDlgWebHistory::OnBnClickedBtnHistoryPages()
 	TCHAR webpages[MAX_PATH], installpath[MAX_PATH];
 	GetInstallPath(installpath, MAX_PATH, (HMODULE)AfxGetInstanceHandle());
 	GetPageDirectory(webpages, MAX_PATH, installpath);
-	// ShellExecute(NULL, TEXT("open"), NULL, NULL, webpages, SW_SHOWNORMAL);
+	ShellExecute(NULL, TEXT("open"), NULL, NULL, webpages, SW_SHOWNORMAL);
 
-	CDlgWebsites dlg;
-	dlg.DoModal();
+	// CDlgWebsites dlg;
+	// dlg.DoModal();
 }
 
 void CDlgWebHistory::OnBnClickedBtnHistoryImage() {
