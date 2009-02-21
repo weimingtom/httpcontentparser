@@ -5,7 +5,6 @@
 #include <utility/httppacket.h>
 #include <utility/ZipUtility.h>
 #include <utility/BufferOnStackHeap.h>
-#include <antiporn/antiporndll.h>
 #include <apputility.h>
 #include <assert.h>
 #include <stdlib.h>
@@ -120,21 +119,21 @@ int HTTPContentHander::checkImage(HTTPPacket *packet) {
 	packet->achieve_data(filename);
 
 	// check Data
-	PornDetectorBase* pPornDetector = NULL;
-	if (!CreateObject(&pPornDetector)) {
-		return CONTENT_CHECK_UNKNOWN;
-	}
+	//PornDetectorBase* pPornDetector = NULL;
+	//if (!CreateObject(&pPornDetector)) {
+	//	return CONTENT_CHECK_UNKNOWN;
+	//}
 
-	double score;
-	bool flag = pPornDetector->Detection(filename, &score);
-	DeleteObject();
+	//double score;
+	//bool flag = pPornDetector->Detection(filename, &score);
+	//DeleteObject();
 
-	if (score > 0.0f) {
-		OutputDebugString("block---------------");
-		return CONTENT_CHECK_PORN;
-	} else {
-		return CONTENT_CHECK_NORMAL;
-	}
+	//if (score > 0.0f) {
+	//	OutputDebugString("block---------------");
+	//	return CONTENT_CHECK_PORN;
+	//} else {
+	//	return CONTENT_CHECK_NORMAL;
+	//}
 
 	//if (score < checker_.getImageVScore()) {
 	//	return CONTENT_CHECK_PORN;
