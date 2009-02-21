@@ -91,7 +91,7 @@ copy .\release\Winlock.dll ..\..\release
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;WINLOCKDLL_EXPORTS;_DLL_"
-				RuntimeLibrary="1"
+				RuntimeLibrary="3"
 				UsePrecompiledHeader="2"
 				PrecompiledHeaderFile=".\Debug/WinLockDLL.pch"
 				AssemblerListingLocation=".\Debug/"
