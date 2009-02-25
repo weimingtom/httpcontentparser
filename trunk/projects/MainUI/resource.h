@@ -38,8 +38,11 @@
 #define IDS_EYECARE_STATE_ENTERTAIN     124
 #define IDS_HOTKEY_CONFLICT             125
 #define IDS_WEB_HISTORY_CLEAR_SUCC      126
+#define IDS_DLG_SEACHWORD               127
 #define IDR_MAINFRAME                   128
+#define IDS_DLG_SEACHWORD_TIME          128
 #define IDD_DLG_HELP                    129
+#define IDS_DLG_SEACHWORD_SEARCH_ENGINE 129
 #define IDD_DLG_ABOUT                   130
 #define IDD_DLG_IMAGERULES              132
 #define IDD_DLG_ONLINE_RULE             133
@@ -75,8 +78,11 @@
 #define IDI_ICON2                       164
 #define IDI_GUI_ARROWRIGHT              164
 #define IDD_DLG_IMAGEBROWSER            165
-#define IDD_DIALOG2                     166
 #define IDD_DLG_WEBSITES                167
+#define IDB_HDRDOWN                     168
+#define IDB_HDRUP                       169
+#define IDD_DLG_SEACHWORD_LIST          170
+#define IDD_DLG_SEACHWORD_HISTORY       170
 #define IDC_TREE_NAVIG                  1000
 #define IDS_TREE_ROOT                   1001
 #define IDS_TREE_DNS_RULE               1002
@@ -102,6 +108,7 @@
 #define IDC_BTN_HISTORY_IMAGE           1006
 #define IDC_BUTTON3                     1007
 #define IDS_TREE_HELP                   1007
+#define IDC_BTN_HISTORY_SEACHWORD       1007
 #define IDC_BUTTON4                     1008
 #define IDC_CHK_IMAGE                   1008
 #define IDS_TREE_ABOUT                  1008
@@ -203,6 +210,7 @@
 #define IDC_SPIN_MIN                    1110
 #define IDC_CHK_ENABLE_SIZE_CHECK       1111
 #define IDC_IMAGES_POS                  1112
+#define IDC_LIST_SEARCH_WORD            1113
 #define IDB_DOCKBAR                     2004
 #define IDC_EDIT1                       4011
 #define IDC_EDIT2                       4012
@@ -241,9 +249,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        168
+#define _APS_NEXT_RESOURCE_VALUE        171
 #define _APS_NEXT_COMMAND_VALUE         32809
-#define _APS_NEXT_CONTROL_VALUE         1113
+#define _APS_NEXT_CONTROL_VALUE         1114
 #define _APS_NEXT_SYMED_VALUE           112
 #endif
 #endif

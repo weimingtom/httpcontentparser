@@ -80,6 +80,8 @@ IDB_BITMAP1             BITMAP                  "res\\GuiDefault.bmp"
 IDB_GUI_DOCKBAR         BITMAP                  "res\\guidockbar.bmp"
 IDB_GUI_DOCKBAROFFICE   BITMAP                  "res\\guidockoffice.bmp"
 IDB_GUI_MDIICONS        BITMAP                  "res\\guimdiicons.bmp"
+IDB_HDRDOWN             BITMAP                  "res\\hdrdown.bmp"
+IDB_HDRUP               BITMAP                  "res\\hdrup.bmp"
 #endif    // 中文(中华人民共和国) resources
 /////////////////////////////////////////////////////////////////////////////
 
@@ -95,47 +97,20 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// Version
-//
-
-VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,0,0,1
- PRODUCTVERSION 1,0,0,1
- FILEFLAGSMASK 0x3fL
-#ifdef _DEBUG
- FILEFLAGS 0x1L
-#else
- FILEFLAGS 0x0L
-#endif
- FILEOS 0x4L
- FILETYPE 0x1L
- FILESUBTYPE 0x0L
-BEGIN
-    BLOCK "StringFileInfo"
-    BEGIN
-        BLOCK "080003a8"
-        BEGIN
-            VALUE "CompanyName", "Kaka"
-            VALUE "FileDescription", "TODO: "
-            VALUE "FileVersion", "1.0.0.1"
-            VALUE "InternalName", "MainUI.exe"
-            VALUE "LegalCopyright", "TODO: (C) "
-            VALUE "OriginalFilename", "MainUI.exe"
-            VALUE "ProductName", "Net..."
-            VALUE "ProductVersion", "1.0.0.1"
-        END
-    END
-    BLOCK "VarFileInfo"
-    BEGIN
-        VALUE "Translation", 0x800, 936
-    END
-END
-
-
-/////////////////////////////////////////////////////////////////////////////
-//
 // Dialog
 //
+
+IDD_DLG_SEACHWORD_HISTORY DIALOGEX 0, 0, 234, 193
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | 
+    WS_SYSMENU
+CAPTION "Seach word history"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    PUSHBUTTON      "Close",IDCANCEL,153,170,56,15
+    CONTROL         "",IDC_LIST_SEARCH_WORD,"SysListView32",LVS_REPORT | 
+                    LVS_OWNERDRAWFIXED | LVS_ALIGNLEFT | WS_BORDER | 
+                    WS_TABSTOP,7,7,220,152
+END
 
 IDD_ABOUTBOX DIALOGEX 0, 0, 235, 55
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | 
@@ -401,14 +376,16 @@ BEGIN
     CONTROL         "Save All website",IDC_CHK_ALLWEBSITES,"Button",
                     BS_AUTOCHECKBOX | WS_TABSTOP,132,64,88,10
     PUSHBUTTON      "Clear",IDC_BUN_CLEAR_CACHE,180,109,50,14
-    PUSHBUTTON      "View the pages",IDC_BTN_HISTORY_PAGES,124,164,92,14
+    PUSHBUTTON      "View Websites",IDC_BTN_HISTORY_PAGES,92,164,64,14
     GROUPBOX        "History",IDC_STA_HISTORY,7,90,236,47
     CONTROL         "",IDC_SLIDER_AUTOCLEAR_TIME,"msctls_trackbar32",
                     TBS_AUTOTICKS | TBS_TOP | WS_TABSTOP,61,104,109,20
     GROUPBOX        "Tools",IDC_STA_TOOLS,7,146,236,47
     LTEXT           "Auto Clear",IDC_STATIC,17,112,35,8
-    PUSHBUTTON      "View the Images",IDC_BTN_HISTORY_IMAGE,23,164,85,14
+    PUSHBUTTON      "View Images",IDC_BTN_HISTORY_IMAGE,16,164,68,14
     RTEXT           "",IDC_STA_WEBHISTORY_AUTOCLEAN,133,126,35,8
+    PUSHBUTTON      "View Seach Word",IDC_BTN_HISTORY_SEACHWORD,163,164,64,
+                    14
 END
 
 IDD_DLG_IMAGERULES DIALOGEX 0, 0, 257, 199
@@ -509,6 +486,14 @@ END
 #ifdef APSTUDIO_INVOKED
 GUIDELINES DESIGNINFO 
 BEGIN
+    IDD_DLG_SEACHWORD_HISTORY, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 227
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 186
+    END
+
     IDD_ABOUTBOX, DIALOG
     BEGIN
         LEFTMARGIN, 7
@@ -715,6 +700,45 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,1
+ PRODUCTVERSION 1,0,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "080003a8"
+        BEGIN
+            VALUE "CompanyName", "Kaka"
+            VALUE "FileDescription", "TODO: "
+            VALUE "FileVersion", "1.0.0.1"
+            VALUE "InternalName", "MainUI.exe"
+            VALUE "LegalCopyright", "TODO: (C) "
+            VALUE "OriginalFilename", "MainUI.exe"
+            VALUE "ProductName", "Net..."
+            VALUE "ProductVersion", "1.0.0.1"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x800, 936
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
 // Menu
 //
 
@@ -806,6 +830,13 @@ BEGIN
     IDS_EYECARE_STATE_ENTERTAIN "Entertain time"
     IDS_HOTKEY_CONFLICT     "Hotkey Conflict!"
     IDS_WEB_HISTORY_CLEAR_SUCC "Clear Succeeded."
+    IDS_DLG_SEACHWORD       "Seach word"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_DLG_SEACHWORD_TIME  "Last Search Time"
+    IDS_DLG_SEACHWORD_SEARCH_ENGINE "Seach Engine"
 END
 
 #endif    // 英语(美国) resources

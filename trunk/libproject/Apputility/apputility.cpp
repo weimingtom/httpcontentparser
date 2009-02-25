@@ -200,6 +200,13 @@ const TCHAR* GetFileNameDir(const TCHAR *filename, TCHAR *directory, const unsig
 	return directory;
 }
 
+const TCHAR * GetSeachWordFile(TCHAR * filename, const unsigned len) {
+	TCHAR installpath[MAX_PATH];
+	GetInstallPath(installpath, MAX_PATH, NULL);
+
+	_sntprintf(filename, len, TEXT("%s%s"), installpath, "History\\seachword");
+	return filename;
+}
 
 const TCHAR * GetPageDirectory(TCHAR * pagePath, const unsigned len, const TCHAR * installPath) {
 	assert (pagePath != NULL);
