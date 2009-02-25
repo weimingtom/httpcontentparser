@@ -7,6 +7,7 @@
 #include ".\dlgwebhistory.h"
 #include ".\globalvariable.h"
 #include ".\dlgimagebrowser.h"
+#include ".\dlgseachwordlist.h"
 #include ".\dlgwebsites.h"
 #include <typeconvert.h>
 #include <apputility.h>
@@ -117,6 +118,7 @@ BEGIN_MESSAGE_MAP(CDlgWebHistory, CDialog)
 	ON_BN_CLICKED(IDC_CHK_ALL_IMAGE, OnBnClickedChkAllImage)
 	ON_BN_CLICKED(IDC_CHK_ALLPAGES, OnBnClickedChkAllpages)
 	ON_BN_CLICKED(IDC_CHK_ALLWEBSITES, OnBnClickedChkAllwebsites)
+	ON_BN_CLICKED(IDC_BTN_HISTORY_SEACHWORD, OnBnClickedBtnHistorySeachword)
 END_MESSAGE_MAP()
 
 // CDlgWebHistory 消息处理程序
@@ -157,6 +159,12 @@ void CDlgWebHistory::OnBnClickedBtnHistoryImage() {
 
 	CDlgImageBrowser dlg;
 	dlg.setImageDir(webimages);
+	dlg.DoModal();
+}
+
+void CDlgWebHistory::OnBnClickedBtnHistorySeachword()
+{
+	CDlgSeachWordList dlg;
 	dlg.DoModal();
 }
 

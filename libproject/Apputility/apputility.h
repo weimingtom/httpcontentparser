@@ -47,6 +47,9 @@ const TCHAR * GetImageDirectory(TCHAR * filename, const unsigned len, const TCHA
 // 获取文字内容的保存路径
 const TCHAR * GetPageDirectory(TCHAR * filename, const unsigned len, const TCHAR * installPath);
 
+// 获取保存搜错词的文件
+const TCHAR * GetSeachWordFile(TCHAR * filename, const unsigned len);
+
 // 获取保存网址的文件
 const TCHAR * GetWebSiteFile(TCHAR *filename, const unsigned len, const TCHAR * installPath);
 const TCHAR * GetPornWebSiteFile(TCHAR *filename, const unsigned len, const TCHAR * installPath);

@@ -63,4 +63,5 @@ public:
 	afx_msg void OnBnClickedChkAllImage();
 	afx_msg void OnBnClickedChkAllpages();
 	afx_msg void OnBnClickedChkAllwebsites();
+	afx_msg void OnBnClickedBtnHistorySeachword();
 };
