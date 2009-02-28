@@ -81,7 +81,6 @@ STDMETHODIMP CWebHistoryRecorder::put_RecordAllImage(VARIANT_BOOL newVal)
 //================================================
 // Websites
 
-
 STDMETHODIMP CWebHistoryRecorder::get_RecordPornURLs(VARIANT_BOOL* pVal)
 {
 	*pVal = convert(g_configuration.getWebHistoryRecordSetting()->recordPornWebsite());
@@ -93,7 +92,6 @@ STDMETHODIMP CWebHistoryRecorder::put_RecordPornURLs(VARIANT_BOOL newVal)
 	g_configuration.getWebHistoryRecordSetting()->recordPornWebsite(convert(newVal));
 	return S_OK;
 }
-
 STDMETHODIMP CWebHistoryRecorder::get_RecordAllURLs(VARIANT_BOOL* pVal)
 {
 	*pVal = convert(g_configuration.getWebHistoryRecordSetting()->recordAllWebsite());
@@ -103,5 +101,19 @@ STDMETHODIMP CWebHistoryRecorder::get_RecordAllURLs(VARIANT_BOOL* pVal)
 STDMETHODIMP CWebHistoryRecorder::put_RecordAllURLs(VARIANT_BOOL newVal)
 {
 	g_configuration.getWebHistoryRecordSetting()->recordAllWebsite(convert(newVal));
+	return S_OK;
+}
+
+//=======================
+// ÊÇ·ñ¼ÇÂ¼ËÑË÷¹Ø¼ü×Ö
+STDMETHODIMP CWebHistoryRecorder::get_RecordSeachKeyword(VARIANT_BOOL* pVal)
+{
+	*pVal = convert(g_configuration.getWebHistoryRecordSetting()->recordSeachKeyword());
+	return S_OK;
+}
+
+STDMETHODIMP CWebHistoryRecorder::put_RecordSeachKeyword(VARIANT_BOOL newVal)
+{
+	g_configuration.getWebHistoryRecordSetting()->recordSeachKeyword(convert(newVal));
 	return S_OK;
 }

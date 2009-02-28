@@ -101,6 +101,7 @@ IDR_DNSSETTING          REGISTRY                "DNSSetting.rgs"
 IDR_ACCESSNETWORK       REGISTRY                "AccessNetwork.rgs"
 IDR_SEARCHRULE          REGISTRY                "SearchRule.rgs"
 IDR_WEBCONTENTCHECK     REGISTRY                "WebContentCheck.rgs"
+IDR_WEBCONTENTRECORD    REGISTRY                "WebContentRecord.rgs"
 
 /////////////////////////////////////////////////////////////////////////////
 //
