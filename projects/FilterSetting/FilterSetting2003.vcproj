@@ -181,9 +181,6 @@ copy .\release\nwrs.exe ..\..\release
 						UsePrecompiledHeader="1"/>
 				</FileConfiguration>
 			</File>
-			<File
-				RelativePath=".\WebContentRecord.cpp">
-			</File>
 		</Filter>
 		<Filter
 			Name="Í·ÎÄ¼þ"
@@ -197,9 +194,6 @@ copy .\release\nwrs.exe ..\..\release
 			</File>
 			<File
 				RelativePath=".\stdafx.h">
-			</File>
-			<File
-				RelativePath=".\WebContentRecord.h">
 			</File>
 		</Filter>
 		<Filter

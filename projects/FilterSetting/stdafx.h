@@ -22,10 +22,6 @@
 #define _WIN32_WINDOWS 0x0410 // 将此更改为针对于 Windows Me 或更高版本的合适的值。
 #endif
 
-#ifndef _WIN32_IE			// 允许使用特定于 IE 4.0 或更高版本的功能。
-#define _WIN32_IE 0x0400	// 将此更改为针对于 IE 5.0 或更高版本的合适的值。
-#endif
-
 #define _ATL_APARTMENT_THREADED
 #define _ATL_NO_AUTOMATIC_NAMESPACE
 
@@ -44,12 +40,12 @@
 #	pragma comment(lib, "settingd.lib")
 #	pragma comment(lib, "apputilityd.lib")
 #	pragma comment(lib, "ScreenRecord_d.lib")
-#pragma comment(lib, "cryptd.lib")
+#	pragma comment(lib, "cryptd.lib")
 #else 
 #	pragma comment(lib, "setting.lib")
 #	pragma comment(lib, "apputility.lib")
 #	pragma comment(lib, "ScreenRecord.lib")
-#pragma comment(lib, "crypt.lib")
+#	pragma comment(lib, "crypt.lib")
 #endif
 
 
