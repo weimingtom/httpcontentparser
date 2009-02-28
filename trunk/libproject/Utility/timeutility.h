@@ -13,25 +13,7 @@ namespace timeutility {
 
 struct tm tmfromstring(const TCHAR * timestr);
 
-
-//class time {
-//public:
-//	time(const TCAR *time);
-//	time(const struct tm *t);
-//
-//	void getlocaltime();
-//	time_t getseconds();
-//private:
-//	int year_;
-//	int month_;
-//	int day_;
-//	int hour_;
-//	int minutes_;
-//	int sec_;
-//};
-//
-//class timespan {
-//};
+TCHAR * USFormatTime(SYSTEMTIME  ft, TCHAR *buffer, int len);
 
 };
 

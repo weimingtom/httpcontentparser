@@ -49,11 +49,15 @@ struct tm tmfromstring(const TCHAR * timestr) {
 	return t;
 }
 
-//// class time
-//time::time(const TCAR *time) {
-//}
-//time::time(const struct tm *t) {
-//}
+TCHAR * USFormatTime(SYSTEMTIME  ft, TCHAR *buffer, int len) {
+	if (ft.wHour <= 12) {
+		_snprintf(buffer, len, "%02d:%02d am %02d/%02d/%04d", ft.wHour, ft.wMinute, ft.wMonth, ft.wDay, ft.wYear);
+	} else {
+		_snprintf(buffer, len, "%02d:%02d pm %02d/%02d/%04d", ft.wHour - 12, ft.wMinute, ft.wMonth, ft.wDay, ft.wYear);
+	}
+
+	return buffer;
+}
 
 
 }; // namespace 
