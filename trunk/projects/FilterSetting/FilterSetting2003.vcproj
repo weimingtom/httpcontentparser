@@ -181,6 +181,9 @@ copy .\release\nwrs.exe ..\..\release
 						UsePrecompiledHeader="1"/>
 				</FileConfiguration>
 			</File>
+			<File
+				RelativePath=".\WebContentRecord.cpp">
+			</File>
 		</Filter>
 		<Filter
 			Name="头文件"
@@ -195,6 +198,9 @@ copy .\release\nwrs.exe ..\..\release
 			<File
 				RelativePath=".\stdafx.h">
 			</File>
+			<File
+				RelativePath=".\WebContentRecord.h">
+			</File>
 		</Filter>
 		<Filter
 			Name="资源文件"
@@ -205,6 +211,9 @@ copy .\release\nwrs.exe ..\..\release
 			</File>
 			<File
 				RelativePath=".\FilterSetting.rgs">
+			</File>
+			<File
+				RelativePath=".\WebContentRecord.rgs">
 			</File>
 		</Filter>
 		<Filter

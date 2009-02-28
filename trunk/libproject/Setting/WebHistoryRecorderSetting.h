@@ -19,6 +19,7 @@ public:
 	bool recordPornPages() const;
 	bool recordPornImage() const;
 	bool recordPornWebsite() const;
+	bool recordSeachKeyword() const;
 
 	void recordAllPages(const bool enable)	{ setModified(true); recordPage_ = enable;}
 	void recordAllImage(const bool enable)	{ setModified(true); recordImage_ = enable;}
@@ -26,6 +27,7 @@ public:
 	void recordPornPages(const bool enable)   { setModified(true); recordPornPage_ = enable;}
 	void recordPornImage(const bool enable)   { setModified(true); recordPornImage_ = enable;}
 	void recordPornWebsite(const bool enable) { setModified(true); recordPornWebsite_ = enable;}
+	void recordSeachKeyword(const bool enable) {setModified(true); recordSeachKeyword_ = enable;}
 
 	bool allpages_setting() const {return recordPage_;}
 	bool allimages_setting() const {return recordImage_;}
@@ -42,6 +44,7 @@ protected:
 	bool recordPornImage_;
 	bool recordWebsite_;
 	bool recordPornWebsite_;
+	bool recordSeachKeyword_;	// ÊÇ·ñ¼ÇÂ¼ËÑË÷¹Ø¼ü×Ö
 
 public:
 	virtual int parseConfig(TiXmlElement * item_root);
@@ -53,6 +56,7 @@ private:
 	int enableWebHistoryRecord(const TCHAR *enable);
 	int setWebHistoryRecord(const TCHAR *type, const TCHAR *enable);
 	int setWebHistoryLastCleanTiime(const TCHAR * lastclean);
+	int setSeachKeywordRecod(const TCHAR *type, const TCHAR *enable);
 	
 	// ±£´æ
 	TiXmlElement * saveWebHistory(TiXmlElement * app_root);
@@ -62,7 +66,6 @@ private:
 	int setWebHistoryAutoCleanTimeScale(const TCHAR *maxt, const TCHAR * mint);
 	int setWebHistoryAutoClean(TiXmlElement * element);
 	int enableWebHistoryAutoClean(const TCHAR *enable);
-		
 public:
 	AutoClean*	getAutoclean() { return &webhistory_auto_clean_;}
 private:

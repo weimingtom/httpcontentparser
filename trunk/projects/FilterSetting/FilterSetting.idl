@@ -89,16 +89,18 @@ interface IScreenSave : IDispatch{
 interface IWebHistoryRecorder : IDispatch{
 	[propget, id(3), helpstring("Attribute RecordPornPages")]	HRESULT RecordPornPages([out, retval] VARIANT_BOOL* pVal);
 	[propput, id(3), helpstring("Attribute RecordPornPages")]	HRESULT RecordPornPages([in] VARIANT_BOOL newVal);
-	[propget, id(6), helpstring("Attribute RecordAllPage")]		HRESULT RecordAllPages([out, retval] VARIANT_BOOL* pVal);
-	[propput, id(6), helpstring("Attribute RecordAllPage")]		HRESULT RecordAllPages([in] VARIANT_BOOL newVal);
+	[propget, id(6), helpstring("Attribute RecordAllPage")]			HRESULT RecordAllPages([out, retval] VARIANT_BOOL* pVal);
+	[propput, id(6), helpstring("Attribute RecordAllPage")]			HRESULT RecordAllPages([in] VARIANT_BOOL newVal);
 	[propget, id(4), helpstring("Attribute RecordPornImage")]	HRESULT RecordPornImage([out, retval] VARIANT_BOOL* pVal);
 	[propput, id(4), helpstring("Attribute RecordPornImage")]	HRESULT RecordPornImage([in] VARIANT_BOOL newVal);
-	[propget, id(5), helpstring("Attribute RecordAllImage")]	HRESULT RecordAllImage([out, retval] VARIANT_BOOL* pVal);
-	[propput, id(5), helpstring("Attribute RecordAllImage")]	HRESULT RecordAllImage([in] VARIANT_BOOL newVal);
+	[propget, id(5), helpstring("Attribute RecordAllImage")]		HRESULT RecordAllImage([out, retval] VARIANT_BOOL* pVal);
+	[propput, id(5), helpstring("Attribute RecordAllImage")]		HRESULT RecordAllImage([in] VARIANT_BOOL newVal);
 	[propget, id(7), helpstring("Attribute recordPornURLs")]		HRESULT RecordPornURLs([out, retval] VARIANT_BOOL* pVal);
 	[propput, id(7), helpstring("Attribute recordPornURLs")]		HRESULT RecordPornURLs([in] VARIANT_BOOL newVal);
-	[propget, id(8), helpstring("Attribute recordAllURLs")]		HRESULT RecordAllURLs([out, retval] VARIANT_BOOL* pVal);
-	[propput, id(8), helpstring("Attribute recordAllURLs")]		HRESULT RecordAllURLs([in] VARIANT_BOOL newVal);
+	[propget, id(8), helpstring("Attribute recordAllURLs")]			HRESULT RecordAllURLs([out, retval] VARIANT_BOOL* pVal);
+	[propput, id(8), helpstring("Attribute recordAllURLs")]			HRESULT RecordAllURLs([in] VARIANT_BOOL newVal);
+	[propget, id(9), helpstring("Attribute recordAllURLs")]			HRESULT RecordSeachKeyword([out, retval] VARIANT_BOOL* pVal);
+	[propput, id(9), helpstring("Attribute recordAllURLs")]			HRESULT RecordSeachKeyword([in] VARIANT_BOOL newVal);
 };
 [
 	object,
@@ -162,6 +164,16 @@ interface IWebContentCheck : IDispatch {
 	[propget, id(5), helpstring("Peropery ImageCheckTightness")] HRESULT ImageCheckTightness([out, retval] LONG* pVal);
 	[propput, id(5), helpstring("Peropery ImageCheckTightness")] HRESULT ImageCheckTightness([in] LONG newVal);
 	[id(6), helpstring("Method getCheckScope")] HRESULT getCheckScope([out] LONG* minSize, [out] LONG* maxSize);
+};
+[
+	object,
+	uuid(AAF80ECE-B58D-40B4-9BE9-F1C7321A606D),
+	dual,
+	nonextensible,
+	helpstring("IWebContentRecord ½Ó¿Ú"),
+	pointer_default(unique)
+]
+interface IWebContentRecord : IDispatch{
 };
 [
 	uuid(42F932B5-F5CB-4F0D-8925-1B6BE5FECD1B),
@@ -243,5 +255,13 @@ library FilterSettingLib {
 	coclass WebContentCheck
 	{
 		[default] interface IWebContentCheck;
+	};
+	[
+		uuid(EECE49EB-B7F4-45DD-8923-343F0C95E5F0),
+		helpstring("WebContentRecord Class")
+	]
+	coclass WebContentRecord
+	{
+		[default] interface IWebContentRecord;
 	};
 };

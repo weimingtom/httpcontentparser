@@ -19,6 +19,8 @@ void WebHistoryRecorderSetting::defaultSetting() {
 	recordPage_ = false;
 	recordWebsite_ = false;
 
+	recordSeachKeyword_  = true;
+
 	SettingItem::defaultSetting();
 }
 
@@ -70,6 +72,13 @@ bool WebHistoryRecorderSetting::recordPornWebsite() const {
 	}
 }
 
+bool WebHistoryRecorderSetting::recordSeachKeyword() const {
+	if (isEnabled()) {
+		return recordSeachKeyword_ ;
+	} else {
+		return false;
+	}
+}
 //=========================================================
 // XML
 int WebHistoryRecorderSetting::parseConfig(TiXmlElement * item_root) {
@@ -102,6 +111,8 @@ int WebHistoryRecorderSetting::setWebHistoryRecord(const TCHAR *type, const TCHA
 		recordAllWebsite(enabled);
 	} else if (0 == _tcscmp(type, CONFIG_APPSET_WEBHISTORY_PORN_WEBSITE)) {
 		recordPornWebsite(enabled);
+	} else if (0 == _tcscmp(type, CONFIG_APPSET_WEBHISTORY_PORN_WEBSITE)) {
+		recordSeachKeyword(enabled);
 	} else {
 	}
 	return 0;
@@ -164,9 +175,10 @@ int WebHistoryRecorderSetting::getWebHistoryRecorder(TiXmlElement *ele) {
 
 // 保存
 TiXmlElement * WebHistoryRecorderSetting::saveWebHistory(TiXmlElement * app_root) {
+	// 注意在保存设置的时候，必须使用成员变量或者以_setting结尾的函数
+	// record*()函授会首先检测是否处于家长模式，因此会造成保存错误
 	TiXmlElement * webhistory_root = new TiXmlElement(CONFIG_ITEM_APPSET_WEBHISTORY); 
 	webhistory_root->SetAttribute(CONFIG_CONST_ENABLE,  enabledFromBool(enabled_));
-
 	// All Images
 	TiXmlElement * allimage = new TiXmlElement(CONFIG_APPSET_WEBHISTORY_CONTENT); 
 	allimage->SetAttribute(CONFIG_CONST_TYPPE, CONFIG_APPSET_WEBHISTORY_ALL_IMAGE);
@@ -198,6 +210,12 @@ TiXmlElement * WebHistoryRecorderSetting::saveWebHistory(TiXmlElement * app_root
 	porn_website->SetAttribute(CONFIG_CONST_TYPPE, CONFIG_APPSET_WEBHISTORY_PORN_WEBSITE);
 	porn_website->SetAttribute(CONFIG_CONST_ENABLE, enabledFromBool(recordPornWebsite_));
 	webhistory_root->LinkEndChild(porn_website);
+
+	// 保存有关keyword的设置
+	TiXmlElement * searckeyword = new TiXmlElement( CONFIG_APPSET_WEBHISTORY_CONTENT ); 
+	searckeyword->SetAttribute(CONFIG_CONST_TYPPE, CONFIG_APPSET_WEBHISTORY_SEACH_KEYWORD);
+	searckeyword->SetAttribute(CONFIG_CONST_ENABLE, enabledFromBool(recordSeachKeyword_));
+	webhistory_root->LinkEndChild(searckeyword);
 
 	TCHAR buffer[MAX_PATH];
 	TiXmlElement * autoclean = new TiXmlElement( CONFIG_APPSET_AUTOCLEAR ); 

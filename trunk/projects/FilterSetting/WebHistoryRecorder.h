@@ -57,6 +57,10 @@ public:
 	STDMETHOD(put_RecordPornURLs)(VARIANT_BOOL newVal);
 	STDMETHOD(get_RecordAllURLs)(VARIANT_BOOL* pVal);
 	STDMETHOD(put_RecordAllURLs)(VARIANT_BOOL newVal);
+
+	// ÊÇ·ñ¼ÇÂ¼ËÑË÷¹Ø¼ü×Ö
+	STDMETHOD(get_RecordSeachKeyword)(VARIANT_BOOL* pVal);
+	STDMETHOD(put_RecordSeachKeyword)(VARIANT_BOOL newVal);
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(WebHistoryRecorder), CWebHistoryRecorder)
