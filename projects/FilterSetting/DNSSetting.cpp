@@ -73,3 +73,24 @@ STDMETHODIMP CDNSSetting::isWhiteDNS(BSTR dns, VARIANT_BOOL* White)
 	*White = convert(g_configuration.getDNSSetting()->inWhiteList((char*)_bstr_t(dns)));
 	return S_OK;
 }
+
+STDMETHODIMP CDNSSetting::getWhiteDNSCount(LONG* cnt)
+{
+	g_configuration.getDNSSetting()
+	return S_OK;
+}
+
+STDMETHODIMP CDNSSetting::getBlackDNSCount(LONG* cnt)
+{
+	return S_OK;
+}
+
+STDMETHODIMP CDNSSetting::getWhiteDNS(LONG lIndex, BSTR* dns)
+{
+	return S_OK;
+}
+
+STDMETHODIMP CDNSSetting::getBlackDNS(LONG lIndex, BSTR* dns)
+{
+	return S_OK;
+}
