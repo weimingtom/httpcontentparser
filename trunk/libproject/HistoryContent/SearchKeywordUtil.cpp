@@ -6,6 +6,7 @@
 #include <iostream>
 #include <stdlib.h>
 #include <stdio.h>
+#include <assert.h>
 
 // ===================
 const char * SeachKeywordUtil::SEPERATOR = "&";
@@ -17,6 +18,42 @@ SeachKeywordUtil::SeachKeywordUtil(void) {
 SeachKeywordUtil::~SeachKeywordUtil(void) {
 }
 
+
+// 专门用于枚举数据对象
+int SeachKeywordUtil::enumerate(DataEnumerator * const enumerator) {
+	assert (NULL != enumerator);
+
+	SEARCH_WORD_DATA::iterator iter = data_.begin();
+	for (; iter != data_.end(); ++iter) {
+		enumerator->DealItemData(iter->first, iter->second);
+	}
+	return 0;
+}
+
+int SeachKeywordUtil::getSize() const {
+	return static_cast<int>(data_.size());
+}
+int SeachKeywordUtil::getFirst(std::string *name, KEYWORD_DATA * data) const {
+	assert (NULL != name);
+	SEARCH_WORD_DATA::const_iterator iter = data_.begin();
+	if (data_.end() != iter) {
+		*name = iter->first;
+		*data = iter->second;
+		return 0;
+	} else {
+		return -1;
+	}
+}
+int SeachKeywordUtil::getNext(const std::string &cur, std::string * name, KEYWORD_DATA * data) const {
+	SEARCH_WORD_DATA::const_iterator iter = data_.begin();
+	if (iter != data_.end()) {
+		*name = iter->first;
+		*data = iter->second;
+		return 0;
+	} else {
+		return -1;
+	}
+}
 
 int SeachKeywordUtil::addKeyword(const std::string &keyword, const int seach_engine) {
 	// 保存为FILETIME, 由于SYSTEMTIME站16字节，而FILETIME只需要8字节
@@ -73,14 +110,11 @@ int SeachKeywordUtil::parseString(const std::string &line) {
 }
 
 // 读取配置文件
-int SeachKeywordUtil::load() {
+int SeachKeywordUtil::load(const std::string &filename) {
 	try {
 		// 获取名称
 		using namespace std;
-		TCHAR filename[MAX_PATH];
-		GetSeachWordFile(filename, MAX_PATH);
-
-		ifstream  file(filename);
+		ifstream  file(filename.c_str());
 		if (file.is_open()) {
 			const int BUF_SIZE = 1024;
 			TCHAR line[BUF_SIZE];
@@ -100,13 +134,10 @@ int SeachKeywordUtil::load() {
 }
 
 // 将现有数据保存到配置文件当中
-int SeachKeywordUtil::save() {
+int SeachKeywordUtil::save(const std::string &filename) {
 	try {
 		// 获取名称
-		TCHAR filename[MAX_PATH];
-		GetSeachWordFile(filename, MAX_PATH);
-
-		std::fstream frecord(filename);
+		std::fstream frecord(filename.c_str());
 		if (frecord.is_open()) {
 			DataRecorder record(frecord);
 			std::for_each(data_.begin(), data_.end(), record);

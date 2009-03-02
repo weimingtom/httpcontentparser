@@ -16,25 +16,39 @@ public:
 	~SeachKeywordUtil(void);
 
 public:
-	int addKeyword(const std::string &keyword, const int seach_engine);
-	
-	// 保存信息
-	int save();
-	
-	// 从文件中读取信息
-	int load();
-
-private:
-	int insertItem(const std::string &keyword, const std::string & search_engine, const std::string & last_time , const std::string &times );
-	int parseString(const std::string &line);
-
-private:
+	// 数据的定义
 	typedef struct _tagKeywordInfo {
 		int engine_type;			// 使用的搜索引擎
 		int seach_count;			// 搜错的次数
 		FILETIME   last_seach;	// 最后一次搜索的时间
 	}KEYWORD_DATA;
 
+public:
+	int addKeyword(const std::string &keyword, const int seach_engine);
+
+	// 保存信息
+	int save(const std::string &filename);
+	
+	// 从文件中读取信息
+	int load(const std::string &filename);
+
+	// 枚举对象的方法
+	// 这种方法好吗? 至少可以枚举对象吧！
+	class DataEnumerator {
+	public:
+		virtual int DealItemData(const std::string &name, const KEYWORD_DATA &item) = 0;
+	};
+	int enumerate(DataEnumerator * const enumerator);
+
+	// 获取
+	int getSize() const ;
+	int getFirst(std::string *name, KEYWORD_DATA * data) const;
+	int getNext(const std::string &cur, std::string * name, KEYWORD_DATA * data) const;
+
+private:
+	int insertItem(const std::string &keyword, const std::string & search_engine, const std::string & last_time , const std::string &times );
+	int parseString(const std::string &line);
+private:
 	typedef std::map<std::string, KEYWORD_DATA>  SEARCH_WORD_DATA;
 
 	SEARCH_WORD_DATA data_;
