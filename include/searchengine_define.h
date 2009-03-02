@@ -19,6 +19,7 @@
 #define SEARCHENGINE_NAME_NULL				TEXT("No Search Engine")
 #define SEARCHENGINE_NAME_NULL_LEN		16
 
+inline
 int  GetSearchEngineName(const int type, TCHAR ** result) {
 	switch (type) {
 		case SEARCHENGINE_GOOGLE:
