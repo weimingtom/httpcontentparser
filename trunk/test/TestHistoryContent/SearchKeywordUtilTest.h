@@ -10,11 +10,15 @@ public:
 	~SearchKeywordUtilTest(void);
 
 	CPPUNIT_TEST_SUITE(SearchKeywordUtilTest);
-	CPPUNIT_TEST(testReadSearchWords);
+	CPPUNIT_TEST(testReadSearchWordsFileOper);
+	CPPUNIT_TEST(testReadSearcEnumerator);
+	CPPUNIT_TEST(testReadSearcGetNext);
 	CPPUNIT_TEST_SUITE_END();
 
 private:
-	void testReadSearchWords();
+	void testReadSearcEnumerator();
+	void testReadSearcGetNext();
+	void testReadSearchWordsFileOper();
 };
 
 #endif  // _TEST_HISTORY_CONTENT_SEARCHKEYWORDUTILTEST_H__
