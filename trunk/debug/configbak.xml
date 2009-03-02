@@ -41,7 +41,7 @@
             <content type="porn_images" enable="true" />
             <content type="porn_webpage" enable="true" />
             <content type="porn_website" enable="true" />
-			<content type="seachkeyword" enabled="true"/>
+			<content type="" enabled="true"/>
             <autoclean max="30" min="1" timespan="3" lastclean="2009-01-04 19:52:26" />
         </webhistory>
         <screensave enable="true" timespan="1200">
