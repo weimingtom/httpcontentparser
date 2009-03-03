@@ -41,9 +41,11 @@
 #define IDS_DLG_SEACHWORD               127
 #define IDR_MAINFRAME                   128
 #define IDS_DLG_SEACHWORD_TIME          128
+#define IDS_DLG_SEACHWORD_LAST_TIME     128
 #define IDD_DLG_HELP                    129
 #define IDS_DLG_SEACHWORD_SEARCH_ENGINE 129
 #define IDD_DLG_ABOUT                   130
+#define IDS_DLG_SEACHWORD_SEARCH_TIMES  130
 #define IDD_DLG_IMAGERULES              132
 #define IDD_DLG_ONLINE_RULE             133
 #define IDD_DLG_DNS_RULE                134

@@ -4,124 +4,85 @@
 #include "stdafx.h"
 #include "MainUI.h"
 #include ".\dlgseachwordlist.h"
+#include ".\globalvariable.h"
 #include <apputility.h>
+#include <comdef.h>
+#include <com\comutility.h>
+#include <utility\timeutility.h>
+#include <string>
 
 
 
-// CDlgSeachWordList 对话框
+// CDlgSearchWordList 对话框
 
-IMPLEMENT_DYNAMIC(CDlgSeachWordList, CDialog)
-CDlgSeachWordList::CDlgSeachWordList(CWnd* pParent /*=NULL*/)
-	: CDialog(CDlgSeachWordList::IDD, pParent)
+IMPLEMENT_DYNAMIC(CDlgSearchWordList, CDialog)
+CDlgSearchWordList::CDlgSearchWordList(CWnd* pParent /*=NULL*/)
+	: CDialog(CDlgSearchWordList::IDD, pParent)
 {
 }
 
-CDlgSeachWordList::~CDlgSeachWordList()
+CDlgSearchWordList::~CDlgSearchWordList()
 {
 }
 
-void CDlgSeachWordList::DoDataExchange(CDataExchange* pDX)
+void CDlgSearchWordList::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_LIST_SEARCH_WORD, m_list);
 }
 
 
-BEGIN_MESSAGE_MAP(CDlgSeachWordList, CDialog)
+BEGIN_MESSAGE_MAP(CDlgSearchWordList, CDialog)
 END_MESSAGE_MAP()
 
 
-namespace {
-// 此为另外一个线程执行的过程
-// 他负责将词汇从文件中读取出来并显示到界面上
-UINT getSeachWords( LPVOID pParam )
-{
+int CDlgSearchWordList::addItem(const _bstr_t &name, const long times, const long searchengine_type, const long hightime, const long lowtime, const int iIndex) {
+	TCHAR buffer[1024], *searchengine;
+	FILETIME ft;
+	ft.dwHighDateTime = hightime;
+	ft.dwLowDateTime = lowtime;
+	m_list.InsertItem(iIndex, (LPCTSTR)name);
+
+	// 是指搜索引擎
+	GetSearchEngineName(searchengine_type, &searchengine);
+	m_list.SetItemText(iIndex, 1, searchengine);
+
+	// 设置搜索次数
+	m_list.SetItemText(iIndex, 2, itoa(times, buffer, 10));
+
+	// 设置最后一次搜索时间
+	m_list.SetItemText(iIndex, 3, timeutility::USFormatTime(ft, buffer, 1024));
 	return 0;
 }
-
-
-
-}
-
-int CDlgSeachWordList::showOnList(const DATA_PAIR &items) {
-	int cnt = 0;
-	DATA_PAIR::const_iterator iter = items.begin();
-	for(; iter != items.end(); ++iter)
-	{	
-		m_list.InsertItem(cnt, iter->first.c_str());
-		m_list.SetItemText(cnt, 1, iter->second.seach_engine.c_str());
-		m_list.SetItemText(cnt, 2, iter->second.last_seachtime.c_str());
-		cnt ++;
-	}
-
-	return 0;
-}
-
-int CDlgSeachWordList::parseFile(DATA_PAIR &items) {
-	try
-	{
-		using namespace std;
-		TCHAR filename[MAX_PATH];
-		GetSeachWordFile(filename, MAX_PATH);
-
-		ifstream  file(filename);
-
-		if (file.is_open())
-		{
-			const int BUF_SIZE = 1024;
-			TCHAR line[BUF_SIZE];
-			string key;
-			ITEM_DATA data;
-
-			while (file.good())
-			{
-				file.getline(line, BUF_SIZE);
-				if (-1 != parseString(key, data.seach_engine, data.last_seachtime, line))
-				{
-					items.insert(make_pair(key, data));
-				}
-			}
-		}
-
-		file.close();
-	}
-	catch(...)
-	{
-	}
-
-	return 0;
-}
-
-int CDlgSeachWordList::parseString(std::string &key, std::string &seachengine, std::string & last_time, const std::string &line) {
-	int iIndex = line.find('&');
-	if (-1 != iIndex)
-	{
-		int newSeperator = line.find('&', iIndex + 1);
-		if (-1 != newSeperator)
-		{
-			key = line.substr(0, iIndex );
-			seachengine = line.substr(iIndex + 1, newSeperator - iIndex -1);
-			last_time = line.substr(newSeperator + 1, line.length());
-			return 1;
-		} else {
+int CDlgSearchWordList::showOnList() {
+	try {
+		AutoInitInScale _auto;
+		SeachKeywordUtil::KEYWORD_DATA data;
+		
+		IWebContentRecord *record = NULL;
+		HRESULT hr = CoCreateInstance(CLSID_WebContentRecord, NULL, CLSCTX_LOCAL_SERVER, IID_IWebContentRecord, (LPVOID*)&record);
+		if (FAILED(hr)) {
 			return -1;
 		}
 
-	} else {
-		return -1;
+		_bstr_t cur, next;
+		int cnt = 0;
+		long times, searchengine, hightime, lowtime;
+
+		record->GetFirstSearchKeyword((BSTR*)&cur, &times, &searchengine, &hightime, &lowtime);
+		while (cur != _bstr_t("")) {
+			addItem(cur, times, searchengine, hightime, lowtime, cnt);
+
+			// 获取下一个词汇
+			record->GetNextSearchKeyword(cur, (BSTR*)&next, &times, &searchengine, &hightime, &lowtime);
+			cur = next;
+		}
+	} catch (_com_error &) {
 	}
+	return 0;
 }
 
-// 从文件中读取词汇，并插入到列表当中
-// 注意由于开始使用词汇排序，因此需要按顺序插入
-void CDlgSeachWordList::getSeachWords()
-{
-	DATA_PAIR items;
-	parseFile(items);
-	showOnList(items);
-}
-
-void CDlgSeachWordList::InitList()
+void CDlgSearchWordList::InitList()
 {
 	m_list.SetExtendedStyle(
 		LVS_EX_FULLROWSELECT | LVS_EX_HEADERDRAGDROP |
@@ -136,7 +97,8 @@ void CDlgSeachWordList::InitList()
 	{
 		{IDS_DLG_SEACHWORD,				  LVCFMT_LEFT,  90}, 
 		{IDS_DLG_SEACHWORD_SEARCH_ENGINE, LVCFMT_RIGHT, 90},
-		{IDS_DLG_SEACHWORD_TIME,		  LVCFMT_RIGHT, 100},
+		{IDS_DLG_SEACHWORD_SEARCH_TIMES, LVCFMT_RIGHT, 70},
+		{IDS_DLG_SEACHWORD_LAST_TIME,		  LVCFMT_RIGHT, 100},
 	};
 	const int nColCount = sizeof colData / sizeof colData[0];
 
@@ -155,13 +117,13 @@ void CDlgSeachWordList::InitList()
 	m_list.EnableSubItemTips  ();
 }
 
-// CDlgSeachWordList 消息处理程序
-BOOL CDlgSeachWordList::OnInitDialog()
+// CDlgSearchWordList 消息处理程序
+BOOL CDlgSearchWordList::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 	InitList();
 	
-	getSeachWords();
+	showOnList();
 	
 	return TRUE;
 }
