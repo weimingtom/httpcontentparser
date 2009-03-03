@@ -120,11 +120,6 @@ interface IDNSSetting : IDispatch{
 	[id(12), helpstring("method checkDNS")]				HRESULT checkDNS([in] BSTR dns_name, [out,retval] VARIANT_BOOL* passed);
 	[id(13), helpstring("Method justEnableWhiteDNS")]	HRESULT justEnableWhiteDNS([in] VARIANT_BOOL enabled);
 	[id(14), helpstring("Method isWhiteDNS")] HRESULT isWhiteDNS([in] BSTR dns, [out,retval] VARIANT_BOOL* White);
-
-	[id(15), helpstring("Method getWhiteDNSCount")]		HRESULT getWhiteDNSCount([out,retval] LONG* cnt);
-	[id(17), helpstring("Method getWhiteDNS")]				HRESULT getWhiteDNS([in] LONG lIndex, [out,retval] BSTR* dns);
-	[id(16), helpstring("Method getBlackDNSCount")]		HRESULT getBlackDNSCount(LONG* cnt);
-	[id(18), helpstring("Method getBlackDNS")]					HRESULT getBlackDNS([in] LONG lIndex, [out,retval] BSTR* dns);
 };
 [
 	object,
