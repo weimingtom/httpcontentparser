@@ -18,7 +18,7 @@ public:
 	}WEBSITE_DATA;
 
 public:
-	int addKeyword(const std::string &websites);
+	int addWebsite(const std::string &websites);
 
 	// ±£¥Ê–≈œ¢
 	int save(const std::string &filename);
