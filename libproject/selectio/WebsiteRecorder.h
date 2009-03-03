@@ -6,6 +6,10 @@
 
 #define PORN_SCORE 50
 
+// 这个类被废弃了，使用COM Service记录访问的网站
+// 1. 用户访问每一个网站都要调用COM Service
+// 2. 避免多个SPI同时访问同一个文件
+
 // class WebsiteRecorder
 // 此类用于记录website
 // 此类直接保存结果， 因此不需要考虑白名单， 因为白名单部分将有

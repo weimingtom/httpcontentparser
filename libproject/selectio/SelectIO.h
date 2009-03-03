@@ -68,9 +68,6 @@ protected:
 	bool handlePacket(HTTPPacket *packet);
 protected:
 	HandleQueue	packet_handle_queue_;
-
-	// 用于记录网站地址
-	WebsiteRecorder website_recorder_;
 public:
 	void addDNS(SOCKET s, const std::string &addr);
 	
