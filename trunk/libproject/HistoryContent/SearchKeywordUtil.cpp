@@ -39,19 +39,19 @@ int SeachKeywordUtil::getFirst(std::string *name, KEYWORD_DATA * data) const {
 	if (data_.end() != iter) {
 		*name = iter->first;
 		*data = iter->second;
-		return 0;
+		return 1;
 	} else {
-		return -1;
+		return 0;
 	}
 }
 int SeachKeywordUtil::getNext(const std::string &cur, std::string * name, KEYWORD_DATA * data) const {
-	SEARCH_WORD_DATA::const_iterator iter = data_.begin();
+	SEARCH_WORD_DATA::const_iterator iter = data_.upper_bound(cur);
 	if (iter != data_.end()) {
 		*name = iter->first;
 		*data = iter->second;
-		return 0;
-	} else {
 		return -1;
+	} else {
+		return 0;
 	}
 }
 
@@ -81,15 +81,21 @@ int SeachKeywordUtil::addKeyword(const std::string &keyword, const int seach_eng
 int SeachKeywordUtil::insertItem(const std::string &keyword, const std::string & search_engine, const std::string & last_time , const std::string &times ) {
 	// 将字符传转化为
 	KEYWORD_DATA item;
-	item.engine_type = atoi(search_engine.c_str());
-	unsigned __int64 value = static_cast<unsigned __int64>(atoi(times.c_str()));
-	item.last_seach.dwHighDateTime = static_cast<unsigned int>(value>>32);
-	item.last_seach.dwLowDateTime = static_cast<unsigned int>(value);
+	
+	TCHAR *p;
+	item.last_seach.dwHighDateTime= static_cast<DWORD>(strtol(last_time.c_str(), &p, 10));
+	item.last_seach.dwLowDateTime  = static_cast<DWORD>(strtol(p, &p, 10));	
+
+	item.engine_type = atoi(search_engine.c_str());	// 搜索引擎
+	item.seach_count = atoi(times.c_str());					// 搜索次数
+
+	// 加入到map当中
 	data_[keyword] = item;
 	return 0;
 }
 
 // 解析一行
+// 格式为  keyword&1&&23
 int SeachKeywordUtil::parseString(const std::string &line) {
 	int firstSep = static_cast<int>(line.find(SEPERATOR));
 	if (-1 == firstSep) return -1;
@@ -114,7 +120,7 @@ int SeachKeywordUtil::load(const std::string &filename) {
 	try {
 		// 获取名称
 		using namespace std;
-		ifstream  file(filename.c_str());
+		ifstream  file(filename.c_str(), std::ios::out);
 		if (file.is_open()) {
 			const int BUF_SIZE = 1024;
 			TCHAR line[BUF_SIZE];
@@ -137,7 +143,7 @@ int SeachKeywordUtil::load(const std::string &filename) {
 int SeachKeywordUtil::save(const std::string &filename) {
 	try {
 		// 获取名称
-		std::fstream frecord(filename.c_str());
+		std::fstream frecord(filename.c_str(), std::ios::out);
 		if (frecord.is_open()) {
 			DataRecorder record(frecord);
 			std::for_each(data_.begin(), data_.end(), record);

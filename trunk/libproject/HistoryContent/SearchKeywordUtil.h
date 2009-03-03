@@ -71,7 +71,7 @@ private:
 			recordfile_.write(buffer, static_cast<std::streamsize>(_tcslen(buffer)));
 			
 			// 记录上一次搜索的时间
-			_snprintf(buffer, BUF_SIZE, "%llu%s", iter.second.last_seach, SeachKeywordUtil::SEPERATOR);
+			_snprintf(buffer, BUF_SIZE, "%u-%u%s", iter.second.last_seach.dwHighDateTime, iter.second.last_seach.dwLowDateTime, SeachKeywordUtil::SEPERATOR);
 			recordfile_.write(buffer, static_cast<std::streamsize>(_tcslen(buffer)));
 
 			// 记录搜错次数
