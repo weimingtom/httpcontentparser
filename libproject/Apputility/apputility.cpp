@@ -200,7 +200,7 @@ const TCHAR* GetFileNameDir(const TCHAR *filename, TCHAR *directory, const unsig
 	return directory;
 }
 
-const TCHAR * GetSeachWordFile(TCHAR * filename, const unsigned len) {
+const TCHAR * GetSearchWordFile(TCHAR * filename, const unsigned len) {
 	TCHAR installpath[MAX_PATH];
 	GetInstallPath(installpath, MAX_PATH, NULL);
 
