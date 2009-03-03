@@ -14,7 +14,7 @@ namespace timeutility {
 struct tm tmfromstring(const TCHAR * timestr);
 
 TCHAR * USFormatTime(SYSTEMTIME  ft, TCHAR *buffer, int len);
-
+TCHAR * USFormatTime(FILETIME ft, TCHAR * buffer, int len);
 };
 
 #endif  // _UTILITY_TIMEUTILITY_H__

@@ -59,5 +59,10 @@ TCHAR * USFormatTime(SYSTEMTIME  ft, TCHAR *buffer, int len) {
 	return buffer;
 }
 
+TCHAR * USFormatTime(FILETIME ft, TCHAR * buffer, int len) {
+	SYSTEMTIME st;
+	FileTimeToSystemTime(&ft, &st);
+	return USFormatTime(st, buffer, len);
+}
 
 }; // namespace 
