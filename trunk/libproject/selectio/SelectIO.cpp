@@ -60,7 +60,6 @@ CSelectIO::~CSelectIO(void) {
 
 void CSelectIO::finalize() {
 	packet_handle_queue_.finialize();
-	website_recorder_.saveWebsites();
 }
 /////////////////////////////////////////////
 // public members
@@ -69,7 +68,6 @@ void CSelectIO::setRecv(MYWSPRECV *recv) {
 
 	// 初始化
 	packet_handle_queue_.initialize();
-	website_recorder_.initialize();
 }
 // 在调用WSPRecv时使用
 // 如果给定的SOCKET 不能处理则返回1 
@@ -106,12 +104,9 @@ int CSelectIO::prerecv(SOCKET s, LPWSABUF lpBuffers,
 		//socketPackets_.replacePacket(s, packet, new_packet);
 		//delete packet;
 		//packet = new_packet;
-		website_recorder_.updateWebsites(dnsmap_.get(s), CONTENT_CHECK_PORN);
 		packet_handle_queue_.removeCompletedPacket(s, packet);
 		*recv_bytes = 0;
 		return 0;
-	} else {
-		website_recorder_.updateWebsites(dnsmap_.get(s), CONTENT_CHECK_NORMAL);
 	}
 	
 	// 获取一个
@@ -412,6 +407,5 @@ void CSelectIO::addDNS(SOCKET s, const std::string &addr) {
 	get_main_dns_name(main_host, MAX_PATH, addr.c_str());
 
 	dnsmap_.add(s, main_host);
-	website_recorder_.addDNS(main_host, addr);
 }
 
