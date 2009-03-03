@@ -23,10 +23,12 @@
 #	pragma comment(lib, "cppunitd.lib")
 #	pragma comment(lib, "testrunnerd.lib")
 #	pragma comment(lib, "historyContentd.lib")
+#	pragma comment(lib, "utilityd.lib")
 #else 
 #	pragma comment(lib, "TestRunner.lib")
 #	pragma comment(lib, "cppunit.lib")
 #	pragma comment(lib, "historyContent.lib")
+#	pragma comment(lib, "utility.lib")
 #endif
 
 #endif  // _TEST_HISTORY_CONTENT_STDAFX_H__
