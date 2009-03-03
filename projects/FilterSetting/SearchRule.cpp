@@ -4,6 +4,8 @@
 #include ".\searchrule.h"
 #include ".\globalvariable.h"
 #include <typeconvert.h>
+#include <searchengine_define.h>
+#include <comutil.h>
 
 // CSearchRule
 
@@ -22,10 +24,13 @@ STDMETHODIMP CSearchRule::InterfaceSupportsErrorInfo(REFIID riid)
 	return S_FALSE;
 }
 
-STDMETHODIMP CSearchRule::check(BSTR seach_word, BSTR host_name, VARIANT_BOOL* pass)
+STDMETHODIMP CSearchRule::check(BSTR search_word, BSTR host_name, VARIANT_BOOL* pass)
 {
-	bool passed = g_configuration.getSearchRule()->check((TCHAR*)bstr_t(host_name), (TCHAR*)bstr_t(seach_word));
+	bool passed = g_configuration.getSearchRule()->check((TCHAR*)bstr_t(host_name), (TCHAR*)bstr_t(search_word));
 	*pass = convert(passed);
+
+	// ¼ÇÂ¼
+	g_searchwordUtil.addKeyword(std::string((TCHAR*)_bstr_t(search_word)), getSearchEngineType((TCHAR*)_bstr_t(host_name)));
 
 	return S_OK;
 }

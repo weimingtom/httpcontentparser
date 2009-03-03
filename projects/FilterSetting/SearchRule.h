@@ -43,9 +43,9 @@ END_COM_MAP()
 
 public:
 
-	STDMETHOD(check)(BSTR seach_word, BSTR host_name, VARIANT_BOOL* pass);
-	STDMETHOD(addBlackSeachword)(BSTR seachword);
-	STDMETHOD(enableCheckSeachEngine)(BSTR seachengine, VARIANT_BOOL enabled);
+	STDMETHOD(check)(BSTR search_word, BSTR host_name, VARIANT_BOOL* pass);
+	STDMETHOD(addBlackSeachword)(BSTR searchword);
+	STDMETHOD(enableCheckSeachEngine)(BSTR searchengine, VARIANT_BOOL enabled);
 	STDMETHOD(removeBlackSeachWord)(BSTR blackword);
 };
 
