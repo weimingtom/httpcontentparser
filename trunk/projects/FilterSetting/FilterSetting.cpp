@@ -42,13 +42,17 @@ CFilterSettingModule _AtlModule;
 
 
 void initializeSetting() {
-		// 初始化配置
+	// 初始化配置
 	TCHAR config_path[MAX_PATH];
 	GetAppConfigFilename(config_path, MAX_PATH, g_hInstance);
 	g_configuration.loadConfig(config_path);
 
+	// 读取搜索词汇信息
 	TCHAR filename[MAX_PATH];
 	g_searchwordUtil.load(GetSearchWordFile(filename, MAX_PATH));
+
+	// 读取访问网站的信息
+	g_websitesUtil.load(GetWebSiteFile(filename, MAX_PATH));
 }
 
 extern "C" int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, 
@@ -63,8 +67,9 @@ extern "C" int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/
 
 	g_hInstance = hInstance;
 
-	AppInstallValidate validator(VALIDATE_COM);
-	validator.repair((HMODULE)hInstance);
+	// TODO enable it. it shoud be used in for auto repair.
+	// AppInstallValidate validator(VALIDATE_COM);
+	// validator.repair((HMODULE)hInstance);
 
 	initializeSetting();
 	g_registerInfo.initialize();

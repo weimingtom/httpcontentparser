@@ -9,12 +9,14 @@
 #include <dnssetting.h>
 #include <xmlconfiguration.h>
 #include <searchkeywordutil.h>
+#include <websitesutil.h>
 
 // extern Authorize g_authorize;
 extern XMLConfiguration g_configuration;
 extern HINSTANCE g_hInstance;
 extern RegisterInfo g_registerInfo;
 extern  SeachKeywordUtil g_searchwordUtil;
+extern WebsitesUtil g_websitesUtil;
 
 
 #endif  // _FILTER_SETTING_GLOBALVARIABLE_H__
