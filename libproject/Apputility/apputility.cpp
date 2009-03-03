@@ -237,6 +237,13 @@ const TCHAR * GetImageDirectory(TCHAR * imagepath, const unsigned len, const TCH
 	}
 	return imagepath;
 }
+const TCHAR* GetWebSiteFile(TCHAR * filename, const unsigned len) {
+	assert (NULL != filename);
+	TCHAR installpath[MAX_PATH];
+	GetInstallPath(installpath, len, NULL);
+	GetWebSiteFile(filename, len, installpath);
+	return filename;
+}	
 
 const TCHAR * GetWebSiteFile(TCHAR *filename, const unsigned len, const TCHAR * installPath) {
 	assert (filename != NULL);
