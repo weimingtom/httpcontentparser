@@ -3,7 +3,9 @@
 
 #include "stdafx.h"
 #include ".\searchkeywordutiltest.h"
+#include ".\websiteutiltest.h"
 
+CPPUNIT_TEST_SUITE_REGISTRATION(WebsiteUtilTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(SearchKeywordUtilTest);
 
 int _tmain(int argc, _TCHAR* argv[])

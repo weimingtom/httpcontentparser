@@ -132,6 +132,9 @@
 			<File
 				RelativePath=".\TestHistoryContent.cpp">
 			</File>
+			<File
+				RelativePath=".\WebsiteUtilTest.cpp">
+			</File>
 		</Filter>
 		<Filter
 			Name="头文件"
@@ -140,6 +143,9 @@
 			<File
 				RelativePath=".\stdafx.h">
 			</File>
+			<File
+				RelativePath=".\WebsiteUtilTest.h">
+			</File>
 		</Filter>
 		<Filter
 			Name="资源文件"
@@ -147,7 +153,7 @@
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}">
 		</Filter>
 		<Filter
-			Name="TEST"
+			Name="SearchKeyword"
 			Filter="">
 			<File
 				RelativePath=".\SearchKeywordUtilTest.cpp">
@@ -155,6 +161,10 @@
 			<File
 				RelativePath=".\SearchKeywordUtilTest.h">
 			</File>
+		</Filter>
+		<Filter
+			Name="Websites"
+			Filter="">
 		</Filter>
 		<File
 			RelativePath=".\ReadMe.txt">
