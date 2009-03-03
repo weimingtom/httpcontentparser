@@ -171,6 +171,19 @@ interface IWebContentCheck : IDispatch {
 	[id(6), helpstring("Method getCheckScope")] HRESULT getCheckScope([out] LONG* minSize, [out] LONG* maxSize);
 };
 [
+	object,
+	uuid(DFD90E3D-0D63-4415-9CF3-EABE3A1FE4E9),
+	dual,
+	nonextensible,
+	helpstring("IWebContentRecord Interface"),
+	pointer_default(unique)
+]
+interface IWebContentRecord : IDispatch{
+	[id(1), helpstring("Method SearchKeyword")] HRESULT SearchKeyword([in] BSTR keyword, [in] LONG searchEngine);
+	[id(2), helpstring("Method GetFirstSearchKeyword")] HRESULT GetFirstSearchKeyword([out] BSTR* keyword, [out] LONG* times, [out] LONG* searchEngine, [out] LONG* timeHighPart, [out] LONG* timeLowPart);
+	[id(3), helpstring("Method GetNextSearchKeyword")] HRESULT GetNextSearchKeyword([in]BSTR  cur, [out] BSTR* keyword, [out] LONG* times, [out] LONG* searchEngine, [out] LONG* timeHighPart, [out] LONG* timeLowPart);
+};
+[
 	uuid(42F932B5-F5CB-4F0D-8925-1B6BE5FECD1B),
 	version(1.0),
 	helpstring("FilterSetting 1.0 ClassLibrary")
@@ -250,5 +263,13 @@ library FilterSettingLib {
 	coclass WebContentCheck
 	{
 		[default] interface IWebContentCheck;
+	};
+	[
+		uuid(6723F6A6-5837-487A-B05E-1115B0EE6B55),
+		helpstring("WebContentRecord Class")
+	]
+	coclass WebContentRecord
+	{
+		[default] interface IWebContentRecord;
 	};
 };

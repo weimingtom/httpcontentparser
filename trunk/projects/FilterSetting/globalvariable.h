@@ -8,12 +8,13 @@
 #include <webhistoryrecordersetting.h>
 #include <dnssetting.h>
 #include <xmlconfiguration.h>
-
-
+#include <searchkeywordutil.h>
 
 // extern Authorize g_authorize;
 extern XMLConfiguration g_configuration;
 extern HINSTANCE g_hInstance;
 extern RegisterInfo g_registerInfo;
+extern  SeachKeywordUtil g_searchwordUtil;
+
 
 #endif  // _FILTER_SETTING_GLOBALVARIABLE_H__
