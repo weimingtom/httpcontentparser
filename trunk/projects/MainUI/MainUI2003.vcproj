@@ -538,7 +538,7 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="Seachword"
+			Name="Searchword"
 			Filter="">
 			<File
 				RelativePath=".\DlgSeachWordList.cpp">

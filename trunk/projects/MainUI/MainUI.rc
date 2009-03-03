@@ -830,13 +830,14 @@ BEGIN
     IDS_EYECARE_STATE_ENTERTAIN "Entertain time"
     IDS_HOTKEY_CONFLICT     "Hotkey Conflict!"
     IDS_WEB_HISTORY_CLEAR_SUCC "Clear Succeeded."
-    IDS_DLG_SEACHWORD       "Seach word"
+    IDS_DLG_SEACHWORD       "Search word"
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_DLG_SEACHWORD_TIME  "Last Search Time"
-    IDS_DLG_SEACHWORD_SEARCH_ENGINE "Seach Engine"
+    IDS_DLG_SEACHWORD_LAST_TIME "Latest Search Time"
+    IDS_DLG_SEACHWORD_SEARCH_ENGINE "Search Engine"
+    IDS_DLG_SEACHWORD_SEARCH_TIMES "Search Times"
 END
 
 #endif    // Ó¢Óï(ÃÀ¹ú) resources

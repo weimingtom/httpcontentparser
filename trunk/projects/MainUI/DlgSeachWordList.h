@@ -8,6 +8,9 @@
 #include <string>
 #include <iostream>
 #include <fstream>
+#include <comdef.h>
+#include <searchengine_define.h>
+#include <searchkeywordutil.h>
 
 class CECListCtrlEx: public CListCtrlEx
 {
@@ -16,32 +19,23 @@ class CECListCtrlEx: public CListCtrlEx
 };
 
 // CDlgSeachWordList 对话框
-class CDlgSeachWordList : public CDialog
+class CDlgSearchWordList : public CDialog
 {
-	DECLARE_DYNAMIC(CDlgSeachWordList)
+	DECLARE_DYNAMIC(CDlgSearchWordList)
 
 public:
-	CDlgSeachWordList(CWnd* pParent = NULL);   // 标准构造函数
-	virtual ~CDlgSeachWordList();
+	CDlgSearchWordList(CWnd* pParent = NULL);   // 标准构造函数
+	virtual ~CDlgSearchWordList();
 
 protected:
 
 	// 设置List contrl的外观
 	void InitList();
-	
-	void getSeachWords();
-	
-	typedef struct
-	{
-		std::string last_seachtime;
-		std::string seach_engine;
-	}ITEM_DATA;
 
-	typedef std::map<std::string, ITEM_DATA> DATA_PAIR;
+	// 显示
+	int showOnList();
 
-	int showOnList(const DATA_PAIR &items);
-	int parseFile(DATA_PAIR &items);
-	int parseString(std::string &key, std::string &seachengine, std::string & last_time, const std::string &line);
+	int addItem(const _bstr_t &name, const long times, const long searchengine_type, const long hightime, const long lowtime, const int iIndex);
 
 // 对话框数据
 	enum { IDD = IDD_DLG_SEACHWORD_HISTORY };

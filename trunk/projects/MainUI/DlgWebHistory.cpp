@@ -164,7 +164,7 @@ void CDlgWebHistory::OnBnClickedBtnHistoryImage() {
 
 void CDlgWebHistory::OnBnClickedBtnHistorySeachword()
 {
-	CDlgSeachWordList dlg;
+	CDlgSearchWordList dlg;
 	dlg.DoModal();
 }
 
