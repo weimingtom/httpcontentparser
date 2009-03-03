@@ -51,6 +51,7 @@ const TCHAR * GetPageDirectory(TCHAR * filename, const unsigned len, const TCHAR
 const TCHAR * GetSearchWordFile(TCHAR * filename, const unsigned len);
 
 // 获取保存网址的文件
+const TCHAR* GetWebSiteFile(TCHAR * filename, const unsigned len);
 const TCHAR * GetWebSiteFile(TCHAR *filename, const unsigned len, const TCHAR * installPath);
 const TCHAR * GetPornWebSiteFile(TCHAR *filename, const unsigned len, const TCHAR * installPath);
 
