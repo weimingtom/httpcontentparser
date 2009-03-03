@@ -40,7 +40,8 @@
 				CommandLine="copy .\debug\HistoryContent.lib ..\..\lib\HistoryContentd.lib"/>
 			<Tool
 				Name="VCPreBuildEventTool"
-				CommandLine="copy .\SearchKeywordUtil.h ..\..\include"/>
+				CommandLine="copy .\SearchKeywordUtil.h ..\..\include
+copy .\WebsitesUtil.h ..\..\include"/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
 			<Tool
@@ -76,9 +77,12 @@
 			<Tool
 				Name="VCMIDLTool"/>
 			<Tool
-				Name="VCPostBuildEventTool"/>
+				Name="VCPostBuildEventTool"
+				CommandLine="copy .\debug\HistoryContent.lib ..\..\lib\HistoryContent.lib"/>
 			<Tool
-				Name="VCPreBuildEventTool"/>
+				Name="VCPreBuildEventTool"
+				CommandLine="copy .\SearchKeywordUtil.h ..\..\include
+copy .\WebsitesUtil.h ..\..\include"/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
 			<Tool
@@ -134,6 +138,16 @@
 			Name="资源文件"
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx"
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}">
+		</Filter>
+		<Filter
+			Name="Websites"
+			Filter="">
+			<File
+				RelativePath=".\WebsitesUtil.cpp">
+			</File>
+			<File
+				RelativePath=".\WebsitesUtil.h">
+			</File>
 		</Filter>
 		<File
 			RelativePath=".\ReadMe.txt">
