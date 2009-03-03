@@ -120,6 +120,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HistoryContent", "libprojec
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestHistoryContent", "test\TestHistoryContent\TestHistoryContent.vcproj", "{B1F97CC3-921C-45F6-99FE-7B9EF5BCE834}"
 	ProjectSection(ProjectDependencies) = postProject
+		{8DAC3D17-DFD3-4FE0-9751-34BEBF84C21F} = {8DAC3D17-DFD3-4FE0-9751-34BEBF84C21F}
 	EndProjectSection
 EndProject
 Global
