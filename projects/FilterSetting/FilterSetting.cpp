@@ -13,6 +13,8 @@
 #include <passwordtype.h>
 #include <webhistoryrecordersetting.h>
 #include <xmlconfiguration.h>
+#include <searchengine_define.h>
+#include <searchkeywordutil.h>
 #include <string>
 #include <time.h>
 
@@ -37,16 +39,16 @@ public :
 
 CFilterSettingModule _AtlModule;
 
-// DNS Rules
-XMLConfiguration g_configuration;
-RegisterInfo g_registerInfo;
-HINSTANCE g_hInstance;
+
 
 void initializeSetting() {
 		// ≥ı ºªØ≈‰÷√
 	TCHAR config_path[MAX_PATH];
 	GetAppConfigFilename(config_path, MAX_PATH, g_hInstance);
 	g_configuration.loadConfig(config_path);
+
+	TCHAR filename[MAX_PATH];
+	g_searchwordUtil.load(GetSearchWordFile(filename, MAX_PATH));
 }
 
 extern "C" int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, 

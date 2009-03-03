@@ -1,0 +1,24 @@
+HKCR
+{
+	FilterSetting.WebContentRecord.1 = s 'WebContentRecord Class'
+	{
+		CLSID = s '{6723F6A6-5837-487A-B05E-1115B0EE6B55}'
+	}
+	FilterSetting.WebContentRecord = s 'WebContentRecord Class'
+	{
+		CLSID = s '{6723F6A6-5837-487A-B05E-1115B0EE6B55}'
+		CurVer = s 'FilterSetting.WebContentRecord.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {6723F6A6-5837-487A-B05E-1115B0EE6B55} = s 'WebContentRecord Class'
+		{
+			ProgID = s 'FilterSetting.WebContentRecord.1'
+			VersionIndependentProgID = s 'FilterSetting.WebContentRecord'
+			ForceRemove 'Programmable'
+			LocalServer32 = s '%MODULE%'
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{42F932B5-F5CB-4F0D-8925-1B6BE5FECD1B}'
+		}
+	}
+}

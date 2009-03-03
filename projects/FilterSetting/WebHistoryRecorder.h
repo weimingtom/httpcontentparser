@@ -1,4 +1,4 @@
-// WebHistoryRecorder.h : CWebHistoryRecorder 的声明
+//// WebHistoryRecorder.h : CWebHistoryRecorder 的声明
 
 #pragma once
 #include "resource.h"       // 主符号

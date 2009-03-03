@@ -76,7 +76,7 @@ STDMETHODIMP CDNSSetting::isWhiteDNS(BSTR dns, VARIANT_BOOL* White)
 
 STDMETHODIMP CDNSSetting::getWhiteDNSCount(LONG* cnt)
 {
-	g_configuration.getDNSSetting()
+	g_configuration.getDNSSetting();
 	return S_OK;
 }
 

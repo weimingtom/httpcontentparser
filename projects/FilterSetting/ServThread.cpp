@@ -5,12 +5,17 @@
 #include <app_constants.h>
 #include <apputility.h>
 #include <PrintScreen.h>
+#include <searchengine_define.h>
+#include <searchkeywordutil.h>
 
 #define TIME_ESCAPE_SAVE_SCREEN  8000
 #define ID_TIMER_SAVE_SCREEN     1
 
 #define TIME_ESCAPE_SAVE_EYECARE 1000	
 #define ID_TIMER_EYECARE_TRY	3
+
+#define TIME_ESCAPE_SAVE_SEARCHWORD	 1000 * 60 * 10
+#define ID_TIMER_SAVE_SEARCHWORD 5
 
 #define WM_USER_SCREEN_SAVE (WM_USER + 0x10)
 #define WM_USER_EYECARE (WM_USER + 0x15)
@@ -25,6 +30,7 @@ extern HINSTANCE g_hInstance;
 namespace {
 
 void startEyecare() {
+	// TODO 这里该干啥啊？
 	// HWND hwnd = FindWindow(, );
 }
 
@@ -33,7 +39,7 @@ void startMainUI() {
 	if (hwnd != NULL) {
 		ShowWindow(hwnd, SW_SHOW);
 	} else {
-		// WinExec(TEXT("Mainui.exe"), SW_SHOW);
+		WinExec(TEXT("Mainui.exe"), SW_SHOW);
 	}
 }
 };
@@ -91,6 +97,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 			// 启动
 			SetTimer(hWnd, ID_TIMER_SAVE_SCREEN,	TIME_ESCAPE_SAVE_SCREEN, NULL);
 			SetTimer(hWnd, ID_TIMER_EYECARE_TRY,	TIME_ESCAPE_SAVE_EYECARE, NULL);
+			SetTimer(hWnd, ID_TIMER_SAVE_SEARCHWORD, TIME_ESCAPE_SAVE_SEARCHWORD, NULL);
 
 			// 设置HOTKEY
 			{
@@ -139,7 +146,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 							StartEyecare((HMODULE)g_hInstance);
 						};
 					}
-				}
+				} 
+			} else if (ID_TIMER_SAVE_SEARCHWORD == wParam && g_configuration.getWebHistoryRecordSetting()->recordSeachKeyword()) {
+				
 			}
 			// 自动开启
 			break;
