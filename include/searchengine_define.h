@@ -39,21 +39,17 @@ int getSearchEngineType(const char * name) {
 }
 
 inline
-int  GetSearchEngineName(const int type, TCHAR ** result) {
+const TCHAR*  GetSearchEngineName(const int type) {
 	switch (type) {
 		case SEARCHENGINE_GOOGLE:
-			*result =  SEARCHENGINE_NAME_GOOGLE;
-			return SEARCHENGINE_NAME_GOOGLE_LEN;
+			return SEARCHENGINE_NAME_GOOGLE;
 		case SEARCHENGINE_YAHOO:
-			*result =  SEARCHENGINE_NAME_YAHOO;
-			return SEARCHENGINE_NAME_YAHOO_LEN ;
+			return SEARCHENGINE_NAME_YAHOO ;
 		case SEARCHENGINE_BAIDU:
-			*result =  SEARCHENGINE_NAME_BAIDU;
-			return SEARCHENGINE_NAME_BAIDU_LEN;
+			return SEARCHENGINE_NAME_BAIDU;
 		default:
 			assert(false);
-			*result = SEARCHENGINE_NAME_NULL;
-			return SEARCHENGINE_NAME_NULL_LEN;
+			return SEARCHENGINE_NAME_NULL;
 	}
 }
 
