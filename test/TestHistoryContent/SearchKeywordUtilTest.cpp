@@ -21,9 +21,7 @@ namespace {
 			<<"\tsearch engine : " << seachengine <<endl
 			<<"\tsearch count : " <<data.seach_count << endl
 			<<"\tlast seach time: " << timeutility::USFormatTime(data.last_seach, buf, MAX_PATH)<<endl;
-	}
-
-	
+	}	
 };
 
 
