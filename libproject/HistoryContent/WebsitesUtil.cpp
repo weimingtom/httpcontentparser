@@ -55,7 +55,7 @@ int WebsitesUtil::getNext(const std::string &cur, std::string * name, WEBSITE_DA
 	}
 }
 
-int WebsitesUtil::addKeyword(const std::string &website) {
+int WebsitesUtil::addWebsite(const std::string &website) {
 	// 保存为FILETIME, 由于SYSTEMTIME站16字节，而FILETIME只需要8字节
 	// 为了方便读取这里使用将SYSTEMTIME转换为FILETIME
 	SYSTEMTIME tm;
