@@ -14,8 +14,8 @@
 #define TIME_ESCAPE_SAVE_EYECARE 1000	
 #define ID_TIMER_EYECARE_TRY	3
 
-#define TIME_ESCAPE_SAVE_SEARCHWORD	 1000 * 60 * 10
-#define ID_TIMER_SAVE_SEARCHWORD 5
+#define TIME_ESCAPE_SAVE_HISTORY	1000 * 60 * 10
+#define ID_TIMER_SAVE_HISTORY 5
 
 #define WM_USER_SCREEN_SAVE (WM_USER + 0x10)
 #define WM_USER_EYECARE (WM_USER + 0x15)
@@ -29,19 +29,19 @@ extern HINSTANCE g_hInstance;
 
 namespace {
 
-void startEyecare() {
-	// TODO 这里该干啥啊？
-	// HWND hwnd = FindWindow(, );
-}
-
-void startMainUI() {
-	HWND hwnd = FindWindow(MAIN_WINDOW_CLASS, MAIN_WINDOW_TITLE);
-	if (hwnd != NULL) {
-		ShowWindow(hwnd, SW_SHOW);
-	} else {
-		WinExec(TEXT("Mainui.exe"), SW_SHOW);
+	void startEyecare() {
+		// TODO 这里该干啥啊？
+		// HWND hwnd = FindWindow(, );
 	}
-}
+
+	void startMainUI() {
+		HWND hwnd = FindWindow(MAIN_WINDOW_CLASS, MAIN_WINDOW_TITLE);
+		if (hwnd != NULL) {
+			ShowWindow(hwnd, SW_SHOW);
+		} else {
+			WinExec(TEXT("Mainui.exe"), SW_SHOW);
+		}
+	}
 };
 
 //==================================
@@ -97,13 +97,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 			// 启动
 			SetTimer(hWnd, ID_TIMER_SAVE_SCREEN,	TIME_ESCAPE_SAVE_SCREEN, NULL);
 			SetTimer(hWnd, ID_TIMER_EYECARE_TRY,	TIME_ESCAPE_SAVE_EYECARE, NULL);
-			SetTimer(hWnd, ID_TIMER_SAVE_SEARCHWORD, TIME_ESCAPE_SAVE_SEARCHWORD, NULL);
+			SetTimer(hWnd, ID_TIMER_SAVE_HISTORY, TIME_ESCAPE_SAVE_HISTORY, NULL);
 
 			// 设置HOTKEY
 			{
-			DWORD hotkey = g_configuration.getHotkey()->getHotkey(CONFIG_HOTKEY_LAUNCH);
-			if ( 0 != hotkey) 
-				server->setHotKey(HIWORD(hotkey), LOWORD(hotkey), HOTKEY_LANUCH_MAINUI);
+				DWORD hotkey = g_configuration.getHotkey()->getHotkey(CONFIG_HOTKEY_LAUNCH);
+				if ( 0 != hotkey) 
+					server->setHotKey(HIWORD(hotkey), LOWORD(hotkey), HOTKEY_LANUCH_MAINUI);
 			}
 			break;
 		case WM_HOTKEY:
@@ -115,6 +115,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 				}
 			}
 		case WM_TIMER:
+			
+			// 每次都要检测配置文件是否已经改变，如果改变则保存
 			if (SettingItem::isModified() == true) {
 				TCHAR config_path[MAX_PATH];
 				GetAppConfigFilename(config_path, MAX_PATH, (HMODULE)g_hInstance);
@@ -123,10 +125,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 				g_configuration.saveConfig(config_path);
 			}
 
+			// 自动切换模式可能导致用户迷惑，因此先废除它
 			// 如果可以切换状态的时候，且当前状态是家长模式
-			if (g_configuration.getTimeoutSwitch()->shouldSwitch()) {
-				SettingItem::setModel(SettingItem::MODE_CHILD);
-			}
+			//if (g_configuration.getTimeoutSwitch()->shouldSwitch()) {
+			//	SettingItem::setModel(SettingItem::MODE_CHILD);
+			//}
+
 			if (ID_TIMER_SAVE_SCREEN == wParam) {
 				// 自动保存屏幕
 				if (g_configuration.getScreenshotSetting()->shouldSave()) {
@@ -147,8 +151,15 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 						};
 					}
 				} 
-			} else if (ID_TIMER_SAVE_SEARCHWORD == wParam && g_configuration.getWebHistoryRecordSetting()->recordSeachKeyword()) {
-				
+			} else if (ID_TIMER_SAVE_HISTORY == wParam && g_configuration.getWebHistoryRecordSetting()->recordSeachKeyword()) {
+				// 保存记录的历史
+
+				// 读取搜索词汇信息
+				TCHAR filename[MAX_PATH];
+				g_searchwordUtil.save(GetSearchWordFile(filename, MAX_PATH));
+
+				// 读取访问网站的信息
+				g_websitesUtil.save(GetWebSiteFile(filename, MAX_PATH));
 			}
 			// 自动开启
 			break;
