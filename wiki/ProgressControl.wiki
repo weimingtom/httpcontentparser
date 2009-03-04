@@ -13,7 +13,6 @@
 
 = Details =
 
-{{{
 IShellExecuteHook Interface
 
 Exposes a method that extends the behavior of the ShellExecute or ShellExecuteEx functions. It is typically implemented by subsystems that expose the names of objects that the user can specify in the Run dialog box after clicking the Microsoft Windows Start button.
@@ -34,5 +33,3 @@ HKEY_LOCAL_MACHINE
                         ShellExecuteHooks
 
 You do not use this interface directly. It is generally used by the ShellExecuteEx function's code.
-
-}}}
