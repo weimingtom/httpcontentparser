@@ -12,7 +12,7 @@ IFolderFilter Interface
          GetEnumFlags Allows a client to specify which classes of objects in a Shell folder should be enumerated. 
          ShouldShow Allows a client to specify which individual items should be enumerated. 
 
-Remarks
+*Remarks*
 
 The most common use of this interface is when your application calls SHBrowseForFolder. When you call this function, you become a client of the folder browser object. That object communicates with you by sending messages to a callback function, BrowseCallbackProc. The BFFM_IUNKNOWN message contains a pointer to the folder browser's IUnknown interface. To filter folder enumeration, do the following: 
 
