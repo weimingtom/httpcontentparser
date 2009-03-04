@@ -83,8 +83,11 @@ BOOL CDlgProgramControl::OnInitDialog()
 	CBaseDlg::OnInitDialog();
 
 	// 初始化ImageList
-	m_imagelist.Create(16, 16, ILC_COLOR24, 50, 10);
-	m_imagelist.Add(AfxGetApp()->LoadIcon(IDI_APPLICATION));
+	m_imagelist.Create(16, 16, ILC_MASK, 50, 5);
+	HICON hIcon;
+	VERIFY(hIcon = AfxGetApp()->LoadIcon(IDI_DEFAULT));
+	VERIFY(0 == m_imagelist.Add(hIcon));
+	VERIFY(1 == m_imagelist.Add(hIcon));
 
 
 	// 初始化listCtrl
