@@ -4,6 +4,9 @@
 
 如何获取应用程序的信息，包括厂家，版本，等信息
 
+主要是用两个API函数GetFileVersionInfo 及 VerQueryValue
+
+
 
 = Details =
 
