@@ -24,6 +24,8 @@ Exposes a method that extends the behavior of the ShellExecute or ShellExecuteEx
 
 
 *Remark*
+
+
 You should implement IShellExecuteHook when you have named objects that the user would expect to be able to run from the Run dialog box after clicking the Windows Start button.
 
 Shell execute hooks are registered by adding a value that contains the object's class identifier (CLSID) string under the following key in the registry: 
