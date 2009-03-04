@@ -95,7 +95,7 @@ BOOL CDlgBlackDNSList::OnInitDialog()
 
 	Restore();
 
-	return TRUE;  // return TRUE unless you set the focus to a control
+	return TRUE; 
 }
 
 void CDlgBlackDNSList::OnBnClickedChkBlackDnslist() {
