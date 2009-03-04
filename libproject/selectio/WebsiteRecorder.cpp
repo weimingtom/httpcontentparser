@@ -122,8 +122,8 @@ void WebsiteRecorder::saveDNSItem(const std::string &main_dns, std::fstream &s) 
 
 	for (; iter != iterEnd; ++iter) {
 		OutputDebugString(iter->second.c_str());
-		s.write(iter->second.c_str(), iter->second.length());
-		s.write("\r\n", (std::streamsize)strlen("\r\n"));
+		s.write(iter->second.c_str(), static_cast<std::streamsize>(iter->second.length()));
+		s.write("\r\n", static_cast<std::streamsize>(strlen("\r\n")));
 	}
 }
 void WebsiteRecorder::addDNS(const std::string &main_dns, const std::string &full) {
