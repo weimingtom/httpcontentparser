@@ -1,4 +1,4 @@
-#summary Visual Studio style propery contro
+#summary Visual Studio风格的属性表
 #labels control,ui,property
 
 = Introduction =
