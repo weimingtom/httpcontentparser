@@ -17,6 +17,7 @@
 #include "DlgWebHistory.h"
 #include "DlgBlackDNSList.h"
 #include "Lev1DlgTools.h"
+#include ".\dlgprogramcontrol.h"
 #include ".\basedlg.h"
 #include "afxwin.h"
 
@@ -75,6 +76,7 @@ private:
 	CDlgScreenshot m_dlgScreenSaver;
 	CDlgBlackDNSList m_dlgDnsRule;
 	CDlgWhiteDNSList m_dlgWhiteDNS;
+	CDlgProgramControl m_dlgProgramControl;
 	CDlgAbout m_dlgAbout;
 	CDlgWebHistory m_dlgWebHistory;
 	CBaseDlg	*m_curDlg;
