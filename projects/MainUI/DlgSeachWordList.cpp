@@ -37,15 +37,15 @@ END_MESSAGE_MAP()
 
 
 int CDlgSearchWordList::addItem(const _bstr_t &name, const long times, const long searchengine_type, const long hightime, const long lowtime, const int iIndex) {
-	TCHAR buffer[1024], *searchengine;
+	TCHAR buffer[1024];
 	FILETIME ft;
 	ft.dwHighDateTime = hightime;
 	ft.dwLowDateTime = lowtime;
 	m_list.InsertItem(iIndex, (LPCTSTR)name);
 
 	// 是指搜索引擎
-	GetSearchEngineName(searchengine_type, &searchengine);
-	m_list.SetItemText(iIndex, 1, searchengine);
+	const TCHAR *p = GetSearchEngineName(searchengine_type);
+	m_list.SetItemText(iIndex, 1, GetSearchEngineName(searchengine_type));
 
 	// 设置搜索次数
 	m_list.SetItemText(iIndex, 2, itoa(times, buffer, 10));
@@ -57,7 +57,6 @@ int CDlgSearchWordList::addItem(const _bstr_t &name, const long times, const lon
 int CDlgSearchWordList::showOnList() {
 	try {
 		AutoInitInScale _auto;
-		SeachKeywordUtil::KEYWORD_DATA data;
 		
 		IWebContentRecord *record = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_WebContentRecord, NULL, CLSCTX_LOCAL_SERVER, IID_IWebContentRecord, (LPVOID*)&record);
@@ -65,16 +64,16 @@ int CDlgSearchWordList::showOnList() {
 			return -1;
 		}
 
-		_bstr_t cur, next;
+		BSTR cur, next;
 		int cnt = 0;
 		long times, searchengine, hightime, lowtime;
 
-		record->GetFirstSearchKeyword((BSTR*)&cur, &times, &searchengine, &hightime, &lowtime);
-		while (cur != _bstr_t("")) {
-			addItem(cur, times, searchengine, hightime, lowtime, cnt);
+		record->GetFirstSearchKeyword(&cur, &times, &searchengine, &hightime, &lowtime);
+		while (hightime != 0 && lowtime != 0) {
+			addItem(_bstr_t(cur), times, searchengine, hightime, lowtime, cnt);
 
 			// 获取下一个词汇
-			record->GetNextSearchKeyword(cur, (BSTR*)&next, &times, &searchengine, &hightime, &lowtime);
+			record->GetNextSearchKeyword(cur, &next, &times, &searchengine, &hightime, &lowtime);
 			cur = next;
 		}
 	} catch (_com_error &) {
@@ -95,9 +94,9 @@ void CDlgSearchWordList::InitList()
 		int  nWidth;
 	} colData[] =
 	{
-		{IDS_DLG_SEACHWORD,				  LVCFMT_LEFT,  90}, 
+		{IDS_DLG_WEBSITES_NAME,				  LVCFMT_LEFT,  90}, 
 		{IDS_DLG_SEACHWORD_SEARCH_ENGINE, LVCFMT_RIGHT, 90},
-		{IDS_DLG_SEACHWORD_SEARCH_TIMES, LVCFMT_RIGHT, 70},
+		{IDS_DLG_SEACHWORD_SEARCH_TIMES, LVCFMT_CENTER, 70},
 		{IDS_DLG_SEACHWORD_LAST_TIME,		  LVCFMT_RIGHT, 100},
 	};
 	const int nColCount = sizeof colData / sizeof colData[0];
