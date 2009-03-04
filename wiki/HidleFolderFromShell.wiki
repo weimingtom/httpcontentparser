@@ -8,7 +8,7 @@
 = Details =
 
 IFolderFilter Interface
-    *IFolderFilter Members*
+    IFolderFilter Members
          GetEnumFlags Allows a client to specify which classes of objects in a Shell folder should be enumerated. 
          ShouldShow Allows a client to specify which individual items should be enumerated. 
 
