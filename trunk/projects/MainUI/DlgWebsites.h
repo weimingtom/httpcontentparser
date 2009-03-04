@@ -1,8 +1,14 @@
 #pragma once
 #include "afxcmn.h"
-
+#include ".\ListView\ListViewCtrlEx.h"
+#include <websitesUtil.h>
+#include <comdef.h>
 
 // CDlgWebsites 对话框
+class CWebsitesList: public CListCtrlEx {
+  public:
+	  const CString GetToolTip(int, int, UINT nFlags, BOOL&) { return "";}
+};
 
 class CDlgWebsites : public CDialog
 {
@@ -16,12 +22,15 @@ public:
 	enum { IDD = IDD_DLG_WEBSITES };
 
 protected:
+	int showOnList();
+	int addItem(const _bstr_t &name, const long times, const long hightime, const long lowtime, const int iIndex);
+protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 支持
 	virtual BOOL OnInitDialog();
 
 	DECLARE_MESSAGE_MAP()
 private:
-	CListCtrl m_list;
+	CWebsitesList m_list;
 	
 
 private:
