@@ -22,6 +22,7 @@ CDlgProgramControl::~CDlgProgramControl()
 void CDlgProgramControl::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
+	DDX_Control(pDX, IDC_LIST_PROGRAM, m_list);
 }
 
 int CDlgProgramControl::OnApply() {
@@ -43,6 +44,12 @@ END_MESSAGE_MAP()
 
 void CDlgProgramControl::OnBnClickedBtnAdd()
 {
+
+	TCHAR * FILE_FILTER = _T("*Exectuable files(*.exe); *.exe|All Files (*.*)|*.*||");
+
+	CFileDialog dlg(TRUE, NULL, NULL, OFN_FILEMUSTEXIST, FILE_FILTER);
+	if (IDOK == dlg.DoModal()) {
+	}
 }
 
 void CDlgProgramControl::OnBnClickedBtnSet()
