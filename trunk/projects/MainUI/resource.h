@@ -55,7 +55,11 @@
 #define IDD_DLG_DNS_BLACKLIST           134
 #define IDS_PROGRAM_CONTROL             134
 #define IDD_DLG_SEARCH_RULE             135
+#define IDS_DLG_PROGRAM_CONTROL_NAME    135
 #define IDD_DLG_CONTENT                 136
+#define IDS_DLG_PROGRAM_CONTROL_PRODUCT 136
+#define IDS_DLG_PROGRAM_CONTROL_COMPANY 136
+#define IDS_DLG_PROGRAM_CONTROL_DESCRIPT 137
 #define IDD_LEV1_RULE                   138
 #define IDB_BITMAP_CHECKMARK            139
 #define IDD_DLG_TEXT                    140
