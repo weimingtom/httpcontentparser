@@ -8,18 +8,18 @@
 = Details =
 
 {{{
-#define FILE_PROPERY_COMMENTS			TEXT("Comments")
-#define FILE_PROPERY_INTERNAL_NAME		TEXT("InternalName")
+#define FILE_PROPERY_COMMENTS                TEXT("Comments")
+#define FILE_PROPERY_INTERNAL_NAME	        TEXT("InternalName")
 #define FILE_PROPERY_PRODUCT_NAME		TEXT("ProductName")
-#define FILE_PROPERY_COMPANY_NAME		TEXT("CompanyName")
-#define FILE_PROPERY_COPYRIGHT			TEXT("LegalCopyright")
-#define FILE_PROPERY_PRODUCT_VER		TEXT("ProductVersion")
-#define FILE_PROPERY_DESCRITPTION		TEXT("FileDescription")
-#define FILE_PROPERY_TRADEMARKS			TEXT("LegalTrademarks")
-#define FILE_PROPERY_PRIVATEBUILD		TEXT("PrivateBuild")
-#define FILE_PROPERY_FILEVERSION		TEXT("FileVersion")
-#define FILE_PROPERY_ORIGINALFILENAME	TEXT("OriginalFilename")
-#define FILE_PROPERY_SPECIALBUILD		TEXT("SpecialBuild")
+#define FILE_PROPERY_COMPANY_NAME       TEXT("CompanyName")
+#define FILE_PROPERY_COPYRIGHT	                TEXT("LegalCopyright")
+#define FILE_PROPERY_PRODUCT_VER            TEXT("ProductVersion")
+#define FILE_PROPERY_DESCRITPTION            TEXT("FileDescription")
+#define FILE_PROPERY_TRADEMARKS              TEXT("LegalTrademarks")
+#define FILE_PROPERY_PRIVATEBUILD             TEXT("PrivateBuild")
+#define FILE_PROPERY_FILEVERSION               TEXT("FileVersion")
+#define FILE_PROPERY_ORIGINALFILENAME   TEXT("OriginalFilename")
+#define FILE_PROPERY_SPECIALBUILD             TEXT("SpecialBuild")
 
 ....
 
