@@ -30,7 +30,7 @@ public:
 	virtual void OnShow();
 	virtual void restoreSetting();
 
-	void addNewFile(const CString &filename);
+	void addNewFile(const CString &fullpath, const CString &filename);
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV Ö§³Ö
 
@@ -43,6 +43,7 @@ public:
 	friend class CProgramList; 
 protected:
 	CProgramList m_list;
+	CImageList	m_imagelist;
 public:
 	virtual BOOL OnInitDialog();
 };
