@@ -17,5 +17,7 @@ Remarks
 The most common use of this interface is when your application calls SHBrowseForFolder. When you call this function, you become a client of the folder browser object. That object communicates with you by sending messages to a callback function, BrowseCallbackProc. The BFFM_IUNKNOWN message contains a pointer to the folder browser's IUnknown interface. To filter folder enumeration, do the following: 
 
 1. Use the IUnknown pointer to call the folder browser's QueryInterface method, and request a pointer to the IFolderFilterSite interface.
+
 2. Call IFolderFilterSite::SetFilter, and pass the folder browser a pointer to your IFolderFilter interface.
+
 3. The folder browser will then query the two methods of interface to determine how to filter the enumeration.
