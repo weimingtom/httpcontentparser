@@ -39,8 +39,11 @@ STDMETHODIMP CWebContentRecord::GetFirstSearchKeyword(BSTR* keyword, LONG* times
 		*searchEngine = static_cast<LONG>(data.engine_type);
 		*timeHighPart = static_cast<LONG>(data.last_seach.dwHighDateTime);
 		*timeLowPart = static_cast<LONG>(data.last_seach.dwLowDateTime);
+		*keyword = _bstr_t(str.c_str());
 	} else {
 		*keyword = _bstr_t("");
+		*timeHighPart = 0;
+		*timeLowPart  = 0;
 	}
 	return S_OK;
 }
@@ -55,8 +58,46 @@ STDMETHODIMP CWebContentRecord::GetNextSearchKeyword(BSTR cur, BSTR* keyword, LO
 		*searchEngine = static_cast<LONG>(data.engine_type);
 		*timeHighPart = static_cast<LONG>(data.last_seach.dwHighDateTime);
 		*timeLowPart = static_cast<LONG>(data.last_seach.dwLowDateTime);
+		*keyword = _bstr_t(next.c_str());
+	} else {
+		*timeHighPart = 0;
+		*timeLowPart  = 0;
+		*keyword = _bstr_t("");
+	}
+	return S_OK;
+}
+
+STDMETHODIMP CWebContentRecord::GetFirstWebsite(BSTR* keyword, LONG* times, LONG* high, LONG* low)
+{
+	std::string str;
+	WebsitesUtil::WEBSITE_DATA data;
+	if (0 != g_websitesUtil.getFirst(&str, &data)) {
+		*keyword = _bstr_t(str.c_str());
+		*times = static_cast<LONG>(data.visit_count);
+		*high = static_cast<LONG>(data.latest_visit.dwHighDateTime);
+		*low = static_cast<LONG>(data.latest_visit.dwLowDateTime);
+	} else {
+		*low = 0;
+		*high = 0;
+		*keyword = _bstr_t("");
+	}
+
+	return S_OK;
+}
+
+STDMETHODIMP CWebContentRecord::GetNextWebSite(BSTR cur, BSTR* keyword, LONG* times, LONG* high, LONG* low)
+{
+	std::string  next;
+	WebsitesUtil::WEBSITE_DATA data;
+	if (0 != g_websitesUtil.getNext(std::string((TCHAR*)_bstr_t(cur)), &next, &data)) {
+		*keyword = _bstr_t(next.c_str());
+		*times = static_cast<LONG>(data.visit_count);
+		*high = static_cast<LONG>(data.latest_visit.dwHighDateTime);
+		*low = static_cast<LONG>(data.latest_visit.dwLowDateTime);
 	} else {
 		*keyword = _bstr_t("");
+		*low = 0;
+		*high = 0;
 	}
 	return S_OK;
 }

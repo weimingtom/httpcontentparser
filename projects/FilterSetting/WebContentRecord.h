@@ -47,6 +47,10 @@ public:
 	STDMETHOD(SearchKeyword)(BSTR keyword, LONG searchEngine);
 	STDMETHOD(GetFirstSearchKeyword)(BSTR* keyword, LONG* times, LONG* searchEngine, LONG* timeHighPart, LONG* timeLowPart);
 	STDMETHOD(GetNextSearchKeyword)(BSTR cur, BSTR* next, LONG* times, LONG* searchEngine, LONG* timeHighPart, LONG* timeLowPart);
+
+	// ¥¶¿ÌÕ¯’æ
+	STDMETHOD(GetFirstWebsite)(BSTR* NAME, LONG* times, LONG* high, LONG* low);
+	STDMETHOD(GetNextWebSite)(BSTR cur, BSTR* next, LONG* times, LONG* hight, LONG* low);
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(WebContentRecord), CWebContentRecord)

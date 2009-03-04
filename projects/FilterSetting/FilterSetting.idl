@@ -177,6 +177,8 @@ interface IWebContentRecord : IDispatch{
 	[id(1), helpstring("Method SearchKeyword")] HRESULT SearchKeyword([in] BSTR keyword, [in] LONG searchEngine);
 	[id(2), helpstring("Method GetFirstSearchKeyword")] HRESULT GetFirstSearchKeyword([out] BSTR* keyword, [out] LONG* times, [out] LONG* searchEngine, [out] LONG* timeHighPart, [out] LONG* timeLowPart);
 	[id(3), helpstring("Method GetNextSearchKeyword")] HRESULT GetNextSearchKeyword([in]BSTR  cur, [out] BSTR* keyword, [out] LONG* times, [out] LONG* searchEngine, [out] LONG* timeHighPart, [out] LONG* timeLowPart);
+	[id(4), helpstring("Method GetFirstWebsite")] HRESULT GetFirstWebsite([out] BSTR* keyword, [out] LONG* times, [out] LONG* high, [out] LONG* low);
+	[id(5), helpstring("Method GetNextWebSite")] HRESULT GetNextWebSite([in] BSTR cur, [out] BSTR* keyword, [out] LONG* times, [out] LONG* hight, [out] LONG* low);
 };
 [
 	uuid(42F932B5-F5CB-4F0D-8925-1B6BE5FECD1B),
