@@ -8,6 +8,7 @@
 #include ".\dlgchangepassword.h"
 #include ".\dlgcheckpassword.h"
 #include ".\DlgImageBrowser.h"
+#include ".\dlgprogramcontrol.h"
 #include ".\services.h"
 #include ".\globalvariable.h"
 #include <app_constants.h>
@@ -457,6 +458,7 @@ void CMainUIDlg::initDlgs() {
 	m_lev1Tools.Create(CLev1DlgTools::IDD, this);
 	m_dlgScreenSaver.Create(CDlgScreenshot::IDD, this);
 	m_dlgWebHistory.Create(CDlgWebHistory::IDD, this);
+	m_dlgProgramControl.Create(CDlgProgramControl::IDD, this);
 	m_curDlg = &m_lev1Rules;
 	
 	showDlg();
@@ -469,14 +471,22 @@ void CMainUIDlg::setToolsDlg() {
 	m_treeNavigation.SetItemData(hItemTools, IDS_TREE_LEV1_RULES);
 
 	HTREEITEM hItem;
+	// 视力保护
 	strItem.LoadString(IDS_TREE_EYECARE);
 	hItem = m_treeNavigation.InsertItem(strItem, hItemTools);
 	m_treeNavigation.SetItemData(hItem, IDS_TREE_EYECARE);
 
+	// 应用程序控制
+	strItem.LoadString(IDS_PROGRAM_CONTROL);
+	hItem = m_treeNavigation.InsertItem(strItem, hItemTools);
+	m_treeNavigation.SetItemData(hItem, IDS_PROGRAM_CONTROL);
+
+	// 屏幕记录
 	strItem.LoadString(IDS_TREE_SCREEN_SAVE);
 	hItem = m_treeNavigation.InsertItem(strItem, hItemTools);
 	m_treeNavigation.SetItemData(hItem, IDS_TREE_SCREEN_SAVE);
 
+	// 上网时间
 	strItem.LoadString(IDS_TREE_ONLINE_HOUR);
 	hItem = m_treeNavigation.InsertItem(strItem, hItemTools);
 	m_treeNavigation.SetItemData(hItem, IDS_TREE_ONLINE_HOUR);
@@ -553,6 +563,9 @@ void CMainUIDlg::setCurDlg(const DWORD item) {
 		//case IDS_TREE_HELP:
 		//	ChangeCurDlg(&m_dlgHelp);
 		//	break;
+		case IDS_PROGRAM_CONTROL:
+			ChangeCurDlg(&m_dlgProgramControl);
+			break;
 		case IDS_TREE_ABOUT:
 			ChangeCurDlg(&m_dlgAbout);
 			break;

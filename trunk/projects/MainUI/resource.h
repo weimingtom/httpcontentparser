@@ -25,6 +25,7 @@
 #define IDS_TREE_LEV1_TOOLS             111
 #define IDS_TREE_SCREEN_SAVE            112
 #define IDS_TREE_WEB_HISTORY            113
+#define IDS_DLG_WEBSITES_NAME           113
 #define IDS_WEB_HISTORY_CLEAR           114
 #define IDS_WEB_HISTORY_VIEW_HISTORY    115
 #define IDS_WEB_HISTORY_EXPORT_WEBSITE_LIST 116
@@ -40,16 +41,19 @@
 #define IDS_WEB_HISTORY_CLEAR_SUCC      126
 #define IDS_DLG_SEACHWORD               127
 #define IDR_MAINFRAME                   128
-#define IDS_DLG_SEACHWORD_TIME          128
 #define IDS_DLG_SEACHWORD_LAST_TIME     128
 #define IDD_DLG_HELP                    129
 #define IDS_DLG_SEACHWORD_SEARCH_ENGINE 129
 #define IDD_DLG_ABOUT                   130
 #define IDS_DLG_SEACHWORD_SEARCH_TIMES  130
+#define IDS_DLG_WEBSITES                131
 #define IDD_DLG_IMAGERULES              132
+#define IDS_DLG_WEBSITE_VISIT_TIMES     132
 #define IDD_DLG_ONLINE_RULE             133
+#define IDS_DLG_WEBSITE_VISIT_LATEST_TIME 133
 #define IDD_DLG_DNS_RULE                134
 #define IDD_DLG_DNS_BLACKLIST           134
+#define IDS_PROGRAM_CONTROL             134
 #define IDD_DLG_SEARCH_RULE             135
 #define IDD_DLG_CONTENT                 136
 #define IDD_LEV1_RULE                   138
@@ -85,6 +89,7 @@
 #define IDB_HDRUP                       169
 #define IDD_DLG_SEACHWORD_LIST          170
 #define IDD_DLG_SEACHWORD_HISTORY       170
+#define IDD_DLG_PROGRAM                 172
 #define IDC_TREE_NAVIG                  1000
 #define IDS_TREE_ROOT                   1001
 #define IDS_TREE_DNS_RULE               1002
@@ -111,11 +116,14 @@
 #define IDC_BUTTON3                     1007
 #define IDS_TREE_HELP                   1007
 #define IDC_BTN_HISTORY_SEACHWORD       1007
+#define IDC_BTN_ADD                     1007
 #define IDC_BUTTON4                     1008
 #define IDC_CHK_IMAGE                   1008
 #define IDS_TREE_ABOUT                  1008
+#define IDC_BTN_SET                     1008
 #define IDC_CHK_SHOWIMAGE               1009
 #define IDS_DNS_BLACK_LIST              1009
+#define IDC_BTN_DEL                     1009
 #define IDS_DNS_WHITE_LIST              1010
 #define IDC_RIGHT_TITLE                 1014
 #define IDC_COMMENT                     1016
@@ -213,6 +221,7 @@
 #define IDC_CHK_ENABLE_SIZE_CHECK       1111
 #define IDC_IMAGES_POS                  1112
 #define IDC_LIST_SEARCH_WORD            1113
+#define IDC_LIST_PROGRAM                1114
 #define IDB_DOCKBAR                     2004
 #define IDC_EDIT1                       4011
 #define IDC_EDIT2                       4012
@@ -251,9 +260,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        171
+#define _APS_NEXT_RESOURCE_VALUE        173
 #define _APS_NEXT_COMMAND_VALUE         32809
-#define _APS_NEXT_CONTROL_VALUE         1114
+#define _APS_NEXT_CONTROL_VALUE         1115
 #define _APS_NEXT_SYMED_VALUE           112
 #endif
 #endif
