@@ -1,17 +1,11 @@
-#summary One-sentence summary of this page.
+#summary 如何注册COM服务
+#labels COM
 
-= Register the COM Service as a windows Service=
-
+= 将COM服务注册为Windows服务=
 just execute the com exe with the arguement '/Service'
 
-
+= 注册COM服务=
 if you just want to register a COM server, with '/regserver'.
 
+= 注销COM服务=
 if you want to unregister the com, execute 'aa.exe /UnRegServer'
-
-= Details =
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
