@@ -1,4 +1,4 @@
-#summary 如何组织应用程序被创建
+#summary 如何阻止应用程序被创建
 #labels shell,process
 
 = Introduction =
@@ -6,6 +6,7 @@
 我们希望用户能够制定一些应用程序，在家长模式下可以运行而在孩子模式下不能运行。
 方法主要有两个 
 1. 对CreateProcess函数增加一个HOOK
+
 2. 直接使用windows提供的SHell，但是它只能控制使用ShellExecute函数启动的程序
 
 
