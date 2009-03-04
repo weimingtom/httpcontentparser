@@ -5,7 +5,7 @@
 #include "MainUI.h"
 #include "DlgProgramControl.h"
 #include ".\dlgprogramcontrol.h"
-
+#include <fileinfo.h>
 
 // CDlgProgramControl 对话框
 
@@ -33,7 +33,27 @@ void CDlgProgramControl::OnShow() {
 void CDlgProgramControl::restoreSetting() {
 }
 
-void CDlgProgramControl::addNewFile(const CString &filename) {
+void CDlgProgramControl::addNewFile(const CString &fullpath, const CString &filename) {
+	CFileInfo info((LPCTSTR)fullpath);
+	
+	// 获取图标
+	HICON hIcon = info.getICON();
+	int iconIndex = 0;
+	if (hIcon != NULL) {
+		iconIndex = m_imagelist.Add(hIcon);
+	}
+
+	// 设置文字信息
+	// 如果无法获得任何信息， 则使用文件名称
+	int iItemIndex  = 0;
+	if (info.getProductName().length() == 0) {
+		iItemIndex = m_list.InsertItem(m_list.GetItemCount(), filename, iconIndex);
+	} else {
+		iItemIndex = m_list.InsertItem(m_list.GetItemCount(), info.getProductName().c_str(), iconIndex);
+	}
+
+	m_list.SetItemText(iItemIndex, 1, info.getCompanyName().c_str());
+	m_list.SetItemText(iItemIndex, 2, info.getDescription().c_str());
 }
 BEGIN_MESSAGE_MAP(CDlgProgramControl, CDialog)
 	ON_BN_CLICKED(IDC_BTN_ADD, OnBnClickedBtnAdd)
@@ -50,7 +70,7 @@ void CDlgProgramControl::OnBnClickedBtnAdd()
 
 	CFileDialog dlg(TRUE, NULL, NULL, OFN_FILEMUSTEXIST, FILE_FILTER);
 	if (IDOK == dlg.DoModal()) {
-		addNewFile(dlg.GetFileExt());
+		addNewFile(dlg.GetPathName(), dlg.GetFileName());
 	}
 }
 
@@ -62,6 +82,13 @@ BOOL CDlgProgramControl::OnInitDialog()
 {
 	CBaseDlg::OnInitDialog();
 
+	// 初始化ImageList
+	m_imagelist.Create(16, 16, ILC_COLOR24, 50, 10);
+	m_imagelist.Add(AfxGetApp()->LoadIcon(IDI_APPLICATION));
+
+
+	// 初始化listCtrl
+	m_list.SetImageList(&m_imagelist, LVSIL_STATE);
 	m_list.SetExtendedStyle(
 		LVS_EX_FULLROWSELECT | LVS_EX_HEADERDRAGDROP |
 		LVS_EX_INFOTIP       | LVS_EX_LABELTIP);
@@ -87,10 +114,11 @@ BOOL CDlgProgramControl::OnInitDialog()
 			nColumn, str, colData[nColumn].nFormat, colData[nColumn].nWidth);
 		if (nColumn > 0) m_list.EnableColumnHiding(nColumn, true);
 	}
+	
 
-	m_list.EnableSortIcon     (TRUE, 1);
-	m_list.ColorSortColumn    (TRUE);
-	m_list.KeepLabelLeft      ();
+	m_list.EnableSortIcon  (TRUE, 1);
+	m_list.ColorSortColumn (TRUE);
+	m_list.KeepLabelLeft ();
 	m_list.EnableSubItemTips  ();
 
 	return TRUE;  // return TRUE unless you set the focus to a control
