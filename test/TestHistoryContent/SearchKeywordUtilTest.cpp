@@ -15,10 +15,9 @@ namespace {
 	void printDataItem(const std::string &name, const SeachKeywordUtil::KEYWORD_DATA &data) {
 		using namespace std;
 		TCHAR buf[MAX_PATH], *seachengine;
-		
-		GetSearchEngineName(data.engine_type, &seachengine);
+	
 		cout<<"name :" << name << endl
-			<<"\tsearch engine : " << seachengine <<endl
+			<<"\tsearch engine : " << GetSearchEngineName(data.engine_type) <<endl
 			<<"\tsearch count : " <<data.seach_count << endl
 			<<"\tlast seach time: " << timeutility::USFormatTime(data.last_seach, buf, MAX_PATH)<<endl;
 	}	
