@@ -18,6 +18,21 @@ IShellExecuteHook Interface
 
 Exposes a method that extends the behavior of the ShellExecute or ShellExecuteEx functions. It is typically implemented by subsystems that expose the names of objects that the user can specify in the Run dialog box after clicking the Microsoft Windows Start button.
 
-*bold* Note
-Shell execute hooks are deprecated as of Windows Vista.
+*Note*  Shell execute hooks are deprecated as of Windows Vista.
+
+*Remark*
+You should implement IShellExecuteHook when you have named objects that the user would expect to be able to run from the Run dialog box after clicking the Windows Start button.
+
+Shell execute hooks are registered by adding a value that contains the object's class identifier (CLSID) string under the following key in the registry: 
+
+HKEY_LOCAL_MACHINE
+    Software
+        Microsoft
+            Windows
+                CurrentVersion
+                    Explorer
+                        ShellExecuteHooks
+
+You do not use this interface directly. It is generally used by the ShellExecuteEx function's code.
+
 }}}
