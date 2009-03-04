@@ -67,6 +67,7 @@ END
 IDR_MAINFRAME           ICON                    "res\\MainUI.ico"
 IDI_GUI_ARROWDOWN       ICON                    "res\\guiarrowdown.ico"
 IDI_GUI_ARROWRIGHT      ICON                    "res\\guiarrowright.ico"
+IDI_DEFAULT             ICON                    "res\\default.ico"
 
 /////////////////////////////////////////////////////////////////////////////
 //

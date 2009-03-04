@@ -57,7 +57,6 @@
 #define IDD_DLG_SEARCH_RULE             135
 #define IDS_DLG_PROGRAM_CONTROL_NAME    135
 #define IDD_DLG_CONTENT                 136
-#define IDS_DLG_PROGRAM_CONTROL_PRODUCT 136
 #define IDS_DLG_PROGRAM_CONTROL_COMPANY 136
 #define IDS_DLG_PROGRAM_CONTROL_DESCRIPT 137
 #define IDD_LEV1_RULE                   138
@@ -94,6 +93,8 @@
 #define IDD_DLG_SEACHWORD_LIST          170
 #define IDD_DLG_SEACHWORD_HISTORY       170
 #define IDD_DLG_PROGRAM                 172
+#define IDI_ICON1                       173
+#define IDI_DEFAULT                     173
 #define IDC_TREE_NAVIG                  1000
 #define IDS_TREE_ROOT                   1001
 #define IDS_TREE_DNS_RULE               1002
@@ -264,7 +265,7 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        173
+#define _APS_NEXT_RESOURCE_VALUE        174
 #define _APS_NEXT_COMMAND_VALUE         32809
 #define _APS_NEXT_CONTROL_VALUE         1115
 #define _APS_NEXT_SYMED_VALUE           112
