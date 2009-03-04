@@ -27,6 +27,8 @@
 #include <set>
 #include <string>
 
+#pragma comment(lib, "strsafe.lib")
+#pragma comment(lib, "Version.lib")
 
 #pragma comment(lib, "ws2_32.lib")
 #ifdef _DEBUG
