@@ -438,17 +438,17 @@ FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
     LTEXT           "",IDC_STA_CELLS,26,28,225,121,NOT WS_VISIBLE
     LTEXT           "Sun.",IDC_STATIC,7,44,16,8
-    LTEXT           "Tues",IDC_STATIC,7,75,16,8
-    LTEXT           "Wed.",IDC_STATIC,7,90,18,8
-    LTEXT           "Thurs.",IDC_STATIC,7,105,22,8
-    LTEXT           "Fri.",IDC_STATIC,7,119,12,8
-    LTEXT           "Sat.",IDC_STATIC,7,134,15,8
+    LTEXT           "Tues",IDC_STATIC,7,76,16,8
+    LTEXT           "Wed.",IDC_STATIC,7,91,18,8
+    LTEXT           "Thurs.",IDC_STATIC,7,106,22,8
+    LTEXT           "Fri.",IDC_STATIC,7,121,12,8
+    LTEXT           "Sat.",IDC_STATIC,7,136,15,8
     LTEXT           "00:00",IDC_STATIC,22,28,20,8
     LTEXT           "24:00",IDC_STATIC,231,28,20,8
     CONTROL         "Time Control",IDC_CHK_TIMECTRL,"Button",BS_AUTOCHECKBOX | 
                     WS_TABSTOP,7,7,64,10
     LTEXT           "12:00",IDC_STATIC,126,28,20,8
-    LTEXT           "Mon.",IDC_STATIC,7,59,17,8
+    LTEXT           "Mon.",IDC_STATIC,7,61,17,8
     CONTROL         157,IDC_STATIC,"Static",SS_BITMAP,10,165,9,15
     CONTROL         158,IDC_STATIC,"Static",SS_BITMAP,103,165,9,15
     LTEXT           "Internet Available",IDC_STATIC,27,168,58,8
