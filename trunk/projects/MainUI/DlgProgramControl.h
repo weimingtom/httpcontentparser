@@ -4,6 +4,7 @@
 // CDlgProgramControl ¶Ô»°¿ò
 
 #include ".\basedlg.h"
+#include "afxcmn.h"
 
 class CDlgProgramControl : public CBaseDlg {
 	DECLARE_DYNAMIC(CDlgProgramControl)
@@ -27,6 +28,7 @@ protected:
 public:
 	afx_msg void OnBnClickedBtnAdd();
 	afx_msg void OnBnClickedBtnSet();
+	CListCtrl m_list;
 };
 
 #endif  // _MAINUI_CDLGPROGRAMCONTROL_H__
