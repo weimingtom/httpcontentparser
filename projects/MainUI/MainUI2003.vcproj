@@ -131,9 +131,6 @@
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
 			<File
-				RelativePath=".\DlgProgramControl.cpp">
-			</File>
-			<File
 				RelativePath=".\MainUI.cpp">
 			</File>
 			<File
@@ -165,9 +162,6 @@
 			Name="头文件"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
-			<File
-				RelativePath=".\DlgProgramControl.h">
-			</File>
 		</Filter>
 		<Filter
 			Name="资源文件"
@@ -260,6 +254,12 @@
 			</File>
 			<File
 				RelativePath=".\DlgOptions.h">
+			</File>
+			<File
+				RelativePath=".\DlgProgramControl.cpp">
+			</File>
+			<File
+				RelativePath=".\DlgProgramControl.h">
 			</File>
 			<File
 				RelativePath=".\DlgScreenshot.cpp">

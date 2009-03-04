@@ -863,6 +863,9 @@ BEGIN
     IDS_DLG_WEBSITE_VISIT_TIMES "Visit count"
     IDS_DLG_WEBSITE_VISIT_LATEST_TIME "Latest visit"
     IDS_PROGRAM_CONTROL     "Application Control"
+    IDS_DLG_PROGRAM_CONTROL_NAME "Name"
+    IDS_DLG_PROGRAM_CONTROL_COMPANY "Company"
+    IDS_DLG_PROGRAM_CONTROL_DESCRIPT "Description"
 END
 
 #endif    // Ó¢Óï(ÃÀ¹ú) resources
