@@ -4,7 +4,9 @@
 = Introduction =
 
 我们希望用户能够制定一些应用程序，在家长模式下可以运行而在孩子模式下不能运行。
+
 方法主要有两个 
+
 1. 对CreateProcess函数增加一个HOOK
 
 2. 直接使用windows提供的SHell，但是它只能控制使用ShellExecute函数启动的程序
@@ -19,6 +21,7 @@ IShellExecuteHook Interface
 Exposes a method that extends the behavior of the ShellExecute or ShellExecuteEx functions. It is typically implemented by subsystems that expose the names of objects that the user can specify in the Run dialog box after clicking the Microsoft Windows Start button.
 
 *Note*  Shell execute hooks are deprecated as of Windows Vista.
+
 
 *Remark*
 You should implement IShellExecuteHook when you have named objects that the user would expect to be able to run from the Run dialog box after clicking the Windows Start button.
