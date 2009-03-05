@@ -25,8 +25,8 @@ STDMETHODIMP CAppControl::GetFirstItem(BSTR* path, LONG *hasValue) {
 	strutility::_tstring fullpath;
 	int result = g_configuration.getProgramControl()->getFirstItem(&fullpath, &fileinfo);
 	if (0 != result) {
-		*hasValue =SELF_COM_SUCCEED;;
 		*path = _bstr_t(fullpath.c_str());
+		*hasValue =SELF_COM_SUCCEED;
 	} 	else {
 		*path = _bstr_t("");
 		*hasValue = SELF_COM_FAILED;

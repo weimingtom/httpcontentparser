@@ -22,6 +22,10 @@ bool ProgramControl::check(const strutility::_tstring & fullpath) {
 }
 
 int ProgramControl::addItem(const strutility::_tstring &fullpath) {
+	if (fullpath.length() == 0) {
+		return 0;
+	}
+
 	data_.insert(std::make_pair(fullpath, new FILEINFO));
 	setModified(true);
 	return 0;
@@ -40,7 +44,7 @@ int ProgramControl::removeitem(const strutility::_tstring &fullpath) {
 
 // 枚举函数
 int ProgramControl::getFirstItem(strutility::_tstring *name, FILEINFO** info) {
-	if (data_.size() != 0)
+	if (data_.size() == 0)
 		return 0;
 	
 	// 获取数据
@@ -50,6 +54,8 @@ int ProgramControl::getFirstItem(strutility::_tstring *name, FILEINFO** info) {
 	return -1;
 }
 int ProgramControl::getNextItem(const strutility::_tstring & cur, strutility::_tstring *name, FILEINFO** info) {
+	assert(cur.length() != 0);
+
 	PROGRAM_INFO::const_iterator iter = data_.upper_bound(cur);
 	if (iter != data_.end()) {
 		*name = iter->first;
