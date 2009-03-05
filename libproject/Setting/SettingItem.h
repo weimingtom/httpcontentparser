@@ -50,6 +50,7 @@ private:
 	friend class HotkeySettingTest;
 	friend class OnlineHourSettingTest;
 	friend class SearchRuleTest;
+	friend class ProgramControl;
 };
 
 #endif  // _SETTING_SETTINGITEM_H__
