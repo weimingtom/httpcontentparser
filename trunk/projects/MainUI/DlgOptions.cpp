@@ -113,14 +113,14 @@ int CDlgOptions::setHotKey() {
 	m_hotKeyShowDlg.GetHotKey(vKey, vModifiers_mfc);
 	if (FALSE == ::setHotkey(vKey, vModifiers_mfc, HOTKEY_SHOW_MAINUI)) {
 		AfxMessageBox(IDS_HOTKEY_CONFLICT, MB_OK | MB_ICONERROR);;
-		return -1;
+		return FAILED_APPLY;
 	}
 
 	// 设置显示对话框的热键
 	m_hotkeySwitchUser.GetHotKey(vKey, vModifiers_mfc);
 	if (FALSE == ::setHotkey(vKey, vModifiers_mfc, HOTKEY_SHOW_SWITCH_USER)) {
 		AfxMessageBox(IDS_HOTKEY_CONFLICT, MB_OK | MB_ICONERROR);
-		return -1;
+		return FAILED_APPLY;
 	}
 
 
@@ -129,25 +129,25 @@ int CDlgOptions::setHotKey() {
 	WORD vModifier = getModifierKey(vModifiers_mfc);
 	if (!notifyCOMServiceHotkey(vKey, vModifier, HOTKEY_LANUCH_MAINUI)) {
 		AfxMessageBox(IDS_HOTKEY_CONFLICT, MB_OK | MB_ICONERROR);
-		return -1;
+		return FAILED_APPLY;
 	}
 
 	// 保存热键
 	g_configuration.getHotkey()->setHotkey(getHotkeyname(HOTKEY_LANUCH_MAINUI),
 		(unsigned)MAKELPARAM(vModifier, vKey));
 
-	return 0;
+	return SUCCESS_APPLY;
 }
 
 
 int CDlgOptions::OnApply() {
 	SetAutoRun();
-	if ( -1 == setHotKey()) {
+	if ( FAILED_APPLY== setHotKey()) {
 		// 如果热键冲突
 		Restore();
-		return -1;
+		return FAILED_APPLY;
 	}
-	return 0;
+	return SUCCESS_APPLY;
 }
  
 
@@ -194,7 +194,7 @@ BOOL CDlgOptions::OnInitDialog()
 	CBaseDlg::OnInitDialog();
 
 	Restore();
-	if (-1 == setHotKey()) {
+	if (FAILED_APPLY == setHotKey()) {
 		// 如果热键冲突
 		Restore();
 	}
