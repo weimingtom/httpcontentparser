@@ -8,6 +8,8 @@
 #include ".\dlgonlinehour.h"
 #include ".\resource.h"
 #include ".\globalvariable.h"
+#include <comdef.h>
+#include <com\comutility.h>
 
 #include <comdef.h>
 
@@ -54,20 +56,23 @@ private:
 
 int CDlgOnlineHour::OnApply() {
 	try {
-		CoInitialize(NULL);
+		AutoInitInScale _auto;
+
 		IAccessNetwork * accessNetwork = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_AccessNetwork, NULL, CLSCTX_LOCAL_SERVER,
 			IID_IAccessNetwork, (LPVOID*)&accessNetwork);
+		if (FAILED(hr)) {
+			AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONEXCLAMATION);
+			return -1;
+		}
 
 		Enumerator enumerate(accessNetwork);
 		enumerate.reset();
 		cells.StarEnum(&enumerate);
 
 		accessNetwork->Release();
-		CoUninitialize();
 		return 0;
 	} catch (_com_error &) {
-		CoUninitialize();
 		return -1;
 	}
 }
