@@ -13,7 +13,9 @@
 #include ".\webhistoryrecordtest.h"
 #include ".\autocleantest.h"
 #include ".\hotkeysettingtest.h"
+#include ".\appcontroltest.h"
 
+CPPUNIT_TEST_SUITE_REGISTRATION(AppControlTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(HotkeySettingTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(AutocleanTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(WebHistoryRecordTest);
