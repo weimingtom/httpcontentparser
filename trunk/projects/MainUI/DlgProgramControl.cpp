@@ -9,6 +9,7 @@
 #include <fileinfo.h>
 #include <comdef.h>
 #include <com\comutility.h>
+#include <com\resultvalue.h>
 
 // CDlgProgramControl 对话框
 
@@ -48,10 +49,10 @@ int CDlgProgramControl::OnApply() {
 	try {
 		AutoInitInScale _auto;
 
-		IProgramControlSetting *pSetting;
-		HRESULT hr = CoCreateInstance(CLSID_ProgramControlSetting, NULL, CLSCTX_LOCAL_SERVER, IID_IProgramControlSetting, (LPVOID*)&pSetting);
-		if (FAILED(hr)) {
-			// TODO: add information
+		IAppControl *pSetting = NULL;
+		HRESULT hr = CoCreateInstance(CLSID_AppControl, NULL, CLSCTX_LOCAL_SERVER, IID_IAppControl, (LPVOID*)&pSetting);
+		if (FAILED(hr) || NULL == pSetting) {
+			AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONEXCLAMATION);
 			return 0;
 		}
 
@@ -60,10 +61,11 @@ int CDlgProgramControl::OnApply() {
 		for (; iter != addedItems_.end(); ++iter) {
 			pSetting->AddNewItem((BSTR)_bstr_t(iter->c_str()));
 		}
-	} catch (_com_error &)
-	{
+		addedItems_.clear();
+		return SUCCESS_APPLY;
+	} catch (_com_error &) {
+		return FAILED_APPLY;
 	}
-	return -1;
 }
 void CDlgProgramControl::OnShow() {
 
@@ -73,18 +75,19 @@ void CDlgProgramControl::restoreSetting() {
 		AutoInitInScale _auto;
 
 		// 从COM服务器上获取数据
-		IProgramControlSetting *pSetting;
-		HRESULT hr = CoCreateInstance(CLSID_ProgramControlSetting, NULL, CLSCTX_LOCAL_SERVER, IID_IProgramControlSetting, (LPVOID*)&pSetting);
+		IAppControl *pSetting;
+		HRESULT hr = CoCreateInstance(CLSID_AppControl, NULL, CLSCTX_LOCAL_SERVER, IID_IAppControl, (LPVOID*)&pSetting);
 		if (FAILED(hr)) {
-			// TODO: add information
+			AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONEXCLAMATION);
 			return ;
 		}
 
 		_bstr_t cur, next;
-		pSetting->GetFirstItem((BSTR*)&cur);
-		while (cur.length() != 0) {
+		LONG result;
+		pSetting->GetFirstItem((BSTR*)&cur, &result);
+		while (SeflComReturnValueSucc(result)) {
 			addNewFile((TCHAR*)_bstr_t(cur));
-			pSetting->GetNextItem((BSTR)cur, (BSTR*)&next);
+			pSetting->GetNextItem((BSTR)cur, (BSTR*)&next, &result);
 			cur = next;
 		}
 
