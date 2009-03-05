@@ -47,6 +47,9 @@
         <screensave enable="true" timespan="1200">
             <autoclean max="30" min="1" timespan="3" lastclean="2008-12-23 10:06:27" enable="false" />
         </screensave>
+		<programcontrol enable="true">
+			<program fullpath=""\>
+		</programcontrol>
         <hotkeys>
             <hotkey name="launch" key="0" />
             <hotkey name="showui" key="0" />
