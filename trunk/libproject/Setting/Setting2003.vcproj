@@ -58,7 +58,7 @@ copy .\configitem.h ..\..\include
 copy .\hotkeysetting.h ..\..\include
 copy .\timeoutswitch.h ..\..\include
 copy .\installdate.h ..\..\include
-"/>
+copy .\programcontrol.h ..\..\include"/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
 			<Tool
@@ -99,7 +99,8 @@ copy .\installdate.h ..\..\include
 				CommandLine="copy .\release\setting.lib ..\..\lib"/>
 			<Tool
 				Name="VCPreBuildEventTool"
-				CommandLine="copy .\webhistoryrecordersetting.h ..\..\include
+				CommandLine="copy .\settingitem.h ..\..\include
+copy .\webhistoryrecordersetting.h ..\..\include
 copy .\authorize.h ..\..\include
 copy .\eyecaresetting.h ..\..\include
 copy .\screenshot.h ..\..\include
@@ -110,7 +111,11 @@ copy .\XMLconfiguration.h ..\..\include
 copy .\SearchRule.h ..\..\include
 copy .\onlinehoursetting.h ..\..\include
 copy .\autoclean.h ..\..\include
+copy .\configitem.h ..\..\include
+copy .\hotkeysetting.h ..\..\include
 copy .\timeoutswitch.h ..\..\include
+copy .\installdate.h ..\..\include
+copy .\programcontrol.h ..\..\include
 "/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
@@ -316,6 +321,16 @@ copy .\timeoutswitch.h ..\..\include
 			</File>
 			<File
 				RelativePath=".\InstallDate.h">
+			</File>
+		</Filter>
+		<Filter
+			Name="ProgramControl"
+			Filter="">
+			<File
+				RelativePath=".\ProgramControl.cpp">
+			</File>
+			<File
+				RelativePath=".\ProgramControl.h">
 			</File>
 		</Filter>
 		<File

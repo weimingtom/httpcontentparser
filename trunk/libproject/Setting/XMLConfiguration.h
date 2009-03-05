@@ -33,6 +33,7 @@
 #include <authorize.h>
 #include <webhistoryrecordersetting.h>
 #include <contentchecksetting.h>
+#include <programcontrol.h>
 #include <Screenshot.h>
 #include <autoclean.h>
 #include <timeoutswitch.h>
@@ -71,6 +72,7 @@ public:
 	HotkeySetting*  getHotkey() { return &hotkey_;}
 	TimeoutSwitch*  getTimeoutSwitch() { return &timeout_switch_;} 
 	InstallDate *	getInstallDate() { return &install_date_;}
+	ProgramControl * getProgramControl() { return &program_control_;}
 private:
 	DNSList						black_url_set_;
 	DNSList						white_url_set_;
@@ -85,6 +87,7 @@ private:
 	HotkeySetting				hotkey_;
 	TimeoutSwitch				timeout_switch_;
 	InstallDate					install_date_;
+	ProgramControl		program_control_;
 
 	// ƒ¨»œ…Ë÷√
 	void defaultSetting();

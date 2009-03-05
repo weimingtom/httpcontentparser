@@ -129,9 +129,14 @@ int XMLConfiguration::parseAppSet(TiXmlNode *appset_root) {
 			} else if (_tcscmp(node->Value(), CONFIG_ITEM_APPSET_SCREENSAVER) == 0) {
 				// 屏幕保存设置功能
 				getScreenshotSetting()->readconfig(element);
+			} else if (_tcscmp(node->Value(), CONFIG_ITEM_APPSET_PROGRAM_CONTROL) == 0) {
+				// 程序控制
+				getProgramControl()->readconfig(element);
 			} else if (_tcscmp(node->Value(), CONFIG_ITEM_APPSET_HOTKEY) == 0) {
+				// 热键设置
 				getHotkey()->readconfig(element);
 			} else if (_tcscmp(node->Value(), CONFIG_ITEM_MODEL_AUTOSWITCH) == 0) {
+				// 自动切换
 				getTimeoutSwitch()->readconfig(element);
 			} else if (_tcscmp(node->Value(), CONFIG_ITEM_MODEL_INSTALL) == 0) {
 				getInstallDate()->readconfig(element);
