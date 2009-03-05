@@ -83,6 +83,11 @@
 #define CONFIG_APPSET_WEBHISTORY_PORN_WEBPAGE	TEXT("porn_webpage")
 #define CONFIG_APPSET_WEBHISTORY_SEACH_KEYWORD TEXT("seachkeyword")
 
+// program control
+#define CONFIG_ITEM_APPSET_PROGRAM_CONTROL		TEXT("programcontrol")
+#define CONFIG_ITEM_APPSET_PROGRAM_ITEM					TEXT("program")
+#define CONFIG_ITEM_APPSET_PROGRAM_ITEM_PATH		TEXT("path")
+
 // screenSaver
 #define CONFIG_ITEM_APPSET_SCREENSAVER			TEXT("screensave")
 #define CONFIG_APPSET_AUTOCLEAR					TEXT("autoclean")
