@@ -47,6 +47,7 @@ int XMLConfiguration::saveAppSetting(TiXmlElement * root) {
 	getScreenshotSetting()->saveconfig(appsetting_root);
 	getHotkey()->saveconfig(appsetting_root);
 	getTimeoutSwitch()->saveconfig(appsetting_root);
+	getProgramControl()->saveConfig(appsetting_root);
 	getInstallDate()->saveconfig(appsetting_root);
 	root->LinkEndChild(appsetting_root);
 	return 0;
