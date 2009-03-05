@@ -186,6 +186,7 @@ BOOL CMainUIDlg::OnInitDialog()
 
 	SetTimer(ID_TIMER, TIME_ESCPSE, NULL);
 	HideMainUI();
+
 	return TRUE;  // 除非设置了控件的焦点，否则返回 TRUE
 }
 
@@ -490,6 +491,9 @@ void CMainUIDlg::setToolsDlg() {
 	strItem.LoadString(IDS_TREE_ONLINE_HOUR);
 	hItem = m_treeNavigation.InsertItem(strItem, hItemTools);
 	m_treeNavigation.SetItemData(hItem, IDS_TREE_ONLINE_HOUR);
+
+	// 展开
+	m_treeNavigation.Expand(hItemTools, TVE_EXPAND );
 }
 
 void CMainUIDlg::setRulesDlg() {
@@ -498,30 +502,37 @@ void CMainUIDlg::setRulesDlg() {
 	HTREEITEM hItemRules = m_treeNavigation.InsertItem(strItem, m_treeNavigation.GetRootItem());
 	m_treeNavigation.SetItemData(hItemRules, IDS_TREE_LEV1_RULES);
 
+	// 图像规则
 	HTREEITEM hItem;
 	strItem.LoadString(IDS_TREE_IMAGE_RULE);
 	hItem = m_treeNavigation.InsertItem(strItem, hItemRules);
 	m_treeNavigation.SetItemData(hItem, IDS_TREE_IMAGE_RULE);
 
+	// Web 白名单
 	strItem.LoadString(IDS_DNS_WHITE_LIST); 
 	hItem = m_treeNavigation.InsertItem(strItem, hItemRules);
 	m_treeNavigation.SetItemData(hItem, IDS_DNS_WHITE_LIST);
 	
-
+	// 黑名单
 	strItem.LoadString(IDS_TREE_DNS_RULE); 
 	hItem = m_treeNavigation.InsertItem(strItem, hItemRules);
 	m_treeNavigation.SetItemData(hItem, IDS_TREE_DNS_RULE);
 	setCurDlg(IDS_TREE_DNS_RULE);
 
+	// 搜索规则
 	strItem.LoadString(IDS_TREE_SEARCH_RULE); 
 	hItem = m_treeNavigation.InsertItem(strItem, hItemRules);
 	m_treeNavigation.SetItemData(hItem, IDS_TREE_SEARCH_RULE);
 
+	// WebHistory
 	strItem.LoadString(IDS_TREE_WEB_HISTORY);
 	hItem = m_treeNavigation.InsertItem(strItem, hItemRules);
 	m_treeNavigation.SetItemData(hItem, IDS_TREE_WEB_HISTORY);
 
 	m_treeNavigation.SelectItem(hItemRules);
+
+	// 展开
+	m_treeNavigation.Expand(hItemRules, TVE_EXPAND );
 }
 
 
