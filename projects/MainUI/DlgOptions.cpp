@@ -56,7 +56,12 @@ BOOL notifyCOMServiceHotkey(WORD vKey, WORD vModifiers, const int type) {
 		AutoInitInScale auto_init_com;
 		VARIANT_BOOL bSucc;
 		IAppSetting *app = NULL;
-		CoCreateInstance(CLSID_AppSetting, NULL, CLSCTX_LOCAL_SERVER, IID_IAppSetting, (LPVOID*)&app);
+		HRESULT hr = CoCreateInstance(CLSID_AppSetting, NULL, CLSCTX_LOCAL_SERVER, IID_IAppSetting, (LPVOID*)&app);
+		if (FAILED(hr)) {
+			AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONEXCLAMATION);
+			return FALSE;
+		}
+
 		app->setHotkey(vKey, vModifiers, type, &bSucc);
 		return convert(bSucc);
 	} catch(...) {
@@ -101,23 +106,20 @@ void CDlgOptions::DoDataExchange(CDataExchange* pDX)
 }
 
 int CDlgOptions::setHotKey() {
-	CString strPrompt;
-	strPrompt.LoadString(IDS_HOTKEY_CONFLICT);
-
 	// 注册热键
 	WORD vModifiers_mfc, vKey;
 
 	// 设置显示对话框的热键
 	m_hotKeyShowDlg.GetHotKey(vKey, vModifiers_mfc);
 	if (FALSE == ::setHotkey(vKey, vModifiers_mfc, HOTKEY_SHOW_MAINUI)) {
-		AfxMessageBox(strPrompt);
+		AfxMessageBox(IDS_HOTKEY_CONFLICT, MB_OK | MB_ICONERROR);;
 		return -1;
 	}
 
 	// 设置显示对话框的热键
 	m_hotkeySwitchUser.GetHotKey(vKey, vModifiers_mfc);
 	if (FALSE == ::setHotkey(vKey, vModifiers_mfc, HOTKEY_SHOW_SWITCH_USER)) {
-		AfxMessageBox(strPrompt);
+		AfxMessageBox(IDS_HOTKEY_CONFLICT, MB_OK | MB_ICONERROR);
 		return -1;
 	}
 
@@ -126,9 +128,7 @@ int CDlgOptions::setHotKey() {
 	m_hotkeyLaunch.GetHotKey(vKey, vModifiers_mfc);
 	WORD vModifier = getModifierKey(vModifiers_mfc);
 	if (!notifyCOMServiceHotkey(vKey, vModifier, HOTKEY_LANUCH_MAINUI)) {
-		CString strPrompt;
-		strPrompt.LoadString(IDS_HOTKEY_CONFLICT);
-		MessageBox(strPrompt);
+		AfxMessageBox(IDS_HOTKEY_CONFLICT, MB_OK | MB_ICONERROR);
 		return -1;
 	}
 
