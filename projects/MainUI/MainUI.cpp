@@ -55,8 +55,9 @@ BOOL CMainUIApp::InitInstance()
 {
 	CoInitialize(NULL);
 	
-	AppInstallValidate validator(VLAIDATE_NONE);
-	validator.repair((HMODULE)AfxGetInstanceHandle());
+	// TODO enable the following code
+	// AppInstallValidate validator(VLAIDATE_NONE);
+	// validator.repair((HMODULE)AfxGetInstanceHandle());
 
 	// ∂¡»°≈‰÷√–≈œ¢
 	initializeSetting();
