@@ -571,9 +571,6 @@ void CMainUIDlg::setCurDlg(const DWORD item) {
 		case IDS_TREE_ONLINE_HOUR:
 			ChangeCurDlg(&m_dlgOnlineHour);
 			break;
-		//case IDS_TREE_HELP:
-		//	ChangeCurDlg(&m_dlgHelp);
-		//	break;
 		case IDS_PROGRAM_CONTROL:
 			ChangeCurDlg(&m_dlgProgramControl);
 			break;
