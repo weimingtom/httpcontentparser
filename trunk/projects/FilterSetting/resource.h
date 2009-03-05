@@ -15,7 +15,7 @@
 #define IDR_IMAGECHECK                  110
 #define IDR_WEBCONTENTCHECK             111
 #define IDR_WEBCONTENTRECORD            112
-#define IDR_PROGRAMCONTROLSETTING       114
+#define IDR_APPCONTROL                  115
 
 // Next default values for new objects
 // 
@@ -24,6 +24,6 @@
 #define _APS_NEXT_RESOURCE_VALUE        201
 #define _APS_NEXT_COMMAND_VALUE         32768
 #define _APS_NEXT_CONTROL_VALUE         201
-#define _APS_NEXT_SYMED_VALUE           115
+#define _APS_NEXT_SYMED_VALUE           116
 #endif
 #endif

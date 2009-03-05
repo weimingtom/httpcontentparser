@@ -185,14 +185,28 @@ interface IWebContentRecord : IDispatch{
 	uuid(F502C5DE-1DF4-4331-8949-A0F326BF5CA0),
 	dual,
 	nonextensible,
-	helpstring("IProgramControlSetting 接口"),
+	helpstring("IProgramControlSetting Interface"),
 	pointer_default(unique)
 ]
 interface IProgramControlSetting : IDispatch{
-	[id(1), helpstring("方法AddNewItem")] HRESULT AddNewItem([in] BSTR path);
-	[id(2), helpstring("方法GetFirstItem")] HRESULT GetFirstItem([out,retval] BSTR* path);
-	[id(3), helpstring("方法GetNextItem")] HRESULT GetNextItem([in] BSTR cur, [out] BSTR* nxt);
-	[id(4), helpstring("方法RemoveItem")] HRESULT RemoveItem([in] BSTR path);
+	[id(1), helpstring("Method AddNewItem")] HRESULT AddNewItem([in] BSTR path);
+	[id(2), helpstring("Method GetFirstItem")] HRESULT GetFirstItem([out,retval] BSTR* path);
+	[id(3), helpstring("Method GetNextItem")] HRESULT GetNextItem([in] BSTR cur, [out] BSTR* nxt);
+	[id(4), helpstring("Method RemoveItem")] HRESULT RemoveItem([in] BSTR path);
+};
+[
+	object,
+	uuid(80F73376-12C6-4138-A680-AEF2F1053CB3),
+	dual,
+	nonextensible,
+	helpstring("IAppControl Interface"),
+	pointer_default(unique)
+]
+interface IAppControl : IDispatch{
+	[id(1), helpstring("Method AddNewItem")] HRESULT AddNewItem([in] BSTR path);
+	[id(2), helpstring("Method GetFirstItem")] HRESULT GetFirstItem([out,retval] BSTR* path);
+	[id(3), helpstring("Method GetNextItem")] HRESULT GetNextItem([in] BSTR cur, [out] BSTR* nxt);
+	[id(4), helpstring("Method RemoveItem")] HRESULT RemoveItem([in] BSTR path);
 };
 [
 	uuid(42F932B5-F5CB-4F0D-8925-1B6BE5FECD1B),
@@ -290,5 +304,13 @@ library FilterSettingLib {
 	coclass ProgramControlSetting
 	{
 		[default] interface IProgramControlSetting;
+	};
+	[
+		uuid(F9BE025F-3F0B-4A54-91AF-5FAAEBC6E45E),
+		helpstring("AppControl Class")
+	]
+	coclass AppControl
+	{
+		[default] interface IAppControl;
 	};
 };

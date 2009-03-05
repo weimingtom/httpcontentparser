@@ -1,0 +1,24 @@
+HKCR
+{
+	FilterSetting.AppControl.1 = s 'AppControl Class'
+	{
+		CLSID = s '{F9BE025F-3F0B-4A54-91AF-5FAAEBC6E45E}'
+	}
+	FilterSetting.AppControl = s 'AppControl Class'
+	{
+		CLSID = s '{F9BE025F-3F0B-4A54-91AF-5FAAEBC6E45E}'
+		CurVer = s 'FilterSetting.AppControl.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {F9BE025F-3F0B-4A54-91AF-5FAAEBC6E45E} = s 'AppControl Class'
+		{
+			ProgID = s 'FilterSetting.AppControl.1'
+			VersionIndependentProgID = s 'FilterSetting.AppControl'
+			ForceRemove 'Programmable'
+			LocalServer32 = s '%MODULE%'
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{42F932B5-F5CB-4F0D-8925-1B6BE5FECD1B}'
+		}
+	}
+}

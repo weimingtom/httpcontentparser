@@ -1,26 +1,25 @@
-// ProgramControlSetting.cpp : CProgramControlSetting 的实现
+// AppControl.cpp : CAppControl 的实现
 
 #include "stdafx.h"
-#include "ProgramControlSetting.h"
-#include ".\programcontrolsetting.h"
+#include "AppControl.h"
 #include ".\globalvariable.h"
 #include <programcontrol.h>
 #include <comdef.h>
 #include <utility\strutility.h>
 
-// CProgramControlSetting
-STDMETHODIMP CProgramControlSetting::AddNewItem(BSTR path) {
+// CAppControl
+STDMETHODIMP CAppControl::AddNewItem(BSTR path) {
 	g_configuration.getProgramControl()->addItem((TCHAR*)_bstr_t(path));
 	return S_OK;
 }
 
 
-STDMETHODIMP CProgramControlSetting::RemoveItem(BSTR path) {
+STDMETHODIMP CAppControl::RemoveItem(BSTR path) {
 	g_configuration.getProgramControl()->removeitem((TCHAR*)_bstr_t(path));
 	return S_OK;
 }
 
-STDMETHODIMP CProgramControlSetting::GetFirstItem(BSTR* path) {
+STDMETHODIMP CAppControl::GetFirstItem(BSTR* path) {
 	ProgramControl::FILEINFO * fileinfo;
 	strutility::_tstring fullpath;
 	int result = g_configuration.getProgramControl()->getFirstItem(&fullpath, &fileinfo);
@@ -31,7 +30,7 @@ STDMETHODIMP CProgramControlSetting::GetFirstItem(BSTR* path) {
 	return S_OK;
 }
 
-STDMETHODIMP CProgramControlSetting::GetNextItem(BSTR cur, BSTR* nxt) {
+STDMETHODIMP CAppControl::GetNextItem(BSTR cur, BSTR* nxt) {
 	ProgramControl::FILEINFO * fileinfo;
 	strutility::_tstring fullpath;
 	int result = g_configuration.getProgramControl()->getNextItem((TCHAR*)_bstr_t(cur), &fullpath, &fileinfo);
