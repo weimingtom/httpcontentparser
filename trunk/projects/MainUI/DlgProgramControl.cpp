@@ -62,6 +62,13 @@ int CDlgProgramControl::OnApply() {
 			pSetting->AddNewItem((BSTR)_bstr_t(iter->c_str()));
 		}
 		addedItems_.clear();
+
+		iter = deleteItems_.begin();
+		for (; iter != deleteItems_.end(); ++iter) {
+			pSetting->RemoveItem((BSTR)_bstr_t(iter->c_str()));
+		}
+		addedItems_.clear();
+
 		return SUCCESS_APPLY;
 	} catch (_com_error &) {
 		return FAILED_APPLY;
@@ -72,6 +79,8 @@ void CDlgProgramControl::OnShow() {
 }
 void CDlgProgramControl::restoreSetting() {
 	try {
+		m_list.DeleteAllItems();
+
 		AutoInitInScale _auto;
 
 		// 从COM服务器上获取数据
@@ -82,12 +91,15 @@ void CDlgProgramControl::restoreSetting() {
 			return ;
 		}
 
-		_bstr_t cur, next;
+		BSTR cur, next;
 		LONG result;
-		pSetting->GetFirstItem((BSTR*)&cur, &result);
+		pSetting->GetFirstItem(&cur, &result);
 		while (SeflComReturnValueSucc(result)) {
 			addNewFile((TCHAR*)_bstr_t(cur));
-			pSetting->GetNextItem((BSTR)cur, (BSTR*)&next, &result);
+			pSetting->GetNextItem(cur, &next, &result);
+
+			//  cure不再使用
+			SysFreeString(cur);
 			cur = next;
 		}
 
@@ -211,6 +223,8 @@ BOOL CDlgProgramControl::OnInitDialog()
 	m_list.ColorSortColumn (TRUE);
 	m_list.KeepLabelLeft ();
 	m_list.EnableSubItemTips  ();
+
+	Restore();
 
 	return TRUE;  // return TRUE unless you set the focus to a control
 }
