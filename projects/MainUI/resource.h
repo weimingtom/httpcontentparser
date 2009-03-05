@@ -60,7 +60,9 @@
 #define IDS_DLG_PROGRAM_CONTROL_COMPANY 136
 #define IDS_DLG_PROGRAM_CONTROL_DESCRIPT 137
 #define IDD_LEV1_RULE                   138
+#define IDS_DLG_PROGRAM_CONTROL_DUPLICATE_ITEM 138
 #define IDB_BITMAP_CHECKMARK            139
+#define IDS_DLG_PROGRAM_CONTROL_FULLPATH 139
 #define IDD_DLG_TEXT                    140
 #define IDD_DLG_OPTION                  141
 #define IDD_DLG_TOOLS                   142
@@ -93,7 +95,6 @@
 #define IDD_DLG_SEACHWORD_LIST          170
 #define IDD_DLG_SEACHWORD_HISTORY       170
 #define IDD_DLG_PROGRAM                 172
-#define IDI_ICON1                       173
 #define IDI_DEFAULT                     173
 #define IDC_TREE_NAVIG                  1000
 #define IDS_TREE_ROOT                   1001

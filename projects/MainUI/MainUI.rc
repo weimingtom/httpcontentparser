@@ -740,7 +740,7 @@ VS_VERSION_INFO VERSIONINFO
 BEGIN
     BLOCK "StringFileInfo"
     BEGIN
-        BLOCK "080003a8"
+        BLOCK "040903a8"
         BEGIN
             VALUE "CompanyName", "Kaka"
             VALUE "FileDescription", "TODO: "
@@ -754,7 +754,7 @@ BEGIN
     END
     BLOCK "VarFileInfo"
     BEGIN
-        VALUE "Translation", 0x800, 936
+        VALUE "Translation", 0x409, 936
     END
 END
 
@@ -867,6 +867,8 @@ BEGIN
     IDS_DLG_PROGRAM_CONTROL_NAME "Name"
     IDS_DLG_PROGRAM_CONTROL_COMPANY "Company"
     IDS_DLG_PROGRAM_CONTROL_DESCRIPT "Description"
+    IDS_DLG_PROGRAM_CONTROL_DUPLICATE_ITEM "The item has been insert!"
+    IDS_DLG_PROGRAM_CONTROL_FULLPATH "Path"
 END
 
 #endif    // Ó¢Óï(ÃÀ¹ú) resources
