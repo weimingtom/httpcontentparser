@@ -6,13 +6,14 @@
 #include ".\basedlg.h"
 #include "afxcmn.h"
 #include ".\ListView\ListViewCtrlEx.h"
-
+#include <utility\strutility.h>
 #include <string>
 #include <map>
+#include <set>
 
 class CProgramList: public CListCtrlEx {
 public:
-	const CString GetToolTip(int, int, UINT nFlags, BOOL&) { return "";}
+	const CString GetToolTip(int, int, UINT nFlags, BOOL&);
 };
 
 class CDlgProgramControl : public CBaseDlg {
@@ -30,7 +31,7 @@ public:
 	virtual void OnShow();
 	virtual void restoreSetting();
 
-	void addNewFile(const CString &fullpath, const CString &filename);
+	int addNewFile(const CString &fullpath);
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV Ö§³Ö
 
@@ -43,7 +44,29 @@ public:
 	friend class CProgramList; 
 protected:
 	CProgramList m_list;
-	CImageList	m_imagelist;
+	CImageList	 m_imagelist;
+	
+protected:
+	typedef struct _tagItemData {
+		strutility::_tstring ProductName;
+		strutility::_tstring CompanyName;
+		strutility::_tstring Description;
+		strutility::_tstring fullPath;
+
+		struct _tagItemData(const TCHAR * name,  const TCHAR * companyName, const TCHAR *descript, const TCHAR * fullPath)
+		{
+			this->ProductName = name;
+			this->CompanyName = companyName;
+			this->Description= descript;
+			this->fullPath= fullPath;
+		}
+	}ITEMDATA;
+
+	typedef std::map<strutility::_tstring, ITEMDATA*> DATA_MAP;
+	DATA_MAP	listdata_;
+	
+	typedef std::set<strutility::_tstring> MODIFY_ITEMS;
+	MODIFY_ITEMS addedItems_, deleteItems_;
 public:
 	virtual BOOL OnInitDialog();
 };
