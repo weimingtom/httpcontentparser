@@ -203,6 +203,9 @@ copy .\release\nwrs.exe ..\..\release
 			<File
 				RelativePath=".\FilterSetting.rgs">
 			</File>
+			<File
+				RelativePath=".\ProgramControlSetting.rgs">
+			</File>
 		</Filter>
 		<Filter
 			Name="autogen"
@@ -385,6 +388,16 @@ copy .\release\nwrs.exe ..\..\release
 			</File>
 			<File
 				RelativePath=".\globalvariable.h">
+			</File>
+		</Filter>
+		<Filter
+			Name="programcontrol"
+			Filter="">
+			<File
+				RelativePath=".\ProgramControlSetting.cpp">
+			</File>
+			<File
+				RelativePath=".\ProgramControlSetting.h">
 			</File>
 		</Filter>
 		<File
