@@ -1,6 +1,9 @@
 #pragma once
 #include "afxwin.h"
 
+#define SUCCESS_APPLY	0
+#define FAILED_APPLY		-1
+
 class CBaseDlg : public CDialog {
 public:
 	CBaseDlg(UINT uTemplate, CWnd *pParent);

@@ -333,7 +333,7 @@ void CMainUIDlg::OnBnClickedMainCancel()
 void CMainUIDlg::OnBnClickedApply()
 {
 	ASSERT (NULL != m_curDlg);
-	if ( -1 == m_curDlg->Apply()) {
+	if ( FAILED_APPLY == m_curDlg->Apply()) {
 		m_curDlg->Restore();
 		return;
 	}
