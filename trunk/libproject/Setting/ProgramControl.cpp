@@ -13,7 +13,12 @@ bool ProgramControl::check(const strutility::_tstring & fullpath) {
 	if (false == isEnabled())
 		return true;
 
-	return true;
+	PROGRAM_INFO::const_iterator iter = data_.find(fullpath);
+	if (data_.end() == iter) {
+		return true;
+	} else {
+		return false;
+	}
 }
 
 int ProgramControl::addItem(const strutility::_tstring &fullpath) {
