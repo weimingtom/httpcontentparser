@@ -3,6 +3,7 @@
 #include "stdafx.h"
 #include "AppControl.h"
 #include ".\globalvariable.h"
+#include <com\resultvalue.h>
 #include <programcontrol.h>
 #include <comdef.h>
 #include <utility\strutility.h>
@@ -19,24 +20,30 @@ STDMETHODIMP CAppControl::RemoveItem(BSTR path) {
 	return S_OK;
 }
 
-STDMETHODIMP CAppControl::GetFirstItem(BSTR* path) {
+STDMETHODIMP CAppControl::GetFirstItem(BSTR* path, LONG *hasValue) {
 	ProgramControl::FILEINFO * fileinfo;
 	strutility::_tstring fullpath;
 	int result = g_configuration.getProgramControl()->getFirstItem(&fullpath, &fileinfo);
-	if (0 != result)
+	if (0 != result) {
+		*hasValue =SELF_COM_SUCCEED;;
 		*path = _bstr_t(fullpath.c_str());
-	else
+	} 	else {
 		*path = _bstr_t("");
+		*hasValue = SELF_COM_FAILED;
+	}
 	return S_OK;
 }
 
-STDMETHODIMP CAppControl::GetNextItem(BSTR cur, BSTR* nxt) {
+STDMETHODIMP CAppControl::GetNextItem(BSTR cur, BSTR* nxt, LONG * hasValue) {
 	ProgramControl::FILEINFO * fileinfo;
 	strutility::_tstring fullpath;
 	int result = g_configuration.getProgramControl()->getNextItem((TCHAR*)_bstr_t(cur), &fullpath, &fileinfo);
-	if (0 != result) 
+	if (0 != result) {
 		*nxt = _bstr_t(fullpath.c_str());
-	else
+		*hasValue = SELF_COM_SUCCEED;
+	}	else {
 		*nxt = _bstr_t("");
+		*hasValue = SELF_COM_FAILED;
+	}
 	return S_OK;
 }

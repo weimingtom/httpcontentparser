@@ -204,8 +204,8 @@ interface IProgramControlSetting : IDispatch{
 ]
 interface IAppControl : IDispatch{
 	[id(1), helpstring("Method AddNewItem")] HRESULT AddNewItem([in] BSTR path);
-	[id(2), helpstring("Method GetFirstItem")] HRESULT GetFirstItem([out,retval] BSTR* path);
-	[id(3), helpstring("Method GetNextItem")] HRESULT GetNextItem([in] BSTR cur, [out] BSTR* nxt);
+	[id(2), helpstring("Method GetFirstItem")] HRESULT GetFirstItem([out] BSTR* path,  [out]LONG * result);
+	[id(3), helpstring("Method GetNextItem")] HRESULT GetNextItem([in] BSTR cur, [out] BSTR* nxt, [out]LONG * result);
 	[id(4), helpstring("Method RemoveItem")] HRESULT RemoveItem([in] BSTR path);
 };
 [

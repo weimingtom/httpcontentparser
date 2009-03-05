@@ -40,9 +40,9 @@ END_COM_MAP()
 
 public:
 	STDMETHOD(AddNewItem)(BSTR path);
-	STDMETHOD(GetFirstItem)(BSTR* path);
-	STDMETHOD(GetNextItem)(BSTR cur, BSTR* nxt);
 	STDMETHOD(RemoveItem)(BSTR path);
+	STDMETHOD(GetFirstItem)(BSTR* path, LONG * hasValue);
+	STDMETHOD(GetNextItem)(BSTR cur, BSTR* nxt, LONG *hasValue);
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(AppControl), CAppControl)
