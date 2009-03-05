@@ -44,7 +44,8 @@
 				Name="VCPreBuildEventTool"
 				CommandLine="copy .\apputility.h ..\..\include
 copy .\AppInstallValidate.h ..\..\include
-copy .\Fileinfo.h ..\..\include"/>
+copy .\Fileinfo.h ..\..\include
+"/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
 			<Tool
@@ -90,7 +91,8 @@ copy .\release\Apputility.lib ..\..\lib\Apputility.lib
 				Name="VCPreBuildEventTool"
 				CommandLine="copy .\apputility.h ..\..\include
 copy .\AppInstallValidate.h ..\..\include
-copy .\Fileinfo.h ..\..\include"/>
+copy .\Fileinfo.h ..\..\include
+"/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
 			<Tool
@@ -113,9 +115,6 @@ copy .\Fileinfo.h ..\..\include"/>
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
 			<File
-				RelativePath=".\FileInfo.cpp">
-			</File>
-			<File
 				RelativePath=".\stdafx.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
@@ -135,9 +134,6 @@ copy .\Fileinfo.h ..\..\include"/>
 			Name="Í·ÎÄ¼þ"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
-			<File
-				RelativePath=".\FileInfo.h">
-			</File>
 			<File
 				RelativePath=".\stdafx.h">
 			</File>
@@ -185,6 +181,16 @@ copy .\Fileinfo.h ..\..\include"/>
 			</File>
 			<File
 				RelativePath=".\apputility.h">
+			</File>
+		</Filter>
+		<Filter
+			Name="FileInfo"
+			Filter="">
+			<File
+				RelativePath=".\FileInfo.cpp">
+			</File>
+			<File
+				RelativePath=".\FileInfo.h">
 			</File>
 		</Filter>
 		<File

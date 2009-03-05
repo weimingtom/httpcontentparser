@@ -77,8 +77,8 @@ void CFileInfo::getInformation() {
 	}
 
 	// ªÒ»°Õº±»
-	SHFILEINFO  info;
-	SHGetFileInfo(filename_.c_str(), 0 , &info, sizeof(info), SHGFI_SMALLICON);
+	SHFILEINFO  info = {0};
+	SHGetFileInfo(filename_.c_str(), 0 , &info, sizeof(info), SHGFI_ICON);
 	hIcon_ = info.hIcon;
 }
 
