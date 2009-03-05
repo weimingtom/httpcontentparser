@@ -64,6 +64,7 @@
 #define IDB_BITMAP_CHECKMARK            139
 #define IDS_DLG_PROGRAM_CONTROL_FULLPATH 139
 #define IDD_DLG_TEXT                    140
+#define IDS_COM_ERRO_COCREATE_FIALED    140
 #define IDD_DLG_OPTION                  141
 #define IDD_DLG_TOOLS                   142
 #define IDD_DLG_EYECARE                 144

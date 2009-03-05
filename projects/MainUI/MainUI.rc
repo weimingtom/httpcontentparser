@@ -869,6 +869,7 @@ BEGIN
     IDS_DLG_PROGRAM_CONTROL_DESCRIPT "Description"
     IDS_DLG_PROGRAM_CONTROL_DUPLICATE_ITEM "The item has been insert!"
     IDS_DLG_PROGRAM_CONTROL_FULLPATH "Path"
+    IDS_COM_ERRO_COCREATE_FIALED "Launch Service Failed!"
 END
 
 #endif    // Ó¢Óï(ÃÀ¹ú) resources
