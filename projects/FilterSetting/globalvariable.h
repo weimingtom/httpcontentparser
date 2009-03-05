@@ -18,5 +18,4 @@ extern RegisterInfo g_registerInfo;
 extern  SeachKeywordUtil g_searchwordUtil;
 extern WebsitesUtil g_websitesUtil;
 
-
 #endif  // _FILTER_SETTING_GLOBALVARIABLE_H__

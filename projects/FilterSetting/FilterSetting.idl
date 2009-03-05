@@ -181,6 +181,20 @@ interface IWebContentRecord : IDispatch{
 	[id(5), helpstring("Method GetNextWebSite")] HRESULT GetNextWebSite([in] BSTR cur, [out] BSTR* keyword, [out] LONG* times, [out] LONG* hight, [out] LONG* low);
 };
 [
+	object,
+	uuid(F502C5DE-1DF4-4331-8949-A0F326BF5CA0),
+	dual,
+	nonextensible,
+	helpstring("IProgramControlSetting 接口"),
+	pointer_default(unique)
+]
+interface IProgramControlSetting : IDispatch{
+	[id(1), helpstring("方法AddNewItem")] HRESULT AddNewItem([in] BSTR path);
+	[id(2), helpstring("方法GetFirstItem")] HRESULT GetFirstItem([out,retval] BSTR* path);
+	[id(3), helpstring("方法GetNextItem")] HRESULT GetNextItem([in] BSTR cur, [out] BSTR* nxt);
+	[id(4), helpstring("方法RemoveItem")] HRESULT RemoveItem([in] BSTR path);
+};
+[
 	uuid(42F932B5-F5CB-4F0D-8925-1B6BE5FECD1B),
 	version(1.0),
 	helpstring("FilterSetting 1.0 ClassLibrary")
@@ -268,5 +282,13 @@ library FilterSettingLib {
 	coclass WebContentRecord
 	{
 		[default] interface IWebContentRecord;
+	};
+	[
+		uuid(3A4C72E5-63A5-44F6-B8C9-19D607500AF7),
+		helpstring("ProgramControlSetting Class")
+	]
+	coclass ProgramControlSetting
+	{
+		[default] interface IProgramControlSetting;
 	};
 };
