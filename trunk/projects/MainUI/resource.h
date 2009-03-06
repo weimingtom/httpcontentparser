@@ -108,9 +108,10 @@
 #define IDI_TREE_BLACK_DNS              182
 #define IDI_TREE_SCREENSHOT             183
 #define IDI_TREE_DISCONNECT             184
-#define IDI_TREE_TOOLS                  185
-#define IDI_ICON1                       186
 #define IDI_TREE_EYECARE                186
+#define IDI_TREE_TOOLS1                 187
+#define IDI_TREE_HOME                   187
+#define IDI_TREE_TOOLS                  188
 #define IDC_TREE_NAVIG                  1000
 #define IDS_TREE_ROOT                   1001
 #define IDS_TREE_DNS_RULE               1002
@@ -281,7 +282,7 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        187
+#define _APS_NEXT_RESOURCE_VALUE        189
 #define _APS_NEXT_COMMAND_VALUE         32809
 #define _APS_NEXT_CONTROL_VALUE         1115
 #define _APS_NEXT_SYMED_VALUE           112

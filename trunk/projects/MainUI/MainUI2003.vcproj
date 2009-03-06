@@ -225,6 +225,12 @@
 				RelativePath=".\res\history.ico">
 			</File>
 			<File
+				RelativePath=".\res\Home.ico">
+			</File>
+			<File
+				RelativePath=".\res\icon3.ico">
+			</File>
+			<File
 				RelativePath=".\res\MainUI.ico">
 			</File>
 			<File
