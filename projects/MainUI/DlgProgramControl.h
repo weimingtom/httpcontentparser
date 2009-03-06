@@ -6,7 +6,9 @@
 #include ".\basedlg.h"
 #include "afxcmn.h"
 #include ".\ListView\ListViewCtrlEx.h"
+#include ".\globalvariable.h"
 #include <utility\strutility.h>
+#include <fileinfo.h>
 #include <string>
 #include <map>
 #include <set>
@@ -31,20 +33,24 @@ public:
 	virtual void OnShow();
 	virtual void restoreSetting();
 
-	int addNewFile(const CString &fullpath);
+	int addNewFile(const CFileInfo &fileinfo);
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 支持
 
 	DECLARE_MESSAGE_MAP()
 public:
 	afx_msg void OnBnClickedBtnAdd();
+	afx_msg void OnBnClickedBtnDel();
 	afx_msg void OnBnClickedBtnSet();
+	virtual BOOL OnInitDialog();
 
 	// 给出提示
 	friend class CProgramList; 
 protected:
 	CProgramList m_list;
 	CImageList	 m_imagelist;
+
+	void resetContent();
 	
 protected:
 	typedef struct _tagItemData {
@@ -64,11 +70,18 @@ protected:
 
 	typedef std::map<strutility::_tstring, ITEMDATA*> DATA_MAP;
 	DATA_MAP	listdata_;
+	// 移除已路径path相关的数据
+	void removeItemData(const CString &path);
 	
-	typedef std::set<strutility::_tstring> MODIFY_ITEMS;
-	MODIFY_ITEMS addedItems_, deleteItems_;
-public:
-	virtual BOOL OnInitDialog();
+	// 等待被删除的项与等待被添加的项
+	// key保存的是被删除项的路径, 而value是保存的原来所在的list的索引
+	typedef std::map<strutility::_tstring, int> MODIFY_ITEMS;
+	MODIFY_ITEMS  deleteItems_;
+	MODIFY_ITEMS addedItems_;
+protected:
+	//  执行删除与添加
+	void executeDelete(IAppControl *pSetting);
+	void executeAdd(IAppControl *pSetting);
 };
 
 
