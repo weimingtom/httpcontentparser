@@ -107,6 +107,9 @@ protected:
 	afx_msg void OnNMClickTreeNavig(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnTvnSelchangedTreeNavig(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg LRESULT OnHotKey(WPARAM wParam, LPARAM lParam);
+	
+	afx_msg void OnTimer(UINT nIDEvent);
+	afx_msg void OnLButtonDblClk(UINT nFlags, CPoint point);
 
 	// 按钮项
 	afx_msg void OnBnClickedOk();
@@ -129,11 +132,11 @@ protected:
 	// 根据当前状态初始化TrayMenu
 	// 此函数会在每次应用程序启动及状态切换时调用
 	void UpdateUIStateByModel();
+
+	// 根据当前模式，调整图标
+	void AdjustIcon();
 private:
 	void ShowMainUI();
 	void HideMainUI();
 	BOOL isShown() const { return m_bShown;}
-public:
-	afx_msg void OnTimer(UINT nIDEvent);
-	afx_msg void OnLButtonDblClk(UINT nFlags, CPoint point);
 };

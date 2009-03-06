@@ -249,6 +249,12 @@
 				RelativePath=".\res\record.ico">
 			</File>
 			<File
+				RelativePath=".\res\shield.ico">
+			</File>
+			<File
+				RelativePath=".\res\shield_delete.ico">
+			</File>
+			<File
 				RelativePath=".\res\sym7_0.ico">
 			</File>
 			<File

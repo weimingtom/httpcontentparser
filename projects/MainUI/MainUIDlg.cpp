@@ -15,6 +15,8 @@
 #include <apputility.h>
 #include <comdef.h>
 
+#define RIGTH_TOP_FONT_NAME			TEXT("MS Shell Dlg")
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -108,6 +110,14 @@ void CMainUIDlg::OnNMClickTreeNavig(NMHDR *pNMHDR, LRESULT *pResult)
 	*pResult = 0;
 }
 
+void CMainUIDlg::AdjustIcon() {
+	if (Services::isParentModel() == true) {
+		m_sysTray.SetIcon(AfxGetApp()->LoadIcon(IDI_MODEL_PARENT));
+	} else {
+		m_sysTray.SetIcon(AfxGetApp()->LoadIcon(IDI_MODEL_PROTECTED));
+	}
+}
+
 // 设置状态
 void CMainUIDlg::UpdateUIStateByModel() {
 	CMenu *pMenu = m_trayMenu.GetSubMenu(0);
@@ -144,8 +154,9 @@ void CMainUIDlg::UpdateUIStateByModel() {
 void CMainUIDlg::setupTrayMenu() {
 	// system Tray
 	m_trayMenu.LoadMenu(IDC_MENU_TRAY_PARENT);
-	m_sysTray.Create(this,10200, CALLMESSAGE, AfxGetApp()->LoadIcon(IDR_MAINFRAME),_T("Hola"));
+	m_sysTray.Create(this,10200, CALLMESSAGE, AfxGetApp()->LoadIcon(IDI_MODEL_PROTECTED),_T(""));
 	m_sysTray.SetSysMenu(&m_trayMenu);
+	AdjustIcon();
 }
 
 BOOL CMainUIDlg::OnInitDialog()
@@ -249,10 +260,14 @@ void CMainUIDlg::OnMainParents()
 	} else {
 		ShowMainUI();
 	}
+
+	// 调整图标
+	AdjustIcon();
 }
 void CMainUIDlg::OnMainChildren()
 {
 	Services::switchChildModel();
+	AdjustIcon();
 }
 
 // 相应热键消息
@@ -279,6 +294,8 @@ LRESULT CMainUIDlg::OnHotKey(WPARAM wParam, LPARAM lParam) {
 		}
 	}
 
+	// 调整图标
+	AdjustIcon();
 	return -1;
 }
 
@@ -348,12 +365,12 @@ void CMainUIDlg::setControlsFonts() {
 	memset(&lf, 0, sizeof(LOGFONT));
 	lf.lfHeight = 14; 
 	lf.lfWeight = FW_LIGHT;
-	strcpy(lf.lfFaceName, "宋体");
+	strcpy(lf.lfFaceName, RIGTH_TOP_FONT_NAME);
 	m_fontTree.CreateFontIndirect(&lf); 
 	GetDlgItem(IDC_TREE_NAVIG)->SetFont(&m_fontTree);
 
 	memset(&lf, 0, sizeof(LOGFONT));
-	strcpy(lf.lfFaceName, "宋体");
+	strcpy(lf.lfFaceName, RIGTH_TOP_FONT_NAME);
 	lf.lfWeight = FW_BOLD;
 	lf.lfHeight = 18;
 	m_fontTitle.CreateFontIndirect(&lf); 
@@ -680,6 +697,8 @@ void CMainUIDlg::OnTimer(UINT nIDEvent)
 	if (isShown() &&Services::isParentModel() == false) {
 		HideMainUI();
 	}
+
+	AdjustIcon();
 	CDialog::OnTimer(nIDEvent);
 }
 
