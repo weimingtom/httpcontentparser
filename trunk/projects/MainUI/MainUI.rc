@@ -82,6 +82,8 @@ IDI_TREE_DISCONNECT     ICON                    "res\\disconnect.ico"
 IDI_TREE_EYECARE        ICON                    "res\\eyecare.ico"
 IDI_TREE_HOME           ICON                    "res\\Home.ico"
 IDI_TREE_TOOLS          ICON                    "res\\icon3.ico"
+IDI_MODEL_PROTECTED     ICON                    "res\\shield.ico"
+IDI_MODEL_PARENT        ICON                    "res\\shield_delete.ico"
 
 /////////////////////////////////////////////////////////////////////////////
 //
