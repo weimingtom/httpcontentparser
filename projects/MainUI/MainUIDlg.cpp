@@ -186,7 +186,6 @@ BOOL CMainUIDlg::OnInitDialog()
 
 	SetTimer(ID_TIMER, TIME_ESCPSE, NULL);
 	HideMainUI();
-
 	return TRUE;  // 除非设置了控件的焦点，否则返回 TRUE
 }
 
@@ -406,6 +405,12 @@ void CMainUIDlg::OnMainLockcomputer() {
 // 设置子对话框
 void CMainUIDlg::InitTreeNodes() {
 	// m_treeNavigation.DeleteAllItems();
+	// 初始化ImageList
+	m_imageList.Create(16, 16, ILC_COLOR24 | ILC_MASK, 50, 5);
+	m_imageList.Add(AfxGetApp()->LoadIcon(IDI_DEFAULT));
+	const int INDEX_TIME			= m_imageList.Add(AfxGetApp()->LoadIcon(IDI_TREE_TIME));
+	const int INDEX_OPTION	=m_imageList.Add(AfxGetApp()->LoadIcon(IDI_TREE_OPTION));
+	m_treeNavigation.SetImageList(&m_imageList, TVSIL_NORMAL);
 
 	CString strRoot;
 	strRoot.LoadString(IDS_TREE_ROOT);
@@ -414,7 +419,6 @@ void CMainUIDlg::InitTreeNodes() {
 	m_treeNavigation.SetItemData(hRoot, -1);
 
 	setRulesDlg();
-
 	setToolsDlg();
 
 	HTREEITEM hItem;
@@ -422,6 +426,7 @@ void CMainUIDlg::InitTreeNodes() {
 	// 规则对话框
 	strItem.LoadString(IDS_TREE_OPTIONS);
 	hItem = m_treeNavigation.InsertItem(strItem, hRoot);
+	m_treeNavigation.SetItemImage(hItem, INDEX_OPTION, INDEX_OPTION);
 	m_treeNavigation.SetItemData(hItem, IDS_TREE_OPTIONS);
 
 	//strItem.LoadString(IDS_TREE_HELP);
@@ -466,41 +471,59 @@ void CMainUIDlg::initDlgs() {
 }
 
 void CMainUIDlg::setToolsDlg() {
+	const int INDEX_TOOLS	= m_imageList.Add(AfxGetApp()->LoadIcon(IDI_TREE_TOOLS));
+	const int INDEX_APP = m_imageList.Add(AfxGetApp()->LoadIcon(IDI_TREE_APPCONTROL));
+	const int INDEX_SCREEN = m_imageList.Add(AfxGetApp()->LoadIcon(IDI_TREE_SCREENSHOT));
+	const int INDEX_DISCONNECT = m_imageList.Add(AfxGetApp()->LoadIcon(IDI_TREE_DISCONNECT));
+	const int INDEX_EYECARE = m_imageList.Add(AfxGetApp()->LoadIcon(IDI_TREE_EYECARE));
+
 	CString strItem;
 	strItem.LoadString(IDS_TREE_LEV1_TOOLS);
 	HTREEITEM hItemTools = m_treeNavigation.InsertItem(strItem, m_treeNavigation.GetRootItem());
 	m_treeNavigation.SetItemData(hItemTools, IDS_TREE_LEV1_RULES);
+	m_treeNavigation.SetItemImage(hItemTools, INDEX_TOOLS, INDEX_TOOLS);
 
 	HTREEITEM hItem;
 	// 视力保护
 	strItem.LoadString(IDS_TREE_EYECARE);
 	hItem = m_treeNavigation.InsertItem(strItem, hItemTools);
 	m_treeNavigation.SetItemData(hItem, IDS_TREE_EYECARE);
+	m_treeNavigation.SetItemImage(hItem, INDEX_EYECARE, INDEX_EYECARE);
 
 	// 应用程序控制
 	strItem.LoadString(IDS_PROGRAM_CONTROL);
 	hItem = m_treeNavigation.InsertItem(strItem, hItemTools);
 	m_treeNavigation.SetItemData(hItem, IDS_PROGRAM_CONTROL);
+	m_treeNavigation.SetItemImage(hItem, INDEX_APP, INDEX_APP);
 
 	// 屏幕记录
 	strItem.LoadString(IDS_TREE_SCREEN_SAVE);
 	hItem = m_treeNavigation.InsertItem(strItem, hItemTools);
 	m_treeNavigation.SetItemData(hItem, IDS_TREE_SCREEN_SAVE);
+	m_treeNavigation.SetItemImage(hItem, INDEX_SCREEN, INDEX_SCREEN);
 
 	// 上网时间
 	strItem.LoadString(IDS_TREE_ONLINE_HOUR);
 	hItem = m_treeNavigation.InsertItem(strItem, hItemTools);
 	m_treeNavigation.SetItemData(hItem, IDS_TREE_ONLINE_HOUR);
+	m_treeNavigation.SetItemImage(hItem, INDEX_DISCONNECT, INDEX_DISCONNECT);
 
 	// 展开
 	m_treeNavigation.Expand(hItemTools, TVE_EXPAND );
 }
 
 void CMainUIDlg::setRulesDlg() {
+	const int INDEX_WEB	= m_imageList.Add(AfxGetApp()->LoadIcon(IDI_TREE_WEB));
+	const int INDEX_HISTORY = m_imageList.Add(AfxGetApp()->LoadIcon(IDI_TREE_HISTORY));
+	const int INDEX_SEARCH = m_imageList.Add(AfxGetApp()->LoadIcon(IDI_TREE_SEACH));
+	const int INDEX_BLACK	= m_imageList.Add(AfxGetApp()->LoadIcon(IDI_TREE_BLACK_DNS));
+	const int INDEX_WHITE = m_imageList.Add(AfxGetApp()->LoadIcon(IDI_TREE_WHITE_DNS));
+
 	CString strItem;
 	strItem.LoadString(IDS_TREE_LEV1_RULES);
 	HTREEITEM hItemRules = m_treeNavigation.InsertItem(strItem, m_treeNavigation.GetRootItem());
 	m_treeNavigation.SetItemData(hItemRules, IDS_TREE_LEV1_RULES);
+	m_treeNavigation.SetItemImage(hItemRules, INDEX_WEB, INDEX_WEB);
 
 	// 图像规则
 	HTREEITEM hItem;
@@ -512,22 +535,26 @@ void CMainUIDlg::setRulesDlg() {
 	strItem.LoadString(IDS_DNS_WHITE_LIST); 
 	hItem = m_treeNavigation.InsertItem(strItem, hItemRules);
 	m_treeNavigation.SetItemData(hItem, IDS_DNS_WHITE_LIST);
+	m_treeNavigation.SetItemImage(hItem, INDEX_WHITE, INDEX_WHITE);
 	
 	// 黑名单
 	strItem.LoadString(IDS_TREE_DNS_RULE); 
 	hItem = m_treeNavigation.InsertItem(strItem, hItemRules);
 	m_treeNavigation.SetItemData(hItem, IDS_TREE_DNS_RULE);
 	setCurDlg(IDS_TREE_DNS_RULE);
+	m_treeNavigation.SetItemImage(hItem, INDEX_BLACK, INDEX_BLACK);
 
 	// 搜索规则
 	strItem.LoadString(IDS_TREE_SEARCH_RULE); 
 	hItem = m_treeNavigation.InsertItem(strItem, hItemRules);
 	m_treeNavigation.SetItemData(hItem, IDS_TREE_SEARCH_RULE);
+	m_treeNavigation.SetItemImage(hItem, INDEX_SEARCH, INDEX_SEARCH);
 
 	// WebHistory
 	strItem.LoadString(IDS_TREE_WEB_HISTORY);
 	hItem = m_treeNavigation.InsertItem(strItem, hItemRules);
 	m_treeNavigation.SetItemData(hItem, IDS_TREE_WEB_HISTORY);
+	m_treeNavigation.SetItemImage(hItem, INDEX_HISTORY, INDEX_HISTORY);
 
 	m_treeNavigation.SelectItem(hItemRules);
 

@@ -168,13 +168,34 @@
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx"
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}">
 			<File
+				RelativePath=".\res\3.ico">
+			</File>
+			<File
+				RelativePath=".\res\6.ico">
+			</File>
+			<File
 				RelativePath=".\res\accessable.bmp">
+			</File>
+			<File
+				RelativePath=".\res\appcontrol.ico">
+			</File>
+			<File
+				RelativePath=".\res\blackwhiteside.ico">
 			</File>
 			<File
 				RelativePath=".\res\block.bmp">
 			</File>
 			<File
+				RelativePath=".\res\camera.ico">
+			</File>
+			<File
 				RelativePath=".\res\default.ico">
+			</File>
+			<File
+				RelativePath=".\res\disconnect.ico">
+			</File>
+			<File
+				RelativePath=".\res\eyecare.ico">
 			</File>
 			<File
 				RelativePath=".\res\guiarrowdown.ico">
@@ -201,6 +222,9 @@
 				RelativePath=".\res\hdrup.bmp">
 			</File>
 			<File
+				RelativePath=".\res\history.ico">
+			</File>
+			<File
 				RelativePath=".\res\MainUI.ico">
 			</File>
 			<File
@@ -210,7 +234,22 @@
 				RelativePath=".\res\MainUI.rc2">
 			</File>
 			<File
+				RelativePath=".\res\option.ico">
+			</File>
+			<File
 				RelativePath=".\res\optionmarks.bmp">
+			</File>
+			<File
+				RelativePath=".\res\record.ico">
+			</File>
+			<File
+				RelativePath=".\res\sym7_0.ico">
+			</File>
+			<File
+				RelativePath=".\res\tools.ico">
+			</File>
+			<File
+				RelativePath=".\res\whitewebsite.ico">
 			</File>
 		</Filter>
 		<Filter

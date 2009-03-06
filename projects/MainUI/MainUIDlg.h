@@ -55,8 +55,9 @@ protected:
 	void setToolsDlg();
 private:
 	CTreeCtrl m_treeNavigation;
+	CImageList	m_imageList;
+
 	void InitTreeNodes();		// 初始化树的节点
-	CImageList m_imageList;
 	void setCurDlg(const DWORD item);
 	void initDlgs();
 	void showDlg();
