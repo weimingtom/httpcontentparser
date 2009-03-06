@@ -142,8 +142,8 @@ BEGIN
 END
 
 IDD_MAINUI_DIALOG DIALOGEX 0, 0, 424, 271
-STYLE DS_SETFONT | DS_MODALFRAME | WS_MINIMIZEBOX | WS_POPUP | WS_VISIBLE | 
-    WS_CAPTION | WS_SYSMENU
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_MINIMIZEBOX | WS_POPUP | 
+    WS_VISIBLE | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_APPWINDOW
 CAPTION "MainUI"
 FONT 8, "MS Shell Dlg", 400, 0, 0x0
@@ -154,8 +154,7 @@ BEGIN
     LTEXT           "Title",IDC_RIGHT_TITLE,165,18,237,11
     CONTROL         "",IDC_STATIC,"Static",SS_BLACKFRAME,161,31,244,1
     CONTROL         "",IDC_TREE_NAVIG,"SysTreeView32",TVS_HASBUTTONS | 
-                    TVS_HASLINES | TVS_NOSCROLL | WS_TABSTOP,7,7,136,257,
-                    WS_EX_STATICEDGE
+                    TVS_NOSCROLL | WS_TABSTOP,7,7,136,257,WS_EX_STATICEDGE
     CONTROL         "",IDC_POSITION_RIGHT,"Static",SS_BLACKFRAME | NOT 
                     WS_VISIBLE,156,40,254,194
     PUSHBUTTON      "Apply",IDC_MAIN_APPLY,359,243,49,14
@@ -834,25 +833,25 @@ END
 
 STRINGTABLE 
 BEGIN
-    IDS_TREE_ROOT           "Main UI"
+    IDS_TREE_ROOT           "Family007"
     IDS_TREE_DNS_RULE       "DNS Black List"
     IDS_TREE_IMAGE_RULE     "Image Content"
     IDS_TREE_SEARCH_RULE    "Black Search Word"
     IDS_TREE_CONTENT_RULE   "Text Content"
-    IDS_TREE_ONLINE_HOUR    "Time"
+    IDS_TREE_ONLINE_HOUR    "Internet Time"
     IDS_TREE_HELP           "Help"
 END
 
 STRINGTABLE 
 BEGIN
     IDS_TREE_ABOUT          "About"
-    IDS_DNS_BLACK_LIST      "DNS Black List"
-    IDS_DNS_WHITE_LIST      "DNS White List"
+    IDS_DNS_BLACK_LIST      "Black Website List"
+    IDS_DNS_WHITE_LIST      "White Website List"
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_TREE_SCREEN_SAVE    "Screenshot"
+    IDS_TREE_SCREEN_SAVE    "Screen Snapshot"
     IDS_DLG_WEBSITES_NAME   "Web History"
     IDS_WEB_HISTORY_CLEAR   "Clear"
     IDS_WEB_HISTORY_VIEW_HISTORY "View the Website History"
@@ -876,7 +875,7 @@ BEGIN
     IDS_DLG_SEACHWORD_LAST_TIME "Latest Search Time"
     IDS_DLG_SEACHWORD_SEARCH_ENGINE "Search Engine"
     IDS_DLG_SEACHWORD_SEARCH_TIMES "Search Times"
-    IDS_DLG_WEBSITES        "websites"
+    IDS_DLG_WEBSITES        "Websites"
     IDS_DLG_WEBSITE_VISIT_TIMES "Visit count"
     IDS_DLG_WEBSITE_VISIT_LATEST_TIME "Latest visit"
     IDS_PROGRAM_CONTROL     "Application Control"
