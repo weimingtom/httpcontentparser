@@ -431,14 +431,9 @@ void CMainUIDlg::InitTreeNodes() {
 	m_treeNavigation.SetItemImage(hItem, INDEX_OPTION, INDEX_OPTION);
 	m_treeNavigation.SetItemData(hItem, IDS_TREE_OPTIONS);
 
-	//strItem.LoadString(IDS_TREE_HELP);
-	//hItem = m_treeNavigation.InsertItem(strItem, hRoot);
-	//m_treeNavigation.SetItemData(hItem, IDS_TREE_HELP);
-
 	strItem.LoadString(IDS_TREE_ABOUT);
 	hItem = m_treeNavigation.InsertItem(strItem, hRoot);
 	m_treeNavigation.SetItemData(hItem, IDS_TREE_ABOUT);
-
 
 	m_treeNavigation.Expand(hRoot, TVE_EXPAND);
 }
