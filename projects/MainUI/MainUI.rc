@@ -79,8 +79,9 @@ IDI_TREE_WHITE_DNS      ICON                    "res\\whitewebsite.ico"
 IDI_TREE_BLACK_DNS      ICON                    "res\\blackwhiteside.ico"
 IDI_TREE_SCREENSHOT     ICON                    "res\\camera.ico"
 IDI_TREE_DISCONNECT     ICON                    "res\\disconnect.ico"
-IDI_TREE_TOOLS          ICON                    "res\\tools.ico"
 IDI_TREE_EYECARE        ICON                    "res\\eyecare.ico"
+IDI_TREE_HOME           ICON                    "res\\Home.ico"
+IDI_TREE_TOOLS          ICON                    "res\\icon3.ico"
 
 /////////////////////////////////////////////////////////////////////////////
 //
