@@ -467,7 +467,6 @@ void CMainUIDlg::showDlg() {
 
 // 创建对话框
 void CMainUIDlg::initDlgs() {
-	m_dlgImageRules.Create(CDlgImageRule::IDD, this);
 	m_dlgOnlineHour.Create(CDlgOnlineHour::IDD, this);
 	m_dlgSearchRule.Create(CDlgSearchRule::IDD, this);
 	m_dlgDnsRule.Create(CDlgBlackDNSList::IDD, this);
@@ -540,11 +539,7 @@ void CMainUIDlg::setRulesDlg() {
 	m_treeNavigation.SetItemData(hItemRules, IDS_TREE_LEV1_RULES);
 	m_treeNavigation.SetItemImage(hItemRules, INDEX_WEB, INDEX_WEB);
 
-	// 图像规则
 	HTREEITEM hItem;
-	strItem.LoadString(IDS_TREE_IMAGE_RULE);
-	hItem = m_treeNavigation.InsertItem(strItem, hItemRules);
-	m_treeNavigation.SetItemData(hItem, IDS_TREE_IMAGE_RULE);
 
 	// Web 白名单
 	strItem.LoadString(IDS_DNS_WHITE_LIST); 
@@ -597,9 +592,6 @@ void CMainUIDlg::setCurDlg(const DWORD item) {
 			break;
 		case IDS_TREE_LEV1_RULES:
 			ChangeCurDlg(&m_lev1Rules);
-			break;
-		case IDS_TREE_IMAGE_RULE:
-			ChangeCurDlg(&m_dlgImageRules);
 			break;
 		case IDS_DNS_WHITE_LIST:
 			ChangeCurDlg(&m_dlgWhiteDNS);

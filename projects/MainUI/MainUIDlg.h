@@ -71,7 +71,7 @@ private:
 	// dlgs
 	CDlgEyecare	m_dlgEyecare;
 	CDlgOptions m_dlgOptions;
-	CDlgImageRule m_dlgImageRules;
+	// CDlgImageRule m_dlgImageRules;
 	CDlgOnlineHour m_dlgOnlineHour;
 	CDlgSearchRule m_dlgSearchRule;
 	CDlgScreenshot m_dlgScreenSaver;
