@@ -14,13 +14,6 @@
 // CDlgProgramControl 对话框
 
 const CString CProgramList::GetToolTip(int nItem, int nSubItem, UINT nFlags, BOOL&) {
-	CDlgProgramControl::ITEMDATA * data  = (CDlgProgramControl::ITEMDATA*)this->GetItemData(nItem);
-	ASSERT(NULL != data);
-	CString name, companyName, description, fullPath;
-	name.Format("Product Name : %s\n", data->ProductName.c_str() );
-	companyName.Format(data->CompanyName.length() != 0 ?"Company Name : %s\n", data->CompanyName.c_str() : "");
-	description.Format(data->Description.length() != 0 ? "Descripton : %s\n", data->Description.c_str() : "");
-	fullPath.Format("Path : %s\n", data->fullPath.c_str() );
 	return "";
 }
 
@@ -31,18 +24,59 @@ CDlgProgramControl::CDlgProgramControl(CWnd* pParent /*=NULL*/)
 }
 
 CDlgProgramControl::~CDlgProgramControl() {
-	DATA_MAP::iterator iter = listdata_.begin();
-	for (; iter != listdata_.end(); ++iter) {
-		if (NULL != iter->second) {
-			delete iter->second;
-		}
-	}
+	resetContent();
 }
 
 void CDlgProgramControl::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_LIST_PROGRAM, m_list);
+}
+
+void CDlgProgramControl::removeItemData(const CString &path) {
+	DATA_MAP::iterator eraserIter = listdata_.find((LPCTSTR)path);
+	if (listdata_.end() != eraserIter) {
+		delete eraserIter->second;
+		listdata_.erase(eraserIter);
+	}
+}
+
+// 执行删除的过程
+void CDlgProgramControl::executeDelete(IAppControl *pSetting) {
+	MODIFY_ITEMS::iterator iter = deleteItems_.begin();
+	for (; iter != deleteItems_.end(); ++iter) {
+		// 从map中删除数据
+		removeItemData(iter->first.c_str());
+		
+		// 从COM服务中删除
+		pSetting->RemoveItem((BSTR)_bstr_t(iter->first.c_str()));
+	}
+
+	deleteItems_.clear();
+}
+
+// 执行添加的过程
+void CDlgProgramControl::executeAdd(IAppControl *pSetting) {
+	// 将新增的项加入进去
+	MODIFY_ITEMS::iterator iter = addedItems_.begin();
+	for (; iter != addedItems_.end(); ++iter) {
+		pSetting->AddNewItem((BSTR)_bstr_t(iter->first.c_str()));
+	}
+	addedItems_.clear();
+}
+
+void CDlgProgramControl::resetContent() {
+	// 冲值修改项
+	addedItems_.clear();
+	deleteItems_.clear();
+
+	DATA_MAP::iterator iter = listdata_.begin();
+	for (; iter != listdata_.end(); ++iter) {
+		if (NULL != iter->second) {
+			delete iter->second;
+		}
+	}
+	listdata_.clear();
 }
 
 int CDlgProgramControl::OnApply() {
@@ -56,21 +90,18 @@ int CDlgProgramControl::OnApply() {
 			return 0;
 		}
 
-		// 将新增的项加入进去
-		MODIFY_ITEMS::iterator iter = addedItems_.begin();
-		for (; iter != addedItems_.end(); ++iter) {
-			pSetting->AddNewItem((BSTR)_bstr_t(iter->c_str()));
-		}
-		addedItems_.clear();
+		executeAdd(pSetting);
+		executeDelete(pSetting);
 
-		iter = deleteItems_.begin();
-		for (; iter != deleteItems_.end(); ++iter) {
-			pSetting->RemoveItem((BSTR)_bstr_t(iter->c_str()));
-		}
-		addedItems_.clear();
+		pSetting->Release();
+		pSetting = NULL;
 
 		return SUCCESS_APPLY;
 	} catch (_com_error &) {
+		AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
+		return FAILED_APPLY;
+	} catch (...) {
+		AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
 		return FAILED_APPLY;
 	}
 }
@@ -79,8 +110,6 @@ void CDlgProgramControl::OnShow() {
 }
 void CDlgProgramControl::restoreSetting() {
 	try {
-		m_list.DeleteAllItems();
-
 		AutoInitInScale _auto;
 
 		// 从COM服务器上获取数据
@@ -90,12 +119,17 @@ void CDlgProgramControl::restoreSetting() {
 			AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONEXCLAMATION);
 			return ;
 		}
+	
+		// 清空内容
+		resetContent();
+		m_list.DeleteAllItems();
 
 		BSTR cur, next;
 		LONG result;
 		pSetting->GetFirstItem(&cur, &result);
 		while (SeflComReturnValueSucc(result)) {
-			addNewFile((TCHAR*)_bstr_t(cur));
+			CFileInfo fileinfo((TCHAR*)_bstr_t(cur));
+			addNewFile(fileinfo);
 			pSetting->GetNextItem(cur, &next, &result);
 
 			//  cure不再使用
@@ -103,21 +137,20 @@ void CDlgProgramControl::restoreSetting() {
 			cur = next;
 		}
 
-		// 冲值修改项
-		addedItems_.clear();
-		deleteItems_.clear();
+		pSetting->Release();
+		pSetting = NULL;
 	} catch (_com_error &) {
+		AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
+	} catch (...) {
+		AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
 	}
 }
 
-int CDlgProgramControl::addNewFile(const CString &fullpath) {
+int CDlgProgramControl::addNewFile(const CFileInfo &info) {
 	// 如果已经存在，则返回-1
-	if (listdata_.find((LPCTSTR)fullpath) != listdata_.end()) {
+ 	if (listdata_.find(info.getFilePath()) != listdata_.end()) {
 		return -1;
 	}
-
-	// 获取信息
-	CFileInfo info((LPCTSTR)fullpath);
 
 	// 获取图标
 	HICON hIcon = info.getICON();
@@ -132,7 +165,7 @@ int CDlgProgramControl::addNewFile(const CString &fullpath) {
 	const TCHAR * displayName = NULL;
 	if (info.getProductName().length() == 0) {
 		TCHAR driver[10], dir[MAX_PATH], name[MAX_PATH], ext[MAX_PATH];
-		_splitpath((LPCTSTR)fullpath, driver, dir, name, ext);
+		_splitpath(info.getFilePath().c_str(), driver, dir, name, ext);
 		displayName = name;
 	} else {
 		displayName = info.getProductName().c_str();
@@ -141,18 +174,19 @@ int CDlgProgramControl::addNewFile(const CString &fullpath) {
 	int iItemIndex = iItemIndex = m_list.InsertItem(m_list.GetItemCount(), displayName, iconIndex);
 	m_list.SetItemText(iItemIndex, 1, info.getCompanyName().c_str());
 	m_list.SetItemText(iItemIndex, 2, info.getDescription().c_str());
-	m_list.SetItemText(iItemIndex, 3, fullpath);
+	m_list.SetItemText(iItemIndex, 3, info.getFilePath().c_str());
 
-	ITEMDATA *pData = new ITEMDATA(displayName, info.getCompanyName().c_str(), info.getDescription().c_str(), (LPCTSTR)fullpath);
-	listdata_.insert(std::make_pair(fullpath, pData));
+	ITEMDATA *pData = new ITEMDATA(displayName, info.getCompanyName().c_str(), info.getDescription().c_str(), info.getFilePath().c_str());
+	listdata_.insert(std::make_pair(info.getFilePath(), pData));
 	m_list.SetItemData(iItemIndex, (DWORD_PTR)pData);
 
-	addedItems_.insert((LPCTSTR)fullpath);
-	return 0;
+	return iItemIndex;
 }
+
 BEGIN_MESSAGE_MAP(CDlgProgramControl, CDialog)
 	ON_BN_CLICKED(IDC_BTN_ADD, OnBnClickedBtnAdd)
 	ON_BN_CLICKED(IDC_BTN_SET, OnBnClickedBtnSet)
+	ON_BN_CLICKED(IDC_BTN_DEL, OnBnClickedBtnDel)
 END_MESSAGE_MAP()
 
 
@@ -165,9 +199,13 @@ void CDlgProgramControl::OnBnClickedBtnAdd()
 
 	CFileDialog dlg(TRUE, NULL, NULL, OFN_FILEMUSTEXIST, FILE_FILTER);
 	if (IDOK == dlg.DoModal()) {
-		if (0 != addNewFile(dlg.GetPathName())) {
+			// 获取信息
+		CFileInfo info((LPCTSTR)dlg.GetPathName());
+		int iIndex = addNewFile(info);
+		if (iIndex < 0) {
 			AfxMessageBox(IDS_DLG_PROGRAM_CONTROL_DUPLICATE_ITEM, MB_OK | MB_ICONEXCLAMATION);
 		} else {
+			addedItems_.insert(std::make_pair((LPCTSTR)dlg.GetPathName(), iIndex));
 			SetModify(true);
 		}
 	}
@@ -224,7 +262,27 @@ BOOL CDlgProgramControl::OnInitDialog()
 	m_list.KeepLabelLeft ();
 	m_list.EnableSubItemTips  ();
 
+	// 载入设置
 	Restore();
 
 	return TRUE;  // return TRUE unless you set the focus to a control
+}
+
+void CDlgProgramControl::OnBnClickedBtnDel()
+{
+	POSITION pos = m_list.GetFirstSelectedItemPosition();
+	if (pos) {
+		// 获取选中的项，
+		int nItem = m_list.GetNextSelectedItem(pos);
+		if (nItem != -1) {
+			m_list.DeleteItem(nItem);	// 从ListCtrl中删除当前想
+
+			// 将待删除的项保存起来，一边在用户按下Apply或者OK按钮时执行删除
+			ITEMDATA * data = (ITEMDATA*)m_list.GetItemData(nItem);
+			if (NULL != data) {
+				deleteItems_.insert(std::make_pair(data->fullPath, nItem));
+				SetModify(true);
+			}
+		}
+	} 
 }
