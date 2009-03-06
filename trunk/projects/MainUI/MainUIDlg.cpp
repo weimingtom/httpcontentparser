@@ -97,6 +97,7 @@ BEGIN_MESSAGE_MAP(CMainUIDlg, CDialog)
 	ON_WM_DESTROY()
 	ON_WM_INITMENUPOPUP()
 	ON_WM_TIMER()
+	ON_WM_LBUTTONDBLCLK()
 END_MESSAGE_MAP()
 
 // CMainUIDlg 消息处理程序
@@ -654,12 +655,14 @@ void CMainUIDlg::OnDestroy()
 
 void CMainUIDlg::ShowMainUI() {
 	ShowWindow(SW_SHOW);
-	::SetWindowPos(GetSafeHwnd(), HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
+	::SetWindowPos(GetSafeHwnd(), CWnd::wndTop, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
+	SetForegroundWindow ();
 	m_bShown = TRUE;
 }
 void CMainUIDlg::HideMainUI() {
 	ShowWindow(SW_HIDE);
-	::SetWindowPos(GetSafeHwnd(), HWND_BOTTOM, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
+	::SetWindowPos(GetSafeHwnd(), CWnd::wndBottom, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
+	
 	m_bShown = FALSE;
 }
 
@@ -678,4 +681,18 @@ void CMainUIDlg::OnTimer(UINT nIDEvent)
 		HideMainUI();
 	}
 	CDialog::OnTimer(nIDEvent);
+}
+
+void CMainUIDlg::OnLButtonDblClk(UINT nFlags, CPoint point)
+{
+	// 如果运行于父模式之下
+	if (Services::isParentModel() == true) {
+		if (!isShown()) {
+			ShowMainUI();
+		} else {
+			// 如果没有显示则激活
+			HideMainUI();
+		}
+	}
+	CDialog::OnLButtonDblClk(nFlags, point);
 }

@@ -23,6 +23,7 @@
 #include "stdafx.h"
 #include "GuiLib.h"
 #include "guisystray.h"
+#include ".\guisystray.h"
 
 
 #ifdef _DEBUG
@@ -52,6 +53,7 @@ CGuiSysTray::~CGuiSysTray()
 
 BEGIN_MESSAGE_MAP(CGuiSysTray, CWnd)
 	ON_WM_TIMER()
+	ON_WM_LBUTTONDBLCLK()
 END_MESSAGE_MAP()
 
 // CGuiSysTray message handlers
@@ -181,3 +183,12 @@ void CGuiSysTray::OnTimer(UINT nIDEvent)
 	CWnd::OnTimer(nIDEvent);
 }
 
+
+void CGuiSysTray::OnLButtonDblClk(UINT nFlags, CPoint point)
+{
+	// 如果来自SysTray
+ 	if (0 == point.x && 0 == point.y) {
+
+	}
+	CWnd::OnLButtonDblClk(nFlags, point);
+}
