@@ -135,4 +135,5 @@ private:
 	BOOL isShown() const { return m_bShown;}
 public:
 	afx_msg void OnTimer(UINT nIDEvent);
+	afx_msg void OnLButtonDblClk(UINT nFlags, CPoint point);
 };
