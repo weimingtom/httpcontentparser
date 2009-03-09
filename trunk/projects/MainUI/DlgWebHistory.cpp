@@ -52,7 +52,8 @@ void CDlgWebHistory::ChangeRecordType() {
 		IWebHistoryRecorder *pWebHistory = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_WebHistoryRecorder, NULL, CLSCTX_ALL, IID_IWebHistoryRecorder, (LPVOID*)&pWebHistory);
 		if (FAILED(hr)) {
-			// TODO:增加处理代码
+			AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
+			return;
 		}
 
 		pWebHistory->put_RecordAllImage(convert(m_bAllImage));
@@ -68,10 +69,9 @@ void CDlgWebHistory::ChangeRecordType() {
 		g_configuration.getWebHistoryRecordAutoClean()->enable(true);
 		g_configuration.getWebHistoryRecordAutoClean()->setTimespan(m_sliderWebHistoryAutoClean.GetPos());
 	} catch (_com_error&) {
-		CString str;
-		str.LoadString(IDS_ERROR_WEB_SET_FAILED);
-		AfxMessageBox(str);
+		AfxMessageBox(IDS_ERROR_WEB_SET_FAILED, MB_OK | MB_ICONERROR);
 	} catch(...) {
+		AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
 	}
 }
 

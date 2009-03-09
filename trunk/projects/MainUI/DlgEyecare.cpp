@@ -93,11 +93,6 @@ int CDlgEyecare::OnApply() {
 	const int mode = (checked ==  IDC_RAD_ENTER_SU_MODE) ? 
 			EyecareSetting::EYECARE_TERMIN_ENTERSU : EyecareSetting::EYECARE_TERMIN_RESETTIMER;
 
-	// 保存在类中
-	g_configuration.getEyecareSetting()->setEnterTime(m_nEnterTime * 60);
-	g_configuration.getEyecareSetting()->setEyecareTime(m_nEyecareTime * 60);
-	g_configuration.getEyecareSetting()->setTerimatedMode(mode);
-	g_configuration.getEyecareSetting()->enable(m_chkEnabled.GetCheck() == BST_CHECKED ? true : false);
 	return 0;
 }
 
