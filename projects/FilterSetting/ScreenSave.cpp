@@ -33,6 +33,12 @@ STDMETHODIMP CScreenSave::setTimeSpan(LONG seconds) {
 	return S_OK;
 }
 
+STDMETHODIMP CScreenSave::getTimeSpan(LONG* secs)
+{
+	*secs = g_configuration.getScreenshotSetting()->getTimeSpan();
+	return S_OK;
+}
+
 STDMETHODIMP CScreenSave::isEnabled(VARIANT_BOOL* enabled) {
 	*enabled = convert(g_configuration.getScreenshotSetting()->isEnabled());
 	return S_OK;
@@ -43,8 +49,15 @@ STDMETHODIMP CScreenSave::ClearCache(void) {
 	return S_OK;
 }
 
-STDMETHODIMP CScreenSave::setAutoClearTimespan(LONG seconds)
+STDMETHODIMP CScreenSave::getAutoClearSpan(LONG* days)
+{
+	*days = g_configuration.getScreenshotAutoClean()->getTimespan();
+	return S_OK;
+}
+
+STDMETHODIMP CScreenSave::setAutoClearTimespan(LONG days)
 { 
+	g_configuration.getScreenshotAutoClean()->setTimespan(days);
 	return S_OK;
 }
 
@@ -59,3 +72,24 @@ STDMETHODIMP CScreenSave::put_AutocleanEnabled(VARIANT_BOOL newVal)
 	g_configuration.getScreenshotAutoClean()->enable(convert(newVal));
 	return S_OK;
 }
+
+
+STDMETHODIMP CScreenSave::isSettingEnabled(VARIANT_BOOL* enabled)
+{
+	*enabled = convert(g_configuration.getScreenshotSetting()->isSettingEnabled());
+	return S_OK;
+}
+
+STDMETHODIMP CScreenSave::enableAutoClear(VARIANT_BOOL enabled)
+{
+	g_configuration.getScreenshotAutoClean()->enable(convert(enabled));
+	return S_OK;
+}
+
+STDMETHODIMP CScreenSave::isAutoClearEnabled(VARIANT_BOOL* enabled)
+{
+	*enabled = convert(g_configuration.getScreenshotAutoClean()->isSettingEnabled());
+	return S_OK;
+}
+
+

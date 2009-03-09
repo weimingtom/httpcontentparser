@@ -44,11 +44,20 @@ END_COM_MAP()
 public:
 	STDMETHOD(enableScreenSave)(VARIANT_BOOL enabled);
 	STDMETHOD(setTimeSpan)(LONG seconds);
+	STDMETHOD(getTimeSpan)(LONG* secs);
 	STDMETHOD(isEnabled)(VARIANT_BOOL* enabled);
 	STDMETHOD(ClearCache)(void);
-	STDMETHOD(setAutoClearTimespan)(LONG seconds);
+	
+
+	STDMETHOD(setAutoClearTimespan)(LONG days);
+	STDMETHOD(getAutoClearSpan)(LONG* days);
 	STDMETHOD(get_AutocleanEnabled)(VARIANT_BOOL* pVal);
 	STDMETHOD(put_AutocleanEnabled)(VARIANT_BOOL newVal);
+	
+	STDMETHOD(isSettingEnabled)(VARIANT_BOOL* enabled);
+	STDMETHOD(enableAutoClear)(VARIANT_BOOL enabled);
+	STDMETHOD(isAutoClearEnabled)(VARIANT_BOOL* enabled);
+	
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(ScreenSave), CScreenSave)
