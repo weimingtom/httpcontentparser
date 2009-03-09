@@ -292,7 +292,7 @@ BEGIN
     LTEXT           "Current State:",IDC_STATIC,16,164,48,8
     LTEXT           "Left Time:",IDC_STATIC,131,164,33,8
     LTEXT           "¾²Ì¬",IDC_STA_CURRENT_STATE,72,164,51,8
-    LTEXT           "¾²Ì¬",IDC_STA_TIME_LEFT,176,163,47,8
+    LTEXT           "¾²Ì¬",IDC_STA_TIME_LEFT,176,164,47,8
     CONTROL         "Enable Eyecare Function",IDC_CHK_ENABLE_EYECARE,"Button",
                     BS_AUTOCHECKBOX | WS_TABSTOP,7,7,95,10
 END
