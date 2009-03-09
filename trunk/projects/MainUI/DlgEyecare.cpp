@@ -50,7 +50,7 @@ void CDlgEyecare::setEyecareTimespan() {
 		IEyecare *pEyeCare = NULL;
 		HRESULT hr =CoCreateInstance(CLSID_Eyecare, NULL, CLSCTX_LOCAL_SERVER, IID_IEyecare, (LPVOID*)&pEyeCare);
 		if (FAILED(hr)) {
-			AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONEXCLAMATION);
+			AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
 			return;
 		}
 
@@ -59,7 +59,7 @@ void CDlgEyecare::setEyecareTimespan() {
 		pEyeCare->enableEyecare(convert(m_chkEnabled.GetCheck() == BST_CHECKED ? true : false));
 		pEyeCare->Release();
 	} catch (_com_error&) {
-		AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONEXCLAMATION);
+		AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
 	}
 }
 
@@ -70,7 +70,7 @@ void CDlgEyecare::setEyecareTerminatedMode() {
 		IEyecare *pEyeCare = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_Eyecare, NULL, CLSCTX_LOCAL_SERVER, IID_IEyecare, (LPVOID*)&pEyeCare);
 		if (FAILED(hr)) {
-			AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONEXCLAMATION);
+			AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
 			return;
 		}
 
@@ -81,7 +81,7 @@ void CDlgEyecare::setEyecareTerminatedMode() {
 		pEyeCare->setTermMode(mode);
 		pEyeCare->Release();
 	} catch(_com_error&) {
-		AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONEXCLAMATION);
+		AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
 	}
 }
 
