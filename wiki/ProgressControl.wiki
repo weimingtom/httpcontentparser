@@ -42,9 +42,8 @@ HKEY_LOCAL_MACHINE
     Software
         Microsoft
             Windows
-                CurrentVersion
+                Current Version
                     Explorer
                         ShellExecuteHooks
 
 You do not use this interface directly. It is generally used by the ShellExecuteEx function's code.
-
