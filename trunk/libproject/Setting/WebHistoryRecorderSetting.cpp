@@ -111,7 +111,7 @@ int WebHistoryRecorderSetting::setWebHistoryRecord(const TCHAR *type, const TCHA
 		recordAllWebsite(enabled);
 	} else if (0 == _tcscmp(type, CONFIG_APPSET_WEBHISTORY_PORN_WEBSITE)) {
 		recordPornWebsite(enabled);
-	} else if (0 == _tcscmp(type, CONFIG_APPSET_WEBHISTORY_PORN_WEBSITE)) {
+	} else if (0 == _tcscmp(type, CONFIG_APPSET_WEBHISTORY_SEACH_KEYWORD)) {
 		recordSeachKeyword(enabled);
 	} else {
 	}

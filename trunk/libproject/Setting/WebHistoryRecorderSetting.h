@@ -35,6 +35,7 @@ public:
 	bool pornimages_setting() const {return recordPornImage_;}
 	bool pornpages_setting() const {return recordPornPage_;}
 	bool pornwebsites_setting() const {return recordPornWebsite_;}
+	bool searchkeyword_setting() const { return recordSeachKeyword_; }
 protected:
 	void defaultSetting();
 
