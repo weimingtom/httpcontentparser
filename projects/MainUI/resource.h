@@ -112,7 +112,6 @@
 #define IDI_TREE_HOME                   187
 #define IDI_TREE_TOOLS                  188
 #define IDI_MODEL_PROTECTED             189
-#define IDI_MAINUI_PARENT               190
 #define IDI_MODEL_PARENT                190
 #define IDC_TREE_NAVIG                  1000
 #define IDS_TREE_ROOT                   1001
@@ -168,6 +167,7 @@
 #define IDC_CHK_ALL_IMAGE               1028
 #define IDC_CHK_AUTOLOAD                1029
 #define IDC_CHECK4                      1029
+#define IDC_CHK_SEARCH_KEYWORD          1029
 #define IDC_STA_CELLS                   1030
 #define IDC_STA_OTHERS2                 1030
 #define IDC_STA_HOTKEY                  1030
@@ -277,7 +277,6 @@
 #define ID_TRAYMENU_MODEL_PARENTS       32804
 #define ID_TRAYMENU_MODEL_CHILDREN      32805
 #define ID_TRAYMENU_EXIT                32806
-#define ID_TRAYMENU_CHANGEPASSWORD      32807
 #define ID_MAIN_REGISTER                32808
 
 // Next default values for new objects
