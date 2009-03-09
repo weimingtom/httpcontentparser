@@ -2,7 +2,7 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="7.10"
-	Name="exts"
+	Name="Exts"
 	ProjectGUID="{7D3A32EF-F083-4939-80B3-962507FD5170}"
 	Keyword="AtlProj">
 	<Platforms>
