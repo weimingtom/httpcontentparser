@@ -110,7 +110,7 @@ void CMainUIDlg::OnNMClickTreeNavig(NMHDR *pNMHDR, LRESULT *pResult)
 	*pResult = 0;
 }
 
-void CMainUIDlg::AdjustIcon() {
+void CMainUIDlg::AdjustModelIcon() {
 	if (Services::isParentModel() == true) {
 		m_sysTray.SetIcon(AfxGetApp()->LoadIcon(IDI_MODEL_PARENT));
 	} else {
@@ -152,11 +152,11 @@ void CMainUIDlg::UpdateUIStateByModel() {
 
 // 设置托盘的图标
 void CMainUIDlg::setupTrayMenu() {
-	// system Tray
 	m_trayMenu.LoadMenu(IDC_MENU_TRAY_PARENT);
+	// 设置// system Tray
 	m_sysTray.Create(this,10200, CALLMESSAGE, AfxGetApp()->LoadIcon(IDI_MODEL_PROTECTED),_T(""));
 	m_sysTray.SetSysMenu(&m_trayMenu);
-	AdjustIcon();
+	AdjustModelIcon();
 }
 
 BOOL CMainUIDlg::OnInitDialog()
@@ -262,12 +262,12 @@ void CMainUIDlg::OnMainParents()
 	}
 
 	// 调整图标
-	AdjustIcon();
+	AdjustModelIcon();
 }
 void CMainUIDlg::OnMainChildren()
 {
 	Services::switchChildModel();
-	AdjustIcon();
+	AdjustModelIcon();
 }
 
 // 相应热键消息
@@ -295,7 +295,7 @@ LRESULT CMainUIDlg::OnHotKey(WPARAM wParam, LPARAM lParam) {
 	}
 
 	// 调整图标
-	AdjustIcon();
+	AdjustModelIcon();
 	return -1;
 }
 
@@ -521,7 +521,7 @@ void CMainUIDlg::setToolsDlg() {
 	hItem = m_treeNavigation.InsertItem(strItem, hItemTools);
 	m_treeNavigation.SetItemData(hItem, IDS_TREE_ONLINE_HOUR);
 	m_treeNavigation.SetItemImage(hItem, INDEX_DISCONNECT, INDEX_DISCONNECT);
-
+	
 	// 展开
 	m_treeNavigation.Expand(hItemTools, TVE_EXPAND );
 }
@@ -690,7 +690,7 @@ void CMainUIDlg::OnTimer(UINT nIDEvent)
 		HideMainUI();
 	}
 
-	AdjustIcon();
+	AdjustModelIcon();
 	CDialog::OnTimer(nIDEvent);
 }
 

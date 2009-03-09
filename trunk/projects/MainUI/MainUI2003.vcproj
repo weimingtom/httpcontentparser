@@ -603,6 +603,16 @@
 				RelativePath=".\ListView\ListViewCtrlEx.h">
 			</File>
 		</Filter>
+		<Filter
+			Name="NewMenu"
+			Filter="">
+			<File
+				RelativePath=".\newMenu\NewMenu.cpp">
+			</File>
+			<File
+				RelativePath=".\newMenu\NewMenu.h">
+			</File>
+		</Filter>
 		<File
 			RelativePath=".\MainUI.exe.manifest">
 		</File>

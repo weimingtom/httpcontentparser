@@ -2,28 +2,28 @@
 //
 
 #pragma once
-#include "afxcmn.h"
 
-#include "dlgimagerule.h"
-#include "dlgonlinehour.h"
-#include "dlghelp.h"
-#include "dlgabout.h"
-#include "dlgsearchrule.h"
-#include "Lev1DlgRules.h"
-#include "DlgOptions.h"
-#include "DlgEyecare.h"
-#include "DlgWhiteDNSList.h"
-#include "DlgScreenshot.h"
-#include "DlgWebHistory.h"
-#include "DlgBlackDNSList.h"
-#include "Lev1DlgTools.h"
-#include ".\dlgprogramcontrol.h"
+#include ".\DlgImagerule.h"
+#include ".\DlgOnlinehour.h"
+#include ".\DlgHelp.h"
+#include ".\DlgAbout.h"
+#include ".\DlgSearchRule.h"
+#include ".\DlgOptions.h"
+#include ".\DlgEyecare.h"
+#include ".\DlgWhiteDNSList.h"
+#include ".\DlgScreenshot.h"
+#include ".\DlgWebHistory.h"
+#include ".\DlgBlackDNSList.h"
+#include ".\DlgProgramControl.h"
+#include ".\Lev1DlgRules.h"
+#include ".\Lev1DlgTools.h"
 #include ".\basedlg.h"
-#include "afxwin.h"
-
+#include ".\newMenu\NewMenu.h"
 #include  ".\Guilib1.5\GuiGroupBox.h"
 #include  ".\Guilib1.5\GuiSysTray.h"
 
+#include "afxwin.h"
+#include "afxcmn.h"
 class CBaseDlg;
 
 // CMainUIDlg 对话框
@@ -36,26 +36,15 @@ public:
 // 对话框数据
 	enum { IDD = IDD_MAINUI_DIALOG };
 
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV 支持
-
 // 实现
 protected:
 	HICON m_hIcon;
-
-	// 生成的消息映射函数
-	virtual BOOL OnInitDialog();
-	afx_msg void OnSysCommand(UINT nID, LPARAM lParam);
-	afx_msg void OnPaint();
-	afx_msg HCURSOR OnQueryDragIcon();
-	DECLARE_MESSAGE_MAP()
-
 	void setControlsFonts();
 	void setRulesDlg();
 	void setToolsDlg();
 private:
-	CTreeCtrl m_treeNavigation;
-	CImageList	m_imageList;
+	CTreeCtrl m_treeNavigation;		// 左侧的导航术
+	CImageList	m_imageList;			// 导航树上的图标
 
 	void InitTreeNodes();		// 初始化树的节点
 	void setCurDlg(const DWORD item);
@@ -85,7 +74,7 @@ private:
 	CLev1DlgTools m_lev1Tools;
 	CLev1DlgRules m_lev1Rules;
 
-	// 右侧
+	// 右侧树的位置
 	CRect    m_rectRight;
 
 	// fonts
@@ -95,7 +84,7 @@ private:
 	// controls
 	// system Tray
 	CGuiSysTray		m_sysTray;
-	CMenu		m_trayMenu;
+	CNewMenu		m_trayMenu;
 	
 	CGuiGroupBox m_staFunFrame;
 	CGuiButton m_btnOkBAK; // if remove it, some error happens.
@@ -125,17 +114,26 @@ protected:
 	afx_msg void OnToolsWebhistory();
 	afx_msg void OnMainLockcomputer();
 	afx_msg void OnDestroy();
+	afx_msg void OnSysCommand(UINT nID, LPARAM lParam);
+	afx_msg void OnPaint();
+	afx_msg HCURSOR OnQueryDragIcon();
 	afx_msg void OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu);
+
+	virtual BOOL OnInitDialog();
+	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV 支持
 	virtual void OnOK();
 	virtual void OnCancel();
+
+	DECLARE_MESSAGE_MAP()
 protected:
 	// 根据当前状态初始化TrayMenu
 	// 此函数会在每次应用程序启动及状态切换时调用
 	void UpdateUIStateByModel();
 
 	// 根据当前模式，调整图标
-	void AdjustIcon();
+	void AdjustModelIcon();
 private:
+	// 隐藏或是显示主界面
 	void ShowMainUI();
 	void HideMainUI();
 	BOOL isShown() const { return m_bShown;}
