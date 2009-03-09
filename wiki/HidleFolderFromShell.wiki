@@ -1,4 +1,5 @@
 #summary 隐藏安装目录
+#labels Shell
 
 = Introduction =
 
