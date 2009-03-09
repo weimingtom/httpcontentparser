@@ -15,14 +15,7 @@ import "ocidl.idl";
 ]
 interface IAppLaunchFilter : IUnknown{
 };
-[
-	object,
-	uuid(A05B167E-C584-4D32-8392-6BDD1826802E),
-	helpstring("IIHidenInstall ½Ó¿Ú"),
-	pointer_default(unique)
-]
-interface IIHidenInstall : IUnknown{
-};
+
 [
 	uuid(9CC3632B-91DF-4DE4-B3F6-DAFBBB940E1E),
 	version(1.0),
@@ -38,13 +31,5 @@ library extsLib
 	coclass AppLaunchFilter
 	{
 		[default] interface IAppLaunchFilter;
-	};
-	[
-		uuid(AE76C6BA-F2A8-4E74-B49B-2FDD98C84301),
-		helpstring("IHidenInstall Class")
-	]
-	coclass IHidenInstall
-	{
-		[default] interface IIHidenInstall;
 	};
 };

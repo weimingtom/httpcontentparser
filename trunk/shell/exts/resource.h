@@ -5,7 +5,6 @@
 #define IDS_PROJNAME                    100
 #define IDR_EXTS                        101
 #define IDR_APPLAUNCHFILTER             102
-#define IDR_IHIDENINSTALL               103
 
 // Next default values for new objects
 // 

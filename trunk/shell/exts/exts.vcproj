@@ -152,9 +152,6 @@
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
 			<File
-				RelativePath=".\AppLaunchFilter.cpp">
-			</File>
-			<File
 				RelativePath=".\exts.cpp">
 			</File>
 			<File
@@ -162,9 +159,6 @@
 			</File>
 			<File
 				RelativePath=".\exts.idl">
-			</File>
-			<File
-				RelativePath=".\IHidenInstall.cpp">
 			</File>
 			<File
 				RelativePath=".\stdafx.cpp">
@@ -187,12 +181,6 @@
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
 			<File
-				RelativePath=".\AppLaunchFilter.h">
-			</File>
-			<File
-				RelativePath=".\IHidenInstall.h">
-			</File>
-			<File
 				RelativePath=".\Resource.h">
 			</File>
 			<File
@@ -204,16 +192,10 @@
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx"
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}">
 			<File
-				RelativePath=".\AppLaunchFilter.rgs">
-			</File>
-			<File
 				RelativePath=".\exts.rc">
 			</File>
 			<File
 				RelativePath=".\exts.rgs">
-			</File>
-			<File
-				RelativePath=".\IHidenInstall.rgs">
 			</File>
 		</Filter>
 		<Filter
@@ -233,6 +215,19 @@
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
+			</File>
+		</Filter>
+		<Filter
+			Name="AppLaunch"
+			Filter="">
+			<File
+				RelativePath=".\AppLaunchFilter.cpp">
+			</File>
+			<File
+				RelativePath=".\AppLaunchFilter.h">
+			</File>
+			<File
+				RelativePath=".\AppLaunchFilter.rgs">
 			</File>
 		</Filter>
 		<File
