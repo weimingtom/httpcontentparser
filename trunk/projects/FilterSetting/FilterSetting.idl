@@ -219,6 +219,9 @@ interface IAppControl : IDispatch{
 	[id(2), helpstring("Method GetFirstItem")] HRESULT GetFirstItem([out] BSTR* path,  [out]LONG * result);
 	[id(3), helpstring("Method GetNextItem")] HRESULT GetNextItem([in] BSTR cur, [out] BSTR* nxt, [out]LONG * result);
 	[id(4), helpstring("Method RemoveItem")] HRESULT RemoveItem([in] BSTR path);
+	[id(5), helpstring("方法checkApp")] HRESULT checkApp(BSTR fullpath, [out,retval] VARIANT_BOOL* result);
+	[id(6), helpstring("方法isSettingEnabled")] HRESULT isSettingEnabled([out] VARIANT_BOOL* enabled);
+	[id(7), helpstring("方法enable")] HRESULT enable([in] VARIANT_BOOL enabled);
 };
 [
 	uuid(42F932B5-F5CB-4F0D-8925-1B6BE5FECD1B),

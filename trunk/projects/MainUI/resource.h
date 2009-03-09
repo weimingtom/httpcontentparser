@@ -246,6 +246,7 @@
 #define IDC_IMAGES_POS                  1112
 #define IDC_LIST_SEARCH_WORD            1113
 #define IDC_LIST_PROGRAM                1114
+#define IDC_CHK_ENABLE_APPCONTROL       1115
 #define IDB_DOCKBAR                     2004
 #define IDC_EDIT1                       4011
 #define IDC_EDIT2                       4012
@@ -285,7 +286,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        191
 #define _APS_NEXT_COMMAND_VALUE         32809
-#define _APS_NEXT_CONTROL_VALUE         1115
+#define _APS_NEXT_CONTROL_VALUE         1116
 #define _APS_NEXT_SYMED_VALUE           112
 #endif
 #endif

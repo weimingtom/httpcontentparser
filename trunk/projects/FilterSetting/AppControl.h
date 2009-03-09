@@ -43,6 +43,9 @@ public:
 	STDMETHOD(RemoveItem)(BSTR path);
 	STDMETHOD(GetFirstItem)(BSTR* path, LONG * hasValue);
 	STDMETHOD(GetNextItem)(BSTR cur, BSTR* nxt, LONG *hasValue);
+	STDMETHOD(checkApp)(BSTR fullpath, VARIANT_BOOL* result);
+	STDMETHOD(isSettingEnabled)(VARIANT_BOOL* enabled);
+	STDMETHOD(enable)(VARIANT_BOOL enabled);
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(AppControl), CAppControl)

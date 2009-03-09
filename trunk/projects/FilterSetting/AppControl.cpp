@@ -4,9 +4,11 @@
 #include "AppControl.h"
 #include ".\globalvariable.h"
 #include <com\resultvalue.h>
+#include <typeconvert.h>
 #include <programcontrol.h>
 #include <comdef.h>
 #include <utility\strutility.h>
+#include ".\appcontrol.h"
 
 // CAppControl
 STDMETHODIMP CAppControl::AddNewItem(BSTR path) {
@@ -45,5 +47,22 @@ STDMETHODIMP CAppControl::GetNextItem(BSTR cur, BSTR* nxt, LONG * hasValue) {
 		*nxt = _bstr_t("");
 		*hasValue = SELF_COM_FAILED;
 	}
+	return S_OK;
+}
+STDMETHODIMP CAppControl::checkApp(BSTR fullpath, VARIANT_BOOL* result)
+{
+	*result = g_configuration.getProgramControl()->check((TCHAR*)_bstr_t(fullpath));
+	return S_OK;
+}
+
+STDMETHODIMP CAppControl::isSettingEnabled(VARIANT_BOOL* enabled)
+{
+	*enabled = convert(g_configuration.getProgramControl()->isSettingEnabled());
+	return S_OK;
+}
+
+STDMETHODIMP CAppControl::enable(VARIANT_BOOL enabled)
+{
+	g_configuration.getProgramControl()->enable(convert(enabled));
 	return S_OK;
 }
