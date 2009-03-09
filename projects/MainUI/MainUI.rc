@@ -379,30 +379,26 @@ IDD_DLG_WEB_HISTORY DIALOGEX 0, 0, 250, 200
 STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
-    GROUPBOX        "Types",IDC_STA_TYPES,7,7,236,75
-    CONTROL         "Save Porn Image",IDC_CHK_PRON_IMAGE,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,17,23,88,10
-    CONTROL         "Save Porn Web Page",IDC_CHK_PORN_PAGE,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,17,43,88,10
-    CONTROL         "Save Porn Website",IDC_CHK_PORN_WEBSITES,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,17,64,88,10
+    GROUPBOX        "Types",IDC_STA_TYPES,7,7,236,69
     CONTROL         "Save All Image",IDC_CHK_ALL_IMAGE,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,132,23,88,10
+                    BS_AUTOCHECKBOX | WS_TABSTOP,25,27,88,10
     CONTROL         "Save All Web Page",IDC_CHK_ALLPAGES,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,132,43,88,10
+                    BS_AUTOCHECKBOX | WS_TABSTOP,129,27,88,10
     CONTROL         "Save All website",IDC_CHK_ALLWEBSITES,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,132,64,88,10
-    PUSHBUTTON      "Clear",IDC_BUN_CLEAR_CACHE,180,109,50,14
+                    BS_AUTOCHECKBOX | WS_TABSTOP,25,50,88,10
+    PUSHBUTTON      "Clear",IDC_BUN_CLEAR_CACHE,180,100,50,14
     PUSHBUTTON      "View Websites",IDC_BTN_HISTORY_PAGES,92,164,64,14
-    GROUPBOX        "History",IDC_STA_HISTORY,7,90,236,47
+    GROUPBOX        "History",IDC_STA_HISTORY,7,80,236,52
     CONTROL         "",IDC_SLIDER_AUTOCLEAR_TIME,"msctls_trackbar32",
-                    TBS_AUTOTICKS | TBS_TOP | WS_TABSTOP,61,104,109,20
-    GROUPBOX        "Tools",IDC_STA_TOOLS,7,146,236,47
-    LTEXT           "Auto Clear",IDC_STATIC,17,112,35,8
+                    TBS_AUTOTICKS | TBS_TOP | WS_TABSTOP,61,95,109,20
+    GROUPBOX        "Tools",IDC_STA_TOOLS,7,143,236,50
+    LTEXT           "Auto Clear",IDC_STATIC,17,103,35,8
     PUSHBUTTON      "View Images",IDC_BTN_HISTORY_IMAGE,16,164,68,14
-    RTEXT           "",IDC_STA_WEBHISTORY_AUTOCLEAN,133,126,35,8
-    PUSHBUTTON      "View Seach Word",IDC_BTN_HISTORY_SEACHWORD,163,164,64,
+    RTEXT           "",IDC_STA_WEBHISTORY_AUTOCLEAN,133,121,35,8
+    PUSHBUTTON      "View Search Word",IDC_BTN_HISTORY_SEACHWORD,163,164,64,
                     14
+    CONTROL         "Save Search Keyword",IDC_CHK_SEARCH_KEYWORD,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,129,50,88,10
 END
 
 IDD_DLG_IMAGERULES DIALOGEX 0, 0, 257, 199
@@ -793,7 +789,7 @@ BEGIN
         MENUITEM "Desktop Image",               ID_TRAYMENU_DESKTOPIMAGE
         MENUITEM "Lock Computer",               ID_TRAYMENU_LOCKCOMPUTER
         MENUITEM SEPARATOR
-        MENUITEM "Change Password",             ID_TRAYMENU_CHANGEPASSWORD
+        MENUITEM "Change Password",             ID_TRAYMENU_DESKTOPIMAGE
         MENUITEM "Option",                      ID_TRAYMENU_MAINUI
         MENUITEM SEPARATOR
         MENUITEM "Children",                    ID_TRAYMENU_MODEL_CHILDREN
