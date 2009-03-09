@@ -91,3 +91,9 @@ STDMETHODIMP CEyecare::enableEyecare(VARIANT_BOOL enabled) {
 	g_configuration.getEyecareSetting()->enable(convert(enabled));
 	return S_OK;
 }
+
+STDMETHODIMP CEyecare::isSettingEnabled(VARIANT_BOOL* enabled)
+{
+	*enabled = convert(g_configuration.getEyecareSetting()->isSettingEnabled());
+	return S_OK;
+}

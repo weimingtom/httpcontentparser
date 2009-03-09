@@ -51,6 +51,7 @@ public:
 	STDMETHOD(setTermMode)(LONG mode);
 	STDMETHOD(getTermMode)(LONG* mode);
 	STDMETHOD(enableEyecare)(VARIANT_BOOL enabled);
+	STDMETHOD(isSettingEnabled)(VARIANT_BOOL* enabled);
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(Eyecare), CEyecare)
