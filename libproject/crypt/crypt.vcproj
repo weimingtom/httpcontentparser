@@ -2,7 +2,7 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="7.10"
-	Name="crypt"
+	Name="Crypt"
 	ProjectGUID="{C99B0EB6-4E0D-48A0-A3A6-CF82F903AB5A}"
 	Keyword="Win32Proj">
 	<Platforms>
