@@ -52,7 +52,13 @@ BOOL CCells::Create(LPCTSTR lpszClassName, LPCTSTR lpszWindowName, DWORD dwStyle
 		for (int col = 0; col < Column; ++col) {
 			cells[row][col].Create("", WS_CHILD, rect, this, id++);
 			cells[row][col].ShowWindow(SW_SHOW);
+
 			rect.left = rect.right;
+			if (col  == 11) {
+				rect.left += MiddleLine_1;
+			} else if (col == 5 || col == 17) {
+				rect.left += MiddleLine_2;
+			}
 			rect.right = rect.left + ItemWidth;
 		}
 

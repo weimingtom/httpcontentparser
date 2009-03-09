@@ -449,24 +449,26 @@ IDD_DLG_ONLINE_RULE DIALOGEX 0, 0, 283, 214
 STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
-    CONTROL         "Time Control",IDC_CHK_TIMECTRL,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,6,1,64,10
-    LTEXT           "",IDC_STATIC,4,22,272,176,0,WS_EX_DLGMODALFRAME
-    LTEXT           "",IDC_STA_CELLS,29,26,215,123,NOT WS_VISIBLE
-    LTEXT           "Sun.",IDC_STATIC,11,44,16,8
-    LTEXT           "Tues",IDC_STATIC,11,76,16,8
-    LTEXT           "Wed.",IDC_STATIC,11,91,18,8
-    LTEXT           "Thurs.",IDC_STATIC,11,106,22,8
-    LTEXT           "Fri.",IDC_STATIC,11,121,12,8
-    LTEXT           "Sat.",IDC_STATIC,11,136,15,8
-    LTEXT           "00:00",IDC_STATIC,30,28,20,8
-    LTEXT           "24:00",IDC_STATIC,219,28,20,8
-    LTEXT           "12:00",IDC_STATIC,129,28,20,8
-    LTEXT           "Mon.",IDC_STATIC,11,61,17,8
-    CONTROL         157,IDC_STATIC,"Static",SS_BITMAP,18,162,9,15
-    CONTROL         158,IDC_STATIC,"Static",SS_BITMAP,111,162,9,15
-    LTEXT           "Internet Available",IDC_STATIC,35,165,58,8
-    LTEXT           "Internet Blocked",IDC_STATIC,134,165,54,8
+    CONTROL         "Enable Time Control",IDC_CHK_TIMECTRL,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,6,1,87,10
+    LTEXT           "",IDC_STATIC,4,17,272,190,0,WS_EX_DLGMODALFRAME
+    LTEXT           "",IDC_STA_CELLS,11,29,215,123,NOT WS_VISIBLE
+    LTEXT           "Sun.",IDC_STATIC,233,48,16,8
+    LTEXT           "Tues",IDC_STATIC,233,80,16,8
+    LTEXT           "Wed.",IDC_STATIC,233,96,18,8
+    LTEXT           "Thurs.",IDC_STATIC,233,110,22,8
+    LTEXT           "Fri.",IDC_STATIC,233,125,12,8
+    LTEXT           "Sat.",IDC_STATIC,233,140,15,8
+    LTEXT           "00:00",IDC_STATIC,12,31,20,8
+    LTEXT           "24:00",IDC_STATIC,207,31,20,8
+    LTEXT           "12:00",IDC_STATIC,109,31,20,8
+    LTEXT           "Mon.",IDC_STATIC,233,65,17,8
+    CONTROL         157,IDC_STATIC,"Static",SS_BITMAP,51,165,9,15
+    CONTROL         158,IDC_STATIC,"Static",SS_BITMAP,144,165,9,15
+    LTEXT           "Internet Available",IDC_STATIC,68,168,58,8
+    LTEXT           "Internet Blocked",IDC_STATIC,167,168,54,8
+    LTEXT           "06:00",IDC_STATIC,58,31,20,8
+    LTEXT           "18:00",IDC_STATIC,163,31,21,8
 END
 
 IDD_DLG_IMAGEBROWSER DIALOGEX 0, 0, 354, 220

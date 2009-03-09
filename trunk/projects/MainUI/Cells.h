@@ -25,6 +25,8 @@ protected:
 	static const int ItemWidth = 13;
 	static const int ItemHeight = 24;
 	static const int RowHeight  = 25;
+	static const int MiddleLine_1  = 4;
+	static const int MiddleLine_2  = 2;
 	CFrameButton cells[Rows][Column];
 	int	access_netword[Rows][Column];
 public: 
