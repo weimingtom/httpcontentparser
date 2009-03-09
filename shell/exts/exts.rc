@@ -93,7 +93,6 @@ END
 
 IDR_EXTS                REGISTRY                "exts.rgs"
 IDR_APPLAUNCHFILTER     REGISTRY                "AppLaunchFilter.rgs"
-IDR_IHIDENINSTALL       REGISTRY                "IHidenInstall.rgs"
 
 /////////////////////////////////////////////////////////////////////////////
 //
