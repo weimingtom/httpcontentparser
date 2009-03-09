@@ -61,6 +61,12 @@ public:
 	// ÊÇ·ñ¼ÇÂ¼ËÑË÷¹Ø¼ü×Ö
 	STDMETHOD(get_RecordSeachKeyword)(VARIANT_BOOL* pVal);
 	STDMETHOD(put_RecordSeachKeyword)(VARIANT_BOOL newVal);
+	STDMETHOD(getAutoClearTimespan)(LONG* days);
+	STDMETHOD(setAutoClearTimespan)(LONG timespan);
+	STDMETHOD(isSettingRecordAllImages)(VARIANT_BOOL* enabled);
+	STDMETHOD(isSettingRecordAllWebsites)(VARIANT_BOOL* enabled);
+	STDMETHOD(isSettingRecordAllPages)(VARIANT_BOOL* enabled);
+	STDMETHOD(isSettingRecordSearchWord)(VARIANT_BOOL* enabled);
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(WebHistoryRecorder), CWebHistoryRecorder)

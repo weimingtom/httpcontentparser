@@ -13,6 +13,10 @@
 #include <apputility.h>
 #include <comdef.h>
 
+#define MAX_AUTO_CLEAR_SPAN	30
+#define MIN_AUTO_CLEAR_SPAN	1
+
+
 // CDlgWebHistory ¶Ô»°¿ò
 
 IMPLEMENT_DYNAMIC(CDlgWebHistory, CDialog)
@@ -60,14 +64,8 @@ void CDlgWebHistory::ChangeRecordType() {
 		pWebHistory->put_RecordAllPages(convert(m_bAllPages));
 		pWebHistory->put_RecordAllURLs(convert(m_bAllWebsite));
 		pWebHistory->put_RecordSeachKeyword(convert(m_bSearchWord));
+		pWebHistory->setAutoClearTimespan(m_sliderWebHistoryAutoClean.GetPos());
 		pWebHistory->Release();
-
-		g_configuration.getWebHistoryRecordSetting()->recordAllImage(m_bAllImage);
-		g_configuration.getWebHistoryRecordSetting()->recordAllPages(m_bAllPages);
-		g_configuration.getWebHistoryRecordSetting()->recordAllWebsite(m_bAllWebsite);
-		g_configuration.getWebHistoryRecordSetting()->recordSeachKeyword(m_bSearchWord);
-		g_configuration.getWebHistoryRecordAutoClean()->enable(true);
-		g_configuration.getWebHistoryRecordAutoClean()->setTimespan(m_sliderWebHistoryAutoClean.GetPos());
 	} catch (_com_error&) {
 		AfxMessageBox(IDS_ERROR_WEB_SET_FAILED, MB_OK | MB_ICONERROR);
 	} catch(...) {
@@ -88,19 +86,36 @@ void CDlgWebHistory::updateSta() {
 }
 
 void CDlgWebHistory::restoreSetting() {
-	m_bAllImage		= g_configuration.getWebHistoryRecordSetting()->allimages_setting();
-	m_bAllPages		= g_configuration.getWebHistoryRecordSetting()->allpages_setting();
-	m_bAllWebsite	= g_configuration.getWebHistoryRecordSetting()->allwebsites_setting();
-	m_bSearchWord	= g_configuration.getWebHistoryRecordSetting()->searchkeyword_setting();
+	try {
+		IWebHistoryRecorder *pWebHistory = NULL;
+		HRESULT hr = CoCreateInstance(CLSID_WebHistoryRecorder, NULL, CLSCTX_ALL, IID_IWebHistoryRecorder, (LPVOID*)&pWebHistory);
+		if (FAILED(hr)) {
+			AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
+			return;
+		}
 
-	// auto clean
-	m_sliderWebHistoryAutoClean.SetRange(g_configuration.getWebHistoryRecordAutoClean()->getRangeMin(),
-	g_configuration.getWebHistoryRecordAutoClean()->getRangeMax());
-	m_sliderWebHistoryAutoClean.SetTicFreq(1);
-	m_sliderWebHistoryAutoClean.SetPos(g_configuration.getWebHistoryRecordAutoClean()->getTimespan());
+		VARIANT_BOOL isEnabled;
+		pWebHistory->isSettingRecordAllImages(&isEnabled);
+		m_bAllImage = convert(isEnabled);
+		pWebHistory->isSettingRecordAllPages(&isEnabled);
+		m_bAllPages = convert(isEnabled);
+		pWebHistory->isSettingRecordAllWebsites(&isEnabled);
+		m_bAllWebsite = convert(isEnabled);
+		pWebHistory->isSettingRecordSearchWord(&isEnabled);
+		m_bSearchWord = convert(isEnabled);
 
-	updateSta();
-	UpdateData(FALSE);
+		// auto clean
+		LONG timspan;
+		pWebHistory->getAutoClearTimespan(&timspan);
+		m_sliderWebHistoryAutoClean.SetRange(MIN_AUTO_CLEAR_SPAN, MAX_AUTO_CLEAR_SPAN);
+		m_sliderWebHistoryAutoClean.SetTicFreq(1);
+		m_sliderWebHistoryAutoClean.SetPos(timspan);
+
+		updateSta();
+		UpdateData(FALSE);
+	} catch(...) {
+		AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
+	}
 }
 BEGIN_MESSAGE_MAP(CDlgWebHistory, CDialog)
 	ON_BN_CLICKED(IDC_BUN_CLEAR_CACHE, OnBnClickedBunClearCache)
