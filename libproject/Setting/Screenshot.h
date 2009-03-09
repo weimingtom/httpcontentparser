@@ -28,7 +28,7 @@ public:
 	virtual TiXmlElement * saveConfig(TiXmlElement * root);
 
 private:
-		// Screenshot
+	// Screenshot
 	int getScreenshot(TiXmlElement * ele);
 	int enableScreenshot(const TCHAR *enable);
 	int setScreenshotTimespan(const TCHAR *timespan);

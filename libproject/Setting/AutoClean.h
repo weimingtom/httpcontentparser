@@ -17,11 +17,11 @@ public:
 
 public:
 	// 设置和获取自动清理的时间间隔
-	void setTimespan(const int hours);
+	void setTimespan(const int days);
 	int getTimespan() const { return timespan_days_;}
 
 	// 设置时间范围
-	void setScale(const  int min, const  int max);
+	void setScale(const  int minDays, const  int maxDays);
 	int getRangeMax() const { return max_;}
 	int getRangeMin() const { return min_;}
 
