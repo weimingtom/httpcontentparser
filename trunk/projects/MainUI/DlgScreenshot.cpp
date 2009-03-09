@@ -10,15 +10,21 @@
 #include <apputility.h>
 #include <typeconvert.h>
 
+#define MAX_AUTO_CLEAR_SPAN	30
+#define MIN_AUTO_CLEAR_SPAN	1
+
+#define MAX_SCREEN_SNAPSHOT	120
+#define MIN_SCREEN_SNAPSHOT	1
+
 // CDlgScreenshot 对话框
 
 IMPLEMENT_DYNAMIC(CDlgScreenshot, CDialog)
 CDlgScreenshot::CDlgScreenshot(CWnd* pParent /*=NULL*/)
-	: CBaseDlg(CDlgScreenshot::IDD, pParent)
-	, m_bEnableScreensave(FALSE)
-	, m_bEnableAutoclean(FALSE)
-	, m_strAutoCleanHours(_T(""))
-	, m_strTimespanMins(_T(""))
+: CBaseDlg(CDlgScreenshot::IDD, pParent)
+, m_bEnableScreensave(FALSE)
+, m_bEnableAutoclean(FALSE)
+, m_strAutoCleanHours(_T(""))
+, m_strTimespanMins(_T(""))
 {
 }
 
@@ -40,48 +46,65 @@ void CDlgScreenshot::DoDataExchange(CDataExchange* pDX)
 
 int CDlgScreenshot::OnApply() {
 	try {
-		// 保存设置
-		g_configuration.getScreenshotAutoClean()->enable(m_bEnableAutoclean);
-		g_configuration.getScreenshotAutoClean()->setTimespan(m_sliderAutoclearTimespan.GetPos());
-
-		g_configuration.getScreenshotSetting()->enable(m_bEnableScreensave);
-		g_configuration.getScreenshotSetting()->setTimeSpan(m_sliderSaveTimespan.GetPos() * 60);
-
 		IScreenSave * screensave = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_ScreenSave, NULL, CLSCTX_LOCAL_SERVER, IID_IScreenSave, (LPVOID*)&screensave);
+		if(FAILED(hr)) {
+			AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
+			return -1;
+		}
 		screensave->enableScreenSave(convert(m_bEnableScreensave));
 		screensave->setTimeSpan(m_sliderSaveTimespan.GetPos() * 60);
+		screensave->setAutoClearTimespan(m_sliderAutoclearTimespan.GetPos());
 		screensave->put_AutocleanEnabled(convert(m_bEnableAutoclean));
 		return 0;
-	} catch (_com_error& ) {
+	} catch (... ) {
+		AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
 		return -1;
 	}
 }
 void CDlgScreenshot::OnShow() {
 }
- 
+
 
 void CDlgScreenshot::restoreSetting() {
-	m_bEnableScreensave = g_configuration.getScreenshotSetting()->isSettingEnabled();
-	m_bEnableAutoclean = g_configuration.getScreenshotAutoClean()->isSettingEnabled();
+	try {
+		IScreenSave * screensave = NULL;
+		HRESULT hr = CoCreateInstance(CLSID_ScreenSave, NULL, CLSCTX_LOCAL_SERVER, IID_IScreenSave, (LPVOID*)&screensave);
+		if(FAILED(hr)) {
+			AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
+			return;
+		}
 
-	// 设置自动存储
-	m_sliderSaveTimespan.SetRange(1, 120);
-	m_sliderSaveTimespan.SetTicFreq(10);
-	int pos = g_configuration.getScreenshotSetting()->getTimeSpan() / 60;
-	m_sliderSaveTimespan.SetPos(pos);
+		VARIANT_BOOL enabled;
+		screensave->isSettingEnabled(&enabled);
+		m_bEnableScreensave = convert(enabled);
 
-	// 设置自动清理
-	m_sliderAutoclearTimespan.SetRange(g_configuration.getScreenshotAutoClean()->getRangeMin(),
-		g_configuration.getScreenshotAutoClean()->getRangeMax());
-	m_sliderAutoclearTimespan.SetTicFreq(1);
-	m_sliderAutoclearTimespan.SetPos(g_configuration.getScreenshotAutoClean()->getTimespan());
+		screensave->isAutoClearEnabled(&enabled);
+		m_bEnableAutoclean = convert(enabled);
 
-	CheckDlgButton(IDC_CHK_AUTOCLEAN, 
-		g_configuration.getScreenshotAutoClean()->isSettingEnabled() ? BST_CHECKED : BST_UNCHECKED);
+		// 设置自动存储
+		LONG secs;
+		screensave->getTimeSpan(&secs);
+		m_sliderSaveTimespan.SetRange(MIN_SCREEN_SNAPSHOT, MAX_SCREEN_SNAPSHOT);
+		m_sliderSaveTimespan.SetTicFreq(10);
+		int pos = secs / 60;
+		m_sliderSaveTimespan.SetPos(pos);
 
-	setAutoCleanTips();
-	setTimespanTips();
+		// 设置自动清理
+		LONG days;
+		screensave->getAutoClearSpan(&days);
+		m_sliderAutoclearTimespan.SetRange(MIN_AUTO_CLEAR_SPAN, MAX_AUTO_CLEAR_SPAN);
+		m_sliderAutoclearTimespan.SetTicFreq(1);
+		m_sliderAutoclearTimespan.SetPos(days);
+
+		screensave->isAutoClearEnabled(&enabled);
+		CheckDlgButton(IDC_CHK_AUTOCLEAN, convert(enabled)? BST_CHECKED : BST_UNCHECKED);
+
+		setAutoCleanTips();
+		setTimespanTips();
+	} catch (...) {
+		AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
+	}
 }
 
 
@@ -116,7 +139,7 @@ END_MESSAGE_MAP()
 
 BOOL CDlgScreenshot::OnInitDialog() {
 	CBaseDlg::OnInitDialog();
-	
+
 	Restore();
 
 	enableAutoSave();
@@ -153,7 +176,7 @@ void CDlgScreenshot::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar) 
 		setAutoCleanTips();
 		SetModify(TRUE);
 	}
-	
+
 	CBaseDlg::OnHScroll(nSBCode, nPos, pScrollBar);	
 }
 
