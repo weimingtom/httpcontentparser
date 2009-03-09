@@ -238,7 +238,7 @@ copy .\release\nwrs.exe ..\..\release
 			</File>
 		</Filter>
 		<Filter
-			Name="ScreenSaver"
+			Name="ScreenshotRecord"
 			Filter="">
 			<File
 				RelativePath=".\ScreenSave.cpp">
