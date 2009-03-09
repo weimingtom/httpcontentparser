@@ -12,6 +12,14 @@
 2. 直接使用windows提供的SHell，但是它只能控制使用ShellExecute函数启动的程序
 
 
+在使用ShellExecute的时候，如果我们返回S_OK, 则所有的操作都将由你实现的接口完成，换句话说，如果你想拦截这个程序阻止他的创建，只需要简单的返回S_OK即可。如果你返回S_FALSE， 则ShellExecute及ShellExecuteEx则会继续执行正常创建。
+
+再使用这个Shell extenton的时候，只需要在注册表项
+HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\Current Version\Explorer\ShellExecuteHooks中添加新项
+
+其名称为实现IShellExecuteHook的class的CLSID， 类型为REG_SZ。
+
+添加后重启外科，COM组件将被启动
 
 
 = Details =
@@ -39,3 +47,4 @@ HKEY_LOCAL_MACHINE
                         ShellExecuteHooks
 
 You do not use this interface directly. It is generally used by the ShellExecuteEx function's code.
+
