@@ -1,0 +1,50 @@
+// exts.idl : exts 的 IDL 源
+//
+
+// 此文件将由 MIDL 工具处理以
+// 产生类型库(exts.tlb)和封送处理代码。
+
+import "oaidl.idl";
+import "ocidl.idl";
+
+[
+	object,
+	uuid(5FB90EC3-8BE4-4ED3-A103-9B1070C84C7A),
+	helpstring("IAppLaunchFilter Interface"),
+	pointer_default(unique)
+]
+interface IAppLaunchFilter : IUnknown{
+};
+[
+	object,
+	uuid(A05B167E-C584-4D32-8392-6BDD1826802E),
+	helpstring("IIHidenInstall 接口"),
+	pointer_default(unique)
+]
+interface IIHidenInstall : IUnknown{
+};
+[
+	uuid(9CC3632B-91DF-4DE4-B3F6-DAFBBB940E1E),
+	version(1.0),
+	helpstring("exts 1.0 type library")
+]
+library extsLib
+{
+	importlib("stdole2.tlb");
+	[
+		uuid(B0C0589E-9692-44E0-B2F1-378BE31B61C1),
+		helpstring("AppLaunchFilter Class")
+	]
+	coclass AppLaunchFilter
+	{
+		[default] interface IAppLaunchFilter;
+	};
+	[
+		uuid(AE76C6BA-F2A8-4E74-B49B-2FDD98C84301),
+		helpstring("IHidenInstall Class")
+	]
+	coclass IHidenInstall
+	{
+		[default] interface IIHidenInstall;
+	};
+};
