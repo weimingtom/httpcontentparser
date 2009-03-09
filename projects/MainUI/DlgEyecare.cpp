@@ -80,7 +80,7 @@ void CDlgEyecare::setEyecareTerminatedMode() {
 
 		pEyeCare->setTermMode(mode);
 		pEyeCare->Release();
-	} catch(_com_error&) {
+	} catch(...) {
 		AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
 	}
 }
@@ -105,20 +105,39 @@ void CDlgEyecare::OnShow() {
 }
 
 void CDlgEyecare::restoreSetting() {
-	// 读出出示信息
-	m_nEnterTime = g_configuration.getEyecareSetting()->getEnterTime() / 60;
-	m_nEyecareTime = g_configuration.getEyecareSetting()->getEyecareTime() / 60;
+	try {
+		IEyecare *pEyeCare = NULL;
+		HRESULT hr = CoCreateInstance(CLSID_Eyecare, NULL, CLSCTX_LOCAL_SERVER, IID_IEyecare, (LPVOID*)&pEyeCare);
+		if (FAILED(hr)) {
+			AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
+			return;
+		}
 
-	const int mode = g_configuration.getEyecareSetting()->getTerminatedMode();
-	assert(mode == EyecareSetting::EYECARE_TERMIN_ENTERSU || mode == EyecareSetting::EYECARE_TERMIN_RESETTIMER);
-	
-	UINT checked = (mode == EyecareSetting::EYECARE_TERMIN_RESETTIMER) ? IDC_RAD_JUST_RESET_TIMER : IDC_RAD_ENTER_SU_MODE;
-	CheckRadioButton(IDC_RAD_ENTER_SU_MODE, IDC_RAD_JUST_RESET_TIMER, checked);
+		pEyeCare->getEnterTime((LONG*)&m_nEnterTime);
+		pEyeCare->getEyecareTime((LONG*)&m_nEyecareTime);
 
-	UINT enabled = g_configuration.getEyecareSetting()->isSettingEnabled() ? BST_CHECKED : BST_UNCHECKED;
-	m_chkEnabled.SetCheck(enabled);
-	
-	UpdateData(FALSE);
+		// 读出出示信息, 时间单位不同， 存储单位是sec, 而显示单位是min
+		m_nEnterTime /= 60;
+		m_nEyecareTime /= 60;
+
+		LONG mode;
+		pEyeCare->getTermMode(&mode);
+		assert(mode == EyecareSetting::EYECARE_TERMIN_ENTERSU || mode == EyecareSetting::EYECARE_TERMIN_RESETTIMER);
+		
+		UINT checked = (mode == EyecareSetting::EYECARE_TERMIN_RESETTIMER) ? IDC_RAD_JUST_RESET_TIMER : IDC_RAD_ENTER_SU_MODE;
+		CheckRadioButton(IDC_RAD_ENTER_SU_MODE, IDC_RAD_JUST_RESET_TIMER, checked);
+
+		VARIANT_BOOL setting_enabled;
+		pEyeCare->isSettingEnabled(&setting_enabled);
+		UINT enabled = convert(setting_enabled)? BST_CHECKED : BST_UNCHECKED;
+		m_chkEnabled.SetCheck(enabled);
+		
+		UpdateData(FALSE);
+
+		pEyeCare->Release();
+	} catch(...) {
+		AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
+	}
 }
 
 BEGIN_MESSAGE_MAP(CDlgEyecare, CDialog)
