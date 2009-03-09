@@ -48,13 +48,18 @@ void CDlgEyecare::setEyecareTimespan() {
 	try {
 		UpdateData(TRUE);
 		IEyecare *pEyeCare = NULL;
-		CoCreateInstance(CLSID_Eyecare, NULL, CLSCTX_LOCAL_SERVER, IID_IEyecare, (LPVOID*)&pEyeCare);
+		HRESULT hr =CoCreateInstance(CLSID_Eyecare, NULL, CLSCTX_LOCAL_SERVER, IID_IEyecare, (LPVOID*)&pEyeCare);
+		if (FAILED(hr)) {
+			AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONEXCLAMATION);
+			return;
+		}
+
 		pEyeCare->setEnterTime(m_nEnterTime * 60);
 		pEyeCare->setEyecareTime(m_nEyecareTime * 60);
 		pEyeCare->enableEyecare(convert(m_chkEnabled.GetCheck() == BST_CHECKED ? true : false));
 		pEyeCare->Release();
 	} catch (_com_error&) {
-		// AfxMessageBox("");
+		AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONEXCLAMATION);
 	}
 }
 
@@ -63,7 +68,12 @@ void CDlgEyecare::setEyecareTerminatedMode() {
 	try {
 		UpdateData(TRUE);
 		IEyecare *pEyeCare = NULL;
-		CoCreateInstance(CLSID_Eyecare, NULL, CLSCTX_LOCAL_SERVER, IID_IEyecare, (LPVOID*)&pEyeCare);
+		HRESULT hr = CoCreateInstance(CLSID_Eyecare, NULL, CLSCTX_LOCAL_SERVER, IID_IEyecare, (LPVOID*)&pEyeCare);
+		if (FAILED(hr)) {
+			AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONEXCLAMATION);
+			return;
+		}
+
 		UINT checked = GetCheckedRadioButton(IDC_RAD_ENTER_SU_MODE, IDC_RAD_JUST_RESET_TIMER);
 		const int mode = (checked ==  IDC_RAD_ENTER_SU_MODE) ? 
 			EyecareSetting::EYECARE_TERMIN_ENTERSU : EyecareSetting::EYECARE_TERMIN_RESETTIMER;
@@ -71,6 +81,7 @@ void CDlgEyecare::setEyecareTerminatedMode() {
 		pEyeCare->setTermMode(mode);
 		pEyeCare->Release();
 	} catch(_com_error&) {
+		AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONEXCLAMATION);
 	}
 }
 
