@@ -10,6 +10,7 @@
 #include <comdef.h>
 #include <com\comutility.h>
 #include <com\resultvalue.h>
+#include <typeconvert.h>
 
 // CDlgProgramControl 对话框
 
@@ -20,6 +21,7 @@ const CString CProgramList::GetToolTip(int nItem, int nSubItem, UINT nFlags, BOO
 IMPLEMENT_DYNAMIC(CDlgProgramControl, CDialog)
 CDlgProgramControl::CDlgProgramControl(CWnd* pParent /*=NULL*/)
 : CBaseDlg(CDlgProgramControl::IDD, pParent)
+, m_bEnableAppControl(FALSE)
 {
 }
 
@@ -31,6 +33,7 @@ void CDlgProgramControl::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_LIST_PROGRAM, m_list);
+	DDX_Check(pDX, IDC_CHK_ENABLE_APPCONTROL, m_bEnableAppControl);
 }
 
 void CDlgProgramControl::removeItemData(const CString &path) {
@@ -81,6 +84,7 @@ void CDlgProgramControl::resetContent() {
 
 int CDlgProgramControl::OnApply() {
 	try {
+		UpdateData(TRUE);
 		AutoInitInScale _auto;
 
 		IAppControl *pSetting = NULL;
@@ -91,10 +95,12 @@ int CDlgProgramControl::OnApply() {
 		}
 
 		executeAdd(pSetting);
-		executeDelete(pSetting);
+		(pSetting);
+		pSetting->enable(convert(m_bEnableAppControl));
 
 		pSetting->Release();
 		pSetting = NULL;
+
 
 		return SUCCESS_APPLY;
 	} catch (_com_error &) {
@@ -137,8 +143,14 @@ void CDlgProgramControl::restoreSetting() {
 			cur = next;
 		}
 
+		// 是否可用
+		VARIANT_BOOL enabled;
+		pSetting->isSettingEnabled(&enabled);
+		m_bEnableAppControl = convert(enabled);
+
 		pSetting->Release();
 		pSetting = NULL;
+		UpdateData(FALSE);
 	} catch (_com_error &) {
 		AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
 	} catch (...) {
@@ -187,6 +199,7 @@ BEGIN_MESSAGE_MAP(CDlgProgramControl, CDialog)
 	ON_BN_CLICKED(IDC_BTN_ADD, OnBnClickedBtnAdd)
 	ON_BN_CLICKED(IDC_BTN_SET, OnBnClickedBtnSet)
 	ON_BN_CLICKED(IDC_BTN_DEL, OnBnClickedBtnDel)
+	ON_BN_CLICKED(IDC_CHK_ENABLE_APPCONTROL, OnBnClickedChkEnableAppcontrol)
 END_MESSAGE_MAP()
 
 
@@ -275,14 +288,19 @@ void CDlgProgramControl::OnBnClickedBtnDel()
 		// 获取选中的项，
 		int nItem = m_list.GetNextSelectedItem(pos);
 		if (nItem != -1) {
-			m_list.DeleteItem(nItem);	// 从ListCtrl中删除当前想
-
 			// 将待删除的项保存起来，一边在用户按下Apply或者OK按钮时执行删除
 			ITEMDATA * data = (ITEMDATA*)m_list.GetItemData(nItem);
 			if (NULL != data) {
 				deleteItems_.insert(std::make_pair(data->fullPath, nItem));
 				SetModify(true);
 			}
+
+			m_list.DeleteItem(nItem);	// 从ListCtrl中删除当前想
 		}
 	} 
+}
+
+void CDlgProgramControl::OnBnClickedChkEnableAppcontrol()
+{
+	SetModify(true);
 }

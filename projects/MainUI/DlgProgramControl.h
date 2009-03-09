@@ -82,6 +82,9 @@ protected:
 	//  Ö´ÐÐÉ¾³ýÓëÌí¼Ó
 	void executeDelete(IAppControl *pSetting);
 	void executeAdd(IAppControl *pSetting);
+public:
+	BOOL m_bEnableAppControl;
+	afx_msg void OnBnClickedChkEnableAppcontrol();
 };
 
 

@@ -346,22 +346,6 @@
 				RelativePath=".\Lev1DlgTools.h">
 			</File>
 			<Filter
-				Name="popup"
-				Filter="">
-				<File
-					RelativePath=".\DlgChangePassword.cpp">
-				</File>
-				<File
-					RelativePath=".\DlgChangePassword.h">
-				</File>
-				<File
-					RelativePath=".\DlgCheckPassword.cpp">
-				</File>
-				<File
-					RelativePath=".\DlgCheckPassword.h">
-				</File>
-			</Filter>
-			<Filter
 				Name="maindlg"
 				Filter="">
 				<File
@@ -370,6 +354,22 @@
 				<File
 					RelativePath=".\MainUIDlg.h">
 				</File>
+				<Filter
+					Name="popup"
+					Filter="">
+					<File
+						RelativePath=".\DlgChangePassword.cpp">
+					</File>
+					<File
+						RelativePath=".\DlgChangePassword.h">
+					</File>
+					<File
+						RelativePath=".\DlgCheckPassword.cpp">
+					</File>
+					<File
+						RelativePath=".\DlgCheckPassword.h">
+					</File>
+				</Filter>
 			</Filter>
 			<Filter
 				Name="ruledlg"

@@ -504,8 +504,8 @@ BEGIN
     PUSHBUTTON      "Delete",IDC_BTN_DEL,194,178,50,14
     PUSHBUTTON      "Setting...",IDC_BTN_SET,7,178,50,14,NOT WS_VISIBLE
     PUSHBUTTON      "Add...",IDC_BTN_ADD,133,178,50,14
-    CONTROL         "Enable Application Control",IDC_CHECK1,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,11,3,99,10
+    CONTROL         "Enable Application Control",IDC_CHK_ENABLE_APPCONTROL,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,11,3,99,10
 END
 
 
