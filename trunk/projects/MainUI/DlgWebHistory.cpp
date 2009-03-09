@@ -17,13 +17,12 @@
 
 IMPLEMENT_DYNAMIC(CDlgWebHistory, CDialog)
 CDlgWebHistory::CDlgWebHistory(CWnd* pParent /*=NULL*/)
-: CBaseDlg(CDlgWebHistory::IDD, pParent) , m_bPornImage(FALSE)
-, m_bPornPage(FALSE)
-, m_bPornWebsite(FALSE)
+: CBaseDlg(CDlgWebHistory::IDD, pParent) 
 , m_bAllImage(FALSE)
 , m_bAllPages(FALSE)
 , m_bAllWebsite(FALSE)
 , m_strAutoClean(_T(""))
+, m_bSearchWord(FALSE)
 {
 }
 
@@ -40,34 +39,32 @@ void CDlgWebHistory::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_STA_TOOLS, m_staTools);
 	DDX_Control(pDX, IDC_STA_HISTORY, m_staHistory);
 	DDX_Control(pDX, IDC_STA_TYPES, m_staTypes);
-	DDX_Check(pDX, IDC_CHK_PRON_IMAGE, m_bPornImage);
-	DDX_Check(pDX, IDC_CHK_PORN_PAGE, m_bPornPage);
-	DDX_Check(pDX, IDC_CHK_PORN_WEBSITES, m_bPornWebsite);
 	DDX_Check(pDX, IDC_CHK_ALL_IMAGE, m_bAllImage);
 	DDX_Check(pDX, IDC_CHK_ALLPAGES, m_bAllPages);
 	DDX_Check(pDX, IDC_CHK_ALLWEBSITES, m_bAllWebsite);
 	DDX_Control(pDX, IDC_SLIDER_AUTOCLEAR_TIME, m_sliderWebHistoryAutoClean);
+	DDX_Check(pDX, IDC_CHK_SEARCH_KEYWORD, m_bSearchWord);
 }
 
 void CDlgWebHistory::ChangeRecordType() {
 	try {
 		UpdateData(TRUE);
 		IWebHistoryRecorder *pWebHistory = NULL;
-		CoCreateInstance(CLSID_WebHistoryRecorder, NULL, CLSCTX_ALL, IID_IWebHistoryRecorder, (LPVOID*)&pWebHistory);
+		HRESULT hr = CoCreateInstance(CLSID_WebHistoryRecorder, NULL, CLSCTX_ALL, IID_IWebHistoryRecorder, (LPVOID*)&pWebHistory);
+		if (FAILED(hr)) {
+			// TODO:增加处理代码
+		}
+
 		pWebHistory->put_RecordAllImage(convert(m_bAllImage));
 		pWebHistory->put_RecordAllPages(convert(m_bAllPages));
 		pWebHistory->put_RecordAllURLs(convert(m_bAllWebsite));
-		pWebHistory->put_RecordPornImage(convert(m_bPornImage));
-		pWebHistory->put_RecordPornPages(convert(m_bPornPage));
-		pWebHistory->put_RecordPornURLs(convert(m_bPornWebsite));
+		pWebHistory->put_RecordSeachKeyword(convert(m_bSearchWord));
 		pWebHistory->Release();
 
-		g_configuration.getWebHistoryRecordSetting()->recordPornImage(m_bPornImage);
-		g_configuration.getWebHistoryRecordSetting()->recordPornPages(m_bPornPage);
-		g_configuration.getWebHistoryRecordSetting()->recordPornWebsite(m_bPornWebsite);
 		g_configuration.getWebHistoryRecordSetting()->recordAllImage(m_bAllImage);
 		g_configuration.getWebHistoryRecordSetting()->recordAllPages(m_bAllPages);
 		g_configuration.getWebHistoryRecordSetting()->recordAllWebsite(m_bAllWebsite);
+		g_configuration.getWebHistoryRecordSetting()->recordSeachKeyword(m_bSearchWord);
 		g_configuration.getWebHistoryRecordAutoClean()->enable(true);
 		g_configuration.getWebHistoryRecordAutoClean()->setTimespan(m_sliderWebHistoryAutoClean.GetPos());
 	} catch (_com_error&) {
@@ -91,12 +88,10 @@ void CDlgWebHistory::updateSta() {
 }
 
 void CDlgWebHistory::restoreSetting() {
-	m_bPornImage	= g_configuration.getWebHistoryRecordSetting()->pornimages_setting();
-	m_bPornPage		= g_configuration.getWebHistoryRecordSetting()->pornpages_setting();
-	m_bPornWebsite	= g_configuration.getWebHistoryRecordSetting()->pornwebsites_setting();
 	m_bAllImage		= g_configuration.getWebHistoryRecordSetting()->allimages_setting();
 	m_bAllPages		= g_configuration.getWebHistoryRecordSetting()->allpages_setting();
 	m_bAllWebsite	= g_configuration.getWebHistoryRecordSetting()->allwebsites_setting();
+	m_bSearchWord	= g_configuration.getWebHistoryRecordSetting()->searchkeyword_setting();
 
 	// auto clean
 	m_sliderWebHistoryAutoClean.SetRange(g_configuration.getWebHistoryRecordAutoClean()->getRangeMin(),
@@ -112,13 +107,11 @@ BEGIN_MESSAGE_MAP(CDlgWebHistory, CDialog)
 	ON_BN_CLICKED(IDC_BTN_HISTORY_PAGES, OnBnClickedBtnHistoryPages)
 	ON_BN_CLICKED(IDC_BTN_HISTORY_IMAGE, OnBnClickedBtnHistoryImage)
 	ON_WM_HSCROLL()
-	ON_BN_CLICKED(IDC_CHK_PRON_IMAGE, OnBnClickedChkPronImage)
-	ON_BN_CLICKED(IDC_CHK_PORN_PAGE, OnBnClickedChkPornPage)
-	ON_BN_CLICKED(IDC_CHK_PORN_WEBSITES, OnBnClickedChkPornWebsites)
 	ON_BN_CLICKED(IDC_CHK_ALL_IMAGE, OnBnClickedChkAllImage)
 	ON_BN_CLICKED(IDC_CHK_ALLPAGES, OnBnClickedChkAllpages)
 	ON_BN_CLICKED(IDC_CHK_ALLWEBSITES, OnBnClickedChkAllwebsites)
 	ON_BN_CLICKED(IDC_BTN_HISTORY_SEACHWORD, OnBnClickedBtnHistorySeachword)
+	ON_BN_CLICKED(IDC_CHK_SEARCH_KEYWORD, OnBnClickedChkSearchKeyword)
 END_MESSAGE_MAP()
 
 // CDlgWebHistory 消息处理程序
@@ -143,11 +136,6 @@ BOOL CDlgWebHistory::OnInitDialog()
 
 void CDlgWebHistory::OnBnClickedBtnHistoryPages()
 {
-	//TCHAR webpages[MAX_PATH], installpath[MAX_PATH];
-	//GetInstallPath(installpath, MAX_PATH, (HMODULE)AfxGetInstanceHandle());
-	//GetPageDirectory(webpages, MAX_PATH, installpath);
-	//ShellExecute(NULL, TEXT("open"), NULL, NULL, webpages, SW_SHOWNORMAL);
-
 	CDlgWebsites dlg;
 	dlg.DoModal();
 }
@@ -177,17 +165,6 @@ void CDlgWebHistory::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar) 
 	CBaseDlg::OnHScroll(nSBCode, nPos, pScrollBar);
 }
 
-void CDlgWebHistory::OnBnClickedChkPronImage() {
-	SetModify(TRUE);
-}
-
-void CDlgWebHistory::OnBnClickedChkPornPage() {
-	SetModify(TRUE);
-}
-
-void CDlgWebHistory::OnBnClickedChkPornWebsites() {
-	SetModify(TRUE);
-}
 
 void CDlgWebHistory::OnBnClickedChkAllImage() {
 	SetModify(TRUE);
@@ -198,5 +175,10 @@ void CDlgWebHistory::OnBnClickedChkAllpages() {
 }
 
 void CDlgWebHistory::OnBnClickedChkAllwebsites() {
+	SetModify(TRUE);
+}
+
+void CDlgWebHistory::OnBnClickedChkSearchKeyword()
+{
 	SetModify(TRUE);
 }

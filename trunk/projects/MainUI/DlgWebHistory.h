@@ -48,20 +48,19 @@ protected:
 	CString m_strAutoClean;
 
 	// constrols
-	BOOL m_bPornImage;
-	BOOL m_bPornPage;
-	BOOL m_bPornWebsite;
+	//BOOL m_bPornImage;
+	//BOOL m_bPornPage;
+	//BOOL m_bPornWebsite;
 	BOOL m_bAllImage;
 	BOOL m_bAllPages;
 	BOOL m_bAllWebsite;
+	BOOL m_bSearchWord;
 	
 public:
 	afx_msg void OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
-	afx_msg void OnBnClickedChkPronImage();
-	afx_msg void OnBnClickedChkPornPage();
-	afx_msg void OnBnClickedChkPornWebsites();
 	afx_msg void OnBnClickedChkAllImage();
 	afx_msg void OnBnClickedChkAllpages();
 	afx_msg void OnBnClickedChkAllwebsites();
 	afx_msg void OnBnClickedBtnHistorySeachword();
+	afx_msg void OnBnClickedChkSearchKeyword();
 };
