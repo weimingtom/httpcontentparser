@@ -1,0 +1,26 @@
+HKCR
+{
+	exts.IHidenInstall.1 = s 'IHidenInstall Class'
+	{
+		CLSID = s '{AE76C6BA-F2A8-4E74-B49B-2FDD98C84301}'
+	}
+	exts.IHidenInstall = s 'IHidenInstall Class'
+	{
+		CLSID = s '{AE76C6BA-F2A8-4E74-B49B-2FDD98C84301}'
+		CurVer = s 'exts.IHidenInstall.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {AE76C6BA-F2A8-4E74-B49B-2FDD98C84301} = s 'IHidenInstall Class'
+		{
+			ProgID = s 'exts.IHidenInstall.1'
+			VersionIndependentProgID = s 'exts.IHidenInstall'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{9CC3632B-91DF-4DE4-B3F6-DAFBBB940E1E}'
+		}
+	}
+}

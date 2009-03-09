@@ -1,0 +1,26 @@
+HKCR
+{
+	exts.AppLaunchFilter.1 = s 'AppLaunchFilter Class'
+	{
+		CLSID = s '{B0C0589E-9692-44E0-B2F1-378BE31B61C1}'
+	}
+	exts.AppLaunchFilter = s 'AppLaunchFilter Class'
+	{
+		CLSID = s '{B0C0589E-9692-44E0-B2F1-378BE31B61C1}'
+		CurVer = s 'exts.AppLaunchFilter.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {B0C0589E-9692-44E0-B2F1-378BE31B61C1} = s 'AppLaunchFilter Class'
+		{
+			ProgID = s 'exts.AppLaunchFilter.1'
+			VersionIndependentProgID = s 'exts.AppLaunchFilter'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{9CC3632B-91DF-4DE4-B3F6-DAFBBB940E1E}'
+		}
+	}
+}
