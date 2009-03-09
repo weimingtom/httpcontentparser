@@ -107,6 +107,12 @@ interface IWebHistoryRecorder : IDispatch{
 	[propput, id(8), helpstring("Attribute recordAllURLs")]			HRESULT RecordAllURLs([in] VARIANT_BOOL newVal);
 	[propget, id(9), helpstring("Attribute recordAllURLs")]			HRESULT RecordSeachKeyword([out, retval] VARIANT_BOOL* pVal);
 	[propput, id(9), helpstring("Attribute recordAllURLs")]			HRESULT RecordSeachKeyword([in] VARIANT_BOOL newVal);
+	[id(10), helpstring("方法getAutoClearTimespan")] HRESULT getAutoClearTimespan([out,retval] LONG* days);
+	[id(11), helpstring("方法setAutoClearTimespan")] HRESULT setAutoClearTimespan([in] LONG timespan);
+	[id(12), helpstring("方法isSettingRecordAllImages")] HRESULT isSettingRecordAllImages([out] VARIANT_BOOL* enabled);
+	[id(13), helpstring("方法isSettingRecordAllWebsites")] HRESULT isSettingRecordAllWebsites([out] VARIANT_BOOL* enabled);
+	[id(14), helpstring("方法isSettingRecordAllPages")] HRESULT isSettingRecordAllPages(VARIANT_BOOL* enabled);
+	[id(15), helpstring("方法isSettingRecordSearchWord")] HRESULT isSettingRecordSearchWord([out] VARIANT_BOOL* enabled);
 };
 [
 	object,

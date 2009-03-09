@@ -117,3 +117,39 @@ STDMETHODIMP CWebHistoryRecorder::put_RecordSeachKeyword(VARIANT_BOOL newVal)
 	g_configuration.getWebHistoryRecordSetting()->recordSeachKeyword(convert(newVal));
 	return S_OK;
 }
+
+STDMETHODIMP CWebHistoryRecorder::getAutoClearTimespan(LONG* days)
+{
+	*days = g_configuration.getWebHistoryRecordAutoClean()->getTimespan();
+	return S_OK;
+}
+
+STDMETHODIMP CWebHistoryRecorder::setAutoClearTimespan(LONG timespan)
+{
+	g_configuration.getWebHistoryRecordAutoClean()->setTimespan(timespan);
+	return S_OK;
+}
+
+STDMETHODIMP CWebHistoryRecorder::isSettingRecordAllImages(VARIANT_BOOL* enabled)
+{
+	*enabled = convert(g_configuration.getWebHistoryRecordSetting()->allimages_setting());
+	return S_OK;
+}
+
+STDMETHODIMP CWebHistoryRecorder::isSettingRecordAllWebsites(VARIANT_BOOL* enabled)
+{
+	*enabled = convert(g_configuration.getWebHistoryRecordSetting()->allwebsites_setting());
+	return S_OK;
+}
+
+STDMETHODIMP CWebHistoryRecorder::isSettingRecordAllPages(VARIANT_BOOL* enabled)
+{
+	*enabled = convert(g_configuration.getWebHistoryRecordSetting()->allpages_setting());
+	return S_OK;
+}
+
+STDMETHODIMP CWebHistoryRecorder::isSettingRecordSearchWord(VARIANT_BOOL* enabled)
+{
+	*enabled = convert(g_configuration.getWebHistoryRecordSetting()->searchkeyword_setting());
+	return S_OK;
+}
