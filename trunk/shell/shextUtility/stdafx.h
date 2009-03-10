@@ -4,7 +4,7 @@
 
 #pragma once
 
+#include <windows.h>
+#include <tchar.h>
 
-#define WIN32_LEAN_AND_MEAN		// 从 Windows 头中排除极少使用的资料
-
-// TODO: 在此处引用程序要求的附加头文件
+#pragma comment(lib, "Advapi32.lib")
