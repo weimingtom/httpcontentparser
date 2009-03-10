@@ -7,6 +7,8 @@
 
 这个接口的安装似乎有些古怪啊！与IShellExecute不同，他要通过调用外壳程序的QueryInterface方法获得IFolderFilterSite接口，并使用该接口的SetFilter方法安装这个Filter
 
+此种方法似乎不能实现
+
 
 = Details =
 
