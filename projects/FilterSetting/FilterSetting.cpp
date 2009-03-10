@@ -15,6 +15,7 @@
 #include <xmlconfiguration.h>
 #include <searchengine_define.h>
 #include <searchkeywordutil.h>
+#include <shell\shellutility.h>
 #include <string>
 #include <time.h>
 
@@ -39,7 +40,12 @@ public :
 
 CFilterSettingModule _AtlModule;
 
-
+void installShellSupport() {
+	// 如果没有安装程序控制，则安装
+	if (!isInstallAppControl()) {
+		installAppControl();
+	}
+}
 
 void initializeSetting() {
 	// 初始化配置
@@ -64,6 +70,9 @@ extern "C" int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/
 		CloseHandle(hMutex);
 		return 0;
 	}
+
+	// 安装外壳程序
+	installShellSupport();
 
 	g_hInstance = hInstance;
 
