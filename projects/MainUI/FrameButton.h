@@ -34,6 +34,14 @@ public:
 	COLORREF     m_clrHigh;
 	COLORREF     m_clrCheck;
 	BOOL         m_bSelected;
+
+public:
+	void setParentDlg(CBaseDlg * dlg) {
+		m_parentDlg_ = dlg;
+	}
+
+private:
+	CBaseDlg * m_parentDlg_;
 	
 protected:
 	DECLARE_MESSAGE_MAP()
