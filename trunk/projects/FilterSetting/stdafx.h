@@ -42,12 +42,14 @@
 #	pragma comment(lib, "ScreenRecord_d.lib")
 #	pragma comment(lib, "historyContentd.lib")
 #	pragma comment(lib, "cryptd.lib")
+#	pragma comment(lib, "shextUtilityd.lib")
 #else 
 #	pragma comment(lib, "setting.lib")
 #	pragma comment(lib, "apputility.lib")
 #	pragma comment(lib, "ScreenRecord.lib")
 #	pragma comment(lib, "historyContent.lib")
 #	pragma comment(lib, "crypt.lib")
+#	pragma comment(lib, "shextUtility.lib")
 #endif
 
 
