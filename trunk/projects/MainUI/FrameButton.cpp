@@ -5,6 +5,7 @@
 
 #include ".\framebutton.h"
 #include ".\resource.h"
+#include ".\basedlg.h"
 
 // CFrameButton
 
@@ -17,6 +18,7 @@ CFrameButton::CFrameButton()
 	m_clrHigh   = ::GetSysColor(COLOR_HIGHLIGHT);
 	m_clrCheck  = RGB(0, 170, 170);
 	m_bSelected = FALSE;
+	m_parentDlg_ = NULL;
 }
 
 CFrameButton::~CFrameButton()
@@ -242,8 +244,9 @@ void CFrameButton::OnLButtonDown(UINT nFlags, CPoint point)
 	SetTimer(1, 10, NULL);
 
 	// Ó²±àÂë
-	AfxGetMainWnd()->GetDlgItem(IDC_MAIN_OK)->EnableWindow(TRUE);
-	AfxGetMainWnd()->GetDlgItem(IDC_MAIN_APPLY)->EnableWindow(TRUE);
+	if (m_parentDlg_ != NULL) {
+		m_parentDlg_->SetModify(true);
+	}
 }
 
 void CFrameButton::OnLButtonUp(UINT nFlags, CPoint point)

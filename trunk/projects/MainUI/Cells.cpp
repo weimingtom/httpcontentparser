@@ -5,12 +5,14 @@
 #include "Cells.h"
 #include ".\cells.h"
 #include "resource.h"
+#include ".\basedlg.h"
 
 // CCells
 
 IMPLEMENT_DYNAMIC(CCells, CWnd)
 CCells::CCells() {
 	memset(access_netword, 0, sizeof(access_netword));
+	m_parentDlg = NULL;
 }
 
 CCells::~CCells()
@@ -52,6 +54,7 @@ BOOL CCells::Create(LPCTSTR lpszClassName, LPCTSTR lpszWindowName, DWORD dwStyle
 		for (int col = 0; col < Column; ++col) {
 			cells[row][col].Create("", WS_CHILD, rect, this, id++);
 			cells[row][col].ShowWindow(SW_SHOW);
+			cells[row][col].setParentDlg(m_parentDlg);
 
 			rect.left = rect.right;
 			if (col  == 11) {

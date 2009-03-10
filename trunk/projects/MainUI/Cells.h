@@ -1,9 +1,11 @@
-#pragma once
-
+#ifndef _MAINUI_CELLS_H__
+#define _MAINUI_CELLS_H__
 
 // CCells
 #include "FrameButton.h"
 #include <Enumerate.h>
+
+class CBaseDlg;
 
 class CCells : public CWnd {
 DECLARE_DYNAMIC(CCells)
@@ -15,6 +17,13 @@ public:
 		ACCESSABLE = 0,
 		UNACCESSABLE
 	};
+
+	void setParentDlg(CBaseDlg * mParentDlg) {
+		m_parentDlg = mParentDlg;
+	}
+
+private:
+	CBaseDlg *m_parentDlg;
 protected:
 	DECLARE_MESSAGE_MAP()
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
@@ -43,4 +52,5 @@ private:
 	void prepareForEnum();
 };
 
+#endif  // _MAINUI_CELLS_H__
 

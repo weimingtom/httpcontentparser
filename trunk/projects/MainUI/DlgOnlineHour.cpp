@@ -113,6 +113,7 @@ BOOL CDlgOnlineHour::OnInitDialog()
 
 	CRect rect;
 	GetDlgItem(IDC_STA_CELLS)->GetWindowRect(rect);
+	cells.setParentDlg(this);
 	cells.Create(NULL, NULL, WS_CHILD, rect, this, IDC_WND_HELLO);
 	cells.ShowWindow(SW_SHOW);
 
