@@ -8,7 +8,7 @@
 = Details =
 
      1.定义FILE_INFORMATION_CLASS的第3号结构：_FILE_BOTH_DIR_INFORMATION，这个结构是ZwQueryDirectoryFile必须参数。
-
+{{{
 typedef struct _FILE_BOTH_DIR_INFORMATION {
     ULONG           NextEntryOffset;
     ULONG           FileIndex;
@@ -26,10 +26,11 @@ typedef struct _FILE_BOTH_DIR_INFORMATION {
     WCHAR           FileName[1];
 } FILE_BOTH_DIR_INFORMATION, *PFILE_BOTH_DIR_INFORMATION;
 
-
+}}}
 
 2.先申明ZwQueryDirectoryFile，然后定义ZwQueryDirectoryFile的原型：
 
+{{{
 extern NTSYSAPI NTSTATUS NTAPI ZwQueryDirectoryFile(
              IN HANDLE hFile,
              IN HANDLE hEvent OPTIONAL,
@@ -59,9 +60,11 @@ typedef NTSTATUS (*REALZWQUERYDIRECTORYFILE)(IN HANDLE hFile,
 
 //定义一个原函数指针
 REALZWQUERYSYSTEMINFORMATION RealZwQuerySystemInformation;
+}}}
 
 3.定义替换API函数的原型：
 
+{{{
 NTSTATUS HookZwQueryDirectoryFile( 
           IN HANDLE hFile,
           IN HANDLE hEvent OPTIONAL,
@@ -74,9 +77,10 @@ NTSTATUS HookZwQueryDirectoryFile(
           IN BOOLEAN bReturnOnlyOneEntry,
           IN PUNICODE_STRING PathMask OPTIONAL,
           IN BOOLEAN bRestartQuery);
-
+}}}
 4.在DriverEntry（驱动入口）函数中加入如下申明：
 
+{{{
 //保存真正的ZwQueryDirectoryFile函数地址
 
 RealZwQueryDirectoryFile=(REALZWQUERYDIRECTORYFILE)(SYSTEMSERVICE(ZwQueryDirectoryFile));
@@ -84,14 +88,19 @@ RealZwQueryDirectoryFile=(REALZWQUERYDIRECTORYFILE)(SYSTEMSERVICE(ZwQueryDirecto
 //把自定义的替换函数指针指向真正的ZwQueryDirectoryFile函数
 
 (REALZWQUERYDIRECTORYFILE)(SYSTEMSERVICE(ZwQueryDirectoryFile))=HookZwQueryDirectoryFile;
+}}}
 
 5.在DriverUnload（驱动卸载函数）函数中加入恢复代码：
 
+{{{
 //恢复原来的函数指针
 
 (REALZWQUERYDIRECTORYFILE)(SYSTEMSERVICE(ZwQueryDirectoryFile))=RealZwQueryDirectoryFile;
+}}}
 
 6.现在准备工作做好了，函数指针都已经设置转向了，剩下的是实现这个我们自定义的替换函数HookZwQueryDirectoryFile，代码如下：
+
+{{{
 
 NTSTATUS HookZwQueryDirectoryFile(
     IN HANDLE hFile,
@@ -182,5 +191,7 @@ rc = ((REALZWQUERYDIRECTORYFILE)(RealZwQueryDirectoryFile))(
 }
 return(rc);
 }
+
+}}}
 
 本代码在开发机器（WINXP+SP1+XPDDK）上测试通过！
