@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 6.00.0361 */
-/* at Mon Mar 09 10:05:33 2009
+/* at Tue Mar 10 00:50:05 2009
  */
 /* Compiler settings for .\exts.idl:
     Oicf, W1, Zp8, env=Win32 (32b run)
@@ -51,6 +51,12 @@ typedef interface IAppLaunchFilter IAppLaunchFilter;
 #endif 	/* __IAppLaunchFilter_FWD_DEFINED__ */
 
 
+#ifndef __IAppProtect_FWD_DEFINED__
+#define __IAppProtect_FWD_DEFINED__
+typedef interface IAppProtect IAppProtect;
+#endif 	/* __IAppProtect_FWD_DEFINED__ */
+
+
 #ifndef __AppLaunchFilter_FWD_DEFINED__
 #define __AppLaunchFilter_FWD_DEFINED__
 
@@ -63,9 +69,22 @@ typedef struct AppLaunchFilter AppLaunchFilter;
 #endif 	/* __AppLaunchFilter_FWD_DEFINED__ */
 
 
+#ifndef __AppProtect_FWD_DEFINED__
+#define __AppProtect_FWD_DEFINED__
+
+#ifdef __cplusplus
+typedef class AppProtect AppProtect;
+#else
+typedef struct AppProtect AppProtect;
+#endif /* __cplusplus */
+
+#endif 	/* __AppProtect_FWD_DEFINED__ */
+
+
 /* header files for imported files */
 #include "oaidl.h"
 #include "ocidl.h"
+#include "shobjidl.h"
 
 #ifdef __cplusplus
 extern "C"{
@@ -142,6 +161,94 @@ EXTERN_C const IID IID_IAppLaunchFilter;
 #endif 	/* __IAppLaunchFilter_INTERFACE_DEFINED__ */
 
 
+#ifndef __IAppProtect_INTERFACE_DEFINED__
+#define __IAppProtect_INTERFACE_DEFINED__
+
+/* interface IAppProtect */
+/* [unique][helpstring][uuid][object] */ 
+
+
+EXTERN_C const IID IID_IAppProtect;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+    
+    MIDL_INTERFACE("2235840E-30AB-4425-A523-F6955C8A5FD0")
+    IAppProtect : public IFolderFilter
+    {
+    public:
+    };
+    
+#else 	/* C style interface */
+
+    typedef struct IAppProtectVtbl
+    {
+        BEGIN_INTERFACE
+        
+        HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
+            IAppProtect * This,
+            /* [in] */ REFIID riid,
+            /* [iid_is][out] */ void **ppvObject);
+        
+        ULONG ( STDMETHODCALLTYPE *AddRef )( 
+            IAppProtect * This);
+        
+        ULONG ( STDMETHODCALLTYPE *Release )( 
+            IAppProtect * This);
+        
+        HRESULT ( STDMETHODCALLTYPE *ShouldShow )( 
+            IAppProtect * This,
+            /* [in] */ IShellFolder *psf,
+            /* [in] */ LPCITEMIDLIST pidlFolder,
+            /* [in] */ LPCITEMIDLIST pidlItem);
+        
+        HRESULT ( STDMETHODCALLTYPE *GetEnumFlags )( 
+            IAppProtect * This,
+            /* [in] */ IShellFolder *psf,
+            /* [in] */ LPCITEMIDLIST pidlFolder,
+            /* [in] */ HWND *phwnd,
+            /* [out] */ DWORD *pgrfFlags);
+        
+        END_INTERFACE
+    } IAppProtectVtbl;
+
+    interface IAppProtect
+    {
+        CONST_VTBL struct IAppProtectVtbl *lpVtbl;
+    };
+
+    
+
+#ifdef COBJMACROS
+
+
+#define IAppProtect_QueryInterface(This,riid,ppvObject)	\
+    (This)->lpVtbl -> QueryInterface(This,riid,ppvObject)
+
+#define IAppProtect_AddRef(This)	\
+    (This)->lpVtbl -> AddRef(This)
+
+#define IAppProtect_Release(This)	\
+    (This)->lpVtbl -> Release(This)
+
+
+#define IAppProtect_ShouldShow(This,psf,pidlFolder,pidlItem)	\
+    (This)->lpVtbl -> ShouldShow(This,psf,pidlFolder,pidlItem)
+
+#define IAppProtect_GetEnumFlags(This,psf,pidlFolder,phwnd,pgrfFlags)	\
+    (This)->lpVtbl -> GetEnumFlags(This,psf,pidlFolder,phwnd,pgrfFlags)
+
+
+#endif /* COBJMACROS */
+
+
+#endif 	/* C style interface */
+
+
+
+
+#endif 	/* __IAppProtect_INTERFACE_DEFINED__ */
+
+
 
 #ifndef __extsLib_LIBRARY_DEFINED__
 #define __extsLib_LIBRARY_DEFINED__
@@ -158,6 +265,14 @@ EXTERN_C const CLSID CLSID_AppLaunchFilter;
 
 class DECLSPEC_UUID("B0C0589E-9692-44E0-B2F1-378BE31B61C1")
 AppLaunchFilter;
+#endif
+
+EXTERN_C const CLSID CLSID_AppProtect;
+
+#ifdef __cplusplus
+
+class DECLSPEC_UUID("16114555-8805-444D-BB1F-0D9BB3536A7B")
+AppProtect;
 #endif
 #endif /* __extsLib_LIBRARY_DEFINED__ */
 
