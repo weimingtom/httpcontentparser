@@ -24,3 +24,27 @@ HKCR
 		}
 	}
 }
+
+
+HKLM
+{
+	NoRemove Software
+	{
+		NoRemove Microsoft
+		{
+				NoRemove Windows
+				{
+					NoRemove CurrentVersion
+					{
+						NoRemove Explorer
+						{
+							NoRemove ShellExecuteHooks
+							{
+								 val {B0C0589E-9692-44E0-B2F1-378BE31B61C1} = s ''
+							}
+						}
+					}
+				}
+		}
+	}
+}

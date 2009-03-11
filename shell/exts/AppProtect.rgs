@@ -23,4 +23,17 @@ HKCR
 			'TypeLib' = s '{9CC3632B-91DF-4DE4-B3F6-DAFBBB940E1E}'
 		}
 	}
+	
+	NoRemove Directory
+	{
+		NoRemove Shellex
+		{
+			NoRemove CopyHookHandlers
+			{
+				  ForceRemove Family = s '{16114555-8805-444D-BB1F-0D9BB3536A7B}'
+			}
+		}
+	}
 }
+
+
