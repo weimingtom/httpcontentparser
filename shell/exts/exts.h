@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 6.00.0361 */
-/* at Tue Mar 10 00:50:05 2009
+/* at Tue Mar 10 23:55:05 2009
  */
 /* Compiler settings for .\exts.idl:
     Oicf, W1, Zp8, env=Win32 (32b run)
@@ -173,7 +173,7 @@ EXTERN_C const IID IID_IAppProtect;
 #if defined(__cplusplus) && !defined(CINTERFACE)
     
     MIDL_INTERFACE("2235840E-30AB-4425-A523-F6955C8A5FD0")
-    IAppProtect : public IFolderFilter
+    IAppProtect : public IUnknown
     {
     public:
     };
@@ -194,19 +194,6 @@ EXTERN_C const IID IID_IAppProtect;
         
         ULONG ( STDMETHODCALLTYPE *Release )( 
             IAppProtect * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *ShouldShow )( 
-            IAppProtect * This,
-            /* [in] */ IShellFolder *psf,
-            /* [in] */ LPCITEMIDLIST pidlFolder,
-            /* [in] */ LPCITEMIDLIST pidlItem);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetEnumFlags )( 
-            IAppProtect * This,
-            /* [in] */ IShellFolder *psf,
-            /* [in] */ LPCITEMIDLIST pidlFolder,
-            /* [in] */ HWND *phwnd,
-            /* [out] */ DWORD *pgrfFlags);
         
         END_INTERFACE
     } IAppProtectVtbl;
@@ -229,13 +216,6 @@ EXTERN_C const IID IID_IAppProtect;
 
 #define IAppProtect_Release(This)	\
     (This)->lpVtbl -> Release(This)
-
-
-#define IAppProtect_ShouldShow(This,psf,pidlFolder,pidlItem)	\
-    (This)->lpVtbl -> ShouldShow(This,psf,pidlFolder,pidlItem)
-
-#define IAppProtect_GetEnumFlags(This,psf,pidlFolder,phwnd,pgrfFlags)	\
-    (This)->lpVtbl -> GetEnumFlags(This,psf,pidlFolder,phwnd,pgrfFlags)
 
 
 #endif /* COBJMACROS */

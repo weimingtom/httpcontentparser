@@ -59,7 +59,8 @@
 				CommandLine="copy .\debug\exts.dll ..\..\debug
 copy .\exts.h ..\..\include\shell
 copy .\exts_i.c ..\..\include\shell
-regsvr32 /s /c &quot;$(TargetPath)&quot;"/>
+regsvr32 /s /c &quot;$(TargetPath)&quot;
+"/>
 			<Tool
 				Name="VCPreBuildEventTool"/>
 			<Tool
@@ -128,7 +129,8 @@ regsvr32 /s /c &quot;$(TargetPath)&quot;"/>
 				CommandLine="copy .\release\exts.dll ..\..\release
 copy .\exts.h ..\..\include\shell
 copy .\exts_i.c ..\..\include\shell
-regsvr32 /s /c &quot;$(TargetPath)&quot;"/>
+regsvr32 /s /c &quot;$(TargetPath)&quot;
+"/>
 			<Tool
 				Name="VCPreBuildEventTool"/>
 			<Tool
@@ -157,9 +159,6 @@ regsvr32 /s /c &quot;$(TargetPath)&quot;"/>
 			Name="源文件"
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
-			<File
-				RelativePath=".\AppProtect.cpp">
-			</File>
 			<File
 				RelativePath=".\exts.cpp">
 			</File>
@@ -190,9 +189,6 @@ regsvr32 /s /c &quot;$(TargetPath)&quot;"/>
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
 			<File
-				RelativePath=".\AppProtect.h">
-			</File>
-			<File
 				RelativePath=".\Resource.h">
 			</File>
 			<File
@@ -203,9 +199,6 @@ regsvr32 /s /c &quot;$(TargetPath)&quot;"/>
 			Name="资源文件"
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx"
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}">
-			<File
-				RelativePath=".\AppProtect.rgs">
-			</File>
 			<File
 				RelativePath=".\exts.rc">
 			</File>
@@ -243,6 +236,19 @@ regsvr32 /s /c &quot;$(TargetPath)&quot;"/>
 			</File>
 			<File
 				RelativePath=".\AppLaunchFilter.rgs">
+			</File>
+		</Filter>
+		<Filter
+			Name="AppProtect"
+			Filter="">
+			<File
+				RelativePath=".\AppProtect.cpp">
+			</File>
+			<File
+				RelativePath=".\AppProtect.h">
+			</File>
+			<File
+				RelativePath=".\AppProtect.rgs">
 			</File>
 		</Filter>
 		<File
