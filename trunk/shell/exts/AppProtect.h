@@ -44,10 +44,6 @@ END_COM_MAP()
 	}
 
 public:
-	// interface IFolderFilter
-	HRESULT __stdcall ShouldShow(IShellFolder *psf, LPCITEMIDLIST pidlFolder, LPCITEMIDLIST pidlItem);
-	HRESULT __stdcall GetEnumFlags(IShellFolder *psf,  LPCITEMIDLIST pidlFolder, HWND *phwnd, DWORD *pgrfFlags);
-
 	// interface ICopyHook
 	UINT __stdcall CopyCallback(HWND hwnd, UINT wFunc, UINT wFlags,
 		LPCTSTR pszSrcFile,  DWORD dwSrcAttribs, LPCTSTR pszDestFile, DWORD dwDestAttribs);

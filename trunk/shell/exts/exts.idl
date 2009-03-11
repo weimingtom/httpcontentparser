@@ -23,7 +23,7 @@ interface IAppLaunchFilter : IUnknown{
 	helpstring("IAppProtect Interface"),
 	pointer_default(unique)
 ]
-interface IAppProtect : IFolderFilter  {
+interface IAppProtect : IUnknown  {
 };
 [
 	uuid(9CC3632B-91DF-4DE4-B3F6-DAFBBB940E1E),
