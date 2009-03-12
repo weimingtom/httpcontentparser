@@ -312,9 +312,8 @@ void CMainUIDlg::OnToolsDesktopimage() {
 }
 
 void CMainUIDlg::OnToolsWebhistory() {
-	TCHAR webimages[MAX_PATH], installpath[MAX_PATH];
-	GetInstallPath(installpath, MAX_PATH);
-	GetImageDirectory(webimages, MAX_PATH, installpath);
+	TCHAR webimages[MAX_PATH];
+	GetImageDirectory(webimages, MAX_PATH);
 	ShellExecute(NULL, TEXT("open"), NULL, NULL, webimages, SW_SHOWNORMAL);
 }
 

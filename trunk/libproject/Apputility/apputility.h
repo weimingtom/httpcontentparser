@@ -24,7 +24,6 @@ void LockComputer();
 // 获取主界面的路径
 HWND GetMainUIHWND();
 void GetMainUIPath(TCHAR * fullpath, const int len);
-void GetMainUIPath(TCHAR * fullpath, const int len, const TCHAR * installPath);
 // 启动主界面
 void StartMainUI();
 
@@ -42,21 +41,20 @@ const TCHAR * GetAppConfigFilename(TCHAR *fullpath, const int len);
 const TCHAR* GetFileNameDir(const TCHAR *filename, TCHAR *directory, const unsigned len);
 
 // 获取保存图片的路径
-const TCHAR * GetImageDirectory(TCHAR * filename, const unsigned len, const TCHAR * installPath);
+const TCHAR * GetImageDirectory(TCHAR * filename, const unsigned len);
 
 // 获取文字内容的保存路径
-const TCHAR * GetPageDirectory(TCHAR * filename, const unsigned len, const TCHAR * installPath);
+const TCHAR * GetPageDirectory(TCHAR * filename, const unsigned len);
 
 // 获取保存搜错词的文件
 const TCHAR * GetSearchWordFile(TCHAR * filename, const unsigned len);
 
 // 获取保存网址的文件
 const TCHAR* GetWebSiteFile(TCHAR * filename, const unsigned len);
-const TCHAR * GetWebSiteFile(TCHAR *filename, const unsigned len, const TCHAR * installPath);
-const TCHAR * GetPornWebSiteFile(TCHAR *filename, const unsigned len, const TCHAR * installPath);
+const TCHAR * GetPornWebSiteFile(TCHAR *filename, const unsigned len);
 
 // 获取历史的文件
-const TCHAR * GetRecordConfigfile(TCHAR *filename, const unsigned len, const TCHAR * installPath);
+const TCHAR * GetRecordConfigfile(TCHAR *filename, const unsigned len);
 
 // 开机自动运行
 INT RegisterAutoRun(const TCHAR * fullpath, BOOL auto_run);

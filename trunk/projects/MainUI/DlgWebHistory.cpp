@@ -156,9 +156,8 @@ void CDlgWebHistory::OnBnClickedBtnHistoryPages()
 }
 
 void CDlgWebHistory::OnBnClickedBtnHistoryImage() {
-	TCHAR webimages[MAX_PATH], installpath[MAX_PATH];
-	GetInstallPath(installpath, MAX_PATH);
-	GetImageDirectory(webimages, MAX_PATH, installpath);
+	TCHAR webimages[MAX_PATH];
+	GetImageDirectory(webimages, MAX_PATH);
 
 	CDlgImageBrowser dlg;
 	dlg.setImageDir(webimages);
