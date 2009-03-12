@@ -109,9 +109,6 @@ void GetMainUIPath(TCHAR * fullpath, const int len) {
 	_sntprintf(fullpath, len, "%s%s", installpath, APPLICATION_MAINUI_NAME);
 }
 
-void GetMainUIPath(TCHAR * fullpath, const int len, const TCHAR * installPath) {
-	_sntprintf(fullpath, len, "%s%s", installPath, APPLICATION_MAINUI_NAME);
-}
 
 void StartMainUI() {
 	TCHAR  fullpath[MAX_PATH];
@@ -170,11 +167,10 @@ void ClearHistory() {
 	GetTextRecordDir(dir, MAX_PATH);
 	DeleteFiles(dir, TEXT("*.*"));
 
-	GetInstallPath(dir, MAX_PATH);
-	GetWebSiteFile(filepath, MAX_PATH, dir);
+	GetWebSiteFile(filepath, MAX_PATH);
 	DeleteFile(filepath);
 
-	GetPornWebSiteFile(filepath, MAX_PATH, dir);
+	GetPornWebSiteFile(filepath, MAX_PATH);
 	DeleteFile(filepath);
 }
 
@@ -208,7 +204,10 @@ const TCHAR * GetSearchWordFile(TCHAR * filename, const unsigned len) {
 	return filename;
 }
 
-const TCHAR * GetPageDirectory(TCHAR * pagePath, const unsigned len, const TCHAR * installPath) {
+const TCHAR * GetPageDirectory(TCHAR * pagePath, const unsigned len) {
+	TCHAR installPath[MAX_PATH];
+	GetInstallPath(installPath, MAX_PATH);
+
 	assert (pagePath != NULL);
 	assert ( true == strutility::endwith(installPath, TEXT("\\")));
 	GenerateFullPath(pagePath, MAX_PATH, installPath, TEXT("History\\text\\"));
@@ -223,9 +222,13 @@ const TCHAR * GetPageDirectory(TCHAR * pagePath, const unsigned len, const TCHAR
 	return pagePath;
 }
 
-const TCHAR * GetImageDirectory(TCHAR * imagepath, const unsigned len, const TCHAR * installPath) {
+const TCHAR * GetImageDirectory(TCHAR * imagepath, const unsigned len) {
+	TCHAR installPath[MAX_PATH];
+	GetInstallPath(installPath, MAX_PATH);
+
 	assert (imagepath != NULL);
 	assert ( true == strutility::endwith(installPath, "\\"));
+
 	GenerateFullPath(imagepath, MAX_PATH, installPath, TEXT("History\\images\\"));
 
 	// 如果路径不存在则创建
@@ -237,21 +240,20 @@ const TCHAR * GetImageDirectory(TCHAR * imagepath, const unsigned len, const TCH
 	}
 	return imagepath;
 }
-const TCHAR* GetWebSiteFile(TCHAR * filename, const unsigned len) {
-	assert (NULL != filename);
-	TCHAR installpath[MAX_PATH];
-	GetInstallPath(installpath, len);
-	GetWebSiteFile(filename, len, installpath);
-	return filename;
-}	
 
-const TCHAR * GetWebSiteFile(TCHAR *filename, const unsigned len, const TCHAR * installPath) {
+const TCHAR * GetWebSiteFile(TCHAR *filename, const unsigned len) {
+	TCHAR installPath[MAX_PATH];
+	GetInstallPath(installPath, MAX_PATH);
+
 	assert (filename != NULL);
 	assert ( true == strutility::endwith(installPath, "\\"));
 	GenerateFullPath(filename, MAX_PATH, installPath, TEXT("History\\websites\\websites.txt"));
 	return filename;
 }
-const TCHAR * GetPornWebSiteFile(TCHAR *filename, const unsigned len, const TCHAR * installPath) {
+const TCHAR * GetPornWebSiteFile(TCHAR *filename, const unsigned len) {
+	TCHAR installPath[MAX_PATH];
+	GetInstallPath(installPath, MAX_PATH);
+
 	assert (filename != NULL);
 	assert ( true == strutility::endwith(installPath, "\\"));
 	GenerateFullPath(filename, MAX_PATH, installPath, TEXT("History\\websites\\pornwebsites.txt"));
@@ -259,7 +261,10 @@ const TCHAR * GetPornWebSiteFile(TCHAR *filename, const unsigned len, const TCHA
 }
 
 // 获取记录图片 文字历史的文件的路径
-const TCHAR * GetRecordConfigfile(TCHAR *filename, const unsigned len, const TCHAR * installPath) {
+const TCHAR * GetRecordConfigfile(TCHAR *filename, const unsigned len) {
+	TCHAR installPath[MAX_PATH];
+	GetInstallPath(installPath, MAX_PATH);
+
 	assert (filename != NULL);
 	assert (strutility::endwith(installPath, "\\") == true);
 	GenerateFullPath(filename, MAX_PATH, installPath, TEXT("History\\config.xml"));

@@ -75,7 +75,7 @@ void AppUtilityTest::testGetMainUIName() {
 	CPPUNIT_ASSERT( 0 == _tcscmp(fullpath, expected));
 
 	GetInstallPath(installpath, MAX_PATH);
-	GetMainUIPath(fullpath, MAX_PATH, installpath);
+	GetMainUIPath(fullpath, MAX_PATH);
 	_tcslwr(fullpath);
 	CPPUNIT_ASSERT( expected == _tcsstr(expected, fullpath));
 	CPPUNIT_ASSERT( 0 == _tcscmp(fullpath, expected));
@@ -101,7 +101,7 @@ void AppUtilityTest::testGetRecordConfigfile() {
 	_sntprintf(configfile, MAX_PATH, TEXT("%s%s"), workdir, TEXT("history\\config.xml"));
 
 	GetInstallPath(installpath, MAX_PATH);
-	GetRecordConfigfile(fullpath, MAX_PATH, installpath);
+	GetRecordConfigfile(fullpath, MAX_PATH);
 
 	_tcslwr(configfile);
 	_tcslwr(fullpath);
@@ -119,7 +119,7 @@ void AppUtilityTest::testGetPageDirectory() {
 	_sntprintf(pageseDir, MAX_PATH, TEXT("%s%s"), workdir, TEXT("history\\text\\"));
 
 	GetInstallPath(installpath, MAX_PATH);
-	GetPageDirectory(fullpath, MAX_PATH, installpath);
+	GetPageDirectory(fullpath, MAX_PATH);
 
 	CPPUNIT_ASSERT( true == strutility::endwith(pageseDir, "\\"));
 	_tcslwr(fullpath);
@@ -137,7 +137,7 @@ void AppUtilityTest::testGetImageDirectory() {
 	_sntprintf(imageDir, MAX_PATH, TEXT("%s%s"), workdir, TEXT("history\\images\\"));
 
 	GetInstallPath(installpath, MAX_PATH);
-	GetImageDirectory(fullpath, MAX_PATH, installpath);
+	GetImageDirectory(fullpath, MAX_PATH);
 
 	_tcslwr(fullpath);
 	_tcslwr(imageDir);
