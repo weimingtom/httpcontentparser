@@ -43,8 +43,8 @@ void WebsiteRecorder::getServiceSetting() {
 			HRESULT hr = CoCreateInstance(CLSID_AppSetting, NULL, CLSCTX_LOCAL_SERVER, IID_IAppSetting, (LPVOID*)&appSetting);
 			appSetting->GetInstallPath((BSTR*)&retVal);
 			
-			GetPornWebSiteFile(porn_path, MAX_PATH, (TCHAR*)_bstr_t(retVal));
-			GetWebSiteFile(normal_path, MAX_PATH, (TCHAR*)_bstr_t(retVal));
+			GetPornWebSiteFile(porn_path, MAX_PATH);
+			GetWebSiteFile(normal_path, MAX_PATH);
 		}
 
 		// 是否应该保存

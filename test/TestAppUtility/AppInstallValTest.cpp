@@ -63,12 +63,12 @@ AppInstallValTest::~AppInstallValTest(void)
 
 void AppInstallValTest::testRunInCOM() {
 	AppInstallValidate t1(VALIDATE_COM);
-	t1.repair(GetModule("TestSysutility.exe"));
+	t1.repair();
 	CPPUNIT_ASSERT(t1.errno_ == PACKETSFILTERED_FILE_NOT_FOUND);
 }
 void AppInstallValTest::testRunInSPI() {
 	AppInstallValidate t1(VALIDATE_SPI);
-	t1.repair(GetModule("TestSysutility.exe"));
+	t1.repair();
 	CPPUNIT_ASSERT(t1.errno_ == F_COM_FILE_NOT_FOUND);
 }
 void AppInstallValTest::testRunInNone() {
