@@ -27,10 +27,10 @@ AppInstallValidate::~AppInstallValidate(void)
 }
 
 
-int AppInstallValidate::repair(HMODULE hModule) {
+int AppInstallValidate::repair() {
 	// 获取当前路径
 	TCHAR currentPath[MAX_PATH], currentProcess[MAX_PATH];
-	GetModuleFileName(hModule, currentProcess, MAX_PATH);
+	GetModuleFileName(NULL, currentProcess, MAX_PATH);
 	GetFileNameDir(currentProcess, currentPath, MAX_PATH);
 
 	// 安装路径注册表项
@@ -38,11 +38,11 @@ int AppInstallValidate::repair(HMODULE hModule) {
 		repairRegistryInstallPath(currentPath);
 
 	// SPI
-	repairSPI(hModule);
+	repairSPI();
 
 	// COM 服务
-	if (!serviceWorking(hModule)) {
-		repairCOM(hModule);
+	if (!serviceWorking()) {
+		repairCOM();
 	}
 	return 0;
 }
@@ -103,7 +103,7 @@ bool AppInstallValidate::shouldRepairSPI() {
 		return true;
 }
 
-void AppInstallValidate::repairSPI(HMODULE hModule) {
+void AppInstallValidate::repairSPI() {
 	if (false == shouldRepairSPI())
 		return;
 
@@ -112,11 +112,11 @@ void AppInstallValidate::repairSPI(HMODULE hModule) {
 	if (install.IsInstalled())
 		return;
 
-	installSPI(hModule);
+	installSPI();
 }
 
 // 安装SPI
-void AppInstallValidate::installSPI(HMODULE hModule) {
+void AppInstallValidate::installSPI() {
 	TCHAR install_path[MAX_PATH], fullpath[MAX_PATH];
 	GetInstallPath(install_path, MAX_PATH);
 
@@ -135,7 +135,7 @@ void AppInstallValidate::installSPI(HMODULE hModule) {
 //=========================================
 // COM服务
 // COM服务是否注册
-bool AppInstallValidate::serviceWorking(HMODULE hModule) {
+bool AppInstallValidate::serviceWorking() {
 	if (!shouldRepairCOM())
 		return true;
 
@@ -163,7 +163,7 @@ bool AppInstallValidate::serviceWorking(HMODULE hModule) {
 	return true;
 }
 
-void AppInstallValidate::repairCOM(HMODULE hModule) {
+void AppInstallValidate::repairCOM() {
 	if (type_ != VALIDATE_SPI) {
 		setErrNo(UnRegisterServices());
 		setErrNo(RegisterServices());
