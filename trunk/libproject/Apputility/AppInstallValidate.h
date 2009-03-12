@@ -17,8 +17,8 @@ public:
 	AppInstallValidate(int type);
 	~AppInstallValidate(void);
 
-	int repair(HMODULE hModule);		// ÐÞ¸´
-	bool validateIntact(HMODULE hModule);
+	int repair();		// ÐÞ¸´
+	bool validateIntact();
 
 	void getErrorMessage(TCHAR * msg, const int len);
 private:
@@ -27,13 +27,13 @@ private:
 	bool shouldRepairRegistry();
 
 	// SPI
-	void repairSPI(HMODULE hModule);
-	void installSPI(HMODULE hModule);
+	void repairSPI();
+	void installSPI();
 	bool shouldRepairSPI();
 
 	// COM Service
-	bool serviceWorking(HMODULE hModule);
-	void repairCOM(HMODULE hModule);
+	bool serviceWorking();
+	void repairCOM();
 	bool shouldRepairCOM();
 private:
 	int type_;
