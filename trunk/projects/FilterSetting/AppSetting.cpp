@@ -48,7 +48,7 @@ STDMETHODIMP CAppSetting::setHotkey(USHORT wVirtualKeyCode, USHORT wModifiers, L
 // 获取安装路径
 STDMETHODIMP CAppSetting::GetInstallPath(BSTR* installpath) {
 	TCHAR path[MAX_PATH];
-	::GetInstallPath(path, MAX_PATH, g_hInstance);
+	::GetInstallPath(path, MAX_PATH);
 	*installpath = bstr_t(path);
 	return S_OK;
 }

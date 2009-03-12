@@ -8,35 +8,35 @@
 #define LOCKPC_APP_FILENAME					TEXT("LockPC.exe")
 
 // 保存屏幕
-DWORD GenScreenSPFile(TCHAR *fullpath, const int len, HMODULE hModule);
+DWORD GenScreenSPFile(TCHAR *fullpath, const int len);
 
-DWORD GetScreenRecordPath(TCHAR * fullpath, const int len, HMODULE hModule);
+DWORD GetScreenRecordPath(TCHAR * fullpath, const int len);
 
 // 清空屏幕缓存
-void ClearScreen(HMODULE hModule);
+void ClearScreen();
 
 // 启动眼睛保护程序
-void StartEyecare(HMODULE hModule);
+void StartEyecare();
 
 // 锁定计算机
-void LockComputer(HMODULE hModule);
+void LockComputer();
 
 // 获取主界面的路径
 HWND GetMainUIHWND();
-void GetMainUIPath(TCHAR * fullpath, const int len, HMODULE hModule);
+void GetMainUIPath(TCHAR * fullpath, const int len);
 void GetMainUIPath(TCHAR * fullpath, const int len, const TCHAR * installPath);
 // 启动主界面
-void StartMainUI(HMODULE hModule);
+void StartMainUI();
 
 // 清空所有
-void ClearHistory(HMODULE hModule);
+void ClearHistory();
 
 // 获取安装路径
-const TCHAR * GetInstallPath(TCHAR *install_path, const int len, HMODULE hModule);
+const TCHAR * GetInstallPath(TCHAR *install_path, const int len);
 const TCHAR * GetInstallPathFromRegistry(TCHAR * install_path, const DWORD len);
 
 // 获取配置文件的路径
-const TCHAR * GetAppConfigFilename(TCHAR *fullpath, const int len, HMODULE);
+const TCHAR * GetAppConfigFilename(TCHAR *fullpath, const int len);
 
 // 获取指定文件的目录
 const TCHAR* GetFileNameDir(const TCHAR *filename, TCHAR *directory, const unsigned len);
@@ -61,7 +61,7 @@ const TCHAR * GetRecordConfigfile(TCHAR *filename, const unsigned len, const TCH
 // 开机自动运行
 INT RegisterAutoRun(const TCHAR * fullpath, BOOL auto_run);
 
-BOOL isAutoRun(HMODULE hModule);
+BOOL isAutoRun();
 
 // 当前的Eyecare是否在运行
 HWND GetEyecareApp();

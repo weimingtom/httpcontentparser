@@ -12,11 +12,11 @@
 
 #define SCREEN_SAVE_TYPE	TEXT("jpg")
 namespace {
-	void GetScreenRecordDir(TCHAR *moduleDir, const int len, HMODULE hModule);	//
-	void GetImageRecordDir(TCHAR *moduleDir, const int len, HMODULE hModule);	// 保存图像的目录
-	void GetTextRecordDir(TCHAR *moduleDir, const int len, HMODULE hModule);
-	void GenerateImageFile(TCHAR *file, const int len, HMODULE hModule);	// 自动生成文件名
-	void GetHistoryRecordDir(TCHAR *moduleDir, const int len, HMODULE hModule);
+	void GetScreenRecordDir(TCHAR *moduleDir, const int len);	//
+	void GetImageRecordDir(TCHAR *moduleDir, const int len);	// 保存图像的目录
+	void GetTextRecordDir(TCHAR *moduleDir, const int len);
+	void GenerateImageFile(TCHAR *file, const int len);	// 自动生成文件名
+	void GetHistoryRecordDir(TCHAR *moduleDir, const int len);
 	void GenerateFullPath(TCHAR *fullpath, const int len, const TCHAR * dir, const TCHAR * filename);
 	
 	HKEY GetAutoRunKey();
@@ -25,9 +25,9 @@ namespace {
 
 
 // 程序是否是自动运行的
-BOOL isAutoRun(HMODULE hModule) {
+BOOL isAutoRun() {
 	TCHAR fullpath[MAX_PATH];
-	GetModuleFileName(hModule, fullpath, MAX_PATH);
+	GetModuleFileName(NULL, fullpath, MAX_PATH);
 
 	// 获取自动运行HKEY
 	HKEY hKey = GetAutoRunKey();
@@ -103,9 +103,9 @@ HWND GetMainUIHWND() {
 }
 
 // 启动主程序
-void GetMainUIPath(TCHAR * fullpath, const int len, HMODULE hModule) {
+void GetMainUIPath(TCHAR * fullpath, const int len) {
 	TCHAR installpath[MAX_PATH];
-	GetInstallPath(installpath, len, hModule);
+	GetInstallPath(installpath, len);
 	_sntprintf(fullpath, len, "%s%s", installpath, APPLICATION_MAINUI_NAME);
 }
 
@@ -113,21 +113,21 @@ void GetMainUIPath(TCHAR * fullpath, const int len, const TCHAR * installPath) {
 	_sntprintf(fullpath, len, "%s%s", installPath, APPLICATION_MAINUI_NAME);
 }
 
-void StartMainUI(HMODULE hModule) {
+void StartMainUI() {
 	TCHAR  fullpath[MAX_PATH];
-	GetMainUIPath(fullpath, MAX_PATH, hModule);
+	GetMainUIPath(fullpath, MAX_PATH);
 	WinExec(fullpath, SW_SHOW);
 }
 
-void LockComputer(HMODULE hModule) {
+void LockComputer() {
 	TCHAR install_path[MAX_PATH], fullpath[MAX_PATH];
-	GetInstallPath(install_path, MAX_PATH, hModule);
+	GetInstallPath(install_path, MAX_PATH);
 
 	_sntprintf(fullpath, MAX_PATH, "%s%s", install_path, LOCKPC_APP_FILENAME);
 	WinExec(fullpath, SW_MAXIMIZE);
 }
 
-void StartEyecare(HMODULE hModule) {
+void StartEyecare() {
 	// 首先检测应用程序是否已经打开了
 	HWND hOld = GetEyecareApp();
 	if (NULL != hOld) {
@@ -135,19 +135,19 @@ void StartEyecare(HMODULE hModule) {
 	}
 
 	TCHAR install_path[MAX_PATH], fullpath[MAX_PATH];
-	GetInstallPath(install_path, MAX_PATH, hModule);
+	GetInstallPath(install_path, MAX_PATH);
 
 	_sntprintf(fullpath, MAX_PATH, "%s%s", install_path, EYECARE_APP_FILENAME);
 	WinExec(fullpath, SW_MAXIMIZE);
 }
 
-DWORD GetScreenRecordPath(TCHAR * fullpath, const int len, HMODULE hModule) {
-	GetScreenRecordDir(fullpath, MAX_PATH, hModule);
+DWORD GetScreenRecordPath(TCHAR * fullpath, const int len) {
+	GetScreenRecordDir(fullpath, MAX_PATH);
 	return (DWORD) strlen (fullpath);
 }
-DWORD GenScreenSPFile(TCHAR *fullpath, const int len, HMODULE hModule) {
+DWORD GenScreenSPFile(TCHAR *fullpath, const int len) {
 	TCHAR dir[MAX_PATH];
-	GetScreenRecordDir(dir, MAX_PATH, hModule);
+	GetScreenRecordDir(dir, MAX_PATH);
 
 	// 获取时间
 	SYSTEMTIME time;
@@ -162,15 +162,15 @@ DWORD GenScreenSPFile(TCHAR *fullpath, const int len, HMODULE hModule) {
 	_sntprintf(fullpath, MAX_PATH, TEXT("%s%s"), dir, filename);
 	return (DWORD)_tcslen(fullpath);
 }
-void ClearHistory(HMODULE hModule) {
+void ClearHistory() {
 	TCHAR dir[MAX_PATH] = {0}, filepath[MAX_PATH] = {0};
-	GetImageRecordDir(dir, MAX_PATH, hModule);
+	GetImageRecordDir(dir, MAX_PATH);
 	DeleteFiles(dir, TEXT("*.*"));
 
-	GetTextRecordDir(dir, MAX_PATH, hModule);
+	GetTextRecordDir(dir, MAX_PATH);
 	DeleteFiles(dir, TEXT("*.*"));
 
-	GetInstallPath(dir, MAX_PATH, hModule);
+	GetInstallPath(dir, MAX_PATH);
 	GetWebSiteFile(filepath, MAX_PATH, dir);
 	DeleteFile(filepath);
 
@@ -178,15 +178,15 @@ void ClearHistory(HMODULE hModule) {
 	DeleteFile(filepath);
 }
 
-void ClearScreen(HMODULE hModule) {
+void ClearScreen() {
 	TCHAR dir[MAX_PATH];
-	GetScreenRecordDir(dir, MAX_PATH, hModule);
+	GetScreenRecordDir(dir, MAX_PATH);
 	DeleteFiles(dir, TEXT("*.jpg"));
 }
 
-const TCHAR * GetAppConfigFilename(TCHAR *fullpath, const int len, HMODULE hModule) {
+const TCHAR * GetAppConfigFilename(TCHAR *fullpath, const int len) {
 	TCHAR filename[MAX_PATH], directory[MAX_PATH];
-	GetModuleFileName((HMODULE)hModule, filename, MAX_PATH);
+	GetModuleFileName(NULL, filename, MAX_PATH);
 	GetFileNameDir(filename, directory, MAX_PATH);
 	assert (_tcslen(directory) != 0);
 	GenerateFullPath(fullpath, len, directory, CONFIG_FILE_NAME);
@@ -202,7 +202,7 @@ const TCHAR* GetFileNameDir(const TCHAR *filename, TCHAR *directory, const unsig
 
 const TCHAR * GetSearchWordFile(TCHAR * filename, const unsigned len) {
 	TCHAR installpath[MAX_PATH];
-	GetInstallPath(installpath, MAX_PATH, NULL);
+	GetInstallPath(installpath, MAX_PATH);
 
 	_sntprintf(filename, len, TEXT("%s%s"), installpath, "History\\seachword");
 	return filename;
@@ -240,7 +240,7 @@ const TCHAR * GetImageDirectory(TCHAR * imagepath, const unsigned len, const TCH
 const TCHAR* GetWebSiteFile(TCHAR * filename, const unsigned len) {
 	assert (NULL != filename);
 	TCHAR installpath[MAX_PATH];
-	GetInstallPath(installpath, len, NULL);
+	GetInstallPath(installpath, len);
 	GetWebSiteFile(filename, len, installpath);
 	return filename;
 }	
@@ -267,9 +267,9 @@ const TCHAR * GetRecordConfigfile(TCHAR *filename, const unsigned len, const TCH
 }
 
 // 获取软件所在目录
-const TCHAR * GetInstallPath(TCHAR *install_path, const int len, HMODULE hModule) {
+const TCHAR * GetInstallPath(TCHAR *install_path, const int len) {
 	TCHAR moduleName[MAX_PATH];
-	DWORD length = GetModuleFileName(hModule, moduleName, MAX_PATH);
+	DWORD length = GetModuleFileName(NULL, moduleName, MAX_PATH);
 	GetFileNameDir(moduleName, install_path, MAX_PATH);
 	return install_path;
 }
@@ -352,34 +352,34 @@ void GenerateFullPath(TCHAR *fullpath, const int len, const TCHAR * dir, const T
 }
 
 // 保存屏幕截图的目录
-void GetScreenRecordDir(TCHAR *screendir, const int len, HMODULE hModule) {
+void GetScreenRecordDir(TCHAR *screendir, const int len) {
 	TCHAR moduleDir[MAX_PATH];
-	GetInstallPath(moduleDir, len, hModule);
+	GetInstallPath(moduleDir, len);
 	_sntprintf(screendir, MAX_PATH, TEXT("%s%s"), moduleDir,TEXT("Screen\\"));
 	if (_tchdir(screendir) == -1)
 		_tmkdir(screendir);
 }
 
 // 获取保存历史的
-void GetHistoryRecordDir(TCHAR *historyDir, const int len, HMODULE hModule) {
+void GetHistoryRecordDir(TCHAR *historyDir, const int len) {
 	TCHAR moduleDir[MAX_PATH];
-	GetInstallPath(moduleDir, len, hModule);
+	GetInstallPath(moduleDir, len);
 	_sntprintf(historyDir, MAX_PATH, TEXT("%s%s"), moduleDir,TEXT("History\\"));
 	if (_tchdir(historyDir) == -1)
 		_tmkdir(historyDir);
 }
 
-void GetImageRecordDir(TCHAR *imagedir, const int len, HMODULE hModule) {
+void GetImageRecordDir(TCHAR *imagedir, const int len) {
 	TCHAR history_dir[MAX_PATH];
-	GetHistoryRecordDir(history_dir, len, hModule);
+	GetHistoryRecordDir(history_dir, len);
 	_sntprintf(imagedir, MAX_PATH, TEXT("%s%s"), history_dir,TEXT("images\\"));
 	if (_tchdir(imagedir) == -1)
 		_tmkdir(imagedir);
 }
 
-void GetTextRecordDir(TCHAR *textdir, const int len, HMODULE hModule) {
+void GetTextRecordDir(TCHAR *textdir, const int len) {
 	TCHAR history_dir[MAX_PATH];
-	GetHistoryRecordDir(history_dir, len, hModule);
+	GetHistoryRecordDir(history_dir, len);
 	_sntprintf(textdir, MAX_PATH, TEXT("%s%s"), history_dir,TEXT("text\\"));
 	if (_tchdir(textdir) == -1)
 		_tmkdir(textdir);

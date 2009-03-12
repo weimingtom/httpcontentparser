@@ -50,7 +50,7 @@ void installShellSupport() {
 void initializeSetting() {
 	// 初始化配置
 	TCHAR config_path[MAX_PATH];
-	GetAppConfigFilename(config_path, MAX_PATH, g_hInstance);
+	GetAppConfigFilename(config_path, MAX_PATH);
 	g_configuration.loadConfig(config_path);
 
 	// 读取搜索词汇信息
@@ -85,12 +85,12 @@ extern "C" int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/
 
 	if (g_configuration.getWebHistoryRecordAutoClean()->shouldExec()) {
 		g_configuration.getWebHistoryRecordAutoClean()->reset();
-		ClearHistory((HMODULE)hInstance);
+		ClearHistory();
 		
 	}
 	if (g_configuration.getScreenshotAutoClean()->shouldExec()) {
 		g_configuration.getScreenshotAutoClean()->reset();
-		ClearScreen((HMODULE)hInstance);
+		ClearScreen();
 	}
 
 	 // 开启服务线程
