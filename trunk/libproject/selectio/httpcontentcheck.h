@@ -34,12 +34,9 @@ private:
 	void addToRepostory(const TCHAR *fullpath, HTTPPacket * packet, const int check_result);
 
 private:
-	TCHAR installpath_[MAX_PATH];
-private:
 	const TCHAR * genRandomName(TCHAR * filename, const int bufsize, const int content_type);
 	const TCHAR * generateImageName(TCHAR *fullpath, const int bufsize, const int content_type);
 	const TCHAR * generatePageName(TCHAR *fullpath, const int bufsize, const int content_type);
-	const TCHAR * getInstallDir();
 
 	// COM Buffer Callers
 	BufferCaller<WebContentRecordCaller, BUFFER_CALL_CNT> record_caller_;

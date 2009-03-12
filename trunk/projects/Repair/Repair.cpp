@@ -47,7 +47,7 @@ BOOL CRepairApp::InitInstance()
 
 	
 	AppInstallValidate validator(VLAIDATE_NONE);
-	validator.repair((HMODULE)AfxGetInstanceHandle());
+	validator.repair();
 
 	TCHAR errMsg[MAX_PATH];
 	validator.getErrorMessage(errMsg, MAX_PATH);

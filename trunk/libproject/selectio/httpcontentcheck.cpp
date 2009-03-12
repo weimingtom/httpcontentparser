@@ -19,7 +19,6 @@
 /////////////////////////////////////////////
 // class HTTPContentHander
 HTTPContentHander::HTTPContentHander() {
-	memset(installpath_, 0, sizeof(installpath_));
 }
 
 HTTPContentHander::~HTTPContentHander() {
@@ -238,12 +237,10 @@ const TCHAR * HTTPContentHander::genRandomName(TCHAR * filename, const int bufsi
 
 // 生成名字
 const TCHAR * HTTPContentHander::generateImageName(TCHAR *fullpath, const int bufsize, const int content_type) {
-	getInstallDir();
-
 	TCHAR filename[MAX_PATH], dir[MAX_PATH];
 	while (1) {
 		genRandomName(filename, MAX_PATH, content_type);
-		GetImageDirectory(dir, MAX_PATH, installpath_);
+		GetImageDirectory(dir, MAX_PATH);
 		_sntprintf(fullpath, bufsize,  "%s%s", dir, filename);
 
 		if (_taccess(fullpath, 0) == -1)
@@ -255,38 +252,14 @@ const TCHAR * HTTPContentHander::generateImageName(TCHAR *fullpath, const int bu
 
 // 产生一个网页的名称
 const TCHAR * HTTPContentHander::generatePageName(TCHAR *fullpath, const int bufsize, const int content_type) {
-	getInstallDir();
-	
 	TCHAR filename[MAX_PATH], dir[MAX_PATH];
 	while (1) {
 		genRandomName(filename, MAX_PATH, content_type);
-		GetPageDirectory(dir, MAX_PATH, installpath_);
+		GetPageDirectory(dir, MAX_PATH);
 		_sntprintf(fullpath, bufsize,  "%s%s", dir, filename);
 
 		if (_taccess(fullpath, 0) == -1)
 			break;
 	}
 	return fullpath;
-}
-
-
-// 获取安装目录路径
-const TCHAR * HTTPContentHander::getInstallDir() {
-	if (0 != _tcslen(installpath_)) {
-		return installpath_;
-	}
-
-	try {
-		AutoInitInScale _auto_com_init;
-		BSTR retVal;
-		IAppSetting * appSetting = NULL;
-		HRESULT hr = CoCreateInstance(CLSID_AppSetting, NULL, CLSCTX_LOCAL_SERVER, IID_IAppSetting, (LPVOID*)&appSetting);
-		appSetting->GetInstallPath((BSTR*)&retVal);
-
-		_bstr_t install_path(retVal);
-		_tcsncpy(installpath_, (TCHAR*)install_path, MAX_PATH);
-	} catch (_com_error &) {
-	}
-
-	return installpath_;
 }
