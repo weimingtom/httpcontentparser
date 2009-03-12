@@ -45,7 +45,7 @@ STDMETHODIMP CScreenshotRecord::isEnabled(VARIANT_BOOL* enabled) {
 }
 
 STDMETHODIMP CScreenshotRecord::ClearCache(void) {
-	ClearScreen(g_hInstance);
+	ClearScreen();
 	return S_OK;
 }
 

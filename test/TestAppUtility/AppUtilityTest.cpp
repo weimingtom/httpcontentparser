@@ -67,14 +67,14 @@ void AppUtilityTest::testGetMainUIName() {
 	GetModuleFileName(NULL, exefile, MAX_PATH);
 	GetFileNameDir(exefile, workdir, MAX_PATH);
 	_sntprintf(expected, MAX_PATH, TEXT("%s%s"), workdir, APPLICATION_MAINUI_NAME);
-	GetMainUIPath(fullpath, MAX_PATH, (HMODULE)NULL);
+	GetMainUIPath(fullpath, MAX_PATH);
 
 	_tcslwr(expected);
 	_tcslwr(fullpath);
 	CPPUNIT_ASSERT( expected == _tcsstr(expected, fullpath));
 	CPPUNIT_ASSERT( 0 == _tcscmp(fullpath, expected));
 
-	GetInstallPath(installpath, MAX_PATH, (HMODULE)NULL);
+	GetInstallPath(installpath, MAX_PATH);
 	GetMainUIPath(fullpath, MAX_PATH, installpath);
 	_tcslwr(fullpath);
 	CPPUNIT_ASSERT( expected == _tcsstr(expected, fullpath));
@@ -100,7 +100,7 @@ void AppUtilityTest::testGetRecordConfigfile() {
 	GetFileNameDir(exefile, workdir, MAX_PATH);
 	_sntprintf(configfile, MAX_PATH, TEXT("%s%s"), workdir, TEXT("history\\config.xml"));
 
-	GetInstallPath(installpath, MAX_PATH, NULL);
+	GetInstallPath(installpath, MAX_PATH);
 	GetRecordConfigfile(fullpath, MAX_PATH, installpath);
 
 	_tcslwr(configfile);
@@ -118,7 +118,7 @@ void AppUtilityTest::testGetPageDirectory() {
 	GetFileNameDir(exefile, workdir, MAX_PATH);
 	_sntprintf(pageseDir, MAX_PATH, TEXT("%s%s"), workdir, TEXT("history\\text\\"));
 
-	GetInstallPath(installpath, MAX_PATH, NULL);
+	GetInstallPath(installpath, MAX_PATH);
 	GetPageDirectory(fullpath, MAX_PATH, installpath);
 
 	CPPUNIT_ASSERT( true == strutility::endwith(pageseDir, "\\"));
@@ -136,7 +136,7 @@ void AppUtilityTest::testGetImageDirectory() {
 	GetFileNameDir(exefile, workdir, MAX_PATH);
 	_sntprintf(imageDir, MAX_PATH, TEXT("%s%s"), workdir, TEXT("history\\images\\"));
 
-	GetInstallPath(installpath, MAX_PATH, NULL);
+	GetInstallPath(installpath, MAX_PATH);
 	GetImageDirectory(fullpath, MAX_PATH, installpath);
 
 	_tcslwr(fullpath);
@@ -155,7 +155,7 @@ void AppUtilityTest::testGetInstallPath() {
 	GetModuleFileName(NULL, exefile, MAX_PATH);
 	GetFileNameDir(exefile, workdir, MAX_PATH);
 
-	GetInstallPath(install_path, MAX_PATH, NULL);
+	GetInstallPath(install_path, MAX_PATH);
 
 	if (false == strutility::endwith(workdir, "\\")) {
 		int len = _tcslen(workdir);
@@ -178,7 +178,7 @@ void AppUtilityTest::testGetAppConfigFilename() {
 	GetFileNameDir(exefile, workdir, MAX_PATH);
 	_sntprintf(configfilename, MAX_PATH, TEXT("%s%s"), workdir, TEXT("nwist.dll"));
 
-	GetAppConfigFilename(fullpath, MAX_PATH, NULL);
+	GetAppConfigFilename(fullpath, MAX_PATH);
 
 	_tcslwr(configfilename);
 	_tcslwr(fullpath);

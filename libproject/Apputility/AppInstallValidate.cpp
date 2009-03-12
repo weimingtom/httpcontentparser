@@ -12,8 +12,8 @@
 
 
 namespace {
-	UINT RegisterServices(HMODULE hModule);
-	UINT UnRegisterServices(HMODULE hModule);
+	UINT RegisterServices();
+	UINT UnRegisterServices();
 	UINT RegisterServices(TCHAR * install_path);
 	UINT UnRegisterServices(TCHAR * install_path);
 };
@@ -118,7 +118,7 @@ void AppInstallValidate::repairSPI(HMODULE hModule) {
 // °²×°SPI
 void AppInstallValidate::installSPI(HMODULE hModule) {
 	TCHAR install_path[MAX_PATH], fullpath[MAX_PATH];
-	GetInstallPath(install_path, MAX_PATH, hModule);
+	GetInstallPath(install_path, MAX_PATH);
 
 	_sntprintf(fullpath, MAX_PATH, TEXT("%s%s"), install_path, PACKETSGRASPER_DLL_NAME);
 
@@ -165,8 +165,8 @@ bool AppInstallValidate::serviceWorking(HMODULE hModule) {
 
 void AppInstallValidate::repairCOM(HMODULE hModule) {
 	if (type_ != VALIDATE_SPI) {
-		setErrNo(UnRegisterServices(hModule));
-		setErrNo(RegisterServices(hModule));
+		setErrNo(UnRegisterServices());
+		setErrNo(RegisterServices());
 	} else {
 		TCHAR install_path[MAX_PATH];
 		GetInstallPathFromRegistry(install_path, MAX_PATH);
@@ -206,14 +206,14 @@ void AppInstallValidate::getErrorMessage(TCHAR * msg, const int len) {
 }
 
 namespace {
-UINT RegisterServices(HMODULE hModule) {
+UINT RegisterServices() {
 	TCHAR install_path[MAX_PATH];
-	GetInstallPath(install_path, MAX_PATH, hModule);
+	GetInstallPath(install_path, MAX_PATH);
 	return RegisterServices(install_path);
 }
-UINT UnRegisterServices(HMODULE hModule) {
+UINT UnRegisterServices() {
 	TCHAR install_path[MAX_PATH];
-	GetInstallPath(install_path, MAX_PATH, hModule);
+	GetInstallPath(install_path, MAX_PATH);
 	return UnRegisterServices(install_path);
 }
 

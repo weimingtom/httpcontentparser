@@ -162,7 +162,7 @@ void CDlgScreenshot::OnBnClickedChkAutoclean() {
 }
 
 void CDlgScreenshot::OnBnClickedBtnClear() {
-	ClearScreen((HMODULE)AfxGetInstanceHandle());
+	ClearScreen();
 	CString str;
 	str.LoadString(IDS_SCREEN_RECORD_CLEAR_BUTTON);
 	AfxMessageBox(str);
@@ -183,7 +183,7 @@ void CDlgScreenshot::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar) 
 void CDlgScreenshot::OnBnClickedViewHistory()
 {
 	TCHAR images[MAX_PATH];
-	GetScreenRecordPath(images, MAX_PATH, (HMODULE)AfxGetInstanceHandle());
+	GetScreenRecordPath(images, MAX_PATH);
 
 	CDlgImageBrowser dlg;
 	dlg.setImageDir(images);

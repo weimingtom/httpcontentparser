@@ -132,7 +132,7 @@ END_MESSAGE_MAP()
 // CDlgWebHistory 消息处理程序
 
 void CDlgWebHistory::OnBnClickedBunClearCache() {
-	ClearHistory((HMODULE)AfxGetInstanceHandle());
+	ClearHistory();
 	CString str;
 	str.LoadString(IDS_WEB_HISTORY_CLEAR_SUCC);
 	AfxMessageBox(str);
@@ -157,7 +157,7 @@ void CDlgWebHistory::OnBnClickedBtnHistoryPages()
 
 void CDlgWebHistory::OnBnClickedBtnHistoryImage() {
 	TCHAR webimages[MAX_PATH], installpath[MAX_PATH];
-	GetInstallPath(installpath, MAX_PATH, (HMODULE)AfxGetInstanceHandle());
+	GetInstallPath(installpath, MAX_PATH);
 	GetImageDirectory(webimages, MAX_PATH, installpath);
 
 	CDlgImageBrowser dlg;

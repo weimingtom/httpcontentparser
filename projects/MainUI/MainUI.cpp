@@ -47,7 +47,7 @@ CMainUIApp theApp;
 void initializeSetting() {
 		// ≥ı ºªØ≈‰÷√
 	TCHAR config_path[MAX_PATH];
-	GetAppConfigFilename(config_path, MAX_PATH, AfxGetInstanceHandle());
+	GetAppConfigFilename(config_path, MAX_PATH);
 	g_configuration.loadConfig(config_path);
 }
 

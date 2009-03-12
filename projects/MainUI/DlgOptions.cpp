@@ -164,7 +164,7 @@ void CDlgOptions::restoreSetting() {
 	m_hotkeySwitchUser.SetHotKey(HIWORD(hotkey), getModifierKeyMFC(LOWORD(hotkey)));
 
 	// 自动运行
-	m_bAutoRun = isAutoRun((HMODULE)AfxGetInstanceHandle());
+	m_bAutoRun = isAutoRun();
 	m_bOld_autorun = m_bAutoRun;
 
 	UpdateData(FALSE);

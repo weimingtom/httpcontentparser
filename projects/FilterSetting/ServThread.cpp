@@ -111,7 +111,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 				OutputDebugString("hotkey.....................");
 				const int hotkey_id = (int)wParam;
 				if (hotkey_id == HOTKEY_LANUCH_MAINUI) {
-					StartMainUI((HMODULE)g_hInstance);
+					StartMainUI();
 				}
 			}
 		case WM_TIMER:
@@ -119,7 +119,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 			// 每次都要检测配置文件是否已经改变，如果改变则保存
 			if (SettingItem::isModified() == true) {
 				TCHAR config_path[MAX_PATH];
-				GetAppConfigFilename(config_path, MAX_PATH, (HMODULE)g_hInstance);
+				GetAppConfigFilename(config_path, MAX_PATH);
 
 				// 保存文件
 				g_configuration.saveConfig(config_path);
@@ -135,7 +135,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 				// 自动保存屏幕
 				if (g_configuration.getScreenshotSetting()->shouldSave()) {
 					TCHAR fullpath[MAX_PATH];
-					GenScreenSPFile(fullpath, MAX_PATH, g_hInstance);
+					GenScreenSPFile(fullpath, MAX_PATH);
 					GetScreen(fullpath);
 				}
 			} else if (ID_TIMER_EYECARE_TRY == wParam) {
@@ -147,7 +147,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 						// 启动进程
 						HWND hwnd = GetEyecareApp();
 						if (NULL == hwnd) {
-							StartEyecare((HMODULE)g_hInstance);
+							StartEyecare();
 						};
 					}
 				} 
