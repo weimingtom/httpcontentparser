@@ -172,6 +172,9 @@ void ClearHistory() {
 
 	GetPornWebSiteFile(filepath, MAX_PATH);
 	DeleteFile(filepath);
+
+	GetSearchWordFile(filepath, MAX_PATH);
+	DeleteFile(filepath);
 }
 
 void ClearScreen() {
