@@ -67,6 +67,7 @@ public:
 	STDMETHOD(isSettingRecordAllWebsites)(VARIANT_BOOL* enabled);
 	STDMETHOD(isSettingRecordAllPages)(VARIANT_BOOL* enabled);
 	STDMETHOD(isSettingRecordSearchWord)(VARIANT_BOOL* enabled);
+	STDMETHOD(clearAll)(void);
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(WebHistoryRecorder), CWebHistoryRecorder)
