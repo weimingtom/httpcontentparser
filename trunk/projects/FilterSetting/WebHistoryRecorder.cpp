@@ -1,11 +1,11 @@
 // WebHistoryRecorder.cpp : CWebHistoryRecorder µÄÊµÏÖ
 
 #include "stdafx.h"
-#include "WebHistoryRecorder.h"
-#include "globalvariable.h"
+#include ".\WebHistoryRecorder.h"
+#include ".\globalvariable.h"
 #include <webhistoryrecordersetting.h>
-#include ".\webhistoryrecorder.h"
 #include <typeconvert.h>
+#include <apputility.h>
 
 // CWebHistoryRecorder
 
@@ -151,5 +151,11 @@ STDMETHODIMP CWebHistoryRecorder::isSettingRecordAllPages(VARIANT_BOOL* enabled)
 STDMETHODIMP CWebHistoryRecorder::isSettingRecordSearchWord(VARIANT_BOOL* enabled)
 {
 	*enabled = convert(g_configuration.getWebHistoryRecordSetting()->searchkeyword_setting());
+	return S_OK;
+}
+
+STDMETHODIMP CWebHistoryRecorder::clearAll(void)
+{
+	ClearHistory();
 	return S_OK;
 }
