@@ -3,6 +3,9 @@
 // Used by MainUI.rc
 //
 #define IDR_RT_MANIFEST                 1
+#define IDC_CLEAR                       2
+#define IDCANCEL2                       3
+#define IDC_SEARCH_CLEAR                3
 #define IDM_ABOUTBOX                    0x0010
 #define IDD_ABOUTBOX                    100
 #define IDS_ABOUTBOX                    101

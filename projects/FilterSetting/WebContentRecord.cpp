@@ -6,6 +6,7 @@
 #include ".\globalvariable.h"
 #include <string>
 #include <comutil.h>
+#include <apputility.h>
 
 // CWebContentRecord
 
@@ -100,5 +101,27 @@ STDMETHODIMP CWebContentRecord::GetNextWebSite(BSTR cur, BSTR* keyword, LONG* ti
 		*low = 0;
 		*high = 0;
 	}
+	return S_OK;
+}
+
+
+STDMETHODIMP CWebContentRecord::clearAll(void)
+{
+	ClearHistory();
+
+	// 清楚内存中保存的记录
+	g_searchwordUtil.clear();
+	g_websitesUtil.clear();
+
+	return S_OK;
+}
+
+STDMETHODIMP CWebContentRecord::clearWebsites(void) {
+	g_websitesUtil.clear();
+	return S_OK;
+}
+
+STDMETHODIMP CWebContentRecord::clearSearchword(void) {
+	g_searchwordUtil.clear();
 	return S_OK;
 }

@@ -51,6 +51,9 @@ public:
 	// ¥¶¿ÌÕ¯’æ
 	STDMETHOD(GetFirstWebsite)(BSTR* NAME, LONG* times, LONG* high, LONG* low);
 	STDMETHOD(GetNextWebSite)(BSTR cur, BSTR* next, LONG* times, LONG* hight, LONG* low);
+	STDMETHOD(clearAll)(void);
+	STDMETHOD(clearWebsites)(void);
+	STDMETHOD(clearSearchword)(void);
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(WebContentRecord), CWebContentRecord)
