@@ -4,6 +4,7 @@
 #include ".\searchrule.h"
 #include ".\globalvariable.h"
 #include <typeconvert.h>
+#include <utility\dns.h>
 #include <searchengine_define.h>
 #include <comutil.h>
 
@@ -30,7 +31,11 @@ STDMETHODIMP CSearchRule::check(BSTR search_word, BSTR host_name, VARIANT_BOOL* 
 	*pass = convert(passed);
 
 	// ¼ÇÂ¼
-	g_searchwordUtil.addKeyword(std::string((TCHAR*)_bstr_t(search_word)), getSearchEngineType((TCHAR*)_bstr_t(host_name)));
+	const int buf_size = 512;
+	char main_name[buf_size];
+	get_main_dns_name(main_name, buf_size, (TCHAR*)_bstr_t(host_name));
+
+	g_searchwordUtil.addKeyword(std::string((TCHAR*)_bstr_t(search_word)), getSearchEngineType(main_name));
 
 	return S_OK;
 }
