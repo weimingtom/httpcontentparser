@@ -43,10 +43,10 @@ int CDlgWebsites::addItem(const _bstr_t &name, const long times, const long high
 	m_list.InsertItem(iIndex, (LPCTSTR)name);
 
 	// 设置搜索次数
-	m_list.SetItemText(iIndex, 2, itoa(times, buffer, 10));
+	m_list.SetItemText(iIndex, 1, itoa(times, buffer, 10));
 
 	// 设置最后一次搜索时间
-	m_list.SetItemText(iIndex, 3, timeutility::USFormatTime(ft, buffer, 1024));
+	m_list.SetItemText(iIndex, 2, timeutility::USFormatTime(ft, buffer, 1024));
 	return 0;
 }
 
@@ -60,7 +60,7 @@ int CDlgWebsites::showOnList() {
 			return -1;
 		}
 
-		_bstr_t cur, next;
+		BSTR cur, next;
 		int cnt = 0;
 		long times, hightime, lowtime;
 
@@ -70,8 +70,11 @@ int CDlgWebsites::showOnList() {
 
 			// 获取下一个词汇
 			record->GetNextWebSite(cur, (BSTR*)&next, &times, &hightime, &lowtime);
+			SysFreeString(cur);
 			cur = next;
 		}
+
+		
 	} catch (_com_error &) {
 	}
 	return 0;
