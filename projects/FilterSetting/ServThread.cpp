@@ -108,7 +108,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 			break;
 		case WM_HOTKEY:
 			{
-				OutputDebugString("hotkey.....................");
 				const int hotkey_id = (int)wParam;
 				if (hotkey_id == HOTKEY_LANUCH_MAINUI) {
 					StartMainUI();
