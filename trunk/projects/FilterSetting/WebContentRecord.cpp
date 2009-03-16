@@ -78,7 +78,7 @@ STDMETHODIMP CWebContentRecord::GetFirstWebsite(BSTR* keyword, LONG* times, LONG
 		*low = static_cast<LONG>(data.latest_visit.dwLowDateTime);
 	} else {
 		*low = 0;
-		*high = 0;
+		*high = 0; 
 		*keyword = _bstr_t("");
 	}
 
@@ -88,8 +88,9 @@ STDMETHODIMP CWebContentRecord::GetFirstWebsite(BSTR* keyword, LONG* times, LONG
 STDMETHODIMP CWebContentRecord::GetNextWebSite(BSTR cur, BSTR* keyword, LONG* times, LONG* high, LONG* low)
 {
 	std::string  next;
+	_bstr_t current(cur);
 	WebsitesUtil::WEBSITE_DATA data;
-	if (0 != g_websitesUtil.getNext(std::string((TCHAR*)_bstr_t(cur)), &next, &data)) {
+	if (0 != g_websitesUtil.getNext(std::string((TCHAR*)current), &next, &data) && current.length() > 0) {
 		*keyword = _bstr_t(next.c_str());
 		*times = static_cast<LONG>(data.visit_count);
 		*high = static_cast<LONG>(data.latest_visit.dwHighDateTime);
