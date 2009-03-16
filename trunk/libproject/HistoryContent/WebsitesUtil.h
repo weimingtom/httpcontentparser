@@ -16,7 +16,6 @@ public:
 		int visit_count;			// 网站的访问的次数
 		FILETIME   latest_visit;	// 最后一次访问的时间
 	}WEBSITE_DATA;
-
 public:
 	int addWebsite(const std::string &websites);
 
@@ -25,6 +24,8 @@ public:
 
 	// 从文件中读取信息
 	int load(const std::string &filename);
+
+	void clear();
 
 	// 枚举对象的方法
 	// 这种方法好吗? 至少可以枚举对象吧！

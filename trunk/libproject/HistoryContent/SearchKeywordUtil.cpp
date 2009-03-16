@@ -19,6 +19,10 @@ SeachKeywordUtil::~SeachKeywordUtil(void) {
 }
 
 
+void SeachKeywordUtil::clear() {
+	data_.clear();
+}
+
 // 专门用于枚举数据对象
 int SeachKeywordUtil::enumerate(DataEnumerator * const enumerator) {
 	assert (NULL != enumerator);
