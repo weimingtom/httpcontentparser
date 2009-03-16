@@ -9,6 +9,9 @@ public:
 	~SeachPacket(void);
 
 public:
+	// 返回值 0
+	// 表示没有结果
+	// 非0表示解析成功
 	int parse(const char * oper, const char * host_name);
 
 	// 获取信息
@@ -20,7 +23,7 @@ public:
 		SEACH_ENGINE_YAHOO,
 		SEACH_ENGINE_BAIDU
 	};
-
+	
 	int getSeachEngineType() const { return seach_engine_;}
 private:
 	int parse_google(const char * oper);

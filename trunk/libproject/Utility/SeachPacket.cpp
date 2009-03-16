@@ -2,13 +2,13 @@
 #include ".\seachpacket.h"
 #include ".\strutility.h"
 #include <utility\strutility.h>
+#include <utility\dns.h>
 #include <assert.h>
 #include <fstream>
 
-#define SEACH_COMAND_START				"/"
-#define SEACH_COMMAND_GOOGLE		"search?"
-#define SEACH_COMMAND_YAHOO			"search?"
-#define SEACH_COMMAND_BAIDU			"s?"
+#define SEACH_COMMAND_GOOGLE		"/search?"
+#define SEACH_COMMAND_YAHOO			"/search?"
+#define SEACH_COMMAND_BAIDU			"/s?"
 
 
 #define SEACHWORD_TITLE_GOOGLE		"q="
@@ -27,36 +27,21 @@ SeachPacket::~SeachPacket(void) {
 
 // members
 bool SeachPacket::is_google_seach(const char *oper) {
-	if (strutility::beginwith(oper, SEACH_COMAND_START))
-	{
-		oper ++;
-	}
-
-	if (strutility::beginwith(oper, SEACH_COMMAND_GOOGLE)) {
+	if (NULL != _tcsstr(oper, SEACH_COMMAND_GOOGLE)) {
 		return true;
 	} else { 
 		return false;
 	}
 }
 bool SeachPacket::is_baidu_seach(const char *oper) {
-	if (strutility::beginwith(oper, SEACH_COMAND_START))
-	{
-		oper ++;
-	}
-
-	if (strutility::beginwith(oper, SEACH_COMMAND_BAIDU)) {
+	if (NULL != _tcsstr(oper, SEACH_COMMAND_BAIDU)) {
 		return true;
 	} else {
 		return false;
 	}
 }
 bool SeachPacket::is_yahoo_seach(const char *oper) {
-	if (strutility::beginwith(oper, SEACH_COMAND_START))
-	{
-		oper ++;
-	}
-
-	if (strutility::beginwith(oper, SEACH_COMMAND_YAHOO)) {
+	if (NULL != _tcsstr(oper, SEACH_COMMAND_YAHOO)) {
 		return true;
 	} else {
 		return false;
@@ -124,16 +109,20 @@ int SeachPacket::parse(const char * oper, const char * host_name) {
 
 	// 如果host_name以http://开头
 	const char *http  = "http://";
-	const int http_len = strlen(http);
+	const int http_len = static_cast<int>(strlen(http));
 	if (true == beginwith(host_name, http)) {
 		host_name += http_len;
 	}
 
-	if (true == beginwith(host_name, "www.google")) {
+	// 获取主机地址
+	const int buf_size = 512;
+	char mainname[buf_size];
+	get_main_dns_name(mainname, buf_size, host_name);
+	if (0 == _tcscmp(mainname, "google")) {
 		return parse_google(buffer);
-	} else if (true == beginwith(host_name, "search.yahoo")) {
+	} else if (0 == _tcscmp(mainname, "yahoo")) {
 		return parse_yahoo(buffer);
-	} else if (true == beginwith(host_name, "www.baidu")) {
+	} else if (0 == _tcscmp(mainname, "baidu")) {
 		return parse_baidu(buffer);
 	} else {
 		// 如果不是这几个主机

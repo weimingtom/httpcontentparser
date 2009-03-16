@@ -132,6 +132,8 @@ bool endwith(const TCHAR * src, const TCHAR *detail) {
 	}
 }
 
+// 从文件的开头结尾处取中间， 
+// contain指定是否包含开头及结尾
 int extract_string(TCHAR *result, const int buf_size, const TCHAR * src, const TCHAR *begin, const TCHAR *end, bool contain) {
 	memset(result, 0, sizeof(TCHAR) * buf_size);
 	const TCHAR * src_beg = _tcsstr(src, begin);
