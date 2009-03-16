@@ -157,5 +157,9 @@ STDMETHODIMP CWebHistoryRecorder::isSettingRecordSearchWord(VARIANT_BOOL* enable
 STDMETHODIMP CWebHistoryRecorder::clearAll(void)
 {
 	ClearHistory();
+
+	// 清楚内存中保存的记录
+	g_searchwordUtil.clear();
+	g_websitesUtil.clear();
 	return S_OK;
 }
