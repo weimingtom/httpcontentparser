@@ -31,7 +31,7 @@ int getSearchEngineType(const char * name) {
 		return  SEARCHENGINE_GOOGLE;
 	} else if (0 == _tcscmp(SEARCHENGINE_HOSTNAME_YAHOO, name)) {
 		return SEARCHENGINE_YAHOO;
-	} else if (0 == _tcscmp(SEARCHENGINE_NAME_BAIDU, name)) {
+	} else if (0 == _tcscmp(SEARCHENGINE_HOSTNAME_BAIDU, name)) {
 		return SEARCHENGINE_BAIDU;
 	} else {
 		return SEARCHENGINE_NAME_UNKNOWN;
