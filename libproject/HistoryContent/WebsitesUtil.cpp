@@ -19,6 +19,11 @@ WebsitesUtil::~WebsitesUtil(void) {
 }
 
 
+void WebsitesUtil::clear() {
+	SEARCH_WORD_DATA::iterator iter = data_.begin();
+	data_.clear();
+}
+
 // 专门用于枚举数据对象
 int WebsitesUtil::enumerate(DataEnumerator * const enumerator) {
 	assert (NULL != enumerator);

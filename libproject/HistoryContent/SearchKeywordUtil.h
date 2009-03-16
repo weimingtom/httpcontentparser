@@ -32,6 +32,8 @@ public:
 	// 从文件中读取信息
 	int load(const std::string &filename);
 
+	void clear();
+
 	// 枚举对象的方法
 	// 这种方法好吗? 至少可以枚举对象吧！
 	class DataEnumerator {
