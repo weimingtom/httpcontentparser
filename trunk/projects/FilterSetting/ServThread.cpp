@@ -156,9 +156,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 
 				// 读取搜索词汇信息
 				TCHAR filename[MAX_PATH];
+				GetSearchWordFile(filename, MAX_PATH);
 				g_searchwordUtil.save(GetSearchWordFile(filename, MAX_PATH));
 
 				// 读取访问网站的信息
+				GetWebSiteFile(filename, MAX_PATH);
 				g_websitesUtil.save(GetWebSiteFile(filename, MAX_PATH));
 			}
 			// 自动开启
