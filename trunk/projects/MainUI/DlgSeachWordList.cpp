@@ -74,6 +74,9 @@ int CDlgSearchWordList::showOnList() {
 
 			// 获取下一个词汇
 			record->GetNextSearchKeyword(cur, &next, &times, &searchengine, &hightime, &lowtime);
+
+			// 释放字符串
+			SysFreeString(cur);
 			cur = next;
 		}
 	} catch (_com_error &) {
