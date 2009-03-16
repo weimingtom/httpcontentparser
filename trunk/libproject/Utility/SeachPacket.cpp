@@ -5,9 +5,10 @@
 #include <assert.h>
 #include <fstream>
 
-#define SEACH_COMMAND_GOOGLE		"/search?"
-#define SEACH_COMMAND_YAHOO			"/search?"
-#define SEACH_COMMAND_BAIDU			"/s?"
+#define SEACH_COMAND_START				"/"
+#define SEACH_COMMAND_GOOGLE		"search?"
+#define SEACH_COMMAND_YAHOO			"search?"
+#define SEACH_COMMAND_BAIDU			"s?"
 
 
 #define SEACHWORD_TITLE_GOOGLE		"q="
@@ -26,6 +27,11 @@ SeachPacket::~SeachPacket(void) {
 
 // members
 bool SeachPacket::is_google_seach(const char *oper) {
+	if (strutility::beginwith(oper, SEACH_COMAND_START))
+	{
+		oper ++;
+	}
+
 	if (strutility::beginwith(oper, SEACH_COMMAND_GOOGLE)) {
 		return true;
 	} else { 
@@ -33,6 +39,11 @@ bool SeachPacket::is_google_seach(const char *oper) {
 	}
 }
 bool SeachPacket::is_baidu_seach(const char *oper) {
+	if (strutility::beginwith(oper, SEACH_COMAND_START))
+	{
+		oper ++;
+	}
+
 	if (strutility::beginwith(oper, SEACH_COMMAND_BAIDU)) {
 		return true;
 	} else {
@@ -40,6 +51,11 @@ bool SeachPacket::is_baidu_seach(const char *oper) {
 	}
 }
 bool SeachPacket::is_yahoo_seach(const char *oper) {
+	if (strutility::beginwith(oper, SEACH_COMAND_START))
+	{
+		oper ++;
+	}
+
 	if (strutility::beginwith(oper, SEACH_COMMAND_YAHOO)) {
 		return true;
 	} else {
@@ -105,6 +121,14 @@ int SeachPacket::parse(const char * oper, const char * host_name) {
 	}
 
 	using namespace strutility;
+
+	// 如果host_name以http://开头
+	const char *http  = "http://";
+	const int http_len = strlen(http);
+	if (true == beginwith(host_name, http)) {
+		host_name += http_len;
+	}
+
 	if (true == beginwith(host_name, "www.google")) {
 		return parse_google(buffer);
 	} else if (true == beginwith(host_name, "search.yahoo")) {
