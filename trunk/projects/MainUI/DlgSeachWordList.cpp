@@ -33,6 +33,7 @@ void CDlgSearchWordList::DoDataExchange(CDataExchange* pDX)
 
 
 BEGIN_MESSAGE_MAP(CDlgSearchWordList, CDialog)
+	ON_BN_CLICKED(IDC_SEARCH_CLEAR, OnBnClickedSearchClear)
 END_MESSAGE_MAP()
 
 
@@ -56,6 +57,8 @@ int CDlgSearchWordList::addItem(const _bstr_t &name, const long times, const lon
 }
 int CDlgSearchWordList::showOnList() {
 	try {
+		m_list.DeleteAllItems();
+
 		AutoInitInScale _auto;
 		
 		IWebContentRecord *record = NULL;
@@ -128,4 +131,23 @@ BOOL CDlgSearchWordList::OnInitDialog()
 	showOnList();
 	
 	return TRUE;
+}
+
+void CDlgSearchWordList::OnBnClickedSearchClear()
+{
+		try {
+		AutoInitInScale _auto;
+		
+		IWebContentRecord *record = NULL;
+		HRESULT hr = CoCreateInstance(CLSID_WebContentRecord, NULL, CLSCTX_LOCAL_SERVER, IID_IWebContentRecord, (LPVOID*)&record);
+		if (FAILED(hr)) {
+			return;
+		}
+		record->clearSearchword();
+		record->Release();
+		record = NULL;
+
+		showOnList();
+	} catch (_com_error &) {
+	}
 }

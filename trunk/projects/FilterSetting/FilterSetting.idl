@@ -113,7 +113,6 @@ interface IWebHistoryRecorder : IDispatch{
 	[id(13), helpstring("Method isSettingRecordAllWebsites")] HRESULT isSettingRecordAllWebsites([out] VARIANT_BOOL* enabled);
 	[id(14), helpstring("Method isSettingRecordAllPages")] HRESULT isSettingRecordAllPages(VARIANT_BOOL* enabled);
 	[id(15), helpstring("Method isSettingRecordSearchWord")] HRESULT isSettingRecordSearchWord([out] VARIANT_BOOL* enabled);
-	[id(16), helpstring("Method clearAll")] HRESULT clearAll(void);
 };
 [
 	object,
@@ -192,6 +191,9 @@ interface IWebContentRecord : IDispatch{
 	[id(3), helpstring("Method GetNextSearchKeyword")] HRESULT GetNextSearchKeyword([in]BSTR  cur, [out] BSTR* keyword, [out] LONG* times, [out] LONG* searchEngine, [out] LONG* timeHighPart, [out] LONG* timeLowPart);
 	[id(4), helpstring("Method GetFirstWebsite")] HRESULT GetFirstWebsite([out] BSTR* keyword, [out] LONG* times, [out] LONG* high, [out] LONG* low);
 	[id(5), helpstring("Method GetNextWebSite")] HRESULT GetNextWebSite([in] BSTR cur, [out] BSTR* keyword, [out] LONG* times, [out] LONG* hight, [out] LONG* low);
+	[id(6), helpstring("方法clearAll")] HRESULT clearAll(void);
+	[id(7), helpstring("方法clearWebsites")] HRESULT clearWebsites(void);
+	[id(8), helpstring("方法clearSearchword")] HRESULT clearSearchword(void);
 };
 [
 	object,

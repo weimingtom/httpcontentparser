@@ -33,6 +33,7 @@ void CDlgWebsites::DoDataExchange(CDataExchange* pDX)
 
 
 BEGIN_MESSAGE_MAP(CDlgWebsites, CDialog)
+	ON_BN_CLICKED(IDC_CLEAR, OnBnClickedClear)
 END_MESSAGE_MAP()
 
 int CDlgWebsites::addItem(const _bstr_t &name, const long times, const long hightime, const long lowtime, const int iIndex) {
@@ -52,6 +53,9 @@ int CDlgWebsites::addItem(const _bstr_t &name, const long times, const long high
 
 int CDlgWebsites::showOnList() {
 	try {
+		// 清空ListCtrl
+		m_list.DeleteAllItems();
+
 		AutoInitInScale _auto;
 		
 		IWebContentRecord *record = NULL;
@@ -100,7 +104,7 @@ BOOL CDlgWebsites::OnInitDialog()
 	{
 		{IDS_DLG_WEBSITES,				  LVCFMT_LEFT,  130}, 
 		{IDS_DLG_WEBSITE_VISIT_TIMES, LVCFMT_CENTER, 70},
-		{IDS_DLG_WEBSITE_VISIT_LATEST_TIME,		  LVCFMT_RIGHT, 100},
+		{IDS_DLG_WEBSITE_VISIT_LATEST_TIME,		  LVCFMT_RIGHT, 130},
 	};
 	const int nColCount = sizeof colData / sizeof colData[0];
 
@@ -126,4 +130,22 @@ BOOL CDlgWebsites::OnInitDialog()
 
 // 从文件中读取网页数据并显示在List当中
 void CDlgWebsites::initializeList() {
+}
+void CDlgWebsites::OnBnClickedClear()
+{
+	try {
+		AutoInitInScale _auto;
+		
+		IWebContentRecord *record = NULL;
+		HRESULT hr = CoCreateInstance(CLSID_WebContentRecord, NULL, CLSCTX_LOCAL_SERVER, IID_IWebContentRecord, (LPVOID*)&record);
+		if (FAILED(hr)) {
+			return;
+		}
+		record->clearWebsites();
+		record->Release();
+		record = NULL;
+
+		showOnList();
+	} catch (_com_error &) {
+	}
 }

@@ -35,4 +35,6 @@ private:
 
 private:
 	void initializeList();
+public:
+	afx_msg void OnBnClickedClear();
 };

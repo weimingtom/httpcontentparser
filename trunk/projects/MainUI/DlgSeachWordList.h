@@ -47,6 +47,7 @@ protected:
 public:
 	virtual BOOL OnInitDialog();
 	CECListCtrlEx m_list;
+	afx_msg void OnBnClickedSearchClear();
 };
 
 #endif  // _MAINUI_CDLGSEACHWORDLIST_H__

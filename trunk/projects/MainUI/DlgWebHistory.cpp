@@ -133,14 +133,14 @@ END_MESSAGE_MAP()
 
 void CDlgWebHistory::OnBnClickedBunClearCache() {
 	try {
-		IWebHistoryRecorder *pWebHistory = NULL;
-		HRESULT hr = CoCreateInstance(CLSID_WebHistoryRecorder, NULL, CLSCTX_ALL, IID_IWebHistoryRecorder, (LPVOID*)&pWebHistory);
+		IWebContentRecord *pWebContent = NULL;
+		HRESULT hr = CoCreateInstance(CLSID_WebContentRecord, NULL, CLSCTX_ALL, IID_IWebContentRecord, (LPVOID*)&pWebContent);
 		if (FAILED(hr)) {
 			AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
 			return;
 		}
 
-		pWebHistory->clearAll();
+		pWebContent->clearAll();
 
 		CString str;
 		str.LoadString(IDS_WEB_HISTORY_CLEAR_SUCC);
