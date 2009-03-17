@@ -5,12 +5,8 @@
 #include ".\MainUI.h"
 #include ".\MainUIDlg.h"
 #include ".\mainuidlg.h"
-#include ".\dlgchangepassword.h"
-#include ".\dlgcheckpassword.h"
 #include ".\DlgImageBrowser.h"
 #include ".\dlgprogramcontrol.h"
-#include ".\dlgSeachwordlist.h"
-#include ".\dlgwebsites.h"
 #include ".\DlgImageBrowser.h"
 #include ".\services.h"
 #include ".\globalvariable.h"
@@ -99,7 +95,6 @@ BEGIN_MESSAGE_MAP(CMainUIDlg, CDialog)
 	ON_COMMAND(ID_TRAYMENU_MODEL_PARENTS, OnMainParents)
 	ON_COMMAND(ID_TRAYMENU_MODEL_CHILDREN, OnMainChildren)
 	ON_COMMAND(ID_TRAYMENU_DESKTOPIMAGE, OnToolsDesktopimage)
-	ON_COMMAND(ID_TRAYMENU_WEBHISTORY, OnToolsWebhistory)
 	ON_COMMAND(ID_TRAYMENU_LOCKCOMPUTER, OnMainLockcomputer)
 	ON_BN_CLICKED(IDC_MAIN_CANCEL, OnBnClickedMainCancel)
 	ON_WM_DESTROY()
@@ -239,8 +234,7 @@ void CMainUIDlg::OnTraymenuMainui() {
 		if (Services::isParentModel() == false) {
 			// 如果当前模式不是parent mode, 弹出对话框
 			// 使用户输入密码
-			CDlgCheckPassword dlg;
-			if (IDOK == dlg.DoModal()) {
+			if (IDOK == m_dlgCheckPassword_.DoModal()) {
 				strMenuItem.LoadString(IDS_TRAYMENU_SHOWUI);
 				ShowMainUI();
 			}
@@ -260,8 +254,7 @@ void CMainUIDlg::OnMainExit() {
 
 void CMainUIDlg::OnMainChangepassword()
 {
-	CDlgChangePassword dlg; 
-	dlg.DoModal();
+	m_dlgChangePassword_.DoModal();
 }
 
 //====================================
@@ -269,8 +262,7 @@ void CMainUIDlg::OnMainChangepassword()
 void CMainUIDlg::OnMainParents()
 {
 	if (Services::isParentModel() == false) {
-		CDlgCheckPassword dlg;
-		if (IDOK == dlg.DoModal()) {
+		if (IDOK == m_dlgCheckPassword_.DoModal()) {
 			ShowMainUI();
 		}
 	} else {
@@ -299,14 +291,16 @@ LRESULT CMainUIDlg::OnHotKey(WPARAM wParam, LPARAM lParam) {
 			ShowMainUI();
 		}
 	} else if (id == HOTKEY_SHOW_SWITCH_USER) {
-		// 如果工作在父模式下，直接返回
-		if (Services::isParentModel() == true)
-			return -1;
-
-		CDlgCheckPassword dlg;
-		if (IDOK == dlg.DoModal()) {
+		// 如果工作在父模式下
+		if (Services::isParentModel() == true) {
+			// 切换到孩子模式
+			Services::switchChildModel();
 		} else {
-			HideMainUI();
+			// 在孩子模式下， 弹出对话框,如果对话框已经显示， 则直接显示之前的对话框
+			if (IDOK == m_dlgCheckPassword_.DoModal()) {
+			} else {
+				HideMainUI();
+			}
 		}
 	}
 
@@ -322,15 +316,8 @@ void CMainUIDlg::OnToolsDesktopimage() {
 	TCHAR images[MAX_PATH];
 	GetScreenRecordPath(images, MAX_PATH);
 
-	CDlgImageBrowser dlg;
-	dlg.setImageDir(images);
-	dlg.DoModal();
-}
-
-void CMainUIDlg::OnToolsWebhistory() {
-	TCHAR webimages[MAX_PATH];
-	GetImageDirectory(webimages, MAX_PATH);
-	ShellExecute(NULL, TEXT("open"), NULL, NULL, webimages, SW_SHOWNORMAL);
+	m_dlgImageBrowser_.setImageDir(images);
+	m_dlgImageBrowser_.DoModal();
 }
 
 
@@ -728,19 +715,16 @@ void CMainUIDlg::OnWebhistoryImages()
 	TCHAR webimages[MAX_PATH];
 	GetImageDirectory(webimages, MAX_PATH);
 
-	CDlgImageBrowser dlg;
-	dlg.setImageDir(webimages);
-	dlg.DoModal();
+	m_dlgImageBrowser_.setImageDir(webimages);
+	m_dlgImageBrowser_.DoModal();
 }
 
 void CMainUIDlg::OnWebhistorySearchkeyword()
 {
-	CDlgSearchWordList dlg;
-	dlg.DoModal();
+	m_dlgSearchKeyword_.DoModal();
 }
 
 void CMainUIDlg::OnWebhistoryWebsites()
 {
-	CDlgWebsites dlg;
-	dlg.DoModal();
+	m_dlgWebsites_.DoModal();
 }
