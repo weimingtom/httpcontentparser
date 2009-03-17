@@ -282,13 +282,16 @@
 #define ID_TRAYMENU_EXIT                32806
 #define ID_MAIN_REGISTER                32808
 #define ID_TRAYMENU_CHANGEPASSWORD      32809
+#define ID_WEBHISTORY_WEBSITES          32810
+#define ID_WEBHISTORY_SEARCHKEYWORD     32811
+#define ID_WEBHISTORY_IMAGES            32812
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        191
-#define _APS_NEXT_COMMAND_VALUE         32810
+#define _APS_NEXT_COMMAND_VALUE         32813
 #define _APS_NEXT_CONTROL_VALUE         1116
 #define _APS_NEXT_SYMED_VALUE           112
 #endif

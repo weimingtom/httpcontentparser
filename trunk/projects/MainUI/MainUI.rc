@@ -793,7 +793,13 @@ BEGIN
         BEGIN
             MENUITEM "www.sina.com",                ID_WEBSITES_WWW32788
         END
-        MENUITEM "Web History",                 ID_TRAYMENU_WEBHISTORY
+        POPUP "Web History"
+        BEGIN
+            MENUITEM "Web sites",                   ID_WEBHISTORY_WEBSITES
+            MENUITEM "Search Keyword",              ID_WEBHISTORY_SEARCHKEYWORD
+
+            MENUITEM "Images",                      ID_WEBHISTORY_IMAGES
+        END
         MENUITEM "Desktop Image",               ID_TRAYMENU_DESKTOPIMAGE
         MENUITEM "Lock Computer",               ID_TRAYMENU_LOCKCOMPUTER
         MENUITEM SEPARATOR

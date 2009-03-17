@@ -9,6 +9,9 @@
 #include ".\dlgcheckpassword.h"
 #include ".\DlgImageBrowser.h"
 #include ".\dlgprogramcontrol.h"
+#include ".\dlgSeachwordlist.h"
+#include ".\dlgwebsites.h"
+#include ".\DlgImageBrowser.h"
 #include ".\services.h"
 #include ".\globalvariable.h"
 #include <app_constants.h>
@@ -103,6 +106,9 @@ BEGIN_MESSAGE_MAP(CMainUIDlg, CDialog)
 	ON_WM_INITMENUPOPUP()
 	ON_WM_TIMER()
 	ON_WM_LBUTTONDBLCLK()
+	ON_COMMAND(ID_WEBHISTORY_IMAGES, OnWebhistoryImages)
+	ON_COMMAND(ID_WEBHISTORY_SEARCHKEYWORD, OnWebhistorySearchkeyword)
+	ON_COMMAND(ID_WEBHISTORY_WEBSITES, OnWebhistoryWebsites)
 END_MESSAGE_MAP()
 
 // CMainUIDlg 消息处理程序
@@ -710,4 +716,26 @@ void CMainUIDlg::OnLButtonDblClk(UINT nFlags, CPoint point)
 		}
 	}
 	CDialog::OnLButtonDblClk(nFlags, point);
+}
+
+void CMainUIDlg::OnWebhistoryImages()
+{
+	TCHAR webimages[MAX_PATH];
+	GetImageDirectory(webimages, MAX_PATH);
+
+	CDlgImageBrowser dlg;
+	dlg.setImageDir(webimages);
+	dlg.DoModal();
+}
+
+void CMainUIDlg::OnWebhistorySearchkeyword()
+{
+	CDlgSearchWordList dlg;
+	dlg.DoModal();
+}
+
+void CMainUIDlg::OnWebhistoryWebsites()
+{
+	CDlgWebsites dlg;
+	dlg.DoModal();
 }
