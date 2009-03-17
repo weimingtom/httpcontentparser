@@ -137,4 +137,8 @@ private:
 	void ShowMainUI();
 	void HideMainUI();
 	BOOL isShown() const { return m_bShown;}
+public:
+	afx_msg void OnWebhistoryImages();
+	afx_msg void OnWebhistorySearchkeyword();
+	afx_msg void OnWebhistoryWebsites();
 };
