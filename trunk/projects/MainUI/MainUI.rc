@@ -797,7 +797,7 @@ BEGIN
         MENUITEM "Desktop Image",               ID_TRAYMENU_DESKTOPIMAGE
         MENUITEM "Lock Computer",               ID_TRAYMENU_LOCKCOMPUTER
         MENUITEM SEPARATOR
-        MENUITEM "Change Password",             ID_TRAYMENU_DESKTOPIMAGE
+        MENUITEM "Change Password",             ID_TRAYMENU_CHANGEPASSWORD
         MENUITEM "Option",                      ID_TRAYMENU_MAINUI
         MENUITEM SEPARATOR
         MENUITEM "Children",                    ID_TRAYMENU_MODEL_CHILDREN

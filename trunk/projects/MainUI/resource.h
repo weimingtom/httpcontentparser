@@ -4,7 +4,6 @@
 //
 #define IDR_RT_MANIFEST                 1
 #define IDC_CLEAR                       2
-#define IDCANCEL2                       3
 #define IDC_SEARCH_CLEAR                3
 #define IDM_ABOUTBOX                    0x0010
 #define IDD_ABOUTBOX                    100
@@ -282,13 +281,14 @@
 #define ID_TRAYMENU_MODEL_CHILDREN      32805
 #define ID_TRAYMENU_EXIT                32806
 #define ID_MAIN_REGISTER                32808
+#define ID_TRAYMENU_CHANGEPASSWORD      32809
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        191
-#define _APS_NEXT_COMMAND_VALUE         32809
+#define _APS_NEXT_COMMAND_VALUE         32810
 #define _APS_NEXT_CONTROL_VALUE         1116
 #define _APS_NEXT_SYMED_VALUE           112
 #endif
