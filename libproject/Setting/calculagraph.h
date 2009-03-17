@@ -35,7 +35,7 @@ public:
 	int getRemainTime() const;
 	int getRemainTimeMS() const;
 private:
-	friend  class MultiCalculagraph;
+	template<int STATE_NUM> friend  class MultiCalculagraph;
 	friend  class CalculargraphTest;
 	// 充值当前计时器
 	void Reset();
