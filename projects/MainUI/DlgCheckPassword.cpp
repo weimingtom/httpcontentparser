@@ -79,6 +79,9 @@ BOOL CDlgCheckPassword::OnInitDialog()
 		return FALSE;
 	}
 
+	m_strPassword = "";
+	UpdateData(FALSE);
+
 	return TRUE;  // return TRUE unless you set the focus to a control
 }
 

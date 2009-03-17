@@ -16,7 +16,9 @@ INT_PTR CPopupDialog::DoModal()
 {
 	if (false == m_bOpened_) {
 		m_bOpened_ = true;
-		return CDialog::DoModal();
+		int result =  CDialog::DoModal();
+		m_bOpened_ = false;
+		return result;
 	} else {
 		SetForegroundWindow();
 		return IDCANCEL;
