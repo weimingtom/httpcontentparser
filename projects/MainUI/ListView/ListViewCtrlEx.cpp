@@ -1214,6 +1214,7 @@ CListBase::CListBase()
   m_fCurrentFlags           = 0;
   m_iCurrentItem            = -1;
   m_iCurrentSubItem         = -1;
+  m_pLabelEdit = NULL;
 }
 
 /*** Destructor **************************************************************/
