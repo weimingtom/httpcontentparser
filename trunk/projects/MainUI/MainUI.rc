@@ -99,6 +99,8 @@ IDB_GUI_DOCKBAROFFICE   BITMAP                  "res\\guidockoffice.bmp"
 IDB_GUI_MDIICONS        BITMAP                  "res\\guimdiicons.bmp"
 IDB_HDRDOWN             BITMAP                  "res\\hdrdown.bmp"
 IDB_HDRUP               BITMAP                  "res\\hdrup.bmp"
+IDB_BITMAP2             BITMAP                  "res\\Folder_A.bmp"
+IDB_BITMAP4             BITMAP                  "res\\Folder_B.bmp"
 #endif    // 中文(中华人民共和国) resources
 /////////////////////////////////////////////////////////////////////////////
 
@@ -793,6 +795,7 @@ BEGIN
         BEGIN
             MENUITEM "www.sina.com",                ID_WEBSITES_WWW32788
         END
+        MENUITEM "Desktop Image",               ID_TRAYMENU_DESKTOPIMAGE
         POPUP "Web History"
         BEGIN
             MENUITEM "Web sites",                   ID_WEBHISTORY_WEBSITES
@@ -800,7 +803,6 @@ BEGIN
 
             MENUITEM "Images",                      ID_WEBHISTORY_IMAGES
         END
-        MENUITEM "Desktop Image",               ID_TRAYMENU_DESKTOPIMAGE
         MENUITEM "Lock Computer",               ID_TRAYMENU_LOCKCOMPUTER
         MENUITEM SEPARATOR
         MENUITEM "Change Password",             ID_TRAYMENU_CHANGEPASSWORD

@@ -200,6 +200,12 @@
 				RelativePath=".\res\eyecare.ico">
 			</File>
 			<File
+				RelativePath=".\res\Folder_A.bmp">
+			</File>
+			<File
+				RelativePath=".\res\Folder_B.bmp">
+			</File>
+			<File
 				RelativePath=".\res\guiarrowdown.ico">
 			</File>
 			<File

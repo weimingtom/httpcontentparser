@@ -166,6 +166,11 @@ void CMainUIDlg::setupTrayMenu() {
 	m_sysTray.Create(this,10200, CALLMESSAGE, AfxGetApp()->LoadIcon(IDI_MODEL_PROTECTED),_T(""));
 	m_sysTray.SetSysMenu(&m_trayMenu);
 	AdjustModelIcon();
+
+	m_trayMenu.ModifyODMenu(0,_T("Register"),  IDB_BITMAP2);
+	m_trayMenu.ModifyODMenu(0,_T("Websites"),  IDB_BITMAP2);
+	m_trayMenu.ModifyODMenu(0,_T("Web History"),  IDB_BITMAP2);
+	m_trayMenu.ModifyODMenu(0,_T("Desktop Image"),  IDB_BITMAP2);
 }
 
 BOOL CMainUIDlg::OnInitDialog()
