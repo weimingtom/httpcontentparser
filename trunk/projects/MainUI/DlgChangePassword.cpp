@@ -97,6 +97,8 @@ BOOL CDlgChangePassword::OnInitDialog()
 		OnCancel();
 		return FALSE;
 	}
+
+	resetFileds();
 	return TRUE;  // return TRUE unless you set the focus to a control
 }
 
