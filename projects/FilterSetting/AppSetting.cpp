@@ -6,6 +6,7 @@
 #include ".\servthread.h"
 #include ".\globalvariable.h"
 #include ".\registerinfo.h"
+#include <apputility.h>
 #include <app_constants.h>
 #include <typeconvert.h>
 #include <apputility.h>
@@ -130,5 +131,21 @@ STDMETHODIMP CAppSetting::Registered(VARIANT_BOOL* registeded)
 
 STDMETHODIMP CAppSetting::Register(BSTR bstr, VARIANT_BOOL* bSucc)
 {
+	return S_OK;
+}
+
+STDMETHODIMP CAppSetting::getImageFolder(BSTR* path)
+{
+	TCHAR buffer[MAX_PATH];
+	GetImageDirectory(buffer, MAX_PATH);
+	*path = (BSTR)_bstr_t(buffer);
+	return S_OK;
+}
+
+STDMETHODIMP CAppSetting::getPagesFolder(BSTR* path)
+{
+	TCHAR buffer[MAX_PATH];
+	GetPageDirectory(buffer, MAX_PATH);
+	*path = (BSTR)_bstr_t(buffer);
 	return S_OK;
 }

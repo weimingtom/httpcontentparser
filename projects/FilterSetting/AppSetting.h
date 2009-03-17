@@ -40,17 +40,28 @@ END_COM_MAP()
 	}
 
 public:
-
+	// 热键
 	STDMETHOD(setHotkey)(USHORT wVirtualKeyCode, USHORT wModifiers, LONG type, VARIANT_BOOL* bSuccess);
-	STDMETHOD(GetInstallPath)(BSTR* path);
+
+	// 模式切换
 	STDMETHOD(switchModel)(VARIANT_BOOL bParent, BSTR pwd, VARIANT_BOOL* bSucc);
 	STDMETHOD(get_ParentModel)(VARIANT_BOOL* pVal);
+
+	// 注册于是否已经注册
+	STDMETHOD(Registered)(VARIANT_BOOL* registeded);
+	STDMETHOD(Register)(BSTR bstr, VARIANT_BOOL* bSucc);
+
+	// 路径设置
+	STDMETHOD(GetInstallPath)(BSTR* path);	// 获取安装路径
+	STDMETHOD(getImageFolder)(BSTR* path);
+	STDMETHOD(getPagesFolder)(BSTR* path);
+
+	// 超时自动切换模式
+	// 暂时被废弃
 	STDMETHOD(setTimeoutValue)(LONG seconds);
 	STDMETHOD(get_TimeoutSwitchEnabled)(VARIANT_BOOL* pVal);
 	STDMETHOD(put_TimeoutSwitchEnabled)(VARIANT_BOOL newVal);
 	STDMETHOD(get_LefttimeToSwitch)(LONG* pVal);
-	STDMETHOD(Registered)(VARIANT_BOOL* registeded);
-	STDMETHOD(Register)(BSTR bstr, VARIANT_BOOL* bSucc);
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(AppSetting), CAppSetting)

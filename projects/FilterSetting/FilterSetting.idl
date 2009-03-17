@@ -40,7 +40,7 @@ interface IEyecare : IDispatch{
 	[id(12), helpstring("Method setTermMode")]		HRESULT setTermMode([in] LONG mode);
 	[id(13), helpstring("Method getTermMode")]		HRESULT getTermMode([out,retval] LONG* mode);
 	[id(14), helpstring("Method enableEyecare")]	HRESULT enableEyecare([in] VARIANT_BOOL enabled);
-	[id(15), helpstring("·½·¨isSettingEnabled")] HRESULT isSettingEnabled([in,out] VARIANT_BOOL* enabled);
+	[id(15), helpstring("Method isSettingEnabled")] HRESULT isSettingEnabled([in,out] VARIANT_BOOL* enabled);
 };
 [
 	object,
@@ -61,6 +61,8 @@ interface IAppSetting : IDispatch{
 	[propget, id(8), helpstring("Property LefttimeToSwitch")]	  HRESULT LefttimeToSwitch([out, retval] LONG* pVal);
 	[id(9), helpstring("Method Registered")] HRESULT Registered([out,retval] VARIANT_BOOL* registeded);
 	[id(10), helpstring("Method Register")] HRESULT Register(BSTR bstr, [out,retval] VARIANT_BOOL* bSucc);
+	[id(11), helpstring("Method getImageFolder")] HRESULT getImageFolder([out] BSTR* path);
+	[id(12), helpstring("Method getPagesFolder")] HRESULT getPagesFolder([out] BSTR* path);
 };
 [
 	object,
