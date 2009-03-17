@@ -15,6 +15,11 @@
 #include ".\DlgWebHistory.h"
 #include ".\DlgBlackDNSList.h"
 #include ".\DlgProgramControl.h"
+#include ".\dlgchangepassword.h"
+#include ".\dlgSeachwordlist.h"
+#include ".\dlgImageBrowser.h"
+#include ".\dlgwebsites.h"
+#include ".\dlgcheckpassword.h"
 #include ".\Lev1DlgRules.h"
 #include ".\Lev1DlgTools.h"
 #include ".\basedlg.h"
@@ -111,7 +116,6 @@ protected:
 	afx_msg void OnMainParents();
 	afx_msg void OnMainChildren();
 	afx_msg void OnToolsDesktopimage();
-	afx_msg void OnToolsWebhistory();
 	afx_msg void OnMainLockcomputer();
 	afx_msg void OnDestroy();
 	afx_msg void OnSysCommand(UINT nID, LPARAM lParam);
@@ -137,6 +141,13 @@ private:
 	void ShowMainUI();
 	void HideMainUI();
 	BOOL isShown() const { return m_bShown;}
+
+	// ¶Ô»°¿ò
+	CDlgCheckPassword m_dlgCheckPassword_;
+	CDlgChangePassword m_dlgChangePassword_;
+	CDlgImageBrowser m_dlgImageBrowser_;
+	CDlgSearchWordList m_dlgSearchKeyword_;
+	CDlgWebsites m_dlgWebsites_;
 public:
 	afx_msg void OnWebhistoryImages();
 	afx_msg void OnWebhistorySearchkeyword();

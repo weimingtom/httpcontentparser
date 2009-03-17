@@ -116,7 +116,7 @@ int CDlgOptions::setHotKey() {
 		return FAILED_APPLY;
 	}
 
-	// 设置显示对话框的热键
+	// 设置切换用户的热键
 	m_hotkeySwitchUser.GetHotKey(vKey, vModifiers_mfc);
 	if (FALSE == ::setHotkey(vKey, vModifiers_mfc, HOTKEY_SHOW_SWITCH_USER)) {
 		AfxMessageBox(IDS_HOTKEY_CONFLICT, MB_OK | MB_ICONERROR);
