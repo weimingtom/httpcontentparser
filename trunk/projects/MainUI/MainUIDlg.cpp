@@ -15,6 +15,9 @@
 #include <apputility.h>
 #include <comdef.h>
 
+// 在Mainui.cpp中定义，他是一个共享变量
+extern HWND share_hwnd;
+
 #define RIGTH_TOP_FONT_NAME			TEXT("MS Shell Dlg")
 
 #ifdef _DEBUG
@@ -162,6 +165,8 @@ void CMainUIDlg::setupTrayMenu() {
 BOOL CMainUIDlg::OnInitDialog()
 {
 	CDialog::OnInitDialog();
+
+	share_hwnd = GetSafeHwnd();
 
 	// 设置一个属性，一边用户在开启新程序时相应
 	// 通过获取此属性，便能判断程序是否已经启动
