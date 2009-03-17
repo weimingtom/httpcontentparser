@@ -19,8 +19,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestFilterSetting", "test\T
 		{23244EE6-33D9-4D23-8BA7-3AA7CCDAF177} = {23244EE6-33D9-4D23-8BA7-3AA7CCDAF177}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "selectio", "libproject\selectio\selectio2003.vcproj", "{9DBE4172-DCAE-4D27-8131-7B16A30D149A}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Selectio", "libproject\selectio\selectio2003.vcproj", "{9DBE4172-DCAE-4D27-8131-7B16A30D149A}"
 	ProjectSection(ProjectDependencies) = postProject
+		{CD11D86D-3173-4945-8215-7450A0D9CB3C} = {CD11D86D-3173-4945-8215-7450A0D9CB3C}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Setting", "libproject\Setting\Setting2003.vcproj", "{CCEEE3B2-3B59-4DE4-B088-2093F3582E42}"
@@ -94,11 +95,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Register", "libproject\Regi
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "crypt", "libproject\crypt\crypt.vcproj", "{C99B0EB6-4E0D-48A0-A3A6-CF82F903AB5A}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Crypt", "libproject\crypt\crypt.vcproj", "{C99B0EB6-4E0D-48A0-A3A6-CF82F903AB5A}"
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "testCrypt", "test\testCrypt\testCrypt.vcproj", "{42C9DD20-2E26-4EEA-9091-E3C0C2AB93B4}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestCrypt", "test\testCrypt\testCrypt.vcproj", "{42C9DD20-2E26-4EEA-9091-E3C0C2AB93B4}"
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
 EndProject
@@ -123,11 +124,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestHistoryContent", "test\
 		{8DAC3D17-DFD3-4FE0-9751-34BEBF84C21F} = {8DAC3D17-DFD3-4FE0-9751-34BEBF84C21F}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "exts", "shell\exts\exts.vcproj", "{7D3A32EF-F083-4939-80B3-962507FD5170}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Exts", "shell\exts\exts.vcproj", "{7D3A32EF-F083-4939-80B3-962507FD5170}"
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "shextUtility", "shell\shextUtility\shextUtility.vcproj", "{6F0DED44-0FBB-494F-8C37-C9BB08CD1D1B}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ShextUtility", "shell\shextUtility\shextUtility.vcproj", "{6F0DED44-0FBB-494F-8C37-C9BB08CD1D1B}"
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
 EndProject
