@@ -43,11 +43,9 @@ copy .\Debug\selectiod.lib ..\..\lib
 			<Tool
 				Name="VCPreBuildEventTool"
 				CommandLine="copy .\selectio.h ..\..\include
-copy .\webrecordconfig.h ..\..\include
 copy .\httpcontentcheck.h ..\..\include
 copy .\BufferCallCOM.h ..\..\include
 copy .\DNSMap.H ..\..\include
-copy .\WebsiteRecorder.h ..\..\include
 copy .\bufferresult.h ..\..\include
 copy .\handlequeue.h ..\..\include
 copy .\socketpackets.h ..\..\include
@@ -95,13 +93,12 @@ copy .\release\selectio.lib ..\..\lib
 			<Tool
 				Name="VCPreBuildEventTool"
 				CommandLine="copy .\selectio.h ..\..\include
-copy .\webrecordconfig.h ..\..\include
 copy .\httpcontentcheck.h ..\..\include
 copy .\BufferCallCOM.h ..\..\include
 copy .\DNSMap.H ..\..\include
-copy .\WebsiteRecorder.h ..\..\include
 copy .\bufferresult.h ..\..\include
 copy .\handlequeue.h ..\..\include
+copy .\socketpackets.h ..\..\include
 "/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
@@ -173,16 +170,6 @@ copy .\handlequeue.h ..\..\include
 			</File>
 		</Filter>
 		<Filter
-			Name="webrecordconfig"
-			Filter="">
-			<File
-				RelativePath=".\WebRecordConfig.cpp">
-			</File>
-			<File
-				RelativePath=".\WebRecordConfig.h">
-			</File>
-		</Filter>
-		<Filter
 			Name="DNSMap"
 			Filter="">
 			<File
@@ -190,16 +177,6 @@ copy .\handlequeue.h ..\..\include
 			</File>
 			<File
 				RelativePath=".\DNSMap.h">
-			</File>
-		</Filter>
-		<Filter
-			Name="Website Recorder"
-			Filter="">
-			<File
-				RelativePath=".\WebsiteRecorder.cpp">
-			</File>
-			<File
-				RelativePath=".\WebsiteRecorder.h">
 			</File>
 		</Filter>
 		<Filter
