@@ -24,13 +24,3 @@ INT_PTR CPopupDialog::DoModal()
 		return IDCANCEL;
 	}
 }
-BEGIN_MESSAGE_MAP(CPopupDialog, CDialog)
-	ON_WM_DESTROY()
-END_MESSAGE_MAP()
-
-void CPopupDialog::OnDestroy()
-{
-	CDialog::OnDestroy();
-
-	m_bOpened_  = false;
-}

@@ -8,10 +8,6 @@ public:
 
 public:
 	virtual INT_PTR DoModal();
-	
-	afx_msg void OnDestroy();
-
-	DECLARE_MESSAGE_MAP()
 
 	bool isOpen() const { return m_bOpened_;}
 

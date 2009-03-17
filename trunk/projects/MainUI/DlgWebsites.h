@@ -29,13 +29,11 @@ protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV Ö§³Ö
 	virtual BOOL OnInitDialog();
 
+	afx_msg void OnBnClickedClear();
 	DECLARE_MESSAGE_MAP()
 private:
 	CWebsitesList m_list;
 	
 
-private:
 	void initializeList();
-public:
-	afx_msg void OnBnClickedClear();
 };
