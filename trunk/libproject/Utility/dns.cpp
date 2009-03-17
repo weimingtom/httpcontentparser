@@ -209,7 +209,7 @@ int get_main_dns_name(TCHAR * main_name, const int bufsize, const TCHAR *fulldns
 	}
 
 	_tcsncpy(main_name, name, min_buf_size);
-	return  _tcslen(main_name);
+	return  static_cast<int>(_tcslen(main_name));
 }
 
 /////////////////////////////////////////////////////////////////////////////

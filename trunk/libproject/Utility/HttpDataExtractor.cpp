@@ -162,7 +162,7 @@ int ChunkPacket::addBuffer(const char *buf, const int len) {
 		// 到达了chunk的尾部
 		if (chunk_data_len == 0) {
 			finished_ = true;
-			return strlen(whole_chunk_tail);
+			return static_cast<int>(strlen(whole_chunk_tail));
 		}
 		// 保存需要读取的长度, 注意还有尾部的三个自己，当然不要将尾部写入到缓冲区里
 		cur_need_length_ = chunk_data_len + chunk_tail_length;

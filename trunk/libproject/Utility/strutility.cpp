@@ -7,7 +7,7 @@
 namespace strutility {
 
 void strtolower(TCHAR * src) {
-	const int len = _tcslen(src);
+	const int len = static_cast<int>(_tcslen(src));
 	for (int i = 0; i < len; ++i) {
 		if (isupper(src[i])) {
 			src[i] = _tolower(src[i]);
@@ -15,7 +15,7 @@ void strtolower(TCHAR * src) {
 	}
 }
 void strtoupper(TCHAR * src) {
-	const int len = _tcslen(src);
+	const int len = static_cast<int>(_tcslen(src));
 	for (int i = 0; i < len; ++i) {
 		if (islower(src[i])) {
 			src[i] = _toupper(src[i]);
