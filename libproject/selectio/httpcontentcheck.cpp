@@ -5,7 +5,6 @@
 #include <utility/httppacket.h>
 #include <utility/ZipUtility.h>
 #include <utility/BufferOnStackHeap.h>
-#include <apputility.h>
 #include <assert.h>
 #include <stdlib.h>
 #include <io.h>
@@ -19,6 +18,8 @@
 /////////////////////////////////////////////
 // class HTTPContentHander
 HTTPContentHander::HTTPContentHander() {
+	memset(imageDir, 0, sizeof(imageDir));
+	memset(pagesDir, 0, sizeof(pagesDir));
 }
 
 HTTPContentHander::~HTTPContentHander() {
@@ -152,15 +153,16 @@ int HTTPContentHander::checkText(HTTPPacket *packet) {
 // 负责保存内容
 int HTTPContentHander::saveImage(HTTPPacket *packet, const int check_result) {
 	assert (isImage(packet->getContentType()) == true);
-	
+
 	if (packet->getDataSize() > IMAGE_LOW_LIMIT) {
 		// 生成文件名
 		TCHAR content_file_path[MAX_PATH];
-		generateImageName(content_file_path, MAX_PATH, packet->getContentType());
-		packet->achieve_data(content_file_path);
+		if (NULL != generateImageName(content_file_path, MAX_PATH, packet->getContentType())) {
+			packet->achieve_data(content_file_path);
 
-		// 增加到配置文件当中
-		addToRepostory(content_file_path, packet, check_result);
+			// 增加到配置文件当中
+			addToRepostory(content_file_path, packet, check_result);
+		}
 	}
 	return -1;
 }
@@ -172,14 +174,14 @@ int HTTPContentHander::saveText(HTTPPacket * packet, const int check_result) {
 	if (packet->getDataSize() > TEXT_LOW_LIMIT) {
 		// 生成文件名
 		TCHAR content_file_path[MAX_PATH];
-		generatePageName(content_file_path, MAX_PATH, packet->getContentType());
-
-		// 如果未压缩则直接保存
-		if (HTTP_RESPONSE_HEADER::CONTENCODING_GZIP != packet->getHeader()->getContentEncoding()) {
-			packet->achieve_data(content_file_path);
-		} else {
-			// 否则需要解压缩保存
-			savezip(packet, content_file_path);
+		if (NULL != generatePageName(content_file_path, MAX_PATH, packet->getContentType())) {
+			// 如果未压缩则直接保存
+			if (HTTP_RESPONSE_HEADER::CONTENCODING_GZIP != packet->getHeader()->getContentEncoding()) {
+				packet->achieve_data(content_file_path);
+			} else {
+				// 否则需要解压缩保存
+				savezip(packet, content_file_path);
+			}
 		}
 
 		// 增加到配置文件当中
@@ -237,29 +239,84 @@ const TCHAR * HTTPContentHander::genRandomName(TCHAR * filename, const int bufsi
 
 // 生成名字
 const TCHAR * HTTPContentHander::generateImageName(TCHAR *fullpath, const int bufsize, const int content_type) {
-	TCHAR filename[MAX_PATH], dir[MAX_PATH];
-	while (1) {
-		genRandomName(filename, MAX_PATH, content_type);
-		GetImageDirectory(dir, MAX_PATH);
-		_sntprintf(fullpath, bufsize,  "%s%s", dir, filename);
+	TCHAR filename[MAX_PATH];
+	const TCHAR * dir = GetImageDirectory();
+	if (dir != NULL) {
+		while (1) {
+			genRandomName(filename, MAX_PATH, content_type);
+			_sntprintf(fullpath, bufsize,  "%s%s", dir, filename);
 
-		if (_taccess(fullpath, 0) == -1)
-			break;
+			if (_taccess(fullpath, 0) == -1)
+				break;
+		}
+		return fullpath;
+	} else {
+		return NULL;
 	}
-	return fullpath;
 }
 
 
 // 产生一个网页的名称
 const TCHAR * HTTPContentHander::generatePageName(TCHAR *fullpath, const int bufsize, const int content_type) {
-	TCHAR filename[MAX_PATH], dir[MAX_PATH];
-	while (1) {
-		genRandomName(filename, MAX_PATH, content_type);
-		GetPageDirectory(dir, MAX_PATH);
-		_sntprintf(fullpath, bufsize,  "%s%s", dir, filename);
+	TCHAR filename[MAX_PATH];
+	const TCHAR * dir = GetPageDirectory();
+	if (NULL != dir) {
+		while (1) {
+			genRandomName(filename, MAX_PATH, content_type);
+			_sntprintf(fullpath, bufsize,  "%s%s", dir, filename);
 
-		if (_taccess(fullpath, 0) == -1)
-			break;
+			if (_taccess(fullpath, 0) == -1)
+				break;
+		}
+		return fullpath;
+	} else {
+		return NULL;
 	}
-	return fullpath;
+}
+
+TCHAR * HTTPContentHander::GetImageDirectory() {
+	try {
+		if (imageDir[0] == '\0') {
+			AutoInitInScale _auto_com_init;
+
+			IAppSetting *appSetting = NULL;
+			HRESULT hr = CoCreateInstance(CLSID_AppSetting, NULL, CLSCTX_LOCAL_SERVER, IID_IAppSetting, (LPVOID*)&appSetting);
+			if (FAILED(hr)) {
+				return NULL;
+			}
+
+			BSTR out;
+			appSetting->getImageFolder(&out);
+			_tcsncpy(imageDir, (TCHAR*)_bstr_t(out), MAX_PATH);
+
+			appSetting->Release();
+			appSetting = NULL;
+		}
+		return imageDir;
+	} catch (...) {
+		return NULL;
+	}
+}
+TCHAR * HTTPContentHander::GetPageDirectory() {
+		try {
+		if (pagesDir[0] == '\0') {
+			AutoInitInScale _auto_com_init;
+
+			IAppSetting *appSetting = NULL;
+			HRESULT hr = CoCreateInstance(CLSID_AppSetting, NULL, CLSCTX_LOCAL_SERVER, IID_IAppSetting, (LPVOID*)&appSetting);
+			if (FAILED(hr)) {
+				return NULL;
+			}
+
+			BSTR out;
+			appSetting->getPagesFolder(&out);
+			_tcsncpy(pagesDir, (TCHAR*)_bstr_t(out), MAX_PATH);
+
+			appSetting->Release();
+			appSetting = NULL;
+		}
+		return pagesDir;
+	} catch (...) {
+		return NULL;
+	}
 }

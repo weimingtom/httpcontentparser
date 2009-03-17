@@ -4,6 +4,10 @@
 #include ".\BufferCallCOM.h"
 #include <webcontenttype.h>
 #include <utility\BufferCaller.h>
+
+
+
+
 class WebRecordConfig;
 class HTTPPacket;
 
@@ -44,6 +48,14 @@ private:
 
 	WebContentRecordCaller recorder_;
 	WebContentCheckCaller checker_;
+
+private:
+	// 获取保存的路径
+	TCHAR * GetImageDirectory();
+	TCHAR * GetPageDirectory();
+
+	TCHAR imageDir[MAX_PATH];
+	TCHAR pagesDir[MAX_PATH];
 };
 
 
