@@ -362,22 +362,6 @@
 				<File
 					RelativePath=".\MainUIDlg.h">
 				</File>
-				<Filter
-					Name="popup"
-					Filter="">
-					<File
-						RelativePath=".\DlgChangePassword.cpp">
-					</File>
-					<File
-						RelativePath=".\DlgChangePassword.h">
-					</File>
-					<File
-						RelativePath=".\DlgCheckPassword.cpp">
-					</File>
-					<File
-						RelativePath=".\DlgCheckPassword.h">
-					</File>
-				</Filter>
 			</Filter>
 			<Filter
 				Name="ruledlg"
@@ -577,6 +561,18 @@
 			Name="tools"
 			Filter="">
 			<File
+				RelativePath=".\DlgChangePassword.cpp">
+			</File>
+			<File
+				RelativePath=".\DlgChangePassword.h">
+			</File>
+			<File
+				RelativePath=".\DlgCheckPassword.cpp">
+			</File>
+			<File
+				RelativePath=".\DlgCheckPassword.h">
+			</File>
+			<File
 				RelativePath=".\DlgImageBrowser.cpp">
 			</File>
 			<File
@@ -593,6 +589,12 @@
 			</File>
 			<File
 				RelativePath=".\DlgWebsites.h">
+			</File>
+			<File
+				RelativePath=".\PopupDialog.cpp">
+			</File>
+			<File
+				RelativePath=".\PopupDialog.h">
 			</File>
 			<File
 				RelativePath=".\thumbctrl.cpp">

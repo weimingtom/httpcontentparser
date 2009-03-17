@@ -14,9 +14,9 @@
 int CDlgChangePassword::static_dlg_show_cnt = false;
 // CDlgChangePassword ¶Ô»°¿ò
 
-IMPLEMENT_DYNAMIC(CDlgChangePassword, CDialog)
+IMPLEMENT_DYNAMIC(CDlgChangePassword, CPopupDialog)
 CDlgChangePassword::CDlgChangePassword(CWnd* pParent /*=NULL*/)
-	: CDialog(CDlgChangePassword::IDD, pParent)
+	: CPopupDialog(CDlgChangePassword::IDD, pParent)
 	, m_strOrgin(_T(""))
 	, m_strNew(_T(""))
 	, m_strRetype(_T(""))
@@ -75,7 +75,7 @@ bool CDlgChangePassword::validate() {
 	return true;
 }
 
-BEGIN_MESSAGE_MAP(CDlgChangePassword, CDialog)
+BEGIN_MESSAGE_MAP(CDlgChangePassword, CPopupDialog)
 	ON_BN_CLICKED(IDOK, OnBnClickedOk)
 	ON_BN_CLICKED(IDCANCEL, OnBnClickedCancel)
 	ON_WM_QUERYDRAGICON()

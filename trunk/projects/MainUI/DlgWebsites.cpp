@@ -15,9 +15,9 @@
 
 // CDlgWebsites ¶Ô»°¿ò
 
-IMPLEMENT_DYNAMIC(CDlgWebsites, CDialog)
+IMPLEMENT_DYNAMIC(CDlgWebsites, CPopupDialog)
 CDlgWebsites::CDlgWebsites(CWnd* pParent /*=NULL*/)
-	: CDialog(CDlgWebsites::IDD, pParent)
+	: CPopupDialog(CDlgWebsites::IDD, pParent)
 {
 }
 
@@ -32,7 +32,7 @@ void CDlgWebsites::DoDataExchange(CDataExchange* pDX)
 }
 
 
-BEGIN_MESSAGE_MAP(CDlgWebsites, CDialog)
+BEGIN_MESSAGE_MAP(CDlgWebsites, CPopupDialog)
 	ON_BN_CLICKED(IDC_CLEAR, OnBnClickedClear)
 END_MESSAGE_MAP()
 

@@ -1,9 +1,9 @@
 #pragma once
 #include "afxwin.h"
-
+#include ".\popupdialog.h"
 // CDlgChangePassword ¶Ô»°¿ò
 
-class CDlgChangePassword : public CDialog
+class CDlgChangePassword : public CPopupDialog
 {
 	DECLARE_DYNAMIC(CDlgChangePassword)
 
