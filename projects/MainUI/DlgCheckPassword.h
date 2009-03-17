@@ -2,10 +2,11 @@
 #define _MAINUI_CDLGCHECKPASSWORD_H__
 
 #include "afxwin.h"
+#include ".\popupdialog.h"
 
 // CDlgCheckPassword ¶Ô»°¿ò
 
-class CDlgCheckPassword : public CDialog
+class CDlgCheckPassword : public CPopupDialog
 {
 	DECLARE_DYNAMIC(CDlgCheckPassword)
 

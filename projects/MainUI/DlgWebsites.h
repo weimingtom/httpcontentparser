@@ -1,6 +1,7 @@
 #pragma once
 #include "afxcmn.h"
 #include ".\ListView\ListViewCtrlEx.h"
+#include ".\popupdialog.h"
 #include <websitesUtil.h>
 #include <comdef.h>
 
@@ -10,7 +11,7 @@ class CWebsitesList: public CListCtrlEx {
 	  const CString GetToolTip(int, int, UINT nFlags, BOOL&) { return "";}
 };
 
-class CDlgWebsites : public CDialog
+class CDlgWebsites : public CPopupDialog
 {
 	DECLARE_DYNAMIC(CDlgWebsites)
 

@@ -15,9 +15,9 @@
 
 // CDlgSearchWordList ¶Ô»°¿ò
 
-IMPLEMENT_DYNAMIC(CDlgSearchWordList, CDialog)
+IMPLEMENT_DYNAMIC(CDlgSearchWordList, CPopupDialog)
 CDlgSearchWordList::CDlgSearchWordList(CWnd* pParent /*=NULL*/)
-	: CDialog(CDlgSearchWordList::IDD, pParent)
+	: CPopupDialog(CDlgSearchWordList::IDD, pParent)
 {
 }
 
@@ -32,7 +32,7 @@ void CDlgSearchWordList::DoDataExchange(CDataExchange* pDX)
 }
 
 
-BEGIN_MESSAGE_MAP(CDlgSearchWordList, CDialog)
+BEGIN_MESSAGE_MAP(CDlgSearchWordList, CPopupDialog)
 	ON_BN_CLICKED(IDC_SEARCH_CLEAR, OnBnClickedSearchClear)
 END_MESSAGE_MAP()
 

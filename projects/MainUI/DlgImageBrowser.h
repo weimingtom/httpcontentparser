@@ -3,10 +3,11 @@
 
 // CDlgImageBrowser 对话框
 #include "ThumbCtrl.h"
+#include ".\popupdialog.h"
 
 // class CDlgImageBrowser
 // 此类将显示某个目录下所有的图片
-class CDlgImageBrowser : public CDialog
+class CDlgImageBrowser : public CPopupDialog
 {
 	DECLARE_DYNAMIC(CDlgImageBrowser)
 

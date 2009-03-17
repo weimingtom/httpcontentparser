@@ -14,9 +14,9 @@ int CDlgCheckPassword::static_dlg_show_cnt = false;
 
 // CDlgCheckPassword ¶Ô»°¿ò
 
-IMPLEMENT_DYNAMIC(CDlgCheckPassword, CDialog)
+IMPLEMENT_DYNAMIC(CDlgCheckPassword, CPopupDialog)
 CDlgCheckPassword::CDlgCheckPassword(CWnd* pParent /*=NULL*/)
-	: CDialog(CDlgCheckPassword::IDD, pParent)
+	: CPopupDialog(CDlgCheckPassword::IDD, pParent)
 	, m_strPassword(_T(""))
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
@@ -41,7 +41,7 @@ void CDlgCheckPassword::DoDataExchange(CDataExchange* pDX)
 }
 
 
-BEGIN_MESSAGE_MAP(CDlgCheckPassword, CDialog)
+BEGIN_MESSAGE_MAP(CDlgCheckPassword, CPopupDialog)
 	ON_BN_CLICKED(IDOK, OnBnClickedOk)
 	ON_WM_QUERYDRAGICON()
 	ON_WM_DESTROY()

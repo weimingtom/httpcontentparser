@@ -3,6 +3,7 @@
 
 
 #include ".\ListView\ListViewCtrlEx.h"
+#include ".\popupdialog.h"
 #include "afxcmn.h"
 #include <map>
 #include <string>
@@ -19,7 +20,7 @@ class CECListCtrlEx: public CListCtrlEx
 };
 
 // CDlgSeachWordList ¶Ô»°¿ò
-class CDlgSearchWordList : public CDialog
+class CDlgSearchWordList : public CPopupDialog
 {
 	DECLARE_DYNAMIC(CDlgSearchWordList)
 

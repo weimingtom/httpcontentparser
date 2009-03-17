@@ -13,9 +13,9 @@
 
 // CDlgImageBrowser ¶Ô»°¿ò
 
-IMPLEMENT_DYNAMIC(CDlgImageBrowser, CDialog)
+IMPLEMENT_DYNAMIC(CDlgImageBrowser, CPopupDialog)
 CDlgImageBrowser::CDlgImageBrowser(CWnd* pParent /*=NULL*/)
-	: CDialog(CDlgImageBrowser::IDD, pParent)
+	: CPopupDialog(CDlgImageBrowser::IDD, pParent)
 {
 	m_ThumbCtrl = NULL;
 }
@@ -30,7 +30,7 @@ void CDlgImageBrowser::DoDataExchange(CDataExchange* pDX)
 }
 
 
-BEGIN_MESSAGE_MAP(CDlgImageBrowser, CDialog)
+BEGIN_MESSAGE_MAP(CDlgImageBrowser, CPopupDialog)
 	ON_WM_CREATE()
 END_MESSAGE_MAP()
 
