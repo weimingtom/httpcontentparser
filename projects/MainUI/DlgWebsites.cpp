@@ -33,7 +33,7 @@ void CDlgWebsites::DoDataExchange(CDataExchange* pDX)
 
 
 BEGIN_MESSAGE_MAP(CDlgWebsites, CPopupDialog)
-	ON_BN_CLICKED(IDC_CLEAR, OnBnClickedClear)
+	ON_BN_CLICKED(IDC_BTN_CLEAR, OnBnClickedClear)
 END_MESSAGE_MAP()
 
 int CDlgWebsites::addItem(const _bstr_t &name, const long times, const long hightime, const long lowtime, const int iIndex) {
@@ -149,3 +149,4 @@ void CDlgWebsites::OnBnClickedClear()
 	} catch (_com_error &) {
 	}
 }
+
