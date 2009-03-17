@@ -4,6 +4,8 @@
 #include "resource.h"
 #include "exts.h"
 
+HINSTANCE g_hInstance;
+
 class CextsModule : public CAtlDllModuleT< CextsModule >
 {
 public :
@@ -18,6 +20,7 @@ CextsModule _AtlModule;
 extern "C" BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpReserved)
 {
 	hInstance;
+	g_hInstance = hInstance;
     return _AtlModule.DllMain(dwReason, lpReserved); 
 }
 
