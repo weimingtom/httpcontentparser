@@ -29,11 +29,8 @@ END_COM_MAP()
 
 	DECLARE_PROTECT_FINAL_CONSTRUCT()
 
-	HRESULT FinalConstruct()
-	{
-		return S_OK;
-	}
-	
+	HRESULT FinalConstruct();
+
 	void FinalRelease() 
 	{
 	}

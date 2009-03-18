@@ -64,9 +64,6 @@ STDMETHODIMP CAppSetting::switchModel(VARIANT_BOOL bParent, BSTR pwd, VARIANT_BO
 
 			// 而且还要停止Eyecare 的计数器
 			g_configuration.getEyecareSetting()->stopTimer();
-
-			// 开启TIMEOUT SWITCH 功能
-			g_configuration.getTimeoutSwitch()->startTimer();
 		} else {
 			// 验证密码失败
 			*bSucc = VARIANT_FALSE;
@@ -76,7 +73,7 @@ STDMETHODIMP CAppSetting::switchModel(VARIANT_BOOL bParent, BSTR pwd, VARIANT_BO
 		SettingItem::setModel(SettingItem::MODE_CHILD);
 		*bSucc = VARIANT_TRUE;
 
-		if (true == g_configuration.getEyecareSetting()->isTimerStopped()) {
+		if (g_configuration.getEyecareSetting()->isEnabled() && g_configuration.getEyecareSetting()->isTimerStopped()) {
 			g_configuration.getEyecareSetting()->restartTimer();
 		}
 	}
