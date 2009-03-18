@@ -4,6 +4,7 @@
 	Version="9.00"
 	Name="PacketsGrasper2008"
 	ProjectGUID="{AC87FE40-8934-49B5-8353-942817AED586}"
+	RootNamespace="PacketsGrasper2008"
 	Keyword="MFCProj"
 	TargetFrameworkVersion="131072"
 	>
@@ -147,7 +148,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="..\..\include"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_SHOW_DETAIL;_SHOW_DEBUG;__HIDE_SPI_FUNCTION_CALL__"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_SHOW_DETAIL;_SHOW_DEBUG;__HIDE_SPI_FUNCTION_CALL__;_CRT_SECURE_NO_WARNINGS"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="2"
