@@ -4,10 +4,12 @@
 
 #pragma once
 
-
-#include <afxwin.h>
+#include <winsock2.h>
 #include <ws2spi.h>
 #include <io.h>				
+#include <tchar.h>
+#include <stdlib.h>
+#include <time.h>
 
 #include <com\comutility.h>
 

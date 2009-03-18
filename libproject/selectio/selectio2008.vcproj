@@ -44,7 +44,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="..\..\include"
-				PreprocessorDefinitions="WIN32;_DEBUG;_LIB; _SHOW_DETAIL"
+				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;_SHOW_DETAIL;_CRT_SECURE_NO_WARNINGS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -152,14 +152,10 @@
 	</References>
 	<Files>
 		<Filter
-			Name="Ô´ÎÄ¼þ"
+			Name="DomainAddress"
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
-			<File
-				RelativePath=".\BufferCallCOM.h"
-				>
-			</File>
 			<File
 				RelativePath=".\DomainAddress.cpp"
 				>
@@ -274,6 +270,14 @@
 			</File>
 			<File
 				RelativePath=".\SelectIO.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="BufferCallCOM"
+			>
+			<File
+				RelativePath=".\BufferCallCOM.h"
 				>
 			</File>
 		</Filter>
