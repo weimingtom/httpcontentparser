@@ -13,6 +13,19 @@
 
 CEyecare::CEyecare() {
 }
+
+HRESULT CEyecare::FinalConstruct()
+{
+	if (SettingItem::getModel() == SettingItem::MODE_PARENT) {
+		g_configuration.getEyecareSetting()->stopTimer();
+	} else {
+		if (g_configuration.getEyecareSetting()->isEnabled() && g_configuration.getEyecareSetting()->isTimerStopped()) {
+			g_configuration.getEyecareSetting()->restartTimer();
+		}
+	}
+	return S_OK;
+}
+
 STDMETHODIMP CEyecare::InterfaceSupportsErrorInfo(REFIID riid)
 {
 	static const IID* arr[] = 
