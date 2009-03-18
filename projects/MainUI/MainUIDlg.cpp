@@ -298,6 +298,7 @@ LRESULT CMainUIDlg::OnHotKey(WPARAM wParam, LPARAM lParam) {
 		} else {
 			// 在孩子模式下， 弹出对话框,如果对话框已经显示， 则直接显示之前的对话框
 			if (IDOK == m_dlgCheckPassword_.DoModal()) {
+				ShowMainUI();
 			} else {
 				HideMainUI();
 			}
