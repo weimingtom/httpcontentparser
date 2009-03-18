@@ -4,6 +4,7 @@
 	Version="9.00"
 	Name="WinLockDLL2008"
 	ProjectGUID="{D7EE016E-A747-4BAA-A5F0-3034C18D5DD2}"
+	RootNamespace="WinLockDLL2008"
 	TargetFrameworkVersion="131072"
 	>
 	<Platforms>
@@ -144,7 +145,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;WINLOCKDLL_EXPORTS;_DLL_"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;WINLOCKDLL_EXPORTS;_CRT_SECURE_NO_WARNINGS;_DLL_"
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="0"
 				PrecompiledHeaderFile=".\Debug/WinLockDLL.pch"
