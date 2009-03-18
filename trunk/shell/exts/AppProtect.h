@@ -8,7 +8,9 @@
 #include <shlguid.h>
 #include <shobjidl.h>
 
+#ifndef _VISUAL_STUDIO_2008_
 struct __declspec(uuid("000214FC-0000-0000-C000-000000000046")) ICopyHook; 
+#endif 
 
 // CAppProtect
 
