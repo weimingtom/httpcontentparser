@@ -10,7 +10,7 @@
 #include <comdef.h>
 
 #define ID_TIME_UPDATE_STATE  1010
-#define TIME_ESCPLE			  400
+#define TIME_ESCPLE			  500
 
 // CDlgEyecare ¶Ô»°¿ò
 
@@ -165,23 +165,29 @@ BOOL CDlgEyecare::OnInitDialog()
 
 
 void CDlgEyecare::UpdateState() {
-	UpdateData(TRUE);
-	IEyecare *pEyeCare = NULL;
-	CoCreateInstance(CLSID_Eyecare, NULL, CLSCTX_LOCAL_SERVER, IID_IEyecare, (LPVOID*)&pEyeCare);
+	try {
+		UpdateData(TRUE);
+		IEyecare *pEyeCare = NULL;
+		HRESULT hr = CoCreateInstance(CLSID_Eyecare, NULL, CLSCTX_LOCAL_SERVER, IID_IEyecare, (LPVOID*)&pEyeCare);
+		if (FAILED(hr)) {
+			return ;
+		}
 
-	LONG value;
-	pEyeCare->getState(&value);
-	m_strCurrentState.LoadString(value == EyecareSetting::EYECARE_TIME ? IDS_EYECARE_STATE_EYECARE : IDS_EYECARE_STATE_ENTERTAIN);
+		LONG value;
+		pEyeCare->getState(&value);
+		m_strCurrentState.LoadString(value == EyecareSetting::EYECARE_TIME ? IDS_EYECARE_STATE_EYECARE : IDS_EYECARE_STATE_ENTERTAIN);
 
-	pEyeCare->getTimeLeft(&value);
-	if (value > 60) {
-		m_strTimeLeft.Format("%d mins.", value/60);
-	} else {
-		m_strTimeLeft.Format("%d sec..", value);
+		pEyeCare->getTimeLeft(&value);
+		if (value > 60) {
+			m_strTimeLeft.Format("%d mins.", value/60);
+		} else {
+			m_strTimeLeft.Format("%d sec..", value);
+		}
+
+		pEyeCare->Release();
+		UpdateData(FALSE);
+	} catch (...) {
 	}
-
-	pEyeCare->Release();
-	UpdateData(FALSE);
 }
 void CDlgEyecare::OnTimer(UINT nIDEvent) {
 	if (nIDEvent == ID_TIME_UPDATE_STATE) {
