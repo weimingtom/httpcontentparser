@@ -192,7 +192,6 @@ void SeachPacketTest::getContentTest() {
 		char * oper = "search?hl=en&q=word&btnG=Search HTTP/1.1";
 		char * host_name = "http://www.google.com/";
 		SeachPacket packet;
-		char result[HTTP_REQUEST_ITEM_MAX_LENGTH];
 		CPPUNIT_ASSERT(SeachPacket::SEACH_ENGINE_UNKNOWN ==packet.getSeachEngineType());
 		CPPUNIT_ASSERT( 0 == packet.parse(oper, host_name));
 		CPPUNIT_ASSERT(SeachPacket::SEACH_ENGINE_UNKNOWN == packet.getSeachEngineType());
