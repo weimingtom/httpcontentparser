@@ -4,10 +4,8 @@
 #include "stdafx.h"
 #include ".\MainUI.h"
 #include ".\MainUIDlg.h"
-#include ".\globalvariable.h"
-#include ".\mainui.h"
-#include ".\services.h"
-#include <afxmt.h>
+#include ".\Globalvariable.h"
+#include ".\Services.h"
 #include <apputility.h>
 #include <typeconvert.h>
 #include <app_constants.h>
