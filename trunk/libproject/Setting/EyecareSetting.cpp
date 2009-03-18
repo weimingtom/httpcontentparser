@@ -60,6 +60,7 @@ bool EyecareSetting::setPassword(const std::string &password, const std::string 
 
 // 获取剩余时间
 int EyecareSetting::getRemainTime() {
+	// 在不使用时应该听表啊
 	return calculagraph_.getRemainTime();
 }
 
