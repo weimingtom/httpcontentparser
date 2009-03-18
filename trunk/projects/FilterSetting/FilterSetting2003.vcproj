@@ -39,6 +39,7 @@
 				OutputFile="$(OutDir)/nwrs.exe"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="..\..\lib"
+				IgnoreDefaultLibraryNames="LIBCMTD.lib;LIBCD.lib"
 				GenerateDebugInformation="TRUE"
 				SubSystem="2"
 				ImportLibrary="$(OutDir)/nwrs.lib"
