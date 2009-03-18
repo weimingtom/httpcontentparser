@@ -11,9 +11,9 @@
 #include <com\FilterSetting_i.c>
 #include <com\comutility.h>
 
-
+#ifndef _VISUAL_STUDIO_2008_
 struct __declspec(uuid("000214FB-0000-0000-C000-000000000046")) IShellExecuteHook; 
-
+#endif
 // CAppLaunchFilter
 
 class ATL_NO_VTABLE CAppLaunchFilter : 
