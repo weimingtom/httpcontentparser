@@ -44,7 +44,7 @@ const char packet1[] = 	"HTTP/1.1 302 Found\r\n"
 void ReplacePacketTest::testNewPacket() {
 	int written;
 	HTTPPacket *packet = new HTTPPacket;
-	packet->addBuffer(packet1, strlen(packet1), &written);
+	packet->addBuffer(packet1, static_cast<int>(strlen(packet1)), &written);
 	HTTPPacket *new_packet = new HTTPPacket;
 
 	FillBlankPacket(packet, new_packet);
