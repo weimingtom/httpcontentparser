@@ -47,6 +47,7 @@ typedef struct _IDSECTOR
 	BYTE    bReserved[128];
 } IDSECTOR, *PIDSECTOR;
 
+#ifndef _VISUAL_STUDIO_2008_
 typedef struct _DRIVERSTATUS
 
 {
@@ -56,13 +57,18 @@ typedef struct _DRIVERSTATUS
 	BYTE  bReserved[2];  //  Reserved for future expansion.
 	DWORD  dwReserved[2];  //  Reserved for future expansion.
 } DRIVERSTATUS, *PDRIVERSTATUS, *LPDRIVERSTATUS;
+#endif 
 
+
+#ifndef _VISUAL_STUDIO_2008_
 typedef struct _SENDCMDOUTPARAMS
 {
 	DWORD         cBufferSize;   //  Size of bBuffer in bytes
 	DRIVERSTATUS  DriverStatus;  //  Driver status structure.
 	BYTE          bBuffer[1];    //  Buffer of arbitrary length in which to store the data read from the                                                       // drive.
 } SENDCMDOUTPARAMS, *PSENDCMDOUTPARAMS, *LPSENDCMDOUTPARAMS;
+#endif
+
 
 typedef struct _SRB_IO_CONTROL
 {
@@ -74,6 +80,7 @@ typedef struct _SRB_IO_CONTROL
 	ULONG Length;
 } SRB_IO_CONTROL, *PSRB_IO_CONTROL;
 
+#ifndef _VISUAL_STUDIO_2008_
 typedef struct _IDEREGS
 {
 	BYTE bFeaturesReg;       // Used for specifying SMART "commands".
@@ -85,7 +92,9 @@ typedef struct _IDEREGS
 	BYTE bCommandReg;        // Actual IDE command.
 	BYTE bReserved;          // reserved for future use.  Must be zero.
 } IDEREGS, *PIDEREGS, *LPIDEREGS;
+#endif
 
+#ifndef _VISUAL_STUDIO_2008_
 typedef struct _SENDCMDINPARAMS
 {
 	DWORD     cBufferSize;   //  Buffer size in bytes
@@ -96,6 +105,8 @@ typedef struct _SENDCMDINPARAMS
 	DWORD     dwReserved[4]; //  For future use.
 	BYTE      bBuffer[1];    //  Input buffer.
 } SENDCMDINPARAMS, *PSENDCMDINPARAMS, *LPSENDCMDINPARAMS;
+#endif
+
 
 typedef struct _GETVERSIONOUTPARAMS
 {
@@ -193,7 +204,8 @@ BOOL WinNTHDSerialNumAsScsiRead( BYTE* dwSerial, UINT* puSerialLen, UINT uMaxSer
 							CopyMemory( dwSerial + * puSerialLen, ( ( USHORT* )pId ) + 10, 20 );
 
 							// Cut off the trailing blanks
-							for( UINT i = 20; i != 0U && ' ' == dwSerial[* puSerialLen + i - 1]; -- i )
+							UINT i =0;
+							for(i = 20; i != 0U && ' ' == dwSerial[* puSerialLen + i - 1]; -- i )
 							{}
 							* puSerialLen += i;
 
@@ -306,7 +318,8 @@ BOOL WinNTHDSerialNumAsPhysicalRead( BYTE* dwSerial, UINT* puSerialLen, UINT uMa
 							CopyMemory( dwSerial + * puSerialLen, ( ( USHORT* )( ( ( PSENDCMDOUTPARAMS )IdOutCmd )->bBuffer ) ) + 10, 20 );  // ÐòÁÐºÅ
 
 							// Cut off the trailing blanks
-							for( UINT i = 20; i != 0U && ' ' == dwSerial[* puSerialLen + i - 1]; -- i )  {}
+							UINT i =0;
+							for( i = 20; i != 0U && ' ' == dwSerial[* puSerialLen + i - 1]; -- i )  {}
 							* puSerialLen += i;
 
 							CopyMemory( dwSerial + * puSerialLen, ( ( USHORT* )( ( ( PSENDCMDOUTPARAMS )IdOutCmd )->bBuffer ) ) + 27, 40 ); // ÐÍºÅ
@@ -474,6 +487,8 @@ UINT GetMAC(BYTE * szSystemInfo, UINT uSystemInfoLen) {
 	if( uErrorCode != 0U )
 	{
 		return FALSE;
+	} else {
+		return TRUE;
 	}
 }
 UINT GetHarddiskSeria(BYTE * info, UINT bufLen) {
@@ -599,5 +614,5 @@ UINT GetCPUID(BYTE * info, UINT bufLen) {
 		CopyMemory( info + bufLen, szCpu, uCpuID );
 		bufLen += uCpuID;
 	}
-
+	return 0;
 }
