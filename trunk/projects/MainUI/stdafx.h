@@ -7,15 +7,27 @@
 
 #define _CRT_SECURE_NO_DEPRECATE
 
+#ifdef _VISUAL_STUDIO_2008_
+#define WINVER 0x0501
+#define _WIN32_WINNT 0x0501
+#endif
+
 #include <afx.h>
 #include <afxcmn.h>
 #include <afxcview.h>
 #include <afxdlgs.h>
 #include <afxdisp.h>
 #include <afxtempl.h>
+#include <afxmt.h>
 #include <shlwapi.h>
-#if _MSC_VER >= 1500
-  #include <vsstyle.h>
+
+#ifdef _VISUAL_STUDIO_2008_
+       #include <tmschema.h>
+#else
+    #if _MSC_VER >= 1500
+         #include <vsstyle.h>
+         
+    #endif
 #endif
 
 
@@ -26,12 +38,11 @@
 #pragma comment(lib, "apputility.lib")
 #endif 
 
+#pragma comment(lib, "uxtheme.lib")
+
 #include "Gdiplus.h"
 using namespace Gdiplus;
 #pragma comment(lib, "gdiplus.lib")
-
-#pragma comment(lib, "uxtheme.lib")
-
 #include "resource.h"
 #include <afxwin.h>
 
