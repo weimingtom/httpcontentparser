@@ -13,8 +13,6 @@ class Authorize;
 class XMLConfiguration;
 class EyecareTest;
 
-// TODO : we must add sate store function
-// TODO : 
 class EyecareSetting : public SettingItem  , public ConfigItem {
 public:
 	EyecareSetting();
