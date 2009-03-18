@@ -133,7 +133,7 @@ DWORD GetPIDFromNameToolhelp(char *szProcessName)
             p = pe32.szExeFile;
 
         // Process found ?
-        if (stricmp(p, szProcessName) == 0)
+        if (_stricmp(p, szProcessName) == 0)
         {
             dwPID = pe32.th32ProcessID;
             break;
@@ -237,7 +237,7 @@ DWORD GetPIDFromNamePSAPI(char *szProcessName)
                           sizeof(szModuleName));
 
         // Process found ?
-        if (stricmp(szModuleName, szProcessName) == 0)
+        if (_stricmp(szModuleName, szProcessName) == 0)
         {
             dwPID = PIDArray[i];
 			CloseHandle(hProcess);
@@ -394,7 +394,7 @@ DWORD GetPIDFromNameZwQuerySystemInformation(char *szProcessName)
 			pszProcessName = L"Idle";
 
         // Process found ?
-        if (wcsicmp(pszProcessName, wcProcessName) == 0)
+        if (_wcsicmp(pszProcessName, wcProcessName) == 0)
         {
 			dwPID = pInfo->ProcessId;
 			free(pBuffer);
