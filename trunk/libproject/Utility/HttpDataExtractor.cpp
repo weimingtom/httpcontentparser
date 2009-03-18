@@ -168,7 +168,7 @@ int ChunkPacket::addBuffer(const char *buf, const int len) {
 		cur_need_length_ = chunk_data_len + chunk_tail_length;
 		
 		// 得到chunk头部的分隔符，从而获取头部的长度
-		char * data_header = strstr(buf, chunk_token);
+		const char * data_header = strstr(buf, chunk_token);
 		if (data_header == NULL) throw int(0);
 		chunk_head_bytes = data_header + strlen(chunk_token) - buf;
 	}

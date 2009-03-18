@@ -230,7 +230,8 @@ int HTTPPacket::extractData(const char *buf, const int len) {
 	} else if (!isComplete() && header_exist_ == true) {
 		// 如果已经得到了头部，且传入的数据不是
 		// 那么得到的数据就是
-		assert ( addBuffer != NULL);
+		//assert ( addBuffer != NULL);
+		// TODO:what the assert should be
 		return  dataextractor_->addBuffer(buf, len);
 	} else if (isComplete() && header_exist_ == false) {
 		OutputDebugString("isComplete() && header_exist_ == false");
@@ -379,7 +380,7 @@ int HTTP_RESPONSE_HEADER::parseHeader(const char *header_data, const int len) {
 void HTTP_RESPONSE_HEADER::parseLine(const char *linedata) {
 	if (linedata == strstr(linedata, HEADER_FIRST)) {
 		// http都不 ： HTTP/1.1 203 XX
-		char * code_ptr = strstr(linedata, " "); // 寻找空格
+		const char * code_ptr = strstr(linedata, " "); // 寻找空格
 		if (NULL != code_ptr) {
 			response_code = atoi(code_ptr);
 		}
@@ -403,14 +404,14 @@ void HTTP_RESPONSE_HEADER::parseLine(const char *linedata) {
 		}
 	} else if (linedata == strstr(linedata, HEADER_DATE)) {
 		// 保存日期
-		char * code_ptr = strstr(linedata, " ");
+		const char * code_ptr = strstr(linedata, " ");
 		strncpy(date, code_ptr+1, 128);
 
 		// 最有一个字符是'\r', 应该去掉
 		date[strlen(date) - 1] = '\0';
 	} else if (linedata == strstr(linedata, HEADER_SERVER)) {
 		// 保存服务器
-		char * code_ptr = strstr(linedata, " ");
+		const char * code_ptr = strstr(linedata, " ");
 		strncpy(server, code_ptr+1, 128);
 
 		// 最有一个字符是'\r', 应该去掉

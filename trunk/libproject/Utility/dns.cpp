@@ -242,7 +242,7 @@ bool CDNS::doDNSLookup() {
 	}
 
 	if(dnsInfo->h_aliases[0]) 	{
-   	 	for(i = 0; dnsInfo->h_aliases[i]; i++) 		{
+   	 	for(int i = 0; dnsInfo->h_aliases[i]; i++) 		{
 			hostIps_.push_back(dnsInfo->h_aliases[i]);
 		}
 	}
