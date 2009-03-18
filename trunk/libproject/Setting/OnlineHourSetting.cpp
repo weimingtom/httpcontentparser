@@ -76,9 +76,9 @@ int OnlineHourSetting::onlineBlocktime(const TCHAR *time) {
 		return -1;
 
 	// Ω‚Œˆ ±º‰
-	char *p1 = _tcsstr(time, CONFIG_ONLINETIME_SEPERATE);
+	const char *p1 = _tcsstr(time, CONFIG_ONLINETIME_SEPERATE);
 	assert (NULL != p1);
-	char *p2 = p1;
+	char *p2;
 	int day = _tcstol(time, &p2, 10);
 	assert (p1 == p2);
 	int hour = _tcstol(p1 + 1, NULL, 10);
