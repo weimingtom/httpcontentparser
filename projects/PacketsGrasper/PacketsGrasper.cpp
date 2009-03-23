@@ -1,8 +1,6 @@
 #include "stdafx.h"
 #include "selectio.h"
 #include "debug.h" 
-#include ".\overlapped.h"
-#include ".\progresscheck.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <tchar.h>
@@ -32,7 +30,7 @@ TCHAR				m_sProcessName[MAX_PATH];	// 保存当前进程名称
 
 CSelectIO g_select;
 
-ProgressCheck progress_check;
+//ProgressCheck progress_check;
 
 
 void ShowAllSOCKET(const char *buf, fd_set *readfds) {
@@ -107,9 +105,9 @@ int WSPAPI WSPSelect (
 	SPI_FUNCTION_CALL(_T("WSPSelect ..."));
 
 	// 如果应用程序是一个不应该被拦截的应用程序
-	if (progress_check.isEnabled())
-		return NextProcTable.lpWSPSelect(nfds, 
-				readfds, writefds, exceptfds, timeout, lpErrno);
+	//if (progress_check.isEnabled())
+	//	return NextProcTable.lpWSPSelect(nfds, 
+	//			readfds, writefds, exceptfds, timeout, lpErrno);
 
 	// 如果在White DNS List, 我们也应该直接返回 ;)
 	// 直接返回，自身填入select
@@ -149,10 +147,10 @@ int WSPAPI WSPRecv(
 	SPI_FUNCTION_CALL(_T("WSPRecv ..."));
 
 	// 如果应用程序是一个不应该被拦截的应用程序
-	if (progress_check.isEnabled())
-		return NextProcTable.lpWSPRecv(s, lpBuffers, dwBufferCount
-				, lpNumberOfBytesRecvd, lpFlags, lpOverlapped
-				, lpCompletionRoutine, lpThreadId, lpErrno);
+	//if (progress_check.isEnabled())
+	//	return NextProcTable.lpWSPRecv(s, lpBuffers, dwBufferCount
+	//			, lpNumberOfBytesRecvd, lpFlags, lpOverlapped
+	//			, lpCompletionRoutine, lpThreadId, lpErrno);
 
 	//char buffer[1024];
 	//sprintf(buffer, "WSPRecv %d", s);

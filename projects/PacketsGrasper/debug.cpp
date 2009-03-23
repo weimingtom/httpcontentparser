@@ -6,6 +6,8 @@
 #include <string>
 #include <exception>
 #include <assert.h>
+#include <comdef.h>
+#include <stdlib.h>
 
 #ifdef _SHOW_DETAIL
 void PrintSocket(SOCKET s, DWORD bytes, TCHAR *sExt)
@@ -17,10 +19,11 @@ void PrintSocket(SOCKET s, DWORD bytes, TCHAR *sExt)
  
 	getpeername(s, (SOCKADDR*)&remote_addr, &remote_addr_len);
 
-	CString sTemp;
-	sTemp.Format("    Socket %u %s\n", s, sExt);
+	const int bufsize = 2048;
+	TCHAR sTemp[bufsize];
+	_snprintf(sTemp, bufsize, "    Socket %u %s\n", s, sExt);
 	OutputDebugString(sTemp);
-	sTemp.Format("    %u.%u.%u.%u:%u -> %u.%u.%u.%u:%u transfered %u bytes\n"
+	_snprintf(sTemp, bufsize, "    %u.%u.%u.%u:%u -> %u.%u.%u.%u:%u transfered %u bytes\n"
 		, local_addr.sin_addr.S_un.S_un_b.s_b1
 		, local_addr.sin_addr.S_un.S_un_b.s_b2
 		, local_addr.sin_addr.S_un.S_un_b.s_b3
@@ -38,30 +41,32 @@ void PrintSocket(SOCKET s, DWORD bytes, TCHAR *sExt)
 
 void PrintReturnCode(int iReturnCode, LPINT lpErrno)
 {
-	CString sOutput , sTemp, sTemp1;
+	const int bufsize = 2048;
+	TCHAR sOutput[bufsize];
+	LPCTSTR errorMsg = NULL, tmp = NULL;
 	switch(iReturnCode)
 	{
 	case SOCKET_ERROR:
-		sTemp = "SOCKET_ERROR";
+		errorMsg = "SOCKET_ERROR";
 		break;
 	case 0:
-		sTemp = "SOCKET_SUCCESS";
+		errorMsg = "SOCKET_SUCCESS";
 		break;
 	default:
-		sTemp = "OTHER";
+		errorMsg = "OTHER";
 		break;
 	}
 	switch(*lpErrno)
 	{
 	case WSA_IO_PENDING:
-		sTemp1 = "WSA_IO_PENDING";
+		tmp = "WSA_IO_PENDING";
 		break;
 	default:
-		sTemp1 = "OTHER";
+		tmp = "OTHER";
 		break; 
 	}
-	sOutput.Format("    ReturnCode: %s(%d); *lpErrno: %s(%d)\n"
-		, sTemp, iReturnCode, sTemp1, *lpErrno);
+	_snprintf(sOutput, bufsize, "    ReturnCode: %s(%d); *lpErrno: %s(%d)\n"
+		, errorMsg, iReturnCode, tmp, *lpErrno);
 	OutputDebugString(sOutput);
 }
  
@@ -70,42 +75,45 @@ void PrintProtocolInfo(
 	IN	TCHAR				*sPathName
 )
 {
+	const int bufsize = 2048;
+	TCHAR sTemp[bufsize];
+
 	OutputDebugString("  ProtocolInfo:\n");
-	CString sTemp, sOutput;
-	sTemp.Format("    LibraryPath: %s\n", sPathName);
+	
+	_sntprintf(sTemp, bufsize, "    LibraryPath: %s\n", sPathName);
 	OutputDebugString(sTemp);
 
-	sTemp.Format("    dwServiceFlags1: 0x%08X; %d\n"
+	_sntprintf(sTemp, bufsize, "    dwServiceFlags1: 0x%08X; %d\n"
 		, pProtocolInfo->dwServiceFlags1
 		, pProtocolInfo->dwServiceFlags1
 		);
 	OutputDebugString(sTemp);
 
-	sTemp.Format("    dwServiceFlags2: 0x%08X; %d\n"
+	_sntprintf(sTemp, bufsize, "    dwServiceFlags2: 0x%08X; %d\n"
 		, pProtocolInfo->dwServiceFlags2
 		, pProtocolInfo->dwServiceFlags2
 		);
 	OutputDebugString(sTemp);
 
-	sTemp.Format("    dwServiceFlags3: 0x%08X; %d\n"
+	_sntprintf(sTemp, bufsize, "    dwServiceFlags3: 0x%08X; %d\n"
 		, pProtocolInfo->dwServiceFlags3
 		, pProtocolInfo->dwServiceFlags3
 		);
 	OutputDebugString(sTemp);
 
-	sTemp.Format("    dwServiceFlags4: 0x%08X; %d\n"
+	_sntprintf(sTemp, bufsize, "    dwServiceFlags4: 0x%08X; %d\n"
 		, pProtocolInfo->dwServiceFlags4
 		, pProtocolInfo->dwServiceFlags4
 		);
 	OutputDebugString(sTemp);
 
-	sTemp.Format("    dwProviderFlags: 0x%08X; %d\n"
+	_sntprintf(sTemp, bufsize, "    dwProviderFlags: 0x%08X; %d\n"
 		, pProtocolInfo->dwProviderFlags
 		, pProtocolInfo->dwProviderFlags
 		);
 	OutputDebugString(sTemp);
 
-	sTemp.Format("    ProviderId: %08X-%04X-%04X-%02X%02X-%02X%02X%02X%02X%02X%02X\n"
+	_sntprintf(sTemp, bufsize, "    ProviderId: %08X-%04X-%04X-%02X%02X-%02X%02X%02X%02X%02X%02X\n"
 		, pProtocolInfo->ProviderId.Data1
 		, pProtocolInfo->ProviderId.Data2
 		, pProtocolInfo->ProviderId.Data3
@@ -120,98 +128,101 @@ void PrintProtocolInfo(
 		);
 	OutputDebugString(sTemp);
 
-	sTemp.Format("    dwCatalogEntryId: 0x%08X; %d\n"
+	_sntprintf(sTemp, bufsize, "    dwCatalogEntryId: 0x%08X; %d\n"
 		, pProtocolInfo->dwCatalogEntryId
 		, pProtocolInfo->dwCatalogEntryId
 		);
 	OutputDebugString(sTemp);
 
-	sTemp.Format("    ProtocolChain.ChainLen: 0x%08X; %d\n"
+	_sntprintf(sTemp, bufsize, "    ProtocolChain.ChainLen: 0x%08X; %d\n"
 		, pProtocolInfo->ProtocolChain.ChainLen
 		, pProtocolInfo->ProtocolChain.ChainLen
 		);
 	OutputDebugString(sTemp);
 
-	sTemp.Empty();
+
+	sTemp[0] = '\0';
+	memset(sTemp, 0, sizeof(sTemp));
 	OutputDebugString("    ProtocolChain.ChainEntries: ");
 	for(int i = 0; i < MAX_PROTOCOL_CHAIN; i++)
 	{
-		CString s = "";
+		TCHAR s[bufsize];
 		if(i == MAX_PROTOCOL_CHAIN - 1)
-			s.Format("0x%08X\n", pProtocolInfo->ProtocolChain.ChainEntries[i]);
+			_sntprintf(s, bufsize,"0x%08X\n", pProtocolInfo->ProtocolChain.ChainEntries[i]);
 		else
-			s.Format("0x%08X->", pProtocolInfo->ProtocolChain.ChainEntries[i]);
-		sTemp += s;
+			_sntprintf(s, bufsize,"0x%08X->", pProtocolInfo->ProtocolChain.ChainEntries[i]);
+		
+		_tcsncat(sTemp, s, bufsize);
 	}
 	OutputDebugString(sTemp);
 
-	sTemp.Format("    iVersion: 0x%08X; %d\n"
+	_sntprintf(sTemp, bufsize, "    iVersion: 0x%08X; %d\n"
 		, pProtocolInfo->iVersion
 		, pProtocolInfo->iVersion
 		);
 	OutputDebugString(sTemp);
 
-	sTemp.Format("    iAddressFamily: 0x%08X; %d\n"
+	_sntprintf(sTemp, bufsize, "    iAddressFamily: 0x%08X; %d\n"
 		, pProtocolInfo->iAddressFamily
 		, pProtocolInfo->iAddressFamily
 		);
 	OutputDebugString(sTemp);
 
-	sTemp.Format("    iMaxSockAddr: 0x%08X; %d\n"
+	_sntprintf(sTemp, bufsize, "    iMaxSockAddr: 0x%08X; %d\n"
 		, pProtocolInfo->iMaxSockAddr
 		, pProtocolInfo->iMaxSockAddr
 		);
 	OutputDebugString(sTemp);
 
-	sTemp.Format("    iMinSockAddr: 0x%08X; %d\n"
+	_sntprintf(sTemp, bufsize, "    iMinSockAddr: 0x%08X; %d\n"
 		, pProtocolInfo->iMinSockAddr
 		, pProtocolInfo->iMinSockAddr
 		);
 	OutputDebugString(sTemp);
 
-	sTemp.Format("    iSocketType: 0x%08X; %d\n"
+	_sntprintf(sTemp, bufsize, "    iSocketType: 0x%08X; %d\n"
 		, pProtocolInfo->iSocketType
 		, pProtocolInfo->iSocketType
 		);
 	OutputDebugString(sTemp);
 
-	sTemp.Format("    iProtocol: 0x%08X; %d\n"
+	_sntprintf(sTemp, bufsize, "    iProtocol: 0x%08X; %d\n"
 		, pProtocolInfo->iProtocol
 		, pProtocolInfo->iProtocol
 		);
 	OutputDebugString(sTemp);
 
-	sTemp.Format("    iProtocolMaxOffset: 0x%08X; %d\n"
+	_sntprintf(sTemp, bufsize, "    iProtocolMaxOffset: 0x%08X; %d\n"
 		, pProtocolInfo->iProtocolMaxOffset
 		, pProtocolInfo->iProtocolMaxOffset
 		);
 	OutputDebugString(sTemp);
 
-	sTemp.Format("    iNetworkByteOrder: 0x%08X; %d\n"
+	_sntprintf(sTemp, bufsize, "    iNetworkByteOrder: 0x%08X; %d\n"
 		, pProtocolInfo->iNetworkByteOrder
 		, pProtocolInfo->iNetworkByteOrder
 		);
 	OutputDebugString(sTemp);
 
-	sTemp.Format("    iSecurityScheme: 0x%08X; %d\n"
+	_sntprintf(sTemp, bufsize, "    iSecurityScheme: 0x%08X; %d\n"
 		, pProtocolInfo->iSecurityScheme
 		, pProtocolInfo->iSecurityScheme
 		);
 	OutputDebugString(sTemp);
 
-	sTemp.Format("    dwMessageSize: 0x%08X; %d\n"
+	_sntprintf(sTemp, bufsize, "    dwMessageSize: 0x%08X; %d\n"
 		, pProtocolInfo->dwMessageSize
 		, pProtocolInfo->dwMessageSize
 		);
 	OutputDebugString(sTemp);
 
-	sTemp.Format("    dwProviderReserved: 0x%08X; %d\n"
+	_sntprintf(sTemp, bufsize, "    dwProviderReserved: 0x%08X; %d\n"
 		, pProtocolInfo->dwProviderReserved
 		, pProtocolInfo->dwProviderReserved
 		);
 	OutputDebugString(sTemp);
 
-	sTemp = pProtocolInfo->szProtocol;
+	_tcsncpy(sTemp, (TCHAR*)_bstr_t(pProtocolInfo->szProtocol), bufsize);
 	OutputDebugString("    szProtocol: ");
 	OutputDebugString(sTemp);
 	OutputDebugString("\n"); 
