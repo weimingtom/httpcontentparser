@@ -1,9 +1,11 @@
 #ifndef STDAFX_H
 #define STDAFX_H
 
-#include <afxwin.h>
+
 #include <ws2spi.h>
+#include <windows.h>
 #include <io.h>				
+#include <tchar.h>
 
  
 #ifdef _DEBUG

@@ -1,5 +1,7 @@
 #include "stdafx.h"
 #include ".\progresscheck.h"
+#include <stdlib.h>
+#include <tchar.h>
 
 ProgressCheck::ProgressCheck(void)
 {
@@ -16,13 +18,6 @@ void ProgressCheck::checkCallProgress() {
 	TCHAR caller[MAX_PATH];
 	GetModuleFileName(NULL, caller, MAX_PATH);
 	_tcslwr(caller);
-
-	TCHAR sysDir[MAX_PATH], svchost[MAX_PATH];
-	GetSystemDirectory(sysDir, MAX_PATH);
-	_stprintf(svchost, "%s\\system32\\svchost.exe", sysDir);
-	if (0 == _tcscmp(caller, svchost)) {
-		enabled_ =  false;
-	}
 
 	enabled_ = true;
 }
