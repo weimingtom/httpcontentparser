@@ -29,9 +29,6 @@ int CDlgBlackDNSList::OnApply() {
 	// DNS CHECK是否可用
 	ASSERT(g_dnssetting != NULL);
 	g_dnssetting->enableBlackDNSCheck(convert(m_chkEnableDNS.GetCheck() == BST_CHECKED));
-
-	// 记录在配置文件
-	g_configuration.getBlackURLSet()->enable(m_chkEnableDNS.GetCheck() == BST_CHECKED);
 	return 0;
 }
 
@@ -53,10 +50,27 @@ void CDlgBlackDNSList::restoreSetting() {
 	// 充值
 	rules.Reset();
 	ListBox.GetListCtrl()->DeleteAllItems();
-	
-	g_configuration.getBlackURLSet()->beginEnum((Enumerator1<std::string>*)this);
-	m_bEnableBlackDNS = g_configuration.getBlackURLSet()->isSettingEnabled();
-	UpdateData(FALSE);
+
+	try {
+		BSTR cur, next;
+		g_dnssetting->getFirstBlackDNS(&cur);
+		while (_bstr_t(cur).length() != 0) {
+			ListBox.AddItem((TCHAR*)_bstr_t(cur));
+			g_dnssetting->getNextBlackDNS(cur, &next);
+			SysFreeString(cur); 
+			cur = next;
+		}
+
+		VARIANT_BOOL isEnabled;
+		g_dnssetting->isBlackDNSSettingEnable(&isEnabled);
+		m_bEnableBlackDNS = convert(isEnabled);
+
+		UpdateData(FALSE);
+	} catch(...) {
+		AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
+		return ;
+	}
+
 }
 
 int CDlgBlackDNSList::Enum(const std::string &dns) {
@@ -68,12 +82,10 @@ int CDlgBlackDNSList::Enum(const std::string &dns) {
 void CDlgBlackDNSList::OnAddItem(const CString &str) {
 	ASSERT (NULL != g_dnssetting);
 	g_dnssetting->addBlackDNS(_bstr_t(str));
-	g_configuration.getBlackURLSet()->addDNS((LPCTSTR)str);
 }
 void CDlgBlackDNSList::OnDelItem(const CString &str) {
 	ASSERT (NULL != g_dnssetting);
 	g_dnssetting->removeBlackDNS(_bstr_t(str));
-	g_configuration.getBlackURLSet()->removeDNS((LPCTSTR)str);
 }
 bool CDlgBlackDNSList::ValidateItem(const CString & str, CString &output) {
 	output = str;
