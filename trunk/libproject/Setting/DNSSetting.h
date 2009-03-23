@@ -91,6 +91,8 @@ public:
 	void enableWhiteDNSCheck(const bool checked);
 	void enableBlackDNSCheck(const bool checked);
 
+	bool isWhiteDNSSettingEnable() const;
+	bool isBlackDNSSettingEnable() const;
 	// Ìí¼Ó
 	bool addBlackDNS(const std::string &dns);
 	bool addWhiteDNS(const std::string &dns);
