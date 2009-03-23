@@ -39,10 +39,6 @@ int CDlgWhiteDNSList::OnApply() {
 	ASSERT(g_dnssetting != NULL);
 	g_dnssetting->enableWhiteDNSCheck(convert(m_chkWhiteDNSList.GetCheck() == BST_CHECKED));
 	g_dnssetting->justEnableWhiteDNS(convert(m_bCheckDenyAllOthers));
-
-	// 记录在配置文件
-	g_configuration.getWhiteURLSet()->enable(m_chkWhiteDNSList.GetCheck() == BST_CHECKED);
-	g_configuration.getDNSSetting()->enable(m_bCheckDenyAllOthers);
 	return 0;
 }
 
@@ -57,11 +53,27 @@ void CDlgWhiteDNSList::restoreSetting() {
 	rules.Reset();
 	ListBox.GetListCtrl()->DeleteAllItems();
 
-	g_configuration.getWhiteURLSet()->beginEnum((Enumerator1<std::string>*)this);
+	try {
+		BSTR cur, next;
+		g_dnssetting->getFirstWhiteDNS(&cur);
+		while (_bstr_t(cur).length() != 0) {
+			ListBox.AddItem((TCHAR*)_bstr_t(cur));
+			g_dnssetting->getNextWhiteDNS(cur, &next);
+			SysFreeString(cur); 
+			cur = next;
+		}
 
-	m_bEnableWhiteDNS = g_configuration.getWhiteURLSet()->isSettingEnabled();
-	m_bCheckDenyAllOthers = g_configuration.getDNSSetting()->justPassWhiteDNS();
-	UpdateData(FALSE);
+		VARIANT_BOOL isEnabled;
+		g_dnssetting->isWhiteDNSSettingEnable(&isEnabled);
+		m_bEnableWhiteDNS = convert(isEnabled);
+		g_dnssetting->isJustEnableWhiteDNS(&isEnabled);
+		m_bCheckDenyAllOthers = convert(isEnabled);
+
+		UpdateData(FALSE);
+	} catch(...) {
+		AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
+		return ;
+	}
 }
 
 int CDlgWhiteDNSList::Enum(const std::string &dns) {
@@ -73,12 +85,10 @@ int CDlgWhiteDNSList::Enum(const std::string &dns) {
 void CDlgWhiteDNSList::OnAddItem(const CString &str) {
 	ASSERT (NULL != g_dnssetting);
 	g_dnssetting->addWhiteDNS(_bstr_t(str));
-	g_configuration.getWhiteURLSet()->addDNS((LPCTSTR)str);
 }
 void CDlgWhiteDNSList::OnDelItem(const CString &str) {
 	ASSERT (NULL != g_dnssetting);
 	g_dnssetting->removeWhiteDNS(_bstr_t(str));
-	g_configuration.getWhiteURLSet()->removeDNS((LPCTSTR)str);
 }
 bool CDlgWhiteDNSList::ValidateItem(const CString & str, CString &output) {
 	output = str;
