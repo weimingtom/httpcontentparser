@@ -76,11 +76,6 @@ void CDlgWhiteDNSList::restoreSetting() {
 	}
 }
 
-int CDlgWhiteDNSList::Enum(const std::string &dns) {
-	ListBox.AddItem(dns.c_str());
-	return 0;
-}
-
 // ÐÞ¸Ä¹æÔò
 void CDlgWhiteDNSList::OnAddItem(const CString &str) {
 	ASSERT (NULL != g_dnssetting);

@@ -9,7 +9,7 @@
 #include  ".\Guilib1.5\GuiListEdit.h"
 #include <Enumerate.h>
 
-class CDlgWhiteDNSList : public CBaseDlg, Enumerator1<std::string>, RuleChanged {
+class CDlgWhiteDNSList : public CBaseDlg, RuleChanged {
 	DECLARE_DYNAMIC(CDlgWhiteDNSList)
 
 public:
@@ -33,7 +33,6 @@ protected:
 
 protected:
 	void restoreSetting();
-	virtual int Enum(const std::string &dns) ;  // member of DNSEnumerator
 public:
 	virtual BOOL OnInitDialog();
 	BOOL m_bCheckDenyAllOthers;

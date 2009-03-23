@@ -73,11 +73,6 @@ void CDlgBlackDNSList::restoreSetting() {
 
 }
 
-int CDlgBlackDNSList::Enum(const std::string &dns) {
-	ListBox.AddItem(dns.c_str());
-	return 0;
-}
-
 // add items
 void CDlgBlackDNSList::OnAddItem(const CString &str) {
 	ASSERT (NULL != g_dnssetting);
