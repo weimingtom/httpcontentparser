@@ -52,6 +52,10 @@ public:
 	STDMETHOD(checkDNS)(BSTR dns_name, VARIANT_BOOL* passed);
 	STDMETHOD(justEnableWhiteDNS)(VARIANT_BOOL enabled);
 	STDMETHOD(isWhiteDNS)(BSTR dns, VARIANT_BOOL* White);
+	STDMETHOD(getFirstWhiteDNS)(BSTR* dns);
+	STDMETHOD(getNextWhiteDNS)(BSTR cur, BSTR* next);
+	STDMETHOD(getFirstBlackDNS)(BSTR* dns);
+	STDMETHOD(getNextBlackDNS)(BSTR cur, BSTR* next);
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(DNSSetting), CDNSSetting)

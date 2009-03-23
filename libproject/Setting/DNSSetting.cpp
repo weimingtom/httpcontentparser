@@ -78,6 +78,19 @@ bool DNSSetting::addWhiteDNS(const std::string &dns) {
 	}
 }
 
+
+std::string DNSSetting::getFirstWhiteDNS() {
+	return white_dns_list_->getFirstDNS();
+}
+std::string DNSSetting::getNextWhiteDNS(const std::string &dns) {
+	return white_dns_list_->getNextDNS(dns);
+}
+std::string DNSSetting::getFirstBlackDNS() {
+	return black_dns_list_->getFirstDNS();
+}
+std::string DNSSetting::getNextBlackDNS(const std::string &dns) {
+	return black_dns_list_->getNextDNS(dns);
+}
 // 移除
 bool DNSSetting::removeBlackDNS(const std::string &dns_name) {
 	setModified(true);
@@ -191,6 +204,29 @@ DNSList::DNSList(void) {
 }
 
 DNSList::~DNSList(void) {
+}
+
+// 获取DNS列表
+std::string  DNSList::getFirstDNS() {
+	if (dns_set_.size() == 0) {
+		return std::string("");
+	} else {
+		return dns_set_.begin()->first;
+	}
+}
+std::string DNSList::getNextDNS(const std::string &name) {
+	assert (name.length() != 0);
+	if (name.length() == 0) {
+		return name;
+	} else {
+		DNS_SET::iterator iter = dns_set_.upper_bound(name);
+		if (iter == dns_set_.end()) {
+			return std::string("");
+		} else {
+			return iter->first;
+		}
+	}
+
 }
 
 //==================================

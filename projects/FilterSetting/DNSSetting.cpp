@@ -78,3 +78,30 @@ STDMETHODIMP CDNSSetting::isWhiteDNS(BSTR dns, VARIANT_BOOL* White)
 	*White = convert(g_configuration.getDNSSetting()->inWhiteList((char*)_bstr_t(dns)));
 	return S_OK;
 }
+STDMETHODIMP CDNSSetting::getFirstWhiteDNS(BSTR* dns)
+{
+	std::string str = g_configuration.getDNSSetting()->getFirstWhiteDNS();
+	*dns = (BSTR)_bstr_t(str.c_str());
+	return S_OK;
+}
+
+STDMETHODIMP CDNSSetting::getNextWhiteDNS(BSTR cur, BSTR* next)
+{
+	std::string str = g_configuration.getDNSSetting()->getNextWhiteDNS((TCHAR*)_bstr_t(cur));
+	*next = (BSTR)_bstr_t(str.c_str());
+	return S_OK;
+}
+
+STDMETHODIMP CDNSSetting::getFirstBlackDNS(BSTR* dns)
+{
+	std::string str = g_configuration.getDNSSetting()->getFirstBlackDNS();
+	*dns = (BSTR)_bstr_t(str.c_str());
+	return S_OK;
+}
+
+STDMETHODIMP CDNSSetting::getNextBlackDNS(BSTR cur, BSTR* next)
+{
+	std::string str = g_configuration.getDNSSetting()->getNextBlackDNS((TCHAR*)_bstr_t(cur));
+	*next = (BSTR)_bstr_t(str.c_str());
+	return S_OK;
+}
