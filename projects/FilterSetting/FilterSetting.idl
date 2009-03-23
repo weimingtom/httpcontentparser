@@ -138,6 +138,9 @@ interface IDNSSetting : IDispatch{
 	[id(16), helpstring("Method getNextWhiteDNS")] HRESULT getNextWhiteDNS([in] BSTR cur, [out] BSTR* next);
 	[id(17), helpstring("Method getFirstBlackDNS")] HRESULT getFirstBlackDNS([out] BSTR* dns);
 	[id(18), helpstring("Method getNextBlackDNS")] HRESULT getNextBlackDNS([in] BSTR cur, [out] BSTR* next);
+	[id(19), helpstring("方法isWhiteDNSSettingEnable")] HRESULT isWhiteDNSSettingEnable([out]VARIANT_BOOL *enabled);
+	[id(20), helpstring("方法isBlackDNSSettingEnable")] HRESULT isBlackDNSSettingEnable([out] VARIANT_BOOL* enabled);
+	[id(21), helpstring("方法isJustEnableWhiteDNS")] HRESULT isJustEnableWhiteDNS([out] VARIANT_BOOL* enabled);
 };
 [
 	object,
