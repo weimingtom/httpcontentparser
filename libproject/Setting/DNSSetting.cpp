@@ -170,6 +170,12 @@ bool DNSSetting::dealResult(const int result) {
 	}
 }
 
+bool DNSSetting::isWhiteDNSSettingEnable() const {
+	return white_dns_list_->isSettingEnabled();
+}
+bool DNSSetting::isBlackDNSSettingEnable() const {
+	return black_dns_list_->isSettingEnabled();
+}
 void DNSSetting::enableBlackDNSCheck(const bool checked) {
 	setModified(true);
 	black_dns_list_->enable(checked);
