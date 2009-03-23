@@ -33,6 +33,11 @@ public:
 
 	// enumerate
 	void beginEnum(Enumerator1<std::string> *enumerator);
+
+	// 获取DNS
+	// 之所以采用这种方式，是因为map不能使用下表进行访问
+	std::string  getFirstDNS();
+	std::string getNextDNS(const std::string &name);
 public:
 	void enable(const bool check) {enabled_ = check;}
 	bool isEnabled() const { return enabled_;}
@@ -91,6 +96,12 @@ public:
 	bool addWhiteDNS(const std::string &dns);
 	bool removeBlackDNS(const std::string &dns_name);
 	bool removeWhiteDNS(const std::string &dns_name);
+
+	// 获取DNS
+	std::string getFirstWhiteDNS();
+	std::string getNextWhiteDNS(const std::string &dns);
+	std::string getFirstBlackDNS();
+	std::string getNextBlackDNS(const std::string &dns);
 private:
 	int check(const std::string &dns);
 	int fuzzeCheck(const std::string &dns);

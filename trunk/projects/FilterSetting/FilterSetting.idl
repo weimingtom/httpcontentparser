@@ -134,6 +134,10 @@ interface IDNSSetting : IDispatch{
 	[id(12), helpstring("method checkDNS")]				HRESULT checkDNS([in] BSTR dns_name, [out,retval] VARIANT_BOOL* passed);
 	[id(13), helpstring("Method justEnableWhiteDNS")]	HRESULT justEnableWhiteDNS([in] VARIANT_BOOL enabled);
 	[id(14), helpstring("Method isWhiteDNS")] HRESULT isWhiteDNS([in] BSTR dns, [out,retval] VARIANT_BOOL* White);
+	[id(15), helpstring("Method getFirstWhiteDNS")] HRESULT getFirstWhiteDNS([out] BSTR* dns);
+	[id(16), helpstring("Method getNextWhiteDNS")] HRESULT getNextWhiteDNS([in] BSTR cur, [out] BSTR* next);
+	[id(17), helpstring("Method getFirstBlackDNS")] HRESULT getFirstBlackDNS([out] BSTR* dns);
+	[id(18), helpstring("Method getNextBlackDNS")] HRESULT getNextBlackDNS([in] BSTR cur, [out] BSTR* next);
 };
 [
 	object,
