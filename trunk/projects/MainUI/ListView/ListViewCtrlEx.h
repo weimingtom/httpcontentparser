@@ -14,7 +14,6 @@ $Log$
 ******************************************************************************/
 
 #pragma once
-#include "stdafx.h"
 /*** Declaration of "workhorse" class "CListBase" ****************************/
 class CListCtrlHelper;
 
