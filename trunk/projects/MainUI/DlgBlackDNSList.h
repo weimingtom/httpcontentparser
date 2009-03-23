@@ -9,7 +9,7 @@
 
 // CDlgBlackDNSList ¶Ô»°¿ò
 
-class CDlgBlackDNSList : public CBaseDlg, Enumerator1<std::string>, RuleChanged {
+class CDlgBlackDNSList : public CBaseDlg, RuleChanged {
 	DECLARE_DYNAMIC(CDlgBlackDNSList)
 
 public:
@@ -30,7 +30,6 @@ protected:
 	BOOL m_bEnableBlackDNS;
 
 	virtual void restoreSetting();
-	virtual int Enum(const std::string &dns) ;  // member of DNSEnumerator
 public:
 	virtual BOOL OnInitDialog();
 	afx_msg void OnBnClickedChkBlackDnslist();

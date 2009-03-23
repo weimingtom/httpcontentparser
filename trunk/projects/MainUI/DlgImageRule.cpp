@@ -59,14 +59,14 @@ void CDlgImageRule::OnShow() {
 int CDlgImageRule::OnApply() {
 	UpdateData(TRUE);
 	// 保存在记录的类中
-	g_configuration.getContentCheckSetting()->enableCheck(IMAGE_TYPE_GIF, m_bCheckGIF);
-	g_configuration.getContentCheckSetting()->enableCheck(IMAGE_TYPE_JPEG, m_bCheckJPEG);
-	g_configuration.getContentCheckSetting()->enableCheck(IMAGE_TYPE_BMP, m_bCheckBMP);
-	g_configuration.getContentCheckSetting()->enableCheck(IMAGE_TYPE_PNG, m_bCheckPNG);
-	g_configuration.getContentCheckSetting()->setImageCheckTightness(m_sliderImageCheckDegree.GetPos());
-	g_configuration.getContentCheckSetting()->enableCheckBySize(m_chkEnableScopeCheck.GetCheck() == BST_CHECKED);
+	//g_configuration.getContentCheckSetting()->enableCheck(IMAGE_TYPE_GIF, m_bCheckGIF);
+	//g_configuration.getContentCheckSetting()->enableCheck(IMAGE_TYPE_JPEG, m_bCheckJPEG);
+	//g_configuration.getContentCheckSetting()->enableCheck(IMAGE_TYPE_BMP, m_bCheckBMP);
+	//g_configuration.getContentCheckSetting()->enableCheck(IMAGE_TYPE_PNG, m_bCheckPNG);
+	//g_configuration.getContentCheckSetting()->setImageCheckTightness(m_sliderImageCheckDegree.GetPos());
+	//g_configuration.getContentCheckSetting()->enableCheckBySize(m_chkEnableScopeCheck.GetCheck() == BST_CHECKED);
 
-	g_configuration.getContentCheckSetting()->setCheckScope(scope_min_, scope_max_);
+	//g_configuration.getContentCheckSetting()->setCheckScope(scope_min_, scope_max_);
 
 	// apply to COM Services
 	try {
@@ -95,21 +95,21 @@ int CDlgImageRule::OnApply() {
 // COM Service处获取到数据，然手在现实
 void CDlgImageRule::restoreSetting() {
 	// 按照初始化设置
-	m_bCheckGIF = g_configuration.getContentCheckSetting()->isSettingNeedCheck(IMAGE_TYPE_GIF);
-	m_bCheckJPEG = g_configuration.getContentCheckSetting()->isSettingNeedCheck(IMAGE_TYPE_JPEG);
-	m_bCheckBMP = g_configuration.getContentCheckSetting()->isSettingNeedCheck(IMAGE_TYPE_BMP);
-	m_bCheckPNG = g_configuration.getContentCheckSetting()->isSettingNeedCheck(IMAGE_TYPE_PNG);
+	//m_bCheckGIF = g_configuration.getContentCheckSetting()->isSettingNeedCheck(IMAGE_TYPE_GIF);
+	//m_bCheckJPEG = g_configuration.getContentCheckSetting()->isSettingNeedCheck(IMAGE_TYPE_JPEG);
+	//m_bCheckBMP = g_configuration.getContentCheckSetting()->isSettingNeedCheck(IMAGE_TYPE_BMP);
+	//m_bCheckPNG = g_configuration.getContentCheckSetting()->isSettingNeedCheck(IMAGE_TYPE_PNG);
 
 	m_sliderImageCheckDegree.SetRange(0, 4);
-	m_sliderImageCheckDegree.SetPos(g_configuration.getContentCheckSetting()->getImageCheckTightness());
+	//m_sliderImageCheckDegree.SetPos(g_configuration.getContentCheckSetting()->getImageCheckTightness());
 
 	// 是否允许根据大小进行检查
-	bool enabed_check_by_size = g_configuration.getContentCheckSetting()->enabledCheckBySize();
+	bool enabed_check_by_size = true;// g_configuration.getContentCheckSetting()->enabledCheckBySize();
 	enableScopeCheck(enabed_check_by_size);
 	m_chkEnableScopeCheck.SetCheck(enabed_check_by_size ? BST_CHECKED : BST_UNCHECKED);
 
 	// 取得检查范围
-	g_configuration.getContentCheckSetting()->getCheckedScope(&scope_min_, &scope_max_);
+	//g_configuration.getContentCheckSetting()->getCheckedScope(&scope_min_, &scope_max_);
 	
 	UpdateData(FALSE);
 }
