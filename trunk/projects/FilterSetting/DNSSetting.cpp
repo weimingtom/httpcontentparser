@@ -105,3 +105,21 @@ STDMETHODIMP CDNSSetting::getNextBlackDNS(BSTR cur, BSTR* next)
 	*next = (BSTR)_bstr_t(str.c_str());
 	return S_OK;
 }
+
+STDMETHODIMP CDNSSetting::isWhiteDNSSettingEnable(VARIANT_BOOL *enabled)
+{
+	*enabled = convert(g_configuration.getDNSSetting()->isWhiteDNSSettingEnable());
+	return S_OK;
+}
+
+STDMETHODIMP CDNSSetting::isBlackDNSSettingEnable(VARIANT_BOOL* enabled)
+{
+	*enabled = convert(g_configuration.getDNSSetting()->isBlackDNSSettingEnable());
+	return S_OK;
+}
+
+STDMETHODIMP CDNSSetting::isJustEnableWhiteDNS(VARIANT_BOOL* enabled)
+{
+	*enabled = convert(g_configuration.getDNSSetting()->justPassWhiteDNS());
+	return S_OK;
+}
