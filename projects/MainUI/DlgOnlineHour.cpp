@@ -119,11 +119,6 @@ void CDlgOnlineHour::restoreSetting() {
 	}
 }
 
-int CDlgOnlineHour::Enum(const int day, const int hour) {
-	cells.check(day, hour);
-	return 0;
-}
-
 BEGIN_MESSAGE_MAP(CDlgOnlineHour, CDialog)
 	ON_BN_CLICKED(IDC_CHK_TIMECTRL, OnBnClickedChkTimectrl)
 END_MESSAGE_MAP()

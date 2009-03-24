@@ -23,7 +23,6 @@ HWND share_hwnd = 0;
 
 
 IDNSSetting *g_dnssetting = NULL;
-XMLConfiguration g_configuration;	// 配置信息
 extern bool g_parentModel = false;
 
 #ifdef _DEBUG
@@ -50,13 +49,6 @@ CMainUIApp theApp;
 
 // CMainUIApp 初始化
 
-void initializeSetting() {
-		// 初始化配置
-	TCHAR config_path[MAX_PATH];
-	GetAppConfigFilename(config_path, MAX_PATH);
-	g_configuration.loadConfig(config_path);
-}
-
 BOOL CMainUIApp::InitInstance() {
 	{
 		CMutex mutext(0, MUTEX_NAME);
@@ -73,9 +65,6 @@ BOOL CMainUIApp::InitInstance() {
 	// TODO enable the following code
 	// AppInstallValidate validator(VLAIDATE_NONE);
 	// validator.repair((HMODULE)AfxGetInstanceHandle());
-
-	// 读取配置信息
-	initializeSetting();
 
 
 	if (FALSE == Initialize()) {
