@@ -89,9 +89,6 @@ void CDlgOnlineHour::DoDataExchange(CDataExchange* pDX)
 }
 
 void CDlgOnlineHour::restoreSetting() {
-	
-	
-
 	try {
 		AutoInitInScale _auto;
 
