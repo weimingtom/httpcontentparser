@@ -150,7 +150,7 @@ STDMETHODIMP CAppSetting::getPagesFolder(BSTR* path)
 STDMETHODIMP CAppSetting::getHotkey(LONG type, USHORT* wVirtualKeyCode, USHORT* wModifier)
 {
 	DWORD hotkey = g_configuration.getHotkey()->getHotkey(getHotkeyname(type));
-	*wModifier = HIWORD(hotkey);
-	*wVirtualKeyCode = LOWORD(hotkey);
+	 *wVirtualKeyCode = HIWORD(hotkey);
+	*wModifier = LOWORD(hotkey);
 	return S_OK;
 }

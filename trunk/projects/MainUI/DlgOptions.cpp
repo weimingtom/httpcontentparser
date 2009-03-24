@@ -17,8 +17,8 @@
 
 IMPLEMENT_DYNAMIC(CDlgOptions, CDialog)
 CDlgOptions::CDlgOptions(CWnd* pParent /*=NULL*/)
-	: CBaseDlg(CDlgOptions::IDD, pParent)
-	, m_bAutoRun(FALSE)
+: CBaseDlg(CDlgOptions::IDD, pParent)
+, m_bAutoRun(FALSE)
 {
 }
 
@@ -26,70 +26,69 @@ CDlgOptions::~CDlgOptions() {
 }
 
 namespace {
-// 注意API的HOTKEY与MFC定义的值不相同，真是晕菜
-WORD  getModifierKey(WORD kModify_mfc) {
-	WORD vModifiers  = 0;
-	if (kModify_mfc & HOTKEYF_SHIFT)
-		vModifiers |= MOD_SHIFT;
-	if (kModify_mfc & HOTKEYF_CONTROL)
-		vModifiers |= MOD_CONTROL;
-	if (kModify_mfc & HOTKEYF_ALT)
-		vModifiers |= MOD_ALT;
+	// 注意API的HOTKEY与MFC定义的值不相同，真是晕菜
+	WORD  getModifierKey(WORD kModify_mfc) {
+		WORD vModifiers  = 0;
+		if (kModify_mfc & HOTKEYF_SHIFT)
+			vModifiers |= MOD_SHIFT;
+		if (kModify_mfc & HOTKEYF_CONTROL)
+			vModifiers |= MOD_CONTROL;
+		if (kModify_mfc & HOTKEYF_ALT)
+			vModifiers |= MOD_ALT;
 
-	return vModifiers;
-}
-
-WORD  getModifierKeyMFC(WORD kModify) {
-	WORD vModifiers_mfc  = 0;
-	if (kModify & MOD_SHIFT)
-		vModifiers_mfc |= HOTKEYF_SHIFT;
-	if (kModify & MOD_CONTROL)
-		vModifiers_mfc |= HOTKEYF_CONTROL;
-	if (kModify & MOD_ALT)
-		vModifiers_mfc |= HOTKEYF_ALT;
-
-	return vModifiers_mfc; 
-}
-
-BOOL notifyCOMServiceHotkey(WORD vKey, WORD vModifiers, const int type) {
-	try {
-		AutoInitInScale auto_init_com;
-		VARIANT_BOOL bSucc;
-		IAppSetting *app = NULL;
-		HRESULT hr = CoCreateInstance(CLSID_AppSetting, NULL, CLSCTX_LOCAL_SERVER, IID_IAppSetting, (LPVOID*)&app);
-		if (FAILED(hr)) {
-			AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONEXCLAMATION);
-			return FALSE;
-		}
-
-		app->setHotkey(vKey, vModifiers, type, &bSucc);
-		return convert(bSucc);
-	} catch(...) {
-		return FALSE;
+		return vModifiers;
 	}
-}
 
-BOOL setHotkey(WORD vKey, WORD vModifiers_mfc, const int type) {
-	// 首先注销当前的热键
-	UnregisterHotKey(AfxGetMainWnd()->GetSafeHwnd(), type);
+	WORD  getModifierKeyMFC(WORD kModify) {
+		WORD vModifiers_mfc  = 0;
+		if (kModify & MOD_SHIFT)
+			vModifiers_mfc |= HOTKEYF_SHIFT;
+		if (kModify & MOD_CONTROL)
+			vModifiers_mfc |= HOTKEYF_CONTROL;
+		if (kModify & MOD_ALT)
+			vModifiers_mfc |= HOTKEYF_ALT;
 
-	WORD vModifier = getModifierKey(vModifiers_mfc);
-	if (0 != vModifier && 0 != vKey) {	
-		if (!RegisterHotKey(AfxGetMainWnd()->GetSafeHwnd(), type, vModifier,vKey)) {
-			// 如果失败，则设置为0
-			g_configuration.getHotkey()->setHotkey(getHotkeyname(type), (unsigned)MAKELPARAM(0, 0));
-			UnregisterHotKey(AfxGetMainWnd()->GetSafeHwnd(), type);
+		return vModifiers_mfc; 
+	}
+
+	BOOL notifyCOMServiceHotkey(WORD vKey, WORD vModifiers, const int type) {
+		try {
+			AutoInitInScale auto_init_com;
+			VARIANT_BOOL bSucc;
+			IAppSetting *app = NULL;
+			HRESULT hr = CoCreateInstance(CLSID_AppSetting, NULL, CLSCTX_LOCAL_SERVER, IID_IAppSetting, (LPVOID*)&app);
+			if (FAILED(hr)) {
+				AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONEXCLAMATION);
+				return FALSE;
+			}
+
+			app->setHotkey(vKey, vModifiers, type, &bSucc);
+			return convert(bSucc);
+		} catch(...) {
+			AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
 			return FALSE;
 		}
-	} else {
+	}
+
+	BOOL setHotkey(WORD vKey, WORD vModifiers_mfc, const int type) {
+		// 首先注销当前的热键
 		UnregisterHotKey(AfxGetMainWnd()->GetSafeHwnd(), type);
-	}
 
-	// 是COM Service知道信息，以便保存
-	g_configuration.getHotkey()->setHotkey(getHotkeyname(type), (unsigned)MAKELPARAM(vModifier, vKey));
-	notifyCOMServiceHotkey(vKey, vModifier, type);
-	return TRUE;
-}
+		WORD vModifier = getModifierKey(vModifiers_mfc);
+		if (0 != vModifier && 0 != vKey) {	
+			if (!RegisterHotKey(AfxGetMainWnd()->GetSafeHwnd(), type, vModifier,vKey)) {
+				// 如果失败，则设置为0
+				UnregisterHotKey(AfxGetMainWnd()->GetSafeHwnd(), type);
+				return FALSE;
+			}
+		} else {
+			UnregisterHotKey(AfxGetMainWnd()->GetSafeHwnd(), type);
+		}
+
+		// 是COM Service知道信息，以便保存
+		notifyCOMServiceHotkey(vKey, vModifier, type);
+		return TRUE;
+	}
 };
 
 
@@ -132,10 +131,6 @@ int CDlgOptions::setHotKey() {
 		return FAILED_APPLY;
 	}
 
-	// 保存热键
-	g_configuration.getHotkey()->setHotkey(getHotkeyname(HOTKEY_LANUCH_MAINUI),
-		(unsigned)MAKELPARAM(vModifier, vKey));
-
 	return SUCCESS_APPLY;
 }
 
@@ -149,25 +144,39 @@ int CDlgOptions::OnApply() {
 	}
 	return SUCCESS_APPLY;
 }
- 
+
 
 // 恢复设置
 void CDlgOptions::restoreSetting() {	
-	// 热键
-	DWORD hotkey = (DWORD)g_configuration.getHotkey()->getHotkey(getHotkeyname(HOTKEY_LANUCH_MAINUI));
-	m_hotkeyLaunch.SetHotKey(HIWORD(hotkey),	getModifierKeyMFC(LOWORD(hotkey)));
+	try {
+		AutoInitInScale auto_init_com;
+		IAppSetting *app = NULL;
+		HRESULT hr = CoCreateInstance(CLSID_AppSetting, NULL, CLSCTX_LOCAL_SERVER, IID_IAppSetting, (LPVOID*)&app);
+		if (FAILED(hr)) {
+			AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONEXCLAMATION);
+			return;
+		}
 
-	hotkey = (DWORD)g_configuration.getHotkey()->getHotkey(getHotkeyname(HOTKEY_SHOW_MAINUI));
-	m_hotKeyShowDlg.SetHotKey(HIWORD(hotkey),	getModifierKeyMFC(LOWORD(hotkey)));
+		// 热键
+		WORD vKey, vModifier;
+		app->getHotkey(HOTKEY_LANUCH_MAINUI, &vKey, &vModifier);
+		m_hotkeyLaunch.SetHotKey(vKey, vModifier);
 
-	hotkey = (DWORD)g_configuration.getHotkey()->getHotkey(getHotkeyname(HOTKEY_SHOW_SWITCH_USER));
-	m_hotkeySwitchUser.SetHotKey(HIWORD(hotkey), getModifierKeyMFC(LOWORD(hotkey)));
+		app->getHotkey(HOTKEY_SHOW_MAINUI, &vKey, &vModifier);
+		m_hotKeyShowDlg.SetHotKey(vKey, vModifier);
 
-	// 自动运行
-	m_bAutoRun = isAutoRun();
-	m_bOld_autorun = m_bAutoRun;
+		app->getHotkey(HOTKEY_SHOW_SWITCH_USER, &vKey, &vModifier);
+		m_hotkeySwitchUser.SetHotKey(vKey, vModifier);
 
-	UpdateData(FALSE);
+		// 自动运行
+		m_bAutoRun = isAutoRun();
+		m_bOld_autorun = m_bAutoRun;
+
+		UpdateData(FALSE);
+	} catch (...) {
+
+		AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONEXCLAMATION);
+	}
 }
 
 void CDlgOptions::OnShow() {
@@ -214,7 +223,7 @@ BOOL CDlgOptions::PreTranslateMessage(MSG* pMsg)
 			m_hotKeyShowDlg.GetSafeHwnd() == pMsg->hwnd||
 			m_hotkeySwitchUser.GetSafeHwnd() == pMsg->hwnd) {
 				SetModify(true);
-		}	
+			}	
 	}
 	return CBaseDlg::PreTranslateMessage(pMsg);
 }

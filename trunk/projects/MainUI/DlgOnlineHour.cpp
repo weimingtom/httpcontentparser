@@ -39,7 +39,7 @@ public:
 	// 取消已有的设置
 	void reset() {
 		for (int day = 0; day < 7; ++day) {
-			for (int hour = 0; hour < 23; ++hour) {
+			for (int hour = 0; hour < 24; ++hour) {
 				accessNetwork_->removeBlockTime(day, hour);
 			}
 		}
@@ -105,9 +105,9 @@ void CDlgOnlineHour::restoreSetting() {
 
 		VARIANT_BOOL isSettingEnabled;
 		for (int day = 0; day < 7; ++day) {
-			for (int hour = 0; hour < 23; ++hour) {
+			for (int hour = 0; hour < 24; ++hour) {
 				hr = accessNetwork->SettingAccessNetwork(day, hour, &isSettingEnabled);
-				if (true == convert(isSettingEnabled)) {
+				if (false == convert(isSettingEnabled)) {
 					cells.check(day, hour);
 				}
 			}

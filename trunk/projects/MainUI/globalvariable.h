@@ -7,7 +7,6 @@
 #include <xmlconfiguration.h>
 
 extern IDNSSetting *g_dnssetting;
-extern XMLConfiguration g_configuration;
 
 extern bool g_parentModel;
 
