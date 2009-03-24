@@ -168,6 +168,9 @@ interface ISearchRule : IDispatch{
 	[id(2), helpstring("Method addBlackSeachword")]			HRESULT addBlackSeachword([in] BSTR seachword);
 	[id(3), helpstring("Method enableCheckSeachEngine")]	HRESULT enableCheckSeachEngine(BSTR seachengine, [in] VARIANT_BOOL enabled);
 	[id(4), helpstring("Method removeBlackSeachWord")]		HRESULT removeBlackSeachWord([in] BSTR blackword);
+	[id(5), helpstring("Method isSettingEnabled")] HRESULT isSettingEnabled([in] BSTR searchengine, [out]VARIANT_BOOL* isSettingenabled);
+	[id(6), helpstring("Method getFirstSearchWord")] HRESULT getFirstSearchWord([out] BSTR* first);
+	[id(7), helpstring("Method getNextSearchWord")] HRESULT getNextSearchWord([in] BSTR cur, [out] BSTR* next);
 };
 [
 	object,

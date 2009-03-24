@@ -13,12 +13,12 @@
 
 IMPLEMENT_DYNAMIC(CDlgSearchRule, CDialog)
 CDlgSearchRule::CDlgSearchRule(CWnd* pParent /*=NULL*/)
-	: CBaseDlg(CDlgSearchRule::IDD, pParent)
-	, rules(this, this)
-	, m_bEnableSearchRule(TRUE)
-	, m_bChkGoogle(FALSE)
-	, m_bChkYahoo(FALSE)
-	, m_bChkBaidu(FALSE)
+: CBaseDlg(CDlgSearchRule::IDD, pParent)
+, rules(this, this)
+, m_bEnableSearchRule(TRUE)
+, m_bChkGoogle(FALSE)
+, m_bChkYahoo(FALSE)
+, m_bChkBaidu(FALSE)
 {
 }
 
@@ -34,7 +34,7 @@ int CDlgSearchRule::OnApply() {
 		ISearchRule *seach_rule;
 		HRESULT hr = CoCreateInstance(CLSID_SearchRule, NULL, CLSCTX_LOCAL_SERVER, IID_ISearchRule, (LPVOID*)&seach_rule);
 		if (FAILED(hr)) {
-			//AfxMessageBox(
+			AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
 			return -1;
 		}
 
@@ -43,13 +43,9 @@ int CDlgSearchRule::OnApply() {
 		seach_rule->enableCheckSeachEngine(_bstr_t("baidu"), convert(m_bChkBaidu));
 		SafeRelease(seach_rule);
 
-		// 保存在类当中
-		g_configuration.getSearchRule()->enableCheck("google", m_bChkGoogle);
-		g_configuration.getSearchRule()->enableCheck("yahoo", m_bChkYahoo);
-		g_configuration.getSearchRule()->enableCheck("baidu", m_bChkBaidu);
 		return 0;
 	} catch (_com_error&) {
-		//AfxMessageBox(
+		AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
 		return -1;
 	}
 }
@@ -75,18 +71,39 @@ void CDlgSearchRule::DoDataExchange(CDataExchange* pDX)
 void CDlgSearchRule::restoreSetting() {
 	rules.Reset();
 	ListBox.GetListCtrl()->DeleteAllItems();
-	g_configuration.getSearchRule()->enumBlackWord((Enumerator1<std::string>*)this);
-	m_bEnableSearchRule = g_configuration.getSearchRule()->isEnabled();
 
-	m_bChkGoogle = g_configuration.getSearchRule()->setting_shouldCheck(TEXT("google"));
-	m_bChkYahoo = g_configuration.getSearchRule()->setting_shouldCheck(TEXT("yahoo"));
-	m_bChkBaidu = g_configuration.getSearchRule()->setting_shouldCheck(TEXT("baidu"));
-	UpdateData(FALSE);
-}
+	try {
+		AutoInitInScale _auto_com_init;
+		ISearchRule *seach_rule;
+		HRESULT hr = CoCreateInstance(CLSID_SearchRule, NULL, CLSCTX_LOCAL_SERVER, IID_ISearchRule, (LPVOID*)&seach_rule);
+		if (FAILED(hr)) {
+			AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
+			return;
+		}
 
-int CDlgSearchRule::Enum(const std::string &words) {
-	ListBox.AddItem(words.c_str());
-	return 0;
+		BSTR cur, next;
+		seach_rule->getFirstSearchWord(&cur);
+		while (_bstr_t(cur).length() != 0) {
+			ListBox.AddItem((TCHAR*)_bstr_t(cur));
+			seach_rule->getNextSearchWord(cur, &next);
+			SysFreeString(cur); 
+			cur = next;
+		}
+
+		VARIANT_BOOL isEnabled;
+		seach_rule->isSettingEnabled(_bstr_t(TEXT("google")), &isEnabled);
+		m_bChkGoogle = convert(isEnabled);
+
+		seach_rule->isSettingEnabled(_bstr_t(TEXT("yahoo")), &isEnabled);
+		m_bChkYahoo = convert(isEnabled);
+
+		seach_rule->isSettingEnabled(_bstr_t(TEXT("baidu")), &isEnabled);
+		m_bChkBaidu = convert(isEnabled);
+
+		UpdateData(FALSE);
+	} catch (...) {
+		AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
+	}
 }
 
 void CDlgSearchRule::OnAddItem(const CString &str) {
@@ -95,6 +112,7 @@ void CDlgSearchRule::OnAddItem(const CString &str) {
 		ISearchRule *seach_rule;
 		HRESULT hr = CoCreateInstance(CLSID_SearchRule, NULL, CLSCTX_LOCAL_SERVER, IID_ISearchRule, (LPVOID*)&seach_rule);
 		if (FAILED(hr)) {
+			AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
 			return;
 		}
 
@@ -103,9 +121,6 @@ void CDlgSearchRule::OnAddItem(const CString &str) {
 
 		// 修改界面
 		SetModify(TRUE);
-
-		// 保存结果
-		g_configuration.getSearchRule()->addBlackSearchWord((LPCTSTR)str);
 	} catch(...) {
 	}
 }
@@ -123,9 +138,6 @@ void CDlgSearchRule::OnDelItem(const CString &str) {
 
 		// 修改界面
 		SetModify(TRUE);
-
-		// 保存结果
-		g_configuration.getSearchRule()->removeBlackSeachWord((LPCTSTR)str);
 	} catch (...) {
 	}
 }
@@ -150,7 +162,7 @@ BOOL CDlgSearchRule::OnInitDialog()
 
 	ListBox.setOnTextChanged(&rules);
 	Restore();
-	
+
 	return TRUE;  // return TRUE unless you set the focus to a control
 }
 

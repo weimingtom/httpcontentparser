@@ -47,6 +47,9 @@ public:
 	STDMETHOD(addBlackSeachword)(BSTR searchword);
 	STDMETHOD(enableCheckSeachEngine)(BSTR searchengine, VARIANT_BOOL enabled);
 	STDMETHOD(removeBlackSeachWord)(BSTR blackword);
+	STDMETHOD(isSettingEnabled)(BSTR searchengine, VARIANT_BOOL* isSettingenabled);
+	STDMETHOD(getFirstSearchWord)(BSTR* first);
+	STDMETHOD(getNextSearchWord)(BSTR cur, BSTR* next);
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(SearchRule), CSearchRule)
