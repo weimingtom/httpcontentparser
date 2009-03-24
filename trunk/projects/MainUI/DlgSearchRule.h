@@ -8,7 +8,7 @@
 #include ".\ContentList.h"
 
 // CDlgSearchRule 对话框
-class CDlgSearchRule : public CBaseDlg, Enumerator1<std::string>, RuleChanged {
+class CDlgSearchRule : public CBaseDlg, RuleChanged {
 	DECLARE_DYNAMIC(CDlgSearchRule)
 
 public:
@@ -25,7 +25,6 @@ public:
 protected:
 	// 初始化初始设置
 	virtual void restoreSetting();
-	virtual int Enum(const std::string &dns) ;  // member of DNSEnumerator
 
 	CGuiListEdit ListBox;
 	CButton m_chkEnableSearchChk;

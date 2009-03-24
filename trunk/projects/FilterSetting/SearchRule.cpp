@@ -54,3 +54,21 @@ STDMETHODIMP CSearchRule::removeBlackSeachWord(BSTR blackword) {
 	g_configuration.getSearchRule()->removeBlackSeachWord((char*)_bstr_t(blackword));
 	return S_OK;
 }
+
+STDMETHODIMP CSearchRule::isSettingEnabled(BSTR searchengine, VARIANT_BOOL* isSettingenabled)
+{
+	*isSettingenabled = convert(g_configuration.getSearchRule()->setting_shouldCheck((TCHAR*)_bstr_t(searchengine)));
+	return S_OK;
+}
+
+STDMETHODIMP CSearchRule::getFirstSearchWord(BSTR* first)
+{
+	*first = _bstr_t(g_configuration.getSearchRule()->getFirstSearchWord().c_str());
+	return S_OK;
+}
+
+STDMETHODIMP CSearchRule::getNextSearchWord(BSTR cur, BSTR* next)
+{
+	*next = _bstr_t(g_configuration.getSearchRule()->getNextSearchWord((TCHAR*)_bstr_t(cur)).c_str());
+	return S_OK;
+}
