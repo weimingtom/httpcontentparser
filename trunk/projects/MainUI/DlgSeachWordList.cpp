@@ -17,7 +17,7 @@
 
 IMPLEMENT_DYNAMIC(CDlgSearchWordList, CPopupDialog)
 CDlgSearchWordList::CDlgSearchWordList(CWnd* pParent /*=NULL*/)
-	: CPopupDialog(CDlgSearchWordList::IDD, pParent)
+: CPopupDialog(CDlgSearchWordList::IDD, pParent)
 {
 }
 
@@ -60,10 +60,11 @@ int CDlgSearchWordList::showOnList() {
 		m_list.DeleteAllItems();
 
 		AutoInitInScale _auto;
-		
+
 		IWebContentRecord *record = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_WebContentRecord, NULL, CLSCTX_LOCAL_SERVER, IID_IWebContentRecord, (LPVOID*)&record);
 		if (FAILED(hr)) {
+			AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
 			return -1;
 		}
 
@@ -82,9 +83,12 @@ int CDlgSearchWordList::showOnList() {
 			SysFreeString(cur);
 			cur = next;
 		}
+
+		return 0;
 	} catch (_com_error &) {
+		AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
+		return -1;
 	}
-	return 0;
 }
 
 void CDlgSearchWordList::InitList()
@@ -127,17 +131,17 @@ BOOL CDlgSearchWordList::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 	InitList();
-	
+
 	showOnList();
-	
+
 	return TRUE;
 }
 
 void CDlgSearchWordList::OnBnClickedSearchClear()
 {
-		try {
+	try {
 		AutoInitInScale _auto;
-		
+
 		IWebContentRecord *record = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_WebContentRecord, NULL, CLSCTX_LOCAL_SERVER, IID_IWebContentRecord, (LPVOID*)&record);
 		if (FAILED(hr)) {
