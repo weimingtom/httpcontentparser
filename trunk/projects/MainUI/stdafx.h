@@ -32,7 +32,6 @@
 
 
 #ifdef _DEBUG
-#pragma comment(lib, "settingd.lib")
 #pragma comment(lib, "apputilityd.lib")
 #else
 #pragma comment(lib, "apputility.lib")

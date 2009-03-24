@@ -6,8 +6,7 @@
 #include <Enumerate.h>
 // CDlgOnlineHour ¶Ô»°¿ò
 
-class CDlgOnlineHour : public CBaseDlg, Enumerator2<int, int>
-{
+class CDlgOnlineHour : public CBaseDlg {
 	DECLARE_DYNAMIC(CDlgOnlineHour)
 
 public:
@@ -33,9 +32,6 @@ public:
 	virtual BOOL OnInitDialog();
 	BOOL m_bEnableTimeCheck;
 
-	// Enum the accessNetword hour
-protected:
-	virtual int Enum(const int day, const int hour);
 public:
 	afx_msg void OnBnClickedChkTimectrl();
 };
