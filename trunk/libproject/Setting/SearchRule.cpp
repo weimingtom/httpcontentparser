@@ -10,6 +10,21 @@ SearchRule::SearchRule(void) {
 SearchRule::~SearchRule(void) {
 }
 
+std::string SearchRule::getFirstSearchWord() const {
+	if (word_set_.size() == 0) {
+		return "";
+	} else {
+		return *(word_set_.begin());
+	}
+}
+std::string SearchRule::getNextSearchWord(const std::string &word) const {
+	WORD_SET::const_iterator iter = word_set_.upper_bound(word);
+	if (iter == word_set_.end()) {
+		return "";
+	} else {
+		return *iter;
+	}
+}
 // 此函数负责设置对应的搜索引擎是否需要被检测
 int SearchRule::enableCheck(const std::string &search_host, const bool checked) {
 	setModified(true);
