@@ -62,6 +62,7 @@ public:
 	STDMETHOD(get_TimeoutSwitchEnabled)(VARIANT_BOOL* pVal);
 	STDMETHOD(put_TimeoutSwitchEnabled)(VARIANT_BOOL newVal);
 	STDMETHOD(get_LefttimeToSwitch)(LONG* pVal);
+	STDMETHOD(getHotkey)(LONG type, USHORT* wVirtualKeyCode, USHORT* wModifier);
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(AppSetting), CAppSetting)
