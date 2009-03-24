@@ -41,6 +41,9 @@ public:
 	// enumerate
 	void enumBlackWord(Enumerator1<std::string> * enumerator);
 	void enumSearchEngine(Enumerator2<std::string, bool> *enumerator);
+
+	std::string getFirstSearchWord() const;
+	std::string getNextSearchWord(const std::string &word) const;
 protected:
 	typedef std::set<std::string> WORD_SET;
 	WORD_SET word_set_;
