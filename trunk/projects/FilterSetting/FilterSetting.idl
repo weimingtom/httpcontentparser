@@ -63,6 +63,7 @@ interface IAppSetting : IDispatch{
 	[id(10), helpstring("Method Register")] HRESULT Register(BSTR bstr, [out,retval] VARIANT_BOOL* bSucc);
 	[id(11), helpstring("Method getImageFolder")] HRESULT getImageFolder([out] BSTR* path);
 	[id(12), helpstring("Method getPagesFolder")] HRESULT getPagesFolder([out] BSTR* path);
+	[id(13), helpstring("·½·¨getHotkey")] HRESULT getHotkey([in] LONG type, [out] USHORT* wVirtualKeyCode, [out] USHORT* wModifier);
 };
 [
 	object,
