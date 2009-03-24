@@ -47,6 +47,8 @@ public:
 	STDMETHOD(accessNetwork)(VARIANT_BOOL* bAccessable);
 	STDMETHOD(setBlockTime)(LONG day, LONG hour);
 	STDMETHOD(removeBlockTime)(LONG day, LONG hour);
+	STDMETHOD(SettingAccessNetwork)(LONG day, LONG hour, VARIANT_BOOL* accessable);
+	STDMETHOD(isSettingEnable)(VARIANT_BOOL* enabled);
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(AccessNetwork), CAccessNetwork)

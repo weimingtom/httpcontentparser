@@ -10,7 +10,7 @@
 #include ".\globalvariable.h"
 #include <comdef.h>
 #include <com\comutility.h>
-
+#include <typeconvert.h>
 #include <comdef.h>
 
 
@@ -73,6 +73,7 @@ int CDlgOnlineHour::OnApply() {
 		accessNetwork->Release();
 		return 0;
 	} catch (_com_error &) {
+		AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
 		return -1;
 	}
 }
@@ -88,11 +89,37 @@ void CDlgOnlineHour::DoDataExchange(CDataExchange* pDX)
 }
 
 void CDlgOnlineHour::restoreSetting() {
-	m_bEnableTimeCheck = g_configuration.getOnlineSetting()->isEnabled();
-	UpdateData(FALSE);
+	
+	
 
-	// 
-	g_configuration.getOnlineSetting()->enumBlockHour((Enumerator2<int, int>*)this);
+	try {
+		AutoInitInScale _auto;
+
+		IAccessNetwork * accessNetwork = NULL;
+		HRESULT hr = CoCreateInstance(CLSID_AccessNetwork, NULL, CLSCTX_LOCAL_SERVER,
+			IID_IAccessNetwork, (LPVOID*)&accessNetwork);
+		if (FAILED(hr)) {
+			AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONEXCLAMATION);
+			return;
+		}
+
+		VARIANT_BOOL isSettingEnabled;
+		for (int day = 0; day < 7; ++day) {
+			for (int hour = 0; hour < 23; ++hour) {
+				hr = accessNetwork->SettingAccessNetwork(day, hour, &isSettingEnabled);
+				if (true == convert(isSettingEnabled)) {
+					cells.check(day, hour);
+				}
+			}
+		}
+	
+		accessNetwork->isSettingEnable(&isSettingEnabled);
+		m_bEnableTimeCheck = convert(isSettingEnabled);
+
+		UpdateData(FALSE);
+	} catch (...) {
+		AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
+	}
 }
 
 int CDlgOnlineHour::Enum(const int day, const int hour) {
