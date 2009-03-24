@@ -49,7 +49,7 @@ STDMETHODIMP CAccessNetwork::removeBlockTime(LONG day, LONG hour)
 
 STDMETHODIMP CAccessNetwork::SettingAccessNetwork(LONG day, LONG hour, VARIANT_BOOL* accessable)
 {
-	*accessable = g_configuration.getOnlineSetting()->getSettingHour(day, hour);
+	*accessable = convert(g_configuration.getOnlineSetting()->getSettingHour(day, hour));
 	return S_OK;
 }
 
