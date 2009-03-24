@@ -14,13 +14,16 @@ public:
 	OnlineHourSetting(void);
 	~OnlineHourSetting(void);
 
+	bool getSettingHour(const DWORD day, const DWORD hour);
+	bool getSettingHour(const DWORD full);
+
 	void setHour(const DWORD full, const bool allow_access);
 	void setHour(const DWORD day, const DWORD hour, const bool allow_access);
 	bool getHour(const DWORD full);
 	bool getHour(const DWORD day, const DWORD hour);
+
 	// 使用DWROD表示一个星期中的某个小时
 	// HIWORD代表 day, LOWORD 代表 hour
-
 	// enumerate the hour
 	void enumBlockHour(Enumerator2<int, int> *enumerator);
 private:

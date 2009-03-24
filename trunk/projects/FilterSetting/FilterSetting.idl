@@ -154,6 +154,8 @@ interface IAccessNetwork : IDispatch{
 	[id(1), helpstring("Method accessNetwork")]		HRESULT accessNetwork([out,retval] VARIANT_BOOL* bAccessable);
 	[id(2), helpstring("Method setBlockTime")]		HRESULT setBlockTime([in] LONG day, [in] LONG hour);
 	[id(3), helpstring("Method removeBlockTime")]	HRESULT removeBlockTime([in] LONG day, [in] LONG hour);
+	[id(4), helpstring("方法SettingAccessNetwork")] HRESULT SettingAccessNetwork([in] LONG day, [in] LONG hour, [out] VARIANT_BOOL* accessable);
+	[id(5), helpstring("方法isSettingEnable")] HRESULT isSettingEnable([out] VARIANT_BOOL* enabled);
 };
 [
 	object,

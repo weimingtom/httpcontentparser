@@ -12,6 +12,19 @@ OnlineHourSetting::~OnlineHourSetting(void) {
 
 //===============================================
 // 
+
+bool OnlineHourSetting::getSettingHour(const DWORD day, const DWORD hour) {
+	assert(day < 7);
+	assert(hour<24);
+	return getSettingHour(static_cast<DWORD>(MAKELPARAM(day, hour)));
+}
+bool OnlineHourSetting::getSettingHour(const DWORD full) {
+	if (online_hour_.find(full) == online_hour_.end()) {
+		return true;
+	} else {
+		return false;
+	}
+}
 bool OnlineHourSetting::getHour(const DWORD full) {
 	assert(LOWORD(full) < 7);
 	assert(HIWORD(full) <24);
@@ -20,11 +33,7 @@ bool OnlineHourSetting::getHour(const DWORD full) {
 		return true;
 	}
 
-	if (online_hour_.find(full) == online_hour_.end()) {
-		return true;
-	} else {
-		return false;
-	}
+	return getSettingHour(full);
 }
 bool OnlineHourSetting::getHour(const DWORD day, const DWORD hour) {
 	assert(day < 7);
