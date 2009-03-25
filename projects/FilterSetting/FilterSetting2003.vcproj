@@ -317,7 +317,7 @@ copy .\release\nwrs.exe ..\..\release
 			</File>
 		</Filter>
 		<Filter
-			Name="seachrule"
+			Name="searchrule"
 			Filter="">
 			<File
 				RelativePath=".\SearchRule.cpp">
