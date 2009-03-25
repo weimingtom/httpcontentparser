@@ -23,6 +23,8 @@ int remove_after(TCHAR * name, const TCHAR * tail);
 // 将%ea%ad之类的UTF8转提取
 char* extUTF8FromStr(const char * src, char * buffer, const int len);
 
+char * utf8ToDBCS(const char *utf8, char * buffer, const int len);
+
 // 获去一个以begin为开头，以end为结尾的字符串
 // 例如: src = "hello world"; begin = "o" end="o" contain = false
 // result = "w"

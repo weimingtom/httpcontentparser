@@ -10,6 +10,14 @@ StrUtilityTest::StrUtilityTest(void) {
 StrUtilityTest::~StrUtilityTest(void) {
 }
 
+void StrUtilityTest::Test_utf8ToDBCS() {
+	{
+		char utf8_with_surrogates[] = "\xe4\xbd\xa0\x61\x62\x63";
+		char buffer[1024] = {0};
+		utf8ToDBCS(utf8_with_surrogates, buffer, 1024);
+ 		CPPUNIT_ASSERT(0 == strcmp("Äãabc", buffer));
+	}
+}
 void StrUtilityTest::Test_extUTF8FromStr() {
 	char buffer[512];
 	{

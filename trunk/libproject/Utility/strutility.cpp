@@ -3,6 +3,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <assert.h>
+#include <vector>
+#include <windows.h>
+#include <utf8\utf8.h>
 
 namespace strutility {
 
@@ -145,6 +148,31 @@ int charToValue(char c) {
 	}
 }
 };
+
+char * utf8ToDBCS(const char *utf8, char * buffer, const int len) {
+	using namespace std;
+	using namespace utf8;
+
+	// 创建UTF16缓冲区
+	int cnt = 0;
+	const int utf8len = strlen(utf8);
+	unsigned short * utf16buffer = new unsigned short[utf8len];
+	memset(utf16buffer, 0, sizeof(unsigned short) * utf8len);
+
+	// 转换成为UTF16
+	vector <unsigned short> utf16result;
+	utf8to16(utf8, utf8 +utf8len, back_inserter(utf16result));
+	vector <unsigned short>::iterator iter  = utf16result.begin();
+	for (; iter != utf16result.end(); ++iter) {
+		utf16buffer[cnt++] = *iter;
+	}
+	
+	
+	WideCharToMultiByte(CP_ACP, WC_NO_BEST_FIT_CHARS, utf16buffer, -1, buffer, len,  NULL, (LPBOOL)&cnt);
+	delete utf16buffer;
+
+	return buffer;
+}
 
 char* extUTF8FromStr(const char * src, char * buffer, const int buflen) {
 	int cnt = 0;
