@@ -253,7 +253,7 @@ IDD_DLG_TOOLS DIALOGEX 0, 0, 250, 200
 STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
-    GROUPBOX        "Screen Saver",IDC_STA_IMAGE_SAVE,7,7,236,51
+    GROUPBOX        "Screen Record",IDC_STA_IMAGE_SAVE,7,7,236,51
     GROUPBOX        "Web content",IDC_STA_WEBCONTENT,7,71,236,57
     CONTROL         "",IDC_SLIDER1,"msctls_trackbar32",TBS_BOTH | WS_TABSTOP,
                     77,25,148,19
@@ -467,10 +467,10 @@ BEGIN
     LTEXT           "24:00",IDC_STATIC,207,31,20,8
     LTEXT           "12:00",IDC_STATIC,109,31,20,8
     LTEXT           "Mon.",IDC_STATIC,233,65,17,8
-    CONTROL         157,IDC_STATIC,"Static",SS_BITMAP,51,165,9,15
-    CONTROL         158,IDC_STATIC,"Static",SS_BITMAP,144,165,9,15
-    LTEXT           "Internet Available",IDC_STATIC,68,168,58,8
-    LTEXT           "Internet Blocked",IDC_STATIC,167,168,54,8
+    CONTROL         157,IDC_STATIC,"Static",SS_BITMAP,41,165,9,15
+    CONTROL         158,IDC_STATIC,"Static",SS_BITMAP,136,165,9,15
+    LTEXT           "Internet Blocked",IDC_STATIC,53,168,54,8
+    LTEXT           "Internet Available",IDC_STATIC,149,168,58,8
     LTEXT           "06:00",IDC_STATIC,58,31,20,8
     LTEXT           "18:00",IDC_STATIC,163,31,21,8
 END
