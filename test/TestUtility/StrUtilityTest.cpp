@@ -10,6 +10,19 @@ StrUtilityTest::StrUtilityTest(void) {
 StrUtilityTest::~StrUtilityTest(void) {
 }
 
+void StrUtilityTest::Test_extUTF8FromStr() {
+	char buffer[512];
+	{
+		char *p = "%a2%B5%Ca";
+		extUTF8FromStr(p, buffer, 512);
+		CPPUNIT_ASSERT(0 == strcmp("\xa2\xb5\xca", buffer));
+	}
+
+	{
+		char *p = "%a2aaaa%B5%Ca";
+		CPPUNIT_ASSERT(NULL == extUTF8FromStr(p, buffer, 512));
+	}
+}
 void StrUtilityTest::TestToLower() {
 	{
 	TCHAR unit[] = TEXT("idosOIJIFSL1");
