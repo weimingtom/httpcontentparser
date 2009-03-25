@@ -4,6 +4,7 @@
 #include ".\searchrule.h"
 #include ".\globalvariable.h"
 #include <typeconvert.h>
+#include <utility\strutility.h>
 #include <utility\dns.h>
 #include <searchengine_define.h>
 #include <comutil.h>
@@ -27,7 +28,29 @@ STDMETHODIMP CSearchRule::InterfaceSupportsErrorInfo(REFIID riid)
 
 STDMETHODIMP CSearchRule::check(BSTR search_word, BSTR host_name, VARIANT_BOOL* pass)
 {
-	bool passed = g_configuration.getSearchRule()->check((TCHAR*)bstr_t(host_name), (TCHAR*)bstr_t(search_word));
+	const int buffer_length = 1024;
+	char mcbs[buffer_length] = {0};
+
+	// 处理search word, 如果search  word是一个UTF8串	
+	_bstr_t bstrWord = search_word;
+	const char * utf8 = (char*)bstrWord;
+	const int search_word_len = strlen(utf8);
+
+	// 如果搜索词汇过长，则直接退出
+	if (search_word_len > buffer_length) {
+		*pass = VARIANT_TRUE;
+	}
+	
+
+	if (utf8[0] == '%') {
+		char  buffer[buffer_length] = {0};
+		strutility::extUTF8FromStr(utf8, buffer,  search_word_len);
+		strutility::utf8ToDBCS(buffer, mcbs, search_word_len);
+	} else {
+		strncpy(mcbs, utf8, search_word_len);
+	}
+
+	bool passed = g_configuration.getSearchRule()->check((TCHAR*)bstr_t(host_name), mcbs);
 	*pass = convert(passed);
 
 	// 记录
@@ -35,7 +58,7 @@ STDMETHODIMP CSearchRule::check(BSTR search_word, BSTR host_name, VARIANT_BOOL* 
 	char main_name[buf_size];
 	get_main_dns_name(main_name, buf_size, (TCHAR*)_bstr_t(host_name));
 
-	g_searchwordUtil.addKeyword(std::string((TCHAR*)_bstr_t(search_word)), getSearchEngineType(main_name));
+	g_searchwordUtil.addKeyword(std::string(mcbs), getSearchEngineType(main_name));
 
 	return S_OK;
 }
