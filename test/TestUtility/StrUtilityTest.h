@@ -19,6 +19,7 @@ public:
 	CPPUNIT_TEST(TestEndWith);
 	CPPUNIT_TEST(Test_extract_string);
 	CPPUNIT_TEST(Test_extUTF8FromStr);
+	CPPUNIT_TEST(Test_utf8ToDBCS);
 	CPPUNIT_TEST_SUITE_END();
 private:
 	void TestSplitString();
@@ -29,6 +30,7 @@ private:
 	void TestToLower();
 	void TestToUpper();
 	void Test_extUTF8FromStr();
+	void Test_utf8ToDBCS();
 };
 
 #endif  // _TEST_UTILITY_STR_UTILITY_H__
