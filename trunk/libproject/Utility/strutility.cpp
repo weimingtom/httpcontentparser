@@ -132,6 +132,46 @@ bool endwith(const TCHAR * src, const TCHAR *detail) {
 	}
 }
 
+namespace {
+int charToValue(char c) {
+	if (c>='A' && c<='F') {
+		return 10 + c - 'A';
+	} else if (c >='a' && c<='f') {
+		return 10 + c - 'a';
+	} else if (c >='0' && c<='9') {
+		return c - '0';
+	} else {
+		assert (false);
+	}
+}
+};
+
+char* extUTF8FromStr(const char * src, char * buffer, const int buflen) {
+	int cnt = 0;
+	int index = 0;
+	const int len = strlen(src);
+	
+
+	while(cnt < len - 1 && index < buflen) {
+		if (src[cnt] == '%') {
+			// 接下来的两个字符必然是十六进制数字
+			assert (src[cnt+1] != NULL  && src[cnt+2] != NULL);
+			if (src[cnt+1] == NULL  || src[cnt+2] == NULL) {
+				return NULL;
+			}
+
+			char high = charToValue(src[cnt+1]) << 4;
+			char low = charToValue(src[cnt+2]);;
+			buffer[index++] = high + low;
+			cnt+=3;
+		} else {
+			return NULL;
+		}
+	}
+	buffer[index] = '\0';
+	return buffer;
+}
+
 // 从文件的开头结尾处取中间， 
 // contain指定是否包含开头及结尾
 int extract_string(TCHAR *result, const int buf_size, const TCHAR * src, const TCHAR *begin, const TCHAR *end, bool contain) {
