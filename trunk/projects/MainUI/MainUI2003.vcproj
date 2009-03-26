@@ -585,6 +585,12 @@
 				RelativePath=".\DlgSeachWordList.h">
 			</File>
 			<File
+				RelativePath=".\DlgSwitchChildren.cpp">
+			</File>
+			<File
+				RelativePath=".\DlgSwitchChildren.h">
+			</File>
+			<File
 				RelativePath=".\DlgWebsites.cpp">
 			</File>
 			<File
