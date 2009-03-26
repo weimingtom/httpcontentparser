@@ -27,8 +27,15 @@ void StrUtilityTest::Test_extUTF8FromStr() {
 	}
 
 	{
-		char *p = "%a2aaaa%B5%Ca";
-		CPPUNIT_ASSERT(NULL == extUTF8FromStr(p, buffer, 512));
+		char *p = "%a2abcd%B5%Ca";
+		extUTF8FromStr(p, buffer, 512);
+		CPPUNIT_ASSERT(0 == strcmp(buffer, "\xa2\x61\x62\x63\x64\xb5\xca"));
+	}
+
+	{
+		char *p = "abc";
+		extUTF8FromStr(p, buffer, 512);
+		CPPUNIT_ASSERT(0 == strcmp(buffer, "abc"));
 	}
 }
 void StrUtilityTest::TestToLower() {
