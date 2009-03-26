@@ -40,15 +40,10 @@ STDMETHODIMP CSearchRule::check(BSTR search_word, BSTR host_name, VARIANT_BOOL* 
 	if (search_word_len > buffer_length) {
 		*pass = VARIANT_TRUE;
 	}
-	
 
-	if (utf8[0] == '%') {
-		char  buffer[buffer_length] = {0};
-		strutility::extUTF8FromStr(utf8, buffer,  search_word_len);
-		strutility::utf8ToDBCS(buffer, mcbs, search_word_len);
-	} else {
-		strncpy(mcbs, utf8, search_word_len);
-	}
+	char  buffer[buffer_length] = {0};
+	strutility::extUTF8FromStr(utf8, buffer,  search_word_len);
+	strutility::utf8ToDBCS(buffer, mcbs, search_word_len);
 
 	bool passed = g_configuration.getSearchRule()->check((TCHAR*)bstr_t(host_name), mcbs);
 	*pass = convert(passed);
