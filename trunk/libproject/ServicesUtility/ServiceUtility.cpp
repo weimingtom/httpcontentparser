@@ -10,8 +10,13 @@
 #include <utility\dns.h>
 #include <typeconvert.h>
 #include <string>
+#include <vector>
 #include <comdef.h>
 using namespace std;
+
+namespace {
+	void getSearchKeyword(char * keyword, char * hostname);
+};
 
 bool checkDNS(const char * dns_name) {
 	AutoInitInScale _auto_com_init;
@@ -35,38 +40,21 @@ bool checkDNS(const char * dns_name) {
 	}
 }
 
-bool checkSeachRule(HTTPRequestPacket* packet) {
-	assert (NULL != packet);
-	// 如果不是Search
-	// 检测HTTP
-	if (HTTPRequestPacket::HTTP_REQUEST_OPETYPE_GET != packet->getRequestType())
-		return true;
+void extractSearchWord(const char * searchword, std::vector<std::string> * vecWords) {
+	assert  (NULL != vecWords);
+	if (NULL == vecWords)
+		return;
 
-	// 获取操作
-	char host_name[HTTP_REQUEST_ITEM_MAX_LENGTH], 
-		oper[HTTP_REQUEST_ITEM_MAX_LENGTH], 
-		search_word[HTTP_REQUEST_ITEM_MAX_LENGTH];
+	// 获取搜索词汇
+	// 首先使用+来分解
+	std::vector<std::string> subwords;
+	std::vector<std::string> keword;
+	const char * specified_chars = "+";
+	strutility::splitstring(searchword, specified_chars, vecWords);
+}
 
-	memset(host_name, 0, sizeof(host_name));
-	memset(oper, 0, sizeof(oper));
-	packet->getGET(oper, MAX_PATH);
-	packet->getHost(host_name, HTTP_REQUEST_ITEM_MAX_LENGTH);
-	
-	if (strlen(host_name) == 0)
-		return true;
-	if (strlen(oper) == 0)
-		return true;
 
-	SeachPacket seach_packet;
-	int result = seach_packet.parse(oper, host_name);
-	if (0 == result) {
-		return true;
-	}
-
-	seach_packet.get_seach_word(search_word, HTTP_REQUEST_ITEM_MAX_LENGTH);
-
-	// 获取seach word
-
+bool checkSearchWord(const char * searchword, const char * hostname) {
 	// 送到服务器进行检测
 	try {
 		AutoInitInScale _auto_com_init;
@@ -77,15 +65,57 @@ bool checkSeachRule(HTTPRequestPacket* packet) {
 		}
 
 		VARIANT_BOOL passed;
-		seach_rule->check(_bstr_t(search_word), _bstr_t(host_name), &passed);
+		seach_rule->check(_bstr_t(searchword), _bstr_t(hostname), &passed);
 		SafeRelease(seach_rule);
 
 		return convert(passed);
 	} catch (_com_error&) {
 		return false;
 	}
+}
 
-	return true;
+bool checkSeachRule(HTTPRequestPacket* packet) {
+	assert (NULL != packet);
+	// 如果不是Search
+	// 检测HTTP
+	if (HTTPRequestPacket::HTTP_REQUEST_OPETYPE_GET != packet->getRequestType())
+		return true;
+
+	// 获取操作(主机名及操作)
+	char host_name[HTTP_REQUEST_ITEM_MAX_LENGTH] = {0},
+		oper[HTTP_REQUEST_ITEM_MAX_LENGTH] = {0}, 
+		search_word[HTTP_REQUEST_ITEM_MAX_LENGTH] = {0};
+
+	packet->getGET(oper, MAX_PATH);
+	packet->getHost(host_name, HTTP_REQUEST_ITEM_MAX_LENGTH);
+	
+	if (strlen(host_name) == 0)
+		return true;
+	if (strlen(oper) == 0)
+		return true;
+
+	// 获取搜索词汇
+	SeachPacket seach_packet;
+	int result = seach_packet.parse(oper, host_name);
+	if (0 == result) {
+		return true;
+	}
+	seach_packet.get_seach_word(search_word, HTTP_REQUEST_ITEM_MAX_LENGTH);
+	
+	// 提取搜索词汇
+	// 由于搜索时，可能出现多个搜索此，这些词汇可能使用空格断开等等
+	using namespace std;
+	vector<string> vecKeywords;
+	extractSearchWord(search_word, &vecKeywords);
+	vector<string>::iterator iter = vecKeywords.begin();
+	for (; iter != vecKeywords.end(); ++iter) {
+		// 如果有任何一个词汇是黑词，则返回
+		if (false == checkSearchWord(search_word, host_name)) {
+			return false;
+		}
+	}
+
+	return true; 
 }
 
 bool checkHTTPRequest(HTTPRequestPacket * packet) {
