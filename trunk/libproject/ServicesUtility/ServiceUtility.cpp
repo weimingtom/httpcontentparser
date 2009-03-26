@@ -48,7 +48,6 @@ void extractSearchWord(const char * searchword, std::vector<std::string> * vecWo
 	// 获取搜索词汇
 	// 首先使用+来分解
 	std::vector<std::string> subwords;
-	std::vector<std::string> keword;
 	const char * specified_chars = "+";
 	strutility::splitstring(searchword, specified_chars, vecWords);
 }
@@ -110,7 +109,7 @@ bool checkSeachRule(HTTPRequestPacket* packet) {
 	vector<string>::iterator iter = vecKeywords.begin();
 	for (; iter != vecKeywords.end(); ++iter) {
 		// 如果有任何一个词汇是黑词，则返回
-		if (false == checkSearchWord(search_word, host_name)) {
+		if (false == checkSearchWord(iter->c_str(), host_name)) {
 			return false;
 		}
 	}
