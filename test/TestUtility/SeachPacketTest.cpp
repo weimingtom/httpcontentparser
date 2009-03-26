@@ -65,6 +65,7 @@ void SeachPacketTest::googleTest() {
 	//Host: www.google.com
 	//Proxy-Connection: Keep-Alive
 
+	{
 	char * oper = "http://www.google.com/search?hl=en&q=word&btnG=Google+Search&aq=f&oq=wor HTTP/1.1";
 	char * host_name = "www.google.com";
 	char result[HTTP_REQUEST_ITEM_MAX_LENGTH];
@@ -74,6 +75,25 @@ void SeachPacketTest::googleTest() {
 	packet.get_seach_word(result, HTTP_REQUEST_ITEM_MAX_LENGTH);
 	CPPUNIT_ASSERT( 0 == strcmp("word", result));
 	CPPUNIT_ASSERT(SeachPacket::SEACH_ENGINE_GOOGLE == packet.getSeachEngineType());
+	}
+
+	//GET /search?hl=zh-CN&newwindow=1&q=aaaaa++bbbbb&btnG=Google+%E6%90%9C%E7%B4%A2&meta= HTTP/1.1
+	//Accept-Encoding: gzip,deflate,bzip2,sdch
+	//Accept-Language: zh,en-US,en
+	//Accept-Charset: ISO-8859-1,*,utf-8
+	//Host: www.google.com
+	//Connection: Keep-Alive
+	{
+	char * oper = "GET /search?hl=zh-CN&newwindow=1&q=aaaaa++bbbbb&btnG=Google+%E6%90%9C%E7%B4%A2&meta= HTTP/1.1";
+	char * host_name = "www.google.com";
+	char result[HTTP_REQUEST_ITEM_MAX_LENGTH];
+	SeachPacket packet;
+	CPPUNIT_ASSERT(SeachPacket::SEACH_ENGINE_UNKNOWN ==packet.getSeachEngineType());
+	CPPUNIT_ASSERT( 0 != packet.parse(oper, host_name));
+	packet.get_seach_word(result, HTTP_REQUEST_ITEM_MAX_LENGTH);
+	CPPUNIT_ASSERT( 0 == strcmp("aaaaa++bbbbb", result));
+	CPPUNIT_ASSERT(SeachPacket::SEACH_ENGINE_GOOGLE == packet.getSeachEngineType());
+	}
 }
 void SeachPacketTest::baiduTest() {
 	//GET http://www.baidu.com/s?wd=word HTTP/1.1
