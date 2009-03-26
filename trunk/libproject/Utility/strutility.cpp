@@ -180,7 +180,7 @@ char* extUTF8FromStr(const char * src, char * buffer, const int buflen) {
 	const int len = strlen(src);
 	
 
-	while(cnt < len - 1 && index < buflen) {
+	while(cnt < len && index < buflen) {
 		if (src[cnt] == '%') {
 			// 接下来的两个字符必然是十六进制数字
 			assert (src[cnt+1] != NULL  && src[cnt+2] != NULL);
@@ -193,7 +193,7 @@ char* extUTF8FromStr(const char * src, char * buffer, const int buflen) {
 			buffer[index++] = high + low;
 			cnt+=3;
 		} else {
-			return NULL;
+			buffer[index++] = src[cnt++];
 		}
 	}
 	buffer[index] = '\0';
