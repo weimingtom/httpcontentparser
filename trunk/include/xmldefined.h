@@ -45,7 +45,7 @@
 
 #define CONFIG_NODE_SEARCH_ENGINES								TEXT("searchengines")
 #define CONDIG_NODE_SEARCH_ENGINE_ITEM						TEXT("searchengine")
-#define CONFIG_NODE_BLACK_SEARCHWORD	T					EXT("blackwords")
+#define CONFIG_NODE_BLACK_SEARCHWORD						TEXT("blackwords")
 #define CONFIG_NODE_BLACK_WORDITEM								TEXT("word")
 //#define CONFIG_NODE_BLACK_ENINE
 
@@ -97,6 +97,11 @@
 #define CONFIG_HOTKEY_PROP_KEY											TEXT("key")
 
 #define CONFIG_ITEM_MODEL_AUTOSWITCH							TEXT("autoswitch")
+
+// ‘”œÓ
+#define CONFIG_ITEM_APPSET_MISC											TEXT("misc")
+#define CONFIG_APPSET_SWITCHTOCHILD_ONCLOSE			TEXT("switchonclose")
+#define CONFIG_SWITCHTOCHILD_ONCLOSE_ASKMEAG		TEXT("askmeagain")
 
 #define CONFIG_ITEM_MODEL_INSTALL									TEXT("install")
 #define CONFIG_ITEM_MODEL_DATE											TEXT("key")
