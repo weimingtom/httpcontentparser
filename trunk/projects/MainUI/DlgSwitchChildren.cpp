@@ -11,10 +11,10 @@
 
 // CDlgSwitchChildren dialog
 
-IMPLEMENT_DYNAMIC(CDlgSwitchChildren, CDialog)
+IMPLEMENT_DYNAMIC(CDlgSwitchChildren, CPopupDialog)
 
 CDlgSwitchChildren::CDlgSwitchChildren(CWnd* pParent /*=NULL*/)
-	: CDialog(CDlgSwitchChildren::IDD, pParent)
+	: CPopupDialog(CDlgSwitchChildren::IDD, pParent)
 	, m_bDontAskmeAgain(FALSE)
 {
 
@@ -31,7 +31,7 @@ void CDlgSwitchChildren::DoDataExchange(CDataExchange* pDX)
 }
 
 
-BEGIN_MESSAGE_MAP(CDlgSwitchChildren, CDialog)
+BEGIN_MESSAGE_MAP(CDlgSwitchChildren, CPopupDialog)
 	ON_BN_CLICKED(IDOK, &CDlgSwitchChildren::OnBnClickedOk)
 	ON_BN_CLICKED(IDCANCEL, &CDlgSwitchChildren::OnBnClickedCancel)
 END_MESSAGE_MAP()

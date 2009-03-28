@@ -341,9 +341,8 @@ void CMainUIDlg::OnBnClickedOk()
 
 	m_curDlg->SetModify(false);
 
-	if (IDOK == m_dlgSwitchChildren_.DoModal()) {	
-		HideMainUI();
-	}
+	m_dlgSwitchChildren_.DoModal();
+	HideMainUI();
 }
 
 void CMainUIDlg::OnBnClickedMainCancel()
@@ -660,6 +659,26 @@ void CMainUIDlg::OnTvnSelchangedTreeNavig(NMHDR *pNMHDR, LRESULT *pResult)
 }
 
 
+// 工具函数
+// 根据COM设置，在最小化窗口时，切换模式
+void CMainUIDlg::SwitchOnClose() {
+	// 设置
+	try {
+		IAppSetting *app = NULL;
+		HRESULT hr = CoCreateInstance(CLSID_AppSetting, NULL, CLSCTX_LOCAL_SERVER, IID_IAppSetting, (LPVOID*)&app);
+		if (FAILED(hr)) {
+			return;
+		}
+		
+		// 是否需要切换到模式
+		VARIANT_BOOL val;
+		app->get_autoSwitchOnClose(&val);
+		if (VARIANT_TRUE == val) {
+			Services::switchChildModel();
+		}
+	} catch (...) {
+	}
+}
 // 注销热键
 void CMainUIDlg::OnDestroy()
 {
@@ -679,6 +698,7 @@ void CMainUIDlg::HideMainUI() {
 	::SetWindowPos(GetSafeHwnd(), CWnd::wndBottom, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
 	
 	m_bShown = FALSE;
+	SwitchOnClose();
 }
 
 

@@ -19,6 +19,8 @@ IMPLEMENT_DYNAMIC(CDlgOptions, CDialog)
 CDlgOptions::CDlgOptions(CWnd* pParent /*=NULL*/)
 : CBaseDlg(CDlgOptions::IDD, pParent)
 , m_bAutoRun(FALSE)
+, m_bSwitchToChildrenOnClose(FALSE)
+, m_bAskmeOnClose(FALSE)
 {
 }
 
@@ -102,6 +104,8 @@ void CDlgOptions::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_HOTKEY_SWITCHUSR, m_hotkeySwitchUser);
 	DDX_Check(pDX, IDC_CHK_AUTOLOAD, m_bAutoRun);
 	DDX_Control(pDX, IDC_HOTKEY_LAUNCH, m_hotkeyLaunch);
+	DDX_Check(pDX, IDC_CHK_SWITCHCHILDREN_WHEN_CLOSE, m_bSwitchToChildrenOnClose);
+	DDX_Check(pDX, IDC_CHK_ASKME_AGAIN_WHENCLOSE, m_bAskmeOnClose);
 }
 
 int CDlgOptions::setHotKey() {
@@ -134,14 +138,36 @@ int CDlgOptions::setHotKey() {
 	return SUCCESS_APPLY;
 }
 
+int CDlgOptions::setMisc() {
+	// 设置
+	try {
+		AutoInitInScale auto_init_com;
+		IAppSetting *app = NULL;
+		HRESULT hr = CoCreateInstance(CLSID_AppSetting, NULL, CLSCTX_LOCAL_SERVER, IID_IAppSetting, (LPVOID*)&app);
+		if (FAILED(hr)) {
+			AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONEXCLAMATION);
+			return FAILED_APPLY;
+		}
+
+		app->put_autoSwitchOnClose(convert(m_bSwitchToChildrenOnClose));
+		app->put_askMeAgain(convert(m_bAskmeOnClose));
+		app->Release();
+		app = NULL;
+		return SUCCESS_APPLY;
+	} catch (...) {
+		return FAILED_APPLY;
+	}
+}
 
 int CDlgOptions::OnApply() {
+	UpdateData(TRUE);
 	SetAutoRun();
-	if ( FAILED_APPLY== setHotKey()) {
+	if ( FAILED_APPLY== setHotKey() || FAILED_APPLY == setMisc()) {
 		// 如果热键冲突
 		Restore();
 		return FAILED_APPLY;
 	}
+
 	return SUCCESS_APPLY;
 }
 
@@ -172,14 +198,23 @@ void CDlgOptions::restoreSetting() {
 		m_bAutoRun = isAutoRun();
 		m_bOld_autorun = m_bAutoRun;
 
+		VARIANT_BOOL val;
+		app->get_autoSwitchOnClose(&val);
+		m_bSwitchToChildrenOnClose = convert(val);
+
+		app->get_askMeAgain(&val);
+		m_bAskmeOnClose = convert(val);
+
 		UpdateData(FALSE);
 	} catch (...) {
-
 		AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONEXCLAMATION);
 	}
 }
 
 void CDlgOptions::OnShow() {
+	// 这个比较特殊，由于此项的设置可能在其他方面被改变
+	// 因此在每次显示这个界面的时候都应该刷新一下设置项
+	restoreSetting();
 }
 
 void CDlgOptions::SetAutoRun() {
@@ -194,6 +229,8 @@ void CDlgOptions::SetAutoRun() {
 
 BEGIN_MESSAGE_MAP(CDlgOptions, CDialog)
 	ON_BN_CLICKED(IDC_CHK_AUTOLOAD, OnBnClickedChkAutoload)
+	ON_BN_CLICKED(IDC_CHK_SWITCHCHILDREN_WHEN_CLOSE, &CDlgOptions::OnBnClickedChkSwitchchildrenWhenClose)
+	ON_BN_CLICKED(IDC_CHK_ASKME_AGAIN_WHENCLOSE, &CDlgOptions::OnBnClickedChkAskmeAgainWhenclose)
 END_MESSAGE_MAP()
 
 
@@ -213,6 +250,15 @@ BOOL CDlgOptions::OnInitDialog()
 void CDlgOptions::OnBnClickedChkAutoload() {
 	SetModify(true);
 }
+
+void CDlgOptions::OnBnClickedChkSwitchchildrenWhenClose() {
+	SetModify(true);
+}
+
+void CDlgOptions::OnBnClickedChkAskmeAgainWhenclose() {
+	SetModify(true);
+}
+
 
 // 当有按键按下且相应消息的是HOTKEY CONTROL
 // 则是button 'OK' and 'Cancel' 可用
