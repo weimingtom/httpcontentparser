@@ -51,6 +51,7 @@ private:
 	friend class OnlineHourSettingTest;
 	friend class SearchRuleTest;
 	friend class ProgramControl;
+	friend class MiscSetting;
 };
 
 #endif  // _SETTING_SETTINGITEM_H__
