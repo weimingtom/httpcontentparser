@@ -253,7 +253,7 @@ IDD_DLG_OPTION DIALOGEX 0, 0, 250, 194
 STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
-    CONTROL         "Auto Load When system Launch",IDC_CHK_AUTOLOAD,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,36,31,120,10
+    CONTROL         "Auto Load When system Launch",IDC_CHK_AUTOLOAD,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,37,26,120,10
     GROUPBOX        "System",IDC_STA_SYSTEM,7,7,223,75
     LTEXT           "Show Dialog:",IDC_STATIC,40,117,42,8
     LTEXT           "Switch User:",IDC_STATIC,40,137,41,8
@@ -262,7 +262,10 @@ BEGIN
     GROUPBOX        "Hotkeys",IDC_STA_HOTKEY,7,94,223,84
     LTEXT           "Lanchu App:",IDC_STATIC,40,156,41,8
     CONTROL         "",IDC_HOTKEY_LAUNCH,"msctls_hotkey32",WS_BORDER | WS_TABSTOP,101,154,87,14
-    CONTROL         "Always Show Icon on Tray",IDC_CHK_ALWAYSSHOW,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,36,52,110,10
+    CONTROL         " Swith to children mode when close",IDC_CHK_SWITCHCHILDREN_WHEN_CLOSE,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,37,44,129,10
+    CONTROL         "Always ask me that When close",IDC_CHK_ASKME_AGAIN_WHENCLOSE,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,37,62,129,10
 END
 
 IDD_DLG_TOOLS DIALOGEX 0, 0, 250, 200
