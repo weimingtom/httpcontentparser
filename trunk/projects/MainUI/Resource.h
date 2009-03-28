@@ -254,6 +254,9 @@
 #define IDC_LIST_PROGRAM                1114
 #define IDC_CHK_ENABLE_APPCONTROL       1115
 #define IDC_CHK_DONT_ASKME_AGAIN        1116
+#define IDC_CHK_SWITCHCHILDREN_WHEN_CLOSE 1117
+#define IDC_CHK_ASKME_AGAIN             1118
+#define IDC_CHK_ASKME_AGAIN_WHENCLOSE   1118
 #define IDB_DOCKBAR                     2004
 #define IDC_EDIT1                       4011
 #define IDC_EDIT2                       4012
@@ -297,7 +300,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        194
 #define _APS_NEXT_COMMAND_VALUE         32813
-#define _APS_NEXT_CONTROL_VALUE         1117
+#define _APS_NEXT_CONTROL_VALUE         1118
 #define _APS_NEXT_SYMED_VALUE           112
 #endif
 #endif
