@@ -208,7 +208,9 @@ BOOL CMainUIDlg::OnInitDialog()
 	setupTrayMenu();
 
 	SetTimer(ID_TIMER, TIME_ESCPSE, NULL);
-	HideMainUI();
+
+	// 由于程序刚刚启动，这里不会自动切换到子模式
+	HideMainUI(FALSE);
 	return TRUE;  // 除非设置了控件的焦点，否则返回 TRUE
 }
 
@@ -286,7 +288,9 @@ LRESULT CMainUIDlg::OnHotKey(WPARAM wParam, LPARAM lParam) {
 		if (Services::isParentModel() == false)
 			return -1;
 		if (isShown()) {
-			HideMainUI();
+
+			// 使用热键显示及隐藏是，不检测切换
+			HideMainUI(FALSE);
 		} else {
 			ShowMainUI();
 		}
@@ -300,7 +304,7 @@ LRESULT CMainUIDlg::OnHotKey(WPARAM wParam, LPARAM lParam) {
 			if (IDOK == m_dlgCheckPassword_.DoModal()) {
 				ShowMainUI();
 			} else {
-				HideMainUI();
+				HideMainUI(FALSE);
 			}
 		}
 	}
@@ -693,12 +697,15 @@ void CMainUIDlg::ShowMainUI() {
 	SetForegroundWindow ();
 	m_bShown = TRUE;
 }
-void CMainUIDlg::HideMainUI() {
+void CMainUIDlg::HideMainUI(BOOL autoSwitchCheck) {
 	ShowWindow(SW_HIDE);
 	::SetWindowPos(GetSafeHwnd(), CWnd::wndBottom, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
 	
 	m_bShown = FALSE;
-	SwitchOnClose();
+
+	if (TRUE == autoSwitchCheck) {
+		SwitchOnClose();
+	}
 }
 
 
@@ -713,7 +720,7 @@ void CMainUIDlg::OnTimer(UINT nIDEvent)
 {
 	// 是否是子状态，如果是则隐藏窗口
 	if (isShown() &&Services::isParentModel() == false) {
-		HideMainUI();
+		HideMainUI(FALSE);
 	}
 
 	AdjustModelIcon();
@@ -728,7 +735,7 @@ void CMainUIDlg::OnLButtonDblClk(UINT nFlags, CPoint point)
 			ShowMainUI();
 		} else {
 			// 如果没有显示则激活
-			HideMainUI();
+			HideMainUI(FALSE);
 		}
 	}
 	CDialog::OnLButtonDblClk(nFlags, point);
