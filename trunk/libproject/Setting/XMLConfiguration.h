@@ -37,6 +37,7 @@
 #include <Screenshot.h>
 #include <autoclean.h>
 #include <timeoutswitch.h>
+#include <miscSetting.h>
 #include <hotkeysetting.h>
 #include <installDate.h>
 #include <xmldefined.h>
@@ -73,6 +74,7 @@ public:
 	TimeoutSwitch*  getTimeoutSwitch() { return &timeout_switch_;} 
 	InstallDate *	getInstallDate() { return &install_date_;}
 	ProgramControl * getProgramControl() { return &program_control_;}
+	MiscSetting	 * getMiscSetting() { return &misc_setting_;}
 private:
 	DNSList						black_url_set_;
 	DNSList						white_url_set_;
@@ -88,6 +90,7 @@ private:
 	TimeoutSwitch				timeout_switch_;
 	InstallDate					install_date_;
 	ProgramControl		program_control_;
+	MiscSetting				misc_setting_;
 
 	// ƒ¨»œ…Ë÷√
 	void defaultSetting();

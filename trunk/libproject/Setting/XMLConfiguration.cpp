@@ -49,6 +49,7 @@ int XMLConfiguration::saveAppSetting(TiXmlElement * root) {
 	getTimeoutSwitch()->saveconfig(appsetting_root);
 	getProgramControl()->saveConfig(appsetting_root);
 	getInstallDate()->saveconfig(appsetting_root);
+	getMiscSetting()->saveConfig(appsetting_root);
 	root->LinkEndChild(appsetting_root);
 	return 0;
 }
@@ -141,6 +142,8 @@ int XMLConfiguration::parseAppSet(TiXmlNode *appset_root) {
 				getTimeoutSwitch()->readconfig(element);
 			} else if (_tcscmp(node->Value(), CONFIG_ITEM_MODEL_INSTALL) == 0) {
 				getInstallDate()->readconfig(element);
+			} else if (_tcscmp(node->Value(), CONFIG_ITEM_APPSET_MISC) == 0) {
+				getMiscSetting()->readconfig(element);
 			}
 		}
 		// 获取下一个
