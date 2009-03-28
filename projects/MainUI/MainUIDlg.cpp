@@ -304,7 +304,7 @@ LRESULT CMainUIDlg::OnHotKey(WPARAM wParam, LPARAM lParam) {
 			if (IDOK == m_dlgCheckPassword_.DoModal()) {
 				ShowMainUI();
 			} else {
-				HideMainUI(FALSE);
+				HideMainUI(FALSE);	// 本身在子模式下，不需要检测
 			}
 		}
 	}
@@ -720,7 +720,7 @@ void CMainUIDlg::OnTimer(UINT nIDEvent)
 {
 	// 是否是子状态，如果是则隐藏窗口
 	if (isShown() &&Services::isParentModel() == false) {
-		HideMainUI(FALSE);
+		HideMainUI(FALSE); // 因为是子模式
 	}
 
 	AdjustModelIcon();
