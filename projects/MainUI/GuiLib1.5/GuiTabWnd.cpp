@@ -30,7 +30,7 @@
 
 #include "GuiTabWnd.h"
 #include "GuiBasetab.h"
-#include "resource.h"
+#include "..\resource.h"
 
 
 #ifdef _DEBUG

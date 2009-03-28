@@ -14,7 +14,7 @@ $Log$
 
 #include "stdafx.h"
 #include "ListViewCtrlEx.h"
-#include "resource.h"
+#include "..\resource.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
