@@ -10,7 +10,7 @@ public:
 	MiscSetting(void);
 	~MiscSetting(void);
 
-	bool askMeAgain_SwitchChildren() const { return askMeAgain_SwitchChildren; }
+	bool askMeAgain_SwitchChildren() const { return askMeAgain_SwitchChildren_; }
 	bool switchChildrenOnClose() const {return  switchChildrenOnClose_;}
 
 	void askMeAgain_SwitchChildren(const bool askme) { setModified(true); askMeAgain_SwitchChildren_ = askme; } 
