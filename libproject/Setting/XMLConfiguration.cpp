@@ -116,6 +116,7 @@ int XMLConfiguration::parseAppSet(TiXmlNode *appset_root) {
 	while (NULL != node) {
 		TiXmlElement * element = node->ToElement();
 		if (NULL != element) {
+			const TCHAR *p =node->Value();
 			if (_tcscmp(node->Value(), CONFIG_ITEM_APPSET_AUTHORIZE) == 0) {
 				// ÊÚÈ¨»úÖÆ
 				getAuthorize()->readconfig(element);
@@ -142,7 +143,7 @@ int XMLConfiguration::parseAppSet(TiXmlNode *appset_root) {
 				getTimeoutSwitch()->readconfig(element);
 			} else if (_tcscmp(node->Value(), CONFIG_ITEM_MODEL_INSTALL) == 0) {
 				getInstallDate()->readconfig(element);
-			} else if (_tcscmp(node->Value(), CONFIG_ITEM_APPSET_MISC) == 0) {
+			} else if (_tcscmp(node->Value(), CONFIG_ITEM_SWITCHTOCHILD_ONCLOSE) == 0) {
 				getMiscSetting()->readconfig(element);
 			}
 		}
