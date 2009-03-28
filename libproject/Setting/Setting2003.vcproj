@@ -58,7 +58,9 @@ copy .\configitem.h ..\..\include
 copy .\hotkeysetting.h ..\..\include
 copy .\timeoutswitch.h ..\..\include
 copy .\installdate.h ..\..\include
-copy .\programcontrol.h ..\..\include"/>
+copy .\programcontrol.h ..\..\include
+copy .\miscsetting.h ..\..\include
+"/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
 			<Tool
@@ -116,6 +118,7 @@ copy .\hotkeysetting.h ..\..\include
 copy .\timeoutswitch.h ..\..\include
 copy .\installdate.h ..\..\include
 copy .\programcontrol.h ..\..\include
+copy .\miscsetting.h ..\..\include
 "/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
@@ -140,14 +143,13 @@ copy .\programcontrol.h ..\..\include
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
 		</Filter>
 		<Filter
-			Name="头文件"
-			Filter="h;hpp;hxx;hm;inl;inc;xsd"
-			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
+			Name="Misc"
+			Filter="">
 			<File
-				RelativePath=".\configItem.cpp">
+				RelativePath=".\MiscSetting.cpp">
 			</File>
 			<File
-				RelativePath=".\configItem.h">
+				RelativePath=".\MiscSetting.h">
 			</File>
 		</Filter>
 		<Filter
@@ -331,6 +333,17 @@ copy .\programcontrol.h ..\..\include
 			</File>
 			<File
 				RelativePath=".\ProgramControl.h">
+			</File>
+		</Filter>
+		<Filter
+			Name="头文件"
+			Filter="h;hpp;hxx;hm;inl;inc;xsd"
+			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
+			<File
+				RelativePath=".\configItem.cpp">
+			</File>
+			<File
+				RelativePath=".\configItem.h">
 			</File>
 		</Filter>
 		<File
