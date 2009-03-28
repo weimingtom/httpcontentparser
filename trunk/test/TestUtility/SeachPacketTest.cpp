@@ -94,6 +94,16 @@ void SeachPacketTest::googleTest() {
 	CPPUNIT_ASSERT( 0 == strcmp("aaaaa++bbbbb", result));
 	CPPUNIT_ASSERT(SeachPacket::SEACH_ENGINE_GOOGLE == packet.getSeachEngineType());
 	}
+
+	// google suggestion
+	{
+	char * oper = "GET /complete/search?hl=zh-CN&gl=cn&xhr=t&q=hell&cp=4 HTTP/1.1";
+	char * host_name = "www.google.com";
+	char result[HTTP_REQUEST_ITEM_MAX_LENGTH];
+	SeachPacket packet;
+	CPPUNIT_ASSERT(SeachPacket::SEACH_ENGINE_UNKNOWN ==packet.getSeachEngineType());
+	CPPUNIT_ASSERT( 0 == packet.parse(oper, host_name));
+	}
 }
 void SeachPacketTest::baiduTest() {
 	//GET http://www.baidu.com/s?wd=word HTTP/1.1

@@ -6,15 +6,16 @@
 #include <assert.h>
 #include <fstream>
 
-#define SEACH_COMMAND_GOOGLE		"/search?"
-#define SEACH_COMMAND_YAHOO			"/search?"
-#define SEACH_COMMAND_BAIDU			"/s?"
+#define SEARCH_COMMAND_GOOGLE		"/search?"
+#define SEARCH_GOOGLE_SUGGESTION	"/complete/search?"
+#define SEARCH_COMMAND_YAHOO			"/search?"
+#define SEARCH_COMMAND_BAIDU			"/s?"
 
 
-#define SEACHWORD_TITLE_GOOGLE		"q="
-#define SEACHWORD_TITLE_YAHOO		"p="
-#define SEACHWORD_TITLE_BAIDU		"wd="
-#define SEACHWORD_TAIL				"&"
+#define SEARCHWORD_TITLE_GOOGLE		"q="
+#define SEARCHWORD_TITLE_YAHOO		"p="
+#define SEARCHWORD_TITLE_BAIDU		"wd="
+#define SEARCHWORD_TAIL				"&"
 
 
 SeachPacket::SeachPacket(void) {
@@ -27,21 +28,24 @@ SeachPacket::~SeachPacket(void) {
 
 // members
 bool SeachPacket::is_google_seach(const char *oper) {
-	if (NULL != _tcsstr(oper, SEACH_COMMAND_GOOGLE)) {
+	// 首先判断是不是suggestion
+	if (NULL != _tcsstr(oper, SEARCH_GOOGLE_SUGGESTION)) {
+		return false;
+	} else if (NULL != _tcsstr(oper, SEARCH_COMMAND_GOOGLE)) {
 		return true;
 	} else { 
 		return false;
 	}
 }
 bool SeachPacket::is_baidu_seach(const char *oper) {
-	if (NULL != _tcsstr(oper, SEACH_COMMAND_BAIDU)) {
+	if (NULL != _tcsstr(oper, SEARCH_COMMAND_BAIDU)) {
 		return true;
 	} else {
 		return false;
 	}
 }
 bool SeachPacket::is_yahoo_seach(const char *oper) {
-	if (NULL != _tcsstr(oper, SEACH_COMMAND_YAHOO)) {
+	if (NULL != _tcsstr(oper, SEARCH_COMMAND_YAHOO)) {
 		return true;
 	} else {
 		return false;
@@ -54,7 +58,7 @@ int SeachPacket::parse_google(const char * oper) {
 	}
 
 	// 获取搜索词
-	if (strutility::extract_string(seach_word, MAX_PATH, oper, SEACHWORD_TITLE_GOOGLE, SEACHWORD_TAIL, false) == 0) {
+	if (strutility::extract_string(seach_word, MAX_PATH, oper, SEARCHWORD_TITLE_GOOGLE, SEARCHWORD_TAIL, false) == 0) {
 		return 0;
 	}
 
@@ -67,7 +71,7 @@ int SeachPacket::parse_baidu(const char * oper) {
 	}
 
 	// 获取搜索词
-	if (strutility::extract_string(seach_word, MAX_PATH, oper, SEACHWORD_TITLE_BAIDU, SEACHWORD_TAIL, false) == 0) {
+	if (strutility::extract_string(seach_word, MAX_PATH, oper, SEARCHWORD_TITLE_BAIDU, SEARCHWORD_TAIL, false) == 0) {
 		return 0;
 	}
 
@@ -80,7 +84,7 @@ int SeachPacket::parse_yahoo(const char * oper) {
 	}
 
 	// 获取搜索词
-	if (strutility::extract_string(seach_word, MAX_PATH, oper, SEACHWORD_TITLE_YAHOO, SEACHWORD_TAIL, false) == 0) {
+	if (strutility::extract_string(seach_word, MAX_PATH, oper, SEARCHWORD_TITLE_YAHOO, SEARCHWORD_TAIL, false) == 0) {
 		return 0;
 	}
 
