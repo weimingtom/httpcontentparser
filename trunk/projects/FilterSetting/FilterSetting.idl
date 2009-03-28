@@ -51,19 +51,34 @@ interface IEyecare : IDispatch{
 	pointer_default(unique)
 ]
 interface IAppSetting : IDispatch{
-	[id(1), helpstring("Method setHotkey")]				 HRESULT setHotkey([in] USHORT wVirtualKeyCode, [in] USHORT wModifiers, [in] LONG type, [out,retval] VARIANT_BOOL* bSuccess);
-	[id(3), helpstring("Method GetInstallPath")]		 HRESULT GetInstallPath([out,retval] BSTR* path);
+	// 当前状态及状态切换
 	[id(4), helpstring("Method switchModel")]			 HRESULT switchModel([in] VARIANT_BOOL bParent, [in] BSTR pwd, [out,retval] VARIANT_BOOL* bSucc);
 	[propget, id(5), helpstring("Property ParentModel")] HRESULT ParentModel([out, retval] VARIANT_BOOL* pVal);
+
+	// 超时自动切换
 	[id(6), helpstring("Method setTimeoutValue")]		 HRESULT setTimeoutValue([in] LONG seconds);
 	[propget, id(7), helpstring("Property TimeoutSwitchEnabled")] HRESULT TimeoutSwitchEnabled([out, retval] VARIANT_BOOL* pVal);
 	[propput, id(7), helpstring("Property TimeoutSwitchEnabled")] HRESULT TimeoutSwitchEnabled([in] VARIANT_BOOL newVal);
 	[propget, id(8), helpstring("Property LefttimeToSwitch")]	  HRESULT LefttimeToSwitch([out, retval] LONG* pVal);
-	[id(9), helpstring("Method Registered")] HRESULT Registered([out,retval] VARIANT_BOOL* registeded);
-	[id(10), helpstring("Method Register")] HRESULT Register(BSTR bstr, [out,retval] VARIANT_BOOL* bSucc);
+
+	// 应用程序相关目录
+	[id(3), helpstring("Method GetInstallPath")]		 HRESULT GetInstallPath([out,retval] BSTR* path);
 	[id(11), helpstring("Method getImageFolder")] HRESULT getImageFolder([out] BSTR* path);
 	[id(12), helpstring("Method getPagesFolder")] HRESULT getPagesFolder([out] BSTR* path);
-	[id(13), helpstring("方法getHotkey")] HRESULT getHotkey([in] LONG type, [out] USHORT* wVirtualKeyCode, [out] USHORT* wModifier);
+
+	// 注册信息
+	[id(9), helpstring("Method Registered")] HRESULT Registered([out,retval] VARIANT_BOOL* registeded);
+	[id(10), helpstring("Method Register")] HRESULT Register(BSTR bstr, [out,retval] VARIANT_BOOL* bSucc);
+
+	// 热键设置
+	[id(1), helpstring("Method setHotkey")]				 HRESULT setHotkey([in] USHORT wVirtualKeyCode, [in] USHORT wModifiers, [in] LONG type, [out,retval] VARIANT_BOOL* bSuccess);
+	[id(13), helpstring("Method getHotkey")] HRESULT getHotkey([in] LONG type, [out] USHORT* wVirtualKeyCode, [out] USHORT* wModifier);
+
+	// 在最小化窗口的时候，是否切换到子模式
+	[propget, id(14), helpstring("Property autoSwitchOnClose")] HRESULT autoSwitchOnClose([out, retval] VARIANT_BOOL* pVal);
+	[propput, id(14), helpstring("Property autoSwitchOnClose")] HRESULT autoSwitchOnClose([in] VARIANT_BOOL newVal);
+	[propget, id(15), helpstring("Property askMeAgain")] HRESULT askMeAgain([out, retval] VARIANT_BOOL* pVal);
+	[propput, id(15), helpstring("Property askMeAgain")] HRESULT askMeAgain([in] VARIANT_BOOL newVal);
 };
 [
 	object,
