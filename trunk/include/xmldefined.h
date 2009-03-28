@@ -99,8 +99,7 @@
 #define CONFIG_ITEM_MODEL_AUTOSWITCH							TEXT("autoswitch")
 
 // тсоН
-#define CONFIG_ITEM_APPSET_MISC											TEXT("misc")
-#define CONFIG_APPSET_SWITCHTOCHILD_ONCLOSE			TEXT("switchonclose")
+#define CONFIG_ITEM_SWITCHTOCHILD_ONCLOSE			TEXT("switchonclose")
 #define CONFIG_SWITCHTOCHILD_ONCLOSE_ASKMEAG		TEXT("askmeagain")
 
 #define CONFIG_ITEM_MODEL_INSTALL									TEXT("install")
