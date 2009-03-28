@@ -26,6 +26,7 @@
 #include ".\newMenu\NewMenu.h"
 #include  ".\Guilib1.5\GuiGroupBox.h"
 #include  ".\Guilib1.5\GuiSysTray.h"
+#include ".\DlgSwitchChildren.h"
 
 #include "afxwin.h"
 #include "afxcmn.h"
@@ -148,6 +149,7 @@ private:
 	CDlgImageBrowser m_dlgImageBrowser_;
 	CDlgSearchWordList m_dlgSearchKeyword_;
 	CDlgWebsites m_dlgWebsites_;
+	CDlgSwitchChildren m_dlgSwitchChildren_;
 public:
 	afx_msg void OnWebhistoryImages();
 	afx_msg void OnWebhistorySearchkeyword();
