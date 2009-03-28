@@ -123,6 +123,9 @@ protected:
 	afx_msg void OnPaint();
 	afx_msg HCURSOR OnQueryDragIcon();
 	afx_msg void OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu);
+	afx_msg void OnWebhistoryImages();
+	afx_msg void OnWebhistorySearchkeyword();
+	afx_msg void OnWebhistoryWebsites();
 
 	virtual BOOL OnInitDialog();
 	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV Ö§³Ö
@@ -150,8 +153,7 @@ private:
 	CDlgSearchWordList m_dlgSearchKeyword_;
 	CDlgWebsites m_dlgWebsites_;
 	CDlgSwitchChildren m_dlgSwitchChildren_;
-public:
-	afx_msg void OnWebhistoryImages();
-	afx_msg void OnWebhistorySearchkeyword();
-	afx_msg void OnWebhistoryWebsites();
+
+private:
+	void SwitchOnClose();
 };

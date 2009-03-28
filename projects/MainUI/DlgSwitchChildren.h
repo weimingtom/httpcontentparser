@@ -6,7 +6,7 @@
 
 // CDlgSwitchChildren dialog
 // 此对话框的作用：当用户关闭窗口的时候，询问用户是否切换到子模式
-class CDlgSwitchChildren : public CDialog
+class CDlgSwitchChildren : public CPopupDialog
 {
 	DECLARE_DYNAMIC(CDlgSwitchChildren)
 
@@ -21,13 +21,15 @@ public:
 
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	afx_msg void OnBnClickedOk();
+	
 	virtual BOOL OnInitDialog();
+
+	afx_msg void OnBnClickedOk();
+	afx_msg void OnBnClickedCancel();
+
 	DECLARE_MESSAGE_MAP()
 private:
 	BOOL m_bDontAskmeAgain;
-public:
-	afx_msg void OnBnClickedCancel();
 };
 
 #endif  // _MAINUI_CDLGSWITCHCHILDREN_H__

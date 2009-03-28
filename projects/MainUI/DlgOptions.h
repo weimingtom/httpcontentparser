@@ -28,6 +28,9 @@ protected:
 	virtual BOOL OnInitDialog();
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
 	afx_msg void OnBnClickedChkAutoload();
+	afx_msg void OnBnClickedChkSwitchchildrenWhenClose();
+	afx_msg void OnBnClickedChkAskmeAgainWhenclose();
+
 	DECLARE_MESSAGE_MAP()
 protected:
 	// control variables
@@ -40,7 +43,12 @@ protected:
 
 	BOOL m_bAutoRun;
 	BOOL m_bOld_autorun;
+
+	BOOL m_bSwitchToChildrenOnClose;
+	BOOL m_bAskmeOnClose;
 protected:
 	void SetAutoRun();
 	int setHotKey();
+
+	int setMisc();
 };
