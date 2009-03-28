@@ -154,3 +154,23 @@ STDMETHODIMP CAppSetting::getHotkey(LONG type, USHORT* wVirtualKeyCode, USHORT* 
 	*wModifier = LOWORD(hotkey);
 	return S_OK;
 }
+
+STDMETHODIMP CAppSetting::get_autoSwitchOnClose(VARIANT_BOOL* pVal) {
+	*pVal = convert(g_configuration.getMiscSetting()->switchChildrenOnClose());
+	return S_OK;
+}
+
+STDMETHODIMP CAppSetting::put_autoSwitchOnClose(VARIANT_BOOL newVal) {
+	g_configuration.getMiscSetting()->switchChildrenOnClose(convert(newVal));
+	return S_OK;
+}
+
+STDMETHODIMP CAppSetting::get_askMeAgain(VARIANT_BOOL* pVal) {
+	*pVal = convert(g_configuration.getMiscSetting()->askMeAgain_SwitchChildren());
+	return S_OK;
+}
+
+STDMETHODIMP CAppSetting::put_askMeAgain(VARIANT_BOOL newVal) {
+	g_configuration.getMiscSetting()->askMeAgain_SwitchChildren(convert(newVal));
+	return S_OK;
+}
