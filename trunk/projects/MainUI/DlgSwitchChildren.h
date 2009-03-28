@@ -14,16 +14,20 @@ public:
 	CDlgSwitchChildren(CWnd* pParent = NULL);   // standard constructor
 	virtual ~CDlgSwitchChildren();
 
-// Dialog Data
+	// Dialog Data
 	enum { IDD = IDD_DLG_MIN_MAINUI };
+
+	BOOL switchToChildren() const;
 
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-
-	DECLARE_MESSAGE_MAP()
-public:
 	afx_msg void OnBnClickedOk();
+	virtual BOOL OnInitDialog();
+	DECLARE_MESSAGE_MAP()
+private:
 	BOOL m_bDontAskmeAgain;
+public:
+	afx_msg void OnBnClickedCancel();
 };
 
 #endif  // _MAINUI_CDLGSWITCHCHILDREN_H__
