@@ -143,7 +143,7 @@ protected:
 private:
 	// 隐藏或是显示主界面
 	void ShowMainUI();
-	void HideMainUI();
+	void HideMainUI(BOOL autoSwitchCheck = TRUE);
 	BOOL isShown() const { return m_bShown;}
 
 	// 对话框
