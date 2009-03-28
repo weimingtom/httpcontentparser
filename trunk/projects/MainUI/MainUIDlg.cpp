@@ -338,9 +338,12 @@ void CMainUIDlg::OnBnClickedOk()
 		m_curDlg->Restore();
 		return;
 	}
-	
+
 	m_curDlg->SetModify(false);
-	HideMainUI();
+
+	if (IDOK == m_dlgSwitchChildren_.DoModal()) {	
+		HideMainUI();
+	}
 }
 
 void CMainUIDlg::OnBnClickedMainCancel()
