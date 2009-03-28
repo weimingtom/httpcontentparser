@@ -162,8 +162,11 @@ void CGuiListEdit::OnEndlabeleditList(NMHDR* pNMHDR, LRESULT* pResult)
 	CString itemText=pItem->pszText;
 	if (itemText.GetLength() == 0)
 		Delete();
-	if (!itemText.IsEmpty() && OnEndEdit(itemText))
+	if (!itemText.IsEmpty() && OnEndEdit(itemText)) {
 		m_list->SetItemText(pItem->iItem,0,itemText);
+	} else {
+		Delete();
+	}
 
 	*pResult = 0;
 }
