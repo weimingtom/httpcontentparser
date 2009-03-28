@@ -36,6 +36,27 @@ void CDlgProgramControl::DoDataExchange(CDataExchange* pDX)
 	DDX_Check(pDX, IDC_CHK_ENABLE_APPCONTROL, m_bEnableAppControl);
 }
 
+void CDlgProgramControl::addItem(const std::string &filepath, const int iIndex) {
+	addedItems_.insert(std::make_pair(filepath, iIndex));
+	
+	// 从删除列表中删除
+	MODIFY_ITEMS::iterator iter = deleteItems_.find(filepath);
+	if (iter != deleteItems_.end()) {
+		deleteItems_.erase(iter);
+	}
+}
+
+void CDlgProgramControl::deleteItem(const std::string &filepath, const int nItem) {
+	deleteItems_.insert(std::make_pair(filepath, nItem));
+
+	// 从添加列表中删除
+	MODIFY_ITEMS::iterator iter = addedItems_.find(filepath);
+	if (iter != addedItems_.end()) {
+		addedItems_.erase(iter);
+	}
+}
+
+
 void CDlgProgramControl::removeItemData(const CString &path) {
 	DATA_MAP::iterator eraserIter = listdata_.find((LPCTSTR)path);
 	if (listdata_.end() != eraserIter) {
@@ -48,9 +69,6 @@ void CDlgProgramControl::removeItemData(const CString &path) {
 void CDlgProgramControl::executeDelete(IAppControl *pSetting) {
 	MODIFY_ITEMS::iterator iter = deleteItems_.begin();
 	for (; iter != deleteItems_.end(); ++iter) {
-		// 从map中删除数据
-		removeItemData(iter->first.c_str());
-		
 		// 从COM服务中删除
 		pSetting->RemoveItem((BSTR)_bstr_t(iter->first.c_str()));
 	}
@@ -94,13 +112,13 @@ int CDlgProgramControl::OnApply() {
 			return 0;
 		}
 
+		// 执行添加删除操作
 		executeAdd(pSetting);
-		(pSetting);
+		executeDelete(pSetting);
 		pSetting->enable(convert(m_bEnableAppControl));
 
 		pSetting->Release();
 		pSetting = NULL;
-
 
 		return SUCCESS_APPLY;
 	} catch (_com_error &) {
@@ -204,7 +222,6 @@ END_MESSAGE_MAP()
 
 
 // CDlgProgramControl 消息处理程序
-
 void CDlgProgramControl::OnBnClickedBtnAdd()
 {
 	// 打开文件
@@ -218,14 +235,13 @@ void CDlgProgramControl::OnBnClickedBtnAdd()
 		if (iIndex < 0) {
 			AfxMessageBox(IDS_DLG_PROGRAM_CONTROL_DUPLICATE_ITEM, MB_OK | MB_ICONEXCLAMATION);
 		} else {
-			addedItems_.insert(std::make_pair((LPCTSTR)dlg.GetPathName(), iIndex));
+			addItem((LPCTSTR)dlg.GetPathName(), iIndex);
 			SetModify(true);
 		}
 	}
 }
 
-void CDlgProgramControl::OnBnClickedBtnSet()
-{
+void CDlgProgramControl::OnBnClickedBtnSet() {
 }
 
 BOOL CDlgProgramControl::OnInitDialog()
@@ -281,6 +297,19 @@ BOOL CDlgProgramControl::OnInitDialog()
 	return TRUE;  // return TRUE unless you set the focus to a control
 }
 
+void CDlgProgramControl::deleteJustFromUI(const int nItem) {
+	assert (-1 != nItem);
+	// 将待删除的项保存起来，一边在用户按下Apply或者OK按钮时执行删除
+	ITEMDATA * data = (ITEMDATA*)m_list.GetItemData(nItem);
+	if (NULL != data) {
+		deleteItem(data->fullPath, nItem);
+		SetModify(true);
+
+		// 从列表中删除
+		removeItemData(data->fullPath.c_str());
+	}
+	m_list.DeleteItem(nItem);	// 从ListCtrl中删除当前想
+}
 void CDlgProgramControl::OnBnClickedBtnDel()
 {
 	POSITION pos = m_list.GetFirstSelectedItemPosition();
@@ -288,14 +317,7 @@ void CDlgProgramControl::OnBnClickedBtnDel()
 		// 获取选中的项，
 		int nItem = m_list.GetNextSelectedItem(pos);
 		if (nItem != -1) {
-			// 将待删除的项保存起来，一边在用户按下Apply或者OK按钮时执行删除
-			ITEMDATA * data = (ITEMDATA*)m_list.GetItemData(nItem);
-			if (NULL != data) {
-				deleteItems_.insert(std::make_pair(data->fullPath, nItem));
-				SetModify(true);
-			}
-
-			m_list.DeleteItem(nItem);	// 从ListCtrl中删除当前想
+			deleteJustFromUI(nItem);
 		}
 	} 
 }

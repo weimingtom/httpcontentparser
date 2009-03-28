@@ -42,6 +42,7 @@ public:
 	afx_msg void OnBnClickedBtnAdd();
 	afx_msg void OnBnClickedBtnDel();
 	afx_msg void OnBnClickedBtnSet();
+	afx_msg void OnBnClickedChkEnableAppcontrol();
 	virtual BOOL OnInitDialog();
 
 	// 给出提示
@@ -68,6 +69,7 @@ protected:
 		}
 	}ITEMDATA;
 
+	// 与路径对应的数据
 	typedef std::map<strutility::_tstring, ITEMDATA*> DATA_MAP;
 	DATA_MAP	listdata_;
 	// 移除已路径path相关的数据
@@ -75,16 +77,27 @@ protected:
 	
 	// 等待被删除的项与等待被添加的项
 	// key保存的是被删除项的路径, 而value是保存的原来所在的list的索引
+	// 其操作流程如下
+	// 对于任何一个用户要删除的项，首先从addedItems中删除, 然后添加到deleteItems.
+	// 对于任何一个用户要添加的项，首先从deleteItems中删除，然后添加到addedItems当中
+	// 当用户执行操作的时候，将所有addedItems中的项进行添加，
+	// 所有delete中的项删除
 	typedef std::map<strutility::_tstring, int> MODIFY_ITEMS;
 	MODIFY_ITEMS  deleteItems_;
 	MODIFY_ITEMS addedItems_;
+
 protected:
+	void addItem(const std::string &filepath, const int iIndex);
+	void deleteItem(const std::string &filepath, const int iIndex);
+
+	void deleteJustFromUI(const int iIndex);
+
 	//  执行删除与添加
 	void executeDelete(IAppControl *pSetting);
 	void executeAdd(IAppControl *pSetting);
-public:
+
+
 	BOOL m_bEnableAppControl;
-	afx_msg void OnBnClickedChkEnableAppcontrol();
 };
 
 
