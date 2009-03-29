@@ -101,6 +101,10 @@ IDB_HDRDOWN             BITMAP                  "res\\hdrdown.bmp"
 IDB_HDRUP               BITMAP                  "res\\hdrup.bmp"
 IDB_BITMAP2             BITMAP                  "res\\Folder_A.bmp"
 IDB_BITMAP4             BITMAP                  "res\\Folder_B.bmp"
+IDB_TRAY_KEY            BITMAP                  "res\\key.bmp"
+IDB_TRAY_LOCK           BITMAP                  "res\\lock.bmp"
+IDB_TRAY_OPTION         BITMAP                  "res\\option.bmp"
+IDB_TRAY_DESKTOPIMAGE   BITMAP                  "res\\camera.bmp"
 
 /////////////////////////////////////////////////////////////////////////////
 //
