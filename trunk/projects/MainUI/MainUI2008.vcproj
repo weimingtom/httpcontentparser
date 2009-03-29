@@ -269,11 +269,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\res\bitmap5.bmp"
+				>
+			</File>
+			<File
 				RelativePath=".\res\blackwhiteside.ico"
 				>
 			</File>
 			<File
 				RelativePath=".\res\block.bmp"
+				>
+			</File>
+			<File
+				RelativePath=".\res\camera.bmp"
 				>
 			</File>
 			<File
@@ -345,6 +353,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\res\key.bmp"
+				>
+			</File>
+			<File
+				RelativePath=".\res\lock.bmp"
+				>
+			</File>
+			<File
 				RelativePath=".\res\MainUI.ico"
 				>
 			</File>
@@ -354,6 +370,10 @@
 			</File>
 			<File
 				RelativePath=".\res\MainUI.rc2"
+				>
+			</File>
+			<File
+				RelativePath=".\res\option.bmp"
 				>
 			</File>
 			<File

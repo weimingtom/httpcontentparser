@@ -165,7 +165,10 @@ void CMainUIDlg::setupTrayMenu() {
 	m_trayMenu.ModifyODMenu(0,_T("Register"),  IDB_BITMAP2);
 	m_trayMenu.ModifyODMenu(0,_T("Websites"),  IDB_BITMAP2);
 	m_trayMenu.ModifyODMenu(0,_T("Web History"),  IDB_BITMAP2);
-	m_trayMenu.ModifyODMenu(0,_T("Desktop Image"),  IDB_BITMAP2);
+	m_trayMenu.ModifyODMenu(0,_T("Option"),  IDB_TRAY_OPTION);
+	m_trayMenu.ModifyODMenu(0,_T("Lock Computer"),  IDB_TRAY_LOCK); 
+	m_trayMenu.ModifyODMenu(0,_T("Desktop Image"),  IDB_TRAY_DESKTOPIMAGE);
+	m_trayMenu.ModifyODMenu(0,_T("Change Password"),  IDB_TRAY_KEY);
 }
 
 BOOL CMainUIDlg::OnInitDialog()
