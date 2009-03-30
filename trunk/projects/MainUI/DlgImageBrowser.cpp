@@ -18,11 +18,11 @@ CDlgImageBrowser::CDlgImageBrowser(CWnd* pParent /*=NULL*/)
 	: CPopupDialog(CDlgImageBrowser::IDD, pParent)
 {
 	m_ThumbCtrl = NULL;
+	m_hIcon = AfxGetApp()->LoadIcon(IDI_TREE_SCREENSHOT);
 }
 
 CDlgImageBrowser::~CDlgImageBrowser()
 {
-	m_hIcon = AfxGetApp()->LoadIcon(IDI_TREE_SCREENSHOT);
 }
 
 void CDlgImageBrowser::DoDataExchange(CDataExchange* pDX)
@@ -52,6 +52,9 @@ int CDlgImageBrowser::OnCreate(LPCREATESTRUCT lpCreateStruct)
 BOOL CDlgImageBrowser::OnInitDialog()
 {
 	CDialog::OnInitDialog();
+	
+	SetIcon(m_hIcon, TRUE);			// 设置大图标
+	SetIcon(m_hIcon, FALSE);		// 设置小图标
 
 	CRect rect;
 	GetDlgItem(IDC_IMAGES_POS)->GetWindowRect(&rect);

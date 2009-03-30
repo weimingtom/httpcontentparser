@@ -33,7 +33,7 @@ protected:
 	DECLARE_MESSAGE_MAP()
 private:
 	CWebsitesList m_list;
-	
-
 	void initializeList();
+
+	HICON m_hIcon;
 };

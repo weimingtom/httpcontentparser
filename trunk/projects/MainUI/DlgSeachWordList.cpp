@@ -19,6 +19,7 @@ IMPLEMENT_DYNAMIC(CDlgSearchWordList, CPopupDialog)
 CDlgSearchWordList::CDlgSearchWordList(CWnd* pParent /*=NULL*/)
 : CPopupDialog(CDlgSearchWordList::IDD, pParent)
 {
+	m_hIcon = AfxGetApp()->LoadIcon(IDI_TREE_SEACH);
 }
 
 CDlgSearchWordList::~CDlgSearchWordList()
@@ -130,6 +131,9 @@ void CDlgSearchWordList::InitList()
 BOOL CDlgSearchWordList::OnInitDialog()
 {
 	CDialog::OnInitDialog();
+	SetIcon(m_hIcon, TRUE);			// 设置大图标
+	SetIcon(m_hIcon, FALSE);		// 设置小图标
+
 	InitList();
 
 	showOnList();
