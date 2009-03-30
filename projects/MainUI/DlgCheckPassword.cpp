@@ -19,7 +19,7 @@ CDlgCheckPassword::CDlgCheckPassword(CWnd* pParent /*=NULL*/)
 	: CPopupDialog(CDlgCheckPassword::IDD, pParent)
 	, m_strPassword(_T(""))
 {
-	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
+	m_hIcon = AfxGetApp()->LoadIcon(IDI_KEY);
 }
 
 CDlgCheckPassword::~CDlgCheckPassword()

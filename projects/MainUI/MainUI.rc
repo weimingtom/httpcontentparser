@@ -84,6 +84,8 @@ IDI_TREE_HOME           ICON                    "res\\Home.ico"
 IDI_TREE_TOOLS          ICON                    "res\\icon3.ico"
 IDI_MODEL_PROTECTED     ICON                    "res\\shield.ico"
 IDI_MODEL_PARENT        ICON                    "res\\shield_delete.ico"
+IDI_LOCK                ICON                    "res\\lock.ico"
+IDI_KEY                 ICON                    "res\\key.ico"
 
 /////////////////////////////////////////////////////////////////////////////
 //

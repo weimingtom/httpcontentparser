@@ -22,6 +22,7 @@ CDlgImageBrowser::CDlgImageBrowser(CWnd* pParent /*=NULL*/)
 
 CDlgImageBrowser::~CDlgImageBrowser()
 {
+	m_hIcon = AfxGetApp()->LoadIcon(IDI_TREE_SCREENSHOT);
 }
 
 void CDlgImageBrowser::DoDataExchange(CDataExchange* pDX)

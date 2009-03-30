@@ -37,4 +37,5 @@ protected:
 
 	// Â·¾¶
 	CString m_imageDir;
+	HICON m_hIcon;
 };

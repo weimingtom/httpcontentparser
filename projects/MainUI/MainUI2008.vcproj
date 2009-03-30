@@ -357,7 +357,15 @@
 				>
 			</File>
 			<File
+				RelativePath=".\res\key.ico"
+				>
+			</File>
+			<File
 				RelativePath=".\res\lock.bmp"
+				>
+			</File>
+			<File
+				RelativePath=".\res\lock.ico"
 				>
 			</File>
 			<File
