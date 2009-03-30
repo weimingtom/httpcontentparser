@@ -14,6 +14,8 @@
 #include <apputility.h>
 #include <comdef.h>
 
+#define 	HISTORY_MENU_POS  3
+
 // 在Mainui.cpp中定义，他是一个共享变量
 extern HWND share_hwnd;
 
@@ -131,6 +133,13 @@ void CMainUIDlg::UpdateUIStateByModel() {
 			pMenu->EnableMenuItem(uID, MF_ENABLED);
 		}
 
+		// 使历史几个菜单项可用
+		CMenu* pHistory = pMenu->GetSubMenu(HISTORY_MENU_POS);
+		for (UINT i = 0; i < pHistory->GetMenuItemCount(); ++i) {
+			const UINT uID = pHistory->GetMenuItemID(i);
+			pHistory->EnableMenuItem(uID, MF_ENABLED);
+		}
+
 		// 选中家长模式
 		pMenu->CheckMenuItem(ID_TRAYMENU_MODEL_PARENTS, MF_CHECKED);
 		pMenu->CheckMenuItem(ID_TRAYMENU_MODEL_CHILDREN, MF_UNCHECKED);
@@ -140,10 +149,16 @@ void CMainUIDlg::UpdateUIStateByModel() {
 			const UINT uID = pMenu->GetMenuItemID(i);
 			if (uID == ID_TRAYMENU_MAINUI ||
 				uID == ID_TRAYMENU_LOCKCOMPUTER || 
-				uID == ID_TRAYMENU_WEBHISTORY ||
 				uID == ID_TRAYMENU_DESKTOPIMAGE) {
 					pMenu->EnableMenuItem(uID, MF_GRAYED);
 				}
+		}
+
+		// 使历史几个菜单项不可用
+		CMenu* pHistory = pMenu->GetSubMenu(HISTORY_MENU_POS);
+		for (UINT i = 0; i < pHistory->GetMenuItemCount(); ++i) {
+			const UINT uID = pHistory->GetMenuItemID(i);
+			pHistory->EnableMenuItem(uID, MF_GRAYED);
 		}
 
 		pMenu->CheckMenuItem(ID_TRAYMENU_MODEL_PARENTS, MF_UNCHECKED);
@@ -169,6 +184,11 @@ void CMainUIDlg::setupTrayMenu() {
 	m_trayMenu.ModifyODMenu(0,_T("Lock Computer"),  IDB_TRAY_LOCK); 
 	m_trayMenu.ModifyODMenu(0,_T("Desktop Image"),  IDB_TRAY_DESKTOPIMAGE);
 	m_trayMenu.ModifyODMenu(0,_T("Change Password"),  IDB_TRAY_KEY);
+
+	// History菜单的图标
+	m_trayMenu.ModifyODMenu(0,_T("Web sites"),  IDB_TRAY_HISTORY_WEBSITE);
+	m_trayMenu.ModifyODMenu(0,_T("Search Keyword"),  IDB_TRAY_HISTORY_SEARCH);
+	m_trayMenu.ModifyODMenu(0,_T("Images"),  IDB_TRAY_DESKTOPIMAGE);
 }
 
 BOOL CMainUIDlg::OnInitDialog()

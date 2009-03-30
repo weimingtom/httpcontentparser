@@ -413,6 +413,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\res\website.bmp"
+				>
+			</File>
+			<File
 				RelativePath=".\res\whitewebsite.ico"
 				>
 			</File>
