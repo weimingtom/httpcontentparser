@@ -177,9 +177,9 @@ void CMainUIDlg::setupTrayMenu() {
 	m_sysTray.SetSysMenu(&m_trayMenu);
 	AdjustModelIcon();
 
-	m_trayMenu.ModifyODMenu(0,_T("Register"),  IDB_BITMAP2);
-	m_trayMenu.ModifyODMenu(0,_T("Websites"),  IDB_BITMAP2);
-	m_trayMenu.ModifyODMenu(0,_T("Web History"),  IDB_BITMAP2);
+	// m_trayMenu.ModifyODMenu(0,_T("Register"),  IDB_BITMAP2);
+	m_trayMenu.ModifyODMenu(0,_T("Websites"),  IDB_TRAY_HISTORY_WEBSITE);
+	// m_trayMenu.ModifyODMenu(0,_T("Web History"),  IDB_BITMAP2);
 	m_trayMenu.ModifyODMenu(0,_T("Option"),  IDB_TRAY_OPTION);
 	m_trayMenu.ModifyODMenu(0,_T("Lock Computer"),  IDB_TRAY_LOCK); 
 	m_trayMenu.ModifyODMenu(0,_T("Desktop Image"),  IDB_TRAY_DESKTOPIMAGE);
