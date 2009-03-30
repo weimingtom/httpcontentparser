@@ -21,7 +21,7 @@ CDlgChangePassword::CDlgChangePassword(CWnd* pParent /*=NULL*/)
 	, m_strNew(_T(""))
 	, m_strRetype(_T(""))
 {
-	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
+	m_hIcon = AfxGetApp()->LoadIcon(IDI_KEY);
 }
 
 CDlgChangePassword::~CDlgChangePassword()
