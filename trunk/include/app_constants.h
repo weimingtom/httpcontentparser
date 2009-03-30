@@ -76,4 +76,6 @@ TCHAR * getHotkeyname(const int type) {
 #define EYECARE_MAIN_WND_TITLE (TEXT(""))
 #define EYECARE_MUTEX_NAME		TEXT("8EF40F9D-71A7-40d9-A229-599105419DAE")
 
+#define HOME_WEBSITES			TEXT("www.family007.com")
+
 #endif // _SPI_INSTALLER_SPIDEFINES_H__
