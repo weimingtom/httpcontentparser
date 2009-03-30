@@ -106,7 +106,9 @@ IDB_BITMAP4             BITMAP                  "res\\Folder_B.bmp"
 IDB_TRAY_KEY            BITMAP                  "res\\key.bmp"
 IDB_TRAY_LOCK           BITMAP                  "res\\lock.bmp"
 IDB_TRAY_OPTION         BITMAP                  "res\\option.bmp"
-IDB_TRAY_DESKTOPIMAGE   BITMAP                  "res\\camera.bmp"
+IDB_TRAY_DESKTOPIMAGE   BITMAP                  "D:\\workspace\\current\\projects\\MainUI\\res\\camera.bmp"
+IDB_TRAY_HISTORY_WEBSITE BITMAP                  "res\\website.bmp"
+IDB_TRAY_HISTORY_SEARCH BITMAP                  "res\\search.bmp"
 
 /////////////////////////////////////////////////////////////////////////////
 //
