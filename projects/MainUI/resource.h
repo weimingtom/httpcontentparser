@@ -119,6 +119,13 @@
 #define IDB_BITMAP4                     192
 #define IDD_DIALOG2                     193
 #define IDD_DLG_MIN_MAINUI              193
+#define IDB_TRAY_KEY                    194
+#define IDB_TRAY_LOCK                   196
+#define IDB_TRAY_OPTION                 197
+#define IDB_TRAY_DESKTOPIMAGE           198
+#define IDI_LOCK                        199
+#define IDI_ICON3                       200
+#define IDI_KEY                         200
 #define IDC_TREE_NAVIG                  1000
 #define IDS_TREE_ROOT                   1001
 #define IDS_TREE_DNS_RULE               1002
@@ -298,7 +305,7 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        194
+#define _APS_NEXT_RESOURCE_VALUE        201
 #define _APS_NEXT_COMMAND_VALUE         32813
 #define _APS_NEXT_CONTROL_VALUE         1118
 #define _APS_NEXT_SYMED_VALUE           112
