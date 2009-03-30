@@ -43,12 +43,12 @@ protected:
 
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV Ö§³Ö
-
-	DECLARE_MESSAGE_MAP()
-public:
 	virtual BOOL OnInitDialog();
 	CECListCtrlEx m_list;
 	afx_msg void OnBnClickedSearchClear();
+	DECLARE_MESSAGE_MAP()
+private:
+	HICON m_hIcon;
 };
 
 #endif  // _MAINUI_CDLGSEACHWORDLIST_H__

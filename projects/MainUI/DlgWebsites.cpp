@@ -19,6 +19,7 @@ IMPLEMENT_DYNAMIC(CDlgWebsites, CPopupDialog)
 CDlgWebsites::CDlgWebsites(CWnd* pParent /*=NULL*/)
 	: CPopupDialog(CDlgWebsites::IDD, pParent)
 {
+	m_hIcon = AfxGetApp()->LoadIcon(IDI_TREE_SEACH);
 }
 
 CDlgWebsites::~CDlgWebsites()
@@ -91,6 +92,11 @@ int CDlgWebsites::showOnList() {
 BOOL CDlgWebsites::OnInitDialog()
 {
 	CDialog::OnInitDialog();
+
+	SetIcon(m_hIcon, TRUE);			// 设置大图标
+	SetIcon(m_hIcon, FALSE);		// 设置小图标
+
+
 	m_list.SetExtendedStyle(
 		LVS_EX_FULLROWSELECT | LVS_EX_HEADERDRAGDROP |
 		LVS_EX_INFOTIP       | LVS_EX_LABELTIP);
