@@ -38,25 +38,6 @@ END_MESSAGE_MAP()
 
 
 // CDlgSwitchChildren message handlers
-
-void CDlgSwitchChildren::OnBnClickedOk()
-{
-	// 首
-	try {
-		AutoInitInScale auto_scale_;
-		IAppSetting * appSetting = NULL;
-		HRESULT hr = CoCreateInstance(CLSID_AppSetting, NULL, CLSCTX_LOCAL_SERVER, IID_IAppSetting, (LPVOID*)&appSetting);
-		if (FAILED(hr)) {
-			return OnOK();
-		} else {
-			appSetting->put_autoSwitchOnClose(VARIANT_TRUE);
-			appSetting->put_askMeAgain(convert(m_bDontAskmeAgain));
-		}
-	} catch (...) {
-	}
-	OnOK();
-}
-
 BOOL CDlgSwitchChildren::OnInitDialog()
 {
 	CDialog::OnInitDialog();
@@ -87,10 +68,32 @@ BOOL CDlgSwitchChildren::OnInitDialog()
 	return TRUE;  // return TRUE unless you set the focus to a control
 }
 
+
+void CDlgSwitchChildren::OnBnClickedOk()
+{
+	// 首
+	try {
+		UpdateData(TRUE);
+		AutoInitInScale auto_scale_;
+		IAppSetting * appSetting = NULL;
+		HRESULT hr = CoCreateInstance(CLSID_AppSetting, NULL, CLSCTX_LOCAL_SERVER, IID_IAppSetting, (LPVOID*)&appSetting);
+		if (FAILED(hr)) {
+			return OnOK();
+		} else {
+			appSetting->put_autoSwitchOnClose(VARIANT_TRUE);
+			appSetting->put_askMeAgain(convert(!m_bDontAskmeAgain));	// 正好相反
+		}
+	} catch (...) {
+	}
+	OnOK();
+}
+
+
 void CDlgSwitchChildren::OnBnClickedCancel()
 {
 		// 首
 	try {
+		UpdateData(TRUE);
 		AutoInitInScale auto_scale_;
 		IAppSetting * appSetting = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_AppSetting, NULL, CLSCTX_LOCAL_SERVER, IID_IAppSetting, (LPVOID*)&appSetting);
@@ -98,7 +101,7 @@ void CDlgSwitchChildren::OnBnClickedCancel()
 			return OnOK();
 		} else {
 			appSetting->put_autoSwitchOnClose(VARIANT_FALSE);
-			appSetting->put_askMeAgain(convert(m_bDontAskmeAgain));
+			appSetting->put_askMeAgain(convert(!m_bDontAskmeAgain));
 		}
 	} catch (...) {
 	}

@@ -156,4 +156,6 @@ private:
 
 private:
 	void SwitchOnClose();
+public:
+	virtual HRESULT get_accHelp(VARIANT varChild, BSTR *pszHelp);
 };

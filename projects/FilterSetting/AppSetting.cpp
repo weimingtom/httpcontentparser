@@ -155,6 +155,8 @@ STDMETHODIMP CAppSetting::getHotkey(LONG type, USHORT* wVirtualKeyCode, USHORT* 
 	return S_OK;
 }
 
+//====================
+// 关闭对话框事是否自动转换模式
 STDMETHODIMP CAppSetting::get_autoSwitchOnClose(VARIANT_BOOL* pVal) {
 	*pVal = convert(g_configuration.getMiscSetting()->switchChildrenOnClose());
 	return S_OK;

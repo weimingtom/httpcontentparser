@@ -188,6 +188,9 @@
 				RelativePath=".\res\block.bmp">
 			</File>
 			<File
+				RelativePath=".\res\camera.bmp">
+			</File>
+			<File
 				RelativePath=".\res\camera.ico">
 			</File>
 			<File
@@ -239,6 +242,18 @@
 				RelativePath=".\res\icon3.ico">
 			</File>
 			<File
+				RelativePath=".\res\key.bmp">
+			</File>
+			<File
+				RelativePath=".\res\key.ico">
+			</File>
+			<File
+				RelativePath=".\res\lock.bmp">
+			</File>
+			<File
+				RelativePath=".\res\lock.ico">
+			</File>
+			<File
 				RelativePath=".\res\MainUI.ico">
 			</File>
 			<File
@@ -248,6 +263,9 @@
 				RelativePath=".\res\MainUI.rc2">
 			</File>
 			<File
+				RelativePath=".\res\option.bmp">
+			</File>
+			<File
 				RelativePath=".\res\option.ico">
 			</File>
 			<File
@@ -255,6 +273,9 @@
 			</File>
 			<File
 				RelativePath=".\res\record.ico">
+			</File>
+			<File
+				RelativePath=".\res\search.bmp">
 			</File>
 			<File
 				RelativePath=".\res\shield.ico">
@@ -267,6 +288,9 @@
 			</File>
 			<File
 				RelativePath=".\res\tools.ico">
+			</File>
+			<File
+				RelativePath=".\res\website.bmp">
 			</File>
 			<File
 				RelativePath=".\res\whitewebsite.ico">
