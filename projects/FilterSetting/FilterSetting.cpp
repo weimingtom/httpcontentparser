@@ -76,9 +76,9 @@ extern "C" int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/
 
 	g_hInstance = hInstance;
 
-	// TODO enable it. it shoud be used in for auto repair.
-	// AppInstallValidate validator(VALIDATE_COM);
-	// validator.repair((HMODULE)hInstance);
+	// ÐÞ¸´Ïî
+	AppInstallValidate validator(VALIDATE_COM);
+	validator.repair();
 
 	initializeSetting();
 	g_registerInfo.initialize();
