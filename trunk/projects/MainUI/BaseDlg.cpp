@@ -36,7 +36,10 @@ int CBaseDlg::Restore() {
 // 
 int  CBaseDlg::BeforeChange() {
 	if (Modified() == true) {
-		int result = AfxMessageBox("Setting have been changed, Would you like apply the change?", MB_YESNO);
+		CString tips, caption;
+		tips.LoadString(IDS_APP_NAME);
+		caption.LoadString(IDS_TIP_SETTING_CHANGED);
+		int result = ::MessageBox(NULL, caption, tips, MB_YESNO | MB_ICONEXCLAMATION);
 		if (result == IDYES) {
 			Apply();
 			SetModify(false);
