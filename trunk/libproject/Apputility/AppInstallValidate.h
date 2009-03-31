@@ -18,6 +18,7 @@ public:
 	~AppInstallValidate(void);
 
 	int repair();		// ÐÞ¸´
+	int repair(HMODULE hModule);
 	bool validateIntact();
 
 	void getErrorMessage(TCHAR * msg, const int len);
@@ -35,6 +36,8 @@ private:
 	bool serviceWorking();
 	void repairCOM();
 	bool shouldRepairCOM();
+
+	void getCurrentPath(HMODULE hModule);
 private:
 	int type_;
 
@@ -43,8 +46,9 @@ private:
 
 private:
 	AppInstallValidate(void);
-
 	friend class AppInstallValTest;
+	
+	TCHAR install_path[MAX_PATH];	// °²×°Â·¾¶
 };
 
 #endif  // _SYSUTILITY_APPINSTALLVALIDATE_H__
