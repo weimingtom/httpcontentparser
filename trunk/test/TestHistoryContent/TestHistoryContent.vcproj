@@ -68,8 +68,9 @@
 			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
+				AdditionalIncludeDirectories="..\..\include"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
-				RuntimeLibrary="4"
+				RuntimeLibrary="2"
 				UsePrecompiledHeader="3"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="TRUE"
@@ -80,6 +81,7 @@
 				Name="VCLinkerTool"
 				OutputFile="$(OutDir)/TestHistoryContent.exe"
 				LinkIncremental="1"
+				AdditionalLibraryDirectories="..\..\lib"
 				GenerateDebugInformation="TRUE"
 				SubSystem="1"
 				OptimizeReferences="2"

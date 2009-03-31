@@ -41,7 +41,8 @@
 			<Tool
 				Name="VCPreBuildEventTool"
 				CommandLine="copy .\SearchKeywordUtil.h ..\..\include
-copy .\WebsitesUtil.h ..\..\include"/>
+copy .\WebsitesUtil.h ..\..\include
+"/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
 			<Tool
@@ -63,8 +64,9 @@ copy .\WebsitesUtil.h ..\..\include"/>
 			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
+				AdditionalIncludeDirectories="..\..\include"
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB"
-				RuntimeLibrary="4"
+				RuntimeLibrary="2"
 				UsePrecompiledHeader="3"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="TRUE"
@@ -78,11 +80,12 @@ copy .\WebsitesUtil.h ..\..\include"/>
 				Name="VCMIDLTool"/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy .\debug\HistoryContent.lib ..\..\lib\HistoryContent.lib"/>
+				CommandLine="copy .\release\HistoryContent.lib ..\..\lib\HistoryContent.lib"/>
 			<Tool
 				Name="VCPreBuildEventTool"
 				CommandLine="copy .\SearchKeywordUtil.h ..\..\include
-copy .\WebsitesUtil.h ..\..\include"/>
+copy .\WebsitesUtil.h ..\..\include
+"/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
 			<Tool
