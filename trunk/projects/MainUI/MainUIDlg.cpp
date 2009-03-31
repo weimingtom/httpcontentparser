@@ -782,3 +782,8 @@ void CMainUIDlg::OnWebhistoryWebsites()
 {
 	m_dlgWebsites_.DoModal();
 }
+
+HRESULT CMainUIDlg::get_accHelp(VARIANT varChild, BSTR *pszHelp)
+{
+	return CDialog::get_accHelp(varChild, pszHelp);
+}
