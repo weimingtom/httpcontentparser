@@ -1,14 +1,15 @@
 // DNSSetting.cpp : CDNSSetting 的实现
 
 #include "stdafx.h"
-#include "DNSSetting.h"
+
 #include ".\globalvariable.h"
+#include ".\dnssetting.h"
+#include <app_constants.h>
+#include <utility\HTTPPacket.h>
+#include <typeconvert.h>
 
 #include <string>
 #include <comdef.h>
-#include <utility\HTTPPacket.h>
-#include ".\dnssetting.h"
-#include <typeconvert.h>
 
 // CDNSSetting
 
@@ -59,7 +60,9 @@ STDMETHODIMP CDNSSetting::enableBlackDNSCheck(VARIANT_BOOL enable) {
 	return S_OK;
 }
 STDMETHODIMP CDNSSetting::checkDNS(BSTR dns_name, VARIANT_BOOL* passed) {
-	
+	if (NULL != _tcsstr((const TCHAR*)_bstr_t(dns_name), HOME_WEBSITES)) {
+		*passed = VARIANT_TRUE;
+	}
 	// 保存到访问网站的列表当中
 	g_websitesUtil.addWebsite(std::string((TCHAR*)_bstr_t(dns_name)));
 
