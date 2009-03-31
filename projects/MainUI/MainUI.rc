@@ -884,9 +884,9 @@ STRINGTABLE
 BEGIN
     IDS_ABOUTBOX            "About "
     IDS_TREE_LEV1_RULES     "Content Rules"
-    IDS_COMMENT_DNS         "DNS1??¨°\r\n    ¡Á¨¨?1¨®??¡ì¡¤??¨º¨°?D?¨°??a¦Ì?2????¦Ì¨ª???\r\n"
-    IDS_COMMENT_IMAGE       "¨ª???1??¨°\r\n    ?¨¦¨°??¨¬2¨¦¨ª???¡ê?2¡é¡Á¨¦?¡¥??¨¦?¨ª???¦Ì???¨º?\r\n"
-    IDS_COMMENT_TEXT        "??¡À?1??¨°\r\n    ¨ª¡§1y????¡À?¦Ì??¨¬2a¨¨¡¤?¡§¨ª???¨º?¡¤?¨º???¨¦?¨ª???\r\n"
+    IDS_COMMENT_DNS         "DNS Setting"
+    IDS_COMMENT_IMAGE       "aaa\r\n"
+    IDS_COMMENT_TEXT        "aaa\r\n"
     IDS_TREE_OPTIONS        "Options"
     IDS_TREE_EYECARE        "Eyecare"
     IDS_TRAYMENU_SHOWUI     "Show Main Dialog"
@@ -949,6 +949,8 @@ BEGIN
     IDS_DLG_PROGRAM_CONTROL_DUPLICATE_ITEM "The item has been insert!"
     IDS_DLG_PROGRAM_CONTROL_FULLPATH "Path"
     IDS_COM_ERRO_COCREATE_FIALED "Launch Service Failed!"
+    IDS_TIP_SETTING_CHANGED "Setting have been changed, Would you like apply the change?"
+    IDS_APP_NAME            "Family007"
 END
 
 #endif    // Ó¢Óï(ÃÀ¹ú) resources

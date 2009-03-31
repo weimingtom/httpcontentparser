@@ -68,7 +68,9 @@
 #define IDD_DLG_TEXT                    140
 #define IDS_COM_ERRO_COCREATE_FIALED    140
 #define IDD_DLG_OPTION                  141
+#define IDS_TIP_SETTING_CHANGED         141
 #define IDD_DLG_TOOLS                   142
+#define IDS_APP_NAME                    142
 #define IDD_DLG_EYECARE                 144
 #define IDD_LEV1_TIME_RULE              147
 #define IDD_DIALOG1                     149
