@@ -1,0 +1,173 @@
+#wrap {
+}
+
+#content {
+	margin-top:20px;
+	margin-left:40px;
+	border-right:2px dashed #BCD2E6;
+	width:70%;
+}
+
+
+#middle {
+	border-bottom:1px solid #BCD2E6;
+}
+
+
+#head {
+	margin-left:auto;
+	margin-right:auto;
+	background-image : url(topimg.JPG);
+	background-repeat: no-repeat;
+	height:270px;
+	width:1279px;
+}
+
+#topcontent {
+	width:800px;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+#tabs_top {
+	position :relative; top:230px;
+	float:left;
+    width:100%;
+    font-size:93%;
+    line-height:normal;
+	border-bottom:1px solid #BCD2E6;
+}
+
+#tabs_top ul {
+	font-size: 12px;
+	margin:0;
+	padding:10px 10px 0 50px;
+	list-style:none;
+}
+
+#tabs_top li {
+    display:inline;
+    margin:0;
+    padding:0;
+}
+
+#tabs_top a {
+    float:left;
+    background:url("images/tableft1.gif") no-repeat left top;
+    margin:0;
+    padding:0 0 0 4px;
+    text-decoration:none;
+}
+
+#tabs_top a span {
+    float:left;
+    display:block;
+    background:url("images/tabright1.gif") no-repeat right top;
+    padding:5px 15px 4px 6px;
+    color:#627EB7;
+}
+
+/* Commented Backslash Hack hides rule from IE5-Mac \*/
+#tabs_top a span {float:none;}
+/* End IE5-Mac hack */
+#tabs_top a:hover span {
+    color:#627EB7;
+}
+#tabs_top a:hover {
+    background-position:0% -42px;
+}
+#tabs_top a:hover span {
+    background-position:100% -42px;
+}
+
+#page {
+	width:800px;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+#sidebar {
+	background : #F5F8FA;
+}
+
+#leftneg {
+	float:right;
+}
+
+div#leftneg tr{
+	padding:0 px;
+	margin:0 px;
+}
+
+div#leftneg td{
+	color : red;
+}
+
+#footer {
+	width : 100%;
+	height: 18px;
+}
+
+#navcontainer { 
+	margin-left: 30px;
+}
+
+#navcontainer ul
+{
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+	font-family: verdana, arial, Helvetica, sans-serif;
+}
+
+#navcontainer li { margin: 0; }
+
+#navcontainer a {
+	display: block;
+	padding: 5px 10px;
+	width: 140px;
+	color: #000;
+	background-color: #ADC1AD;
+	text-decoration: none;
+	border-top: 1px solid #fff;
+	border-left: 1px solid #fff;
+	border-bottom: 1px solid #333;
+	border-right: 1px solid #333;
+	font-weight: bold;
+	font-size: .8em;
+	background-image: url(images/vertical06.jpg);
+	background-repeat: no-repeat;
+	background-position: 0 0;
+}
+
+#navcontainer a:hover {
+	color: #000;
+	background-color: #889E88;
+	text-decoration: none;
+	border-top: 1px solid #333;
+	border-left: 1px solid #333;
+	border-bottom: 1px solid #fff;
+	border-right: 1px solid #fff;
+	background-image: url(images/vertical06a.jpg);
+	background-repeat: no-repeat;
+	background-position: 0 0;
+}
+
+#navcontainer ul ul li { margin: 0; }
+
+#navcontainer ul ul a {
+	display: block;
+	padding: 5px 5px 5px 30px;
+	width: 125px;
+	color: #000;
+	background-color: #C5D8C5;
+	text-decoration: none;
+	font-weight: normal;
+}
+
+#navcontainer ul ul a:hover {
+	color: #000;
+	background-color: #889E88;
+	text-decoration: none;
+}
+

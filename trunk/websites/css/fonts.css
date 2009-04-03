@@ -1,0 +1,30 @@
+.sup_title {
+	color:#2D73B9;
+}
+
+.fir_title {
+	font-size:20px;
+	font-family:"Arial", "sans-serif";
+	text-indent:24px;
+	color:#2D73B9;
+}
+
+.sec_title {
+	font-size : 16px;
+	font-family:"Arial", "sans-serif";
+	text-indent:48px;
+	color:#00AEED;
+}
+
+.text {
+	font-size : 16px;
+	font-family:"Arial", "sans-serif";
+	text-indent:64px;
+	color:#00AEED;
+}
+
+.footer {
+	font-size : 16px;
+	font-family:"Arial", "sans-serif";
+	text-align:center;
+}
