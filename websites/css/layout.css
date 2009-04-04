@@ -112,16 +112,25 @@ div#leftneg td{
 	margin-left: 30px;
 }
 
-#navcontainer ul
+#navcontainer div
 {
-	margin: 0;
-	padding: 0;
+	margin: 0px;
+	padding: 0px;
 	list-style-type: none;
 	font-family: verdana, arial, Helvetica, sans-serif;
 }
 
-#navcontainer li { margin: 0; }
+#navcontainer p { 
+	margin:0px;
+}
 
+#navcontainer a{
+	display: block;
+	padding: 5px 10px;
+	width: 140px;
+	color: #000;
+	font-size: 14px;
+}
 #navcontainer a {
 	display: block;
 	padding: 5px 10px;
@@ -134,7 +143,7 @@ div#leftneg td{
 	border-bottom: 1px solid #333;
 	border-right: 1px solid #333;
 	font-weight: bold;
-	font-size: 16px;
+	font-size: 14px;
 	background-image: url(../images/vertical06.jpg);
 	background-repeat: no-repeat;
 	background-position: 0 0;
