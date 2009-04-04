@@ -146,22 +146,21 @@ div#leftneg td{
 	border-left: 1px solid #fff;
 	border-bottom: 1px solid #333;
 	border-right: 1px solid #333;
-	background-image: url(../images/vertical06.jpg);
-	background-repeat: no-repeat;
+	background-image: url(../images/glossyback.gif);
+	background-repeat: repeat;
 	background-position: 0 0;*/
 }
 
 #navcontainer a:hover {
 	color: #000;
-	text-decoration: none;
-	/*
+	/*text-decoration: none;
 	background-color: #889E88;	
 	border-top: 1px solid #333;
 	border-left: 1px solid #333;
 	border-bottom: 1px solid #fff;
 	border-right: 1px solid #fff;
-	background-image: url(../images/vertical06a.jpg);
-	background-repeat: no-repeat;
+	background-image: url(../images/glossyback2.gif);
+	background-repeat: repeat;
 	background-position: 0 0;*/
 }
 
