@@ -5,22 +5,29 @@
 .fir_title {
 	font-size:20px;
 	font-family:"Arial", "sans-serif";
-	text-indent:24px;
+	text-indent:+12px;
 	color:#2D73B9;
 }
 
 .sec_title {
 	font-size : 16px;
 	font-family:"Arial", "sans-serif";
-	text-indent:48px;
-	color:#00AEED;
+	text-indent:+36px;
+	color:#000000;
 }
 
 .text {
 	font-size : 16px;
 	font-family:"Arial", "sans-serif";
-	text-indent:64px;
-	color:#00AEED;
+	text-indent: +36px;
+	color:#000000;
+}
+
+.sec_text {
+	font-size : 16px;
+	font-family:"Arial", "sans-serif";
+	text-indent: +60px;
+	color:#000000;
 }
 
 .footer {
