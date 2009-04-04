@@ -33,7 +33,7 @@
 	position :relative; top:230px;
 	float:left;
     width:100%;
-    font-size:93%;
+    font-size:12px;
     line-height:normal;
 	border-bottom:1px solid #BCD2E6;
 }
@@ -134,7 +134,7 @@ div#leftneg td{
 	border-bottom: 1px solid #333;
 	border-right: 1px solid #333;
 	font-weight: bold;
-	font-size: .8em;
+	font-size: 16px;
 	background-image: url(../images/vertical06.jpg);
 	background-repeat: no-repeat;
 	background-position: 0 0;
