@@ -1,16 +1,26 @@
 #wrap {
+	width:100%;
+	margin-left:auto;
+	margin-right:auto;	
 }
 
 #content {
-	margin-top:20px;
+	padding-left:5px;
+	padding-top:20px;
+	padding-bottom:0px;
+	margin-top:0px;
+	margin-bottom:0px;
 	margin-left:40px;
-	border-right:2px dashed #BCD2E6;
+	border-right:1px solid #BCD2E6;
+	border-left:1px solid #BCD2E6;
 	width:70%;
 }
 
 
 #middle {
 	border-bottom:1px solid #BCD2E6;
+	margin-left:auto;
+	margin-right:auto;	
 }
 
 
