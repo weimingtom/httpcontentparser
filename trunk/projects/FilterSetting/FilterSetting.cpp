@@ -77,8 +77,9 @@ extern "C" int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/
 	g_hInstance = hInstance;
 
 	// ÐÞ¸´Ïî
+	//todo
 	AppInstallValidate validator(VALIDATE_COM);
-	validator.repair();
+	//validator.repair();
 
 	initializeSetting();
 	g_registerInfo.initialize();
