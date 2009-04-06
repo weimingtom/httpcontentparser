@@ -10,19 +10,19 @@
 	border-bottom:2px solid #BCD2E6;
 }
 
+.footer {
+	font-size : 16px;
+	font-family:"Arial", "sans-serif";
+	text-align:center;
+}
+
 .sec_title {
 	font-size : 16px;
 	font-family:"Arial", "sans-serif";
 	color:#000000;
 	padding-top:8px;
 	padding-bottom:0px;
-}
-
-
-.footer {
-	font-size : 16px;
-	font-family:"Arial", "sans-serif";
-	text-align:center;
+	text-indent:24px;
 }
 
 .div_text {
