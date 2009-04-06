@@ -159,6 +159,9 @@
 				RelativePath=".\Eyecare.rc">
 			</File>
 			<File
+				RelativePath=".\rt_manif.bin">
+			</File>
+			<File
 				RelativePath=".\small.ico">
 			</File>
 		</Filter>
