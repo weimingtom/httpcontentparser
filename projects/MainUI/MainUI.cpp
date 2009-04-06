@@ -62,9 +62,9 @@ BOOL CMainUIApp::InitInstance() {
 
 	CoInitialize(NULL);
 
-	// 自动修复
+	// 自动修复 TODO
 	AppInstallValidate validator(VLAIDATE_NONE);
-	validator.repair();
+	//validator.repair();
 
 
 	if (FALSE == Initialize()) {
