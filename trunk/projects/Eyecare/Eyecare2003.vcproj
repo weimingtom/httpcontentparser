@@ -167,6 +167,9 @@
 			<File
 				RelativePath=".\small.ico">
 			</File>
+			<File
+				RelativePath=".\res\top.bmp">
+			</File>
 		</Filter>
 		<File
 			RelativePath=".\res\Eyecare.exe..manifest">
