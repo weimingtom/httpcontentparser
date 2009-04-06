@@ -818,13 +818,8 @@ BEGIN
     BEGIN
         BLOCK "040903a8"
         BEGIN
-            VALUE "CompanyName", "Kaka"
-            VALUE "FileDescription", "TODO: "
             VALUE "FileVersion", "1.0.0.1"
             VALUE "InternalName", "MainUI.exe"
-            VALUE "LegalCopyright", "TODO: (C) "
-            VALUE "OriginalFilename", "MainUI.exe"
-            VALUE "ProductName", "Net..."
             VALUE "ProductVersion", "1.0.0.1"
         END
     END
