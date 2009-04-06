@@ -6,9 +6,7 @@
 #include <process.h>
 #include <stdlib.h>
 #include <io.h>
-
-
-
+#include <shell\shellutility.h>
 
 
 namespace {
@@ -45,6 +43,9 @@ int AppInstallValidate::repair(HMODULE hModule) {
 
 	// SPI
 	repairSPI();
+
+	// 修复外科扩展
+	repairShellExt();
 
 	// COM 服务
 	if (!serviceWorking()) {
@@ -190,6 +191,20 @@ bool AppInstallValidate::shouldRepairCOM() {
 		return true;
 }
 
+//===================================================
+// 修复外科应用程序
+
+void AppInstallValidate::repairShellExt() {
+	// 安装应用程序
+	if (isInstallCopyHook()) {
+		installCopyHook();
+	}
+
+	// 安装应用程序控制
+	if(isInstallAppControl()) {
+		installAppControl();
+	}
+}
 //===================================================
 // 设置当前错误号
 void AppInstallValidate::setErrNo(int new_error) {
