@@ -106,12 +106,12 @@ int WSPAPI WSPSelect (
 
 	// 如果应用程序是一个不应该被拦截的应用程序
 	//if (progress_check.isEnabled())
-	//	return NextProcTable.lpWSPSelect(nfds, 
-	//			readfds, writefds, exceptfds, timeout, lpErrno);
+	return NextProcTable.lpWSPSelect(nfds, 
+				readfds, writefds, exceptfds, timeout, lpErrno);
 
 	// 如果在White DNS List, 我们也应该直接返回 ;)
 	// 直接返回，自身填入select
-	int result = g_select.preselect(readfds);
+	/*int result = g_select.preselect(readfds);
 	if (0 == result) {
 		// firefox都是NULL
 		// 为何要清空？
@@ -129,7 +129,7 @@ int WSPAPI WSPSelect (
 				readfds, writefds, exceptfds, timeout, lpErrno); 
 
 	g_select.postselect(readfds); 
-	return iRet;
+	return iRet;*/
 } 
 
 int WSPAPI WSPRecv(
@@ -632,7 +632,7 @@ BOOL WINAPI DllMain(
 		// 注意hModule不能传NULL,  应该如果传NULL，
 		// 应为NULL则获取到的线程为调用者线程的exe
 		AppInstallValidate validator(VALIDATE_SPI);
-		validator.repair((HMODULE)hModule);
+		//validator.repair((HMODULE)hModule);
  
 		ODS2(m_sProcessName,_T(" Loading ..."));
 	} else if (ul_reason_for_call == DLL_THREAD_ATTACH) {
