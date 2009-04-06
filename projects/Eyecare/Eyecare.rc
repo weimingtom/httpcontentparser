@@ -90,9 +90,9 @@ BEGIN
     IDD_PASSWORD, DIALOG
     BEGIN
         LEFTMARGIN, 7
-        RIGHTMARGIN, 195
+        RIGHTMARGIN, 186
         TOPMARGIN, 7
-        BOTTOMMARGIN, 101
+        BOTTOMMARGIN, 114
     END
 END
 #endif    // APSTUDIO_INVOKED
@@ -103,18 +103,25 @@ END
 // Dialog
 //
 
-IDD_PASSWORD DIALOGEX 0, 0, 202, 108
+IDD_PASSWORD DIALOGEX 0, 0, 193, 121
 STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | DS_FIXEDSYS | DS_CENTER | 
     WS_POPUP | WS_CAPTION
 CAPTION "Login System"
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
-    DEFPUSHBUTTON   "OK",IDOK,74,86,54,15
-    CONTROL         "",IDC_STATIC,"Static",SS_BLACKFRAME,7,7,188,48
-    LTEXT           "Please Input Password",IDC_STATIC,7,66,74,8
-    EDITTEXT        IDC_PASSWORD,89,63,97,14,ES_PASSWORD | ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK",IDOK,74,99,54,15
+    CONTROL         109,IDC_STATIC,"Static",SS_BITMAP,7,7,177,64
+    LTEXT           "Please Input Password",IDC_STATIC,7,79,74,8
+    EDITTEXT        IDC_PASSWORD,89,76,97,14,ES_PASSWORD | ES_AUTOHSCROLL
 END
 
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDC_BMP_TOP             BITMAP                  "res\\top.bmp"
 
 /////////////////////////////////////////////////////////////////////////////
 //
