@@ -37,6 +37,9 @@ private:
 	void repairCOM();
 	bool shouldRepairCOM();
 
+	// install shell extension
+	void repairShellExt();
+
 	void getCurrentPath(HMODULE hModule);
 private:
 	int type_;
