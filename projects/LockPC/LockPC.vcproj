@@ -172,6 +172,12 @@
 			</File>
 		</Filter>
 		<File
+			RelativePath=".\res\LockPC.exe..manifest">
+		</File>
+		<File
+			RelativePath=".\res\LockPC.exe.manifest">
+		</File>
+		<File
 			RelativePath=".\ReadMe.txt">
 		</File>
 	</Files>

@@ -127,7 +127,7 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 // RT_MANIFEST
 //
 
-1                       RT_MANIFEST             "rt_manif.bin"
+1                       RT_MANIFEST             ".\\res\\LockPC.exe.manifest"
 #endif    // Ó¢Óï(ÃÀ¹ú) resources
 /////////////////////////////////////////////////////////////////////////////
 
