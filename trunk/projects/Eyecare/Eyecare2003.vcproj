@@ -153,6 +153,9 @@
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx"
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}">
 			<File
+				RelativePath=".\bin1.bin">
+			</File>
+			<File
 				RelativePath=".\Eyecare.ico">
 			</File>
 			<File
@@ -165,6 +168,15 @@
 				RelativePath=".\small.ico">
 			</File>
 		</Filter>
+		<File
+			RelativePath=".\res\Eyecare.exe..manifest">
+		</File>
+		<File
+			RelativePath=".\res\Eyecare.exe.manifest">
+		</File>
+		<File
+			RelativePath=".\res\LockPC.exe..manifest">
+		</File>
 		<File
 			RelativePath=".\ReadMe.txt">
 		</File>
