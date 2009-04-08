@@ -129,6 +129,10 @@
 #define IDI_KEY                         200
 #define IDB_TRAY_HISTORY_WEBSITE        202
 #define IDB_TRAY_HISTORY_SEARCH         203
+#define IDD_DLG_REGISTER                204
+#define IDB_BMP_LOGO                    207
+#define IDB_BMP_SMALL_LOGO              208
+#define IDI_ICO_SMALL_LOGO              212
 #define IDC_TREE_NAVIG                  1000
 #define IDS_TREE_ROOT                   1001
 #define IDS_TREE_DNS_RULE               1002
@@ -267,7 +271,6 @@
 #define IDC_CHK_SWITCHCHILDREN_WHEN_CLOSE 1117
 #define IDC_CHK_ASKME_AGAIN             1118
 #define IDC_CHK_ASKME_AGAIN_WHENCLOSE   1118
-#define IDB_DOCKBAR                     2004
 #define IDC_EDIT1                       4011
 #define IDC_EDIT2                       4012
 #define IDC_EDT_RETRY                   4013
@@ -308,7 +311,7 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        204
+#define _APS_NEXT_RESOURCE_VALUE        213
 #define _APS_NEXT_COMMAND_VALUE         32813
 #define _APS_NEXT_CONTROL_VALUE         1118
 #define _APS_NEXT_SYMED_VALUE           112
