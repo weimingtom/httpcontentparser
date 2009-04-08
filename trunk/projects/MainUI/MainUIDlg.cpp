@@ -9,6 +9,7 @@
 #include ".\dlgprogramcontrol.h"
 #include ".\DlgImageBrowser.h"
 #include ".\services.h"
+#include ".\dlgregister.h"
 #include ".\globalvariable.h"
 #include <app_constants.h>
 #include <apputility.h>
@@ -29,36 +30,6 @@ extern HWND share_hwnd;
 
 #define ID_TIMER    100
 #define TIME_ESCPSE	500
-
-// 用于应用程序“关于”菜单项的 CAboutDlg 对话框
-
-class CAboutDlg : public CDialog
-{
-public:
-	CAboutDlg();
-
-// 对话框数据
-	enum { IDD = IDD_ABOUTBOX };
-
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 支持
-
-// 实现
-protected:
-	DECLARE_MESSAGE_MAP()
-};
-
-CAboutDlg::CAboutDlg() : CDialog(CAboutDlg::IDD)
-{
-}
-
-void CAboutDlg::DoDataExchange(CDataExchange* pDX)
-{
-	CDialog::DoDataExchange(pDX);
-}
-
-BEGIN_MESSAGE_MAP(CAboutDlg, CDialog)
-END_MESSAGE_MAP()
 
 
 // CMainUIDlg 对话框
@@ -241,7 +212,7 @@ BOOL CMainUIDlg::OnInitDialog()
 void CMainUIDlg::OnSysCommand(UINT nID, LPARAM lParam)
 {
 	if ((nID & 0xFFF0) == IDM_ABOUTBOX) {
-		CAboutDlg dlgAbout;
+		CDlgRegister dlgAbout;
 		dlgAbout.DoModal();
 	} else if (nID == SC_MINIMIZE) {
 		HideMainUI();
