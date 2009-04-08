@@ -6,7 +6,6 @@
 #define IDC_CLEAR                       2
 #define IDC_SEARCH_CLEAR                3
 #define IDM_ABOUTBOX                    0x0010
-#define IDD_ABOUTBOX                    100
 #define IDS_ABOUTBOX                    101
 #define IDC_TRAY_MENU                   101
 #define IDC_STA_PASSWORD                101
