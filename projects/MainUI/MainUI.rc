@@ -86,6 +86,7 @@ IDI_MODEL_PROTECTED     ICON                    "res\\shield.ico"
 IDI_MODEL_PARENT        ICON                    "res\\shield_delete.ico"
 IDI_LOCK                ICON                    "res\\lock.ico"
 IDI_KEY                 ICON                    "res\\key.ico"
+IDI_ICO_SMALL_LOGO      ICON                    "res\\SmallLogo.ico"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -109,6 +110,8 @@ IDB_TRAY_OPTION         BITMAP                  "res\\option.bmp"
 IDB_TRAY_DESKTOPIMAGE   BITMAP                  "D:\\workspace\\current\\projects\\MainUI\\res\\camera.bmp"
 IDB_TRAY_HISTORY_WEBSITE BITMAP                  "res\\website.bmp"
 IDB_TRAY_HISTORY_SEARCH BITMAP                  "res\\search.bmp"
+IDB_BMP_LOGO            BITMAP                  "res\\logo.bmp"
+IDB_BMP_SMALL_LOGO      BITMAP                  "res\\SmallLogo.bmp"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -129,6 +132,22 @@ BEGIN
                     IDC_STATIC,11,15,144,8
 END
 
+IDD_DLG_REGISTER DIALOGEX 0, 0, 188, 95
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | 
+    WS_SYSMENU
+CAPTION "Register"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,72,74,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,131,74,50,14
+    EDITTEXT        IDC_EDIT1,65,49,116,14,ES_AUTOHSCROLL
+    LTEXT           "Serial Number:",IDC_STATIC,9,53,49,8
+    LTEXT           "Version 1.0.1213.0",IDC_STATIC,112,14,61,13
+    ICON            IDI_ICO_SMALL_LOGO,IDC_STATIC,15,15,21,20
+    LTEXT           "Web Snowman",IDC_STATIC,54,14,48,16
+    LTEXT           "Copyright (C) 2009",IDC_STATIC,111,29,70,13
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -144,6 +163,14 @@ BEGIN
         RIGHTMARGIN, 155
         TOPMARGIN, 7
         BOTTOMMARGIN, 67
+    END
+
+    IDD_DLG_REGISTER, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 181
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 88
     END
 END
 #endif    // APSTUDIO_INVOKED
