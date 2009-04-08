@@ -150,6 +150,7 @@
 #define IDC_BTN_HISTORY                 1005
 #define IDC_VIEW_HISTORY                1005
 #define IDC_BTN_HISTORY_PAGES           1005
+#define IDC_REGISTER                    1005
 #define IDC_APPLY                       1006
 #define IDC_LIST1                       1006
 #define IDC_CHK_PNG                     1006
@@ -271,6 +272,7 @@
 #define IDC_CHK_SWITCHCHILDREN_WHEN_CLOSE 1117
 #define IDC_CHK_ASKME_AGAIN             1118
 #define IDC_CHK_ASKME_AGAIN_WHENCLOSE   1118
+#define IDC_STA_REGISTER_INFO           1118
 #define IDC_EDIT1                       4011
 #define IDC_EDIT2                       4012
 #define IDC_EDT_RETRY                   4013
@@ -313,7 +315,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        213
 #define _APS_NEXT_COMMAND_VALUE         32813
-#define _APS_NEXT_CONTROL_VALUE         1118
+#define _APS_NEXT_CONTROL_VALUE         1119
 #define _APS_NEXT_SYMED_VALUE           112
 #endif
 #endif

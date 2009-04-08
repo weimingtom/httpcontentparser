@@ -25,4 +25,5 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	CGuiGroupBox m_staAbout;
+	afx_msg void OnBnClickedRegister();
 };
