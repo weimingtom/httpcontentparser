@@ -132,6 +132,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SoftwareEncrypt", "Register
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestSoftwareEncrypt", "test\TestSoftwareEncrypt\TestSoftwareEncrypt.vcproj", "{0B5E78ED-3E0A-4DBE-B590-B283DBF8D98C}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfiguration) = preSolution
 		Debug = Debug
@@ -366,6 +370,14 @@ Global
 		{9E22A563-69C9-48A7-AFFF-4E3D41077852}.Release.Build.0 = Release|Win32
 		{9E22A563-69C9-48A7-AFFF-4E3D41077852}.Release Unicode.ActiveCfg = Release|Win32
 		{9E22A563-69C9-48A7-AFFF-4E3D41077852}.Release Unicode.Build.0 = Release|Win32
+		{0B5E78ED-3E0A-4DBE-B590-B283DBF8D98C}.Debug.ActiveCfg = Debug|Win32
+		{0B5E78ED-3E0A-4DBE-B590-B283DBF8D98C}.Debug.Build.0 = Debug|Win32
+		{0B5E78ED-3E0A-4DBE-B590-B283DBF8D98C}.Debug Unicode.ActiveCfg = Debug|Win32
+		{0B5E78ED-3E0A-4DBE-B590-B283DBF8D98C}.Debug Unicode.Build.0 = Debug|Win32
+		{0B5E78ED-3E0A-4DBE-B590-B283DBF8D98C}.Release.ActiveCfg = Release|Win32
+		{0B5E78ED-3E0A-4DBE-B590-B283DBF8D98C}.Release.Build.0 = Release|Win32
+		{0B5E78ED-3E0A-4DBE-B590-B283DBF8D98C}.Release Unicode.ActiveCfg = Release|Win32
+		{0B5E78ED-3E0A-4DBE-B590-B283DBF8D98C}.Release Unicode.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 	EndGlobalSection
