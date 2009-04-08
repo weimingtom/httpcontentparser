@@ -4,6 +4,8 @@
 #include "stdafx.h"
 #include "MainUI.h"
 #include "DlgAbout.h"
+#include ".\dlgabout.h"
+#include ".\Dlgregister.h"
 
 // CDlgAbout 对话框
 
@@ -33,7 +35,13 @@ void CDlgAbout::DoDataExchange(CDataExchange* pDX)
 
 
 BEGIN_MESSAGE_MAP(CDlgAbout, CDialog)
+	ON_BN_CLICKED(IDC_REGISTER, OnBnClickedRegister)
 END_MESSAGE_MAP()
 
 
 // CDlgAbout 消息处理程序
+
+void CDlgAbout::OnBnClickedRegister() {
+	CDlgRegister dlg;
+	dlg.DoModal();
+}

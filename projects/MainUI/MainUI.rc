@@ -132,22 +132,6 @@ BEGIN
                     IDC_STATIC,11,15,144,8
 END
 
-IDD_DLG_REGISTER DIALOGEX 0, 0, 188, 95
-STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | 
-    WS_SYSMENU
-CAPTION "Register"
-FONT 8, "MS Shell Dlg", 400, 0, 0x1
-BEGIN
-    DEFPUSHBUTTON   "OK",IDOK,72,74,50,14
-    PUSHBUTTON      "Cancel",IDCANCEL,131,74,50,14
-    EDITTEXT        IDC_EDIT1,65,49,116,14,ES_AUTOHSCROLL
-    LTEXT           "Serial Number:",IDC_STATIC,9,53,49,8
-    LTEXT           "Version 1.0.1213.0",IDC_STATIC,112,14,61,13
-    ICON            IDI_ICO_SMALL_LOGO,IDC_STATIC,15,15,21,20
-    LTEXT           "Web Snowman",IDC_STATIC,54,14,48,16
-    LTEXT           "Copyright (C) 2009",IDC_STATIC,111,29,70,13
-END
-
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -163,14 +147,6 @@ BEGIN
         RIGHTMARGIN, 155
         TOPMARGIN, 7
         BOTTOMMARGIN, 67
-    END
-
-    IDD_DLG_REGISTER, DIALOG
-    BEGIN
-        LEFTMARGIN, 7
-        RIGHTMARGIN, 181
-        TOPMARGIN, 7
-        BOTTOMMARGIN, 88
     END
 END
 #endif    // APSTUDIO_INVOKED
@@ -253,7 +229,23 @@ IDD_DLG_ABOUT DIALOGEX 0, 0, 222, 195
 STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
-    LTEXT           "About",IDC_STA_ABOUT,7,7,208,181
+    LTEXT           "About",IDC_STA_ABOUT,7,176,208,8,NOT WS_VISIBLE
+    LTEXT           "Version 1.0.1213.0",IDC_STATIC,128,26,61,13
+    ICON            IDI_ICO_SMALL_LOGO,IDC_STATIC,23,26,21,20
+    LTEXT           "Web Snowman",IDC_STATIC,62,26,48,16
+    LTEXT           "Copyright (C) 2009",IDC_STATIC,129,41,70,13
+    GROUPBOX        "About",IDC_STATIC,7,4,208,58
+    GROUPBOX        "Register",IDC_STATIC,7,71,208,41
+    PUSHBUTTON      "Register",IDC_REGISTER,151,87,50,14
+    LTEXT           "Thanks for your registering.",IDC_STA_REGISTER_INFO,22,
+                    89,90,8
+    GROUPBOX        "Contact Us",IDC_STATIC,7,123,208,61
+    LTEXT           "www.family007.com",IDC_STATIC,105,139,66,8
+    LTEXT           "Out Website:",IDC_STATIC,41,139,44,8
+    LTEXT           "Email:",IDC_STATIC,41,152,20,8
+    LTEXT           "www.family007.com",IDC_STATIC,105,152,66,8
+    LTEXT           "Emaillist",IDC_STATIC,41,165,26,8
+    LTEXT           "www.family007.com",IDC_STATIC,105,165,66,8
 END
 
 IDD_DLG_DNS_BLACKLIST DIALOGEX 0, 0, 250, 200
@@ -594,6 +586,22 @@ BEGIN
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,11,3,99,10
 END
 
+IDD_DLG_REGISTER DIALOGEX 0, 0, 188, 95
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | 
+    WS_SYSMENU
+CAPTION "Register"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,72,74,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,131,74,50,14
+    EDITTEXT        IDC_EDIT1,65,49,116,14,ES_AUTOHSCROLL
+    LTEXT           "Serial Number:",IDC_STATIC,9,53,49,8
+    LTEXT           "Version 1.0.1213.0",IDC_STATIC,112,14,61,13
+    ICON            IDI_ICO_SMALL_LOGO,IDC_STATIC,15,15,21,20
+    LTEXT           "Web Snowman",IDC_STATIC,54,14,48,16
+    LTEXT           "Copyright (C) 2009",IDC_STATIC,111,29,70,13
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -819,6 +827,14 @@ BEGIN
         TOPMARGIN, 3
         BOTTOMMARGIN, 192
     END
+
+    IDD_DLG_REGISTER, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 181
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 88
+    END
 END
 #endif    // APSTUDIO_INVOKED
 
@@ -912,7 +928,7 @@ BEGIN
     IDS_COMMENT_IMAGE       "aaa\r\n"
     IDS_COMMENT_TEXT        "aaa\r\n"
     IDS_TREE_OPTIONS        "Options"
-    IDS_TREE_EYECARE        "Eyecare"
+    IDS_TREE_EYECARE        "Eyelight protect"
     IDS_TRAYMENU_SHOWUI     "Show Main Dialog"
     IDS_TRAYMENU_HIDEUI     "Hide Main Dialog"
     IDS_TREE_TOOLSETTING    "Tools Setting"
@@ -922,7 +938,7 @@ END
 STRINGTABLE 
 BEGIN
     IDS_TREE_ROOT           "Family007"
-    IDS_TREE_DNS_RULE       "DNS Black List"
+    IDS_TREE_DNS_RULE       "Black Websites List"
     IDS_TREE_IMAGE_RULE     "Image Content"
     IDS_TREE_SEARCH_RULE    "Black Search Word"
     IDS_TREE_CONTENT_RULE   "Text Content"
