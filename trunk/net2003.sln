@@ -91,10 +91,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Hardware", "libproject\Hard
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Register", "libproject\Register\Register.vcproj", "{983A564C-7A5D-4088-9113-CD1E7FDAC29A}"
-	ProjectSection(ProjectDependencies) = postProject
-	EndProjectSection
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Crypt", "libproject\crypt\crypt.vcproj", "{C99B0EB6-4E0D-48A0-A3A6-CF82F903AB5A}"
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
@@ -129,6 +125,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Exts", "shell\exts\exts.vcp
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ShextUtility", "shell\shextUtility\shextUtility.vcproj", "{6F0DED44-0FBB-494F-8C37-C9BB08CD1D1B}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SoftwareEncrypt", "RegisterUtility\SoftwareEncrypt\SoftwareEncrypt.vcproj", "{9E22A563-69C9-48A7-AFFF-4E3D41077852}"
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
 EndProject
@@ -286,14 +286,6 @@ Global
 		{EC65E27D-9148-41F4-BAB3-1C6E78F6419A}.Release.Build.0 = Release|Win32
 		{EC65E27D-9148-41F4-BAB3-1C6E78F6419A}.Release Unicode.ActiveCfg = Release|Win32
 		{EC65E27D-9148-41F4-BAB3-1C6E78F6419A}.Release Unicode.Build.0 = Release|Win32
-		{983A564C-7A5D-4088-9113-CD1E7FDAC29A}.Debug.ActiveCfg = Debug|Win32
-		{983A564C-7A5D-4088-9113-CD1E7FDAC29A}.Debug.Build.0 = Debug|Win32
-		{983A564C-7A5D-4088-9113-CD1E7FDAC29A}.Debug Unicode.ActiveCfg = Debug|Win32
-		{983A564C-7A5D-4088-9113-CD1E7FDAC29A}.Debug Unicode.Build.0 = Debug|Win32
-		{983A564C-7A5D-4088-9113-CD1E7FDAC29A}.Release.ActiveCfg = Release|Win32
-		{983A564C-7A5D-4088-9113-CD1E7FDAC29A}.Release.Build.0 = Release|Win32
-		{983A564C-7A5D-4088-9113-CD1E7FDAC29A}.Release Unicode.ActiveCfg = Release|Win32
-		{983A564C-7A5D-4088-9113-CD1E7FDAC29A}.Release Unicode.Build.0 = Release|Win32
 		{C99B0EB6-4E0D-48A0-A3A6-CF82F903AB5A}.Debug.ActiveCfg = Debug|Win32
 		{C99B0EB6-4E0D-48A0-A3A6-CF82F903AB5A}.Debug.Build.0 = Debug|Win32
 		{C99B0EB6-4E0D-48A0-A3A6-CF82F903AB5A}.Debug Unicode.ActiveCfg = Debug|Win32
@@ -366,6 +358,14 @@ Global
 		{6F0DED44-0FBB-494F-8C37-C9BB08CD1D1B}.Release.Build.0 = Release|Win32
 		{6F0DED44-0FBB-494F-8C37-C9BB08CD1D1B}.Release Unicode.ActiveCfg = Release|Win32
 		{6F0DED44-0FBB-494F-8C37-C9BB08CD1D1B}.Release Unicode.Build.0 = Release|Win32
+		{9E22A563-69C9-48A7-AFFF-4E3D41077852}.Debug.ActiveCfg = Debug|Win32
+		{9E22A563-69C9-48A7-AFFF-4E3D41077852}.Debug.Build.0 = Debug|Win32
+		{9E22A563-69C9-48A7-AFFF-4E3D41077852}.Debug Unicode.ActiveCfg = Debug|Win32
+		{9E22A563-69C9-48A7-AFFF-4E3D41077852}.Debug Unicode.Build.0 = Debug|Win32
+		{9E22A563-69C9-48A7-AFFF-4E3D41077852}.Release.ActiveCfg = Release|Win32
+		{9E22A563-69C9-48A7-AFFF-4E3D41077852}.Release.Build.0 = Release|Win32
+		{9E22A563-69C9-48A7-AFFF-4E3D41077852}.Release Unicode.ActiveCfg = Release|Win32
+		{9E22A563-69C9-48A7-AFFF-4E3D41077852}.Release Unicode.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 	EndGlobalSection
