@@ -3,8 +3,7 @@
 
 // CDlgRegister ¶Ô»°¿ò
 
-class CDlgRegister : public CDialog
-{
+class CDlgRegister : public CDialog {
 	DECLARE_DYNAMIC(CDlgRegister)
 
 public:
