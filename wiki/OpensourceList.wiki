@@ -1,0 +1,27 @@
+#summary 详述程序使用的开源程序
+#labels Opensource
+
+= Introduction =
+
+本篇文章将主要介绍程序使用的开源库
+
+
+= Details =
+
+Add your content here.  Format your content with:
+  *GuiLib1.1.5*
+  
+   一个MFC extentsion库， 软件使用了该库提供的EditListBox及CGroupBox。不过好像很久没有更新了。其主页为http://www.beyondata.com/.
+  
+  *cURL and cURLLib*
+  这个库提供了各种传输层之上协议的解析功能及一系列的工具。其地址为http://curl.haxx.se/
+  
+  *tinyxml_2_5_3.tar*
+  一个非常好用小巧的XML解析工具，http://www.grinninglizard.com/tinyxml/
+
+  *cppunit-1.12.1.rar*
+  一个C++的应用单元测试工具.
+
+  *UltimateToolbox93*
+  一个开源的MFC界面工具， 还包括一些其他的东西。
+  
