@@ -9,8 +9,8 @@
 = Details =
 
 Add your content here.  Format your content with:
-  *GuiLib1.1.5*
-  
+
+  *GuiLib1.1.5*  
    一个MFC extentsion库， 软件使用了该库提供的EditListBox及CGroupBox。不过好像很久没有更新了。其主页为http://www.beyondata.com/.
   
   *cURL and cURLLib*
