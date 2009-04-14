@@ -9,9 +9,9 @@
 
 // CDlgRegister ¶Ô»°¿ò
 
-IMPLEMENT_DYNAMIC(CDlgRegister, CDialog)
+IMPLEMENT_DYNAMIC(CDlgRegister, CPopupDialog)
 CDlgRegister::CDlgRegister(CWnd* pParent /*=NULL*/)
-	: CDialog(CDlgRegister::IDD, pParent) {
+	: CPopupDialog(CDlgRegister::IDD, pParent) {
 }
 
 CDlgRegister::~CDlgRegister() {
@@ -23,7 +23,7 @@ void CDlgRegister::DoDataExchange(CDataExchange* pDX)
 }
 
 
-BEGIN_MESSAGE_MAP(CDlgRegister, CDialog)
+BEGIN_MESSAGE_MAP(CDlgRegister, CPopupDialog)
 	ON_BN_CLICKED(IDOK, OnBnClickedOk)
 	ON_BN_CLICKED(IDCANCEL, OnBnClickedCancel)
 END_MESSAGE_MAP()

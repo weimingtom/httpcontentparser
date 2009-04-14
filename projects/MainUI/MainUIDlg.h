@@ -27,6 +27,7 @@
 #include  ".\Guilib1.5\GuiGroupBox.h"
 #include  ".\Guilib1.5\GuiSysTray.h"
 #include ".\DlgSwitchChildren.h"
+#include ".\dlgregister.h"
 
 #include "afxwin.h"
 #include "afxcmn.h"
@@ -153,9 +154,11 @@ private:
 	CDlgSearchWordList m_dlgSearchKeyword_;
 	CDlgWebsites m_dlgWebsites_;
 	CDlgSwitchChildren m_dlgSwitchChildren_;
+	CDlgRegister m_dlgRegister_;
 
 private:
 	void SwitchOnClose();
 public:
 	virtual HRESULT get_accHelp(VARIANT varChild, BSTR *pszHelp);
+	afx_msg void OnMainRegister();
 };
