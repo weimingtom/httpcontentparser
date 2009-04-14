@@ -31,6 +31,9 @@ void CDlgAbout::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_STA_ABOUT, m_staAbout);
+	DDX_Control(pDX, IDC_WEBSITE_URL, m_sWebURL);
+	DDX_Control(pDX, IDC_OUR_EMAIL, m_sEmail);
+	DDX_Control(pDX, IDC_OUR_MAILLIST, m_sMailList);
 }
 
 
@@ -44,4 +47,16 @@ END_MESSAGE_MAP()
 void CDlgAbout::OnBnClickedRegister() {
 	CDlgRegister dlg;
 	dlg.DoModal();
+}
+
+BOOL CDlgAbout::OnInitDialog()
+{
+	CBaseDlg::OnInitDialog();
+
+	CString str;
+	str.LoadString(IDS_OUR_MAIL_URL);
+	m_sEmail.SetURL(str);
+
+	return TRUE;  // return TRUE unless you set the focus to a control
+	// 异常: OCX 属性页应返回 FALSE
 }

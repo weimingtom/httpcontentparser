@@ -219,7 +219,7 @@ FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
     LTEXT           "About",IDC_STA_ABOUT,7,176,208,8,NOT WS_VISIBLE
     LTEXT           "Version 1.0.1213.0",IDC_STATIC,128,26,61,13
-    ICON            IDI_ICO_SMALL_LOGO,IDC_STATIC,23,26,21,20
+    ICON            IDI_ICO_SMALL_LOGO,IDC_STATIC,23,26,20,20
     LTEXT           "Web Snowman",IDC_STATIC,62,26,48,16
     LTEXT           "Copyright (C) 2009",IDC_STATIC,129,41,70,13
     GROUPBOX        "About",IDC_STATIC,7,4,208,58
@@ -228,12 +228,12 @@ BEGIN
     LTEXT           "Thanks for your registering.",IDC_STA_REGISTER_INFO,22,
                     89,90,8
     GROUPBOX        "Contact Us",IDC_STATIC,7,123,208,61
-    LTEXT           "www.family007.com",IDC_STATIC,105,139,66,8
+    LTEXT           "www.family007.com",IDC_WEBSITE_URL,105,139,66,8
     LTEXT           "Out Website:",IDC_STATIC,41,139,44,8
     LTEXT           "Email:",IDC_STATIC,41,152,20,8
-    LTEXT           "www.family007.com",IDC_STATIC,105,152,66,8
+    LTEXT           "ynkhpp@ynkhpp.com",IDC_OUR_EMAIL,105,152,70,8
     LTEXT           "Emaillist",IDC_STATIC,41,165,26,8
-    LTEXT           "www.family007.com",IDC_STATIC,105,165,66,8
+    LTEXT           "www.family007.com",IDC_OUR_MAILLIST,105,165,66,8
 END
 
 IDD_DLG_DNS_BLACKLIST DIALOGEX 0, 0, 250, 200
@@ -974,6 +974,7 @@ BEGIN
     IDS_COM_ERRO_COCREATE_FIALED "Launch Service Failed!"
     IDS_TIP_SETTING_CHANGED "Setting have been changed, Would you like apply the change?"
     IDS_APP_NAME            "Family007"
+    IDS_OUR_MAIL_URL        "mailto:ynkhpp@gmail.com"
 END
 
 #endif    // Ó¢Óï(ÃÀ¹ú) resources
