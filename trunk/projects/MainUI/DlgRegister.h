@@ -2,8 +2,9 @@
 #define _MAINUI_CDLGREGISTER_H__
 
 // CDlgRegister ¶Ô»°¿ò
+#include ".\popupdialog.h"
 
-class CDlgRegister : public CDialog {
+class CDlgRegister : public CPopupDialog {
 	DECLARE_DYNAMIC(CDlgRegister)
 
 public:

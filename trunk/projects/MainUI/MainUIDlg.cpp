@@ -8,6 +8,7 @@
 #include ".\DlgImageBrowser.h"
 #include ".\dlgprogramcontrol.h"
 #include ".\DlgImageBrowser.h"
+#include ".\dlgregister.h"
 #include ".\services.h"
 #include ".\dlgregister.h"
 #include ".\globalvariable.h"
@@ -77,6 +78,7 @@ BEGIN_MESSAGE_MAP(CMainUIDlg, CDialog)
 	ON_COMMAND(ID_WEBHISTORY_IMAGES, OnWebhistoryImages)
 	ON_COMMAND(ID_WEBHISTORY_SEARCHKEYWORD, OnWebhistorySearchkeyword)
 	ON_COMMAND(ID_WEBHISTORY_WEBSITES, OnWebhistoryWebsites)
+	ON_COMMAND(ID_MAIN_REGISTER, OnMainRegister)
 END_MESSAGE_MAP()
 
 // CMainUIDlg 消息处理程序
@@ -757,4 +759,8 @@ void CMainUIDlg::OnWebhistoryWebsites()
 HRESULT CMainUIDlg::get_accHelp(VARIANT varChild, BSTR *pszHelp)
 {
 	return CDialog::get_accHelp(varChild, pszHelp);
+}
+
+void CMainUIDlg::OnMainRegister() {
+	m_dlgRegister_.DoModal();
 }

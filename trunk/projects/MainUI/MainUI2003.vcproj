@@ -453,16 +453,6 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="UtilitydLG"
-			Filter="">
-			<File
-				RelativePath=".\DlgRegister.cpp">
-			</File>
-			<File
-				RelativePath=".\DlgRegister.h">
-			</File>
-		</Filter>
-		<Filter
 			Name="Service"
 			Filter="">
 			<File
@@ -603,7 +593,7 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="tools"
+			Name="UtilitydLG"
 			Filter="">
 			<File
 				RelativePath=".\DlgChangePassword.cpp">
@@ -622,6 +612,12 @@
 			</File>
 			<File
 				RelativePath=".\DlgImageBrowser.h">
+			</File>
+			<File
+				RelativePath=".\DlgRegister.cpp">
+			</File>
+			<File
+				RelativePath=".\DlgRegister.h">
 			</File>
 			<File
 				RelativePath=".\DlgSeachWordList.cpp">
