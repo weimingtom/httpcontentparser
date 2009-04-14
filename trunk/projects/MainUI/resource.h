@@ -70,6 +70,7 @@
 #define IDS_TIP_SETTING_CHANGED         141
 #define IDD_DLG_TOOLS                   142
 #define IDS_APP_NAME                    142
+#define IDS_OUR_MAIL_URL                143
 #define IDD_DLG_EYECARE                 144
 #define IDD_LEV1_TIME_RULE              147
 #define IDD_DIALOG1                     149
@@ -272,6 +273,9 @@
 #define IDC_CHK_ASKME_AGAIN             1118
 #define IDC_CHK_ASKME_AGAIN_WHENCLOSE   1118
 #define IDC_STA_REGISTER_INFO           1118
+#define IDC_WEBSITE_URL                 1119
+#define IDC_OUR_EMAIL                   1120
+#define IDC_OUR_MAILLIST                1121
 #define IDC_EDIT1                       4011
 #define IDC_EDIT2                       4012
 #define IDC_EDT_RETRY                   4013
@@ -314,7 +318,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        213
 #define _APS_NEXT_COMMAND_VALUE         32813
-#define _APS_NEXT_CONTROL_VALUE         1119
+#define _APS_NEXT_CONTROL_VALUE         1122
 #define _APS_NEXT_SYMED_VALUE           112
 #endif
 #endif
