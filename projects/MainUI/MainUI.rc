@@ -448,8 +448,8 @@ BEGIN
     CONTROL         "Save All Web Page",IDC_CHK_ALLPAGES,"Button",
                     BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,155,55,88,
                     10
-    CONTROL         "Save All website",IDC_CHK_ALLWEBSITES,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,44,45,88,10
+    CONTROL         "Save All website visited",IDC_CHK_ALLWEBSITES,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,44,50,88,10
     PUSHBUTTON      "Clear",IDC_BUN_CLEAR_CACHE,180,100,50,14
     PUSHBUTTON      "View Websites",IDC_BTN_HISTORY_PAGES,31,164,79,14
     GROUPBOX        "History",IDC_STA_HISTORY,7,80,236,52
@@ -463,7 +463,7 @@ BEGIN
     PUSHBUTTON      "View Search Word",IDC_BTN_HISTORY_SEACHWORD,134,165,81,
                     14
     CONTROL         "Save Search Keyword",IDC_CHK_SEARCH_KEYWORD,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,45,28,88,10
+                    BS_AUTOCHECKBOX | WS_TABSTOP,44,28,88,10
 END
 
 IDD_DLG_IMAGERULES DIALOGEX 0, 0, 257, 199
