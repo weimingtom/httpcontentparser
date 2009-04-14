@@ -11,8 +11,9 @@
 
 // 保存软件安装的注册表信息
 #define REG_SOFTWARE_DIR			_T("SOFTWARE\\family007")
-#define REG_SOFTWARE_INSTALLPATH	_T("InstallPath")
-#define REG_SOFTWARE_INSTALLDATE	_T("InstallKey")		// 安装日期
+#define REG_SOFTWARE_INSTALLPATH		_T("InstallPath")
+#define REG_SOFTWARE_INSTALLDATE		_T("InstallKey")		// 安装日期
+#define REG_SOFTWARE_PRODUCTSN		_T("ProductSN")	// 序列号
 
 #define MAX_PROTOCOL_CATALOG_LENTH	sizeof(WSAPROTOCOL_INFOW) + MAX_PATH
 
@@ -77,5 +78,8 @@ TCHAR * getHotkeyname(const int type) {
 #define EYECARE_MUTEX_NAME		TEXT("8EF40F9D-71A7-40d9-A229-599105419DAE")
 
 #define HOME_WEBSITES			TEXT("www.family007.com")
+
+// 用来存储安装时间，文件没有什么用
+#define WINDOWS_FILE_TO_STORE_INSTALLDATE	TEXT("snowman.ini")
 
 #endif // _SPI_INSTALLER_SPIDEFINES_H__
