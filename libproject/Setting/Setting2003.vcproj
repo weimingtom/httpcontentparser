@@ -57,7 +57,6 @@ copy .\autoclean.h ..\..\include
 copy .\configitem.h ..\..\include
 copy .\hotkeysetting.h ..\..\include
 copy .\timeoutswitch.h ..\..\include
-copy .\installdate.h ..\..\include
 copy .\programcontrol.h ..\..\include
 copy .\miscsetting.h ..\..\include
 "/>
@@ -116,7 +115,6 @@ copy .\autoclean.h ..\..\include
 copy .\configitem.h ..\..\include
 copy .\hotkeysetting.h ..\..\include
 copy .\timeoutswitch.h ..\..\include
-copy .\installdate.h ..\..\include
 copy .\programcontrol.h ..\..\include
 copy .\miscsetting.h ..\..\include
 "/>
@@ -313,16 +311,6 @@ copy .\miscsetting.h ..\..\include
 			</File>
 			<File
 				RelativePath=".\TimeoutSwitch.h">
-			</File>
-		</Filter>
-		<Filter
-			Name="Installtime"
-			Filter="">
-			<File
-				RelativePath=".\InstallDate.cpp">
-			</File>
-			<File
-				RelativePath=".\InstallDate.h">
 			</File>
 		</Filter>
 		<Filter
