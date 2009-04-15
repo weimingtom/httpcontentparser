@@ -3,7 +3,9 @@
 
 #include "stdafx.h"
 #include "BaseEncryptTest.h"
+#include ".\installdatetest.h"
 
+CPPUNIT_TEST_SUITE_REGISTRATION(InstallDateTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(BaseEncryptTest);
 
 int _tmain(int argc, _TCHAR* argv[]) {

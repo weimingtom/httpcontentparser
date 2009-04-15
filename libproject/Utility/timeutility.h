@@ -15,6 +15,8 @@ struct tm tmfromstring(const TCHAR * timestr);
 
 TCHAR * USFormatTime(SYSTEMTIME  ft, TCHAR *buffer, int len);
 TCHAR * USFormatTime(FILETIME ft, TCHAR * buffer, int len);
+
+FILETIME ft_from_tm(const tm &t);
 };
 
 #endif  // _UTILITY_TIMEUTILITY_H__

@@ -7,3 +7,9 @@
 
 #include <tchar.h>
 #include <windows.h>
+
+#ifdef _DEBUG
+#	pragma comment(lib, "utilityd.lib")
+#else 
+#	pragma comment(lib, "utility.lib")
+#endif

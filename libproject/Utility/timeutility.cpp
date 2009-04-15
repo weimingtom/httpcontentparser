@@ -25,6 +25,22 @@ namespace timeutility {
 //	return (float)(s1 - s2);
 //}
 
+FILETIME ft_from_tm(const tm &t) {
+	SYSTEMTIME st = {0};
+	st.wYear = t.tm_mday;
+	st.wMonth = t.tm_mon;
+	st.wDay = t.tm_mday;
+	st.wDayOfWeek = t.tm_wday;
+	st.wHour = t.tm_hour;
+	st.wMinute  = t.tm_min;
+	st.wSecond = t.tm_sec;
+	st.wMilliseconds = 0;
+
+	FILETIME ft;
+	SystemTimeToFileTime(&st, &ft);
+	return ft;
+}
+
 // convert 1999-01-01 12:12:00
 // convert 1999-1-1  12:12:00
 struct tm tmfromstring(const TCHAR * timestr) {

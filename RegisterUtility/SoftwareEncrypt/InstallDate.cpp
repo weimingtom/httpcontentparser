@@ -4,7 +4,12 @@
 #include <tchar.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <vector>
 #include <string>
+#include <utility\strutility.h>
+#include <utility\timeutility.h>
+#include <boost/scope_exit.hpp>
+#include <boost/exception.hpp>
 
 namespace {
 	const FILETIME FT_ZERO = {0};
@@ -17,47 +22,26 @@ namespace {
 		return ft;
 	}
 
-	FILETIME ft_from_tm(const tm &t) {
-		SYSTEMTIME st = {0};
-		st.wYear = t.tm_mday;
-		st.wMonth = t.tm_mon;
-		st.wDay = t.tm_mday;
-		st.wDayOfWeek = t.tm_wday;
-		st.wHour = t.tm_hour;
-		st.wMinute  = t.tm_min;
-		st.wSecond = t.tm_sec;
-		st.wMilliseconds = 0;
-		
-		FILETIME ft;
-		SystemTimeToFileTime(&st, &ft);
-		return ft;
-	}
-
 	// 将FILETIME转化为时间形式
 	std::string filetimeToString(const FILETIME &ft) {
-		TCHAR str[MAX_PATH], buffer[MAX_PATH];
-		_sntprintf(str, MAX_PATH, "%s-%s", _ltoa(ft.dwHighDateTime, buffer, 10),  _ltoa(ft.dwLowDateTime, buffer, 10));
+		TCHAR str[MAX_PATH];
+		_sntprintf(str, MAX_PATH, "%u-%u", ft.dwHighDateTime,  ft.dwLowDateTime);
 		return std::string(str);
 	}
 
 	// 将时间转换为FILETIME形式
 	FILETIME stringToFiletime(const std::string &str) {
 		FILETIME ft = {0};
-		int index = str.find('-');
+		
+		std::vector<std::string> vec;
+		strutility::splitstring(str.c_str(), "-", &vec);
 
-		// 如果找不到， 说明是一个错误的格式
-		if (index == -1) {
+		if (vec.size() != 2) {
 			return ft;
 		}
 
-		TCHAR buffer[MAX_PATH] = {0};
-		_tcsncpy(buffer, str.c_str(), index+1);
-		ft.dwHighDateTime = static_cast<DWORD>(atoi(buffer));
-
-		memset(buffer, 0, sizeof(buffer));
-		_tcsncpy(buffer, str.c_str()+index+1, str.length() - index -1);
-		ft.dwLowDateTime = static_cast<DWORD>(atoi(buffer));
-
+		ft.dwHighDateTime = static_cast<DWORD>(atoi(vec[0].c_str()));
+		ft.dwLowDateTime = static_cast<DWORD>(atoi( vec[1].c_str()));
 		return ft;
 	}
 
@@ -115,10 +99,22 @@ namespace {
 		using namespace	boost::posix_time;
 		// 获取三个安装时间
 
+	
 		ptime pWin = getInstallDateFromWin();
-		ptime pReg = getInstallDateFromRegistry();
 		ptime pFile  = getInstallDateFromFile();
+		ptime pReg = getInstallDateFromRegistry();
 
+		// 如果获取到的时间不合法怎么办
+		/*try {
+			using namespace std;
+			cout<<"windows file :"<<to_iso_string(pWin)<<endl;
+			cout<<"registry date: "<< to_iso_string(pReg)<<endl;
+			cout<<"current file date: "<< to_iso_string(pFile)<<endl;
+		} catch (boost::exception &e) {
+		}*/
+
+		// 新的时间小，还是老的时间小
+		// 时间越久，时间越小
 		return min(pWin, min(pReg, pFile));
 	}
 
@@ -175,6 +171,7 @@ namespace {
 			return;
 		}
 
+		// 设置时间
 		std::string install_date = filetimeToString(ft);
 		if (ERROR_SUCCESS == RegSetValueEx( hKey, REG_SOFTWARE_INSTALLDATE , 0, REG_SZ,
 				(const BYTE*)(LPCSTR)install_date.c_str(), (DWORD)install_date.length())) {
@@ -184,6 +181,8 @@ namespace {
 
 };
 
+//==========================================
+//
 // 获取安装时间的方式
 // 1. 将安装时间保存在文件当中
 // 2. 保存在注册表当中
@@ -198,7 +197,7 @@ InstallDate::~InstallDate(void) {
 // 获取安装的天数
 unsigned int  InstallDate::getInstalledDays() {
 	boost::posix_time::ptime cur = boost::posix_time::second_clock::local_time();
-	boost::posix_time::ptime installtime = getInstallDataTime();
+	boost::posix_time::ptime installtime = ::getInstallDataTime();
 
 	boost::posix_time::time_duration td = installtime - cur;
 	// 如果是负数，说明存在错误
@@ -211,11 +210,16 @@ unsigned int  InstallDate::getInstalledDays() {
 // 设置安装时间
 int InstallDate::setInstall() {
 	using namespace boost::posix_time;
-	boost::posix_time::ptime installtime = getInstallDataTime();
-	FILETIME installFT = ft_from_tm(to_tm(installtime));
+	boost::posix_time::ptime installtime = ::getInstallDataTime();
+	FILETIME installFT = timeutility::ft_from_tm(to_tm(installtime));
 
 	setInstallDataOnRegistry(installFT);
 	setInstallDateInWin(installFT);
 	setInstallDateFile(installFT);
 	return 0;
+}
+
+std::string InstallDate::getInstallData() {
+	boost::posix_time::ptime installtime = ::getInstallDataTime();
+	return boost::posix_time::to_iso_string(installtime);
 }
