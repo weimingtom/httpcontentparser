@@ -17,8 +17,8 @@ public:
 	
 	// 为第一次安装准备
 	int setInstall();
-private:
-	boost::posix_time::ptime getInstallDataTime();
+
+	std::string getInstallData();
 };
 
 #endif  // _SOFTWARE_ENCRYPT_INSTALLDATE_H__
