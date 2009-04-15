@@ -4,6 +4,8 @@
 #include <boost/date_time/gregorian/gregorian.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
 
+#define INSTALL_DAYS_ERROR	0xFFFFFFFF
+
 // 获取安装时间
 class InstallDate {
 public:
@@ -11,15 +13,12 @@ public:
 	~InstallDate(void);
 
 public:
-	int  getInstalledDays(); // 获取安装的天数
+	unsigned int  getInstalledDays(); // 获取安装的天数
 	
 	// 为第一次安装准备
 	int setInstall();
 private:
 	boost::posix_time::ptime getInstallDataTime();
-	boost::posix_time::ptime getInstallDateFromRegistry();
-	boost::posix_time::ptime getInstallDateFromFile();
-	boost::posix_time::ptime getInstallDateFromWin();
 };
 
 #endif  // _SOFTWARE_ENCRYPT_INSTALLDATE_H__
