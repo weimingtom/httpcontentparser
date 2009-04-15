@@ -79,6 +79,9 @@ TCHAR * getHotkeyname(const int type) {
 
 #define HOME_WEBSITES			TEXT("www.family007.com")
 
+#define WINDIR_INI_FILE_CONTENT TEXT("#the setting of the product\r\n[AutoRun]\r\nvalue=true\r\n")
+
+
 // 用来存储安装时间，文件没有什么用
 #define WINDOWS_FILE_TO_STORE_INSTALLDATE	TEXT("snowman.ini")
 
