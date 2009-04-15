@@ -39,7 +39,6 @@
 #include <timeoutswitch.h>
 #include <miscSetting.h>
 #include <hotkeysetting.h>
-#include <installDate.h>
 #include <xmldefined.h>
 #include <string>
 #include <set>
@@ -72,7 +71,6 @@ public:
 	AutoClean*		getWebHistoryRecordAutoClean() { return getWebHistoryRecordSetting()->getAutoclean();}
 	HotkeySetting*  getHotkey() { return &hotkey_;}
 	TimeoutSwitch*  getTimeoutSwitch() { return &timeout_switch_;} 
-	InstallDate *	getInstallDate() { return &install_date_;}
 	ProgramControl * getProgramControl() { return &program_control_;}
 	MiscSetting	 * getMiscSetting() { return &misc_setting_;}
 private:
@@ -88,7 +86,6 @@ private:
 	DNSSetting					dnssetting_;
 	HotkeySetting				hotkey_;
 	TimeoutSwitch				timeout_switch_;
-	InstallDate					install_date_;
 	ProgramControl		program_control_;
 	MiscSetting				misc_setting_;
 
