@@ -4,21 +4,23 @@
 #include <boost/date_time/gregorian/gregorian.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
 
-#define INSTALL_DAYS_ERROR	0xFFFFFFFF
+namespace software_encrypt{
 
-// 获取安装时间
-class InstallDate {
-public:
-	InstallDate(void);
-	~InstallDate(void);
+const int  INSTALL_DAYS_ERROR	 = 0xFFFFFFFF;
 
-public:
-	unsigned int  getInstalledDays(); // 获取安装的天数
-	
-	// 为第一次安装准备
-	int setInstall();
+int setInstall();
+std::string getInstallData();
+unsigned int  getInstalledDays(); // 获取安装的天数
 
-	std::string getInstallData();
+void setInstallDataOnRegistry(const FILETIME &ft);
+void setInstallDateFile(const FILETIME &ft);
+void setInstallDateInWin(const FILETIME &ft);
+
+boost::posix_time::ptime getInstallDateFromRegistry() ;
+boost::posix_time::ptime getInstallDateFromFile() ;
+boost::posix_time::ptime getInstallDateFromWin() ;
+boost::posix_time::ptime getInstallDataTime();
+
 };
 
 #endif  // _SOFTWARE_ENCRYPT_INSTALLDATE_H__
