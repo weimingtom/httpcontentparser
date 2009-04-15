@@ -40,7 +40,8 @@
 				CommandLine="copy .\debug\softwareencrypt.lib ..\..\lib\softwareencryptd.lib"/>
 			<Tool
 				Name="VCPreBuildEventTool"
-				CommandLine="copy .\baseencrypt.h ..\..\include\softwareEncrypt"/>
+				CommandLine="copy .\baseencrypt.h ..\..\include\softwareEncrypt
+copy .\installDate.h ..\..\include\softwareEncrypt"/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
 			<Tool
