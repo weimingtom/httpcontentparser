@@ -3,8 +3,9 @@
 
 #include <boost/date_time/gregorian/gregorian.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
+#include <windows.h>
 
-namespace software_encrypt{
+namespace software_encrypt {
 
 const int  INSTALL_DAYS_ERROR	 = 0xFFFFFFFF;
 

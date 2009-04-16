@@ -41,7 +41,9 @@
 			<Tool
 				Name="VCPreBuildEventTool"
 				CommandLine="copy .\baseencrypt.h ..\..\include\softwareEncrypt
-copy .\installDate.h ..\..\include\softwareEncrypt"/>
+copy .\installDate.h ..\..\include\softwareEncrypt
+copy .\LicenseInfo.h ..\..\include\softwareEncrypt
+"/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
 			<Tool
@@ -82,7 +84,9 @@ copy .\installDate.h ..\..\include\softwareEncrypt"/>
 				CommandLine="copy .\release\softwareencrypt.lib ..\..\lib\softwareencrypt.lib"/>
 			<Tool
 				Name="VCPreBuildEventTool"
-				CommandLine="copy .\baseencrypt.h ..\..\include\softwareEncrypt"/>
+				CommandLine="copy .\baseencrypt.h ..\..\include\softwareEncrypt
+copy .\installDate.h ..\..\include\softwareEncrypt
+copy .\LicenseInfo.h ..\..\include\softwareEncrypt"/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
 			<Tool
@@ -149,9 +153,26 @@ copy .\installDate.h ..\..\include\softwareEncrypt"/>
 				RelativePath=".\InstallDate.h">
 			</File>
 		</Filter>
-		<File
-			RelativePath=".\ReadMe.txt">
-		</File>
+		<Filter
+			Name="LicenseInfo"
+			Filter="">
+			<File
+				RelativePath=".\LicenseInfo.cpp">
+			</File>
+			<File
+				RelativePath=".\LicenseInfo.h">
+			</File>
+		</Filter>
+		<Filter
+			Name="SerialNumber"
+			Filter="">
+			<File
+				RelativePath=".\SerialNumber.cpp">
+			</File>
+			<File
+				RelativePath=".\serialNumber.h">
+			</File>
+		</Filter>
 	</Files>
 	<Globals>
 	</Globals>
