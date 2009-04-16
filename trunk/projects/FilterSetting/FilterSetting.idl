@@ -154,9 +154,9 @@ interface IDNSSetting : IDispatch{
 	[id(16), helpstring("Method getNextWhiteDNS")] HRESULT getNextWhiteDNS([in] BSTR cur, [out] BSTR* next);
 	[id(17), helpstring("Method getFirstBlackDNS")] HRESULT getFirstBlackDNS([out] BSTR* dns);
 	[id(18), helpstring("Method getNextBlackDNS")] HRESULT getNextBlackDNS([in] BSTR cur, [out] BSTR* next);
-	[id(19), helpstring("方法isWhiteDNSSettingEnable")] HRESULT isWhiteDNSSettingEnable([out]VARIANT_BOOL *enabled);
-	[id(20), helpstring("方法isBlackDNSSettingEnable")] HRESULT isBlackDNSSettingEnable([out] VARIANT_BOOL* enabled);
-	[id(21), helpstring("方法isJustEnableWhiteDNS")] HRESULT isJustEnableWhiteDNS([out] VARIANT_BOOL* enabled);
+	[id(19), helpstring("Meothd isWhiteDNSSettingEnable")] HRESULT isWhiteDNSSettingEnable([out]VARIANT_BOOL *enabled);
+	[id(20), helpstring("Method isBlackDNSSettingEnable")] HRESULT isBlackDNSSettingEnable([out] VARIANT_BOOL* enabled);
+	[id(21), helpstring("Method isJustEnableWhiteDNS")] HRESULT isJustEnableWhiteDNS([out] VARIANT_BOOL* enabled);
 };
 [
 	object,
@@ -221,24 +221,11 @@ interface IWebContentRecord : IDispatch{
 	[id(3), helpstring("Method GetNextSearchKeyword")] HRESULT GetNextSearchKeyword([in]BSTR  cur, [out] BSTR* keyword, [out] LONG* times, [out] LONG* searchEngine, [out] LONG* timeHighPart, [out] LONG* timeLowPart);
 	[id(4), helpstring("Method GetFirstWebsite")] HRESULT GetFirstWebsite([out] BSTR* keyword, [out] LONG* times, [out] LONG* high, [out] LONG* low);
 	[id(5), helpstring("Method GetNextWebSite")] HRESULT GetNextWebSite([in] BSTR cur, [out] BSTR* keyword, [out] LONG* times, [out] LONG* hight, [out] LONG* low);
-	[id(6), helpstring("方法clearAll")] HRESULT clearAll(void);
-	[id(7), helpstring("方法clearWebsites")] HRESULT clearWebsites(void);
-	[id(8), helpstring("方法clearSearchword")] HRESULT clearSearchword(void);
+	[id(6), helpstring("Method clearAll")] HRESULT clearAll(void);
+	[id(7), helpstring("Method clearWebsites")] HRESULT clearWebsites(void);
+	[id(8), helpstring("Method clearSearchword")] HRESULT clearSearchword(void);
 };
-[
-	object,
-	uuid(F502C5DE-1DF4-4331-8949-A0F326BF5CA0),
-	dual,
-	nonextensible,
-	helpstring("IProgramControlSetting Interface"),
-	pointer_default(unique)
-]
-interface IProgramControlSetting : IDispatch{
-	[id(1), helpstring("Method AddNewItem")] HRESULT AddNewItem([in] BSTR path);
-	[id(2), helpstring("Method GetFirstItem")] HRESULT GetFirstItem([out,retval] BSTR* path);
-	[id(3), helpstring("Method GetNextItem")] HRESULT GetNextItem([in] BSTR cur, [out] BSTR* nxt);
-	[id(4), helpstring("Method RemoveItem")] HRESULT RemoveItem([in] BSTR path);
-};
+
 [
 	object,
 	uuid(80F73376-12C6-4138-A680-AEF2F1053CB3),
@@ -252,9 +239,9 @@ interface IAppControl : IDispatch{
 	[id(2), helpstring("Method GetFirstItem")] HRESULT GetFirstItem([out] BSTR* path,  [out]LONG * result);
 	[id(3), helpstring("Method GetNextItem")] HRESULT GetNextItem([in] BSTR cur, [out] BSTR* nxt, [out]LONG * result);
 	[id(4), helpstring("Method RemoveItem")] HRESULT RemoveItem([in] BSTR path);
-	[id(5), helpstring("方法checkApp")] HRESULT checkApp(BSTR fullpath, [out,retval] VARIANT_BOOL* result);
-	[id(6), helpstring("方法isSettingEnabled")] HRESULT isSettingEnabled([out] VARIANT_BOOL* enabled);
-	[id(7), helpstring("方法enable")] HRESULT enable([in] VARIANT_BOOL enabled);
+	[id(5), helpstring("Method checkApp")] HRESULT checkApp(BSTR fullpath, [out,retval] VARIANT_BOOL* result);
+	[id(6), helpstring("Method isSettingEnabled")] HRESULT isSettingEnabled([out] VARIANT_BOOL* enabled);
+	[id(7), helpstring("Method enable")] HRESULT enable([in] VARIANT_BOOL enabled);
 };
 [
 	uuid(42F932B5-F5CB-4F0D-8925-1B6BE5FECD1B),
@@ -344,14 +331,6 @@ library FilterSettingLib {
 	coclass WebContentRecord
 	{
 		[default] interface IWebContentRecord;
-	};
-	[
-		uuid(3A4C72E5-63A5-44F6-B8C9-19D607500AF7),
-		helpstring("ProgramControlSetting Class")
-	]
-	coclass ProgramControlSetting
-	{
-		[default] interface IProgramControlSetting;
 	};
 	[
 		uuid(F9BE025F-3F0B-4A54-91AF-5FAAEBC6E45E),
