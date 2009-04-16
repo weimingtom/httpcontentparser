@@ -6,3 +6,4 @@ XMLConfiguration g_configuration;
 HINSTANCE g_hInstance;
 SeachKeywordUtil g_searchwordUtil;
 WebsitesUtil g_websitesUtil;
+software_encrypt::LicenseInfo g_licenseInfo;

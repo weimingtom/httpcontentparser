@@ -69,7 +69,8 @@ interface IAppSetting : IDispatch{
 	// 注册信息
 	[id(9), helpstring("Method Registered")] HRESULT Registered([out,retval] VARIANT_BOOL* registeded);
 	[id(10), helpstring("Method Register")] HRESULT Register(BSTR bstr, [out,retval] VARIANT_BOOL* bSucc);
-
+	[propget, id(16), helpstring("Property InstallDays")] HRESULT InstallDays([out, retval] LONG* pVal);
+	[propget, id(17), helpstring("Property LeftDays")] HRESULT LeftDays([out, retval] LONG* pVal);
 	// 热键设置
 	[id(1), helpstring("Method setHotkey")]				 HRESULT setHotkey([in] USHORT wVirtualKeyCode, [in] USHORT wModifiers, [in] LONG type, [out,retval] VARIANT_BOOL* bSuccess);
 	[id(13), helpstring("Method getHotkey")] HRESULT getHotkey([in] LONG type, [out] USHORT* wVirtualKeyCode, [out] USHORT* wModifier);
