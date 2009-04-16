@@ -5,7 +5,6 @@
 #include "globalvariable.h"
 #include "FilterSetting.h"
 #include ".\servthread.h"
-#include ".\registerinfo.h"
 #include <utility\timeutility.h>
 #include <AppinstallValidate.h>
 #include <apputility.h>
@@ -82,7 +81,6 @@ extern "C" int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/
 	//validator.repair();
 
 	initializeSetting();
-	g_registerInfo.initialize();
 
 	if (g_configuration.getWebHistoryRecordAutoClean()->shouldExec()) {
 		g_configuration.getWebHistoryRecordAutoClean()->reset();

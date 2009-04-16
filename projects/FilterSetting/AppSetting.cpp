@@ -5,7 +5,6 @@
 #include ".\appsetting.h"
 #include ".\servthread.h"
 #include ".\globalvariable.h"
-#include ".\registerinfo.h"
 #include <apputility.h>
 #include <app_constants.h>
 #include <typeconvert.h>

@@ -2,7 +2,6 @@
 #define _FILTER_SETTING_GLOBALVARIABLE_H__
 
 #include "FilterSetting.h"
-#include ".\registerinfo.h"
 #include <authorize.h>
 #include <eyecaresetting.h>
 #include <webhistoryrecordersetting.h>
@@ -14,7 +13,6 @@
 // extern Authorize g_authorize;
 extern XMLConfiguration g_configuration;
 extern HINSTANCE g_hInstance;
-extern RegisterInfo g_registerInfo;
 extern  SeachKeywordUtil g_searchwordUtil;
 extern WebsitesUtil g_websitesUtil;
 
