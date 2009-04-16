@@ -56,8 +56,7 @@ boost::posix_time::ptime makeValidate(const FILETIME &ft) {
 		return boost::posix_time::second_clock::local_time();
 	} else {
 		// 检测是否是一个合理的FILETIME
-		SYSTEMTIME st;
-		if (FALSE != FileTimeToSystemTime(&ft, &st)) {
+		if (ft.dwHighDateTime >= 0x800000000) {
 			return boost::posix_time::from_ftime<boost::posix_time::ptime>(ft);
 		} else {
 			return boost::posix_time::second_clock::local_time();
