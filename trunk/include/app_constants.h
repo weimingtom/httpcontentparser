@@ -14,6 +14,7 @@
 #define REG_SOFTWARE_INSTALLPATH		_T("InstallPath")
 #define REG_SOFTWARE_INSTALLDATE		_T("InstallKey")		// 安装日期
 #define REG_SOFTWARE_PRODUCTSN		_T("ProductSN")	// 序列号
+#define REG_SOFTWARE_TRAIL_DAYES		20
 
 #define MAX_PROTOCOL_CATALOG_LENTH	sizeof(WSAPROTOCOL_INFOW) + MAX_PATH
 

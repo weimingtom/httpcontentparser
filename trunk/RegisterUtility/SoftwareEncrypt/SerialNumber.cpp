@@ -2,6 +2,7 @@
 #include "serialNumber.h"
 #include <app_constants.h>
 
+namespace software_encrypt {
 namespace {
 
 std::string getSNFromRegistry() {
@@ -49,4 +50,6 @@ std::string getSN() {
 
 void storeSN(const std::string &sn) {
 	storeSNtoRegistry(sn);
+}
+
 }

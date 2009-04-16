@@ -120,8 +120,8 @@ STDMETHODIMP CAppSetting::get_LefttimeToSwitch(LONG* pVal)
 	return S_OK;
 }
 
-STDMETHODIMP CAppSetting::Registered(VARIANT_BOOL* registeded)
-{
+STDMETHODIMP CAppSetting::Registered(VARIANT_BOOL* registeded) {
+	*registeded = convert(g_licenseInfo.registered());
 	return S_OK;
 }
 
@@ -173,5 +173,17 @@ STDMETHODIMP CAppSetting::get_askMeAgain(VARIANT_BOOL* pVal) {
 
 STDMETHODIMP CAppSetting::put_askMeAgain(VARIANT_BOOL newVal) {
 	g_configuration.getMiscSetting()->askMeAgain_SwitchChildren(convert(newVal));
+	return S_OK;
+}
+
+STDMETHODIMP CAppSetting::get_InstallDays(LONG* pVal)
+{
+	*pVal  = g_licenseInfo.getInstallDays();
+	return S_OK;
+}
+
+STDMETHODIMP CAppSetting::get_LeftDays(LONG* pVal)
+{
+	*pVal = REG_SOFTWARE_TRAIL_DAYES - g_licenseInfo.getInstallDays();
 	return S_OK;
 }

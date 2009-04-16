@@ -67,6 +67,8 @@ public:
 	STDMETHOD(put_autoSwitchOnClose)(VARIANT_BOOL newVal);
 	STDMETHOD(get_askMeAgain)(VARIANT_BOOL* pVal);
 	STDMETHOD(put_askMeAgain)(VARIANT_BOOL newVal);
+	STDMETHOD(get_InstallDays)(LONG* pVal);
+	STDMETHOD(get_LeftDays)(LONG* pVal);
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(AppSetting), CAppSetting)

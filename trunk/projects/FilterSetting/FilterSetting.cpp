@@ -47,6 +47,9 @@ void installShellSupport() {
 }
 
 void initializeSetting() {
+	// 获取注册信息
+	g_licenseInfo.initialize();
+
 	// 初始化配置
 	TCHAR config_path[MAX_PATH];
 	GetAppConfigFilename(config_path, MAX_PATH);
