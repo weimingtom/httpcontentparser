@@ -356,16 +356,6 @@ copy .\release\nwrs.exe ..\..\release
 			</File>
 		</Filter>
 		<Filter
-			Name="reg"
-			Filter="">
-			<File
-				RelativePath=".\RegisterInfo.cpp">
-			</File>
-			<File
-				RelativePath=".\RegisterInfo.h">
-			</File>
-		</Filter>
-		<Filter
 			Name="WebContentRecord"
 			Filter="">
 			<File
