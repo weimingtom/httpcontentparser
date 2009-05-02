@@ -20,7 +20,7 @@ public:
 	virtual ~CDlgWebsites();
 
 // 对话框数据
-	enum { IDD = IDD_DLG_WEBSITES };
+	enum { IDD = IDD_POPDLG_WEBSITES };
 
 protected:
 	int showOnList();

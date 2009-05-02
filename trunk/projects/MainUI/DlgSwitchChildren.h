@@ -2,6 +2,7 @@
 #define _MAINUI_CDLGSWITCHCHILDREN_H__
 
 #include ".\popupdialog.h"
+#include ".\resource.h"
 
 
 // CDlgSwitchChildren dialog
@@ -15,7 +16,7 @@ public:
 	virtual ~CDlgSwitchChildren();
 
 	// Dialog Data
-	enum { IDD = IDD_DLG_MIN_MAINUI };
+	enum { IDD = IDD_POPDLG_MIN_MAINUI };
 
 	BOOL switchToChildren() const;
 

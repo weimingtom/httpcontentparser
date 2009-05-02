@@ -12,7 +12,7 @@ public:
 	virtual ~CDlgRegister();
 
 // 对话框数据
-	enum { IDD = IDD_DLG_REGISTER };
+	enum { IDD = IDD_POPLDG_REGISTER };
 
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 支持

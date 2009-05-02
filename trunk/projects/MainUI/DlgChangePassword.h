@@ -12,7 +12,7 @@ public:
 	virtual ~CDlgChangePassword();
 
 // 对话框数据
-	enum { IDD = IDD_CHANGE_PASSWORD };
+	enum { IDD = IDD_POPUP_CHANGE_PASSWORD };
 
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 支持

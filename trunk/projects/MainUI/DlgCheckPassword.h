@@ -15,7 +15,7 @@ public:
 	virtual ~CDlgCheckPassword();
 
 // 对话框数据
-	enum { IDD = IDD_DLG_CHKPASSWORD };
+	enum { IDD = IDD_POPDLG_CHKPASSWORD };
 
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 支持
