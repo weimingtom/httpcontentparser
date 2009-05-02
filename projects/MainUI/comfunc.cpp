@@ -7,15 +7,15 @@
 
 bool registered() {
 	try {
-		IAppSetting *pApp  = NULL;
-		HRESULT hr = CoCreateInstance(CLSID_AppSetting, NULL, CLSCTX_LOCAL_SERVER, IID_IAppSetting, (LPVOID*)&pApp);
+		IAppRegInfo *pAppReg  = NULL;
+		HRESULT hr = CoCreateInstance(CLSID_AppRegInfo, NULL, CLSCTX_LOCAL_SERVER, IID_IAppRegInfo, (LPVOID*)&pAppReg);
 		if (FAILED(hr)) {
 			return false;
 		}
 
 		VARIANT_BOOL bRegistered;
-		pApp->Registered(&bRegistered);
-		// pApp->Release();
+		pAppReg->Registered(&bRegistered);
+		pAppReg->Release();
 		return convert(bRegistered);
 	} catch (...) {
 		return false;
@@ -23,18 +23,18 @@ bool registered() {
 }
 int trialLeftDays() {
 	try {
-		IAppSetting *pApp  = NULL;
-		HRESULT hr = CoCreateInstance(CLSID_AppSetting, NULL, CLSCTX_LOCAL_SERVER, IID_IAppSetting, (LPVOID*)&pApp);
+		IAppRegInfo *pAppReg  = NULL;
+		HRESULT hr = CoCreateInstance(CLSID_AppRegInfo, NULL, CLSCTX_LOCAL_SERVER, IID_IAppRegInfo, (LPVOID*)&pAppReg);
 		if (FAILED(hr)) {
 			return 1;
 		}
 
 		VARIANT_BOOL bRegistered;
 		LONG leftDays;
-		pApp->Registered(&bRegistered);
+		pAppReg->Registered(&bRegistered);
 
 		if (bRegistered != VARIANT_TRUE) {
-			pApp->get_LeftDays(&leftDays);
+			pAppReg->get_LeftDays(&leftDays);
 			return leftDays;
 		} else {
 			return -1;
@@ -46,14 +46,14 @@ int trialLeftDays() {
 
 bool registerSN(const std::string &sn) {
 	try {
-		IAppSetting *pApp  = NULL;
-		HRESULT hr = CoCreateInstance(CLSID_AppSetting, NULL, CLSCTX_LOCAL_SERVER, IID_IAppSetting, (LPVOID*)&pApp);
+		IAppRegInfo *pAppReg  = NULL;
+		HRESULT hr = CoCreateInstance(CLSID_AppRegInfo, NULL, CLSCTX_LOCAL_SERVER, IID_IAppRegInfo, (LPVOID*)&pAppReg);
 		if (FAILED(hr)) {
 			return false;
 		}
 
 		VARIANT_BOOL bSucc;
-		pApp->Register(_bstr_t(sn.c_str()), &bSucc);
+		pAppReg->Register(_bstr_t(sn.c_str()), &bSucc);
 
 		return convert(bSucc);
 	} catch (...) {
