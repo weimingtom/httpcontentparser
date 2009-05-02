@@ -47,9 +47,6 @@ public:
 	STDMETHOD(switchModel)(VARIANT_BOOL bParent, BSTR pwd, VARIANT_BOOL* bSucc);
 	STDMETHOD(get_ParentModel)(VARIANT_BOOL* pVal);
 
-	// 注册于是否已经注册
-	STDMETHOD(Registered)(VARIANT_BOOL* registeded);
-	STDMETHOD(Register)(BSTR bstr, VARIANT_BOOL* bSucc);
 
 	// 路径设置
 	STDMETHOD(GetInstallPath)(BSTR* path);	// 获取安装路径
@@ -67,8 +64,6 @@ public:
 	STDMETHOD(put_autoSwitchOnClose)(VARIANT_BOOL newVal);
 	STDMETHOD(get_askMeAgain)(VARIANT_BOOL* pVal);
 	STDMETHOD(put_askMeAgain)(VARIANT_BOOL newVal);
-	STDMETHOD(get_InstallDays)(LONG* pVal);
-	STDMETHOD(get_LeftDays)(LONG* pVal);
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(AppSetting), CAppSetting)

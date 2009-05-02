@@ -103,6 +103,7 @@ IDR_SEARCHRULE          REGISTRY                "SearchRule.rgs"
 IDR_WEBCONTENTCHECK     REGISTRY                "WebContentCheck.rgs"
 IDR_WEBCONTENTRECORD    REGISTRY                "WebContentRecord.rgs"
 IDR_APPCONTROL          REGISTRY                "AppControl.rgs"
+IDR_APPREGINFO          REGISTRY                "AppRegInfo.rgs"
 
 /////////////////////////////////////////////////////////////////////////////
 //

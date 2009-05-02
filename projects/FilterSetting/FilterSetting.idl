@@ -66,13 +66,8 @@ interface IAppSetting : IDispatch{
 	[id(11), helpstring("Method getImageFolder")] HRESULT getImageFolder([out] BSTR* path);
 	[id(12), helpstring("Method getPagesFolder")] HRESULT getPagesFolder([out] BSTR* path);
 
-	// 注册信息
-	[id(9), helpstring("Method Registered")] HRESULT Registered([out,retval] VARIANT_BOOL* registeded);
-	[id(10), helpstring("Method Register")] HRESULT Register(BSTR bstr, [out,retval] VARIANT_BOOL* bSucc);
-	[propget, id(16), helpstring("Property InstallDays")] HRESULT InstallDays([out, retval] LONG* pVal);
-	[propget, id(17), helpstring("Property LeftDays")] HRESULT LeftDays([out, retval] LONG* pVal);
 	// 热键设置
-	[id(1), helpstring("Method setHotkey")]				 HRESULT setHotkey([in] USHORT wVirtualKeyCode, [in] USHORT wModifiers, [in] LONG type, [out,retval] VARIANT_BOOL* bSuccess);
+	[id(1), helpstring("Method setHotkey")]		HRESULT setHotkey([in] USHORT wVirtualKeyCode, [in] USHORT wModifiers, [in] LONG type, [out,retval] VARIANT_BOOL* bSuccess);
 	[id(13), helpstring("Method getHotkey")] HRESULT getHotkey([in] LONG type, [out] USHORT* wVirtualKeyCode, [out] USHORT* wModifier);
 
 	// 在最小化窗口的时候，是否切换到子模式
@@ -245,6 +240,21 @@ interface IAppControl : IDispatch{
 	[id(7), helpstring("Method enable")] HRESULT enable([in] VARIANT_BOOL enabled);
 };
 [
+	object,
+	uuid(1F92E0F2-DD66-415F-862A-1593805BA478),
+	dual,
+	nonextensible,
+	helpstring("IAppRegInfo Interface"),
+	pointer_default(unique)
+]
+interface IAppRegInfo : IDispatch{
+	// 注册信息
+	[id(1), helpstring("Method Registered")] HRESULT Registered([out,retval] VARIANT_BOOL* registeded);
+	[id(2), helpstring("Method Register")] HRESULT Register(BSTR bstr, [out,retval] VARIANT_BOOL* bSucc);
+	[propget, id(3), helpstring("Property InstallDays")] HRESULT InstallDays([out, retval] LONG* pVal);
+	[propget, id(4), helpstring("Property LeftDays")] HRESULT LeftDays([out, retval] LONG* pVal);
+};
+[
 	uuid(42F932B5-F5CB-4F0D-8925-1B6BE5FECD1B),
 	version(1.0),
 	helpstring("FilterSetting 1.0 ClassLibrary")
@@ -340,5 +350,13 @@ library FilterSettingLib {
 	coclass AppControl
 	{
 		[default] interface IAppControl;
+	};
+	[
+		uuid(EA3C051B-429A-4169-86AF-7105F362486B),
+		helpstring("AppRegInfo Class")
+	]
+	coclass AppRegInfo
+	{
+		[default] interface IAppRegInfo;
 	};
 };
