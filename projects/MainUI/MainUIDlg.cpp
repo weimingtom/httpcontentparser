@@ -671,11 +671,11 @@ void CMainUIDlg::SwitchOnClose() {
 		}
 		
 		// 是否需要切换到模式
-		VARIANT_BOOL val;
+		/*VARIANT_BOOL val;
 		app->get_autoSwitchOnClose(&val);
 		if (VARIANT_TRUE == val) {
 			Services::switchChildModel();
-		}
+		}*/
 	} catch (...) {
 	}
 }

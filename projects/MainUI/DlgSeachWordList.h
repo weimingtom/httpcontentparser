@@ -39,7 +39,7 @@ protected:
 	int addItem(const _bstr_t &name, const long times, const long searchengine_type, const long hightime, const long lowtime, const int iIndex);
 
 // 对话框数据
-	enum { IDD = IDD_DLG_SEACHWORD_HISTORY };
+	enum { IDD = IDD_POPDLG_SEACHWORD_HISTORY };
 
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 支持

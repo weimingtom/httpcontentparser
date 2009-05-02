@@ -16,7 +16,7 @@ public:
 	virtual ~CDlgImageBrowser();
 
 	// 对话框数据
-	enum { IDD = IDD_DLG_IMAGEBROWSER };
+	enum { IDD = IDD_POPDLG_IMAGEBROWSER };
 
 
 	// 设置图片目录

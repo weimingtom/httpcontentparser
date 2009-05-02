@@ -76,7 +76,9 @@
 #define IDD_DIALOG1                     149
 #define IDD_DLG_DNS_WHITELIST           149
 #define IDD_CHANGE_PASSWORD             150
+#define IDD_POPUP_CHANGE_PASSWORD       150
 #define IDD_DLG_CHKPASSWORD             151
+#define IDD_POPDLG_CHKPASSWORD          151
 #define IDD_TOOLS                       152
 #define IDD_LEV1_TOOLS                  153
 #define IDD_TEMPLATE                    154
@@ -94,11 +96,14 @@
 #define IDI_ICON2                       164
 #define IDI_GUI_ARROWRIGHT              164
 #define IDD_DLG_IMAGEBROWSER            165
+#define IDD_POPDLG_IMAGEBROWSER         165
 #define IDD_DLG_WEBSITES                167
+#define IDD_POPDLG_WEBSITES             167
 #define IDB_HDRDOWN                     168
 #define IDB_HDRUP                       169
 #define IDD_DLG_SEACHWORD_LIST          170
 #define IDD_DLG_SEACHWORD_HISTORY       170
+#define IDD_POPDLG_SEACHWORD_HISTORY    170
 #define IDD_DLG_PROGRAM                 172
 #define IDI_DEFAULT                     173
 #define IDI_TREE_WEB                    174
@@ -121,6 +126,7 @@
 #define IDB_BITMAP4                     192
 #define IDD_DIALOG2                     193
 #define IDD_DLG_MIN_MAINUI              193
+#define IDD_POPDLG_MIN_MAINUI           193
 #define IDB_TRAY_KEY                    194
 #define IDB_TRAY_LOCK                   196
 #define IDB_TRAY_OPTION                 197
@@ -129,7 +135,7 @@
 #define IDI_KEY                         200
 #define IDB_TRAY_HISTORY_WEBSITE        202
 #define IDB_TRAY_HISTORY_SEARCH         203
-#define IDD_DLG_REGISTER                204
+#define IDD_POPLDG_REGISTER             204
 #define IDB_BMP_LOGO                    207
 #define IDB_BMP_SMALL_LOGO              208
 #define IDI_ICO_SMALL_LOGO              212
