@@ -1,0 +1,24 @@
+HKCR
+{
+	FilterSetting.AppRegInfo.1 = s 'AppRegInfo Class'
+	{
+		CLSID = s '{EA3C051B-429A-4169-86AF-7105F362486B}'
+	}
+	FilterSetting.AppRegInfo = s 'AppRegInfo Class'
+	{
+		CLSID = s '{EA3C051B-429A-4169-86AF-7105F362486B}'
+		CurVer = s 'FilterSetting.AppRegInfo.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {EA3C051B-429A-4169-86AF-7105F362486B} = s 'AppRegInfo Class'
+		{
+			ProgID = s 'FilterSetting.AppRegInfo.1'
+			VersionIndependentProgID = s 'FilterSetting.AppRegInfo'
+			ForceRemove 'Programmable'
+			LocalServer32 = s '%MODULE%'
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{42F932B5-F5CB-4F0D-8925-1B6BE5FECD1B}'
+		}
+	}
+}
