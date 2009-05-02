@@ -12,6 +12,15 @@ LicenseInfo::LicenseInfo(void) : initialized_(false){
 LicenseInfo::~LicenseInfo(void) {
 }
 
+bool LicenseInfo::regApp(const std::string &sn) {
+	if (validateSN(sn)) {
+		// TODO 采取什么动作呢？ 如果用户
+		storeSN(sn);
+		return true;
+	} else {
+		return false;
+	}
+}
 // 是否已经注册了
 bool LicenseInfo::registered() {
 	assert (true == initialized_);

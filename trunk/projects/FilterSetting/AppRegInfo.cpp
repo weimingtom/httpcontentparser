@@ -30,5 +30,16 @@ STDMETHODIMP CAppRegInfo::Registered(VARIANT_BOOL* registeded) {
 
 STDMETHODIMP CAppRegInfo::Register(BSTR bstr, VARIANT_BOOL* bSucc)
 {
+	// 如果已经注册则不进行任何操作
+	if (g_licenseInfo.registered()) {
+		*bSucc = VARIANT_TRUE;
+		return S_OK;
+	}
+
+	// 尝试进行注册
+	*bSucc = convert(g_licenseInfo.regApp(std::string((char*)_bstr_t(bstr))));
+	if (VARIANT_TRUE == *bSucc) {
+		// 如果注册成功应该采取什么动作
+	}
 	return S_OK;
 }
