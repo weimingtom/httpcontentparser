@@ -20,6 +20,7 @@ public:
 	bool registered(); // 是否已经注册了
 
 	void initialize();		// 初始化
+	bool regApp(const std::string &bstr);
 private:
 	//======================
 	// 一下信息都应该只从文件中读取一次
