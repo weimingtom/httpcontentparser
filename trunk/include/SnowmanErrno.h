@@ -1,0 +1,6 @@
+#ifndef _SNOWMAN_ERROR_NO_H__
+#define _SNOWMAN_ERROR_NO_H__
+
+#define SNOWMAN_ERROR_COM_INIT_FAILED  0x40000001
+
+#endif // _SNOWMAN_ERROR_NO_H__
