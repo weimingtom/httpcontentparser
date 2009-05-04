@@ -90,8 +90,7 @@ void CDlgWebHistory::restoreSetting() {
 		IWebHistoryRecorder *pWebHistory = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_WebHistoryRecorder, NULL, CLSCTX_ALL, IID_IWebHistoryRecorder, (LPVOID*)&pWebHistory);
 		if (FAILED(hr)) {
-			AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
-			return;
+			throw int(SNOWMAN_ERROR_COM_INIT_FAILED);
 		}
 
 		VARIANT_BOOL isEnabled;
@@ -114,7 +113,7 @@ void CDlgWebHistory::restoreSetting() {
 		updateSta();
 		UpdateData(FALSE);
 	} catch(...) {
-		AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
+		throw int(SNOWMAN_ERROR_COM_INIT_FAILED);
 	}
 }
 BEGIN_MESSAGE_MAP(CDlgWebHistory, CDialog)

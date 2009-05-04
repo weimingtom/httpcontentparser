@@ -180,8 +180,7 @@ void CDlgOptions::restoreSetting() {
 		ISnowmanSetting *app = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_SnowmanSetting, NULL, CLSCTX_LOCAL_SERVER, IID_ISnowmanSetting, (LPVOID*)&app);
 		if (FAILED(hr)) {
-			AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONEXCLAMATION);
-			return;
+			throw int(SNOWMAN_ERROR_COM_INIT_FAILED);
 		}
 
 		// ÈÈ¼ü
@@ -208,7 +207,7 @@ void CDlgOptions::restoreSetting() {
 
 		UpdateData(FALSE);
 	} catch (...) {
-		AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONEXCLAMATION);
+		throw int(SNOWMAN_ERROR_COM_INIT_FAILED);
 	}
 }
 

@@ -20,6 +20,7 @@
 #include <afxtempl.h>
 #include <afxmt.h>
 #include <shlwapi.h>
+#include <SnowmanErrno.h>
 
 #ifdef _VISUAL_STUDIO_2008_
        #include <tmschema.h>

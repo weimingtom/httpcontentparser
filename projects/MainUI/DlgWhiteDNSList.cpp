@@ -71,8 +71,7 @@ void CDlgWhiteDNSList::restoreSetting() {
 
 		UpdateData(FALSE);
 	} catch(...) {
-		AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
-		return ;
+		throw int(SNOWMAN_ERROR_COM_INIT_FAILED);
 	}
 }
 

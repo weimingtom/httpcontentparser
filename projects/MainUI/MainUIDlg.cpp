@@ -334,31 +334,45 @@ void CMainUIDlg::OnCancel() {
 void CMainUIDlg::OnBnClickedOk()
 {
 	ASSERT (NULL != m_curDlg);
-	if ( -1 == m_curDlg->Apply()) {
-		m_curDlg->Restore();
-		return;
+	try {
+		if ( -1 == m_curDlg->Apply()) {
+			m_curDlg->Restore();
+			return;
+		}
+
+		m_curDlg->SetModify(false);
+
+		m_dlgSwitchChildren_.DoModal();
+		HideMainUI();
+	} catch (...) {
+		AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONEXCLAMATION);
 	}
-
-	m_curDlg->SetModify(false);
-
-	m_dlgSwitchChildren_.DoModal();
-	HideMainUI();
 }
 
 void CMainUIDlg::OnBnClickedMainCancel()
 {
-	HideMainUI();	// 隐藏窗口
-	m_curDlg->Restore();	// 恢复设置
-	m_curDlg->SetModify(false);
-}
+	try {
+		HideMainUI();	// 隐藏窗口
+		m_curDlg->Restore();	// 恢复设置
+		m_curDlg->SetModify(false);
+	} catch (...) {
+			AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONEXCLAMATION);
+		}
+	} 
 
 // 按下Apply按钮
 void CMainUIDlg::OnBnClickedApply()
 {
 	ASSERT (NULL != m_curDlg);
-	if ( FAILED_APPLY == m_curDlg->Apply()) {
-		m_curDlg->Restore();
-		return;
+
+	try {
+		if ( FAILED_APPLY == m_curDlg->Apply()) {
+			m_curDlg->Restore();
+			return;
+		}
+
+	} catch (...) {
+		AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONEXCLAMATION);
 	}
 
 	m_curDlg->SetModify(false);
@@ -462,31 +476,45 @@ void CMainUIDlg::InitTreeNodes() {
 }
 
 void CMainUIDlg::showDlg() {
-	CRect rect;
-	CWnd * pWndLeft = GetDlgItem(IDC_POSITION_RIGHT);
-	pWndLeft->GetWindowRect(&rect);
-	ScreenToClient(&rect);
-	m_curDlg->SetWindowPos(&wndTop, rect.left, rect.top, rect.Width(), rect.Height(), SWP_SHOWWINDOW);
-	m_curDlg->OnShow();
+	try {
+		CRect rect;
+		CWnd * pWndLeft = GetDlgItem(IDC_POSITION_RIGHT);
+		pWndLeft->GetWindowRect(&rect);
+		ScreenToClient(&rect);
+		m_curDlg->SetWindowPos(&wndTop, rect.left, rect.top, rect.Width(), rect.Height(), SWP_SHOWWINDOW);
+		m_curDlg->OnShow();
+	} catch (...) {
+		AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONEXCLAMATION);
+	}
 }
 
 // 创建对话框
 void CMainUIDlg::initDlgs() {
-	m_dlgOnlineHour.Create(CDlgOnlineHour::IDD, this);
-	m_dlgSearchRule.Create(CDlgSearchRule::IDD, this);
-	m_dlgDnsRule.Create(CDlgBlackDNSList::IDD, this);
-	m_dlgAbout.Create(CDlgAbout::IDD, this);
-	m_lev1Rules.Create(CLev1DlgRules::IDD, this);
-	m_dlgOptions.Create(CDlgOptions::IDD, this);
-	m_dlgEyecare.Create(CDlgEyecare::IDD, this);
-	m_dlgWhiteDNS.Create(CDlgWhiteDNSList::IDD, this);
-	m_lev1Tools.Create(CLev1DlgTools::IDD, this);
-	m_dlgScreenSaver.Create(CDlgScreenshot::IDD, this);
-	m_dlgWebHistory.Create(CDlgWebHistory::IDD, this);
-	m_dlgProgramControl.Create(CDlgProgramControl::IDD, this);
-	m_curDlg = &m_lev1Rules;
-	
-	showDlg();
+	try {
+		// TODO
+		// 如果这里COM注册出现错误可能所有的地方都会弹出对话框
+		// 如果能够使用抛出异常的方式就好了， 这样只会产生一个错误对话框
+		// 但是也可能导致对话框无法正常显示
+		// 只要简单的关闭对话框就行了！
+		m_dlgOnlineHour.Create(CDlgOnlineHour::IDD, this);
+		m_dlgSearchRule.Create(CDlgSearchRule::IDD, this);
+		m_dlgDnsRule.Create(CDlgBlackDNSList::IDD, this);
+		m_dlgAbout.Create(CDlgAbout::IDD, this);
+		m_lev1Rules.Create(CLev1DlgRules::IDD, this);
+		m_dlgOptions.Create(CDlgOptions::IDD, this);
+		m_dlgEyecare.Create(CDlgEyecare::IDD, this);
+		m_dlgWhiteDNS.Create(CDlgWhiteDNSList::IDD, this);
+		m_lev1Tools.Create(CLev1DlgTools::IDD, this);
+		m_dlgScreenSaver.Create(CDlgScreenshot::IDD, this);
+		m_dlgWebHistory.Create(CDlgWebHistory::IDD, this);
+		m_dlgProgramControl.Create(CDlgProgramControl::IDD, this);
+		m_curDlg = &m_lev1Rules;
+		showDlg();
+		
+	} catch (...) {
+		AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONEXCLAMATION);
+		EndDialog(IDCANCEL);
+	}
 }
 
 void CMainUIDlg::setToolsDlg() {
@@ -646,16 +674,20 @@ void CMainUIDlg::OnTvnSelchangedTreeNavig(NMHDR *pNMHDR, LRESULT *pResult)
 	// HTREEITEM hItem = m_treeNavigation.GetSelectedItem();
 	DWORD itemData = (DWORD)m_treeNavigation.GetItemData(pNMTreeView->itemNew.hItem);
 
-	// 首先调用
-	if (m_curDlg->BeforeChange() == 1) {
-		setCurDlg(itemData);
-		m_curDlg->AfterChange();
-	} else {
-		m_curDlg->Restore();
-		m_curDlg->SetModify(false);
-	}
+	try {
+		// 首先调用
+		if (m_curDlg->BeforeChange() == 1) {
+			setCurDlg(itemData);
+			m_curDlg->AfterChange();
+		} else {
+			m_curDlg->Restore();
+			m_curDlg->SetModify(false);
+		}
 
-	*pResult = 0;
+		*pResult = 0;
+	} catch (...) {
+		AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONEXCLAMATION);
+	}
 }
 
 
