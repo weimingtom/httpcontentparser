@@ -1,36 +1,18 @@
-// AppSetting.cpp : CAppSetting 的实现
+// SnowmanSetting.cpp : CSnowmanSetting 的实现
 
 #include "stdafx.h"
-#include ".\AppSetting.h"
-#include ".\appsetting.h"
-#include ".\servthread.h"
+#include "SnowmanSetting.h"
 #include ".\globalvariable.h"
-#include <apputility.h>
-#include <app_constants.h>
+#include ".\ServThread.h"
 #include <typeconvert.h>
 #include <apputility.h>
-#include <assert.h>
-#include <comdef.h>
+#include <utility\strutility.h>
+#include <utility\dns.h>
+#include <searchengine_define.h>
+#include <comutil.h>
 
-
-// CAppSetting
-
-STDMETHODIMP CAppSetting::InterfaceSupportsErrorInfo(REFIID riid)
-{
-	static const IID* arr[] = 
-	{
-		&IID_IAppSetting
-	};
-
-	for (int i=0; i < sizeof(arr) / sizeof(arr[0]); i++)
-	{
-		if (InlineIsEqualGUID(*arr[i],riid))
-			return S_OK;
-	}
-	return S_FALSE;
-}
-
-STDMETHODIMP CAppSetting::setHotkey(USHORT wVirtualKeyCode, USHORT wModifiers, LONG type, VARIANT_BOOL* bSuccess) {
+// CSnowmanSetting
+STDMETHODIMP CSnowmanSetting::setHotkey(USHORT wVirtualKeyCode, USHORT wModifiers, LONG type, VARIANT_BOOL* bSuccess) {
 	BOOL bSucc = (int)ServThread::getInstance()->setHotKey(wVirtualKeyCode, wModifiers, type);
 	*bSuccess = convert(bSucc);
 
@@ -46,7 +28,7 @@ STDMETHODIMP CAppSetting::setHotkey(USHORT wVirtualKeyCode, USHORT wModifiers, L
 }
 
 // 获取安装路径
-STDMETHODIMP CAppSetting::GetInstallPath(BSTR* installpath) {
+STDMETHODIMP CSnowmanSetting::GetInstallPath(BSTR* installpath) {
 	TCHAR path[MAX_PATH];
 	::GetInstallPath(path, MAX_PATH);
 	*installpath = bstr_t(path);
@@ -54,7 +36,7 @@ STDMETHODIMP CAppSetting::GetInstallPath(BSTR* installpath) {
 }
 
 
-STDMETHODIMP CAppSetting::switchModel(VARIANT_BOOL bParent, BSTR pwd, VARIANT_BOOL* bSucc) {
+STDMETHODIMP CSnowmanSetting::switchModel(VARIANT_BOOL bParent, BSTR pwd, VARIANT_BOOL* bSucc) {
 	if (VARIANT_TRUE == bParent) {
 		// 切换到家长模式需要验证密码
 		if (true == g_configuration.getAuthorize()->checkPassword((TCHAR*)_bstr_t(pwd), PASSWORD_SU)) {
@@ -80,7 +62,7 @@ STDMETHODIMP CAppSetting::switchModel(VARIANT_BOOL bParent, BSTR pwd, VARIANT_BO
 }
 
 // 当前模式是否是家长模式
-STDMETHODIMP CAppSetting::get_ParentModel(VARIANT_BOOL* pVal) {
+STDMETHODIMP CSnowmanSetting::get_ParentModel(VARIANT_BOOL* pVal) {
 	if (SettingItem::MODE_PARENT == SettingItem::getModel()) {
 		*pVal = VARIANT_TRUE;
 	} else {
@@ -89,19 +71,19 @@ STDMETHODIMP CAppSetting::get_ParentModel(VARIANT_BOOL* pVal) {
 	return S_OK;
 }
 
-STDMETHODIMP CAppSetting::setTimeoutValue(LONG seconds)
+STDMETHODIMP CSnowmanSetting::setTimeoutValue(LONG seconds)
 {
 	g_configuration.getTimeoutSwitch()->setTimeoutValue(seconds);
 	return S_OK;
 }
 
-STDMETHODIMP CAppSetting::get_TimeoutSwitchEnabled(VARIANT_BOOL* pVal)
+STDMETHODIMP CSnowmanSetting::get_TimeoutSwitchEnabled(VARIANT_BOOL* pVal)
 {
 	*pVal = convert(g_configuration.getTimeoutSwitch()->isEnabled());
 	return S_OK;
 }
 
-STDMETHODIMP CAppSetting::put_TimeoutSwitchEnabled(VARIANT_BOOL newVal)
+STDMETHODIMP CSnowmanSetting::put_TimeoutSwitchEnabled(VARIANT_BOOL newVal)
 {
 	g_configuration.getTimeoutSwitch()->enable(convert(newVal));
 	bool a = convert(newVal);
@@ -114,13 +96,13 @@ STDMETHODIMP CAppSetting::put_TimeoutSwitchEnabled(VARIANT_BOOL newVal)
 }
 
 // 获取距离切换状态的时间
-STDMETHODIMP CAppSetting::get_LefttimeToSwitch(LONG* pVal)
+STDMETHODIMP CSnowmanSetting::get_LefttimeToSwitch(LONG* pVal)
 {
 	*pVal = (LONG)g_configuration.getTimeoutSwitch()->getLeftTime();
 	return S_OK;
 }
 
-STDMETHODIMP CAppSetting::getImageFolder(BSTR* path)
+STDMETHODIMP CSnowmanSetting::getImageFolder(BSTR* path)
 {
 	TCHAR buffer[MAX_PATH];
 	GetImageDirectory(buffer, MAX_PATH);
@@ -128,7 +110,7 @@ STDMETHODIMP CAppSetting::getImageFolder(BSTR* path)
 	return S_OK;
 }
 
-STDMETHODIMP CAppSetting::getPagesFolder(BSTR* path)
+STDMETHODIMP CSnowmanSetting::getPagesFolder(BSTR* path)
 {
 	TCHAR buffer[MAX_PATH];
 	GetPageDirectory(buffer, MAX_PATH);
@@ -136,7 +118,7 @@ STDMETHODIMP CAppSetting::getPagesFolder(BSTR* path)
 	return S_OK;
 }
 
-STDMETHODIMP CAppSetting::getHotkey(LONG type, USHORT* wVirtualKeyCode, USHORT* wModifier)
+STDMETHODIMP CSnowmanSetting::getHotkey(LONG type, USHORT* wVirtualKeyCode, USHORT* wModifier)
 {
 	DWORD hotkey = g_configuration.getHotkey()->getHotkey(getHotkeyname(type));
 	 *wVirtualKeyCode = HIWORD(hotkey);
@@ -146,22 +128,23 @@ STDMETHODIMP CAppSetting::getHotkey(LONG type, USHORT* wVirtualKeyCode, USHORT* 
 
 //====================
 // 关闭对话框事是否自动转换模式
-STDMETHODIMP CAppSetting::get_autoSwitchOnClose(VARIANT_BOOL* pVal) {
+STDMETHODIMP CSnowmanSetting::get_autoSwitchOnClose(VARIANT_BOOL* pVal) {
 	*pVal = convert(g_configuration.getMiscSetting()->switchChildrenOnClose());
 	return S_OK;
 }
 
-STDMETHODIMP CAppSetting::put_autoSwitchOnClose(VARIANT_BOOL newVal) {
+STDMETHODIMP CSnowmanSetting::put_autoSwitchOnClose(VARIANT_BOOL newVal) {
 	g_configuration.getMiscSetting()->switchChildrenOnClose(convert(newVal));
 	return S_OK;
 }
 
-STDMETHODIMP CAppSetting::get_askMeAgain(VARIANT_BOOL* pVal) {
+STDMETHODIMP CSnowmanSetting::get_askMeAgain(VARIANT_BOOL* pVal) {
 	*pVal = convert(g_configuration.getMiscSetting()->askMeAgain_SwitchChildren());
 	return S_OK;
 }
 
-STDMETHODIMP CAppSetting::put_askMeAgain(VARIANT_BOOL newVal) {
+STDMETHODIMP CSnowmanSetting::put_askMeAgain(VARIANT_BOOL newVal) {
 	g_configuration.getMiscSetting()->askMeAgain_SwitchChildren(convert(newVal));
 	return S_OK;
 }
+

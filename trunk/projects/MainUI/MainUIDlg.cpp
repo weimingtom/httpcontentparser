@@ -664,15 +664,14 @@ void CMainUIDlg::OnTvnSelchangedTreeNavig(NMHDR *pNMHDR, LRESULT *pResult)
 void CMainUIDlg::SwitchOnClose() {
 	// 设置
 	try {
-		IAppSetting *app = NULL;
-		HRESULT hr = CoCreateInstance(CLSID_AppSetting, NULL, CLSCTX_LOCAL_SERVER, IID_IAppSetting, (LPVOID*)&app);
+		ISnowmanSetting *app = NULL;
+		HRESULT hr = CoCreateInstance(CLSID_SnowmanSetting, NULL, CLSCTX_LOCAL_SERVER, IID_ISnowmanSetting, (LPVOID*)&app);
 		if (FAILED(hr)) {
 			return;
 		}
 		
 		// 是否需要切换到模式
-		/*VARIANT_BOOL val;
-		app->get_autoSwitchOnClose(&val);
+		/*app->get_autoSwitchOnClose(&val);
 		if (VARIANT_TRUE == val) {
 			Services::switchChildModel();
 		}*/

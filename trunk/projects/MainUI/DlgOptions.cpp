@@ -57,8 +57,8 @@ namespace {
 		try {
 			AutoInitInScale auto_init_com;
 			VARIANT_BOOL bSucc;
-			IAppSetting *app = NULL;
-			HRESULT hr = CoCreateInstance(CLSID_AppSetting, NULL, CLSCTX_LOCAL_SERVER, IID_IAppSetting, (LPVOID*)&app);
+			ISnowmanSetting *app = NULL;
+			HRESULT hr = CoCreateInstance(CLSID_SnowmanSetting, NULL, CLSCTX_LOCAL_SERVER, IID_ISnowmanSetting, (LPVOID*)&app);
 			if (FAILED(hr)) {
 				AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONEXCLAMATION);
 				return FALSE;
@@ -66,6 +66,7 @@ namespace {
 
 			app->setHotkey(vKey, vModifiers, type, &bSucc);
 			return convert(bSucc);
+			return true;
 		} catch(...) {
 			AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
 			return FALSE;
@@ -142,8 +143,8 @@ int CDlgOptions::setMisc() {
 	// ÉèÖÃ
 	try {
 		AutoInitInScale auto_init_com;
-		IAppSetting *app = NULL;
-		HRESULT hr = CoCreateInstance(CLSID_AppSetting, NULL, CLSCTX_LOCAL_SERVER, IID_IAppSetting, (LPVOID*)&app);
+		ISnowmanSetting *app = NULL;
+		HRESULT hr = CoCreateInstance(CLSID_SnowmanSetting, NULL, CLSCTX_LOCAL_SERVER, IID_ISnowmanSetting, (LPVOID*)&app);
 		if (FAILED(hr)) {
 			AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONEXCLAMATION);
 			return FAILED_APPLY;
@@ -176,15 +177,15 @@ int CDlgOptions::OnApply() {
 void CDlgOptions::restoreSetting() {	
 	try {
 		AutoInitInScale auto_init_com;
-		IAppSetting *app = NULL;
-		HRESULT hr = CoCreateInstance(CLSID_AppSetting, NULL, CLSCTX_LOCAL_SERVER, IID_IAppSetting, (LPVOID*)&app);
+		ISnowmanSetting *app = NULL;
+		HRESULT hr = CoCreateInstance(CLSID_SnowmanSetting, NULL, CLSCTX_LOCAL_SERVER, IID_ISnowmanSetting, (LPVOID*)&app);
 		if (FAILED(hr)) {
 			AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONEXCLAMATION);
 			return;
 		}
 
 		// ÈÈ¼ü
-		WORD vKey, vModifier;
+		WORD vKey = 0, vModifier = 0;
 		app->getHotkey(HOTKEY_LANUCH_MAINUI, &vKey, &vModifier);
 		m_hotkeyLaunch.SetHotKey(vKey, vModifier);
 

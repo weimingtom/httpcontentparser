@@ -1,0 +1,24 @@
+HKCR
+{
+	FilterSetting.SnowmanSetting.1 = s 'SnowmanSetting Class'
+	{
+		CLSID = s '{8848E577-A80C-4C1C-9964-9D083B2E01C9}'
+	}
+	FilterSetting.SnowmanSetting = s 'SnowmanSetting Class'
+	{
+		CLSID = s '{8848E577-A80C-4C1C-9964-9D083B2E01C9}'
+		CurVer = s 'FilterSetting.SnowmanSetting.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {8848E577-A80C-4C1C-9964-9D083B2E01C9} = s 'SnowmanSetting Class'
+		{
+			ProgID = s 'FilterSetting.SnowmanSetting.1'
+			VersionIndependentProgID = s 'FilterSetting.SnowmanSetting'
+			ForceRemove 'Programmable'
+			LocalServer32 = s '%MODULE%'
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{42F932B5-F5CB-4F0D-8925-1B6BE5FECD1B}'
+		}
+	}
+}

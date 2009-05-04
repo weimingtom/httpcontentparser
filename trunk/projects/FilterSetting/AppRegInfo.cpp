@@ -4,7 +4,7 @@
 #include "AppRegInfo.h"
 #include <app_constants.h>
 #include <typeconvert.h>
-#include ".\globalvariable.h"
+#include ".\globalvariable.h" 
 
 // CAppRegInfo
 

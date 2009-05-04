@@ -99,8 +99,8 @@ BOOL IsRunInEnterModel() {
 BOOL IsRuninParentModel() {
 	try {
 		VARIANT_BOOL parent_mode = VARIANT_FALSE;
-		IAppSetting *app = NULL;
-		HRESULT hr = CoCreateInstance(CLSID_AppSetting, NULL, CLSCTX_LOCAL_SERVER, IID_IAppSetting, (LPVOID*)&app);
+		ISnowmanSetting *app = NULL;
+		HRESULT hr = CoCreateInstance(CLSID_SnowmanSetting, NULL, CLSCTX_LOCAL_SERVER, IID_ISnowmanSetting, (LPVOID*)&app);
 		if (FAILED(hr)) {
 			return FALSE;
 		}
