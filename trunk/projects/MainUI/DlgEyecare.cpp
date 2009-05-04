@@ -70,8 +70,7 @@ void CDlgEyecare::setEyecareTerminatedMode() {
 		IEyecare *pEyeCare = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_Eyecare, NULL, CLSCTX_LOCAL_SERVER, IID_IEyecare, (LPVOID*)&pEyeCare);
 		if (FAILED(hr)) {
-			AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
-			return;
+			throw int(SNOWMAN_ERROR_COM_INIT_FAILED);
 		}
 
 		UINT checked = GetCheckedRadioButton(IDC_RAD_ENTER_SU_MODE, IDC_RAD_JUST_RESET_TIMER);
@@ -81,7 +80,7 @@ void CDlgEyecare::setEyecareTerminatedMode() {
 		pEyeCare->setTermMode(mode);
 		pEyeCare->Release();
 	} catch(...) {
-		AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
+		throw int(SNOWMAN_ERROR_COM_INIT_FAILED);
 	}
 }
 

@@ -71,8 +71,7 @@ void CDlgScreenshot::restoreSetting() {
 		IScreenSave * screensave = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_ScreenSave, NULL, CLSCTX_LOCAL_SERVER, IID_IScreenSave, (LPVOID*)&screensave);
 		if(FAILED(hr)) {
-			AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
-			return;
+			throw int(SNOWMAN_ERROR_COM_INIT_FAILED);
 		}
 
 		VARIANT_BOOL enabled;
@@ -103,7 +102,7 @@ void CDlgScreenshot::restoreSetting() {
 		setAutoCleanTips();
 		setTimespanTips();
 	} catch (...) {
-		AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
+		throw int(SNOWMAN_ERROR_COM_INIT_FAILED);
 	}
 }
 

@@ -27,8 +27,12 @@ int CBaseDlg::Apply() {
 }
 // ªÿ∏¥…Ë÷√
 int CBaseDlg::Restore() {
-	SetModify(false);
-	restoreSetting();
+	try {
+		SetModify(false);
+		restoreSetting();
+	} catch (...) {
+		AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONEXCLAMATION);
+	}
 	return 0;
 }
 
