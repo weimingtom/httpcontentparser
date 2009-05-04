@@ -279,8 +279,8 @@ TCHAR * HTTPContentHander::GetImageDirectory() {
 		if (imageDir[0] == '\0') {
 			AutoInitInScale _auto_com_init;
 
-			IAppSetting *appSetting = NULL;
-			HRESULT hr = CoCreateInstance(CLSID_AppSetting, NULL, CLSCTX_LOCAL_SERVER, IID_IAppSetting, (LPVOID*)&appSetting);
+			ISnowmanSetting *appSetting = NULL;
+			HRESULT hr = CoCreateInstance(CLSID_SnowmanSetting, NULL, CLSCTX_LOCAL_SERVER, IID_ISnowmanSetting, (LPVOID*)&appSetting);
 			if (FAILED(hr)) {
 				return NULL;
 			}
@@ -302,8 +302,8 @@ TCHAR * HTTPContentHander::GetPageDirectory() {
 		if (pagesDir[0] == '\0') {
 			AutoInitInScale _auto_com_init;
 
-			IAppSetting *appSetting = NULL;
-			HRESULT hr = CoCreateInstance(CLSID_AppSetting, NULL, CLSCTX_LOCAL_SERVER, IID_IAppSetting, (LPVOID*)&appSetting);
+			ISnowmanSetting *appSetting = NULL;
+			HRESULT hr = CoCreateInstance(CLSID_SnowmanSetting, NULL, CLSCTX_LOCAL_SERVER, IID_ISnowmanSetting, (LPVOID*)&appSetting);
 			if (FAILED(hr)) {
 				return NULL;
 			}

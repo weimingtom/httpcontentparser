@@ -26,6 +26,8 @@
 #include "GuiDrawLayer.h"
 #include "..\resource.h"
 
+#define IDB_DOCKBAR                     2004
+
 #ifdef _DEBUG
 #undef THIS_FILE
 static char THIS_FILE[]=__FILE__;

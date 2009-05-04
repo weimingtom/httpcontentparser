@@ -9,8 +9,8 @@
 
 bool isRunOnParentModel() {
 	AutoInitInScale auot;
-	IAppSetting *appsetting = NULL;
-	CoCreateInstance(CLSID_AppSetting, NULL, CLSCTX_LOCAL_SERVER, IID_IAppSetting, (LPVOID*)&appsetting);
+	ISnowmanSetting *appsetting = NULL;
+	CoCreateInstance(CLSID_SnowmanSetting, NULL, CLSCTX_LOCAL_SERVER, IID_ISnowmanSetting, (LPVOID*)&appsetting);
 	VARIANT_BOOL result;
 	appsetting->get_ParentModel(&result);
 	return convert(result);
@@ -18,8 +18,8 @@ bool isRunOnParentModel() {
 
 void GetInParentModel() {
 	AutoInitInScale auot;
-	IAppSetting *appsetting = NULL;
-	CoCreateInstance(CLSID_AppSetting, NULL, CLSCTX_LOCAL_SERVER, IID_IAppSetting, (LPVOID*)&appsetting);
+	ISnowmanSetting *appsetting = NULL;
+	CoCreateInstance(CLSID_SnowmanSetting, NULL, CLSCTX_LOCAL_SERVER, IID_ISnowmanSetting, (LPVOID*)&appsetting);
 	VARIANT_BOOL result;
 	appsetting->switchModel(VARIANT_TRUE, _bstr_t("123"), &result);
 	assert ( result == VARIANT_TRUE); // ÃÜÂë´íÎó
@@ -27,8 +27,8 @@ void GetInParentModel() {
 
 void GetInChildMode() {
 	AutoInitInScale auot;
-	IAppSetting *appsetting = NULL;
-	CoCreateInstance(CLSID_AppSetting, NULL, CLSCTX_LOCAL_SERVER, IID_IAppSetting, (LPVOID*)&appsetting);
+	ISnowmanSetting *appsetting = NULL;
+	CoCreateInstance(CLSID_SnowmanSetting, NULL, CLSCTX_LOCAL_SERVER, IID_ISnowmanSetting, (LPVOID*)&appsetting);
 	VARIANT_BOOL result;
 	appsetting->switchModel(VARIANT_FALSE, _bstr_t("123"), &result);
 	assert ( result == VARIANT_TRUE); // ÃÜÂë´íÎó

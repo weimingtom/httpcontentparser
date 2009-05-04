@@ -42,40 +42,7 @@ interface IEyecare : IDispatch{
 	[id(14), helpstring("Method enableEyecare")]	HRESULT enableEyecare([in] VARIANT_BOOL enabled);
 	[id(15), helpstring("Method isSettingEnabled")] HRESULT isSettingEnabled([in,out] VARIANT_BOOL* enabled);
 };
-[
-	object,
-	uuid(00A9583E-A2E7-4EB4-AF45-6FFC8BEDC701),
-	dual,
-	nonextensible,
-	helpstring("IAppSetting  Interface"),
-	pointer_default(unique)
-]
-interface IAppSetting : IDispatch{
-	// 当前状态及状态切换
-	[id(4), helpstring("Method switchModel")]			 HRESULT switchModel([in] VARIANT_BOOL bParent, [in] BSTR pwd, [out,retval] VARIANT_BOOL* bSucc);
-	[propget, id(5), helpstring("Property ParentModel")] HRESULT ParentModel([out, retval] VARIANT_BOOL* pVal);
 
-	// 超时自动切换
-	[id(6), helpstring("Method setTimeoutValue")]		 HRESULT setTimeoutValue([in] LONG seconds);
-	[propget, id(7), helpstring("Property TimeoutSwitchEnabled")] HRESULT TimeoutSwitchEnabled([out, retval] VARIANT_BOOL* pVal);
-	[propput, id(7), helpstring("Property TimeoutSwitchEnabled")] HRESULT TimeoutSwitchEnabled([in] VARIANT_BOOL newVal);
-	[propget, id(8), helpstring("Property LefttimeToSwitch")]	  HRESULT LefttimeToSwitch([out, retval] LONG* pVal);
-
-	// 应用程序相关目录
-	[id(3), helpstring("Method GetInstallPath")]		 HRESULT GetInstallPath([out,retval] BSTR* path);
-	[id(11), helpstring("Method getImageFolder")] HRESULT getImageFolder([out] BSTR* path);
-	[id(12), helpstring("Method getPagesFolder")] HRESULT getPagesFolder([out] BSTR* path);
-
-	// 热键设置
-	[id(1), helpstring("Method setHotkey")]		HRESULT setHotkey([in] USHORT wVirtualKeyCode, [in] USHORT wModifiers, [in] LONG type, [out,retval] VARIANT_BOOL* bSuccess);
-	[id(13), helpstring("Method getHotkey")] HRESULT getHotkey([in] LONG type, [out] USHORT* wVirtualKeyCode, [out] USHORT* wModifier);
-
-	// 在最小化窗口的时候，是否切换到子模式
-	[propget, id(14), helpstring("Property autoSwitchOnClose")] HRESULT autoSwitchOnClose([out, retval] VARIANT_BOOL* pVal);
-	[propput, id(14), helpstring("Property autoSwitchOnClose")] HRESULT autoSwitchOnClose([in] VARIANT_BOOL newVal);
-	[propget, id(15), helpstring("Property askMeAgain")] HRESULT askMeAgain([out, retval] VARIANT_BOOL* pVal);
-	[propput, id(15), helpstring("Property askMeAgain")] HRESULT askMeAgain([in] VARIANT_BOOL newVal);
-};
 [
 	object,
 	uuid(AE3AA2A0-D840-4301-932D-ED450D797CA7),
@@ -166,8 +133,8 @@ interface IAccessNetwork : IDispatch{
 	[id(1), helpstring("Method accessNetwork")]		HRESULT accessNetwork([out,retval] VARIANT_BOOL* bAccessable);
 	[id(2), helpstring("Method setBlockTime")]		HRESULT setBlockTime([in] LONG day, [in] LONG hour);
 	[id(3), helpstring("Method removeBlockTime")]	HRESULT removeBlockTime([in] LONG day, [in] LONG hour);
-	[id(4), helpstring("方法SettingAccessNetwork")] HRESULT SettingAccessNetwork([in] LONG day, [in] LONG hour, [out] VARIANT_BOOL* accessable);
-	[id(5), helpstring("方法isSettingEnable")] HRESULT isSettingEnable([out] VARIANT_BOOL* enabled);
+	[id(4), helpstring("Method SettingAccessNetwork")] HRESULT SettingAccessNetwork([in] LONG day, [in] LONG hour, [out] VARIANT_BOOL* accessable);
+	[id(5), helpstring("Method isSettingEnable")] HRESULT isSettingEnable([out] VARIANT_BOOL* enabled);
 };
 [
 	object,
@@ -255,6 +222,31 @@ interface IAppRegInfo : IDispatch{
 	[propget, id(4), helpstring("Property LeftDays")] HRESULT LeftDays([out, retval] LONG* pVal);
 };
 [
+	object,
+	uuid(1B832763-4873-430D-8C86-49C70561546A),
+	dual,
+	nonextensible,
+	helpstring("ISnowmanSetting Interface"),
+	pointer_default(unique)
+]
+interface ISnowmanSetting : IDispatch{
+	[id(1), helpstring("Method switchModel")]			 HRESULT switchModel([in] VARIANT_BOOL bParent, [in] BSTR pwd, [out,retval] VARIANT_BOOL* bSucc);
+	[propget, id(2), helpstring("Property ParentModel")] HRESULT ParentModel([out, retval] VARIANT_BOOL* pVal);
+	[id(3), helpstring("Method setTimeoutValue")]		 HRESULT setTimeoutValue([in] LONG seconds);
+	[propget, id(4), helpstring("Property TimeoutSwitchEnabled")] HRESULT TimeoutSwitchEnabled([out, retval] VARIANT_BOOL* pVal);
+	[propput, id(4), helpstring("Property TimeoutSwitchEnabled")] HRESULT TimeoutSwitchEnabled([in] VARIANT_BOOL newVal);
+	[propget, id(5), helpstring("Property LefttimeToSwitch")]	  HRESULT LefttimeToSwitch([out, retval] LONG* pVal);
+	[id(7), helpstring("Method GetInstallPath")]		 HRESULT GetInstallPath([out,retval] BSTR* path);
+	[id(8), helpstring("Method getImageFolder")] HRESULT getImageFolder([out] BSTR* path);
+	[id(9), helpstring("Method getPagesFolder")] HRESULT getPagesFolder([out] BSTR* path);
+	[id(10), helpstring("Method setHotkey")]		HRESULT setHotkey([in] USHORT wVirtualKeyCode, [in] USHORT wModifiers, [in] LONG type, [out,retval] VARIANT_BOOL* bSuccess);
+	[id(11), helpstring("Method getHotkey")] HRESULT getHotkey([in] LONG type, [out] USHORT* wVirtualKeyCode, [out] USHORT* wModifier);
+	[propget, id(14), helpstring("Property autoSwitchOnClose")] HRESULT autoSwitchOnClose([out, retval] VARIANT_BOOL* pVal);
+	[propput, id(14), helpstring("Property autoSwitchOnClose")] HRESULT autoSwitchOnClose([in] VARIANT_BOOL newVal);
+	[propget, id(15), helpstring("Property askMeAgain")] HRESULT askMeAgain([out, retval] VARIANT_BOOL* pVal);
+	[propput, id(15), helpstring("Property askMeAgain")] HRESULT askMeAgain([in] VARIANT_BOOL newVal);
+};
+[
 	uuid(42F932B5-F5CB-4F0D-8925-1B6BE5FECD1B),
 	version(1.0),
 	helpstring("FilterSetting 1.0 ClassLibrary")
@@ -278,14 +270,6 @@ library FilterSettingLib {
 	coclass Eyecare
 	{
 		[default] interface IEyecare;
-	};
-	[
-		uuid(40B3A4B6-7DC1-4DE0-BDC3-8D519F0AD7B6),
-		helpstring("AppSetting Class")
-	]
-	coclass AppSetting
-	{
-		[default] interface IAppSetting;
 	};
 	[
 		uuid(6CCC382B-10BC-4F2F-AC82-E79EC9CDA172),
@@ -358,5 +342,13 @@ library FilterSettingLib {
 	coclass AppRegInfo
 	{
 		[default] interface IAppRegInfo;
+	};
+	[
+		uuid(8848E577-A80C-4C1C-9964-9D083B2E01C9),
+		helpstring("SnowmanSetting Class")
+	]
+	coclass SnowmanSetting
+	{
+		[default] interface ISnowmanSetting;
 	};
 };

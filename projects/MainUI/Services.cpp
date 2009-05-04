@@ -7,10 +7,10 @@
 bool Services::isParentModel() {
 	AutoInitInScale auto_;
 	try {
-		IAppSetting * appSetting = NULL;
+		ISnowmanSetting * appSetting = NULL;
 		// 获取系统设置
-		HRESULT hr = CoCreateInstance(CLSID_AppSetting, 
-			NULL, CLSCTX_LOCAL_SERVER, IID_IAppSetting, (LPVOID*)&appSetting);
+		HRESULT hr = CoCreateInstance(CLSID_SnowmanSetting, 
+			NULL, CLSCTX_LOCAL_SERVER, IID_ISnowmanSetting, (LPVOID*)&appSetting);
 
 		if (FAILED(hr)) {
 			return false;
@@ -28,8 +28,8 @@ bool Services::switchParentModel(LPCTSTR password) {
 	AutoInitInScale auto_;
 	try {
 		VARIANT_BOOL bSucc;
-		IAppSetting *appSetting = NULL;
-		HRESULT hr = CoCreateInstance(CLSID_AppSetting, NULL, CLSCTX_LOCAL_SERVER, IID_IAppSetting, (LPVOID*)&appSetting);
+		ISnowmanSetting *appSetting = NULL;
+		HRESULT hr = CoCreateInstance(CLSID_SnowmanSetting, NULL, CLSCTX_LOCAL_SERVER, IID_ISnowmanSetting, (LPVOID*)&appSetting);
 		if (FAILED(hr)) {
 			return false;
 		}
@@ -46,8 +46,8 @@ void Services::switchChildModel() {
 	AutoInitInScale auto_;
 	try {
 		VARIANT_BOOL bSucc;
-		IAppSetting *appSetting = NULL;
-		HRESULT hr = CoCreateInstance(CLSID_AppSetting, NULL, CLSCTX_LOCAL_SERVER, IID_IAppSetting, (LPVOID*)&appSetting);
+		ISnowmanSetting *appSetting = NULL;
+		HRESULT hr = CoCreateInstance(CLSID_SnowmanSetting, NULL, CLSCTX_LOCAL_SERVER, IID_ISnowmanSetting, (LPVOID*)&appSetting);
 		if (FAILED(hr)) {
 			return;
 		}

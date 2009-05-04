@@ -47,8 +47,8 @@ BOOL CDlgSwitchChildren::OnInitDialog()
 
 	try {
 		AutoInitInScale auto_scale_;
-		IAppSetting * appSetting = NULL;
-		HRESULT hr = CoCreateInstance(CLSID_AppSetting, NULL, CLSCTX_LOCAL_SERVER, IID_IAppSetting, (LPVOID*)&appSetting);
+		ISnowmanSetting * appSetting = NULL;
+		HRESULT hr = CoCreateInstance(CLSID_SnowmanSetting, NULL, CLSCTX_LOCAL_SERVER, IID_ISnowmanSetting, (LPVOID*)&appSetting);
 		if (SUCCEEDED(hr)) {
 			VARIANT_BOOL askme, closed;
 			appSetting->get_askMeAgain(&askme);
@@ -75,8 +75,8 @@ void CDlgSwitchChildren::OnBnClickedOk()
 	try {
 		UpdateData(TRUE);
 		AutoInitInScale auto_scale_;
-		IAppSetting * appSetting = NULL;
-		HRESULT hr = CoCreateInstance(CLSID_AppSetting, NULL, CLSCTX_LOCAL_SERVER, IID_IAppSetting, (LPVOID*)&appSetting);
+		ISnowmanSetting * appSetting = NULL;
+		HRESULT hr = CoCreateInstance(CLSID_SnowmanSetting, NULL, CLSCTX_LOCAL_SERVER, IID_ISnowmanSetting, (LPVOID*)&appSetting);
 		if (FAILED(hr)) {
 			return OnOK();
 		} else {
@@ -95,8 +95,8 @@ void CDlgSwitchChildren::OnBnClickedCancel()
 	try {
 		UpdateData(TRUE);
 		AutoInitInScale auto_scale_;
-		IAppSetting * appSetting = NULL;
-		HRESULT hr = CoCreateInstance(CLSID_AppSetting, NULL, CLSCTX_LOCAL_SERVER, IID_IAppSetting, (LPVOID*)&appSetting);
+		ISnowmanSetting * appSetting = NULL;
+		HRESULT hr = CoCreateInstance(CLSID_SnowmanSetting, NULL, CLSCTX_LOCAL_SERVER, IID_ISnowmanSetting, (LPVOID*)&appSetting);
 		if (FAILED(hr)) {
 			return OnOK();
 		} else {

@@ -94,7 +94,6 @@ END
 IDR_FILTERSETTING       REGISTRY                "FilterSetting.rgs"
 IDR_AUTHORIZE           REGISTRY                "Authorize.rgs"
 IDR_EYECARE             REGISTRY                "Eyecare.rgs"
-IDR_APPSETTING          REGISTRY                "AppSetting.rgs"
 IDR_SCREENSAVE          REGISTRY                "ScreenSave.rgs"
 IDR_WEBHISTORYRECORDER  REGISTRY                "WebHistoryRecorder.rgs"
 IDR_DNSSETTING          REGISTRY                "DNSSetting.rgs"
@@ -104,6 +103,7 @@ IDR_WEBCONTENTCHECK     REGISTRY                "WebContentCheck.rgs"
 IDR_WEBCONTENTRECORD    REGISTRY                "WebContentRecord.rgs"
 IDR_APPCONTROL          REGISTRY                "AppControl.rgs"
 IDR_APPREGINFO          REGISTRY                "AppRegInfo.rgs"
+IDR_SNOWMANSETTING      REGISTRY                "SnowmanSetting.rgs"
 
 /////////////////////////////////////////////////////////////////////////////
 //

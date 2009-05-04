@@ -1,4 +1,4 @@
-// AppSetting.h : CAppSetting 的声明
+// SnowmanSetting.h : CSnowmanSetting 的声明
 
 #pragma once
 #include "resource.h"       // 主符号
@@ -6,41 +6,41 @@
 #include "FilterSetting.h"
 
 
-// CAppSetting
+// CSnowmanSetting
 
-class ATL_NO_VTABLE CAppSetting : 
+class ATL_NO_VTABLE CSnowmanSetting : 
 	public CComObjectRootEx<CComSingleThreadModel>,
-	public CComCoClass<CAppSetting, &CLSID_AppSetting>,
-	public ISupportErrorInfo,
-	public IDispatchImpl<IAppSetting, &IID_IAppSetting, &LIBID_FilterSettingLib, /*wMajor =*/ 1, /*wMinor =*/ 0>
+	public CComCoClass<CSnowmanSetting, &CLSID_SnowmanSetting>,
+	public IDispatchImpl<ISnowmanSetting, &IID_ISnowmanSetting, &LIBID_FilterSettingLib, /*wMajor =*/ 1, /*wMinor =*/ 0>
 {
 public:
-	CAppSetting() {
+	CSnowmanSetting()
+	{
 	}
 
-DECLARE_REGISTRY_RESOURCEID(IDR_APPSETTING)
+DECLARE_REGISTRY_RESOURCEID(IDR_SNOWMANSETTING)
 
 
-BEGIN_COM_MAP(CAppSetting)
-	COM_INTERFACE_ENTRY(IAppSetting)
+BEGIN_COM_MAP(CSnowmanSetting)
+	COM_INTERFACE_ENTRY(ISnowmanSetting)
 	COM_INTERFACE_ENTRY(IDispatch)
-	COM_INTERFACE_ENTRY(ISupportErrorInfo)
 END_COM_MAP()
 
-// ISupportsErrorInfo
-	STDMETHOD(InterfaceSupportsErrorInfo)(REFIID riid);
 
 	DECLARE_PROTECT_FINAL_CONSTRUCT()
 
-	HRESULT FinalConstruct() {
+	HRESULT FinalConstruct()
+	{
 		return S_OK;
 	}
 	
-	void FinalRelease() {
+	void FinalRelease() 
+	{
 	}
 
 public:
 	// 热键
+	STDMETHOD(getHotkey)(LONG type, USHORT* wVirtualKeyCode, USHORT* wModifier);
 	STDMETHOD(setHotkey)(USHORT wVirtualKeyCode, USHORT wModifiers, LONG type, VARIANT_BOOL* bSuccess);
 
 	// 模式切换
@@ -54,16 +54,16 @@ public:
 	STDMETHOD(getPagesFolder)(BSTR* path);
 
 	// 超时自动切换模式
-	// 暂时被废弃
-	STDMETHOD(setTimeoutValue)(LONG seconds);
-	STDMETHOD(get_TimeoutSwitchEnabled)(VARIANT_BOOL* pVal);
-	STDMETHOD(put_TimeoutSwitchEnabled)(VARIANT_BOOL newVal);
-	STDMETHOD(get_LefttimeToSwitch)(LONG* pVal);
-	STDMETHOD(getHotkey)(LONG type, USHORT* wVirtualKeyCode, USHORT* wModifier);
 	STDMETHOD(get_autoSwitchOnClose)(VARIANT_BOOL* pVal);
 	STDMETHOD(put_autoSwitchOnClose)(VARIANT_BOOL newVal);
 	STDMETHOD(get_askMeAgain)(VARIANT_BOOL* pVal);
 	STDMETHOD(put_askMeAgain)(VARIANT_BOOL newVal);
+
+		// 暂时被废弃
+	STDMETHOD(setTimeoutValue)(LONG seconds);
+	STDMETHOD(get_TimeoutSwitchEnabled)(VARIANT_BOOL* pVal);
+	STDMETHOD(put_TimeoutSwitchEnabled)(VARIANT_BOOL newVal);
+	STDMETHOD(get_LefttimeToSwitch)(LONG* pVal);
 };
 
-OBJECT_ENTRY_AUTO(__uuidof(AppSetting), CAppSetting)
+OBJECT_ENTRY_AUTO(__uuidof(SnowmanSetting), CSnowmanSetting)
