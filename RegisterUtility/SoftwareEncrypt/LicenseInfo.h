@@ -16,11 +16,12 @@ public:
 
 public:
 	int getInstallDays();	// 获取时间期限
-	int getDaysLimit();	// 剩余多少天使用
+	int getDaysLeft();	// 剩余多少天使用
 	bool registered(); // 是否已经注册了
 
 	void initialize();		// 初始化
 	bool regApp(const std::string &bstr);
+	int getAppStatus();
 private:
 	//======================
 	// 一下信息都应该只从文件中读取一次
