@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <io.h>
 #include <shell\shellutility.h>
+#include <softwareStatus.h>
 
 
 namespace {
@@ -19,6 +20,7 @@ namespace {
 AppInstallValidate::AppInstallValidate(int type) : type_(type)
 {
 	memset(install_path, 0, sizeof(install_path));
+	status_ = SNOWMAN_STATUS_TRIAL;
 }
 
 AppInstallValidate::~AppInstallValidate(void)
@@ -120,10 +122,15 @@ void AppInstallValidate::repairSPI() {
 
 	// 如果已经安装，则直接返回成功
 	CXInstall install;
-	if (install.IsInstalled())
-		return;
-
-	installSPI();
+	if (shouldInstall()) {
+		if (!install.IsInstalled()) {
+			installSPI();
+		}
+	} else {
+		// 卸载
+		// 必须卸载
+		install.RemoveProvider();
+	}
 }
 
 // 安装SPI
@@ -174,13 +181,18 @@ bool AppInstallValidate::serviceWorking() {
 }
 
 void AppInstallValidate::repairCOM() {
-	if (type_ != VALIDATE_SPI) {
-		setErrNo(UnRegisterServices());
-		setErrNo(RegisterServices());
-	} else {
-		setErrNo(UnRegisterServices(install_path));
-		setErrNo(RegisterServices(install_path));
+	if (shouldInstall()) {
+		if (type_ != VALIDATE_SPI) {
+			setErrNo(UnRegisterServices());
+			setErrNo(RegisterServices());
+		} else {
+			setErrNo(UnRegisterServices(install_path));
+			setErrNo(RegisterServices(install_path));
+		}
 	}
+	// COM还是应该继续运行下去
+	// 除非用户从卸载程序卸载
+	// 因此ELSE并不执行卸载部分
 }
 
 bool AppInstallValidate::shouldRepairCOM() {
@@ -193,16 +205,17 @@ bool AppInstallValidate::shouldRepairCOM() {
 
 //===================================================
 // 修复外科应用程序
-
 void AppInstallValidate::repairShellExt() {
-	// 安装应用程序
-	if (isInstallCopyHook()) {
-		installCopyHook();
-	}
+	if (shouldInstall()) {
+		// 安装应用程序
+		if (!isInstallCopyHook()) {
+			installCopyHook();
+		}
 
-	// 安装应用程序控制
-	if(isInstallAppControl()) {
-		installAppControl();
+		// 安装应用程序控制
+		if(!isInstallAppControl()) {
+			installAppControl();
+		}
 	}
 }
 //===================================================
@@ -226,6 +239,28 @@ void AppInstallValidate::getErrorMessage(TCHAR * msg, const int len) {
 		default:
 			msg[0] = '\0';
 	}	
+}
+
+bool AppInstallValidate::shouldInstall() {
+	if (SNOWMAN_STATUS_REGISTERED == status_) {
+		return true;
+	} else if (SNOWMAN_STATUS_TRIAL == status_) {
+		return true;
+	} else if (SNOWMAN_STATUS_OVERTIME == status_) {
+		// 超期了
+		return false;
+	} else if (SNOWMAN_STATUS_UNINSTALL == status_) {
+		// 卸载
+		// 肯定不要再修复了
+		return false;
+	} else if (SNOWMAN_STATUS_UPDATE == status_) {
+		// 如果重启后就要升级了
+		// 在重启时程序可能要被卸载了，这时候
+		// 就不要再修复了
+		return false;
+	} else {
+		return false;
+	}
 }
 
 namespace {
