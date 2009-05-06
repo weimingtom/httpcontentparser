@@ -10,6 +10,7 @@
 #include <utility\dns.h>
 #include <searchengine_define.h>
 #include <comutil.h>
+#include ".\snowmansetting.h"
 
 // CSnowmanSetting
 STDMETHODIMP CSnowmanSetting::setHotkey(USHORT wVirtualKeyCode, USHORT wModifiers, LONG type, VARIANT_BOOL* bSuccess) {
@@ -148,3 +149,10 @@ STDMETHODIMP CSnowmanSetting::put_askMeAgain(VARIANT_BOOL newVal) {
 	return S_OK;
 }
 
+
+STDMETHODIMP CSnowmanSetting::getApplicationStatus(LONG* status)
+{
+	// TODO: 在此添加实现代码
+
+	return S_OK;
+}

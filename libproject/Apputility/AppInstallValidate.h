@@ -25,7 +25,7 @@
 // 情况进行操作就可以了！
 class AppInstallValidate {
 public:
-	AppInstallValidate(int type);
+	AppInstallValidate(int type, int status);
 	~AppInstallValidate(void);
 
 	int repair();		// 修复

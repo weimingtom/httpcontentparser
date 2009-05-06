@@ -15,6 +15,7 @@
 #include <searchengine_define.h>
 #include <searchkeywordutil.h>
 #include <shell\shellutility.h>
+#include <softwareStatus.h>
 #include <string>
 #include <time.h>
 
@@ -79,8 +80,9 @@ extern "C" int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/
 	g_hInstance = hInstance;
 
 	// 修复项
-	//todo
-	AppInstallValidate validator(VALIDATE_COM);
+	// todo 此处应该直接使用函数获取状态
+	// 获取应用程序状态
+	AppInstallValidate validator(VALIDATE_COM, SNOWMAN_STATUS_REGISTERED);
 	//validator.repair();
 
 	initializeSetting();

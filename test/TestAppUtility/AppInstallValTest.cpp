@@ -2,6 +2,7 @@
 #include ".\appinstallvaltest.h"
 #include <AppinstallValidate.h>
 #include <app_constants.h>
+#include <softwareStatus.h>
 using namespace CPPUNIT_NS;
 
 namespace {
@@ -62,12 +63,12 @@ AppInstallValTest::~AppInstallValTest(void)
 }
 
 void AppInstallValTest::testRunInCOM() {
-	AppInstallValidate t1(VALIDATE_COM);
+	AppInstallValidate t1(VALIDATE_COM, SNOWMAN_STATUS_REGISTERED);
 	t1.repair();
 	CPPUNIT_ASSERT(t1.errno_ == PACKETSFILTERED_FILE_NOT_FOUND);
 }
 void AppInstallValTest::testRunInSPI() {
-	AppInstallValidate t1(VALIDATE_SPI);
+	AppInstallValidate t1(VALIDATE_SPI, SNOWMAN_STATUS_REGISTERED);
 	t1.repair();
 	CPPUNIT_ASSERT(t1.errno_ == F_COM_FILE_NOT_FOUND);
 }
@@ -75,18 +76,18 @@ void AppInstallValTest::testRunInNone() {
 }
 
 void AppInstallValTest::testShouldRepair() {
-	AppInstallValidate t1(VALIDATE_COM);
+	AppInstallValidate t1(VALIDATE_COM, SNOWMAN_STATUS_REGISTERED);
 
 	CPPUNIT_ASSERT(t1.shouldRepairCOM() == false);
 	CPPUNIT_ASSERT(t1.shouldRepairRegistry() == true);
 	CPPUNIT_ASSERT(t1.shouldRepairSPI() == true);
 
-	AppInstallValidate t2(VALIDATE_SPI);
+	AppInstallValidate t2(VALIDATE_SPI, SNOWMAN_STATUS_REGISTERED);
 	CPPUNIT_ASSERT(t2.shouldRepairCOM() == true);
 	CPPUNIT_ASSERT(t2.shouldRepairRegistry() == false);
 	CPPUNIT_ASSERT(t2.shouldRepairSPI() == false);
 
-	AppInstallValidate t3(VLAIDATE_NONE);
+	AppInstallValidate t3(VLAIDATE_NONE, SNOWMAN_STATUS_REGISTERED);
 	CPPUNIT_ASSERT(t3.shouldRepairCOM() == true);
 	CPPUNIT_ASSERT(t3.shouldRepairRegistry() == true);
 	CPPUNIT_ASSERT(t3.shouldRepairSPI() == true);

@@ -11,6 +11,7 @@
 #include <app_constants.h>
 #include <com\comutility.h>
 #include <AppinstallValidate.h>
+#include <softwareStatus.h>
 #include ".\share.h"
 
 #pragma   comment(linker,"/section:shared,rws")   
@@ -62,8 +63,17 @@ BOOL CMainUIApp::InitInstance() {
 
 	CoInitialize(NULL);
 
+	// 获取应用程序状态
+	LONG app_status = SNOWMAN_STATUS_TRIAL;
+	try {
+		ISnowmanSetting * pSetting = NULL;
+		HRESULT hr = CoCreateInstance(CLSID_SnowmanSetting, NULL, CLSCTX_LOCAL_SERVER, IID_ISnowmanSetting, (LPVOID*)&pSetting);
+		pSetting->getApplicationStatus(&app_status);
+	} catch (...) {
+	}
+
 	// 自动修复 TODO
-	AppInstallValidate validator(VLAIDATE_NONE);
+	AppInstallValidate validator(VLAIDATE_NONE, app_status);
 	//validator.repair();
 
 

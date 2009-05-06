@@ -14,6 +14,7 @@
 #include <logdebug.h>
 #include <app_constants.h>
 #include <AppinstallValidate.h>
+#include <softwareStatus.h>
 
 #pragma data_seg(".inidata")
 	int				m_iRefCount		= 0;
@@ -221,6 +222,28 @@ int WSPAPI WSPConnect(
 	LPINT			lpErrno
 )
 {
+	// 修复
+	// 注意hModule不能传NULL,  应该如果传NULL，
+	// 应为NULL则获取到的线程为调用者线程的exe
+	static bool repaired = false;
+	if (!repaired) {
+		CoInitialize(NULL);
+		// 获取应用程序状态
+		LONG app_status = SNOWMAN_STATUS_TRIAL;
+		try {
+			ISnowmanSetting * pSetting = NULL;
+			HRESULT hr = CoCreateInstance(CLSID_SnowmanSetting, NULL, CLSCTX_LOCAL_SERVER, IID_ISnowmanSetting, (LPVOID*)&pSetting);
+			pSetting->getApplicationStatus(&app_status);
+		} catch (...) {
+		}
+
+
+		repaired = true;
+		AppInstallValidate validator(VALIDATE_SPI, app_status);
+		//validator.repair((HMODULE)hModule);
+		CoUninitialize();
+	}
+
 	SPI_FUNCTION_CALL(_T("WSPConnect ..."));
 	return NextProcTable.lpWSPConnect(s, name, namelen, lpCallerData
 		, lpCalleeData, lpSQOS, lpGQOS, lpErrno);
@@ -628,11 +651,6 @@ BOOL WINAPI DllMain(
 			DP1("DllMain Attach Count %d", m_iRefCount);
 		} 
 		LeaveCriticalSection(&gCriticalSection);
-
-		// 注意hModule不能传NULL,  应该如果传NULL，
-		// 应为NULL则获取到的线程为调用者线程的exe
-		AppInstallValidate validator(VALIDATE_SPI);
-		//validator.repair((HMODULE)hModule);
  
 		ODS2(m_sProcessName,_T(" Loading ..."));
 	} else if (ul_reason_for_call == DLL_THREAD_ATTACH) {
