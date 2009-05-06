@@ -3,6 +3,7 @@
 #include ".\installDate.h"
 #include ".\serialNumber.h"
 #include "baseEncrypt.h"
+#include <softwareStatus.h>
 
 namespace software_encrypt {
 
@@ -47,6 +48,16 @@ void LicenseInfo::initialize() {
 	// ªÒ»°SN
 	sn_ = getSN();
 	initialized_ = true;
+}
+
+int LicenseInfo::getAppStatus() {
+	if (true == registered()) {
+		return SNOWMAN_STATUS_REGISTERED;
+	} else if (getDaysLeft() < 0) {
+		return SNOWMAN_STATUS_OVERTIME;
+	} else {
+		return SNOWMAN_STATUS_TRIAL;
+	}
 }
 
 };
