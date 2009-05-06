@@ -64,6 +64,9 @@ public:
 	STDMETHOD(get_TimeoutSwitchEnabled)(VARIANT_BOOL* pVal);
 	STDMETHOD(put_TimeoutSwitchEnabled)(VARIANT_BOOL newVal);
 	STDMETHOD(get_LefttimeToSwitch)(LONG* pVal);
+
+	// 获取应用程序状态
+	STDMETHOD(getApplicationStatus)(LONG* status);
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(SnowmanSetting), CSnowmanSetting)

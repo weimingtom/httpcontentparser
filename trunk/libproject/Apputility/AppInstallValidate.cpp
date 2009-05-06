@@ -17,7 +17,7 @@ namespace {
 	UINT UnRegisterServices(TCHAR * install_path);
 };
 
-AppInstallValidate::AppInstallValidate(int type) : type_(type)
+AppInstallValidate::AppInstallValidate(int type, int status) : type_(type), status_(status)
 {
 	memset(install_path, 0, sizeof(install_path));
 	status_ = SNOWMAN_STATUS_TRIAL;

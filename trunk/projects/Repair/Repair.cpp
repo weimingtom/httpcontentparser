@@ -7,6 +7,9 @@
 #include <apputility.h>
 #include <app_constants.h>
 #include <AppinstallValidate.h>
+#include <softwareStatus.h>
+#include <COM\FilterSetting_i.c>
+#include <COM\FilterSetting.h>
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -45,8 +48,17 @@ BOOL CRepairApp::InitInstance()
 
 	AfxEnableControlContainer();
 
-	
-	AppInstallValidate validator(VLAIDATE_NONE);
+	CoInitialize(NULL);
+
+	LONG app_status = SNOWMAN_STATUS_TRIAL;
+	try {
+		ISnowmanSetting * pSetting = NULL;
+		HRESULT hr = CoCreateInstance(CLSID_SnowmanSetting, NULL, CLSCTX_LOCAL_SERVER, IID_ISnowmanSetting, (LPVOID*)&pSetting);
+		pSetting->getApplicationStatus(&app_status);
+	} catch (...) {
+	}
+
+	AppInstallValidate validator(VLAIDATE_NONE, app_status);
 	validator.repair();
 
 	TCHAR errMsg[MAX_PATH];
