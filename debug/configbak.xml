@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<config>
+<config installed="true" first="true">
     <rules>
         <rule name="onlinetime" enable="true" />
         <rule name="blackurl" enable="true" />
@@ -48,7 +48,7 @@
             <autoclean max="30" min="1" timespan="3" lastclean="2008-12-23 10:06:27" enable="false" />
         </screensave>
 		<programcontrol enable="true">
-			<program fullpath=""\>
+			<program fullpath=""/>
 		</programcontrol>
         <hotkeys>
             <hotkey name="launch" key="0" />
