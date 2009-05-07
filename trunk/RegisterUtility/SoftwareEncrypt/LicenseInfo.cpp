@@ -4,9 +4,11 @@
 #include ".\serialNumber.h"
 #include "baseEncrypt.h"
 #include <softwareStatus.h>
+#include <app_constants.h>
+
+#define UNINSTALL_INDICATOR		TEXT("uninstall.dll")
 
 namespace software_encrypt {
-
 LicenseInfo::LicenseInfo(void) : initialized_(false){
 }
 
@@ -27,6 +29,10 @@ bool LicenseInfo::registered() {
 	assert (true == initialized_);
 
 	return validateSN(sn_);
+}
+
+int LicenseInfo::getDaysLeft() {
+	return REG_SOFTWARE_TRAIL_DAYES - getInstallDays();
 }
 
 // 获取安装时间
@@ -59,5 +65,4 @@ int LicenseInfo::getAppStatus() {
 		return SNOWMAN_STATUS_TRIAL;
 	}
 }
-
 };
