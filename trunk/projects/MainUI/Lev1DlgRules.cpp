@@ -20,6 +20,11 @@ CLev1DlgRules::~CLev1DlgRules()
 {
 }
 
+std::string CLev1DlgRules::getHelpLink() const {
+	return "";
+}
+
+
 void CLev1DlgRules::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);

@@ -18,6 +18,10 @@ CLev1DlgTools::~CLev1DlgTools()
 {
 }
 
+std::string CLev1DlgTools::getHelpLink() const {
+	return "";
+}
+
 void CLev1DlgTools::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);

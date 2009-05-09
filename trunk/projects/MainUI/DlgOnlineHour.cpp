@@ -26,6 +26,9 @@ CDlgOnlineHour::~CDlgOnlineHour()
 {
 }
 
+std::string CDlgOnlineHour::getHelpLink() const {
+	return "";
+}
 
 namespace {
 	// …Ë÷√

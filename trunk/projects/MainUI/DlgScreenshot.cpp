@@ -32,6 +32,11 @@ CDlgScreenshot::~CDlgScreenshot()
 {
 }
 
+std::string CDlgScreenshot::getHelpLink() const {
+	return "";
+}
+
+
 void CDlgScreenshot::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);

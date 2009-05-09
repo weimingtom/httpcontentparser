@@ -16,6 +16,8 @@ public:
 	CDlgBlackDNSList(CWnd* pParent = NULL);   // 标准构造函数
 	virtual ~CDlgBlackDNSList();
 
+	virtual std::string getHelpLink() const;
+
 // 对话框数据
 	enum { IDD = IDD_DLG_DNS_RULE };
 

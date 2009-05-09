@@ -1,5 +1,6 @@
 #pragma once
 #include "afxwin.h"
+#include <string>
 
 #define SUCCESS_APPLY	0
 #define FAILED_APPLY		-1
@@ -13,6 +14,7 @@ public:
 	virtual int  BeforeChange();
 	int  AfterChange();
 	
+	virtual std::string getHelpLink() const = 0;
 
 	// 确定对话框数据是否有改变
 	bool Modified() {

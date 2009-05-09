@@ -19,6 +19,10 @@ CDlgHelp::~CDlgHelp()
 {
 }
 
+std::string CDlgHelp::getHelpLink() const {
+	return "";
+}
+
 
 void CDlgHelp::restoreSetting() {
 }

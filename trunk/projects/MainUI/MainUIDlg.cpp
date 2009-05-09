@@ -79,6 +79,7 @@ BEGIN_MESSAGE_MAP(CMainUIDlg, CDialog)
 	ON_COMMAND(ID_WEBHISTORY_SEARCHKEYWORD, OnWebhistorySearchkeyword)
 	ON_COMMAND(ID_WEBHISTORY_WEBSITES, OnWebhistoryWebsites)
 	ON_COMMAND(ID_MAIN_REGISTER, OnMainRegister)
+	ON_WM_HELPINFO()
 END_MESSAGE_MAP()
 
 // CMainUIDlg 消息处理程序
@@ -794,4 +795,12 @@ HRESULT CMainUIDlg::get_accHelp(VARIANT varChild, BSTR *pszHelp)
 
 void CMainUIDlg::OnMainRegister() {
 	m_dlgRegister_.DoModal();
+}
+
+BOOL CMainUIDlg::OnHelpInfo(HELPINFO* pHelpInfo)
+{
+	if (NULL != m_curDlg) {
+		m_curDlg->getHelpLink();
+	}
+	return TRUE;
 }

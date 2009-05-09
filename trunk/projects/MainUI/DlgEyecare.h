@@ -13,6 +13,8 @@ public:
 	CDlgEyecare(CWnd* pParent = NULL);   // 标准构造函数
 	virtual ~CDlgEyecare();
 
+	virtual std::string getHelpLink() const;
+
 // 对话框数据
 	enum { IDD = IDD_DLG_EYECARE };
 

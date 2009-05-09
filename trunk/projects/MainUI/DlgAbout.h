@@ -14,6 +14,8 @@ public:
 	CDlgAbout(CWnd* pParent = NULL);   // 标准构造函数
 	virtual ~CDlgAbout();
 
+	virtual std::string getHelpLink() const;
+
 // 对话框数据
 	enum { IDD = IDD_DLG_ABOUT };
 
@@ -26,6 +28,7 @@ protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 支持
 
 	afx_msg void OnBnClickedRegister();
+	afx_msg BOOL OnHelpInfo(HELPINFO* pHelpInfo);
 	DECLARE_MESSAGE_MAP()
 
 	CGuiGroupBox m_staAbout;

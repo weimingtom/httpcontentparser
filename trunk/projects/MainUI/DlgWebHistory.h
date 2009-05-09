@@ -14,6 +14,8 @@ public:
 	CDlgWebHistory(CWnd* pParent = NULL);   // 标准构造函数
 	virtual ~CDlgWebHistory();
 
+	virtual std::string getHelpLink() const;
+
 // 对话框数据
 	enum { IDD = IDD_DLG_WEB_HISTORY };
 
