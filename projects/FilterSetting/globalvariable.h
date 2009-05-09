@@ -18,4 +18,6 @@ extern  SeachKeywordUtil g_searchwordUtil;
 extern WebsitesUtil g_websitesUtil;
 extern software_encrypt::LicenseInfo g_licenseInfo;
 
+int getAppStatus();
+
 #endif  // _FILTER_SETTING_GLOBALVARIABLE_H__

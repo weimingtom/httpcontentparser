@@ -9,6 +9,7 @@
 #include <utility\strutility.h>
 #include <utility\dns.h>
 #include <searchengine_define.h>
+#include <softwareStatus.h>
 #include <comutil.h>
 #include ".\snowmansetting.h"
 
@@ -152,7 +153,6 @@ STDMETHODIMP CSnowmanSetting::put_askMeAgain(VARIANT_BOOL newVal) {
 
 STDMETHODIMP CSnowmanSetting::getApplicationStatus(LONG* status)
 {
-	// TODO: 在此添加实现代码
-
+	*status = getAppStatus();
 	return S_OK;
 }
