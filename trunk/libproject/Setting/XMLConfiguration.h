@@ -73,22 +73,29 @@ public:
 	TimeoutSwitch*  getTimeoutSwitch() { return &timeout_switch_;} 
 	ProgramControl * getProgramControl() { return &program_control_;}
 	MiscSetting	 * getMiscSetting() { return &misc_setting_;}
-private:
-	DNSList						black_url_set_;
-	DNSList						white_url_set_;
-	SearchRule					search_rule_;
-	OnlineHourSetting			online_setting_;
-	EyecareSetting				eye_care_;
-	WebHistoryRecorderSetting	web_history_;
-	Authorize					authorize_;
-	ContentCheckSetting			content_check_;
-	Screenshot					screen_save_;
-	DNSSetting					dnssetting_;
-	HotkeySetting				hotkey_;
-	TimeoutSwitch				timeout_switch_;
-	ProgramControl		program_control_;
-	MiscSetting				misc_setting_;
 
+	bool fisttime() const { return first_time_;}
+	bool uninstall() const { return uninstall_;}
+	void setUninstall( const bool uninstall) { uninstall_ = uninstall; }
+private:
+	DNSList											black_url_set_;
+	DNSList											white_url_set_;
+	SearchRule									search_rule_;
+	OnlineHourSetting						online_setting_;
+	EyecareSetting								eye_care_;
+	WebHistoryRecorderSetting	web_history_;
+	Authorize										authorize_;
+	ContentCheckSetting					content_check_;
+	Screenshot									screen_save_;
+	DNSSetting									dnssetting_;
+	HotkeySetting								hotkey_;
+	TimeoutSwitch								timeout_switch_;
+	ProgramControl							program_control_;
+	MiscSetting									misc_setting_;
+
+	// 第一次使用
+	bool first_time_;
+	bool uninstall_;
 	// 默认设置
 	void defaultSetting();
 private:

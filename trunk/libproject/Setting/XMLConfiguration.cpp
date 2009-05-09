@@ -23,6 +23,8 @@
 XMLConfiguration::XMLConfiguration() 
 	: black_url_set_(CONFIG_NODE_NAME_BLACKURL)
 	, white_url_set_(CONFIG_NODE_NAME_WHITEURL) {
+	first_time_ = false;
+	uninstall_ = false;
 	defaultSetting();
 }
 
@@ -71,6 +73,9 @@ int XMLConfiguration::saveConfig(const TCHAR * configpath) {
 
 	// 创建根节点
 	TiXmlElement * root_element = new TiXmlElement( CONFIG_ROOT_VALUE );
+
+	// 是否卸载
+	root_element->SetAttribute(CONFIG_ATTRIBUTE_INSTALL, enabledFromBool(uninstall()));
 	
 	saveRules(root_element);
 	saveAppSetting(root_element);
@@ -186,6 +191,18 @@ int XMLConfiguration::parseConfiguration(TiXmlElement * root) {
 	// root应该对应<config>, 否则的话可能配置文件已经损坏
 	if (_tcscmp(root->Value(), CONFIG_ROOT_VALUE) != 0) {
 		return -1;
+	}
+
+	// 获取uninstall及initialize
+	const TCHAR * install = root->Attribute(CONFIG_ATTRIBUTE_INSTALL);
+	if ( NULL != install) {
+		setUninstall(!enabledFromString(install));
+	}
+	const TCHAR * initialize = root->Attribute(CONFIG_ATTRIBUTE_FIRSTTIME);
+	if ( NULL != initialize) {
+		first_time_ = enabledFromString(initialize);
+	} else {
+		first_time_ = false;
 	}
 
 	// 解析XML
