@@ -105,6 +105,9 @@
 #define CONFIG_ITEM_MODEL_INSTALL									TEXT("install")
 #define CONFIG_ITEM_MODEL_DATE											TEXT("key")
 
+#define CONFIG_ATTRIBUTE_INSTALL										TEXT("installed")
+#define CONFIG_ATTRIBUTE_FIRSTTIME										TEXT("initialize")
+
 
 inline
 bool enabledFromString(const TCHAR *enable) {
