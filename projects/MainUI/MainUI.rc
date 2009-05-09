@@ -224,9 +224,9 @@ BEGIN
     LTEXT           "Copyright (C) 2009",IDC_STATIC,129,41,70,13
     GROUPBOX        "About",IDC_STATIC,7,4,208,58
     GROUPBOX        "Register",IDC_STATIC,7,71,208,41
-    PUSHBUTTON      "Register",IDC_REGISTER,151,87,50,14
+    PUSHBUTTON      "Register",IDC_REGISTER,170,87,39,14
     LTEXT           "Thanks for your registering.",IDC_STA_REGISTER_INFO,22,
-                    89,90,8
+                    89,138,8
     GROUPBOX        "Contact Us",IDC_STATIC,7,123,208,61
     LTEXT           "www.family007.com",IDC_WEBSITE_URL,105,139,66,8
     LTEXT           "Out Website:",IDC_STATIC,41,139,44,8
@@ -975,6 +975,14 @@ BEGIN
     IDS_TIP_SETTING_CHANGED "Setting have been changed, Would you like apply the change?"
     IDS_APP_NAME            "Family007"
     IDS_OUR_MAIL_URL        "mailto:ynkhpp@gmail.com"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_REGISTER_DONE       "Thanks for your registering."
+    IDS_REGISTER_OVERTIME   "Exceed 30 days"
+    IDS_REGISTER_TRIAL_DAYS "%d days Left, Please Register as soon as possibile"
+    IDS_REGISTER_CANNOT_GETINFO "Get Information from service failed!"
 END
 
 #endif    // Ó¢Óï(ÃÀ¹ú) resources

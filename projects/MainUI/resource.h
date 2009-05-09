@@ -72,7 +72,11 @@
 #define IDS_APP_NAME                    142
 #define IDS_OUR_MAIL_URL                143
 #define IDD_DLG_EYECARE                 144
+#define IDS_REGISTER_DONE               144
+#define IDS_REGISTER_OVERTIME           145
+#define IDS_REGISTER_TRIAL_DAYS         146
 #define IDD_LEV1_TIME_RULE              147
+#define IDS_REGISTER_CANNOT_GETINFO     147
 #define IDD_DIALOG1                     149
 #define IDD_DLG_DNS_WHITELIST           149
 #define IDD_CHANGE_PASSWORD             150

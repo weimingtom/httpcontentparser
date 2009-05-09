@@ -75,6 +75,10 @@ std::string generateSN() {
 
 // ¼òµ¥¼ÓÃÜËãÀ²
 bool validateSN(const std::string &serialnumber) {
+	if (serialnumber.length() != 20) {
+		return false;
+	}
+
 	int r1 = getNum(serialnumber.c_str()[0]);
 	int r3 = getNum(serialnumber.c_str()[2]);
 	int r7 = getNum(serialnumber.c_str()[6]);
