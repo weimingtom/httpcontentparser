@@ -15,6 +15,8 @@ public:
 	CDlgSearchRule(CWnd* pParent = NULL);   // 标准构造函数
 	virtual ~CDlgSearchRule();
 
+	virtual std::string getHelpLink() const;
+
 // 对话框数据
 	enum { IDD = IDD_DLG_SEARCH_RULE };
 

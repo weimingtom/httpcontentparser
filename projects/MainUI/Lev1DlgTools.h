@@ -12,6 +12,8 @@ public:
 	CLev1DlgTools(CWnd* pParent = NULL);   // 标准构造函数
 	virtual ~CLev1DlgTools();
 
+	virtual std::string getHelpLink() const;
+
 // 对话框数据
 	enum { IDD = IDD_LEV1_TOOLS };
 

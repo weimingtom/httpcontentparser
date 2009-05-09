@@ -26,6 +26,11 @@ CDlgSearchRule::~CDlgSearchRule()
 {
 }
 
+std::string CDlgSearchRule::getHelpLink() const {
+	return "";
+}
+
+
 int CDlgSearchRule::OnApply() {
 	rules.Apply();
 	UpdateData();

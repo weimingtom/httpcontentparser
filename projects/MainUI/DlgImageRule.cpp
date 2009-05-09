@@ -29,6 +29,10 @@ CDlgImageRule::~CDlgImageRule()
 {
 }
 
+std::string CDlgImageRule::getHelpLink() const {
+	return "";
+}
+
 void CDlgImageRule::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);

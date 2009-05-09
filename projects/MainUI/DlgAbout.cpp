@@ -9,6 +9,7 @@
 #include ".\globalvariable.h"
 #include <com\comutility.h>
 
+
 // CDlgAbout 对话框
 
 IMPLEMENT_DYNAMIC(CDlgAbout, CDialog)
@@ -25,6 +26,10 @@ CDlgAbout::~CDlgAbout()
 
 int CDlgAbout::OnApply() {
 	return 0;
+}
+
+std::string CDlgAbout::getHelpLink() const {
+	return "";
 }
 
 void CDlgAbout::OnShow() {
@@ -73,6 +78,7 @@ void CDlgAbout::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(CDlgAbout, CDialog)
 	ON_BN_CLICKED(IDC_REGISTER, OnBnClickedRegister)
+	ON_WM_HELPINFO()
 END_MESSAGE_MAP()
 
 
@@ -93,4 +99,9 @@ BOOL CDlgAbout::OnInitDialog()
 
 	return TRUE;  // return TRUE unless you set the focus to a control
 	// 异常: OCX 属性页应返回 FALSE
+}
+
+BOOL CDlgAbout::OnHelpInfo(HELPINFO* pHelpInfo)
+{
+	return TRUE;
 }

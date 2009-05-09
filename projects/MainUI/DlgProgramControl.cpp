@@ -29,6 +29,10 @@ CDlgProgramControl::~CDlgProgramControl() {
 	resetContent();
 }
 
+std::string CDlgProgramControl::getHelpLink() const {
+	return "";
+}
+
 void CDlgProgramControl::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);

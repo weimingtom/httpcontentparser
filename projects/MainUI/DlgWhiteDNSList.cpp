@@ -23,6 +23,10 @@ CDlgWhiteDNSList::~CDlgWhiteDNSList()
 {
 }
 
+std::string CDlgWhiteDNSList::getHelpLink() const {
+	return "";
+}
+
 void CDlgWhiteDNSList::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);

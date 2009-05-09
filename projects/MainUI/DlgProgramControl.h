@@ -25,6 +25,8 @@ public:
 	CDlgProgramControl(CWnd* pParent = NULL);   // 标准构造函数
 	virtual ~CDlgProgramControl();
 
+	virtual std::string getHelpLink() const;
+
 // 对话框数据
 	enum { IDD = IDD_DLG_PROGRAM };
 

@@ -34,6 +34,11 @@ CDlgWebHistory::~CDlgWebHistory()
 {
 }
 
+std::string CDlgWebHistory::getHelpLink() const {
+	return "";
+}
+
+
 void CDlgWebHistory::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);

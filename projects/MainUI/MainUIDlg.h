@@ -161,4 +161,5 @@ private:
 public:
 	virtual HRESULT get_accHelp(VARIANT varChild, BSTR *pszHelp);
 	afx_msg void OnMainRegister();
+	afx_msg BOOL OnHelpInfo(HELPINFO* pHelpInfo);
 };

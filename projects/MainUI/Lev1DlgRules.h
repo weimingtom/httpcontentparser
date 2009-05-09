@@ -14,6 +14,8 @@ public:
 	CLev1DlgRules(CWnd* pParent = NULL);   // 标准构造函数
 	virtual ~CLev1DlgRules();
 
+	virtual std::string getHelpLink() const;
+
 // 对话框数据
 	enum { IDD = IDD_LEV1_RULE };
 

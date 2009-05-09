@@ -22,6 +22,10 @@ CDlgBlackDNSList::~CDlgBlackDNSList()
 {
 }
 
+std::string CDlgBlackDNSList::getHelpLink() const {
+	return "";
+}
+
 
 int CDlgBlackDNSList::OnApply() {
 	rules.Apply();

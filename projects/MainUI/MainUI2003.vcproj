@@ -386,12 +386,6 @@
 			<File
 				RelativePath=".\DlgWhiteDNSList.h">
 			</File>
-			<File
-				RelativePath=".\Lev1DlgTools.cpp">
-			</File>
-			<File
-				RelativePath=".\Lev1DlgTools.h">
-			</File>
 			<Filter
 				Name="maindlg"
 				Filter="">
@@ -410,6 +404,12 @@
 				</File>
 				<File
 					RelativePath=".\Lev1DlgRules.h">
+				</File>
+				<File
+					RelativePath=".\Lev1DlgTools.cpp">
+				</File>
+				<File
+					RelativePath=".\Lev1DlgTools.h">
 				</File>
 			</Filter>
 			<Filter

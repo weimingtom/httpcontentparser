@@ -28,6 +28,10 @@ CDlgEyecare::~CDlgEyecare()
 {
 }
 
+std::string CDlgEyecare::getHelpLink() const {
+	return "";
+}
+
 void CDlgEyecare::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);

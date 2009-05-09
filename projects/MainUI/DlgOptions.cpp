@@ -27,6 +27,10 @@ CDlgOptions::CDlgOptions(CWnd* pParent /*=NULL*/)
 CDlgOptions::~CDlgOptions() {
 }
 
+std::string CDlgOptions::getHelpLink() const {
+	return "";
+}
+
 namespace {
 	// 注意API的HOTKEY与MFC定义的值不相同，真是晕菜
 	WORD  getModifierKey(WORD kModify_mfc) {
