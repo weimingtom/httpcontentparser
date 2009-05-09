@@ -21,6 +21,7 @@ protected:
 	virtual int OnApply();
 	virtual void OnShow();
 	virtual void restoreSetting() {}
+	virtual BOOL OnInitDialog();
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV Ö§³Ö
 
@@ -32,6 +33,7 @@ protected:
 	CHyperLink m_sWebURL;
 	CHyperLink m_sEmail;
 	CHyperLink m_sMailList;
-public:
-	virtual BOOL OnInitDialog();
+
+	CString m_strRegisterInfo;
+	CButton m_btnRegistered;
 };
