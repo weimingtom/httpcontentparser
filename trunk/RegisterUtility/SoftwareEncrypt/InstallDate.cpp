@@ -14,6 +14,7 @@
 namespace software_encrypt {
 
 namespace {
+
 const FILETIME FT_ZERO = {0};
 FILETIME getFileCreateTime(const TCHAR * filename) {
 	FILETIME ft = {0};
@@ -56,14 +57,35 @@ boost::posix_time::ptime makeValidate(const FILETIME &ft) {
 		return boost::posix_time::second_clock::local_time();
 	} else {
 		// 检测是否是一个合理的FILETIME
-		if (ft.dwHighDateTime >= 0x800000000) {
-			return boost::posix_time::from_ftime<boost::posix_time::ptime>(ft);
-		} else {
+		// 这只是一个测试，看是否出异常
+		// 如果出现异常， 说明存在问题
+		SYSTEMTIME st;
+		if (0 == FileTimeToSystemTime(&ft, &st)) {
 			return boost::posix_time::second_clock::local_time();
+		} else {
+			return boost::posix_time::from_ftime<boost::posix_time::ptime>(ft);
 		}
 	}
 }
+
+const TCHAR* GetFileNameDir(const TCHAR *filename, TCHAR *directory, const unsigned len) {
+	TCHAR dir[MAX_PATH], driver[MAX_PATH];
+	_tsplitpath(filename, driver, dir, NULL, NULL);
+	_sntprintf(directory, len, TEXT("%s%s"), driver, dir);
+	return directory;
+}
+
+TCHAR * GetFilePath(TCHAR * path, const int max_len) {
+	TCHAR module[MAX_PATH], dir[MAX_PATH];
+	GetModuleFileName(NULL, module, MAX_PATH);
+	GetFileNameDir(module, dir, MAX_PATH);
+	_sntprintf(path, max_len, "%s%s", dir, INSTALL_DIR_DATE_INDICATOR);
+	return path;
+}
+
 };
+
+namespace internal_utility {
 
 //====================================
 // 获取安装时间
@@ -87,43 +109,19 @@ boost::posix_time::ptime getInstallDateFromRegistry() {
 }
 
 boost::posix_time::ptime getInstallDateFromFile() {
-	TCHAR filename[MAX_PATH];
+	TCHAR path[MAX_PATH];
+	GetFilePath(path, MAX_PATH);
 
-	GetModuleFileName(NULL, filename, MAX_PATH);
-	return makeValidate(getFileCreateTime(filename));
+	return makeValidate(getFileCreateTime(path));
 }
 
 // 4, 从windows下的一个文件查看安装时间
 boost::posix_time::ptime getInstallDateFromWin() {
 	TCHAR fullpath[MAX_PATH], windowDir[MAX_PATH];
 	GetWindowsDirectory(windowDir, MAX_PATH);
-	_sntprintf(fullpath, MAX_PATH, "%s%s", windowDir, WINDOWS_FILE_TO_STORE_INSTALLDATE);
+	_sntprintf(fullpath, MAX_PATH, "%s\\%s", windowDir, WINDOWS_FILE_TO_STORE_INSTALLDATE);
 
 	return makeValidate(getFileCreateTime(fullpath)); 
-}
-
-// 获取安装时间
-boost::posix_time::ptime getInstallDataTime() {
-	using namespace	boost::posix_time;
-	// 获取三个安装时间
-
-
-	ptime pWin = getInstallDateFromWin();
-	ptime pFile  = getInstallDateFromFile();
-	ptime pReg = getInstallDateFromRegistry();
-
-	// 如果获取到的时间不合法怎么办
-	/*try {
-	using namespace std;
-	cout<<"windows file :"<<to_iso_string(pWin)<<endl;
-	cout<<"registry date: "<< to_iso_string(pReg)<<endl;
-	cout<<"current file date: "<< to_iso_string(pFile)<<endl;
-	} catch (boost::exception &e) {
-	}*/
-
-	// 新的时间小，还是老的时间小
-	// 时间越久，时间越小
-	return min(pWin, min(pReg, pFile));
 }
 
 //====================================
@@ -136,16 +134,17 @@ void setInstallDateInWin(const FILETIME &ft) {
 		// 获取文件路径
 		TCHAR fullpath[MAX_PATH], windowDir[MAX_PATH];
 		GetWindowsDirectory(windowDir, MAX_PATH);
-		_sntprintf(fullpath, MAX_PATH, "%s%s", windowDir, WINDOWS_FILE_TO_STORE_INSTALLDATE);
+		_sntprintf(fullpath, MAX_PATH, "%s\\%s", windowDir, WINDOWS_FILE_TO_STORE_INSTALLDATE);
 
 		// 如果文件存在则直接设置创佳时间
-		HANDLE hFile = CreateFile(fullpath, GENERIC_READ, FILE_SHARE_READ,  NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_HIDDEN,  NULL);
+		HANDLE hFile = CreateFile(fullpath, GENERIC_WRITE, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,  NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_HIDDEN,  NULL);
 		if (INVALID_HANDLE_VALUE != hFile) {
 			SetFileTime(hFile, &ft, NULL, NULL);
-
+			int a = GetLastError();
 			// 给文件写入内容
 			DWORD written =  _tcslen(WINDIR_INI_FILE_CONTENT);
 			WriteFile(hFile, WINDIR_INI_FILE_CONTENT, written, &written, NULL);
+			CloseHandle(hFile);
 		}
 	} catch (...) {
 	}
@@ -154,12 +153,15 @@ void setInstallDateInWin(const FILETIME &ft) {
 // 设置文件的创建时间
 void setInstallDateFile(const FILETIME &ft) {
 	try {
+		// 不能使用本省的文件，因为它将无法访问
+		// 其他的使用什么文件呢？
 		TCHAR filename[MAX_PATH];
-		GetModuleFileName(NULL, filename, MAX_PATH);
+		GetFilePath(filename, MAX_PATH);
 
-		HANDLE hFile = CreateFile(filename, GENERIC_READ, FILE_SHARE_READ,  NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_HIDDEN,  NULL);
+		HANDLE hFile = CreateFile(filename, GENERIC_WRITE, FILE_SHARE_WRITE | FILE_SHARE_READ,  NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL,  NULL);
 		if (INVALID_HANDLE_VALUE != hFile) {
-			SetFileTime(hFile, &ft, NULL, NULL);
+			BOOL bFalse = SetFileTime(hFile, &ft, NULL, NULL);
+			return;
 		}
 	} catch(...) {
 	}
@@ -168,7 +170,7 @@ void setInstallDateFile(const FILETIME &ft) {
 // 设置注册表的创建时间
 void setInstallDataOnRegistry(const FILETIME &ft) {
 	HKEY hKey;
-	long   ret = ::RegOpenKeyEx(HKEY_LOCAL_MACHINE, REG_SOFTWARE_DIR,  0,   KEY_READ,   &hKey);
+	long   ret = ::RegOpenKeyEx(HKEY_LOCAL_MACHINE, REG_SOFTWARE_DIR,  0,   KEY_WRITE,   &hKey);
 	if (ERROR_FILE_NOT_FOUND == ret) {
 		// 如果没有键值， 则创建
 		ret = ::RegCreateKey(HKEY_LOCAL_MACHINE, REG_SOFTWARE_DIR, &hKey);
@@ -181,13 +183,31 @@ void setInstallDataOnRegistry(const FILETIME &ft) {
 
 	// 设置时间
 	std::string install_date = filetimeToString(ft);
-	if (ERROR_SUCCESS == RegSetValueEx( hKey, REG_SOFTWARE_INSTALLDATE , 0, REG_SZ,
-		(const BYTE*)(LPCSTR)install_date.c_str(), (DWORD)install_date.length())) {
+	ret = RegSetValueEx( hKey, REG_SOFTWARE_INSTALLDATE , 0, REG_SZ, (const BYTE*)(LPCSTR)install_date.c_str(), (DWORD)install_date.length());
+	if (ERROR_SUCCESS == ret) {
 			RegCloseKey(hKey);
 	}
 }
+};
+
+// 获取安装时间
+boost::posix_time::ptime getInstallDataTime() {
+	using namespace	boost::posix_time;
+	// 获取三个安装时间
 
 
+	ptime pWin = internal_utility::getInstallDateFromWin();
+	ptime pFile  = internal_utility::getInstallDateFromFile();
+	ptime pReg = internal_utility::getInstallDateFromRegistry();
+
+	//std::cout<<"pReg: " << to_simple_string(pReg)<< std::endl;	
+	//std::cout<<"pFile: " << to_simple_string(pFile)<< std::endl;
+	//std::cout<<"pWin: " << to_simple_string(pWin)<< std::endl;
+
+	// 新的时间小，还是老的时间小
+	// 时间越久，时间越小
+	return min(pWin, min(pReg, pFile));
+}
 
 //==========================================
 //
@@ -216,9 +236,9 @@ int setInstall() {
 	boost::posix_time::ptime installtime = getInstallDataTime();
 	FILETIME installFT = timeutility::ft_from_tm(to_tm(installtime));
 
-	setInstallDataOnRegistry(installFT);
-	setInstallDateInWin(installFT);
-	setInstallDateFile(installFT);
+	internal_utility::setInstallDataOnRegistry(installFT);
+	internal_utility::setInstallDateInWin(installFT);
+	internal_utility::setInstallDateFile(installFT);
 	return 0;
 }
 

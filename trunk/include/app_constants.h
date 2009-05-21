@@ -85,5 +85,6 @@ TCHAR * getHotkeyname(const int type) {
 
 // 用来存储安装时间，文件没有什么用
 #define WINDOWS_FILE_TO_STORE_INSTALLDATE	TEXT("snowman.ini")
+#define INSTALL_DIR_DATE_INDICATOR	TEXT("nwist.dll")
 
 #endif // _SPI_INSTALLER_SPIDEFINES_H__
