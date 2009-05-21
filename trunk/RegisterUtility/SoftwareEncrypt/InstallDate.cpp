@@ -21,6 +21,7 @@ FILETIME getFileCreateTime(const TCHAR * filename) {
 	HANDLE hFile = CreateFile(filename, GENERIC_READ, FILE_SHARE_READ,  NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL,  NULL);
 	if (INVALID_HANDLE_VALUE != hFile) {
 		GetFileTime(hFile, &ft, NULL, NULL);
+		CloseHandle(hFile);
 	}
 	return ft;
 }
@@ -138,6 +139,7 @@ void setInstallDateInWin(const FILETIME &ft) {
 
 		// 如果文件存在则直接设置创佳时间
 		HANDLE hFile = CreateFile(fullpath, GENERIC_WRITE, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,  NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_HIDDEN,  NULL);
+		int a  = GetLastError();
 		if (INVALID_HANDLE_VALUE != hFile) {
 			SetFileTime(hFile, &ft, NULL, NULL);
 			int a = GetLastError();
@@ -200,9 +202,9 @@ boost::posix_time::ptime getInstallDataTime() {
 	ptime pFile  = internal_utility::getInstallDateFromFile();
 	ptime pReg = internal_utility::getInstallDateFromRegistry();
 
-	//std::cout<<"pReg: " << to_simple_string(pReg)<< std::endl;	
-	//std::cout<<"pFile: " << to_simple_string(pFile)<< std::endl;
-	//std::cout<<"pWin: " << to_simple_string(pWin)<< std::endl;
+	std::cout<<"pReg: " << to_simple_string(pReg)<< std::endl;	
+	std::cout<<"pFile: " << to_simple_string(pFile)<< std::endl;
+	std::cout<<"pWin: " << to_simple_string(pWin)<< std::endl;
 
 	// 新的时间小，还是老的时间小
 	// 时间越久，时间越小
