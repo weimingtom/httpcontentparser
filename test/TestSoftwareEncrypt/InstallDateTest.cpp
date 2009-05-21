@@ -19,9 +19,96 @@ namespace {
 
 void InstallDateTest::TestInstallDateItem() {
 	using namespace software_encrypt;
-	setInstall();
+	using namespace boost::posix_time;
+
 	std::cout<<"Install date: " << getInstallData() << std::endl;
 	std::cout<<"Installed days : " << getInstalledDays() <<std::endl;
+
+	SYSTEMTIME st1 = {0}, st2 = {0}, st3 = {0};
+	FILETIME ft1= {0}, ft2  = {0}, ft3 = {0};
+ 
+	{
+	memset(&st1, 0, sizeof(SYSTEMTIME));
+	st1.wYear = 2009;
+	st1.wMonth = 5;
+	st1.wDay = 8;
+	SystemTimeToFileTime(&st1, &ft1);
+	internal_utility::setInstallDateInWin(ft1);
+
+	memset(&st2, 0, sizeof(SYSTEMTIME));
+	st2.wYear = 2008;
+	st2.wMonth = 5;
+	st2.wDay = 8;
+	SystemTimeToFileTime(&st2, &ft2);
+	internal_utility::setInstallDateFile(ft2);
+
+	memset(&st3, 0, sizeof(SYSTEMTIME));
+	st3.wYear = 2006;
+	st3.wMonth = 5;
+	st3.wDay = 8;
+	SystemTimeToFileTime(&st3, &ft3);
+	internal_utility::setInstallDataOnRegistry(ft3);
+
+	ptime t1 =getInstallDataTime();
+	ptime t2 =from_ftime<ptime>(ft3);
+	CPPUNIT_ASSERT(t1 == t2);
+	}
+
+		{
+	memset(&st1, 0, sizeof(SYSTEMTIME));
+	st1.wYear = 2009;
+	st1.wMonth = 5;
+	st1.wDay = 8;
+	SystemTimeToFileTime(&st1, &ft1);
+	internal_utility::setInstallDateInWin(ft1);
+
+	memset(&st2, 0, sizeof(SYSTEMTIME));
+	st2.wYear = 2006;
+	st2.wMonth = 5;
+	st2.wDay = 7;
+	SystemTimeToFileTime(&st2, &ft2);
+	internal_utility::setInstallDateFile(ft2);
+
+	memset(&st3, 0, sizeof(SYSTEMTIME));
+	st3.wYear = 2006;
+	st3.wMonth = 5;
+	st3.wDay = 8;
+	SystemTimeToFileTime(&st3, &ft3);
+	internal_utility::setInstallDataOnRegistry(ft3);
+
+	ptime t1 =getInstallDataTime();
+	ptime t2 =from_ftime<ptime>(ft2);
+	CPPUNIT_ASSERT(t1 == t2);
+	}
+
+	{
+	memset(&st1, 0, sizeof(SYSTEMTIME));
+	st1.wYear = 2007;
+	st1.wMonth = 2;
+	st1.wDay = 8;
+	SystemTimeToFileTime(&st1, &ft1);
+	internal_utility::setInstallDateInWin(ft1);
+
+	memset(&st2, 0, sizeof(SYSTEMTIME));
+	st2.wYear = 2008;
+	st2.wMonth = 5;
+	st2.wDay = 8;
+	SystemTimeToFileTime(&st2, &ft2);
+	internal_utility::setInstallDateFile(ft2);
+
+	memset(&st3, 0, sizeof(SYSTEMTIME));
+	st3.wYear = 2007;
+	st3.wMonth = 5;
+	st3.wDay = 8;
+	SystemTimeToFileTime(&st3, &ft3);
+	internal_utility::setInstallDataOnRegistry(ft3);
+
+	ptime t1 =getInstallDataTime();
+	ptime t2 =from_ftime<ptime>(ft1);
+	std::cout<<"pWin: " << to_simple_string(t1)<< std::endl;
+	std::cout<<"pWin: " << to_simple_string(t2)<< std::endl;
+	CPPUNIT_ASSERT(t1 == t2);
+	}
 }
 
 void InstallDateTest::TestGetInstallDateFromRegistry() {
@@ -40,7 +127,6 @@ void InstallDateTest::TestGetInstallDateFromRegistry() {
 	ptime t1 = internal_utility::getInstallDateFromRegistry();
 	ptime t2 =from_ftime<ptime>(ft);
 	CPPUNIT_ASSERT(t1 == t2);
-	tm rt = to_tm(t1);
 	}
 	
 	{
@@ -54,7 +140,6 @@ void InstallDateTest::TestGetInstallDateFromRegistry() {
 	ptime t1 = internal_utility::getInstallDateFromRegistry();
 	ptime t2 =from_ftime<ptime>(ft);
 	CPPUNIT_ASSERT(t1 == t2);
-	tm rt = to_tm(t1);
 	}
 
 	{
@@ -71,7 +156,6 @@ void InstallDateTest::TestGetInstallDateFromRegistry() {
 	ptime t1 = internal_utility::getInstallDateFromRegistry();
 	ptime t2 =from_ftime<ptime>(ft);
 	CPPUNIT_ASSERT(t1 == t2);
-	tm rt = to_tm(t1);
 	}
 }
 
@@ -90,10 +174,7 @@ void InstallDateTest::TestGetInstallDateFromWin() {
 	internal_utility::setInstallDateInWin(ft);
 	ptime t1 = internal_utility::getInstallDateFromWin();
 	ptime t2 =from_ftime<ptime>(ft);
-	std::cout<<"pWin: " << to_simple_string(t1)<< std::endl;
-	std::cout<<"pWin: " << to_simple_string(t2)<< std::endl;
 	CPPUNIT_ASSERT(t1 == t2);
-	tm rt = to_tm(t1);
 	}
 }
 void InstallDateTest::TestGetInstallDateFromFile() {
@@ -111,10 +192,7 @@ void InstallDateTest::TestGetInstallDateFromFile() {
 	internal_utility::setInstallDateFile(ft);
 	ptime t1 = internal_utility::getInstallDateFromFile();
 	ptime t2 =from_ftime<ptime>(ft);
-	std::cout<<"pWin: " << to_simple_string(t1)<< std::endl;
-	std::cout<<"pWin: " << to_simple_string(t2)<< std::endl;
 	CPPUNIT_ASSERT(t1 == t2);
-	tm rt = to_tm(t1);
 	}
 }
 
