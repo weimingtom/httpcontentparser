@@ -19,6 +19,9 @@ bool LicenseInfo::regApp(const std::string &sn) {
 	if (validateSN(sn)) {
 		// TODO 采取什么动作呢？ 如果用户
 		storeSN(sn);
+		// 保存注册码， 即使是错误的也要保存吗？
+		// 正确了则保存， 否则保持原状态
+		sn_ = sn;
 		return true;
 	} else {
 		return false;
