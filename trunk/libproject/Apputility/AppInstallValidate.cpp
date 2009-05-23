@@ -36,6 +36,19 @@ void AppInstallValidate::getCurrentPath(HMODULE hModule) {
 	assert (_tcslen(install_path) != 0);
 }
 
+int AppInstallValidate::uninstall() {
+	// É¾³ýShell ext
+	uninstallCopyControl();
+	uninstallAppControl();
+
+	// É¾³ýSPI
+	CXInstall	m_Install;
+	m_Install.DeleteReg();
+
+	// ×¢ÏúCOM·þÎñ
+	UnRegisterServices();
+	return 0;
+}
 int AppInstallValidate::repair(HMODULE hModule) {
 	getCurrentPath(hModule);
 

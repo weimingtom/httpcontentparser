@@ -33,6 +33,8 @@ public:
 	bool validateIntact();
 
 	void getErrorMessage(TCHAR * msg, const int len);
+
+	int uninstall();
 private:
 	bool validateReigstrInstallPath(const TCHAR *path);
 	bool repairRegistryInstallPath(const TCHAR * path);
