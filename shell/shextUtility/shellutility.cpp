@@ -2,9 +2,12 @@
 #include "shellutility.h"
 #include <shell\exts_i.c>
 #include <shell\exts.h>
+#include <tchar.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include <comdef.h>
 
-#define INSTALL_ITEM_APP_CONTROL	TEXT("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\ShellExecuteHooks")
+#define INSTALL_ITEM_APP_CONTROL	TEXT("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\ShellExecuteHooks\\")
 #define INSTALL_ITEM_COPY_HOOK		TEXT("Directory\\Shellex\\CopyHookHandlers")
 
 #define MAX_KEY_LENGTH 255
@@ -16,6 +19,7 @@
 namespace {
 	bool szExistInSubKey(HKEY key, LPCTSTR pSubKey, LPCTSTR lpItemText);
 	int addSzItemInSubKey(HKEY hKey, LPCTSTR pSubKey, LPCTSTR lpItemText);
+	int delSzItemInSubKey(HKEY hKey, LPCTSTR pSubKey, LPCTSTR itemValue) ;
 }
 
 // 安装拷贝控制
@@ -27,6 +31,10 @@ bool installCopyHook() {
 	return addSzItemInSubKey(HKEY_CLASSES_ROOT, INSTALL_ITEM_COPY_HOOK, COPY_HOOK_CLSID);
 }
 
+int uninstallCopyControl() {
+	return delSzItemInSubKey(HKEY_CLASSES_ROOT, INSTALL_ITEM_COPY_HOOK, COPY_HOOK_CLSID);
+}
+
 // 安装应用程序控制
 int installAppControl() {
 	return addSzItemInSubKey(HKEY_LOCAL_MACHINE, INSTALL_ITEM_APP_CONTROL, APP_CONTROL_CLSID);
@@ -34,17 +42,39 @@ int installAppControl() {
 bool isInstallAppControl() {
 	return szExistInSubKey(HKEY_LOCAL_MACHINE, INSTALL_ITEM_APP_CONTROL, APP_CONTROL_CLSID);
 }
+int uninstallAppControl() {
+	return delSzItemInSubKey(HKEY_LOCAL_MACHINE, INSTALL_ITEM_APP_CONTROL, APP_CONTROL_CLSID);
+}
 
 namespace {
+int delSzItemInSubKey(HKEY hKey, LPCTSTR pSubKey, LPCTSTR pssItem) {
+	HKEY hKeyNew;
+	LONG result = RegOpenKeyEx(hKey, pSubKey, 0,  KEY_WRITE, &hKeyNew);
+	if (ERROR_FILE_NOT_FOUND == result) {
+		return 0;
+	} else if (ERROR_SUCCESS == result) {
+		if (ERROR_SUCCESS ==   ::RegDeleteValue(hKeyNew, pssItem)) {
+			return 0;
+		} else {
+			return -1;
+		}
+	}
+	return -1;
+}
 int addSzItemInSubKey(HKEY hKey, LPCTSTR pSubKey, LPCTSTR lpItemText) {
 	HKEY hKeyNew;
-	LONG result = RegOpenKeyEx(HKEY_LOCAL_MACHINE, INSTALL_ITEM_APP_CONTROL, 0,  KEY_WRITE, &hKeyNew);
+	LONG result = RegOpenKeyEx(hKey, pSubKey, 0,  KEY_WRITE, &hKeyNew);
 	if (ERROR_SUCCESS != result) {
 		// 如果不存在则创建
 		if (ERROR_FILE_NOT_FOUND == result) {
-			result = ::RegCreateKey(HKEY_LOCAL_MACHINE, INSTALL_ITEM_APP_CONTROL, &hKey);
-			if (result != ERROR_SUCCESS){
+			DWORD	dwDisposition;
+			result = ::RegCreateKeyEx(hKey, pSubKey, 0, NULL, REG_OPTION_NON_VOLATILE, KEY_ALL_ACCESS, NULL, &hKeyNew, &dwDisposition) ;
+			if (result != ERROR_SUCCESS) {
 				return -1;
+			}
+			result = RegOpenKeyEx(hKey, pSubKey, 0,  KEY_WRITE, &hKeyNew);
+			if (ERROR_SUCCESS != result) {
+				return 1;
 			}
 		} else {
 		return 1; 
@@ -52,11 +82,12 @@ int addSzItemInSubKey(HKEY hKey, LPCTSTR pSubKey, LPCTSTR lpItemText) {
 	}
 
 	// 添加一个新项
-	if (ERROR_SUCCESS == RegSetValueEx(hKeyNew, APP_CONTROL_CLSID , 0, REG_SZ, 
-		(const BYTE*)(LPCSTR)APP_CONTROL_CLSID, (DWORD)_tcslen(APP_CONTROL_CLSID))) {
+	result = RegSetValueEx(hKeyNew, lpItemText , 0, REG_SZ, 	(const BYTE*)(LPCSTR)lpItemText, (DWORD)_tcslen(lpItemText));
+	if (ERROR_SUCCESS == result) {
 		RegCloseKey(hKeyNew);
 		return 0;
 	} else {
+		int a = GetLastError();
 		return 2;
 	}
 }

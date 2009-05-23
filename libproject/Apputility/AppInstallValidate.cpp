@@ -77,7 +77,11 @@ int AppInstallValidate::repair() {
 bool AppInstallValidate::shouldRepairRegistry() {
 	// 当用户是SPI时， 安装路径一定不对。因此不能用来修复
 	// 其实只要传入dll的hModule就可以获取路径
-	return true;
+	if (type_ == VALIDATE_SPI) {
+		return false;
+	} else {
+		return true;
+	}
 }
 
 // 修复注册表项
