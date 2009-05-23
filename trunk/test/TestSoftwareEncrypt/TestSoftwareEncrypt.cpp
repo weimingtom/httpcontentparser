@@ -4,7 +4,9 @@
 #include "stdafx.h"
 #include "BaseEncryptTest.h"
 #include ".\installdatetest.h"
+#include ".\licenseinfotest.h"
 
+CPPUNIT_TEST_SUITE_REGISTRATION(LicenseInfoTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(InstallDateTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(BaseEncryptTest);
 
