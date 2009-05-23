@@ -40,13 +40,6 @@ public :
 
 CFilterSettingModule _AtlModule;
 
-void installShellSupport() {
-	// 如果没有安装程序控制，则安装
-	if (!isInstallAppControl()) {
-		installAppControl();
-	}
-}
-
 void initializeSetting() {
 	// 获取注册信息
 	g_licenseInfo.initialize();
@@ -73,9 +66,6 @@ extern "C" int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/
 		CloseHandle(hMutex);
 		return 0;
 	}
-
-	// 安装外壳程序
-	installShellSupport();
 
 	g_hInstance = hInstance;
 	g_licenseInfo.initialize();
