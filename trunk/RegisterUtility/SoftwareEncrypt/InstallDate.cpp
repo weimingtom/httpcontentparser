@@ -160,9 +160,12 @@ void setInstallDateFile(const FILETIME &ft) {
 		TCHAR filename[MAX_PATH];
 		GetFilePath(filename, MAX_PATH);
 
+		SYSTEMTIME st;
+		FileTimeToSystemTime(&ft, &st);
 		HANDLE hFile = CreateFile(filename, GENERIC_WRITE, FILE_SHARE_WRITE | FILE_SHARE_READ,  NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL,  NULL);
 		if (INVALID_HANDLE_VALUE != hFile) {
 			BOOL bFalse = SetFileTime(hFile, &ft, NULL, NULL);
+			CloseHandle(hFile);
 			return;
 		}
 	} catch(...) {
@@ -201,10 +204,6 @@ boost::posix_time::ptime getInstallDataTime() {
 	ptime pWin = internal_utility::getInstallDateFromWin();
 	ptime pFile  = internal_utility::getInstallDateFromFile();
 	ptime pReg = internal_utility::getInstallDateFromRegistry();
-
-	std::cout<<"pReg: " << to_simple_string(pReg)<< std::endl;	
-	std::cout<<"pFile: " << to_simple_string(pFile)<< std::endl;
-	std::cout<<"pWin: " << to_simple_string(pWin)<< std::endl;
 
 	// 新的时间小，还是老的时间小
 	// 时间越久，时间越小

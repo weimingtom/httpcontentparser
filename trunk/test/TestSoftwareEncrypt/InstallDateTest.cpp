@@ -21,9 +21,6 @@ void InstallDateTest::TestInstallDateItem() {
 	using namespace software_encrypt;
 	using namespace boost::posix_time;
 
-	std::cout<<"Install date: " << getInstallData() << std::endl;
-	std::cout<<"Installed days : " << getInstalledDays() <<std::endl;
-
 	SYSTEMTIME st1 = {0}, st2 = {0}, st3 = {0};
 	FILETIME ft1= {0}, ft2  = {0}, ft3 = {0};
  
@@ -78,6 +75,8 @@ void InstallDateTest::TestInstallDateItem() {
 
 	ptime t1 =getInstallDataTime();
 	ptime t2 =from_ftime<ptime>(ft2);
+	std::cout<<"pWin: " << to_simple_string(t1)<< std::endl;
+	std::cout<<"pWin: " << to_simple_string(t2)<< std::endl;
 	CPPUNIT_ASSERT(t1 == t2);
 	}
 
@@ -105,8 +104,6 @@ void InstallDateTest::TestInstallDateItem() {
 
 	ptime t1 =getInstallDataTime();
 	ptime t2 =from_ftime<ptime>(ft1);
-	std::cout<<"pWin: " << to_simple_string(t1)<< std::endl;
-	std::cout<<"pWin: " << to_simple_string(t2)<< std::endl;
 	CPPUNIT_ASSERT(t1 == t2);
 	}
 }

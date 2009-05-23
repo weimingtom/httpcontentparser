@@ -12,10 +12,12 @@ public:
 
 	CPPUNIT_TEST_SUITE(LicenseInfoTest);
 	CPPUNIT_TEST(testSNStored);
+	CPPUNIT_TEST(testReg);
 	CPPUNIT_TEST_SUITE_END();
 
 private:
 	void testSNStored();
+	void testReg();
 };
 
 #endif  // _TESTSOFTWAREENCRYPT_LICENSEINFOTEST_H__
