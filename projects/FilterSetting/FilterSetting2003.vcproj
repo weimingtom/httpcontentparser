@@ -61,6 +61,7 @@
 				CommandLine="copy .\FilterSetting_i.c ..\..\include\com
 copy .\filtersetting.h ..\..\include\com
 copy .\Debug\nwrs.exe ..\..\debug
+..\..\debug\nwrs.exe -regserver
 
 "/>
 			<Tool
