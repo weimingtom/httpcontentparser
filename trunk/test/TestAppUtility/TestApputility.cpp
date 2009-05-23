@@ -4,8 +4,10 @@
 #include "stdafx.h"
 #include ".\appinstallvaltest.h"
 #include ".\AppUtilitytest.h"
+#include ".\shellexttest.h"
 #include ".\fileinfotest.h"
 
+CPPUNIT_TEST_SUITE_REGISTRATION(ShellExtTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(FileInfoTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(AppInstallValTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(AppUtilityTest);
