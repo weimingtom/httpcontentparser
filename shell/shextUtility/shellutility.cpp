@@ -38,7 +38,7 @@ bool isInstallAppControl() {
 namespace {
 int addSzItemInSubKey(HKEY hKey, LPCTSTR pSubKey, LPCTSTR lpItemText) {
 	HKEY hKeyNew;
-	LONG result = RegOpenKeyEx(HKEY_LOCAL_MACHINE, INSTALL_ITEM_APP_CONTROL, 0,  KEY_READ, &hKeyNew);
+	LONG result = RegOpenKeyEx(HKEY_LOCAL_MACHINE, INSTALL_ITEM_APP_CONTROL, 0,  KEY_WRITE, &hKeyNew);
 	if (ERROR_SUCCESS != result) {
 		// 如果不存在则创建
 		if (ERROR_FILE_NOT_FOUND == result) {
