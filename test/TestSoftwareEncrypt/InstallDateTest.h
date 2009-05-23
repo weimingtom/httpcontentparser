@@ -2,7 +2,10 @@
 #define _TEST_SOFTWAREENCRYPT_INSTALLDATETEST_H__
 
 #include "stdafx.h"
+#include <windows.h>
 #include <cppunit/extensions/HelperMacros.h>
+#include <boost/date_time/gregorian/gregorian.hpp>
+#include <boost/date_time/posix_time/posix_time.hpp>
 
 class InstallDateTest : public CPPUNIT_NS::TestFixture {
 public:
@@ -21,6 +24,11 @@ private:
 	void TestGetInstallDateFromRegistry();
 	void TestGetInstallDateFromFile();
 	void TestGetInstallDateFromWin();
+
+private:
+	boost::posix_time::ptime rawdate; //
 };
+
+SYSTEMTIME st_from_tm(const tm &t);
 
 #endif  // _TEST_SOFTWAREENCRYPT_INSTALLDATETEST_H__

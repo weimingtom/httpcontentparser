@@ -44,12 +44,13 @@ void storeSNtoRegistry(const std::string &sn) {
 }
 };
 
-std::string getSN() {
-	return getSNFromRegistry();
-}
+namespace internal_utility {
+	std::string getSN() {
+		return getSNFromRegistry();
+	}
 
-void storeSN(const std::string &sn) {
-	storeSNtoRegistry(sn);
-}
-
-}
+	void storeSN(const std::string &sn) {
+		storeSNtoRegistry(sn);
+	}
+};
+};

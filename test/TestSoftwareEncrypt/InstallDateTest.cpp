@@ -7,14 +7,19 @@
 #include <time.h>
 
 InstallDateTest::InstallDateTest(void) {
+	rawdate = software_encrypt::getInstallDataTime();
 } 
 
 InstallDateTest::~InstallDateTest(void) {
+	tm t =	to_tm(rawdate);
+	FILETIME ft;
+	SYSTEMTIME st = st_from_tm(t);
+	SystemTimeToFileTime(&st, &ft);
+	software_encrypt::internal_utility::setInstallDateFile(ft);
+	software_encrypt::internal_utility::setInstallDataOnRegistry(ft);
+	software_encrypt::internal_utility::setInstallDateInWin(ft);
 }
 
-namespace {
-	SYSTEMTIME st_from_tm(const tm &t);
-};
 
 
 void InstallDateTest::TestInstallDateItem() {
@@ -51,7 +56,7 @@ void InstallDateTest::TestInstallDateItem() {
 	CPPUNIT_ASSERT(t1 == t2);
 	}
 
-		{
+	{
 	memset(&st1, 0, sizeof(SYSTEMTIME));
 	st1.wYear = 2009;
 	st1.wMonth = 5;
@@ -193,17 +198,14 @@ void InstallDateTest::TestGetInstallDateFromFile() {
 	}
 }
 
-namespace {
-	SYSTEMTIME st_from_tm(const tm &t) {
-		SYSTEMTIME rt = {0};
-		rt.wYear = t.tm_year;
-		rt.wMonth = t.tm_mon;
-		rt.wDay = t.tm_mday;
-		rt.wHour = t.tm_hour;
-		rt.wMinute = t.tm_min;
-		rt.wSecond = t.tm_sec;
-		rt.wDay = t.tm_wday;
-		return rt;
-	}
+SYSTEMTIME st_from_tm(const tm &t) {
+	SYSTEMTIME rt = {0};
+	rt.wYear = t.tm_year + 1900;
+	rt.wMonth = t.tm_mon+1;
+	rt.wDay = t.tm_mday;
+	rt.wHour = t.tm_hour;
+	rt.wMinute = t.tm_min;
+	rt.wSecond = t.tm_sec;
+	return rt;
 }
 
