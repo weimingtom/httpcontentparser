@@ -43,6 +43,7 @@
 				CommandLine="copy .\baseencrypt.h ..\..\include\softwareEncrypt
 copy .\installDate.h ..\..\include\softwareEncrypt
 copy .\LicenseInfo.h ..\..\include\softwareEncrypt
+copy .\serialNumber.h  ..\..\include\softwareEncrypt
 "/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
@@ -86,7 +87,9 @@ copy .\LicenseInfo.h ..\..\include\softwareEncrypt
 				Name="VCPreBuildEventTool"
 				CommandLine="copy .\baseencrypt.h ..\..\include\softwareEncrypt
 copy .\installDate.h ..\..\include\softwareEncrypt
-copy .\LicenseInfo.h ..\..\include\softwareEncrypt"/>
+copy .\LicenseInfo.h ..\..\include\softwareEncrypt
+copy .\serialNumber.h  ..\..\include\softwareEncrypt
+"/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
 			<Tool

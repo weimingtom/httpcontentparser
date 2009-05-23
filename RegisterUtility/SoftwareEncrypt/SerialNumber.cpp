@@ -26,7 +26,7 @@ std::string getSNFromRegistry() {
 
 void storeSNtoRegistry(const std::string &sn) {
 	HKEY hKey;
-	long   ret = ::RegOpenKeyEx(HKEY_LOCAL_MACHINE, REG_SOFTWARE_DIR,  0,   KEY_READ,   &hKey);
+	long   ret = ::RegOpenKeyEx(HKEY_LOCAL_MACHINE, REG_SOFTWARE_DIR,  0,   KEY_WRITE,   &hKey);
 	if (ERROR_FILE_NOT_FOUND == ret) {
 		// 如果没有键值， 则创建
 		ret = ::RegCreateKey(HKEY_LOCAL_MACHINE, REG_SOFTWARE_DIR, &hKey);
