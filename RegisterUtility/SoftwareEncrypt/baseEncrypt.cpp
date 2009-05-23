@@ -16,7 +16,6 @@ char getChar(int i) {
 	} else if (i < 0) {
 		return getChar(-i);
 	} else {
-		assert(false);
 		return 0;
 	}
 }
@@ -27,7 +26,6 @@ int getNum(char i) {
 	} else if (i >='A' && i <='F') {
 		return i - 'A' + 10;
 	} else {
-		assert(false);
 		return 0;
 	}
 }
