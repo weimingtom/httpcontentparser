@@ -239,7 +239,7 @@ int WSPAPI WSPConnect(
 
 
 		repaired = true;
-		AppInstallValidate validator(VALIDATE_SPI, app_status);
+		AppUtility::AppInstallValidate validator(VALIDATE_SPI, app_status);
 		//validator.repair((HMODULE)hModule);
 		CoUninitialize();
 	}
