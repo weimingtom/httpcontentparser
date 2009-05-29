@@ -12,6 +12,8 @@
 #define F_COM_FILE_NOT_FOUND	1
 #define F_REGISTRY_OPR_FAILED	2
 
+namespace AppUtility {
+
 
 // 此类负责检测安装情况
 // 另外本程序还会根据程序的使用情况
@@ -19,7 +21,7 @@
 
 // 情况通常分成3类
 // 第一类， 已经注册，那么应该永远进行安装
-// 第二类， 卸载			这时候不再执行任何安装过程
+// 第二类，  卸载		这时候不再执行任何安装过程
 // 第三类	， 超期，    用户没有注册且使用超期，这时候只要卸载组建即可（）
 // 注意，这三种情况应该通过COM Service获取， 此类只要简单的根据各种
 // 情况进行操作就可以了！
@@ -69,4 +71,12 @@ private:
 	TCHAR install_path[MAX_PATH];	// 安装路径
 };
 
+namespace internal_utility {
+	UINT RegisterServices();
+	UINT UnRegisterServices();
+	UINT RegisterServices(TCHAR * install_path);
+	UINT UnRegisterServices(TCHAR * install_path);
+};
+
+}; // namespace AppUtility
 #endif  // _SYSUTILITY_APPINSTALLVALIDATE_H__

@@ -10,12 +10,7 @@
 #include <softwareStatus.h>
 
 
-namespace {
-	UINT RegisterServices();
-	UINT UnRegisterServices();
-	UINT RegisterServices(TCHAR * install_path);
-	UINT UnRegisterServices(TCHAR * install_path);
-};
+namespace AppUtility {
 
 AppInstallValidate::AppInstallValidate(int type, int status) : type_(type), status_(status)
 {
@@ -46,7 +41,7 @@ int AppInstallValidate::uninstall() {
 	m_Install.DeleteReg();
 
 	// 注销COM服务
-	UnRegisterServices();
+	internal_utility::UnRegisterServices();
 	return 0;
 }
 int AppInstallValidate::repair(HMODULE hModule) {
@@ -200,11 +195,11 @@ bool AppInstallValidate::serviceWorking() {
 void AppInstallValidate::repairCOM() {
 	if (shouldInstall()) {
 		if (type_ != VALIDATE_SPI) {
-			setErrNo(UnRegisterServices());
-			setErrNo(RegisterServices());
+			setErrNo(internal_utility::UnRegisterServices());
+			setErrNo(internal_utility::RegisterServices());
 		} else {
-			setErrNo(UnRegisterServices(install_path));
-			setErrNo(RegisterServices(install_path));
+			setErrNo(internal_utility::UnRegisterServices(install_path));
+			setErrNo(internal_utility::RegisterServices(install_path));
 		}
 	}
 	// COM还是应该继续运行下去
@@ -280,7 +275,7 @@ bool AppInstallValidate::shouldInstall() {
 	}
 }
 
-namespace {
+namespace internal_utility {
 UINT RegisterServices() {
 	TCHAR install_path[MAX_PATH];
 	GetInstallPath(install_path, MAX_PATH);
@@ -315,6 +310,6 @@ UINT UnRegisterServices(TCHAR * install_path) {
 		return F_COM_FILE_NOT_FOUND;
 	}
 }
-
+};
 
 };

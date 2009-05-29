@@ -73,7 +73,7 @@ extern "C" int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/
 	// 修复项
 	// todo 此处应该直接使用函数获取状态
 	// 获取应用程序状态
-	AppInstallValidate validator(VALIDATE_COM, getAppStatus());
+	AppUtility::AppInstallValidate validator(VALIDATE_COM, getAppStatus());
 	//validator.repair();
 
 	initializeSetting();
