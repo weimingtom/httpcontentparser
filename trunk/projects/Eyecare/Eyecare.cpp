@@ -146,12 +146,6 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 		return 0;
 	}
 	
-	// 如果已经有程序启动，则直接推出
-	HANDLE hMutex = CreateMutex(NULL, FALSE, EYECARE_MUTEX_NAME);
-	if (GetLastError() == ERROR_ALREADY_EXISTS) {
-		CloseHandle(hMutex);
-		return 0;
-	}
 
 	CoInitialize(NULL);
 	UNREFERENCED_PARAMETER(hPrevInstance);
@@ -159,6 +153,11 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 
 	// 如果运行于Enter模式， 则直接退出
 	if (IsRunInEnterModel()) {
+		return 0;
+	}
+
+	// 如果运行于父亲模式
+	if (IsRuninParentModel()) {
 		return 0;
 	}
 
