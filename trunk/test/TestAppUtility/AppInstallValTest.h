@@ -11,6 +11,7 @@ public:
 
 public:
 	CPPUNIT_TEST_SUITE(AppInstallValTest);
+	CPPUNIT_TEST(testServieInstall);
 	CPPUNIT_TEST(testRunInSPI);
 	CPPUNIT_TEST(testShouldRepair);
 	CPPUNIT_TEST(testRunInCOM);
@@ -21,6 +22,7 @@ private:
 	void testRunInCOM();
 	void testRunInSPI();
 	void testRunInNone();
+	void testServieInstall();
 };
 
 #endif  // _SYSUTILITY_APPINSTALLVALTEST_H__
