@@ -16,6 +16,7 @@ CDlgBlackDNSList::CDlgBlackDNSList(CWnd* pParent /*=NULL*/)
 	, rules(this, this)
 {
 	m_bEnableBlackDNS = TRUE;
+	auther_name_ = ANOTHER_BWL;
 }
 
 CDlgBlackDNSList::~CDlgBlackDNSList()

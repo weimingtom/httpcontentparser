@@ -38,4 +38,6 @@ public:
 private:
 	bool changed_;
 	CBaseDlg() {changed_ = false;}
+protected:
+	std::string auther_name_;
 };

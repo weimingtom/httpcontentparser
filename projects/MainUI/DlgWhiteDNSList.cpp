@@ -17,6 +17,7 @@ CDlgWhiteDNSList::CDlgWhiteDNSList(CWnd* pParent /*=NULL*/)
 	, m_bEnableWhiteDNS(TRUE)
 	, m_bCheckDenyAllOthers(FALSE)
 {
+	auther_name_ = ANOTHER_WWL;
 }
 
 CDlgWhiteDNSList::~CDlgWhiteDNSList()

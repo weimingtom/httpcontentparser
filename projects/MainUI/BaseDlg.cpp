@@ -1,9 +1,10 @@
 #include "StdAfx.h"
 #include ".\basedlg.h"
 #include ".\resource.h"
+#include <app_constants.h>
 
-CBaseDlg::CBaseDlg(UINT uTemplate, CWnd *pParent) : CDialog(uTemplate, pParent)
-{
+CBaseDlg::CBaseDlg(UINT uTemplate, CWnd *pParent) : CDialog(uTemplate, pParent) {
+	auther_name_ = ANOTHER_GENERIC;
 }
 
 CBaseDlg::~CBaseDlg(void)

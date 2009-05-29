@@ -22,6 +22,7 @@ CDlgEyecare::CDlgEyecare(CWnd* pParent /*=NULL*/)
 	, m_strCurrentState(_T(""))
 	, m_strTimeLeft(_T(""))
 {
+	auther_name_ = ANOTHER_EP;
 }
 
 CDlgEyecare::~CDlgEyecare()

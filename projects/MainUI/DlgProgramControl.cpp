@@ -23,6 +23,7 @@ CDlgProgramControl::CDlgProgramControl(CWnd* pParent /*=NULL*/)
 : CBaseDlg(CDlgProgramControl::IDD, pParent)
 , m_bEnableAppControl(FALSE)
 {
+	auther_name_ = ANOTHER_AC;
 }
 
 CDlgProgramControl::~CDlgProgramControl() {
