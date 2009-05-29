@@ -26,6 +26,7 @@ CDlgScreenshot::CDlgScreenshot(CWnd* pParent /*=NULL*/)
 , m_strAutoCleanHours(_T(""))
 , m_strTimespanMins(_T(""))
 {
+	auther_name_ = ANOTHER_SS;
 }
 
 CDlgScreenshot::~CDlgScreenshot()

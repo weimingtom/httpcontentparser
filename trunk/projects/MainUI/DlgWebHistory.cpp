@@ -28,6 +28,7 @@ CDlgWebHistory::CDlgWebHistory(CWnd* pParent /*=NULL*/)
 , m_strAutoClean(_T(""))
 , m_bSearchWord(FALSE)
 {
+	auther_name_ = ANOTHER_WH;
 }
 
 CDlgWebHistory::~CDlgWebHistory()

@@ -20,6 +20,7 @@ CDlgOnlineHour::CDlgOnlineHour(CWnd* pParent /*=NULL*/)
 	: CBaseDlg(CDlgOnlineHour::IDD, pParent)
 	, m_bEnableTimeCheck(FALSE)
 {
+	auther_name_ = ANOTHER_IT;
 }
 
 CDlgOnlineHour::~CDlgOnlineHour()

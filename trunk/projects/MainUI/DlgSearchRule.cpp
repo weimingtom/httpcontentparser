@@ -20,6 +20,7 @@ CDlgSearchRule::CDlgSearchRule(CWnd* pParent /*=NULL*/)
 , m_bChkYahoo(FALSE)
 , m_bChkBaidu(FALSE)
 {
+	auther_name_ = ANOTHER_BSL;
 }
 
 CDlgSearchRule::~CDlgSearchRule()

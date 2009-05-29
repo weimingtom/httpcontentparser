@@ -23,6 +23,7 @@ CDlgImageRule::CDlgImageRule(CWnd* pParent /*=NULL*/)
 	, scope_min_(0)
 	, scope_max_(0)
 {
+	// auther_name_ = ANOTHER_;
 }
 
 CDlgImageRule::~CDlgImageRule()

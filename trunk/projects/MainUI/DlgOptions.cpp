@@ -22,6 +22,7 @@ CDlgOptions::CDlgOptions(CWnd* pParent /*=NULL*/)
 , m_bSwitchToChildrenOnClose(FALSE)
 , m_bAskmeOnClose(FALSE)
 {
+	auther_name_ = ANOTHER_OP;
 }
 
 CDlgOptions::~CDlgOptions() {

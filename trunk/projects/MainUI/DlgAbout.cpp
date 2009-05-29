@@ -17,6 +17,7 @@ CDlgAbout::CDlgAbout(CWnd* pParent /*=NULL*/)
 	: CBaseDlg(CDlgAbout::IDD, pParent)
 	, m_strRegisterInfo(_T(""))
 {
+	auther_name_ = ANOTHER_ABOUT;
 }
 
 CDlgAbout::~CDlgAbout()

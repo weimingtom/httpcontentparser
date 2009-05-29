@@ -90,4 +90,17 @@ TCHAR * getHotkeyname(const int type) {
 // 在启动LockPC和Eyecare时指定，如果没有指定程序直接退出
 #define LAUNCH_PARAM			TEXT("websnowman")
 
+// Author Name
+#define ANOTHER_GENERIC		TEXT("#generic")	// generic
+#define ANOTHER_WWL			TEXT("#wwl")	// white web list
+#define ANOTHER_BWL				TEXT("#bwl")	// black web list
+#define ANOTHER_BSL				TEXT("#bsl")		// black search list
+#define ANOTHER_WH				TEXT("#wh")		// Web History
+#define ANOTHER_EP					TEXT("#ep")		// eyelight protect
+#define ANOTHER_AC				TEXT("#ac")		// app control
+#define ANOTHER_SS					TEXT("#ss")		// screen snapshot
+#define ANOTHER_IT					TEXT("#it")		// internet time
+#define ANOTHER_OP				TEXT("#op")		// options
+#define ANOTHER_ABOUT		TEXT("#about")		// about
+
 #endif // _SPI_INSTALLER_SPIDEFINES_H__
