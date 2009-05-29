@@ -136,10 +136,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
                      LPTSTR    lpCmdLine,
                      int       nCmdShow)
 {
-	// 如果已经有程序启动，则直接推出
-	HANDLE hMutex = CreateMutex(NULL, FALSE, EYECARE_MUTEX_NAME);
-	if (GetLastError() == ERROR_ALREADY_EXISTS) {
-		CloseHandle(hMutex);
+	if (_tcscmp(lpCmdLine, LAUNCH_PARAM) != 0) {
 		return 0;
 	}
 
@@ -148,7 +145,13 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 	if (NULL != hOld) {
 		return 0;
 	}
-
+	
+	// 如果已经有程序启动，则直接推出
+	HANDLE hMutex = CreateMutex(NULL, FALSE, EYECARE_MUTEX_NAME);
+	if (GetLastError() == ERROR_ALREADY_EXISTS) {
+		CloseHandle(hMutex);
+		return 0;
+	}
 
 	CoInitialize(NULL);
 	UNREFERENCED_PARAMETER(hPrevInstance);

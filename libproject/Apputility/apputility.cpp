@@ -117,11 +117,12 @@ void StartMainUI() {
 }
 
 void LockComputer() {
-	TCHAR install_path[MAX_PATH], fullpath[MAX_PATH];
+	TCHAR install_path[MAX_PATH], fullpath[MAX_PATH], cmdLine[MAX_PATH * 2];
 	GetInstallPath(install_path, MAX_PATH);
-
+	
 	_sntprintf(fullpath, MAX_PATH, "%s%s", install_path, LOCKPC_APP_FILENAME);
-	WinExec(fullpath, SW_MAXIMIZE);
+	_sntprintf(cmdLine, MAX_PATH *2, "%s %s", fullpath, LAUNCH_PARAM);
+	WinExec(cmdLine, SW_MAXIMIZE);
 }
 
 void StartEyecare() {
@@ -131,11 +132,12 @@ void StartEyecare() {
 		return;
 	}
 
-	TCHAR install_path[MAX_PATH], fullpath[MAX_PATH];
+	TCHAR install_path[MAX_PATH], fullpath[MAX_PATH], cmdLine[MAX_PATH * 2];
 	GetInstallPath(install_path, MAX_PATH);
 
 	_sntprintf(fullpath, MAX_PATH, "%s%s", install_path, EYECARE_APP_FILENAME);
-	WinExec(fullpath, SW_MAXIMIZE);
+	_sntprintf(cmdLine, MAX_PATH *2, "%s %s", fullpath, LAUNCH_PARAM);
+	WinExec(cmdLine, SW_MAXIMIZE);
 }
 
 DWORD GetScreenRecordPath(TCHAR * fullpath, const int len) {

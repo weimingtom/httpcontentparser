@@ -48,7 +48,7 @@
 
 #define CONFIG_HOTKEY_LAUNCH					TEXT("launch")
 #define CONFIG_HOTKEY_SHOWUI					TEXT("showui")
-#define CONFIG_HOTKEY_SWITCHUSER				TEXT("switchuser")
+#define CONFIG_HOTKEY_SWITCHUSER		TEXT("switchuser")
 
 inline
 TCHAR * getHotkeyname(const int type) {
@@ -86,5 +86,8 @@ TCHAR * getHotkeyname(const int type) {
 // 用来存储安装时间，文件没有什么用
 #define WINDOWS_FILE_TO_STORE_INSTALLDATE	TEXT("snowman.ini")
 #define INSTALL_DIR_DATE_INDICATOR	TEXT("nwist.dll")
+
+// 在启动LockPC和Eyecare时指定，如果没有指定程序直接退出
+#define LAUNCH_PARAM			TEXT("websnowman")
 
 #endif // _SPI_INSTALLER_SPIDEFINES_H__
