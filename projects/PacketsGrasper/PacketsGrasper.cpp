@@ -29,7 +29,7 @@ CRITICAL_SECTION	gCriticalSection;			// 代码段保护变量
 WSPPROC_TABLE		NextProcTable;				// 保存30个服务提供者指针
 TCHAR				m_sProcessName[MAX_PATH];	// 保存当前进程名称
 
-CSelectIO g_select;
+//CSelectIO g_select;
 
 //ProgressCheck progress_check;
 
@@ -146,6 +146,9 @@ int WSPAPI WSPRecv(
 )
 {
 	SPI_FUNCTION_CALL(_T("WSPRecv ..."));
+	return NextProcTable.lpWSPRecv(s, lpBuffers, dwBufferCount
+				, lpNumberOfBytesRecvd, lpFlags, lpOverlapped
+				, lpCompletionRoutine, lpThreadId, lpErrno);
 
 	// 如果应用程序是一个不应该被拦截的应用程序
 	//if (progress_check.isEnabled())
@@ -156,7 +159,7 @@ int WSPAPI WSPRecv(
 	//char buffer[1024];
 	//sprintf(buffer, "WSPRecv %d", s);
 	//OutputDebugString(buffer);
-	try { 
+	/*try { 
 		// 对于使用MSG_PEEK抓取的方式
 		if ((*lpFlags) & MSG_PEEK) {
 			return NextProcTable.lpWSPRecv(s, lpBuffers, dwBufferCount
@@ -176,9 +179,8 @@ int WSPAPI WSPRecv(
  
 		return iRet;
 	} catch (...) { 
-		// writeException("WSPRecv", "unknown");
 		return SOCKET_ERROR; 
-	}
+	}*/
 }
 
 
@@ -204,7 +206,7 @@ int WSPAPI WSPCloseSocket(
 ) 
 {
 	SPI_FUNCTION_CALL(_T("WSPCloseSocket ..."));
-	g_select.onCloseSocket(s);
+	//g_select.onCloseSocket(s);
 	//char buffer[1024];
 	//sprintf(buffer, "CloseSocket %d", s);
 	//OutputDebugString(buffer);
@@ -288,7 +290,7 @@ int WSPAPI WSPSend(
 	// 将DNS保存在DNS MAP当中
 	char host[MAX_PATH];
 	packet.getHost(host, MAX_PATH);
-	g_select.addDNS(s, host);
+	//g_select.addDNS(s, host);
 
 	//sprintf(host, "D:\\debuglog\\req\\%d.log", s);
 	//DUMP_HTTP_REQUEST(lpBuffers, dwBufferCount, host);
@@ -663,7 +665,7 @@ BOOL WINAPI DllMain(
 		}
 		LeaveCriticalSection(&gCriticalSection);
 
-		g_select.finalize();
+		//g_select.finalize();
 
 		//UninitializeLog();
 		ODS2(m_sProcessName,_T(" Exit ..."));
@@ -739,7 +741,7 @@ int WSPAPI WSPStartup(
 	lpProcTable->lpWSPShutdown 				= WSPShutdown;
 	lpProcTable->lpWSPStringToAddress 		= WSPStringToAddress;
 
-	g_select.setRecv(NextProcTable.lpWSPRecv);
+	//g_select.setRecv(NextProcTable.lpWSPRecv);
 	LeaveCriticalSection(&gCriticalSection);
 	return 0;
 }
