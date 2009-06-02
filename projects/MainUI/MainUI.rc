@@ -841,10 +841,10 @@ BEGIN
     BEGIN
         BLOCK "040903a8"
         BEGIN
-            VALUE "CompanyName", "W.U.T"
+            VALUE "FileDescription", "Control Centrol of Seb Snowman"
             VALUE "FileVersion", "1.0.0.1"
             VALUE "InternalName", "Web Snowman"
-            VALUE "LegalCopyright", "All Copyright Reserve"
+            VALUE "LegalCopyright", "All Copyright Reserve (C) 2009"
             VALUE "ProductName", "Web Snowman"
             VALUE "ProductVersion", "1.0.0.1"
         END
