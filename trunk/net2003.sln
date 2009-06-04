@@ -137,6 +137,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestSoftwareEncrypt", "test
 		{9E22A563-69C9-48A7-AFFF-4E3D41077852} = {9E22A563-69C9-48A7-AFFF-4E3D41077852}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Uninstaller", "projects\Uninstaller\Uninstaller.vcproj", "{F47AD3E9-CFB3-4BE6-ABA1-C9F115996D18}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfiguration) = preSolution
 		Debug = Debug
@@ -379,6 +383,14 @@ Global
 		{0B5E78ED-3E0A-4DBE-B590-B283DBF8D98C}.Release.Build.0 = Release|Win32
 		{0B5E78ED-3E0A-4DBE-B590-B283DBF8D98C}.Release Unicode.ActiveCfg = Release|Win32
 		{0B5E78ED-3E0A-4DBE-B590-B283DBF8D98C}.Release Unicode.Build.0 = Release|Win32
+		{F47AD3E9-CFB3-4BE6-ABA1-C9F115996D18}.Debug.ActiveCfg = Debug|Win32
+		{F47AD3E9-CFB3-4BE6-ABA1-C9F115996D18}.Debug.Build.0 = Debug|Win32
+		{F47AD3E9-CFB3-4BE6-ABA1-C9F115996D18}.Debug Unicode.ActiveCfg = Debug|Win32
+		{F47AD3E9-CFB3-4BE6-ABA1-C9F115996D18}.Debug Unicode.Build.0 = Debug|Win32
+		{F47AD3E9-CFB3-4BE6-ABA1-C9F115996D18}.Release.ActiveCfg = Release|Win32
+		{F47AD3E9-CFB3-4BE6-ABA1-C9F115996D18}.Release.Build.0 = Release|Win32
+		{F47AD3E9-CFB3-4BE6-ABA1-C9F115996D18}.Release Unicode.ActiveCfg = Release|Win32
+		{F47AD3E9-CFB3-4BE6-ABA1-C9F115996D18}.Release Unicode.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 	EndGlobalSection
