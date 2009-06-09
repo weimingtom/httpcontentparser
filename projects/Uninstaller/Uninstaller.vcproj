@@ -130,6 +130,9 @@
 				RelativePath=".\DlgCheckPassword.cpp">
 			</File>
 			<File
+				RelativePath=".\DlgProcess.cpp">
+			</File>
+			<File
 				RelativePath=".\DlgReboot.cpp">
 			</File>
 			<File
@@ -159,6 +162,9 @@
 				RelativePath=".\DlgCheckPassword.h">
 			</File>
 			<File
+				RelativePath=".\DlgProcess.h">
+			</File>
+			<File
 				RelativePath=".\DlgReboot.h">
 			</File>
 			<File
@@ -177,6 +183,9 @@
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}">
 			<File
 				RelativePath=".\res\key.ico">
+			</File>
+			<File
+				RelativePath=".\res\Process.bmp">
 			</File>
 			<File
 				RelativePath=".\res\reboot.bmp">

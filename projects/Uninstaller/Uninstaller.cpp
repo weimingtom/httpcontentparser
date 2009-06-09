@@ -5,6 +5,7 @@
 #include "Uninstaller.h"
 #include ".\dlgcheckpassword.h" 
 #include ".\DlgReboot.h"
+#include ".\dlgprocess.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -54,12 +55,22 @@ BOOL CUninstallerApp::InitInstance()
 	// such as the name of your company or organization
 	SetRegistryKey(_T("Local AppWizard-Generated Applications"));
 
+	CString title, message;
+	title.LoadString(AfxGetInstanceHandle(), IDS_TITLE);
+	message.LoadString(AfxGetInstanceHandle(), IDS_ASCERTAIN);
+	if (IDYES != ::MessageBox(NULL, message, title, MB_YESNO | MB_ICONQUESTION)) {
+		return FALSE;
+	}
+
 	// CHECK THE password
 	CDlgCheckPassword dlgCheckPwd;
 	if ( IDOK == dlgCheckPwd.DoModal()) {
 		m_pMainWnd = NULL;
-		CDlgReboot dlg;
-		dlg.DoModal();
+		CDlgProcess dlgProc;
+		dlgProc.DoModal();
+
+		CDlgReboot dlgReboot;
+		dlgReboot.DoModal();
 	}
 
 	// Since the dialog has been closed, return FALSE so that we exit the

@@ -80,6 +80,7 @@ IDI_KEY                 ICON                    "res\\key.ico"
 //
 
 IDB_BMP_REBOOT          BITMAP                  "res\\reboot.bmp"
+IDB_BMP_PROCESS         BITMAP                  "res\\Process.bmp"
 #endif    // 中文(中华人民共和国) resources
 /////////////////////////////////////////////////////////////////////////////
 
@@ -111,17 +112,6 @@ BEGIN
     DEFPUSHBUTTON   "OK",IDOK,178,7,50,16,WS_GROUP
 END
 
-IDD_UNINSTALLER_DIALOG DIALOGEX 0, 0, 320, 200
-STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_VISIBLE | 
-    WS_CAPTION | WS_SYSMENU
-EXSTYLE WS_EX_APPWINDOW
-CAPTION "Uninstall Web Snowman"
-FONT 8, "MS Shell Dlg", 0, 0, 0x1
-BEGIN
-    DEFPUSHBUTTON   "OK",IDOK,180,177,50,16
-    PUSHBUTTON      "Cancel",IDCANCEL,263,177,50,16
-END
-
 IDD_POPDLG_CHKPASSWORD DIALOGEX 0, 0, 145, 70
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | 
     WS_SYSMENU
@@ -135,9 +125,9 @@ BEGIN
     LTEXT           "Password",IDC_STATIC,7,20,38,8
 END
 
-IDD_DIALOG1 DIALOGEX 0, 0, 330, 228
-STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | 
-    WS_SYSMENU
+IDD_DLG_REBOOT DIALOGEX 0, 0, 330, 228
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | DS_CENTER | WS_POPUP | 
+    WS_CAPTION | WS_SYSMENU
 CAPTION "Uninstall - Websnow"
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
@@ -147,6 +137,19 @@ BEGIN
                     BS_AUTORADIOBUTTON,117,73,99,10
     CONTROL         "&No, I will restart the computer later.",IDC_RAD_LATER,
                     "Button",BS_AUTORADIOBUTTON,117,87,131,10
+END
+
+IDD_DLG_PROCESS DIALOGEX 0, 0, 333, 230
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | DS_CENTER | WS_POPUP | 
+    WS_CAPTION | WS_SYSMENU
+CAPTION "Uninstall - Websnow"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CONTROL         141,IDC_STATIC,"Static",SS_BITMAP,0,1,333,196
+    CONTROL         "",IDC_PROGRESS,"msctls_progress32",WS_BORDER,28,69,271,
+                    14
+    PUSHBUTTON      "Next",IDC_BUTTON1,257,208,50,14,WS_DISABLED
+    PUSHBUTTON      "Prev",IDC_BUTTON3,187,208,50,14,WS_DISABLED
 END
 
 
@@ -166,14 +169,6 @@ BEGIN
         BOTTOMMARGIN, 48
     END
 
-    IDD_UNINSTALLER_DIALOG, DIALOG
-    BEGIN
-        LEFTMARGIN, 7
-        RIGHTMARGIN, 313
-        TOPMARGIN, 7
-        BOTTOMMARGIN, 193
-    END
-
     IDD_POPDLG_CHKPASSWORD, DIALOG
     BEGIN
         LEFTMARGIN, 7
@@ -182,10 +177,16 @@ BEGIN
         BOTTOMMARGIN, 63
     END
 
-    IDD_DIALOG1, DIALOG
+    IDD_DLG_REBOOT, DIALOG
     BEGIN
         RIGHTMARGIN, 329
         BOTTOMMARGIN, 221
+    END
+
+    IDD_DLG_PROCESS, DIALOG
+    BEGIN
+        RIGHTMARGIN, 331
+        BOTTOMMARGIN, 222
     END
 END
 #endif    // APSTUDIO_INVOKED
@@ -200,7 +201,7 @@ STRINGTABLE
 BEGIN
     IDS_ABOUTBOX            "&About Uninstaller..."
     IDS_CHECK_PASSWORD_WRONG "Password was not corrected!"
-    IDS_TITLE               "Uninstall Web Snowman"
+    IDS_TITLE               "Uninstall Websnow"
     IDS_ASCERTAIN           "Are you sure you want to completely remove Websnow and all of its components?"
     IDS_UNINSTALL_FINISH    "Web"
 END
