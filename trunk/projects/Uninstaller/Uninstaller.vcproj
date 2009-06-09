@@ -130,13 +130,7 @@
 				RelativePath=".\DlgCheckPassword.cpp">
 			</File>
 			<File
-				RelativePath=".\PageAscertain.cpp">
-			</File>
-			<File
-				RelativePath=".\PageProcess.cpp">
-			</File>
-			<File
-				RelativePath=".\PageReboot.cpp">
+				RelativePath=".\DlgReboot.cpp">
 			</File>
 			<File
 				RelativePath=".\stdafx.cpp">
@@ -156,12 +150,6 @@
 			<File
 				RelativePath=".\Uninstaller.cpp">
 			</File>
-			<File
-				RelativePath=".\UninstallerDlg.cpp">
-			</File>
-			<File
-				RelativePath=".\UninstallSheet.cpp">
-			</File>
 		</Filter>
 		<Filter
 			Name="头文件"
@@ -171,13 +159,7 @@
 				RelativePath=".\DlgCheckPassword.h">
 			</File>
 			<File
-				RelativePath=".\PageAscertain.h">
-			</File>
-			<File
-				RelativePath=".\PageProcess.h">
-			</File>
-			<File
-				RelativePath=".\PageReboot.h">
+				RelativePath=".\DlgReboot.h">
 			</File>
 			<File
 				RelativePath=".\Resource.h">
@@ -188,12 +170,6 @@
 			<File
 				RelativePath=".\Uninstaller.h">
 			</File>
-			<File
-				RelativePath=".\UninstallerDlg.h">
-			</File>
-			<File
-				RelativePath=".\UninstallSheet.h">
-			</File>
 		</Filter>
 		<Filter
 			Name="资源文件"
@@ -203,10 +179,10 @@
 				RelativePath=".\res\key.ico">
 			</File>
 			<File
-				RelativePath=".\res\rt_manif.bin">
+				RelativePath=".\res\reboot.bmp">
 			</File>
 			<File
-				RelativePath=".\res\SmallLogo.ico">
+				RelativePath=".\res\rt_manif.bin">
 			</File>
 			<File
 				RelativePath=".\res\Uninstaller.ico">

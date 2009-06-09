@@ -3,9 +3,8 @@
 
 #include "stdafx.h"
 #include "Uninstaller.h"
-#include "UninstallerDlg.h"
-#include ".\dlgcheckpassword.h"
-#include ".\UninstallSheet.h"
+#include ".\dlgcheckpassword.h" 
+#include ".\DlgReboot.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -58,9 +57,9 @@ BOOL CUninstallerApp::InitInstance()
 	// CHECK THE password
 	CDlgCheckPassword dlgCheckPwd;
 	if ( IDOK == dlgCheckPwd.DoModal()) {
-		CUninstallSheet sheet(IDS_TITLE);
-		m_pMainWnd = &sheet;
-		sheet.DoModal();
+		m_pMainWnd = NULL;
+		CDlgReboot dlg;
+		dlg.DoModal();
 	}
 
 	// Since the dialog has been closed, return FALSE so that we exit the
