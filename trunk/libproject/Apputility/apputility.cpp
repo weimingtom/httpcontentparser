@@ -207,6 +207,13 @@ const TCHAR* GetFileNameDir(const TCHAR *filename, TCHAR *directory, const unsig
 	return directory;
 }
 
+const TCHAR* GetFileName(const TCHAR *fullname, TCHAR * ename, const unsigned len) {
+	TCHAR dir[MAX_PATH], driver[MAX_PATH], name[MAX_PATH], ext[MAX_PATH];
+	_tsplitpath(fullname, driver, dir, name, ext);
+	_sntprintf(ename, len, TEXT("%s%s"), name, ext);
+	return ename;
+}
+
 const TCHAR * GetSearchWordFile(TCHAR * filename, const unsigned len) {
 	TCHAR installpath[MAX_PATH];
 	GetInstallPath(installpath, MAX_PATH);
