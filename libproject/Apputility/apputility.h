@@ -41,6 +41,7 @@ const TCHAR * GetAppConfigFilename(TCHAR *fullpath, const int len);
 
 // 获取指定文件的目录
 const TCHAR* GetFileNameDir(const TCHAR *filename, TCHAR *directory, const unsigned len);
+const TCHAR* GetFileName(const TCHAR *fullname, TCHAR * ename, const unsigned len);
 
 // 获取保存图片的路径
 const TCHAR * GetImageDirectory(TCHAR * filename, const unsigned len);
