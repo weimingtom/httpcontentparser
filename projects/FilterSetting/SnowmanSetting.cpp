@@ -156,3 +156,11 @@ STDMETHODIMP CSnowmanSetting::getApplicationStatus(LONG* status)
 	*status = getAppStatus();
 	return S_OK;
 }
+
+STDMETHODIMP CSnowmanSetting::setApplicationStatus(LONG status)
+{
+	if ( SNOWMAN_STATUS_UNINSTALL== status) {
+		g_configuration.setUninstall(true);
+	}
+	return S_OK;
+}
