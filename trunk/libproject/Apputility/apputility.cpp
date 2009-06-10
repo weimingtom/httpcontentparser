@@ -109,6 +109,12 @@ void GetMainUIPath(TCHAR * fullpath, const int len) {
 	_sntprintf(fullpath, len, "%s%s", installpath, APPLICATION_MAINUI_NAME);
 }
 
+const TCHAR * GetUninstallUtility(TCHAR * fullpath, const int len) {
+	TCHAR installpath[MAX_PATH];
+	GetInstallPath(installpath, len);
+	_sntprintf(fullpath, len, "%s%s", installpath, UNINSTALL_UTILITY);
+	return fullpath;
+}
 
 void StartMainUI() {
 	TCHAR  fullpath[MAX_PATH];

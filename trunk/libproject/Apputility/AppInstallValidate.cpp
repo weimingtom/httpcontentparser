@@ -12,6 +12,22 @@
 
 namespace AppUtility {
 
+
+UINT UninstallSPI() {
+	CXInstall	m_Install;
+	m_Install.DeleteReg();
+	return 0;
+}
+UINT UninstallService() {
+	internal_utility::UnRegisterServices();
+	return 0;
+}
+UINT UninstallShellExt() {
+	uninstallCopyControl();
+	uninstallAppControl();
+	return 0;
+}
+
 AppInstallValidate::AppInstallValidate(int type, int status) : type_(type), status_(status)
 {
 	memset(install_path, 0, sizeof(install_path));

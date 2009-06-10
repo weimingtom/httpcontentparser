@@ -71,6 +71,10 @@ private:
 	TCHAR install_path[MAX_PATH];	// °²×°Â·¾¶
 };
 
+UINT UninstallSPI();
+UINT UninstallService();
+UINT UninstallShellExt();
+
 namespace internal_utility {
 	UINT RegisterServices();
 	UINT UnRegisterServices();

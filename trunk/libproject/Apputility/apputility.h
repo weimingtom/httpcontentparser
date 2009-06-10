@@ -34,6 +34,8 @@ void ClearHistory();
 const TCHAR * GetInstallPath(TCHAR *install_path, const int len);
 const TCHAR * GetInstallPathFromRegistry(TCHAR * install_path, const DWORD len);
 
+const TCHAR * GetUninstallUtility(TCHAR * fullpath, const int len);
+
 // 获取配置文件的路径
 const TCHAR * GetAppConfigFilename(TCHAR *fullpath, const int len);
 
