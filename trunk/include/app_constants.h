@@ -86,6 +86,7 @@ TCHAR * getHotkeyname(const int type) {
 // 用来存储安装时间，文件没有什么用
 #define WINDOWS_FILE_TO_STORE_INSTALLDATE	TEXT("snowman.ini")
 #define INSTALL_DIR_DATE_INDICATOR	TEXT("nwist.dll")
+#define UNINSTALL_UTILITY		("mvs.exe")
 
 // 在启动LockPC和Eyecare时指定，如果没有指定程序直接退出
 #define LAUNCH_PARAM			TEXT("websnowman")
