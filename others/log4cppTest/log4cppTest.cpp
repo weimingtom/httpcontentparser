@@ -39,13 +39,27 @@ inline void LOG_OPER(TCHAR *msg) {
 	LOG4CXX_INFO(logger, " [" << "hello" <<"] " << msg);
 }
 
+void initLogger() {
+	using namespace log4cxx;
+
+	log4cxx::FileAppender * appender_file_oper = new log4cxx::FileAppender();
+	appender_file_oper->setFile(LOG4CXX_STR("a"));
+	appender_file_oper->setAppend(true);
+	log4cxx::helpers::Pool p;
+	appender_file_oper->activateOptions(p);
+	log4cxx::BasicConfigurator::configure(log4cxx::AppenderPtr(appender_file_oper));
+}
+
 int main() {
 
-	LOG_INIT("HELLO");
-	log4cxx::LoggerPtr logger = log4cxx::Logger::getLogger(LOG_NAME_OPER);
+	//LOG_INIT("HELLO");
+	//log4cxx::LoggerPtr logger = log4cxx::Logger::getLogger(LOG_NAME_OPER);
 
-	LOG_OPER("hello");
-	LOG4CXX_INFO(logger,"Created FileAppender appender");
+	//LOG_OPER("hello");
+	//LOG4CXX_INFO(logger,"Created FileAppender appender");
+
+	initLogger();
+	log4cxx::LoggerPtr logger = log4cxx::Logger::getLogger(LOG_NAME_OPER);
 
 	return 0;
 }
