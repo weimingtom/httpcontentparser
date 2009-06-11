@@ -12,6 +12,7 @@
 IMPLEMENT_DYNAMIC(CDlgReboot, CDialog)
 CDlgReboot::CDlgReboot(CWnd* pParent /*=NULL*/)
 	: CDialog(CDlgReboot::IDD, pParent)
+	, m_bRestart(0)
 {
 	m_bkColor = RGB(255, 255, 255);
 	m_bkBrush = CreateSolidBrush(m_bkColor);
@@ -29,16 +30,21 @@ void CDlgReboot::DoDataExchange(CDataExchange* pDX)
 
 
 BEGIN_MESSAGE_MAP(CDlgReboot, CDialog)
-	ON_BN_CLICKED(IDC_BUTTON2, OnBnClickedButton2)
+	ON_BN_CLICKED(IDC_BTN_FINISH, OnBnClickedFinish)
 	ON_WM_CTLCOLOR()
 END_MESSAGE_MAP()
 
 
 // CDlgReboot 消息处理程序
 
-void CDlgReboot::OnBnClickedButton2()
+void CDlgReboot::OnBnClickedFinish()
 {
-	// TODO: 在此添加控件通知处理程序代码
+	UpdateData(TRUE);
+	if (m_bRestart == 0) {
+		ExitWindowsEx(EWX_REBOOT , 0);
+	}
+
+	EndDialog(IDOK);
 }
 
 HBRUSH CDlgReboot::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
@@ -61,3 +67,4 @@ BOOL CDlgReboot::OnInitDialog()
 
 	return TRUE;  
 }
+

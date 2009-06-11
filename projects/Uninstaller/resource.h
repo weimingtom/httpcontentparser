@@ -9,6 +9,7 @@
 #define IDS_TITLE                       103
 #define IDS_ASCERTAIN                   104
 #define IDS_UNINSTALL_FINISH            105
+#define IDS_FILE_NOT_FOUND              106
 #define IDR_MAINFRAME                   130
 #define IDI_KEY                         133
 #define IDD_DLG_REBOOT                  137
@@ -17,9 +18,9 @@
 #define IDB_BMP_PROCESS                 141
 #define IDD_POPDLG_CHKPASSWORD          205
 #define IDC_BUTTON2                     1002
+#define IDC_BTN_FINISH                  1002
 #define IDC_RADIO_RESTART               1003
 #define IDC_RAD_LATER                   1004
-#define IDC_PROGRES                     1005
 #define IDC_PROGRESS                    1005
 #define IDC_BUTTON1                     1006
 #define IDC_BUTTON3                     1007
