@@ -141,6 +141,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Uninstaller", "projects\Uni
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mvs", "projects\mvs\mvs.vcproj", "{B0839C7D-7530-4D48-9108-2E0C79B42D05}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfiguration) = preSolution
 		Debug = Debug
@@ -391,6 +395,14 @@ Global
 		{F47AD3E9-CFB3-4BE6-ABA1-C9F115996D18}.Release.Build.0 = Release|Win32
 		{F47AD3E9-CFB3-4BE6-ABA1-C9F115996D18}.Release Unicode.ActiveCfg = Release|Win32
 		{F47AD3E9-CFB3-4BE6-ABA1-C9F115996D18}.Release Unicode.Build.0 = Release|Win32
+		{B0839C7D-7530-4D48-9108-2E0C79B42D05}.Debug.ActiveCfg = Debug|Win32
+		{B0839C7D-7530-4D48-9108-2E0C79B42D05}.Debug.Build.0 = Debug|Win32
+		{B0839C7D-7530-4D48-9108-2E0C79B42D05}.Debug Unicode.ActiveCfg = Debug|Win32
+		{B0839C7D-7530-4D48-9108-2E0C79B42D05}.Debug Unicode.Build.0 = Debug|Win32
+		{B0839C7D-7530-4D48-9108-2E0C79B42D05}.Release.ActiveCfg = Release|Win32
+		{B0839C7D-7530-4D48-9108-2E0C79B42D05}.Release.Build.0 = Release|Win32
+		{B0839C7D-7530-4D48-9108-2E0C79B42D05}.Release Unicode.ActiveCfg = Release|Win32
+		{B0839C7D-7530-4D48-9108-2E0C79B42D05}.Release Unicode.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 	EndGlobalSection
