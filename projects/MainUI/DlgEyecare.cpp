@@ -8,6 +8,7 @@
 #include ".\globalvariable.h"
 #include <typeconvert.h>
 #include <comdef.h>
+#include <logger_name.h>
 
 #define ID_TIME_UPDATE_STATE  1010
 #define TIME_ESCPLE			  500
@@ -64,6 +65,7 @@ void CDlgEyecare::setEyecareTimespan() {
 		pEyeCare->enableEyecare(convert(m_chkEnabled.GetCheck() == BST_CHECKED ? true : false));
 		pEyeCare->Release();
 	} catch (_com_error&) {
+		LOG4CXX_ERROR(log4cxx::Logger::getLogger(MAINUI_LOGGER_ERROR), "CDlgEyecare::setEyecareTimespan::catch");
 		AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
 	}
 }
@@ -85,6 +87,7 @@ void CDlgEyecare::setEyecareTerminatedMode() {
 		pEyeCare->setTermMode(mode);
 		pEyeCare->Release();
 	} catch(...) {
+		LOG4CXX_ERROR(log4cxx::Logger::getLogger(MAINUI_LOGGER_ERROR), "CDlgEyecare::setEyecareTerminatedMode::catch");
 		throw int(SNOWMAN_ERROR_COM_INIT_FAILED);
 	}
 }
@@ -135,6 +138,7 @@ void CDlgEyecare::restoreSetting() {
 
 		pEyeCare->Release();
 	} catch(...) {
+		LOG4CXX_ERROR(log4cxx::Logger::getLogger(MAINUI_LOGGER_ERROR), "CDlgEyecare::restoreSetting::catch");
 		AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
 	}
 }
@@ -191,6 +195,7 @@ void CDlgEyecare::UpdateState() {
 		pEyeCare->Release();
 		UpdateData(FALSE);
 	} catch (...) {
+		LOG4CXX_ERROR(log4cxx::Logger::getLogger(MAINUI_LOGGER_ERROR), "CDlgEyecare::UpdateState::catch");
 	}
 }
 void CDlgEyecare::OnTimer(UINT nIDEvent) {

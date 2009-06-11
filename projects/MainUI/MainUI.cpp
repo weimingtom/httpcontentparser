@@ -12,7 +12,34 @@
 #include <com\comutility.h>
 #include <AppinstallValidate.h>
 #include <softwareStatus.h>
+#include <logger_name.h>
 #include ".\share.h"
+#include <logger_name.h>
+#include <log4cxx/logger.h>
+#include <log4cxx/fileappender.h>
+#include <log4cxx/simplelayout.h>
+#include <log4cxx/basicconfigurator.h>
+#include <log4cxx/propertyconfigurator.h>
+#include <log4cxx/helpers/exception.h>
+
+#ifdef _DEBUG
+#define new DEBUG_NEW
+#endif
+
+
+namespace {
+void initLogger() {
+	using namespace log4cxx;
+
+	log4cxx::FileAppender * appender_file_oper = new log4cxx::FileAppender();
+	appender_file_oper->setFile(MAINUI_LOGGER_ERROR_FILE);
+	appender_file_oper->setLayout(LayoutPtr(new SimpleLayout()));
+	appender_file_oper->setAppend(true);
+	log4cxx::helpers::Pool p;
+	appender_file_oper->activateOptions(p);
+	log4cxx::BasicConfigurator::configure(log4cxx::AppenderPtr(appender_file_oper));
+}
+};
 
 #pragma   comment(linker,"/section:shared,rws")   
 #pragma data_seg("shared")
@@ -22,13 +49,9 @@ HWND share_hwnd = 0;
 #define MUTEX_NAME TEXT("2A144C85-AF84-4f88-8F7D-6C794A2800EB")
 
 
-
 IDNSSetting *g_dnssetting = NULL;
 extern bool g_parentModel = false;
 
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#endif
 
 // CMainUIApp
 
@@ -51,6 +74,10 @@ CMainUIApp theApp;
 // CMainUIApp 初始化
 
 BOOL CMainUIApp::InitInstance() {
+	// 初始化LOGGER
+	
+	initLogger();
+	LOG4CXX_INFO(log4cxx::Logger::getLogger(MAINUI_LOGGER_ERROR), "CMainUIApp::InitInstance()");
 	{
 		CMutex mutext(0, MUTEX_NAME);
 		CSingleLock(&mutext, true);
@@ -102,11 +129,13 @@ BOOL CMainUIApp::InitInstance() {
 
 	// 由于对话框已关闭，所以将返回 FALSE 以便退出应用程序，
 	// 而不是启动应用程序的消息泵。
+
 	return FALSE;
 }
 
 int CMainUIApp::ExitInstance()
 {
+	LOG4CXX_INFO(log4cxx::Logger::getLogger(MAINUI_LOGGER_ERROR), "CMainUIApp::ExitInstance()");
 	GdiplusShutdown( m_GdiplusToken);
 	SafeRelease(g_dnssetting);
 	CoUninitialize();

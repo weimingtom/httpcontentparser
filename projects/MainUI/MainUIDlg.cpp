@@ -15,6 +15,7 @@
 #include <app_constants.h>
 #include <apputility.h>
 #include <comdef.h>
+#include <logger_name.h>
 
 #define 	HISTORY_MENU_POS  3
 
@@ -346,6 +347,7 @@ void CMainUIDlg::OnBnClickedOk()
 		m_dlgSwitchChildren_.DoModal();
 		HideMainUI();
 	} catch (...) {
+		LOG4CXX_ERROR(log4cxx::Logger::getLogger(MAINUI_LOGGER_ERROR), "CMainUIDlg::OnBnClickedOk::Catch");
 		AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONEXCLAMATION);
 	}
 }
@@ -357,6 +359,7 @@ void CMainUIDlg::OnBnClickedMainCancel()
 		m_curDlg->Restore();	// »Ö¸´ÉèÖÃ
 		m_curDlg->SetModify(false);
 	} catch (...) {
+			LOG4CXX_ERROR(log4cxx::Logger::getLogger(MAINUI_LOGGER_ERROR), "CMainUIDlg::OnBnClickedMainCancel::Catch");
 			AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONEXCLAMATION);
 		}
 	} 
@@ -373,7 +376,8 @@ void CMainUIDlg::OnBnClickedApply()
 		}
 
 	} catch (...) {
-		AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONEXCLAMATION);
+		LOG4CXX_ERROR(log4cxx::Logger::getLogger(MAINUI_LOGGER_ERROR), "CMainUIDlg::OnBnClickedApply::Catch");
+		LOG4CXX_INFO(log4cxx::Logger::getLogger(MAINUI_LOGGER_INFO), "Trying out the Apache log4cxx API");
 	}
 
 	m_curDlg->SetModify(false);
@@ -485,6 +489,7 @@ void CMainUIDlg::showDlg() {
 		m_curDlg->SetWindowPos(&wndTop, rect.left, rect.top, rect.Width(), rect.Height(), SWP_SHOWWINDOW);
 		m_curDlg->OnShow();
 	} catch (...) {
+		LOG4CXX_ERROR(log4cxx::Logger::getLogger(MAINUI_LOGGER_ERROR), "CMainUIDlg::showDlg::Catch");
 		AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONEXCLAMATION);
 	}
 }
@@ -513,6 +518,7 @@ void CMainUIDlg::initDlgs() {
 		showDlg();
 		
 	} catch (...) {
+		LOG4CXX_ERROR(log4cxx::Logger::getLogger(MAINUI_LOGGER_ERROR), "CMainUIDlg::showDlg::initDlgs");
 		AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONEXCLAMATION);
 		EndDialog(IDCANCEL);
 	}
@@ -687,6 +693,7 @@ void CMainUIDlg::OnTvnSelchangedTreeNavig(NMHDR *pNMHDR, LRESULT *pResult)
 
 		*pResult = 0;
 	} catch (...) {
+		LOG4CXX_INFO(log4cxx::Logger::getLogger(MAINUI_LOGGER_INFO), "CMainUIDlg::OnTvnSelchangedTreeNavig()::Catch");
 		AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONEXCLAMATION);
 	}
 }
@@ -700,6 +707,7 @@ void CMainUIDlg::SwitchOnClose() {
 		ISnowmanSetting *app = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_SnowmanSetting, NULL, CLSCTX_LOCAL_SERVER, IID_ISnowmanSetting, (LPVOID*)&app);
 		if (FAILED(hr)) {
+			LOG4CXX_ERROR(log4cxx::Logger::getLogger(MAINUI_LOGGER_ERROR), "CMainUIDlg::SwitchOnClose FAILED");
 			return;
 		}
 		
@@ -709,6 +717,7 @@ void CMainUIDlg::SwitchOnClose() {
 			Services::switchChildModel();
 		}*/
 	} catch (...) {
+		LOG4CXX_ERROR(log4cxx::Logger::getLogger(MAINUI_LOGGER_ERROR), "Catch");
 	}
 }
 // ×¢ÏúÈÈ¼ü

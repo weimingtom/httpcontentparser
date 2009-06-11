@@ -12,6 +12,7 @@
 #include <com\comutility.h>
 #include <typeconvert.h>
 #include <timeoutswitch.h>
+#include <logger_name.h>
 
 // CDlgOptions ¶Ô»°¿ò
 
@@ -73,6 +74,7 @@ namespace {
 			return convert(bSucc);
 			return true;
 		} catch(...) {
+			LOG4CXX_ERROR(log4cxx::Logger::getLogger(MAINUI_LOGGER_ERROR), "CDlgOptions::notifyCOMServiceHotkey::...");
 			AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
 			return FALSE;
 		}
@@ -151,6 +153,7 @@ int CDlgOptions::setMisc() {
 		ISnowmanSetting *app = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_SnowmanSetting, NULL, CLSCTX_LOCAL_SERVER, IID_ISnowmanSetting, (LPVOID*)&app);
 		if (FAILED(hr)) {
+			LOG4CXX_ERROR(log4cxx::Logger::getLogger(MAINUI_LOGGER_ERROR), "CDlgOptions::setMisc::failed");
 			AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONEXCLAMATION);
 			return FAILED_APPLY;
 		}
@@ -161,6 +164,7 @@ int CDlgOptions::setMisc() {
 		app = NULL;
 		return SUCCESS_APPLY;
 	} catch (...) {
+		LOG4CXX_ERROR(log4cxx::Logger::getLogger(MAINUI_LOGGER_ERROR), "CDlgOptions::setMisc::...");
 		return FAILED_APPLY;
 	}
 }
@@ -185,6 +189,7 @@ void CDlgOptions::restoreSetting() {
 		ISnowmanSetting *app = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_SnowmanSetting, NULL, CLSCTX_LOCAL_SERVER, IID_ISnowmanSetting, (LPVOID*)&app);
 		if (FAILED(hr)) {
+			LOG4CXX_ERROR(log4cxx::Logger::getLogger(MAINUI_LOGGER_ERROR), "CDlgOptions::restoreSetting::failed");
 			throw int(SNOWMAN_ERROR_COM_INIT_FAILED);
 		}
 
@@ -212,6 +217,7 @@ void CDlgOptions::restoreSetting() {
 
 		UpdateData(FALSE);
 	} catch (...) {
+		LOG4CXX_ERROR(log4cxx::Logger::getLogger(MAINUI_LOGGER_ERROR), "CDlgOptions::restoreSetting::...");
 		throw int(SNOWMAN_ERROR_COM_INIT_FAILED);
 	}
 }

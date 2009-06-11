@@ -11,6 +11,7 @@
 #include <com\comutility.h>
 #include <com\resultvalue.h>
 #include <typeconvert.h>
+#include <logger_name.h>
 
 // CDlgProgramControl ¶Ô»°¿ò
 
@@ -127,9 +128,11 @@ int CDlgProgramControl::OnApply() {
 
 		return SUCCESS_APPLY;
 	} catch (_com_error &) {
+		LOG4CXX_ERROR(log4cxx::Logger::getLogger(MAINUI_LOGGER_ERROR), "CDlgProgramControl::OnApply::_com_error");
 		AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
 		return FAILED_APPLY;
 	} catch (...) {
+		LOG4CXX_ERROR(log4cxx::Logger::getLogger(MAINUI_LOGGER_ERROR), "CDlgProgramControl::OnApply::...");
 		AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
 		return FAILED_APPLY;
 	}
@@ -145,6 +148,7 @@ void CDlgProgramControl::restoreSetting() {
 		IAppControl *pSetting;
 		HRESULT hr = CoCreateInstance(CLSID_AppControl, NULL, CLSCTX_LOCAL_SERVER, IID_IAppControl, (LPVOID*)&pSetting);
 		if (FAILED(hr)) {
+			LOG4CXX_ERROR(log4cxx::Logger::getLogger(MAINUI_LOGGER_ERROR), "CDlgProgramControl::restoreSetting::failed");
 			throw int(SNOWMAN_ERROR_COM_INIT_FAILED);
 		}
 	
@@ -174,6 +178,7 @@ void CDlgProgramControl::restoreSetting() {
 		pSetting = NULL;
 		UpdateData(FALSE);
 	} catch (...) {
+		LOG4CXX_ERROR(log4cxx::Logger::getLogger(MAINUI_LOGGER_ERROR), "CDlgProgramControl::restoreSetting::...");
 		throw int(SNOWMAN_ERROR_COM_INIT_FAILED);
 	}
 }

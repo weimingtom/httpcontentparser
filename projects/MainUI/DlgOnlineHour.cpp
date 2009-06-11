@@ -12,7 +12,7 @@
 #include <com\comutility.h>
 #include <typeconvert.h>
 #include <comdef.h>
-
+#include <logger_name.h>
 
 // CDlgOnlineHour ¶Ô»°¿ò
 IMPLEMENT_DYNAMIC(CDlgOnlineHour, CDialog)
@@ -77,6 +77,7 @@ int CDlgOnlineHour::OnApply() {
 		accessNetwork->Release();
 		return 0;
 	} catch (_com_error &) {
+		LOG4CXX_ERROR(log4cxx::Logger::getLogger(MAINUI_LOGGER_ERROR), "CDlgOnlineHour::OnApply::_com_error");
 		AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
 		return -1;
 	}
@@ -118,6 +119,7 @@ void CDlgOnlineHour::restoreSetting() {
 
 		UpdateData(FALSE);
 	} catch (...) {
+		LOG4CXX_ERROR(log4cxx::Logger::getLogger(MAINUI_LOGGER_ERROR), "CDlgOnlineHour::restoreSetting::...");
 		throw int(SNOWMAN_ERROR_COM_INIT_FAILED);
 	}
 }
