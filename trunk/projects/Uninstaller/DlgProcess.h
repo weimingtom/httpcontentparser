@@ -26,5 +26,5 @@ private:
 	HICON m_hIcon;
 	CProgressCtrl m_process;
 
-	void process();
+	friend UINT __cdecl Process( LPVOID pParam );
 };

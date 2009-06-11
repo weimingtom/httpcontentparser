@@ -132,7 +132,7 @@ CAPTION "Uninstall - Websnow"
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
     CONTROL         138,IDC_STATIC,"Static",SS_BITMAP,0,0,329,221
-    PUSHBUTTON      "Finish",IDC_BUTTON2,197,207,50,14
+    PUSHBUTTON      "Finish",IDC_BTN_FINISH,197,207,50,14
     CONTROL         "&Yes, restart the computer",IDC_RADIO_RESTART,"Button",
                     BS_AUTORADIOBUTTON,117,73,99,10
     CONTROL         "&No, I will restart the computer later.",IDC_RAD_LATER,
@@ -204,6 +204,7 @@ BEGIN
     IDS_TITLE               "Uninstall Websnow"
     IDS_ASCERTAIN           "Are you sure you want to completely remove Websnow and all of its components?"
     IDS_UNINSTALL_FINISH    "Web"
+    IDS_FILE_NOT_FOUND      "A critical file lost, You have to delete the websnow installation folder yourself after reboot computer."
 END
 
 #endif    // Ó¢Óï(ÃÀ¹ú) resources

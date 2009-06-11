@@ -41,3 +41,9 @@
 #endif // _AFX_NO_AFXCMN_SUPPORT
 #include <afxdlgs.h>
 
+#ifdef _DEBUG
+#pragma comment(lib, "Apputilityd.lib")
+#else
+#pragma comment(lib, "Apputility.lib")
+#endif 
+

@@ -6,6 +6,7 @@
 #include ".\dlgcheckpassword.h" 
 #include ".\DlgReboot.h"
 #include ".\dlgprocess.h"
+#include <com\comutility.h>
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -37,6 +38,8 @@ CUninstallerApp theApp;
 
 BOOL CUninstallerApp::InitInstance()
 {
+	AutoInitInScale _auto_scale_;
+
 	// InitCommonControls() is required on Windows XP if an application
 	// manifest specifies use of ComCtl32.dll version 6 or later to enable
 	// visual styles.  Otherwise, any window creation will fail.

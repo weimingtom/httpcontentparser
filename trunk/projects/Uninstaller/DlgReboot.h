@@ -19,11 +19,12 @@ protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV Ö§³Ö
 
 	DECLARE_MESSAGE_MAP()
-	afx_msg void OnBnClickedButton2();
+	afx_msg void OnBnClickedFinish();
 	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
 
 private:
 	COLORREF m_bkColor;
 	HBRUSH	  m_bkBrush;
 	HICON m_hIcon;
+	int m_bRestart;
 };
