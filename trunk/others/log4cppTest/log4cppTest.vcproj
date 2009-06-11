@@ -32,6 +32,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="ws2_32.lib"
 				OutputFile="$(OutDir)/log4cppTest.exe"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="..\..\lib"

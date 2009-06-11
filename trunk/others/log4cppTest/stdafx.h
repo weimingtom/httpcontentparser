@@ -12,4 +12,4 @@
 #include <log4cxx/basicconfigurator.h>
 #include <log4cxx/helpers/exception.h>
 
-#pragma comment(lib, "log4cxxd.lib")
+#pragma comment(lib, "log4cxx.lib")
