@@ -46,7 +46,7 @@
 				MkTypLibCompatible="FALSE"/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy .\Debug\MainUI.exe ..\..\debug"/>
+				CommandLine="copy .\Debug\MainUI.exe ..\..\debug\Websnow.exe"/>
 			<Tool
 				Name="VCPreBuildEventTool"/>
 			<Tool
@@ -103,7 +103,7 @@
 				MkTypLibCompatible="FALSE"/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy .\release\MainUI.exe ..\..\release"/>
+				CommandLine="copy .\release\MainUI.exe ..\..\release\Websnow.exe"/>
 			<Tool
 				Name="VCPreBuildEventTool"/>
 			<Tool
