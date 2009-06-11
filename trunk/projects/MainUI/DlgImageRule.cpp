@@ -10,6 +10,7 @@
 #include <webcontenttype.h>
 #include <typeconvert.h>
 #include <comdef.h>
+#include <logger_name.h>
 
 // CDlgImageRule ¶Ô»°¿ò
 
@@ -88,7 +89,9 @@ int CDlgImageRule::OnApply() {
 		contentCheck->enableCheck(convert(m_bCheckPNG),  IMAGE_TYPE_PNG);
 		contentCheck->put_ImageCheckTightness(m_sliderImageCheckDegree.GetPos());
 	} catch (_com_error&) {
+		LOG4CXX_ERROR(log4cxx::Logger::getLogger(MAINUI_LOGGER_ERROR), "CDlgImageRule::OnApply::com_error");
 	} catch (...) {
+		LOG4CXX_ERROR(log4cxx::Logger::getLogger(MAINUI_LOGGER_ERROR), "CDlgImageRule::OnApply::...");
 	}
 	
 	return 0;
