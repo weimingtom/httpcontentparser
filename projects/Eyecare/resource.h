@@ -14,7 +14,6 @@
 #define IDC_BMP_TOP                     109
 #define IDR_MAINFRAME                   128
 #define IDD_DIALOG1                     129
-#define IDB_BITMAP1                     132
 #define IDC_PASSWORD                    1001
 #define IDC_STATIC                      -1
 
