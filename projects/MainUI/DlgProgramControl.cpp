@@ -114,6 +114,7 @@ int CDlgProgramControl::OnApply() {
 		IAppControl *pSetting = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_AppControl, NULL, CLSCTX_LOCAL_SERVER, IID_IAppControl, (LPVOID*)&pSetting);
 		if (FAILED(hr) || NULL == pSetting) {
+			LOGGER_WRITE(MAINUI_LOGGER_ERROR, "Failed on create AppControl");
 			AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
 			return 0;
 		}
@@ -128,11 +129,11 @@ int CDlgProgramControl::OnApply() {
 
 		return SUCCESS_APPLY;
 	} catch (_com_error &) {
-		LOG4CXX_ERROR(log4cxx::Logger::getLogger(MAINUI_LOGGER_ERROR), "CDlgProgramControl::OnApply::_com_error");
+		LOGGER_WRITE(MAINUI_LOGGER_ERROR, "CATCH(_com_error&)");
 		AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
 		return FAILED_APPLY;
 	} catch (...) {
-		LOG4CXX_ERROR(log4cxx::Logger::getLogger(MAINUI_LOGGER_ERROR), "CDlgProgramControl::OnApply::...");
+		LOGGER_WRITE(MAINUI_LOGGER_ERROR, "CATCH(...)");
 		AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
 		return FAILED_APPLY;
 	}
@@ -148,7 +149,7 @@ void CDlgProgramControl::restoreSetting() {
 		IAppControl *pSetting;
 		HRESULT hr = CoCreateInstance(CLSID_AppControl, NULL, CLSCTX_LOCAL_SERVER, IID_IAppControl, (LPVOID*)&pSetting);
 		if (FAILED(hr)) {
-			LOG4CXX_ERROR(log4cxx::Logger::getLogger(MAINUI_LOGGER_ERROR), "CDlgProgramControl::restoreSetting::failed");
+			LOGGER_WRITE(MAINUI_LOGGER_ERROR, "Failed on create AppControl");
 			throw int(SNOWMAN_ERROR_COM_INIT_FAILED);
 		}
 	
@@ -178,7 +179,7 @@ void CDlgProgramControl::restoreSetting() {
 		pSetting = NULL;
 		UpdateData(FALSE);
 	} catch (...) {
-		LOG4CXX_ERROR(log4cxx::Logger::getLogger(MAINUI_LOGGER_ERROR), "CDlgProgramControl::restoreSetting::...");
+		LOGGER_WRITE(MAINUI_LOGGER_ERROR, "CATCH(...)");
 		throw int(SNOWMAN_ERROR_COM_INIT_FAILED);
 	}
 }

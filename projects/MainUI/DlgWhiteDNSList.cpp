@@ -77,7 +77,7 @@ void CDlgWhiteDNSList::restoreSetting() {
 
 		UpdateData(FALSE);
 	} catch(...) {
-		LOG4CXX_ERROR(log4cxx::Logger::getLogger(MAINUI_LOGGER_ERROR), "CDlgWebHistory::restoreSetting():CATCH");
+		LOGGER_WRITE(MAINUI_LOGGER_ERROR, "CATCH(...)")
 		throw int(SNOWMAN_ERROR_COM_INIT_FAILED);
 	}
 }

@@ -65,7 +65,7 @@ int CDlgScreenshot::OnApply() {
 		screensave->put_AutocleanEnabled(convert(m_bEnableAutoclean));
 		return 0;
 	} catch (... ) {
-		LOG4CXX_ERROR(log4cxx::Logger::getLogger(MAINUI_LOGGER_ERROR), "CDlgScreenshot::OnApply():catch");
+		LOGGER_WRITE(MAINUI_LOGGER_ERROR, "CATCH(...)");
 		AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
 		return -1;
 	}
@@ -79,7 +79,7 @@ void CDlgScreenshot::restoreSetting() {
 		IScreenSave * screensave = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_ScreenSave, NULL, CLSCTX_LOCAL_SERVER, IID_IScreenSave, (LPVOID*)&screensave);
 		if(FAILED(hr)) {
-			LOG4CXX_ERROR(log4cxx::Logger::getLogger(MAINUI_LOGGER_ERROR), "CDlgScreenshot::restoreSetting():failed");
+			LOGGER_WRITE(MAINUI_LOGGER_ERROR, "FAILED on create SceenSave");
 			throw int(SNOWMAN_ERROR_COM_INIT_FAILED);
 		}
 
@@ -111,7 +111,7 @@ void CDlgScreenshot::restoreSetting() {
 		setAutoCleanTips();
 		setTimespanTips();
 	} catch (...) {
-		LOG4CXX_ERROR(log4cxx::Logger::getLogger(MAINUI_LOGGER_ERROR), "CDlgScreenshot::restoreSetting():catch");
+		LOGGER_WRITE(MAINUI_LOGGER_ERROR, "CATCH(...)");
 		throw int(SNOWMAN_ERROR_COM_INIT_FAILED);
 	}
 }

@@ -56,6 +56,7 @@ void CDlgEyecare::setEyecareTimespan() {
 		IEyecare *pEyeCare = NULL;
 		HRESULT hr =CoCreateInstance(CLSID_Eyecare, NULL, CLSCTX_LOCAL_SERVER, IID_IEyecare, (LPVOID*)&pEyeCare);
 		if (FAILED(hr)) {
+			LOGGER_WRITE(MAINUI_LOGGER_ERROR, "FAILED ON CoCreateInstance...");
 			AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
 			return;
 		}
@@ -65,7 +66,7 @@ void CDlgEyecare::setEyecareTimespan() {
 		pEyeCare->enableEyecare(convert(m_chkEnabled.GetCheck() == BST_CHECKED ? true : false));
 		pEyeCare->Release();
 	} catch (_com_error&) {
-		LOG4CXX_ERROR(log4cxx::Logger::getLogger(MAINUI_LOGGER_ERROR), "CDlgEyecare::setEyecareTimespan::catch");
+		LOGGER_WRITE(MAINUI_LOGGER_ERROR, "CATCH(com_error&)");
 		AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
 	}
 }
@@ -87,7 +88,7 @@ void CDlgEyecare::setEyecareTerminatedMode() {
 		pEyeCare->setTermMode(mode);
 		pEyeCare->Release();
 	} catch(...) {
-		LOG4CXX_ERROR(log4cxx::Logger::getLogger(MAINUI_LOGGER_ERROR), "CDlgEyecare::setEyecareTerminatedMode::catch");
+		LOGGER_WRITE(MAINUI_LOGGER_ERROR, "CATCH...");
 		throw int(SNOWMAN_ERROR_COM_INIT_FAILED);
 	}
 }
@@ -111,6 +112,7 @@ void CDlgEyecare::restoreSetting() {
 		IEyecare *pEyeCare = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_Eyecare, NULL, CLSCTX_LOCAL_SERVER, IID_IEyecare, (LPVOID*)&pEyeCare);
 		if (FAILED(hr)) {
+			LOGGER_WRITE(MAINUI_LOGGER_ERROR, "FAILED CoCreateInstance ...");
 			AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
 			return;
 		}
@@ -138,7 +140,7 @@ void CDlgEyecare::restoreSetting() {
 
 		pEyeCare->Release();
 	} catch(...) {
-		LOG4CXX_ERROR(log4cxx::Logger::getLogger(MAINUI_LOGGER_ERROR), "CDlgEyecare::restoreSetting::catch");
+		LOGGER_WRITE(MAINUI_LOGGER_ERROR, "CATCH...");
 		AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
 	}
 }
@@ -178,6 +180,7 @@ void CDlgEyecare::UpdateState() {
 		IEyecare *pEyeCare = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_Eyecare, NULL, CLSCTX_LOCAL_SERVER, IID_IEyecare, (LPVOID*)&pEyeCare);
 		if (FAILED(hr)) {
+			LOGGER_WRITE(MAINUI_LOGGER_ERROR, "FAILED On CoCreateInstance...");
 			return ;
 		}
 
@@ -195,7 +198,7 @@ void CDlgEyecare::UpdateState() {
 		pEyeCare->Release();
 		UpdateData(FALSE);
 	} catch (...) {
-		LOG4CXX_ERROR(log4cxx::Logger::getLogger(MAINUI_LOGGER_ERROR), "CDlgEyecare::UpdateState::catch");
+		LOGGER_WRITE(MAINUI_LOGGER_ERROR, "CATCH...");
 	}
 }
 void CDlgEyecare::OnTimer(UINT nIDEvent) {
