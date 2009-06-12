@@ -102,7 +102,7 @@ IDB_BMP_TOP             BITMAP                  "res\\top.bmp"
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
-IDI_ICON1               ICON                    "res\\app.ico"
+IDI_LOCKPC              ICON                    "res\\app.ico"
 
 /////////////////////////////////////////////////////////////////////////////
 //

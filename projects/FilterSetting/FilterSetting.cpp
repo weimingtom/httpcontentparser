@@ -18,6 +18,7 @@
 #include <softwareStatus.h>
 #include <string>
 #include <time.h>
+#include <logger_name.h>
 
 
 class CFilterSettingModule : public CAtlServiceModuleT< CFilterSettingModule, IDS_SERVICENAME >
@@ -27,11 +28,19 @@ public :
 	DECLARE_REGISTRY_APPID_RESOURCEID(IDR_FILTERSETTING, "{92277243-F9BC-4ED8-9DD1-06D31FB572CF}")
 	HRESULT InitializeSecurity() throw()
 	{
+
 		// TODO : 调用 CoInitializeSecurity 并为服务提供适当的 
 		// 安全设置
 		// 建议 - PKT 级别的身份验证、
 		// RPC_C_IMP_LEVEL_IDENTIFY 的模拟级别
 		// 以及适当的非空安全说明符。
+		CSecurityDescriptor sd;
+		sd.InitializeFromThreadToken();
+		HRESULT hr = CoInitializeSecurity(sd, -1, NULL, NULL, RPC_C_AUTHN_LEVEL_PKT,
+				RPC_C_IMP_LEVEL_IMPERSONATE,  NULL, EOAC_NONE, NULL);
+		if (FAILED(hr)) {
+			LOGGER_WRITE_COM_FAILED(FILTERSETTING_LOGGER_ERROR, "CoInitializeSecurity", hr);
+		}
 
 		return S_OK;
 	}
@@ -66,6 +75,8 @@ extern "C" int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/
 		CloseHandle(hMutex);
 		return 0;
 	}
+
+	initLogger(FILTERSETTING_LOGGER_FILE);
 
 	g_hInstance = hInstance;
 	g_licenseInfo.initialize();

@@ -27,20 +27,6 @@
 #endif
 
 
-namespace {
-void initLogger() {
-	using namespace log4cxx;
-
-	log4cxx::FileAppender * appender_file_oper = new log4cxx::FileAppender();
-	appender_file_oper->setFile(MAINUI_LOGGER_ERROR_FILE);
-	appender_file_oper->setLayout(LayoutPtr(new SimpleLayout()));
-	appender_file_oper->setAppend(true);
-	log4cxx::helpers::Pool p;
-	appender_file_oper->activateOptions(p);
-	log4cxx::BasicConfigurator::configure(log4cxx::AppenderPtr(appender_file_oper));
-}
-};
-
 #pragma   comment(linker,"/section:shared,rws")   
 #pragma data_seg("shared")
 HWND share_hwnd = 0;
@@ -51,6 +37,11 @@ HWND share_hwnd = 0;
 
 IDNSSetting *g_dnssetting = NULL;
 extern bool g_parentModel = false;
+
+// 初始化COM
+namespace {
+AutoInitInScale g_auto_com_init;
+};
 
 
 // CMainUIApp
@@ -74,7 +65,8 @@ CMainUIApp theApp;
 // CMainUIApp 初始化
 
 BOOL CMainUIApp::InitInstance() {
-	initLogger();
+
+	initLogger(MAINUI_LOGGER_ERROR_FILE);
 	LOGGER_WRITE(MAINUI_LOGGER_ERROR, "CMainUIApp::InitInstance()");
 	{
 		CMutex mutext(0, MUTEX_NAME);
@@ -86,15 +78,13 @@ BOOL CMainUIApp::InitInstance() {
 		}
 	}
 
-	CoInitialize(NULL);
-
 	// 获取应用程序状态
 	LONG app_status = SNOWMAN_STATUS_TRIAL;
 	try {
 		ISnowmanSetting * pSetting = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_SnowmanSetting, NULL, CLSCTX_LOCAL_SERVER, IID_ISnowmanSetting, (LPVOID*)&pSetting);
 		if (FAILED(hr)) {
-			LOGGER_WRITE_COM_ERROR(MAINUI_LOGGER_ERROR, "FAILED ON create Snowsetting", hr);
+			LOGGER_WRITE_COM_FAILED(MAINUI_LOGGER_ERROR, "Create Snowsetting", hr);
 		}
 		pSetting->getApplicationStatus(&app_status);
 	} catch (...) {
@@ -141,7 +131,6 @@ int CMainUIApp::ExitInstance()
 	LOGGER_WRITE(MAINUI_LOGGER_ERROR, TEXT("CMainUIApp::ExitInstance()"));
 	GdiplusShutdown( m_GdiplusToken);
 	SafeRelease(g_dnssetting);
-	CoUninitialize();
 
 	return CWinApp::ExitInstance();
 }
@@ -157,7 +146,7 @@ BOOL CMainUIApp::Initialize(void)
 	HRESULT hr = CoCreateInstance(CLSID_DNSSetting, 
 		NULL, CLSCTX_LOCAL_SERVER, IID_IDNSSetting, (LPVOID*)&g_dnssetting);
 	if (FAILED(hr)) {
-		LOGGER_WRITE_COM_ERROR(MAINUI_LOGGER_ERROR, "FAILED ON create Snowsetting", hr);
+		LOGGER_WRITE_COM_FAILED(MAINUI_LOGGER_ERROR, "Create DNSString", hr);
 		AfxMessageBox(str);
 		return FALSE;
 	}

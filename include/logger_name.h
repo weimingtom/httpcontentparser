@@ -17,6 +17,9 @@
 #define		MAINUI_LOGGER_INFO_FILE			LOG4CXX_STR(".\\LOG\\mi.log")
 #define		REVISION_TEXT								TEXT("2.3.0.1134")
 
+#define		FILTERSETTING_LOGGER_ERROR	TEXT("Service_error")
+#define		FILTERSETTING_LOGGER_FILE		LOG4CXX_STR(".\\log\\services.log")
+
 
 #define LOGGER_WRITE(LOGGER_NAME, LOGGER_TEXT)	{TCHAR buffer[1024];		\
 	_sntprintf(buffer, 1024, "{%s} %s", __FUNCTION__, (LOGGER_TEXT));		\
@@ -33,6 +36,18 @@
 #define LOGGER_WRITE_COM_DESCRIPTION(LOGGER_NAME, LOGGER_TEXT) {TCHAR buffer[1024];		\
 	_sntprintf(buffer, 1024, "{%s} COM_ERROR : %s", __FUNCTION__, (LOGGER_TEXT));		\
 	LOG4CXX_INFO(log4cxx::Logger::getLogger(LOGGER_NAME), buffer);}
+
+
+inline void initLogger(log4cxx::LogString FILEAPPENDER) {
+	using namespace log4cxx;
+	log4cxx::FileAppender * appender_file_oper = new log4cxx::FileAppender();
+	appender_file_oper->setFile(FILEAPPENDER);
+	appender_file_oper->setLayout(LayoutPtr(new SimpleLayout()));
+	appender_file_oper->setAppend(true);
+	log4cxx::helpers::Pool p;
+	appender_file_oper->activateOptions(p);
+	log4cxx::BasicConfigurator::configure(log4cxx::AppenderPtr(appender_file_oper));
+}
 
 
 #endif  // _INCLUDE_LOGGER_NAME__H__
