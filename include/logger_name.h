@@ -19,7 +19,19 @@
 
 
 #define LOGGER_WRITE(LOGGER_NAME, LOGGER_TEXT)	{TCHAR buffer[1024];		\
-	_sntprintf(buffer, 1024, "%s : %s", __FUNCTION__, (LOGGER_TEXT));		\
+	_sntprintf(buffer, 1024, "{%s} %s", __FUNCTION__, (LOGGER_TEXT));		\
+	LOG4CXX_INFO(log4cxx::Logger::getLogger(LOGGER_NAME), buffer);}
+
+#define LOGGER_WRITE_COM_ERROR(LOGGER_NAME, LOGGER_TEXT, RESULT) { TCHAR buffer[1024]; \
+	_sntprintf(buffer, 1024, "{%s} %s HRESULT Value : %8Xh", __FUNCTION__, (LOGGER_TEXT), RESULT);		\
+	LOG4CXX_INFO(log4cxx::Logger::getLogger(LOGGER_NAME), buffer);}
+
+#define LOGGER_WRITE_COM_FAILED(LOGGER_NAME, LOGGER_TEXT, RESULT) { TCHAR buffer[1024]; \
+	_sntprintf(buffer, 1024, "{%s} Failed on {%s}; HRESULT Value : %8Xh", __FUNCTION__, (LOGGER_TEXT), RESULT);		\
+	LOG4CXX_INFO(log4cxx::Logger::getLogger(LOGGER_NAME), buffer);}
+
+#define LOGGER_WRITE_COM_DESCRIPTION(LOGGER_NAME, LOGGER_TEXT) {TCHAR buffer[1024];		\
+	_sntprintf(buffer, 1024, "{%s} COM_ERROR : %s", __FUNCTION__, (LOGGER_TEXT));		\
 	LOG4CXX_INFO(log4cxx::Logger::getLogger(LOGGER_NAME), buffer);}
 
 

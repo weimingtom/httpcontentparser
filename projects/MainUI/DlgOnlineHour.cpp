@@ -66,7 +66,7 @@ int CDlgOnlineHour::OnApply() {
 		HRESULT hr = CoCreateInstance(CLSID_AccessNetwork, NULL, CLSCTX_LOCAL_SERVER,
 			IID_IAccessNetwork, (LPVOID*)&accessNetwork);
 		if (FAILED(hr)) {
-			LOGGER_WRITE(MAINUI_LOGGER_ERROR, "Failed on create AccessNetwork");
+			LOGGER_WRITE_COM_FAILED(MAINUI_LOGGER_ERROR, "Create AccessNetwork", hr);
 			AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONEXCLAMATION);
 			return -1;
 		}
@@ -77,8 +77,8 @@ int CDlgOnlineHour::OnApply() {
 
 		accessNetwork->Release();
 		return 0;
-	} catch (_com_error &) {
-		LOGGER_WRITE(MAINUI_LOGGER_ERROR, "CATCH(_com_error)");
+	} catch (_com_error & e) {
+		LOGGER_WRITE_COM_DESCRIPTION(MAINUI_LOGGER_ERROR, (TCHAR*)e.Description());;
 		AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
 		return -1;
 	}
@@ -102,7 +102,7 @@ void CDlgOnlineHour::restoreSetting() {
 		HRESULT hr = CoCreateInstance(CLSID_AccessNetwork, NULL, CLSCTX_LOCAL_SERVER,
 			IID_IAccessNetwork, (LPVOID*)&accessNetwork);
 		if (FAILED(hr)) {
-			LOGGER_WRITE(MAINUI_LOGGER_ERROR, "FAILED On craete AccessNetwork");
+			LOGGER_WRITE_COM_FAILED(MAINUI_LOGGER_ERROR, "Create AccessNetwork", hr);
 			throw int(SNOWMAN_ERROR_COM_INIT_FAILED);
 		}
 
