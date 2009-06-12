@@ -74,8 +74,6 @@ CMainUIApp theApp;
 // CMainUIApp 初始化
 
 BOOL CMainUIApp::InitInstance() {
-	// 初始化LOGGER
-	
 	initLogger();
 	LOGGER_WRITE(MAINUI_LOGGER_ERROR, "CMainUIApp::InitInstance()");
 	{
@@ -95,10 +93,15 @@ BOOL CMainUIApp::InitInstance() {
 	try {
 		ISnowmanSetting * pSetting = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_SnowmanSetting, NULL, CLSCTX_LOCAL_SERVER, IID_ISnowmanSetting, (LPVOID*)&pSetting);
+		if (FAILED(hr)) {
+			LOGGER_WRITE_COM_ERROR(MAINUI_LOGGER_ERROR, "FAILED ON create Snowsetting", hr);
+		}
 		pSetting->getApplicationStatus(&app_status);
 	} catch (...) {
+		LOGGER_WRITE(MAINUI_LOGGER_ERROR, "CATCH(...)");
 	}
 
+	// 初始化LOGGER
 	AppUtility::AppInstallValidate validator(VLAIDATE_NONE, app_status);
 	validator.repair();
 
@@ -154,6 +157,7 @@ BOOL CMainUIApp::Initialize(void)
 	HRESULT hr = CoCreateInstance(CLSID_DNSSetting, 
 		NULL, CLSCTX_LOCAL_SERVER, IID_IDNSSetting, (LPVOID*)&g_dnssetting);
 	if (FAILED(hr)) {
+		LOGGER_WRITE_COM_ERROR(MAINUI_LOGGER_ERROR, "FAILED ON create Snowsetting", hr);
 		AfxMessageBox(str);
 		return FALSE;
 	}

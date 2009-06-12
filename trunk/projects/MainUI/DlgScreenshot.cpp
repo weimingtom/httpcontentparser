@@ -56,6 +56,7 @@ int CDlgScreenshot::OnApply() {
 		IScreenSave * screensave = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_ScreenSave, NULL, CLSCTX_LOCAL_SERVER, IID_IScreenSave, (LPVOID*)&screensave);
 		if(FAILED(hr)) {
+			LOGGER_WRITE_COM_FAILED(MAINUI_LOGGER_ERROR, "Create Sceensave", hr);
 			AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
 			return -1;
 		}
@@ -79,7 +80,7 @@ void CDlgScreenshot::restoreSetting() {
 		IScreenSave * screensave = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_ScreenSave, NULL, CLSCTX_LOCAL_SERVER, IID_IScreenSave, (LPVOID*)&screensave);
 		if(FAILED(hr)) {
-			LOGGER_WRITE(MAINUI_LOGGER_ERROR, "FAILED on create SceenSave");
+			LOGGER_WRITE_COM_FAILED(MAINUI_LOGGER_ERROR, "Create Sceensave", hr);
 			throw int(SNOWMAN_ERROR_COM_INIT_FAILED);
 		}
 

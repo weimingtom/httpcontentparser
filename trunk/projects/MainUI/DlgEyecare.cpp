@@ -56,7 +56,7 @@ void CDlgEyecare::setEyecareTimespan() {
 		IEyecare *pEyeCare = NULL;
 		HRESULT hr =CoCreateInstance(CLSID_Eyecare, NULL, CLSCTX_LOCAL_SERVER, IID_IEyecare, (LPVOID*)&pEyeCare);
 		if (FAILED(hr)) {
-			LOGGER_WRITE(MAINUI_LOGGER_ERROR, "FAILED ON CoCreateInstance...");
+			LOGGER_WRITE_COM_FAILED(MAINUI_LOGGER_ERROR, "Create Eyecare", hr);
 			AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
 			return;
 		}
@@ -65,8 +65,8 @@ void CDlgEyecare::setEyecareTimespan() {
 		pEyeCare->setEyecareTime(m_nEyecareTime * 60);
 		pEyeCare->enableEyecare(convert(m_chkEnabled.GetCheck() == BST_CHECKED ? true : false));
 		pEyeCare->Release();
-	} catch (_com_error&) {
-		LOGGER_WRITE(MAINUI_LOGGER_ERROR, "CATCH(com_error&)");
+	} catch (_com_error& e) {
+		LOGGER_WRITE_COM_DESCRIPTION(MAINUI_LOGGER_ERROR, (TCHAR*)e.Description());
 		AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
 	}
 }
@@ -78,6 +78,7 @@ void CDlgEyecare::setEyecareTerminatedMode() {
 		IEyecare *pEyeCare = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_Eyecare, NULL, CLSCTX_LOCAL_SERVER, IID_IEyecare, (LPVOID*)&pEyeCare);
 		if (FAILED(hr)) {
+			LOGGER_WRITE_COM_FAILED(MAINUI_LOGGER_ERROR, "Create Eyecare", hr);
 			throw int(SNOWMAN_ERROR_COM_INIT_FAILED);
 		}
 
@@ -112,7 +113,7 @@ void CDlgEyecare::restoreSetting() {
 		IEyecare *pEyeCare = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_Eyecare, NULL, CLSCTX_LOCAL_SERVER, IID_IEyecare, (LPVOID*)&pEyeCare);
 		if (FAILED(hr)) {
-			LOGGER_WRITE(MAINUI_LOGGER_ERROR, "FAILED CoCreateInstance ...");
+			LOGGER_WRITE_COM_FAILED(MAINUI_LOGGER_ERROR, "Create Eyecare", hr);
 			AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
 			return;
 		}
@@ -180,7 +181,7 @@ void CDlgEyecare::UpdateState() {
 		IEyecare *pEyeCare = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_Eyecare, NULL, CLSCTX_LOCAL_SERVER, IID_IEyecare, (LPVOID*)&pEyeCare);
 		if (FAILED(hr)) {
-			LOGGER_WRITE(MAINUI_LOGGER_ERROR, "FAILED On CoCreateInstance...");
+			LOGGER_WRITE_COM_FAILED(MAINUI_LOGGER_ERROR, "CreateEyecare", hr);
 			return ;
 		}
 

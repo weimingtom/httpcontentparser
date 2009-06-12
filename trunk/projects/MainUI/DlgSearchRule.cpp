@@ -41,7 +41,7 @@ int CDlgSearchRule::OnApply() {
 		ISearchRule *seach_rule;
 		HRESULT hr = CoCreateInstance(CLSID_SearchRule, NULL, CLSCTX_LOCAL_SERVER, IID_ISearchRule, (LPVOID*)&seach_rule);
 		if (FAILED(hr)) {
-			LOGGER_WRITE(MAINUI_LOGGER_ERROR, "FAILED On create Search Rule");
+			LOGGER_WRITE_COM_FAILED(MAINUI_LOGGER_ERROR, "Create SearchRule", hr);
 			AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
 			return -1;
 		}
@@ -86,7 +86,7 @@ void CDlgSearchRule::restoreSetting() {
 		ISearchRule *seach_rule;
 		HRESULT hr = CoCreateInstance(CLSID_SearchRule, NULL, CLSCTX_LOCAL_SERVER, IID_ISearchRule, (LPVOID*)&seach_rule);
 		if (FAILED(hr)) {
-			LOGGER_WRITE(MAINUI_LOGGER_ERROR, "FAILED On Create SearchRule");
+			LOGGER_WRITE_COM_FAILED(MAINUI_LOGGER_ERROR, "Create SearchRule", hr);
 			throw int(SNOWMAN_ERROR_COM_INIT_FAILED);
 		}
 
@@ -122,7 +122,7 @@ void CDlgSearchRule::OnAddItem(const CString &str) {
 		ISearchRule *seach_rule;
 		HRESULT hr = CoCreateInstance(CLSID_SearchRule, NULL, CLSCTX_LOCAL_SERVER, IID_ISearchRule, (LPVOID*)&seach_rule);
 		if (FAILED(hr)) {
-			LOGGER_WRITE(MAINUI_LOGGER_ERROR, "FAILED On create searchRule")
+			LOGGER_WRITE_COM_FAILED(MAINUI_LOGGER_ERROR, "Create searchRule", hr)
 			AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
 			return;
 		}
@@ -142,7 +142,7 @@ void CDlgSearchRule::OnDelItem(const CString &str) {
 		ISearchRule *seach_rule;
 		HRESULT hr = CoCreateInstance(CLSID_SearchRule, NULL, CLSCTX_LOCAL_SERVER, IID_ISearchRule, (LPVOID*)&seach_rule);
 		if (FAILED(hr)) {
-			LOGGER_WRITE(MAINUI_LOGGER_ERROR, "FAILED On create searchRule")
+			LOGGER_WRITE_COM_FAILED(MAINUI_LOGGER_ERROR, "Create searchRule", hr)
 			return;
 		}
 

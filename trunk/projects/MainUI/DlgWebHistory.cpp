@@ -63,7 +63,7 @@ void CDlgWebHistory::ChangeRecordType() {
 		IWebHistoryRecorder *pWebHistory = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_WebHistoryRecorder, NULL, CLSCTX_ALL, IID_IWebHistoryRecorder, (LPVOID*)&pWebHistory);
 		if (FAILED(hr)) {
-			LOGGER_WRITE(MAINUI_LOGGER_ERROR, "FAILED On create historyRecord")
+			LOGGER_WRITE_COM_FAILED(MAINUI_LOGGER_ERROR, "Create historyRecord", hr)
 			AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
 			return;
 		}
@@ -74,8 +74,8 @@ void CDlgWebHistory::ChangeRecordType() {
 		pWebHistory->put_RecordSeachKeyword(convert(m_bSearchWord));
 		pWebHistory->setAutoClearTimespan(m_sliderWebHistoryAutoClean.GetPos());
 		pWebHistory->Release();
-	} catch (_com_error&) {
-		LOGGER_WRITE(MAINUI_LOGGER_ERROR, "CATCH(_com_error)")
+	} catch (_com_error& e) {
+		LOGGER_WRITE_COM_DESCRIPTION(MAINUI_LOGGER_ERROR, (TCHAR*)e.Description());;
 		AfxMessageBox(IDS_ERROR_WEB_SET_FAILED, MB_OK | MB_ICONERROR);
 	} catch(...) {
 		LOGGER_WRITE(MAINUI_LOGGER_ERROR, "CATCH(...)")
@@ -100,7 +100,7 @@ void CDlgWebHistory::restoreSetting() {
 		IWebHistoryRecorder *pWebHistory = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_WebHistoryRecorder, NULL, CLSCTX_ALL, IID_IWebHistoryRecorder, (LPVOID*)&pWebHistory);
 		if (FAILED(hr)) {
-			LOGGER_WRITE(MAINUI_LOGGER_ERROR, "FAILED On create HistoryRecord")
+			LOGGER_WRITE_COM_FAILED(MAINUI_LOGGER_ERROR, "Create historyRecord", hr)
 			throw int(SNOWMAN_ERROR_COM_INIT_FAILED);
 		}
 
@@ -147,7 +147,7 @@ void CDlgWebHistory::OnBnClickedBunClearCache() {
 		IWebContentRecord *pWebContent = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_WebContentRecord, NULL, CLSCTX_ALL, IID_IWebContentRecord, (LPVOID*)&pWebContent);
 		if (FAILED(hr)) {
-			LOG4CXX_ERROR(log4cxx::Logger::getLogger(MAINUI_LOGGER_ERROR), "CDlgWebHistory::OnBnClickedBunClearCache():FAILED");
+			LOGGER_WRITE_COM_FAILED(MAINUI_LOGGER_ERROR, "Create historyRecord", hr)
 			AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
 			return;
 		}
@@ -158,7 +158,7 @@ void CDlgWebHistory::OnBnClickedBunClearCache() {
 		str.LoadString(IDS_WEB_HISTORY_CLEAR_SUCC);
 		AfxMessageBox(str);
 	} catch (...) {
-		LOGGER_WRITE(MAINUI_LOGGER_ERROR, "CATCH(_com_error)")
+		LOGGER_WRITE(MAINUI_LOGGER_ERROR, "CATCH(...)")
 		AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
 		return;
 	}

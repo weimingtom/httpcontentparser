@@ -66,7 +66,7 @@ namespace {
 			ISnowmanSetting *app = NULL;
 			HRESULT hr = CoCreateInstance(CLSID_SnowmanSetting, NULL, CLSCTX_LOCAL_SERVER, IID_ISnowmanSetting, (LPVOID*)&app);
 			if (FAILED(hr)) {
-				LOGGER_WRITE(MAINUI_LOGGER_ERROR, "FAILED On Create SnowmanSetting");
+				LOGGER_WRITE_COM_FAILED(MAINUI_LOGGER_ERROR, "Create SnowSetting", hr);
 				AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONEXCLAMATION);
 				return FALSE;
 			}
@@ -153,7 +153,7 @@ int CDlgOptions::setMisc() {
 		ISnowmanSetting *app = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_SnowmanSetting, NULL, CLSCTX_LOCAL_SERVER, IID_ISnowmanSetting, (LPVOID*)&app);
 		if (FAILED(hr)) {
-			LOGGER_WRITE(MAINUI_LOGGER_ERROR, "Failed on create snowmanSetting");
+			LOGGER_WRITE_COM_FAILED(MAINUI_LOGGER_ERROR, "Create AccessNetwork", hr);
 			AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONEXCLAMATION);
 			return FAILED_APPLY;
 		}
@@ -189,7 +189,7 @@ void CDlgOptions::restoreSetting() {
 		ISnowmanSetting *app = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_SnowmanSetting, NULL, CLSCTX_LOCAL_SERVER, IID_ISnowmanSetting, (LPVOID*)&app);
 		if (FAILED(hr)) {
-			LOGGER_WRITE(MAINUI_LOGGER_ERROR, "Failed on create snowmanSetting");
+			LOGGER_WRITE_COM_FAILED(MAINUI_LOGGER_ERROR, "Create AccessNetwork", hr);
 			throw int(SNOWMAN_ERROR_COM_INIT_FAILED);
 		}
 
