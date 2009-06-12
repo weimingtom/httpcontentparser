@@ -60,7 +60,7 @@ void CDlgAbout::OnShow() {
 		}
 		
 	} catch (...) {
-		LOG4CXX_ERROR(log4cxx::Logger::getLogger(MAINUI_LOGGER_ERROR), "CDlgAbout::OnShow::initDlgs");
+		LOGGER_WRITE(MAINUI_LOGGER_ERROR, "CATCH...");
 		m_strRegisterInfo.LoadString(IDS_REGISTER_CANNOT_GETINFO);
 	}
 	UpdateData(FALSE);

@@ -66,15 +66,15 @@ namespace {
 			ISnowmanSetting *app = NULL;
 			HRESULT hr = CoCreateInstance(CLSID_SnowmanSetting, NULL, CLSCTX_LOCAL_SERVER, IID_ISnowmanSetting, (LPVOID*)&app);
 			if (FAILED(hr)) {
+				LOGGER_WRITE(MAINUI_LOGGER_ERROR, "FAILED On Create SnowmanSetting");
 				AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONEXCLAMATION);
 				return FALSE;
 			}
 
 			app->setHotkey(vKey, vModifiers, type, &bSucc);
 			return convert(bSucc);
-			return true;
 		} catch(...) {
-			LOG4CXX_ERROR(log4cxx::Logger::getLogger(MAINUI_LOGGER_ERROR), "CDlgOptions::notifyCOMServiceHotkey::...");
+			LOGGER_WRITE(MAINUI_LOGGER_ERROR, "CATCH(...)");
 			AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
 			return FALSE;
 		}
@@ -153,7 +153,7 @@ int CDlgOptions::setMisc() {
 		ISnowmanSetting *app = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_SnowmanSetting, NULL, CLSCTX_LOCAL_SERVER, IID_ISnowmanSetting, (LPVOID*)&app);
 		if (FAILED(hr)) {
-			LOG4CXX_ERROR(log4cxx::Logger::getLogger(MAINUI_LOGGER_ERROR), "CDlgOptions::setMisc::failed");
+			LOGGER_WRITE(MAINUI_LOGGER_ERROR, "Failed on create snowmanSetting");
 			AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONEXCLAMATION);
 			return FAILED_APPLY;
 		}
@@ -164,7 +164,7 @@ int CDlgOptions::setMisc() {
 		app = NULL;
 		return SUCCESS_APPLY;
 	} catch (...) {
-		LOG4CXX_ERROR(log4cxx::Logger::getLogger(MAINUI_LOGGER_ERROR), "CDlgOptions::setMisc::...");
+		LOGGER_WRITE(MAINUI_LOGGER_ERROR, "CATCH(...)");
 		return FAILED_APPLY;
 	}
 }
@@ -189,7 +189,7 @@ void CDlgOptions::restoreSetting() {
 		ISnowmanSetting *app = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_SnowmanSetting, NULL, CLSCTX_LOCAL_SERVER, IID_ISnowmanSetting, (LPVOID*)&app);
 		if (FAILED(hr)) {
-			LOG4CXX_ERROR(log4cxx::Logger::getLogger(MAINUI_LOGGER_ERROR), "CDlgOptions::restoreSetting::failed");
+			LOGGER_WRITE(MAINUI_LOGGER_ERROR, "Failed on create snowmanSetting");
 			throw int(SNOWMAN_ERROR_COM_INIT_FAILED);
 		}
 
@@ -217,7 +217,7 @@ void CDlgOptions::restoreSetting() {
 
 		UpdateData(FALSE);
 	} catch (...) {
-		LOG4CXX_ERROR(log4cxx::Logger::getLogger(MAINUI_LOGGER_ERROR), "CDlgOptions::restoreSetting::...");
+		LOGGER_WRITE(MAINUI_LOGGER_ERROR, "CATCH(...)");
 		throw int(SNOWMAN_ERROR_COM_INIT_FAILED);
 	}
 }

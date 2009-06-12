@@ -77,7 +77,7 @@ BOOL CMainUIApp::InitInstance() {
 	// ≥ı ºªØLOGGER
 	
 	initLogger();
-	LOG4CXX_INFO(log4cxx::Logger::getLogger(MAINUI_LOGGER_ERROR), "CMainUIApp::InitInstance()");
+	LOGGER_WRITE(MAINUI_LOGGER_ERROR, "CMainUIApp::InitInstance()");
 	{
 		CMutex mutext(0, MUTEX_NAME);
 		CSingleLock(&mutext, true);
@@ -135,7 +135,7 @@ BOOL CMainUIApp::InitInstance() {
 
 int CMainUIApp::ExitInstance()
 {
-	LOG4CXX_INFO(log4cxx::Logger::getLogger(MAINUI_LOGGER_ERROR), "CMainUIApp::ExitInstance()");
+	LOGGER_WRITE(MAINUI_LOGGER_ERROR, TEXT("CMainUIApp::ExitInstance()"));
 	GdiplusShutdown( m_GdiplusToken);
 	SafeRelease(g_dnssetting);
 	CoUninitialize();
