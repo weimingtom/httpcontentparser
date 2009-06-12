@@ -54,5 +54,11 @@
 #	pragma comment(lib, "softwareencrypt.lib")
 #endif
 
+#include <log4cxx/logger.h>
+#include <log4cxx/basicconfigurator.h>
+#include <log4cxx/helpers/exception.h>
+
+#pragma comment(lib, "log4cxx.lib")
+
 
 using namespace ATL;

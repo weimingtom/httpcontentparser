@@ -20,6 +20,7 @@ OutputDir=D:\workspace
 OutputBaseFilename=Websnow
 Compression=lzma
 SolidCompression=yes
+RestartIfNeededByRun=yes
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
@@ -38,20 +39,22 @@ Source: "D:\workspace\current\debug\msvcp71d.dll"; DestDir: "{app}"; Flags: igno
 Source: "D:\workspace\current\debug\msvcr71.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "D:\workspace\current\debug\mvs.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "D:\workspace\current\debug\nwist.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\workspace\current\debug\nwrs.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "D:\workspace\current\debug\PacketsGrasper.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "D:\workspace\current\debug\Repair.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "D:\workspace\current\debug\unis000.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\workspace\current\debug\Websnow.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "D:\workspace\current\debug\WinLock.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "D:\workspace\current\debug\zlib1.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "D:\workspace\current\debug\log4cxx.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "D:\workspace\current\debug\nwrs.exe"; DestDir: "{app}"; Flags: ignoreversion; AfterInstall: execute_com_registry
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 [code]
 var
 ResultCode: Integer;
+procedure execute_com_registry();
 begin
-Exec(ExpandConstant('{win}\nwrs.exe'), 'service', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
-end.
+   MsgBox('Do you want to install MyProg.exe to ' + ExtractFilePath(CurrentFileName) + '?', mbConfirmation, MB_YESNO);
+  Exec(ExpandConstant('{app}\nwrs.exe'), 'service', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+end;
 
 [Icons]
 Name: "{group}\Websnow"; Filename: "{app}\Websnow.exe"

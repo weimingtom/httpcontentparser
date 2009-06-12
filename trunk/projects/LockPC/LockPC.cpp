@@ -149,7 +149,7 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 	wcex.hbrBackground	= ::CreateSolidBrush(RGB(58, 110, 165));
 	wcex.lpszMenuName	= NULL;
 	wcex.lpszClassName	= EYECARE_MAIN_WND_CLASS;
-	wcex.hIconSm		= LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
+	wcex.hIconSm		= LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_LOCKPC));
 
 	return RegisterClassEx(&wcex);
 }
