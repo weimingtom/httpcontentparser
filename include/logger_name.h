@@ -17,7 +17,10 @@
 #define		MAINUI_LOGGER_INFO_FILE			LOG4CXX_STR(".\\LOG\\mi.log")
 #define		REVISION_TEXT								TEXT("2.3.0.1134")
 
+//==========================================
+// FILTERSETTING
 #define		FILTERSETTING_LOGGER_ERROR	TEXT("Service_error")
+#define		FILTERSETTING_LOGGER_DEBUG	TEXT("Service_debug")
 #define		FILTERSETTING_LOGGER_FILE		LOG4CXX_STR(".\\log\\services.log")
 #define		WSUT_LOGGER_ERROR					TEXT("wsut_error")
 #define		WSUT_LOGGER_FILE		LOG4CXX_STR(".\\log\\wsut.log")
@@ -33,24 +36,39 @@
 			NULL,     GetLastError(),     0,   (LPTSTR) &lpMsgBuf,   0,    NULL);	\
 	_sntprintf(buffer, 1024, "{%s} Failed On call %s, return value is %d, lastError is %d : %s", __FUNCTION__, (FUNC_NAME), RETURE_VALUE, GetLastError(), lpMsgBuf);		\
 	LocalFree( lpMsgBuf );	\
-	LOG4CXX_INFO(log4cxx::Logger::getLogger(LOGGER_NAME), buffer);}
+	LOG4CXX_ERROR(log4cxx::Logger::getLogger(LOGGER_NAME), buffer);}
 
 #define LOGGER_FUNC_RETURN_FAILED(LOGGER_NAME, FUNC_NAME, RETURE_VALUE)	{TCHAR buffer[1024];		\
 	_sntprintf(buffer, 1024, "{%s} Failed On call %s, return value is %d", __FUNCTION__, (FUNC_NAME), RETURE_VALUE);		\
 	LocalFree( lpMsgBuf );	\
-	LOG4CXX_INFO(log4cxx::Logger::getLogger(LOGGER_NAME), buffer
+	LOG4CXX_ERROR(log4cxx::Logger::getLogger(LOGGER_NAME), buffer
 
 #define LOGGER_WRITE_COM_ERROR(LOGGER_NAME, LOGGER_TEXT, RESULT) { TCHAR buffer[1024]; \
 	_sntprintf(buffer, 1024, "{%s} %s HRESULT Value : %8Xh", __FUNCTION__, (LOGGER_TEXT), RESULT);		\
-	LOG4CXX_INFO(log4cxx::Logger::getLogger(LOGGER_NAME), buffer);}
+	LOG4CXX_ERROR(log4cxx::Logger::getLogger(LOGGER_NAME), buffer);}
 
 #define LOGGER_WRITE_COM_FAILED(LOGGER_NAME, LOGGER_TEXT, RESULT) { TCHAR buffer[1024]; \
 	_sntprintf(buffer, 1024, "{%s} Failed on {%s}; HRESULT Value : %8Xh", __FUNCTION__, (LOGGER_TEXT), RESULT);		\
-	LOG4CXX_INFO(log4cxx::Logger::getLogger(LOGGER_NAME), buffer);}
+	LOG4CXX_ERROR(log4cxx::Logger::getLogger(LOGGER_NAME), buffer);}
 
 #define LOGGER_WRITE_COM_DESCRIPTION(LOGGER_NAME, LOGGER_TEXT) {TCHAR buffer[1024];		\
 	_sntprintf(buffer, 1024, "{%s} COM_ERROR : %s", __FUNCTION__, (LOGGER_TEXT));		\
-	LOG4CXX_INFO(log4cxx::Logger::getLogger(LOGGER_NAME), buffer);}
+	LOG4CXX_ERROR(log4cxx::Logger::getLogger(LOGGER_NAME), buffer);}
+
+
+//=============================================================
+#ifdef DEBUG
+#define LOGGER_DEBUG_WRITE(LOGGER_NAME, LOGGER_TEXT)	{TCHAR buffer[1024];		\
+	_sntprintf(buffer, 1024, "{%s} %s", __FUNCTION__, (LOGGER_TEXT));		\
+	LOG4CXX_DEBUG(log4cxx::Logger::getLogger(LOGGER_NAME), buffer);}
+
+#define LOGGER_DEBUG_WRITE_DATA(LOGGER_NAME, LOGGER_REASON, LOGGER_DATA)	{TCHAR buffer[1024];		\
+	_sntprintf(buffer, 1024, "{%s} %s:%s", __FUNCTION__, (LOGGER_REASON), LOGGER_DATA);		\
+	LOG4CXX_DEBUG(log4cxx::Logger::getLogger(LOGGER_NAME), buffer);}
+#else
+#define LOGGER_DEBUG_WRITE(LOGGER_REASON, LOGGER_DATA)
+#define LOGGER_DEBUG_WRITE_DATA(LOGGER_NAME, LOGGER_REASON, LOGGER_DATA);
+#endif
 
 
 inline void initLogger(log4cxx::LogString FILEAPPENDER) {
