@@ -51,28 +51,29 @@ Name: {commondesktop}\Websnow; Filename: {app}\Websnow.exe; Tasks: desktopicon
 Name: {group}\{cm:UninstallProgram, Websnow}; Filename: {uninstallexe}
 
 [Run]
-Filename: {app}\Websnow.exe; Description: {cm:LaunchProgram,Websnow}; Flags: nowait postinstall skipifsilent
 
 
 
-Filename: {app}\nwrs.exe; Parameters: /service; Flags: shellexec
+Filename: {app}\nwrs.exe; Parameters: /service; Flags: shellexec; Tasks: ; Languages: 
 [Code]
 //importing a custom DLL function, first for Setup, then for uninstall
 function CheckProgram(lpStatus: String):Integer;
-external 'CheckProgram@{app}\wsut.dll uninstallonly';
+external 'CheckProgram@{app}\wsut.dll stdcall uninstallonly';
 
 function CheckStatus(lpStatus: String):Integer;
-external 'CheckStatus@{app}\wsut.dll uninstallonly';
+external 'CheckStatus@{app}\wsut.dll stdcall uninstallonly';
 
 function CallUtility(lpStatus: String):Integer;
-external 'CallUtility@{app}\wsut.dll uninstallonly';
+external 'CallUtility@{app}\wsut.dll stdcall uninstallonly';
 
 var
 ResultCode : Integer;
 Status : Integer;
-MsgForm: TSetupForm;
+MsgForm: TSetupForm ;
 PwdEdit: TPasswordEdit;
-ChkPwdFailed : Boolean;
+ShouldExitDirectly : Boolean;		{检测密码是否失败}
+ChkPwdSucc : Boolean;	{检测密码成功}
+ LaunchAsWindow: TNewCheckBox; {开机随windows一起启动}
 
 function CheckString(Password : String) : Boolean;
 begin
@@ -84,7 +85,8 @@ begin
     Status := CheckStatus(Password);
     if (0 = Status) then begin
       {注销服务}
-      CallUtility(Password);
+      ChkPwdSucc := True;		{检测密码成功， 保存在变量当中}
+      CallUtility(Password);		{调用卸载其他部分的代码}
       Result := True;
     end else begin
       MsgBox('Wrong password.', mbError, MB_OK);
@@ -108,8 +110,15 @@ procedure PwdFormCancel(Sender: TObject);
 begin
 	 if ExitSetupMsgBox() = True then
 	begin
-		ChkPwdFailed := True;
+		ShouldExitDirectly := True;
 		MsgForm.Close();
+	end;
+end;
+
+procedure MsgFormClose(Sender: TObject; var CanClose: Boolean);
+begin
+	if ChkPwdSucc = False then begin
+		CanClose := ExitSetupMsgBox();
 	end;
 end;
 
@@ -119,9 +128,10 @@ var
   MsgOkButton:TButton;
   MsgCancelButton:TButton;
 begin
-  MsgForm:= CreateCustomForm;
+  MsgForm:= CreateCustomForm();
   MsgForm.ClientWidth := ScaleX(400);
   MsgForm.ClientHeight := ScaleY(120);
+  MsgForm.OnCloseQuery := @MsgFormClose;
   MsgForm.Caption := 'Check password';
   MsgForm.Center;
 
@@ -138,8 +148,8 @@ begin
   PwdEdit.Parent := MsgForm;
   PwdEdit.Width := ScaleX(MsgForm.ClientWidth - 40);
   PwdEdit.Height := ScaleY(23);
-  PwdEdit.Left := 20;
-  PwdEdit.Top := 40;
+  PwdEdit.Left := ScaleX(20);
+  PwdEdit.Top := ScaleY(40);
 
   MsgOkButton := TButton.Create(MsgForm);
   MsgOkButton.Parent := MsgForm;
@@ -162,12 +172,41 @@ begin
   MsgForm.ShowModal()
 end;
 
+{开机自动运行选项}
+function AutoRunText(Sender: TWizardPage): Boolean;
+begin
+	if LaunchAsWindow.Checked = True then begin
+		RegWriteExpandStringValue(HKEY_LOCAL_MACHINE, 'SOFTWARE\Microsoft\Windows\CurrentVersion\Run', 'Websnow',  ExpandConstant('{app}')+'\websnow.exe');
+	end;
+	Result:=True;
+end;
+procedure AutoRunCustomWizard();
+var
+ Page: TWizardPage;
+begin
+
+	Page := CreateCustomPage(wpSelectProgramGroup, 'Autorun as windows start', 'TButton and others');
+	Page.OnNextButtonClick := @AutoRunText
+	LaunchAsWindow := TNewCheckBox.Create(Page);
+	LaunchAsWindow.Top := ScaleY(30);
+	LaunchAsWindow.Width := Page.SurfaceWidth;
+	LaunchAsWindow.Height := ScaleY(17);
+	LaunchAsWindow.Caption := 'Auto run';
+	LaunchAsWindow.Checked := True;
+	LaunchAsWindow.Parent := Page.Surface;
+end;
+
+procedure InitializeWizard();
+begin
+	AutoRunCustomWizard();
+end;
 {弹出对话框}
 function InitializeUninstall(): Boolean;
 begin
-	ChkPwdFailed := False;
+	ShouldExitDirectly := False;
+	ChkPwdSucc := True;
     CheckPwdMsgBox();
-    if ChkPwdFailed = True then begin
+    if ShouldExitDirectly = True then begin
 		Result := False;
 	end else begin
 		Result:=True
@@ -178,5 +217,3 @@ function UninstallNeedRestart(): Boolean;
 begin
   Result := True;
 end;
-
-
