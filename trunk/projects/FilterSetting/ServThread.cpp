@@ -42,7 +42,7 @@ namespace {
 		} else {
 			UINT result = WinExec(TEXT("Mainui.exe"), SW_SHOW);
 			if (0 != result) {
-				LOGGER_FUNC_FAILED(FILTERSETTING_LOGGER, "WinExec", result);
+				LOGGER_WINAPIC_FAILED(FILTERSETTING_LOGGER, "WinExec", result);
 			}
 		}
 	}
@@ -239,8 +239,6 @@ void ServThread::startServer() {
 
 	hThread_ = CreateThread(NULL, 1, (LPTHREAD_START_ROUTINE)TreadProc, (LPVOID)this, 0, &dwThreadId_);
 	if (NULL == hThread_) {
-		LOGGER_FUNC_FAILED(FILTERSETTING_LOGGER, "CreateThread", hThread_);
-	} else {
-		LOGGER_DEBUG_WRITE(FILTERSETTING_LOGGER, "Create Thread Success");
-	}
+		LOGGER_WINAPIC_FAILED(FILTERSETTING_LOGGER, "CreateThread", hThread_);
+	} 
 }

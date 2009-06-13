@@ -18,12 +18,19 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+#define LOGGER_TRACE(LOGGER_NAME, LOGGER_TEXT)	{TCHAR buffer[1024];		\
+	_sntprintf(buffer, 1024, "{%s} %s", __FUNCTION__, (LOGGER_TEXT));		\
+	LOG4CXX_INFO(log4cxx::Logger::getLogger(LOGGER_NAME), buffer);}
+
+#define LOGGER_TRACE_DATA(LOGGER_NAME, LOGGER_TEXT, DATA)	{TCHAR buffer[1024];		\
+	_sntprintf(buffer, 1024, "{%s} %s:%s", __FUNCTION__, (LOGGER_TEXT), DATA);		\
+	LOG4CXX_INFO(log4cxx::Logger::getLogger(LOGGER_NAME), buffer);}
 
 #define LOGGER_WRITE(LOGGER_NAME, LOGGER_TEXT)	{TCHAR buffer[1024];		\
 	_sntprintf(buffer, 1024, "{%s} %s", __FUNCTION__, (LOGGER_TEXT));		\
 	LOG4CXX_INFO(log4cxx::Logger::getLogger(LOGGER_NAME), buffer);}
 
-#define LOGGER_FUNC_FAILED(LOGGER_NAME, FUNC_NAME, RETURE_VALUE)	{TCHAR buffer[1024];		\
+#define LOGGER_WINAPIC_FAILED(LOGGER_NAME, FUNC_NAME, RETURE_VALUE)	{TCHAR buffer[1024];		\
 	LPVOID lpMsgBuf;	\
 	FormatMessage( FORMAT_MESSAGE_ALLOCATE_BUFFER |     FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,	\
 			NULL,     GetLastError(),     0,   (LPTSTR) &lpMsgBuf,   0,    NULL);	\
@@ -33,8 +40,7 @@
 
 #define LOGGER_FUNC_RETURN_FAILED(LOGGER_NAME, FUNC_NAME, RETURE_VALUE)	{TCHAR buffer[1024];		\
 	_sntprintf(buffer, 1024, "{%s} Failed On call %s, return value is %d", __FUNCTION__, (FUNC_NAME), RETURE_VALUE);		\
-	LocalFree( lpMsgBuf );	\
-	LOG4CXX_ERROR(log4cxx::Logger::getLogger(LOGGER_NAME), buffer
+	LOG4CXX_ERROR(log4cxx::Logger::getLogger(LOGGER_NAME), buffer);}
 
 #define LOGGER_WRITE_COM_ERROR(LOGGER_NAME, LOGGER_TEXT, RESULT) { TCHAR buffer[1024]; \
 	_sntprintf(buffer, 1024, "{%s} %s HRESULT Value : %8Xh", __FUNCTION__, (LOGGER_TEXT), RESULT);		\
