@@ -1,0 +1,5 @@
+LIBRARY	wsut
+EXPORTS
+	CheckStatus
+	CallUtility
+	CheckProgram
