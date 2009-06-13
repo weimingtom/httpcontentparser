@@ -11,7 +11,7 @@
 #include <com\comutility.h>
 #include <com\resultvalue.h>
 #include <typeconvert.h>
-#include <logger_name.h>
+#include ".\logger_def.h"
 
 // CDlgProgramControl ¶Ô»°¿ò
 
@@ -114,7 +114,7 @@ int CDlgProgramControl::OnApply() {
 		IAppControl *pSetting = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_AppControl, NULL, CLSCTX_LOCAL_SERVER, IID_IAppControl, (LPVOID*)&pSetting);
 		if (FAILED(hr) || NULL == pSetting) {
-			LOGGER_WRITE_COM_FAILED(MAINUI_LOGGER_ERROR, "Create AppControl", hr);
+			LOGGER_WRITE_COM_FAILED(MAINUI_LOGGER, "Create AppControl", hr);
 			AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
 			return 0;
 		}
@@ -129,11 +129,11 @@ int CDlgProgramControl::OnApply() {
 
 		return SUCCESS_APPLY;
 	} catch (_com_error &e) {
-		LOGGER_WRITE_COM_DESCRIPTION(MAINUI_LOGGER_ERROR, (TCHAR*)e.Description());;
+		LOGGER_WRITE_COM_DESCRIPTION(MAINUI_LOGGER, (TCHAR*)e.Description());;
 		AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
 		return FAILED_APPLY;
 	} catch (...) {
-		LOGGER_WRITE(MAINUI_LOGGER_ERROR, "CATCH(...)");
+		LOGGER_WRITE(MAINUI_LOGGER, "CATCH(...)");
 		AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
 		return FAILED_APPLY;
 	}
@@ -149,7 +149,7 @@ void CDlgProgramControl::restoreSetting() {
 		IAppControl *pSetting;
 		HRESULT hr = CoCreateInstance(CLSID_AppControl, NULL, CLSCTX_LOCAL_SERVER, IID_IAppControl, (LPVOID*)&pSetting);
 		if (FAILED(hr)) {
-			LOGGER_WRITE_COM_FAILED(MAINUI_LOGGER_ERROR, "Create AppControl", hr);
+			LOGGER_WRITE_COM_FAILED(MAINUI_LOGGER, "Create AppControl", hr);
 			throw int(SNOWMAN_ERROR_COM_INIT_FAILED);
 		}
 	
@@ -179,7 +179,7 @@ void CDlgProgramControl::restoreSetting() {
 		pSetting = NULL;
 		UpdateData(FALSE);
 	} catch (...) {
-		LOGGER_WRITE(MAINUI_LOGGER_ERROR, "CATCH(...)");
+		LOGGER_WRITE(MAINUI_LOGGER, "CATCH(...)");
 		throw int(SNOWMAN_ERROR_COM_INIT_FAILED);
 	}
 }

@@ -10,7 +10,7 @@
 #include <webcontenttype.h>
 #include <typeconvert.h>
 #include <comdef.h>
-#include <logger_name.h>
+#include ".\logger_def.h"
 
 // CDlgImageRule ¶Ô»°¿ò
 
@@ -79,7 +79,7 @@ int CDlgImageRule::OnApply() {
 		IWebContentCheck *contentCheck = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_WebContentCheck, NULL, CLSCTX_LOCAL_SERVER, IID_IWebContentCheck, (LPVOID*)&contentCheck);
 		if (FAILED(hr)) {
-			LOGGER_WRITE_COM_FAILED(MAINUI_LOGGER_ERROR, "Create Webcontent", hr);
+			LOGGER_WRITE_COM_FAILED(MAINUI_LOGGER, "Create Webcontent", hr);
 			return -1;
 		}
 
@@ -90,9 +90,9 @@ int CDlgImageRule::OnApply() {
 		contentCheck->enableCheck(convert(m_bCheckPNG),  IMAGE_TYPE_PNG);
 		contentCheck->put_ImageCheckTightness(m_sliderImageCheckDegree.GetPos());
 	} catch (_com_error& e) {
-		LOGGER_WRITE_COM_DESCRIPTION(MAINUI_LOGGER_ERROR, (TCHAR*)e.Description());;
+		LOGGER_WRITE_COM_DESCRIPTION(MAINUI_LOGGER, (TCHAR*)e.Description());;
 	} catch (...) {
-		LOGGER_WRITE(MAINUI_LOGGER_ERROR, "CATCH(...)");
+		LOGGER_WRITE(MAINUI_LOGGER, "CATCH(...)");
 	}
 	
 	return 0;

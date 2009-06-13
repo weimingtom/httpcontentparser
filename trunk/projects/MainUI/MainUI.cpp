@@ -12,15 +12,15 @@
 #include <com\comutility.h>
 #include <AppinstallValidate.h>
 #include <softwareStatus.h>
-#include <logger_name.h>
+#include ".\logger_def.h"
 #include ".\share.h"
-#include <logger_name.h>
 #include <log4cxx/logger.h>
 #include <log4cxx/fileappender.h>
 #include <log4cxx/simplelayout.h>
 #include <log4cxx/basicconfigurator.h>
 #include <log4cxx/propertyconfigurator.h>
 #include <log4cxx/helpers/exception.h>
+#include ".\logger_def.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -65,8 +65,6 @@ CMainUIApp theApp;
 // CMainUIApp 初始化
 
 BOOL CMainUIApp::InitInstance() {
-	
-	initLogger(MAINUI_LOGGER_ERROR_FILE);
 	{
 		CMutex mutext(0, MUTEX_NAME);
 		CSingleLock(&mutext, true);
@@ -83,11 +81,11 @@ BOOL CMainUIApp::InitInstance() {
 		ISnowmanSetting * pSetting = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_SnowmanSetting, NULL, CLSCTX_LOCAL_SERVER, IID_ISnowmanSetting, (LPVOID*)&pSetting);
 		if (FAILED(hr)) {
-			LOGGER_WRITE_COM_FAILED(MAINUI_LOGGER_ERROR, "Create Snowsetting", hr);
+			LOGGER_WRITE_COM_FAILED(MAINUI_LOGGER, "Create Snowsetting", hr);
 		}
 		pSetting->getApplicationStatus(&app_status);
 	} catch (...) {
-		LOGGER_WRITE(MAINUI_LOGGER_ERROR, "CATCH(...)");
+		LOGGER_WRITE(MAINUI_LOGGER, "CATCH(...)");
 	}
 
 	// 初始化LOGGER
@@ -144,7 +142,7 @@ BOOL CMainUIApp::Initialize(void)
 	HRESULT hr = CoCreateInstance(CLSID_DNSSetting, 
 		NULL, CLSCTX_LOCAL_SERVER, IID_IDNSSetting, (LPVOID*)&g_dnssetting);
 	if (FAILED(hr)) {
-		LOGGER_WRITE_COM_FAILED(MAINUI_LOGGER_ERROR, "Create DNSString", hr);
+		LOGGER_WRITE_COM_FAILED(MAINUI_LOGGER, "Create DNSString", hr);
 		AfxMessageBox(str);
 		return FALSE;
 	}
@@ -152,3 +150,18 @@ BOOL CMainUIApp::Initialize(void)
 	g_parentModel = Services::isParentModel();
 	return TRUE;
 }
+
+namespace {
+class LoggerInit {
+public:
+	LoggerInit() {
+		initLogger(MAINUI_LOGGER_FILE);
+#ifdef DEBUG
+	setLoggerLevel(MAINUI_LOGGER, log4cxx::Level::getDebug());
+#else
+	setLoggerLevel(MAINUI_LOGGER,  log4cxx::Level::getInfo());
+#endif
+	}
+};
+LoggerInit g_logger_init;
+};

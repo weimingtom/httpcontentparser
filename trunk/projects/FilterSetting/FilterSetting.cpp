@@ -18,7 +18,7 @@
 #include <softwareStatus.h>
 #include <string>
 #include <time.h>
-#include <logger_name.h>
+#include ".\logger_def.h"
 
 
 class CFilterSettingModule : public CAtlServiceModuleT< CFilterSettingModule, IDS_SERVICENAME >
@@ -39,7 +39,7 @@ public :
 		HRESULT hr = CoInitializeSecurity(sd, -1, NULL, NULL, RPC_C_AUTHN_LEVEL_PKT,
 				RPC_C_IMP_LEVEL_IMPERSONATE,  NULL, EOAC_NONE, NULL);
 		if (FAILED(hr)) {
-			LOGGER_WRITE_COM_FAILED(FILTERSETTING_LOGGER_ERROR, "CoInitializeSecurity", hr);
+			LOGGER_WRITE_COM_FAILED(FILTERSETTING_LOGGER, "CoInitializeSecurity", hr);
 		}
 
 		return S_OK;
@@ -57,16 +57,16 @@ void initializeSetting() {
 	TCHAR config_path[MAX_PATH];
 	GetAppConfigFilename(config_path, MAX_PATH);
 	g_configuration.loadConfig(config_path);
-	LOGGER_DEBUG_WRITE_DATA(FILTERSETTING_LOGGER_DEBUG, "AppConfigFilePath", config_path);
+	LOGGER_DEBUG_WRITE_DATA(FILTERSETTING_LOGGER, "AppConfigFilePath", config_path);
 
 	// 读取搜索词汇信息
 	TCHAR filename[MAX_PATH];
 	g_searchwordUtil.load(GetSearchWordFile(filename, MAX_PATH));
-	LOGGER_DEBUG_WRITE_DATA(FILTERSETTING_LOGGER_DEBUG, "SearchWordPath", filename);
+	LOGGER_DEBUG_WRITE_DATA(FILTERSETTING_LOGGER, "SearchWordPath", filename);
 
 	// 读取访问网站的信息
 	g_websitesUtil.load(GetWebSiteFile(filename, MAX_PATH));
-	LOGGER_DEBUG_WRITE_DATA(FILTERSETTING_LOGGER_DEBUG, "Website files", filename);
+	LOGGER_DEBUG_WRITE_DATA(FILTERSETTING_LOGGER, "Website files", filename);
 }
 
 extern "C" int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, 
@@ -79,7 +79,6 @@ extern "C" int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/
 		return 0;
 	}
 
-	initLogger(FILTERSETTING_LOGGER_FILE);
 
 	g_hInstance = hInstance;
 	g_licenseInfo.initialize();
@@ -94,13 +93,13 @@ extern "C" int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/
 
 	if (g_configuration.getWebHistoryRecordAutoClean()->shouldExec()) {
 		g_configuration.getWebHistoryRecordAutoClean()->reset();
-		LOGGER_WRITE(FILTERSETTING_LOGGER_ERROR, "Clear WebHistory");
+		LOGGER_WRITE(FILTERSETTING_LOGGER, "Clear WebHistory");
 		ClearHistory();
 		
 	}
 	if (g_configuration.getScreenshotAutoClean()->shouldExec()) {
 		g_configuration.getScreenshotAutoClean()->reset();
-		LOGGER_WRITE(FILTERSETTING_LOGGER_ERROR, "Clear Screenshot");
+		LOGGER_WRITE(FILTERSETTING_LOGGER, "Clear Screenshot");
 		ClearScreen();
 	}
 
@@ -115,3 +114,18 @@ void CFilterSettingModule::ServiceMain(DWORD dwArgc, LPTSTR* lpszArgv)
 {
 	CAtlServiceModuleT<CFilterSettingModule,IDS_SERVICENAME>::ServiceMain(dwArgc, lpszArgv);
 }
+
+namespace {
+class LoggerInit {
+public:
+	LoggerInit() {
+		initLogger(FILTERSETTING_LOGGER_FILE);
+#ifdef DEBUG
+	setLoggerLevel(FILTERSETTING_LOGGER, log4cxx::Level::getDebug());
+#else
+	setLoggerLevel(FILTERSETTING_LOGGER,  log4cxx::Level::getInfo());
+#endif
+	}
+};
+LoggerInit g_logger_init;
+};

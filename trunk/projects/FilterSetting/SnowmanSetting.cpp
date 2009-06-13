@@ -11,8 +11,8 @@
 #include <searchengine_define.h>
 #include <softwareStatus.h>
 #include <comutil.h>
-#include <logger_name.h>
 #include ".\snowmansetting.h"
+#include ".\logger_def.h"
 
 // CSnowmanSetting
 STDMETHODIMP CSnowmanSetting::setHotkey(USHORT wVirtualKeyCode, USHORT wModifiers, LONG type, VARIANT_BOOL* bSuccess) {
@@ -40,6 +40,7 @@ STDMETHODIMP CSnowmanSetting::GetInstallPath(BSTR* installpath) {
 
 
 STDMETHODIMP CSnowmanSetting::switchModel(VARIANT_BOOL bParent, BSTR pwd, VARIANT_BOOL* bSucc) {
+
 	if (VARIANT_TRUE == bParent) {
 		// 切换到家长模式需要验证密码
 		if (true == g_configuration.getAuthorize()->checkPassword((TCHAR*)_bstr_t(pwd), PASSWORD_SU)) {
@@ -48,11 +49,14 @@ STDMETHODIMP CSnowmanSetting::switchModel(VARIANT_BOOL bParent, BSTR pwd, VARIAN
 
 			// 而且还要停止Eyecare 的计数器
 			g_configuration.getEyecareSetting()->stopTimer();
+			LOGGER_WRITE(FILTERSETTING_LOGGER, "succeed in swithing to parent model");
 		} else {
 			// 验证密码失败
 			*bSucc = VARIANT_FALSE;
+			LOGGER_WRITE(FILTERSETTING_LOGGER, "failed in swithing to parent model");
 		}
 	} else {
+		LOGGER_WRITE(FILTERSETTING_LOGGER, "Try to swith to children model");
 		// 如果切换到孩子模式，则不需要密码
 		SettingItem::setModel(SettingItem::MODE_CHILD);
 		*bSucc = VARIANT_TRUE;
@@ -170,7 +174,7 @@ STDMETHODIMP CSnowmanSetting::CheckPwd(BSTR password, VARIANT_BOOL* bSucc)
 {
 	if (true == g_configuration.getAuthorize()->checkPassword((TCHAR*)_bstr_t(password), PASSWORD_SU)) {
 			SettingItem::setModel(SettingItem::MODE_PARENT);
-			*bSucc = VARIANT_TRUE;
+		*bSucc = VARIANT_TRUE;
 	} else {
 		*bSucc = VARIANT_FALSE;
 	}

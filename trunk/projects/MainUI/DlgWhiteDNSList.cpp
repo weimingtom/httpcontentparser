@@ -7,7 +7,7 @@
 #include ".\dlgwhitednslist.h"
 #include ".\globalvariable.h"
 #include <typeconvert.h>
-#include <logger_name.h>
+#include ".\logger_def.h"
 
 // CDlgWhiteDNSList ¶Ô»°¿ò
 
@@ -77,7 +77,7 @@ void CDlgWhiteDNSList::restoreSetting() {
 
 		UpdateData(FALSE);
 	} catch(...) {
-		LOGGER_WRITE(MAINUI_LOGGER_ERROR, "CATCH(...)")
+		LOGGER_WRITE(MAINUI_LOGGER, "CATCH(...)")
 		throw int(SNOWMAN_ERROR_COM_INIT_FAILED);
 	}
 }

@@ -9,7 +9,7 @@
 #include ".\DlgImageBrowser.h"
 #include <apputility.h>
 #include <typeconvert.h>
-#include <logger_name.h>
+#include ".\logger_def.h"
 
 #define MAX_AUTO_CLEAR_SPAN	30
 #define MIN_AUTO_CLEAR_SPAN	1
@@ -56,7 +56,7 @@ int CDlgScreenshot::OnApply() {
 		IScreenSave * screensave = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_ScreenSave, NULL, CLSCTX_LOCAL_SERVER, IID_IScreenSave, (LPVOID*)&screensave);
 		if(FAILED(hr)) {
-			LOGGER_WRITE_COM_FAILED(MAINUI_LOGGER_ERROR, "Create Sceensave", hr);
+			LOGGER_WRITE_COM_FAILED(MAINUI_LOGGER, "Create Sceensave", hr);
 			AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
 			return -1;
 		}
@@ -66,7 +66,7 @@ int CDlgScreenshot::OnApply() {
 		screensave->put_AutocleanEnabled(convert(m_bEnableAutoclean));
 		return 0;
 	} catch (... ) {
-		LOGGER_WRITE(MAINUI_LOGGER_ERROR, "CATCH(...)");
+		LOGGER_WRITE(MAINUI_LOGGER, "CATCH(...)");
 		AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
 		return -1;
 	}
@@ -80,7 +80,7 @@ void CDlgScreenshot::restoreSetting() {
 		IScreenSave * screensave = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_ScreenSave, NULL, CLSCTX_LOCAL_SERVER, IID_IScreenSave, (LPVOID*)&screensave);
 		if(FAILED(hr)) {
-			LOGGER_WRITE_COM_FAILED(MAINUI_LOGGER_ERROR, "Create Sceensave", hr);
+			LOGGER_WRITE_COM_FAILED(MAINUI_LOGGER, "Create Sceensave", hr);
 			throw int(SNOWMAN_ERROR_COM_INIT_FAILED);
 		}
 
@@ -112,7 +112,7 @@ void CDlgScreenshot::restoreSetting() {
 		setAutoCleanTips();
 		setTimespanTips();
 	} catch (...) {
-		LOGGER_WRITE(MAINUI_LOGGER_ERROR, "CATCH(...)");
+		LOGGER_WRITE(MAINUI_LOGGER, "CATCH(...)");
 		throw int(SNOWMAN_ERROR_COM_INIT_FAILED);
 	}
 }

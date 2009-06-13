@@ -8,7 +8,7 @@
 #include ".\dlgsearchrule.h"
 #include <com\comutility.h>
 #include <typeconvert.h>
-#include <logger_name.h>
+#include ".\logger_def.h"
 
 // CDlgSearchRule 对话框
 
@@ -41,7 +41,7 @@ int CDlgSearchRule::OnApply() {
 		ISearchRule *seach_rule;
 		HRESULT hr = CoCreateInstance(CLSID_SearchRule, NULL, CLSCTX_LOCAL_SERVER, IID_ISearchRule, (LPVOID*)&seach_rule);
 		if (FAILED(hr)) {
-			LOGGER_WRITE_COM_FAILED(MAINUI_LOGGER_ERROR, "Create SearchRule", hr);
+			LOGGER_WRITE_COM_FAILED(MAINUI_LOGGER, "Create SearchRule", hr);
 			AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
 			return -1;
 		}
@@ -53,7 +53,7 @@ int CDlgSearchRule::OnApply() {
 
 		return 0;
 	} catch (_com_error&) {
-		LOGGER_WRITE(MAINUI_LOGGER_ERROR, "CATCH(_com_error)");
+		LOGGER_WRITE(MAINUI_LOGGER, "CATCH(_com_error)");
 		AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
 		return -1;
 	}
@@ -86,7 +86,7 @@ void CDlgSearchRule::restoreSetting() {
 		ISearchRule *seach_rule;
 		HRESULT hr = CoCreateInstance(CLSID_SearchRule, NULL, CLSCTX_LOCAL_SERVER, IID_ISearchRule, (LPVOID*)&seach_rule);
 		if (FAILED(hr)) {
-			LOGGER_WRITE_COM_FAILED(MAINUI_LOGGER_ERROR, "Create SearchRule", hr);
+			LOGGER_WRITE_COM_FAILED(MAINUI_LOGGER, "Create SearchRule", hr);
 			throw int(SNOWMAN_ERROR_COM_INIT_FAILED);
 		}
 
@@ -111,7 +111,7 @@ void CDlgSearchRule::restoreSetting() {
 
 		UpdateData(FALSE);
 	} catch (...) {
-		LOGGER_WRITE(MAINUI_LOGGER_ERROR, "CATCH(...)");
+		LOGGER_WRITE(MAINUI_LOGGER, "CATCH(...)");
 		throw int(SNOWMAN_ERROR_COM_INIT_FAILED);
 	}
 }
@@ -122,7 +122,7 @@ void CDlgSearchRule::OnAddItem(const CString &str) {
 		ISearchRule *seach_rule;
 		HRESULT hr = CoCreateInstance(CLSID_SearchRule, NULL, CLSCTX_LOCAL_SERVER, IID_ISearchRule, (LPVOID*)&seach_rule);
 		if (FAILED(hr)) {
-			LOGGER_WRITE_COM_FAILED(MAINUI_LOGGER_ERROR, "Create searchRule", hr)
+			LOGGER_WRITE_COM_FAILED(MAINUI_LOGGER, "Create searchRule", hr)
 			AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
 			return;
 		}
@@ -133,7 +133,7 @@ void CDlgSearchRule::OnAddItem(const CString &str) {
 		// 修改界面
 		SetModify(TRUE);
 	} catch(...) {
-		LOGGER_WRITE(MAINUI_LOGGER_ERROR, "CATCH(...)");
+		LOGGER_WRITE(MAINUI_LOGGER, "CATCH(...)");
 	}
 }
 void CDlgSearchRule::OnDelItem(const CString &str) {
@@ -142,7 +142,7 @@ void CDlgSearchRule::OnDelItem(const CString &str) {
 		ISearchRule *seach_rule;
 		HRESULT hr = CoCreateInstance(CLSID_SearchRule, NULL, CLSCTX_LOCAL_SERVER, IID_ISearchRule, (LPVOID*)&seach_rule);
 		if (FAILED(hr)) {
-			LOGGER_WRITE_COM_FAILED(MAINUI_LOGGER_ERROR, "Create searchRule", hr)
+			LOGGER_WRITE_COM_FAILED(MAINUI_LOGGER, "Create searchRule", hr)
 			return;
 		}
 
@@ -152,7 +152,7 @@ void CDlgSearchRule::OnDelItem(const CString &str) {
 		// 修改界面
 		SetModify(TRUE);
 	} catch (...) {
-		LOGGER_WRITE(MAINUI_LOGGER_ERROR, "CATCH(...)");
+		LOGGER_WRITE(MAINUI_LOGGER, "CATCH(...)");
 	}
 }
 bool CDlgSearchRule::ValidateItem(const CString & str, CString &output) {

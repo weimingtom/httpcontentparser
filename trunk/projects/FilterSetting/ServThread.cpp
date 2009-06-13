@@ -7,7 +7,7 @@
 #include <PrintScreen.h>
 #include <searchengine_define.h>
 #include <searchkeywordutil.h>
-#include <logger_name.h>
+#include ".\logger_def.h"
 
 #define TIME_ESCAPE_SAVE_SCREEN  8000
 #define ID_TIMER_SAVE_SCREEN     1
@@ -42,7 +42,7 @@ namespace {
 		} else {
 			UINT result = WinExec(TEXT("Mainui.exe"), SW_SHOW);
 			if (0 != result) {
-				LOGGER_FUNC_FAILED(FILTERSETTING_LOGGER_ERROR, "WinExec", result);
+				LOGGER_FUNC_FAILED(FILTERSETTING_LOGGER, "WinExec", result);
 			}
 		}
 	}
@@ -78,7 +78,7 @@ ServThread::~ServThread(void) {
 }
 
 int ServThread::setHotKey(WORD vKey, WORD fsModifiers, int type) {
-	if (type == HOTKEY_LANUCH_MAINUI) {
+	if (type == HOTKEY_LANUCH_MAINUI) { 
 		return (int)SendMessage(hwnd_, WM_REGISTER_HOTKEY, MAKEWPARAM(vKey, fsModifiers), (LPARAM)type);
 	} else {
 		return TRUE;
@@ -91,12 +91,18 @@ void ServThread::initialize() {
 TCHAR szWindowClass[] = TEXT("None");
 // 创建一个窗口
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
-	// 两个计时器
-	static DWORD tickAutoSaver = GetTickCount();
-	static DWORD tickEyecare = GetTickCount();
-	ServThread *server = ServThread::getInstance();
+	try {
+		{
+			TCHAR msgText[1024];
+			_sntprintf(msgText, 1024, "WndProc Msg : %08Xh", message);
+			LOGGER_DEBUG_WRITE(FILTERSETTING_LOGGER, msgText);
+		}
+		// 两个计时器
+		static DWORD tickAutoSaver = GetTickCount();
+		static DWORD tickEyecare = GetTickCount();
+		ServThread *server = ServThread::getInstance();
 
-	switch (message) {
+		switch (message) {
 		case WM_CREATE:
 			// 启动
 			SetTimer(hWnd, ID_TIMER_SAVE_SCREEN,	TIME_ESCAPE_SAVE_SCREEN, NULL);
@@ -118,7 +124,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 				}
 			}
 		case WM_TIMER:
-			
 			// 每次都要检测配置文件是否已经改变，如果改变则保存
 			if (SettingItem::isModified() == true) {
 				TCHAR config_path[MAX_PATH];
@@ -126,7 +131,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 
 				// 保存文件
 				g_configuration.saveConfig(config_path);
-				LOGGER_DEBUG_WRITE(FILTERSETTING_LOGGER_DEBUG, "Save Configuration");
+				LOGGER_DEBUG_WRITE(FILTERSETTING_LOGGER, "Save Configuration");
 			}
 
 			// 自动切换模式可能导致用户迷惑，因此先废除它
@@ -141,7 +146,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 					TCHAR fullpath[MAX_PATH];
 					GenScreenSPFile(fullpath, MAX_PATH);
 					GetScreen(fullpath);
-					LOGGER_DEBUG_WRITE(FILTERSETTING_LOGGER_DEBUG, "Screen Snapshot");
+					LOGGER_DEBUG_WRITE(FILTERSETTING_LOGGER, "Screen Snapshot");
 				}
 			} else if (ID_TIMER_EYECARE_TRY == wParam) {
 				// 只有运行于子模式才执行此操作
@@ -167,7 +172,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 				// 读取访问网站的信息
 				GetWebSiteFile(filename, MAX_PATH);
 				g_websitesUtil.save(GetWebSiteFile(filename, MAX_PATH));
-				LOGGER_DEBUG_WRITE(FILTERSETTING_LOGGER_DEBUG, "Save History");
+				LOGGER_DEBUG_WRITE(FILTERSETTING_LOGGER, "Save History");
 			}
 			// 自动开启
 			break;
@@ -184,6 +189,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 			KillTimer(hWnd, ID_TIMER_EYECARE_TRY);
 			break;
 
+		}
+	} catch(...) {
+		LOGGER_WRITE(FILTERSETTING_LOGGER, "WndProc Unknown exception");
 	}
 	return DefWindowProc(hWnd, message, wParam, lParam);
 }
@@ -220,6 +228,7 @@ DWORD ServThread::TreadProc(LPVOID param) {
 		DispatchMessage(&msg);	
 	}
 
+	LOGGER_DEBUG_WRITE(FILTERSETTING_LOGGER, "Thread Exit");
 	return 1;
 }
 
@@ -230,6 +239,8 @@ void ServThread::startServer() {
 
 	hThread_ = CreateThread(NULL, 1, (LPTHREAD_START_ROUTINE)TreadProc, (LPVOID)this, 0, &dwThreadId_);
 	if (NULL == hThread_) {
-		LOGGER_FUNC_FAILED(FILTERSETTING_LOGGER_ERROR, "CreateThread", hThread_);
+		LOGGER_FUNC_FAILED(FILTERSETTING_LOGGER, "CreateThread", hThread_);
+	} else {
+		LOGGER_DEBUG_WRITE(FILTERSETTING_LOGGER, "Create Thread Success");
 	}
 }
