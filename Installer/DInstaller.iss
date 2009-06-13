@@ -12,57 +12,171 @@ AppPublisherURL=http://www.wsnow.com/
 AppSupportURL=http://www.wsnow.com/
 AppUpdatesURL=http://www.wsnow.com/
 DefaultDirName={pf}\Websnow
-DisableDirPage=yes
+DisableDirPage=No
 DefaultGroupName=Websnow
-DisableProgramGroupPage=yes
+DisableProgramGroupPage=No
 LicenseFile=D:\workspace\current\Installer\License.txt
 OutputDir=D:\workspace
 OutputBaseFilename=Websnow
 Compression=lzma
 SolidCompression=yes
-RestartIfNeededByRun=yes
 
 [Languages]
-Name: "english"; MessagesFile: "compiler:Default.isl"
+Name: english; MessagesFile: compiler:Default.isl
 
 [Tasks]
-Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
+Name: desktopicon; Description: {cm:CreateDesktopIcon}; GroupDescription: {cm:AdditionalIcons}; Flags: unchecked
 
 [Files]
-Source: "D:\workspace\current\debug\Websnow.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\workspace\current\debug\atl71.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\workspace\current\debug\exts.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\workspace\current\debug\Eyecare.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\workspace\current\debug\LockPC.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\workspace\current\debug\mfc71d.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\workspace\current\debug\msvcp71d.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\workspace\current\debug\msvcr71.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\workspace\current\debug\mvs.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\workspace\current\debug\nwist.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\workspace\current\debug\PacketsGrasper.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\workspace\current\debug\Repair.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\workspace\current\debug\unis000.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\workspace\current\debug\WinLock.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\workspace\current\debug\zlib1.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\workspace\current\debug\log4cxx.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\workspace\current\debug\nwrs.exe"; DestDir: "{app}"; Flags: ignoreversion; AfterInstall: execute_com_registry
+Source: D:\workspace\current\debug\Websnow.exe; DestDir: {app}; Flags: ignoreversion
+Source: D:\workspace\current\debug\atl71.dll; DestDir: {app}; Flags: ignoreversion
+Source: D:\workspace\current\debug\exts.dll; DestDir: {app}; Flags: ignoreversion
+Source: D:\workspace\current\debug\Eyecare.exe; DestDir: {app}; Flags: ignoreversion
+Source: D:\workspace\current\debug\LockPC.exe; DestDir: {app}; Flags: ignoreversion
+Source: D:\workspace\current\debug\mfc71d.dll; DestDir: {app}; Flags: ignoreversion
+Source: D:\workspace\current\debug\msvcp71d.dll; DestDir: {app}; Flags: ignoreversion
+Source: D:\workspace\current\debug\msvcr71.dll; DestDir: {app}; Flags: ignoreversion
+Source: D:\workspace\current\debug\nwist.dll; DestDir: {app}; Flags: ignoreversion
+Source: D:\workspace\current\debug\PacketsGrasper.dll; DestDir: {app}; Flags: ignoreversion
+Source: D:\workspace\current\debug\Repair.exe; DestDir: {app}; Flags: ignoreversion
+Source: D:\workspace\current\debug\WinLock.dll; DestDir: {app}; Flags: ignoreversion
+Source: D:\workspace\current\debug\zlib1.dll; DestDir: {app}; Flags: ignoreversion
+Source: D:\workspace\current\debug\log4cxx.dll; DestDir: {app}; Flags: ignoreversion
+Source: D:\workspace\current\debug\wsut.dll; DestDir: {app}; Flags: ignoreversion
+Source: D:\workspace\current\debug\nwrs.exe; DestDir: {app}; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
-[code]
-var
-ResultCode: Integer;
-procedure execute_com_registry();
-begin
-   MsgBox('Do you want to install MyProg.exe to ' + ExtractFilePath(CurrentFileName) + '?', mbConfirmation, MB_YESNO);
-  Exec(ExpandConstant('{app}\nwrs.exe'), 'service', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
-end;
-
 [Icons]
-Name: "{group}\Websnow"; Filename: "{app}\Websnow.exe"
-Name: "{group}\Uninstall"; Filename: "{app}\unis000.exe"
-Name: "{commondesktop}\Websnow"; Filename: "{app}\Websnow.exe"; Tasks: desktopicon
+Name: {group}\Websnow; Filename: {app}\Websnow.exe
+Name: {commondesktop}\Websnow; Filename: {app}\Websnow.exe; Tasks: desktopicon
+Name: {group}\{cm:UninstallProgram, Websnow}; Filename: {uninstallexe}
 
 [Run]
-Filename: "{app}\Websnow.exe"; Description: "{cm:LaunchProgram,Websnow}"; Flags: nowait postinstall skipifsilent
+Filename: {app}\Websnow.exe; Description: {cm:LaunchProgram,Websnow}; Flags: nowait postinstall skipifsilent
 
+
+
+Filename: {app}\nwrs.exe; Parameters: /service; Flags: shellexec
+[Code]
+//importing a custom DLL function, first for Setup, then for uninstall
+function CheckProgram(lpStatus: String):Integer;
+external 'CheckProgram@{app}\wsut.dll uninstallonly';
+
+function CheckStatus(lpStatus: String):Integer;
+external 'CheckStatus@{app}\wsut.dll uninstallonly';
+
+function CallUtility(lpStatus: String):Integer;
+external 'CallUtility@{app}\wsut.dll uninstallonly';
+
+var
+ResultCode : Integer;
+Status : Integer;
+MsgForm: TSetupForm;
+PwdEdit: TPasswordEdit;
+ChkPwdFailed : Boolean;
+
+function CheckString(Password : String) : Boolean;
+begin
+  {检测password}
+  if Password = '' then begin
+     MsgBox('You must enter the password.', mbError, MB_OK);
+     Result := False;
+  end else begin
+    Status := CheckStatus(Password);
+    if (0 = Status) then begin
+      {注销服务}
+      CallUtility(Password);
+      Result := True;
+    end else begin
+      MsgBox('Wrong password.', mbError, MB_OK);
+      Result := False
+    end;
+  end;
+end;
+
+ {在PASSWORD界面按下OK按钮}
+procedure PwdFormOK(Sender: TObject);
+begin
+	if CheckString(PwdEdit.Text) = True then begin
+		MsgForm.Close();
+	end else begin
+		MsgBox('The password you entered is not correct. Please try again.', mbError, MB_OK);
+	end;
+end;
+
+{在PASSWORD界面按下Cancel按钮}
+procedure PwdFormCancel(Sender: TObject);
+begin
+	 if ExitSetupMsgBox() = True then
+	begin
+		ChkPwdFailed := True;
+		MsgForm.Close();
+	end;
+end;
+
+procedure CheckPwdMsgBox();
+var
+  MsgLabel: TLabel;
+  MsgOkButton:TButton;
+  MsgCancelButton:TButton;
+begin
+  MsgForm:= CreateCustomForm;
+  MsgForm.ClientWidth := ScaleX(400);
+  MsgForm.ClientHeight := ScaleY(120);
+  MsgForm.Caption := 'Check password';
+  MsgForm.Center;
+
+  {标签}
+  MsgLabel := TLabel.Create(MsgForm);
+  MsgLabel.Parent := MsgForm;
+  MsgLabel.Left := ScaleX(20);
+  MsgLabel.Top := ScaleY(20);
+  MsgLabel.Caption:= 'Please provide the password, then click OK to continue. Passwords are case-sensitive.';
+  MsgLabel.Parent := MsgForm;
+
+  {密码}
+  PwdEdit:=TPasswordEdit.Create(MsgForm);
+  PwdEdit.Parent := MsgForm;
+  PwdEdit.Width := ScaleX(MsgForm.ClientWidth - 40);
+  PwdEdit.Height := ScaleY(23);
+  PwdEdit.Left := 20;
+  PwdEdit.Top := 40;
+
+  MsgOkButton := TButton.Create(MsgForm);
+  MsgOkButton.Parent := MsgForm;
+  MsgOkButton.Width := ScaleX(75);
+  MsgOkButton.Height := ScaleY(23);
+  MsgOkButton.Left := MsgForm.ClientWidth - MsgOkButton.Width*2 - ScaleX(30);
+  MsgOkButton.Top := MsgForm.ClientHeight - ScaleY(23 + 10);
+  MsgOkButton.Caption := 'OK';
+  MsgOkButton.OnClick := @PwdFormOK;
+
+  MsgCancelButton := TButton.Create(MsgForm);
+  MsgCancelButton.Parent := MsgForm;
+  MsgCancelButton.Width := ScaleX(75);
+  MsgCancelButton.Height := ScaleY(23);
+  MsgCancelButton.Left := MsgForm.ClientWidth - MsgCancelButton.Width - ScaleX(20);
+  MsgCancelButton.Top := MsgForm.ClientHeight - ScaleY(23 + 10);
+  MsgCancelButton.Caption := 'Cancel';
+  MsgCancelButton.OnClick := @PwdFormCancel;
+
+  MsgForm.ShowModal()
+end;
+
+{弹出对话框}
+function InitializeUninstall(): Boolean;
+begin
+	ChkPwdFailed := False;
+    CheckPwdMsgBox();
+    if ChkPwdFailed = True then begin
+		Result := False;
+	end else begin
+		Result:=True
+	end;
+end;
+
+function UninstallNeedRestart(): Boolean;
+begin
+  Result := True;
+end;
 
 
