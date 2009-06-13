@@ -247,6 +247,7 @@ interface ISnowmanSetting : IDispatch{
 	[propput, id(15), helpstring("Property askMeAgain")] HRESULT askMeAgain([in] VARIANT_BOOL newVal);
 	[id(16), helpstring("Method getApplicationStatus")] HRESULT getApplicationStatus([out] LONG* status);
 	[id(17), helpstring("Method setApplicationStatus")] HRESULT setApplicationStatus([in] LONG status);
+	[id(18), helpstring("Method CheckPwd")] HRESULT CheckPwd([in] BSTR password, [out]VARIANT_BOOL* bSucc);
 };
 [
 	uuid(42F932B5-F5CB-4F0D-8925-1B6BE5FECD1B),

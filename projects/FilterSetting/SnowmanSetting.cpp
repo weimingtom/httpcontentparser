@@ -165,3 +165,14 @@ STDMETHODIMP CSnowmanSetting::setApplicationStatus(LONG status)
 	}
 	return S_OK;
 }
+
+STDMETHODIMP CSnowmanSetting::CheckPwd(BSTR password, VARIANT_BOOL* bSucc)
+{
+	if (true == g_configuration.getAuthorize()->checkPassword((TCHAR*)_bstr_t(password), PASSWORD_SU)) {
+			SettingItem::setModel(SettingItem::MODE_PARENT);
+			*bSucc = VARIANT_TRUE;
+	} else {
+		*bSucc = VARIANT_FALSE;
+	}
+	return S_OK;
+}
