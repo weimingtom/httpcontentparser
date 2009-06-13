@@ -97,7 +97,7 @@
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="3"
 				PrecompiledHeaderThrough="stdafx.h"
-				PrecompiledHeaderFile=".\Debug/TcpIpDog.pch"
+				PrecompiledHeaderFile=".\Debug/PacketGrapsher.pch"
 				AssemblerListingLocation=".\Debug/"
 				ObjectFile=".\Debug/"
 				ProgramDataBaseFileName=".\Debug/"
