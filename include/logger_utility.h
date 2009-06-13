@@ -18,7 +18,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#define LOGGER_TRACE(LOGGER_NAME, LOGGER_TEXT)	{TCHAR buffer[1024];		\
+#define LOGGER_TRACE_WRITE(LOGGER_NAME, LOGGER_TEXT)	{TCHAR buffer[1024];		\
 	_sntprintf(buffer, 1024, "{%s} %s", __FUNCTION__, (LOGGER_TEXT));		\
 	LOG4CXX_INFO(log4cxx::Logger::getLogger(LOGGER_NAME), buffer);}
 
