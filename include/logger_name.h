@@ -19,6 +19,8 @@
 
 #define		FILTERSETTING_LOGGER_ERROR	TEXT("Service_error")
 #define		FILTERSETTING_LOGGER_FILE		LOG4CXX_STR(".\\log\\services.log")
+#define		WSUT_LOGGER_ERROR					TEXT("wsut_error")
+#define		WSUT_LOGGER_FILE		LOG4CXX_STR(".\\log\\wsut.log")
 
 
 #define LOGGER_WRITE(LOGGER_NAME, LOGGER_TEXT)	{TCHAR buffer[1024];		\
@@ -32,6 +34,11 @@
 	_sntprintf(buffer, 1024, "{%s} Failed On call %s, return value is %d, lastError is %d : %s", __FUNCTION__, (FUNC_NAME), RETURE_VALUE, GetLastError(), lpMsgBuf);		\
 	LocalFree( lpMsgBuf );	\
 	LOG4CXX_INFO(log4cxx::Logger::getLogger(LOGGER_NAME), buffer);}
+
+#define LOGGER_FUNC_RETURN_FAILED(LOGGER_NAME, FUNC_NAME, RETURE_VALUE)	{TCHAR buffer[1024];		\
+	_sntprintf(buffer, 1024, "{%s} Failed On call %s, return value is %d", __FUNCTION__, (FUNC_NAME), RETURE_VALUE);		\
+	LocalFree( lpMsgBuf );	\
+	LOG4CXX_INFO(log4cxx::Logger::getLogger(LOGGER_NAME), buffer
 
 #define LOGGER_WRITE_COM_ERROR(LOGGER_NAME, LOGGER_TEXT, RESULT) { TCHAR buffer[1024]; \
 	_sntprintf(buffer, 1024, "{%s} %s HRESULT Value : %8Xh", __FUNCTION__, (LOGGER_TEXT), RESULT);		\

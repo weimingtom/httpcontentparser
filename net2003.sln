@@ -137,11 +137,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestSoftwareEncrypt", "test
 		{9E22A563-69C9-48A7-AFFF-4E3D41077852} = {9E22A563-69C9-48A7-AFFF-4E3D41077852}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Uninstaller", "projects\Uninstaller\Uninstaller.vcproj", "{F47AD3E9-CFB3-4BE6-ABA1-C9F115996D18}"
-	ProjectSection(ProjectDependencies) = postProject
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mvs", "projects\mvs\mvs.vcproj", "{B0839C7D-7530-4D48-9108-2E0C79B42D05}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "wsut", "libproject\wsut\wsut.vcproj", "{9C126E38-92C9-4960-BB70-DC3139749754}"
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
 EndProject
@@ -387,22 +383,14 @@ Global
 		{0B5E78ED-3E0A-4DBE-B590-B283DBF8D98C}.Release.Build.0 = Release|Win32
 		{0B5E78ED-3E0A-4DBE-B590-B283DBF8D98C}.Release Unicode.ActiveCfg = Release|Win32
 		{0B5E78ED-3E0A-4DBE-B590-B283DBF8D98C}.Release Unicode.Build.0 = Release|Win32
-		{F47AD3E9-CFB3-4BE6-ABA1-C9F115996D18}.Debug.ActiveCfg = Debug|Win32
-		{F47AD3E9-CFB3-4BE6-ABA1-C9F115996D18}.Debug.Build.0 = Debug|Win32
-		{F47AD3E9-CFB3-4BE6-ABA1-C9F115996D18}.Debug Unicode.ActiveCfg = Debug|Win32
-		{F47AD3E9-CFB3-4BE6-ABA1-C9F115996D18}.Debug Unicode.Build.0 = Debug|Win32
-		{F47AD3E9-CFB3-4BE6-ABA1-C9F115996D18}.Release.ActiveCfg = Release|Win32
-		{F47AD3E9-CFB3-4BE6-ABA1-C9F115996D18}.Release.Build.0 = Release|Win32
-		{F47AD3E9-CFB3-4BE6-ABA1-C9F115996D18}.Release Unicode.ActiveCfg = Release|Win32
-		{F47AD3E9-CFB3-4BE6-ABA1-C9F115996D18}.Release Unicode.Build.0 = Release|Win32
-		{B0839C7D-7530-4D48-9108-2E0C79B42D05}.Debug.ActiveCfg = Debug|Win32
-		{B0839C7D-7530-4D48-9108-2E0C79B42D05}.Debug.Build.0 = Debug|Win32
-		{B0839C7D-7530-4D48-9108-2E0C79B42D05}.Debug Unicode.ActiveCfg = Debug|Win32
-		{B0839C7D-7530-4D48-9108-2E0C79B42D05}.Debug Unicode.Build.0 = Debug|Win32
-		{B0839C7D-7530-4D48-9108-2E0C79B42D05}.Release.ActiveCfg = Release|Win32
-		{B0839C7D-7530-4D48-9108-2E0C79B42D05}.Release.Build.0 = Release|Win32
-		{B0839C7D-7530-4D48-9108-2E0C79B42D05}.Release Unicode.ActiveCfg = Release|Win32
-		{B0839C7D-7530-4D48-9108-2E0C79B42D05}.Release Unicode.Build.0 = Release|Win32
+		{9C126E38-92C9-4960-BB70-DC3139749754}.Debug.ActiveCfg = Debug|Win32
+		{9C126E38-92C9-4960-BB70-DC3139749754}.Debug.Build.0 = Debug|Win32
+		{9C126E38-92C9-4960-BB70-DC3139749754}.Debug Unicode.ActiveCfg = Debug|Win32
+		{9C126E38-92C9-4960-BB70-DC3139749754}.Debug Unicode.Build.0 = Debug|Win32
+		{9C126E38-92C9-4960-BB70-DC3139749754}.Release.ActiveCfg = Release|Win32
+		{9C126E38-92C9-4960-BB70-DC3139749754}.Release.Build.0 = Release|Win32
+		{9C126E38-92C9-4960-BB70-DC3139749754}.Release Unicode.ActiveCfg = Release|Win32
+		{9C126E38-92C9-4960-BB70-DC3139749754}.Release Unicode.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 	EndGlobalSection
