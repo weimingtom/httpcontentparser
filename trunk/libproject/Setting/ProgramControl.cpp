@@ -68,6 +68,7 @@ int ProgramControl::getNextItem(const strutility::_tstring & cur, strutility::_t
 
 // 从XML中读取应用程序设置
 int ProgramControl::parseConfig(TiXmlElement * item_root)  {
+	enable(enabledFromString(item_root->Attribute(CONFIG_CONST_ENABLE)));
 	TiXmlNode * node = item_root->FirstChild();
 	while (NULL != node) {
 		TiXmlElement *ele = node->ToElement();
@@ -82,6 +83,7 @@ int ProgramControl::parseConfig(TiXmlElement * item_root)  {
 // 保存应用程序设置
 TiXmlElement * ProgramControl:: saveConfig(TiXmlElement * item_root) {
 	TiXmlElement * rule_root = new TiXmlElement(CONFIG_ITEM_APPSET_PROGRAM_CONTROL);
+	rule_root->SetAttribute(CONFIG_CONST_ENABLE, enabledFromBool(isSettingEnabled()));
 
 	PROGRAM_INFO::iterator iter = data_.begin();
 	for (; iter != data_.end(); ++iter) {
