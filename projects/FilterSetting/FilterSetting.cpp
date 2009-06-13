@@ -57,13 +57,16 @@ void initializeSetting() {
 	TCHAR config_path[MAX_PATH];
 	GetAppConfigFilename(config_path, MAX_PATH);
 	g_configuration.loadConfig(config_path);
+	LOGGER_DEBUG_WRITE_DATA(FILTERSETTING_LOGGER_DEBUG, "AppConfigFilePath", config_path);
 
 	// 读取搜索词汇信息
 	TCHAR filename[MAX_PATH];
 	g_searchwordUtil.load(GetSearchWordFile(filename, MAX_PATH));
+	LOGGER_DEBUG_WRITE_DATA(FILTERSETTING_LOGGER_DEBUG, "SearchWordPath", filename);
 
 	// 读取访问网站的信息
 	g_websitesUtil.load(GetWebSiteFile(filename, MAX_PATH));
+	LOGGER_DEBUG_WRITE_DATA(FILTERSETTING_LOGGER_DEBUG, "Website files", filename);
 }
 
 extern "C" int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, 
@@ -85,17 +88,19 @@ extern "C" int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/
 	// todo 此处应该直接使用函数获取状态
 	// 获取应用程序状态
 	AppUtility::AppInstallValidate validator(VALIDATE_COM, getAppStatus());
-	//validator.repair();
+	validator.repair();
 
 	initializeSetting();
 
 	if (g_configuration.getWebHistoryRecordAutoClean()->shouldExec()) {
 		g_configuration.getWebHistoryRecordAutoClean()->reset();
+		LOGGER_WRITE(FILTERSETTING_LOGGER_ERROR, "Clear WebHistory");
 		ClearHistory();
 		
 	}
 	if (g_configuration.getScreenshotAutoClean()->shouldExec()) {
 		g_configuration.getScreenshotAutoClean()->reset();
+		LOGGER_WRITE(FILTERSETTING_LOGGER_ERROR, "Clear Screenshot");
 		ClearScreen();
 	}
 
