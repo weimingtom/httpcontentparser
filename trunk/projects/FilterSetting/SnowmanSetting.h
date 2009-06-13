@@ -68,6 +68,7 @@ public:
 	// 获取应用程序状态
 	STDMETHOD(getApplicationStatus)(LONG* status);
 	STDMETHOD(setApplicationStatus)(LONG status);
+	STDMETHOD(CheckPwd)(BSTR password, VARIANT_BOOL* bSucc);
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(SnowmanSetting), CSnowmanSetting)
