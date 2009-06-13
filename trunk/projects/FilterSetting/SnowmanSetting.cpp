@@ -11,6 +11,7 @@
 #include <searchengine_define.h>
 #include <softwareStatus.h>
 #include <comutil.h>
+#include <logger_name.h>
 #include ".\snowmansetting.h"
 
 // CSnowmanSetting

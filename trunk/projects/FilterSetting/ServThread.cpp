@@ -7,6 +7,7 @@
 #include <PrintScreen.h>
 #include <searchengine_define.h>
 #include <searchkeywordutil.h>
+#include <logger_name.h>
 
 #define TIME_ESCAPE_SAVE_SCREEN  8000
 #define ID_TIMER_SAVE_SCREEN     1
@@ -39,7 +40,10 @@ namespace {
 		if (hwnd != NULL) {
 			ShowWindow(hwnd, SW_SHOW);
 		} else {
-			WinExec(TEXT("Mainui.exe"), SW_SHOW);
+			UINT result = WinExec(TEXT("Mainui.exe"), SW_SHOW);
+			if (0 != result) {
+				LOGGER_FUNC_FAILED(FILTERSETTING_LOGGER_ERROR, "WinExec", result);
+			}
 		}
 	}
 };
@@ -222,4 +226,7 @@ void ServThread::startServer() {
 	assert (dwThreadId_ == 0);
 
 	hThread_ = CreateThread(NULL, 1, (LPTHREAD_START_ROUTINE)TreadProc, (LPVOID)this, 0, &dwThreadId_);
+	if (NULL == hThread_) {
+		LOGGER_FUNC_FAILED(FILTERSETTING_LOGGER_ERROR, "CreateThread", hThread_);
+	}
 }

@@ -25,6 +25,14 @@
 	_sntprintf(buffer, 1024, "{%s} %s", __FUNCTION__, (LOGGER_TEXT));		\
 	LOG4CXX_INFO(log4cxx::Logger::getLogger(LOGGER_NAME), buffer);}
 
+#define LOGGER_FUNC_FAILED(LOGGER_NAME, FUNC_NAME, RETURE_VALUE)	{TCHAR buffer[1024];		\
+	LPVOID lpMsgBuf;	\
+	FormatMessage( FORMAT_MESSAGE_ALLOCATE_BUFFER |     FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,	\
+			NULL,     GetLastError(),     0,   (LPTSTR) &lpMsgBuf,   0,    NULL);	\
+	_sntprintf(buffer, 1024, "{%s} Failed On call %s, return value is %d, lastError is %d : %s", __FUNCTION__, (FUNC_NAME), RETURE_VALUE, GetLastError(), lpMsgBuf);		\
+	LocalFree( lpMsgBuf );	\
+	LOG4CXX_INFO(log4cxx::Logger::getLogger(LOGGER_NAME), buffer);}
+
 #define LOGGER_WRITE_COM_ERROR(LOGGER_NAME, LOGGER_TEXT, RESULT) { TCHAR buffer[1024]; \
 	_sntprintf(buffer, 1024, "{%s} %s HRESULT Value : %8Xh", __FUNCTION__, (LOGGER_TEXT), RESULT);		\
 	LOG4CXX_INFO(log4cxx::Logger::getLogger(LOGGER_NAME), buffer);}
