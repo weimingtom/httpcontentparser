@@ -10,7 +10,7 @@
 #define REG_PROTOCOL_CATALOG_ITEM	_T("PackedCatalogItem")
 
 // 保存软件安装的注册表信息
-#define REG_SOFTWARE_DIR			_T("SOFTWARE\\family007")
+#define REG_SOFTWARE_DIR			_T("SOFTWARE\\Websnow")
 #define REG_SOFTWARE_INSTALLPATH		_T("InstallPath")
 #define REG_SOFTWARE_INSTALLDATE		_T("InstallKey")		// 安装日期
 #define REG_SOFTWARE_PRODUCTSN		_T("ProductSN")	// 序列号
@@ -35,7 +35,7 @@
 #define COM_SERVICE_MUTEX	TEXT("7F6E3389-60CF-4b19-B1BD-BC6258E63BDC")
 
 // 应用程序的名称
-#define APPLICATION_MAINUI_NAME	TEXT("MainUI")
+#define APPLICATION_MAINUI_NAME	TEXT("Websnow")
 
 // 注册表项名称
 #define REGISTER_MAINUI_KEY	APPLICATION_MAINUI_NAME
