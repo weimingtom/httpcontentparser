@@ -1,29 +1,22 @@
 #ifndef _INCLUDE_LOGGER_NAME__H__
 #define _INCLUDE_LOGGER_NAME__H__
 
-#include <log4cxx/logger.h>
-#include <log4cxx/fileappender.h>
 #include <log4cxx/simplelayout.h>
-#include <log4cxx/basicconfigurator.h>
-#include <log4cxx/helpers/exception.h>
+#include <log4cxx/logmanager.h>
+#include <log4cxx/xml/domconfigurator.h>
+#include <log4cxx/patternlayout.h>
+#include <log4cxx/rolling/rollingfileappender.h>
+#include <log4cxx/rolling/fixedwindowrollingpolicy.h>
+#include <log4cxx/rolling/filterbasedtriggeringpolicy.h>
+#include <log4cxx/filter/levelrangefilter.h>
+#include <log4cxx/helpers/pool.h>
+#include <log4cxx/logger.h>
+#include <log4cxx/propertyconfigurator.h>
+#include <log4cxx/dailyrollingfileappender.h>
+#include <log4cxx/helpers/stringhelper.h>
 #include <tchar.h>
 #include <stdlib.h>
 #include <stdio.h>
-
-
-#define		MAINUI_LOGGER_ERROR				TEXT("mainui_error")
-#define		MAINUI_LOGGER_ERROR_FILE		LOG4CXX_STR(".\\LOG\\me.log")
-#define		MAINUI_LOGGER_INFO					TEXT("mainui_info")
-#define		MAINUI_LOGGER_INFO_FILE			LOG4CXX_STR(".\\LOG\\mi.log")
-#define		REVISION_TEXT								TEXT("2.3.0.1134")
-
-//==========================================
-// FILTERSETTING
-#define		FILTERSETTING_LOGGER_ERROR	TEXT("Service_error")
-#define		FILTERSETTING_LOGGER_DEBUG	TEXT("Service_debug")
-#define		FILTERSETTING_LOGGER_FILE		LOG4CXX_STR(".\\log\\services.log")
-#define		WSUT_LOGGER_ERROR					TEXT("wsut_error")
-#define		WSUT_LOGGER_FILE		LOG4CXX_STR(".\\log\\wsut.log")
 
 
 #define LOGGER_WRITE(LOGGER_NAME, LOGGER_TEXT)	{TCHAR buffer[1024];		\
@@ -55,9 +48,6 @@
 	_sntprintf(buffer, 1024, "{%s} COM_ERROR : %s", __FUNCTION__, (LOGGER_TEXT));		\
 	LOG4CXX_ERROR(log4cxx::Logger::getLogger(LOGGER_NAME), buffer);}
 
-
-//=============================================================
-#ifdef DEBUG
 #define LOGGER_DEBUG_WRITE(LOGGER_NAME, LOGGER_TEXT)	{TCHAR buffer[1024];		\
 	_sntprintf(buffer, 1024, "{%s} %s", __FUNCTION__, (LOGGER_TEXT));		\
 	LOG4CXX_DEBUG(log4cxx::Logger::getLogger(LOGGER_NAME), buffer);}
@@ -65,10 +55,7 @@
 #define LOGGER_DEBUG_WRITE_DATA(LOGGER_NAME, LOGGER_REASON, LOGGER_DATA)	{TCHAR buffer[1024];		\
 	_sntprintf(buffer, 1024, "{%s} %s:%s", __FUNCTION__, (LOGGER_REASON), LOGGER_DATA);		\
 	LOG4CXX_DEBUG(log4cxx::Logger::getLogger(LOGGER_NAME), buffer);}
-#else
-#define LOGGER_DEBUG_WRITE(LOGGER_REASON, LOGGER_DATA)
-#define LOGGER_DEBUG_WRITE_DATA(LOGGER_NAME, LOGGER_REASON, LOGGER_DATA);
-#endif
+
 
 
 inline void initLogger(log4cxx::LogString FILEAPPENDER) {
@@ -82,5 +69,9 @@ inline void initLogger(log4cxx::LogString FILEAPPENDER) {
 	log4cxx::BasicConfigurator::configure(log4cxx::AppenderPtr(appender_file_oper));
 }
 
+inline void setLoggerLevel(LPCTSTR logger_name, const log4cxx::LevelPtr & Lev) {
+	using namespace log4cxx;
+	log4cxx::Logger::getLogger(logger_name)->setLevel(Lev);
+}
 
 #endif  // _INCLUDE_LOGGER_NAME__H__
