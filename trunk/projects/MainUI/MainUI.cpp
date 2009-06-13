@@ -65,7 +65,7 @@ CMainUIApp theApp;
 // CMainUIApp ≥ı ºªØ
 
 BOOL CMainUIApp::InitInstance() {
-
+	
 	initLogger(MAINUI_LOGGER_ERROR_FILE);
 	{
 		CMutex mutext(0, MUTEX_NAME);
