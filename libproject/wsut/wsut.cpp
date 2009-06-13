@@ -20,13 +20,11 @@ namespace {
 class LoggerInit {
 public:
 	LoggerInit() {
-		//initLogger(WSUT_LOGGER_FILE);
+		initLogger(WSUT_LOGGER_FILE);
 	}
 };
 
 LoggerInit g_logger_init;
-
-HINSTANCE g_hInstance;
 
 void SetUninstallStatus() {
 	AutoInitInScale auto_;
@@ -35,7 +33,7 @@ void SetUninstallStatus() {
 		HRESULT hr = CoCreateInstance(CLSID_SnowmanSetting, NULL, CLSCTX_LOCAL_SERVER,
 			IID_ISnowmanSetting, (LPVOID*)&pSetting);
 		if (FAILED(hr)) {
-			//LOGGER_WRITE_COM_FAILED(WSUT_LOGGER_ERROR, "Create snowman", hr);
+			LOGGER_WRITE_COM_FAILED(WSUT_LOGGER_ERROR, "Create snowman", hr);
 			return ;
 		}
 
@@ -43,7 +41,7 @@ void SetUninstallStatus() {
 		pSetting->Release();
 		pSetting = NULL;
 	} catch (_com_error & e) {
-		//LOGGER_WRITE_COM_DESCRIPTION(WSUT_LOGGER_ERROR, e.Description());
+		LOGGER_WRITE_COM_DESCRIPTION(WSUT_LOGGER_ERROR, e.Description());
 	}
 }
 
@@ -55,7 +53,7 @@ bool CheckPoassword(LPCTSTR password) {
 		ISnowmanSetting *appSetting = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_SnowmanSetting, NULL, CLSCTX_LOCAL_SERVER, IID_ISnowmanSetting, (LPVOID*)&appSetting);
 		if (FAILED(hr)) {
-			//LOGGER_WRITE_COM_FAILED(WSUT_LOGGER_ERROR, "Create snowman", hr);
+			LOGGER_WRITE_COM_FAILED(WSUT_LOGGER_ERROR, "Create snowman", hr);
 			return false;
 		}
 
@@ -63,7 +61,7 @@ bool CheckPoassword(LPCTSTR password) {
 		SafeRelease(appSetting);
 		return convert(bSucc);
 	} catch (_com_error &e) {
-		//LOGGER_WRITE_COM_DESCRIPTION(WSUT_LOGGER_ERROR, e.Description());
+		LOGGER_WRITE_COM_DESCRIPTION(WSUT_LOGGER_ERROR, e.Description());
 		return false;
 	}
 }
@@ -71,11 +69,11 @@ bool CheckPoassword(LPCTSTR password) {
 };
 
 
-WSUT_API int CheckProgram(const char * status) {
+WSUT_API __stdcall int CheckProgram(const char * status) {
 	//  检测那些程序在运行
 	return 0;
 }
-WSUT_API int CheckStatus(const char * status) {
+WSUT_API __stdcall int CheckStatus(const char * status) {
 	AutoInitInScale _auto_scale__;
 
 	if (true == CheckPoassword(status)) {
@@ -84,7 +82,7 @@ WSUT_API int CheckStatus(const char * status) {
 		return -1;
 	}
 }
-WSUT_API int CallUtility(const char * status) {
+WSUT_API __stdcall int CallUtility(const char * status) {
 	AutoInitInScale _auto_scale__;
 
 	// 检测密码
@@ -108,7 +106,6 @@ BOOL APIENTRY DllMain( HANDLE hModule,
                        LPVOID lpReserved
 					 )
 {
-	g_hInstance = (HINSTANCE)hModule;
 	switch (ul_reason_for_call)
 	{
 	case DLL_PROCESS_ATTACH:
