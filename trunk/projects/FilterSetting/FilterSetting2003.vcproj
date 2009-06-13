@@ -16,7 +16,7 @@
 			IntermediateDirectory="Debug"
 			ConfigurationType="1"
 			UseOfMFC="2"
-			UseOfATL="2"
+			UseOfATL="1"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE"
 			CharacterSet="2">
 			<Tool
