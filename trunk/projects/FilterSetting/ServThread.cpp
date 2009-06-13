@@ -126,6 +126,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 
 				// 保存文件
 				g_configuration.saveConfig(config_path);
+				LOGGER_DEBUG_WRITE(FILTERSETTING_LOGGER_DEBUG, "Save Configuration");
 			}
 
 			// 自动切换模式可能导致用户迷惑，因此先废除它
@@ -140,6 +141,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 					TCHAR fullpath[MAX_PATH];
 					GenScreenSPFile(fullpath, MAX_PATH);
 					GetScreen(fullpath);
+					LOGGER_DEBUG_WRITE(FILTERSETTING_LOGGER_DEBUG, "Screen Snapshot");
 				}
 			} else if (ID_TIMER_EYECARE_TRY == wParam) {
 				// 只有运行于子模式才执行此操作
@@ -165,6 +167,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 				// 读取访问网站的信息
 				GetWebSiteFile(filename, MAX_PATH);
 				g_websitesUtil.save(GetWebSiteFile(filename, MAX_PATH));
+				LOGGER_DEBUG_WRITE(FILTERSETTING_LOGGER_DEBUG, "Save History");
 			}
 			// 自动开启
 			break;

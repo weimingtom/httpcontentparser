@@ -67,7 +67,6 @@ CMainUIApp theApp;
 BOOL CMainUIApp::InitInstance() {
 
 	initLogger(MAINUI_LOGGER_ERROR_FILE);
-	LOGGER_WRITE(MAINUI_LOGGER_ERROR, "CMainUIApp::InitInstance()");
 	{
 		CMutex mutext(0, MUTEX_NAME);
 		CSingleLock(&mutext, true);
@@ -128,7 +127,6 @@ BOOL CMainUIApp::InitInstance() {
 
 int CMainUIApp::ExitInstance()
 {
-	LOGGER_WRITE(MAINUI_LOGGER_ERROR, TEXT("CMainUIApp::ExitInstance()"));
 	GdiplusShutdown( m_GdiplusToken);
 	SafeRelease(g_dnssetting);
 
