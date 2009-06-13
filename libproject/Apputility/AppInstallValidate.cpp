@@ -122,14 +122,14 @@ bool AppInstallValidate::repairRegistryInstallPath(const TCHAR * path) {
 
 // 验证注册表中的安装路径是否正确
 bool AppInstallValidate::validateReigstrInstallPath(const TCHAR *currentPath) {
-	// 获取路径
-	TCHAR pathInReg[MAX_PATH];
-	GetInstallPathFromRegistry(pathInReg, MAX_PATH);
-	_tcslwr(pathInReg);
-
 	TCHAR tmp[MAX_PATH];
 	_tcsncpy(tmp, currentPath, MAX_PATH);
 	_tcslwr(tmp);
+
+	// 获取路径
+	TCHAR pathInReg[MAX_PATH] = {0};
+	GetInstallPathFromRegistry(pathInReg, MAX_PATH);
+	_tcslwr(pathInReg);
 
 	return (0 == _tcscmp(pathInReg, tmp));
 }
