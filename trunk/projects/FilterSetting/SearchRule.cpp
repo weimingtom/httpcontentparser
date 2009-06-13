@@ -53,7 +53,10 @@ STDMETHODIMP CSearchRule::check(BSTR search_word, BSTR host_name, VARIANT_BOOL* 
 	char main_name[buf_size];
 	get_main_dns_name(main_name, buf_size, (TCHAR*)_bstr_t(host_name));
 
-	g_searchwordUtil.addKeyword(std::string(mcbs), getSearchEngineType(main_name));
+	// 只有当工作在child模式下载， 才进行转换
+	if (SettingItem::MODE_PARENT != SettingItem::getModel()) {
+		g_searchwordUtil.addKeyword(std::string(mcbs), getSearchEngineType(main_name));
+	}
 
 	return S_OK;
 }
