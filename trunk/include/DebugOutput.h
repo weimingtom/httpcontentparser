@@ -9,7 +9,7 @@
 #define _INIT_OUTPUT_OSTRSTREAM_ std::ostrstream __output_debug_string_stream__;
 #define _DEBUG_STREAM_DBG_	__output_debug_string_stream__<<"[DBG] "
 #define _DEBUG_STREAM_TRC_	__output_debug_string_stream__<<"[TRC] "
-#define _OUTPUT_FMT_STRING_	 __output_debug_string_stream__<<std::endl; OutputDebugString(__output_debug_string_stream__.str());
+#define _OUTPUT_FMT_STRING_	OutputDebugString(__output_debug_string_stream__.str());
 
 #else
 #define _INIT_FILESCOPT_OSTRSTREAM
