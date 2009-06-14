@@ -56,7 +56,7 @@ void CDlgEyecare::setEyecareTimespan() {
 		IEyecare *pEyeCare = NULL;
 		HRESULT hr =CoCreateInstance(CLSID_Eyecare, NULL, CLSCTX_LOCAL_SERVER, IID_IEyecare, (LPVOID*)&pEyeCare);
 		if (FAILED(hr)) {
-			LERR_<< "Create Eyecare failed with HRESULT value "<< hr;
+			LERR_<< "Create Eyecare failed with HRESULT value "<<std::hex<<hr;
 			AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
 			return;
 		}
@@ -181,7 +181,7 @@ void CDlgEyecare::UpdateState() {
 		IEyecare *pEyeCare = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_Eyecare, NULL, CLSCTX_LOCAL_SERVER, IID_IEyecare, (LPVOID*)&pEyeCare);
 		if (FAILED(hr)) {
-			LERR_<< "CreateEyecare failed with HRESULT value "<< hr;
+			LERR_<< "CreateEyecare failed with HRESULT value "<<std::hex<<hr;
 			return ;
 		}
 

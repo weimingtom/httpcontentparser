@@ -56,7 +56,7 @@ int CDlgScreenshot::OnApply() {
 		IScreenSave * screensave = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_ScreenSave, NULL, CLSCTX_LOCAL_SERVER, IID_IScreenSave, (LPVOID*)&screensave);
 		if(FAILED(hr)) {
-			LERR_<<"Create Sceensave failed with HRESULT value"<< hr;
+			LERR_<<"Create Sceensave failed with HRESULT value"<<std::hex<<hr;
 			AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
 			return -1;
 		}

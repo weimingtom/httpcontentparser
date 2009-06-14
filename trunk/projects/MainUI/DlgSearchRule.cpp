@@ -41,7 +41,7 @@ int CDlgSearchRule::OnApply() {
 		ISearchRule *seach_rule;
 		HRESULT hr = CoCreateInstance(CLSID_SearchRule, NULL, CLSCTX_LOCAL_SERVER, IID_ISearchRule, (LPVOID*)&seach_rule);
 		if (FAILED(hr)) {
-			LERR_<<"Create SearchRule failed with HRESULT value "<< hr;
+			LERR_<<"Create SearchRule failed with HRESULT value "<<std::hex<<hr;
 			AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
 			return -1;
 		}
@@ -86,7 +86,7 @@ void CDlgSearchRule::restoreSetting() {
 		ISearchRule *seach_rule;
 		HRESULT hr = CoCreateInstance(CLSID_SearchRule, NULL, CLSCTX_LOCAL_SERVER, IID_ISearchRule, (LPVOID*)&seach_rule);
 		if (FAILED(hr)) {
-			LERR_<<"Create SearchRule failed with HRESULT vlaue "<< hr;
+			LERR_<<"Create SearchRule failed with HRESULT vlaue "<<std::hex<<hr;
 			throw int(SNOWMAN_ERROR_COM_INIT_FAILED);
 		}
 
@@ -122,7 +122,7 @@ void CDlgSearchRule::OnAddItem(const CString &str) {
 		ISearchRule *seach_rule;
 		HRESULT hr = CoCreateInstance(CLSID_SearchRule, NULL, CLSCTX_LOCAL_SERVER, IID_ISearchRule, (LPVOID*)&seach_rule);
 		if (FAILED(hr)) {
-			LERR_<<"Create searchRule faied with HRESULT value "<<hr;
+			LERR_<<"Create searchRule faied with HRESULT value "<<std::hex<<hr;
 			AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
 			return;
 		}
@@ -142,7 +142,7 @@ void CDlgSearchRule::OnDelItem(const CString &str) {
 		ISearchRule *seach_rule;
 		HRESULT hr = CoCreateInstance(CLSID_SearchRule, NULL, CLSCTX_LOCAL_SERVER, IID_ISearchRule, (LPVOID*)&seach_rule);
 		if (FAILED(hr)) {
-			LERR_<<"Create searchRule failed with HRESULT value "<< hr;
+			LERR_<<"Create searchRule failed with HRESULT value "<<std::hex<<hr;
 			return;
 		}
 

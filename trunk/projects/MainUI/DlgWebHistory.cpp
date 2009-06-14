@@ -63,7 +63,7 @@ void CDlgWebHistory::ChangeRecordType() {
 		IWebHistoryRecorder *pWebHistory = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_WebHistoryRecorder, NULL, CLSCTX_ALL, IID_IWebHistoryRecorder, (LPVOID*)&pWebHistory);
 		if (FAILED(hr)) {
-			LERR_<<"Create historyRecord with HRESULT value"<< hr;
+			LERR_<<"Create historyRecord with HRESULT value"<<std::hex<<hr;
 			AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
 			return;
 		}
