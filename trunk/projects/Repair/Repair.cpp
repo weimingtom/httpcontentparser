@@ -10,6 +10,7 @@
 #include <softwareStatus.h>
 #include <COM\FilterSetting_i.c>
 #include <COM\FilterSetting.h>
+#include ".\log.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -61,15 +62,40 @@ BOOL CRepairApp::InitInstance()
 	AppUtility::AppInstallValidate validator(VLAIDATE_NONE, app_status);
 	validator.repair();
 
-	TCHAR errMsg[MAX_PATH];
-	validator.getErrorMessage(errMsg, MAX_PATH);
-	if (_tcslen(errMsg) > 0) {
-		AfxMessageBox(errMsg);
+
+	if (_tcsstr(GetCommandLine(), "-i")) {
+		TCHAR errMsg[MAX_PATH];
+		validator.getErrorMessage(errMsg, MAX_PATH);
+		if (_tcslen(errMsg) > 0) {
+			AfxMessageBox(errMsg);
+			return FALSE;
+		}
+
+
+		CString strSucc;
+		strSucc.LoadString(IDS_REPAIR_SUCCESS);
+		AfxMessageBox(strSucc);
 		return FALSE;
 	}
 
-	CString strSucc;
-	strSucc.LoadString(IDS_REPAIR_SUCCESS);
-	AfxMessageBox(strSucc);
-	return FALSE;
+	return TRUE;
 }
+
+
+namespace {
+class LoggerInit {
+public:
+	LoggerInit() {
+		using namespace boost::logging;
+#ifdef DEBUG
+	init_debug_logger(".\\log\\drepair.log", false, true);
+	init_app_logger(".\\log\\repair.log", false, true);
+	g_log_level()->set_enabled(level::debug);
+#else
+	init_app_logger(".\\log\\repair.log");
+	g_log_level()->set_enabled(level::warning);
+#endif
+	}
+};
+LoggerInit g_logger_init;
+};

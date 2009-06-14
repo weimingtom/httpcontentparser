@@ -122,6 +122,12 @@
 				RelativePath=".\LockPC.cpp">
 			</File>
 			<File
+				RelativePath=".\log.cpp">
+			</File>
+			<File
+				RelativePath=".\log.h">
+			</File>
+			<File
 				RelativePath=".\stdafx.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
