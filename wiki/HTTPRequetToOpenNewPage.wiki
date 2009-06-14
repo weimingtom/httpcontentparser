@@ -38,4 +38,3 @@ Connection: Keep-Alive
 GET /support/accounts/?hl=zh-CN HTTP/1.1
 Host: www.google.com
 Connection: keep-alive
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/530.5 (KHTML, like Gecko) Chrome/2.0.172.31 Safari/530.5
