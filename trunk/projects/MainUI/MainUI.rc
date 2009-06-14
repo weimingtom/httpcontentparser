@@ -983,6 +983,7 @@ BEGIN
     IDS_REGISTER_OVERTIME   "Exceed 30 days"
     IDS_REGISTER_TRIAL_DAYS "%d days Left, Please Register as soon as possibile"
     IDS_REGISTER_CANNOT_GETINFO "Get Information from service failed!"
+    IDS_REGISTER_OVER_TIP   "30 days tail day is over. All function has been disabled. Please register as soon as possible."
 END
 
 #endif    // Ó¢Óï(ÃÀ¹ú) resources
