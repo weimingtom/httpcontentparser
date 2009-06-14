@@ -60,7 +60,7 @@ BOOL CRepairApp::InitInstance()
 	}
 
 	AppUtility::AppInstallValidate validator(VLAIDATE_NONE, app_status);
-	validator.repair();
+	validator.repair(true);
 
 	TCHAR errMsg[MAX_PATH];
 	validator.getErrorMessage(errMsg, MAX_PATH);
