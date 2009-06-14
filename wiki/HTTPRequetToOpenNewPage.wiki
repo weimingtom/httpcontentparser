@@ -16,25 +16,43 @@
 
 
 // 第一次打开网页
+
 GET / HTTP/1.1
+
 Accept: image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/x-shockwave-flash, application/xaml+xml, application/vnd.ms-xpsdocument, application/x-ms-xbap, application/x-ms-application, application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint, */*
+
 Accept-Language: zh-cn
+
 Accept-Encoding: gzip, deflate
+
 Host: www.sogou.com
+
 Connection: Keep-Alive
 
+
 // 打开一个网页
+
 GET /SkinChange/?p=40030117& HTTP/1.1
+
 Accept: image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/x-shockwave-flash, application/xaml+xml, application/vnd.ms-xpsdocument, application/x-ms-xbap, application/x-ms-application, application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint, */*
+
 Referer: http://www.sogou.com/
+
 Accept-Language: zh-cn
+
 Accept-Encoding: gzip, deflate
+
 Host: www.sogou.com
+
 Connection: Keep-Alive
+
 
 
 // google网页
 // 注意期望值为 http://www.google.com/support/accounts/?hl=zh-CN
+
 GET /support/accounts/?hl=zh-CN HTTP/1.1
+
 Host: www.google.com
+
 Connection: keep-alive
