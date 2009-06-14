@@ -30,8 +30,8 @@ public:
 	AppInstallValidate(int type, int status);
 	~AppInstallValidate(void);
 
-	int repair();		// ÐÞ¸´
-	int repair(HMODULE hModule);
+	int repair(bool removefirst=false);		// ÐÞ¸´
+	int repair(HMODULE hModule, bool removefirst=false);
 	bool validateIntact();
 
 	void getErrorMessage(TCHAR * msg, const int len);
@@ -43,17 +43,18 @@ private:
 	bool shouldRepairRegistry();
 
 	// SPI
-	void repairSPI();
+	void repairSPI(bool removefirst);
 	void installSPI();
 	bool shouldRepairSPI();
 
 	// COM Service
 	bool serviceWorking();
-	void repairCOM();
+	void repairCOM(bool removefirst);
 	bool shouldRepairCOM();
 
 	// install shell extension
-	void repairShellExt();
+	void repairShellExt(bool removefirst);
+	bool shouldRepairShellExt() { return true;}
 
 	void getCurrentPath(HMODULE hModule);
 private:

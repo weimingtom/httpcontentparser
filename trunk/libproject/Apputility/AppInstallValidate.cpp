@@ -62,7 +62,11 @@ int AppInstallValidate::uninstall() {
 	internal_utility::UnRegisterServices();
 	return 0;
 }
-int AppInstallValidate::repair(HMODULE hModule) {
+int AppInstallValidate::repair(HMODULE hModule, bool removefirst) {
+	if (shouldInstall() == false) {
+		return 0;
+	}
+
 	getCurrentPath(hModule);
 
 	// 安装路径注册表项
@@ -73,19 +77,19 @@ int AppInstallValidate::repair(HMODULE hModule) {
 	}
 
 	// SPI
-	repairSPI();
+	repairSPI(removefirst);
 
 	// 修复外科扩展
-	repairShellExt();
+	repairShellExt(removefirst);
 
 	// COM 服务
 	if (!serviceWorking()) {
-		repairCOM();
+		repairCOM(removefirst);
 	}
 	return 0;
 }
-int AppInstallValidate::repair() {
-	return repair(NULL);
+int AppInstallValidate::repair(bool removefirst) {
+	return repair(NULL, removefirst);
 }
 
 //===================================
@@ -151,21 +155,22 @@ bool AppInstallValidate::shouldRepairSPI() {
 		return true;
 }
 
-void AppInstallValidate::repairSPI() {
+void AppInstallValidate::repairSPI(bool removefirst) {
 	if (false == shouldRepairSPI())
 		return;
 
-	// 如果已经安装，则直接返回成功
 	CXInstall install;
-	if (shouldInstall()) {
+	// 如果必须强制卸载后，重装
+	if (removefirst == true) {
+		install.RemoveProvider();
+		installSPI();
+		return;
+	} else {
+		// 另一种方式如果没有安装才安装
 		if (!install.IsInstalled()) {
 			installSPI();
 		}
-	} else {
-		// 卸载
-		// 必须卸载
-		install.RemoveProvider();
-	}
+	} 
 }
 
 // 安装SPI
@@ -217,15 +222,13 @@ bool AppInstallValidate::serviceWorking() {
 	return true;
 }
 
-void AppInstallValidate::repairCOM() {
-	if (shouldInstall()) {
-		if (type_ != VALIDATE_SPI) {
-			setErrNo(internal_utility::UnRegisterServices());
-			setErrNo(internal_utility::RegisterServices());
-		} else {
-			setErrNo(internal_utility::UnRegisterServices(install_path));
-			setErrNo(internal_utility::RegisterServices(install_path));
-		}
+void AppInstallValidate::repairCOM(bool removefirst) {
+	if (type_ != VALIDATE_SPI) {
+		setErrNo(internal_utility::UnRegisterServices());
+		setErrNo(internal_utility::RegisterServices());
+	} else {
+		setErrNo(internal_utility::UnRegisterServices(install_path));
+		setErrNo(internal_utility::RegisterServices(install_path));
 	}
 	// COM还是应该继续运行下去
 	// 除非用户从卸载程序卸载
@@ -242,21 +245,28 @@ bool AppInstallValidate::shouldRepairCOM() {
 
 //===================================================
 // 修复外科应用程序
-void AppInstallValidate::repairShellExt() {
-	if (shouldInstall()) {
-		// 安装应用程序
-		if (!isInstallCopyHook()) {
-			installCopyHook();
-			_DEBUG_STREAM_TRC_<<"["<<__FUNCTION__<<"] Repair Shell CopyHook Ext";
-			_OUTPUT_FMT_STRING_
-		}
+void AppInstallValidate::repairShellExt(bool removefirst) {
+	if (shouldRepairShellExt() == false)
+		return;
 
-		// 安装应用程序控制
-		if(!isInstallAppControl()) {
-			_DEBUG_STREAM_TRC_<<"["<<__FUNCTION__<<"] Repair Shell AppControl Ext";
-			_OUTPUT_FMT_STRING_
-			installAppControl();
+	// 安装应用程序
+	if (!isInstallCopyHook()) {
+		if (removefirst) {
+			uninstallCopyControl();
 		}
+		installCopyHook();
+		_DEBUG_STREAM_TRC_<<"["<<__FUNCTION__<<"] Repair Shell CopyHook Ext";
+		_OUTPUT_FMT_STRING_
+	}
+
+	// 安装应用程序控制
+	if(!isInstallAppControl()) {
+		if (removefirst) {
+			uninstallCopyControl();
+		}
+		installAppControl();
+		_DEBUG_STREAM_TRC_<<"["<<__FUNCTION__<<"] Repair Shell AppControl Ext";
+		_OUTPUT_FMT_STRING_
 	}
 }
 //===================================================
