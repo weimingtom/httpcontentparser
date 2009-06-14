@@ -8,7 +8,9 @@
 #include <io.h>
 #include <shell\shellutility.h>
 #include <softwareStatus.h>
+#include <DebugOutput.h>
 
+_INIT_FILESCOPT_OSTRSTREAM_
 
 namespace AppUtility {
 
@@ -64,8 +66,11 @@ int AppInstallValidate::repair(HMODULE hModule) {
 	getCurrentPath(hModule);
 
 	// 安装路径注册表项
-	if (!validateReigstrInstallPath(install_path))
+	if (!validateReigstrInstallPath(install_path)) {
 		repairRegistryInstallPath(install_path);
+		_DEBUG_STREAM_TRC_<<"["<<__FUNCTION__<<"] Repair Registry Install Path";
+		_OUTPUT_FMT_STRING_
+	}
 
 	// SPI
 	repairSPI();
@@ -116,6 +121,8 @@ bool AppInstallValidate::repairRegistryInstallPath(const TCHAR * path) {
 		return true;
 	} else {
 		setErrNo(F_REGISTRY_OPR_FAILED);
+		_DEBUG_STREAM_TRC_<<"["<<__FUNCTION__<<"] Failed On Registion Operation Errono: "<<GetLastError();
+		_OUTPUT_FMT_STRING_
 		return false;
 	}
 }
@@ -176,6 +183,8 @@ void AppInstallValidate::installSPI() {
 
 	CXInstall	m_Install;
 	setErrNo(m_Install.InstallProvider(fullpath));
+	_DEBUG_STREAM_TRC_<<"Repair SPI";
+	_OUTPUT_FMT_STRING_
 }
 
 //=========================================
@@ -238,10 +247,14 @@ void AppInstallValidate::repairShellExt() {
 		// 安装应用程序
 		if (!isInstallCopyHook()) {
 			installCopyHook();
+			_DEBUG_STREAM_TRC_<<"["<<__FUNCTION__<<"] Repair Shell CopyHook Ext";
+			_OUTPUT_FMT_STRING_
 		}
 
 		// 安装应用程序控制
 		if(!isInstallAppControl()) {
+			_DEBUG_STREAM_TRC_<<"["<<__FUNCTION__<<"] Repair Shell AppControl Ext";
+			_OUTPUT_FMT_STRING_
 			installAppControl();
 		}
 	}
@@ -256,13 +269,14 @@ void AppInstallValidate::setErrNo(int new_error) {
 void AppInstallValidate::getErrorMessage(TCHAR * msg, const int len) {
 	switch (errno_) {
 		case PACKETSFILTERED_FILE_NOT_FOUND:
-			_tcsncpy(msg, "Fail to repair! Pleas try to reinstall.", len);
+			_sntprintf(msg, len, "File %s cannot be found. Please restainll the software.", PACKETSGRASPER_DLL_NAME );
 			break;
 		case F_COM_FILE_NOT_FOUND:
-			_tcsncpy(msg, "Fail to repair! Pleas try to reinstall.", len);
+			_sntprintf(msg, len, "File  %s cannot be found. Please restainll the software.", SERVICE_FILENAME );
 			break;
 		case F_REGISTRY_OPR_FAILED:
 			_tcsncpy(msg, "Fail to repair! Pleas try to reinstall.", len);
+			
 			break;
 		default:
 			msg[0] = '\0';
