@@ -128,3 +128,42 @@ int HTTPRequestPacket::parsePacket(char * buf, const int len) {
 
 	return cnt;
 }
+
+// 注意期望值为 http://www.google.com/support/accounts/?hl=zh-CN
+// GET /support/accounts/?hl=zh-CN HTTP/1.1
+// Host: www.google.com
+// 当用户打开的是一个网址时， 他不应有又后缀，
+#define REQUEST_FILE_FORMAT_PNG			".png"
+#define REQUEST_FILE_FORMAT_GIF				".gif"
+#define REQUEST_FILE_FORMAT_JPG				".jpg"
+#define REQUEST_FILE_FORMAT_BMP			".bmp"
+#define REQUEST_FILE_FORMAT_CSS				".css"
+#define REQUEST_FILE_FORMAT_JS				".js"
+#define REQUEST_FILE_FORMAT_SWF			".swf"
+
+bool HTTPRequestPacket::openPage() {
+	// 如果请求包含是GET类型， 切其中不包含.js, .gif, .jpg, .css, .bmp, .png, .swf就可以认为打开的是一个网页
+	// 网页的后缀可能是什么都没有， 也可能是 'html', 'php', 'asp', 'aspx'等，比较多
+	// 总之地址栏内可能出现的后缀都是
+	if (HTTP_REQUEST_OPETYPE_GET != http_request_type_) {
+		return false;
+	}
+
+	if (NULL != strstr(oper_, REQUEST_FILE_FORMAT_PNG)) {
+		return false;
+	} else if (NULL != strstr(oper_, REQUEST_FILE_FORMAT_GIF)) {
+		return false;
+	} else if (NULL != strstr(oper_, REQUEST_FILE_FORMAT_JPG)) {
+		return false;
+	} else if (NULL != strstr(oper_, REQUEST_FILE_FORMAT_BMP)) {
+		return false;
+	} else if (NULL != strstr(oper_, REQUEST_FILE_FORMAT_CSS)) {
+		return false;
+	} else if (NULL != strstr(oper_, REQUEST_FILE_FORMAT_JS)) {
+		return false;
+	} else if (NULL != strstr(oper_, REQUEST_FILE_FORMAT_SWF)) {
+		return false;
+	} else {
+		return true;
+	}
+}
