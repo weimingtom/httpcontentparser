@@ -12,15 +12,8 @@
 #include <com\comutility.h>
 #include <AppinstallValidate.h>
 #include <softwareStatus.h>
-#include ".\logger_def.h"
 #include ".\share.h"
-#include <log4cxx/logger.h>
-#include <log4cxx/fileappender.h>
-#include <log4cxx/simplelayout.h>
-#include <log4cxx/basicconfigurator.h>
-#include <log4cxx/propertyconfigurator.h>
-#include <log4cxx/helpers/exception.h>
-#include ".\logger_def.h"
+#include ".\log.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -33,7 +26,8 @@ HWND share_hwnd = 0;
 #pragma data_seg()
 
 #define MUTEX_NAME TEXT("2A144C85-AF84-4f88-8F7D-6C794A2800EB")
-
+#define WEBSNOW_LOGGER_FILE		".\\log\\websnow.log"
+#define WEBSNOW_DEBUG_FILE		".\\log\\dwebsnow.log"
 
 IDNSSetting *g_dnssetting = NULL;
 extern bool g_parentModel = false;
@@ -66,6 +60,9 @@ CMainUIApp theApp;
 
 BOOL CMainUIApp::InitInstance() {
 	{
+		LERR_<<"CATCH(...)";
+		LERR_<<"CATCH(...)";
+		LERR_<<"CATCH(...)";
 		CMutex mutext(0, MUTEX_NAME);
 		CSingleLock(&mutext, true);
 		if (share_hwnd != NULL) {
@@ -81,11 +78,11 @@ BOOL CMainUIApp::InitInstance() {
 		ISnowmanSetting * pSetting = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_SnowmanSetting, NULL, CLSCTX_LOCAL_SERVER, IID_ISnowmanSetting, (LPVOID*)&pSetting);
 		if (FAILED(hr)) {
-			LOGGER_WRITE_COM_FAILED(MAINUI_LOGGER, "Create Snowsetting", hr);
+			LERR_<< "Create Snowsetting with HRESULT vlaue "<<hr;
 		}
 		pSetting->getApplicationStatus(&app_status);
 	} catch (...) {
-		LOGGER_WRITE(MAINUI_LOGGER, "CATCH(...)");
+		LERR_<<"CATCH(...)";
 	}
 
 	// ³õÊ¼»¯LOGGER
@@ -142,7 +139,7 @@ BOOL CMainUIApp::Initialize(void)
 	HRESULT hr = CoCreateInstance(CLSID_DNSSetting, 
 		NULL, CLSCTX_LOCAL_SERVER, IID_IDNSSetting, (LPVOID*)&g_dnssetting);
 	if (FAILED(hr)) {
-		LOGGER_WRITE_COM_FAILED(MAINUI_LOGGER, "Create DNSString", hr);
+		LERR_<<"Create DNSString with HRESULT vlaue "<<hr;
 		AfxMessageBox(str);
 		return FALSE;
 	}
@@ -155,11 +152,14 @@ namespace {
 class LoggerInit {
 public:
 	LoggerInit() {
-		initLogger(MAINUI_LOGGER_FILE);
+		using namespace boost::logging;
 #ifdef DEBUG
-	setLoggerLevel(MAINUI_LOGGER, log4cxx::Level::getDebug());
+	init_debug_logger(WEBSNOW_DEBUG_FILE, false, true);
+	init_app_logger(WEBSNOW_LOGGER_FILE, false, true);
+	g_log_level()->set_enabled(level::debug);
 #else
-	setLoggerLevel(MAINUI_LOGGER,  log4cxx::Level::getInfo());
+	init_app_logger(WEBSNOW_LOGGER_FILE);
+	g_log_level()->set_enabled(level::warning);
 #endif
 	}
 };

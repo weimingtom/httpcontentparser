@@ -15,22 +15,24 @@
 #include <comdef.h>
 #include ".\logger_def.h"
 #include "resource.h"
+#include ".\log.h"
 
 namespace {
 class LoggerInit {
 public:
 	LoggerInit() {
-		initLogger(WSUT_LOGGER_FILE);
+		using namespace boost::logging;
 #ifdef DEBUG
-	setLoggerLevel(WSUT_LOGGER, log4cxx::Level::getDebug());
+	init_debug_logger(WSUT_DEBUG_FILE, false, true);
+	init_app_logger(WSUT_LOGGER_FILE, false,true);
+	g_log_level()->set_enabled(level::debug);
 #else
-	setLoggerLevel(WSUT_LOGGER,  log4cxx::Level::getInfo());
+	init_app_logger(WSUT_LOGGER_FILE);
+	g_log_level()->set_enabled(level::warning);
 #endif
 	}
 };
-
 LoggerInit g_logger_init;
-
 void SetUninstallStatus() {
 	AutoInitInScale auto_;
 	try {
@@ -38,7 +40,7 @@ void SetUninstallStatus() {
 		HRESULT hr = CoCreateInstance(CLSID_SnowmanSetting, NULL, CLSCTX_LOCAL_SERVER,
 			IID_ISnowmanSetting, (LPVOID*)&pSetting);
 		if (FAILED(hr)) {
-			LOGGER_WRITE_COM_FAILED(WSUT_LOGGER, "Create snowman", hr);
+			LERR_<<"Create snowman FAILED with HRESULT value "<< hr;
 			return ;
 		}
 
@@ -46,7 +48,7 @@ void SetUninstallStatus() {
 		pSetting->Release();
 		pSetting = NULL;
 	} catch (_com_error & e) {
-		LOGGER_WRITE_COM_DESCRIPTION(WSUT_LOGGER, e.Description());
+		LERR_<<"_com_error exception with Description :  "<< e.Description();
 	}
 }
 
@@ -58,7 +60,7 @@ bool CheckPoassword(LPCTSTR password) {
 		ISnowmanSetting *appSetting = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_SnowmanSetting, NULL, CLSCTX_LOCAL_SERVER, IID_ISnowmanSetting, (LPVOID*)&appSetting);
 		if (FAILED(hr)) {
-			LOGGER_WRITE_COM_FAILED(WSUT_LOGGER, "Create snowman", hr);
+			LERR_<<"Create snowman FAILED with HRESULT value "<< hr;
 			return false;
 		}
 
@@ -66,7 +68,7 @@ bool CheckPoassword(LPCTSTR password) {
 		SafeRelease(appSetting);
 		return convert(bSucc);
 	} catch (_com_error &e) {
-		LOGGER_WRITE_COM_DESCRIPTION(WSUT_LOGGER, e.Description());
+		LERR_<<"_com_error exception with Description :  "<< e.Description();
 		return false;
 	}
 }

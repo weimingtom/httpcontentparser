@@ -9,7 +9,7 @@
 #include <comdef.h>
 #include <utility\strutility.h>
 #include ".\appcontrol.h"
-#include ".\logger_def.h"
+#include ".\log.h"
 
 // CAppControl
 STDMETHODIMP CAppControl::AddNewItem(BSTR path) {
@@ -54,9 +54,9 @@ STDMETHODIMP CAppControl::checkApp(BSTR fullpath, VARIANT_BOOL* result)
 {
 	*result = g_configuration.getProgramControl()->check((TCHAR*)_bstr_t(fullpath));
 	if (VARIANT_TRUE == *result) {
-		LOGGER_DEBUG_WRITE_DATA(FILTERSETTING_LOGGER, "pass app check", (char*)_bstr_t(fullpath));
+		LTRC_<<"pass app check "<< (char*)_bstr_t(fullpath);
 	} else {
-		LOGGER_DEBUG_WRITE_DATA(FILTERSETTING_LOGGER, "block app check", (char*)_bstr_t(fullpath));
+		LTRC_<<"block app check "<<(char*)_bstr_t(fullpath);
 	}
 	return S_OK;
 }

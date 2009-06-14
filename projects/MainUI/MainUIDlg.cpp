@@ -15,7 +15,7 @@
 #include <app_constants.h>
 #include <apputility.h>
 #include <comdef.h>
-#include ".\logger_def.h"
+#include ".\log.h"
 
 #define 	HISTORY_MENU_POS  3
 
@@ -347,7 +347,7 @@ void CMainUIDlg::OnBnClickedOk()
 		m_dlgSwitchChildren_.DoModal();
 		HideMainUI();
 	} catch (...) {
-		LOGGER_WRITE(MAINUI_LOGGER, "FAILED On create HistoryRecord")
+		LERR_<<"FAILED On create HistoryRecord";
 		AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONEXCLAMATION);
 	}
 }
@@ -359,7 +359,7 @@ void CMainUIDlg::OnBnClickedMainCancel()
 		m_curDlg->Restore();	// »Ö¸´ÉèÖÃ
 		m_curDlg->SetModify(false);
 	} catch (...) {
-			LOGGER_WRITE(MAINUI_LOGGER, "FAILED On create HistoryRecord")
+			LERR_<< "FAILED On create HistoryRecord";
 			AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONEXCLAMATION);
 		}
 	} 
@@ -376,7 +376,7 @@ void CMainUIDlg::OnBnClickedApply()
 		}
 
 	} catch (...) {
-		LOGGER_WRITE(MAINUI_LOGGER, "FAILED On create HistoryRecord")
+		LERR_<<"FAILED On create HistoryRecord";
 	}
 
 	m_curDlg->SetModify(false);
@@ -488,7 +488,7 @@ void CMainUIDlg::showDlg() {
 		m_curDlg->SetWindowPos(&wndTop, rect.left, rect.top, rect.Width(), rect.Height(), SWP_SHOWWINDOW);
 		m_curDlg->OnShow();
 	} catch (...) {
-		LOGGER_WRITE(MAINUI_LOGGER, "FAILED On create HistoryRecord")
+		LERR_<<"FAILED On create HistoryRecord";
 		AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONEXCLAMATION);
 	}
 }
@@ -517,7 +517,7 @@ void CMainUIDlg::initDlgs() {
 		showDlg();
 		
 	} catch (...) {
-		LOGGER_WRITE(MAINUI_LOGGER, "FAILED On create HistoryRecord")
+		LERR_<<"FAILED On create HistoryRecord";
 		AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONEXCLAMATION);
 		EndDialog(IDCANCEL);
 	}
@@ -692,7 +692,7 @@ void CMainUIDlg::OnTvnSelchangedTreeNavig(NMHDR *pNMHDR, LRESULT *pResult)
 
 		*pResult = 0;
 	} catch (...) {
-		LOGGER_WRITE(MAINUI_LOGGER, "FAILED On create HistoryRecord")
+		LERR_<<"FAILED On create HistoryRecord";
 		AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONEXCLAMATION);
 	}
 }
@@ -706,7 +706,7 @@ void CMainUIDlg::SwitchOnClose() {
 		ISnowmanSetting *app = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_SnowmanSetting, NULL, CLSCTX_LOCAL_SERVER, IID_ISnowmanSetting, (LPVOID*)&app);
 		if (FAILED(hr)) {
-			LOGGER_WRITE(MAINUI_LOGGER, "failed on create snowmansetting")
+			LERR_<<"failed on create snowmansetting with HRESULT value : "<<hr;
 			return;
 		}
 		
@@ -717,7 +717,7 @@ void CMainUIDlg::SwitchOnClose() {
 			Services::switchChildModel();
 		}
 	} catch (...) {
-		LOGGER_WRITE(MAINUI_LOGGER, "CATCH(...)")
+		LERR_<< "CATCH(...)";
 	}
 }
 // ×¢ÏúÈÈ¼ü

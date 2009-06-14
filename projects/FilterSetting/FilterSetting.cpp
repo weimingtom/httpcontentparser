@@ -18,7 +18,10 @@
 #include <softwareStatus.h>
 #include <string>
 #include <time.h>
-#include ".\logger_def.h"
+#include ".\log.h"
+
+#define FILTERSETTING_LOGGER_FILE		".\\log\\service.log"
+#define FILTERSETTING_DEBUG_FILE		".\\log\\dservice.log"
 
 
 class CFilterSettingModule : public CAtlServiceModuleT< CFilterSettingModule, IDS_SERVICENAME >
@@ -39,7 +42,7 @@ public :
 		HRESULT hr = CoInitializeSecurity(sd, -1, NULL, NULL, RPC_C_AUTHN_LEVEL_PKT,
 				RPC_C_IMP_LEVEL_IMPERSONATE,  NULL, EOAC_NONE, NULL);
 		if (FAILED(hr)) {
-			LOGGER_WRITE_COM_FAILED(FILTERSETTING_LOGGER, "CoInitializeSecurity", hr);
+			LERR_<<"CoInitializeSecurity Failed with HRESULT value "<< hr;
 		}
 
 		return S_OK;
@@ -57,16 +60,16 @@ void initializeSetting() {
 	TCHAR config_path[MAX_PATH];
 	GetAppConfigFilename(config_path, MAX_PATH);
 	g_configuration.loadConfig(config_path);
-	LOGGER_DEBUG_WRITE_DATA(FILTERSETTING_LOGGER, "AppConfigFilePath", config_path);
+	LTRC_<<"AppConfig files path : "<< config_path;
 
 	// 读取搜索词汇信息
 	TCHAR filename[MAX_PATH];
 	g_searchwordUtil.load(GetSearchWordFile(filename, MAX_PATH));
-	LOGGER_DEBUG_WRITE_DATA(FILTERSETTING_LOGGER, "SearchWordPath", filename);
+	LTRC_<<"SearchWord files path : "<< filename;
 
 	// 读取访问网站的信息
 	g_websitesUtil.load(GetWebSiteFile(filename, MAX_PATH));
-	LOGGER_DEBUG_WRITE_DATA(FILTERSETTING_LOGGER, "Website files", filename);
+	LTRC_<<"Website files path : "<< filename;
 }
 
 extern "C" int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, 
@@ -93,13 +96,13 @@ extern "C" int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/
 
 	if (g_configuration.getWebHistoryRecordAutoClean()->shouldExec()) {
 		g_configuration.getWebHistoryRecordAutoClean()->reset();
-		LOGGER_WRITE(FILTERSETTING_LOGGER, "Clear WebHistory");
+		LTRC_<<"Clear WebHistory";
 		ClearHistory();
 		
 	}
 	if (g_configuration.getScreenshotAutoClean()->shouldExec()) {
 		g_configuration.getScreenshotAutoClean()->reset();
-		LOGGER_WRITE(FILTERSETTING_LOGGER, "Clear Screenshot");
+		LTRC_<<"Clear Screenshot";
 		ClearScreen();
 	}
 
@@ -119,11 +122,14 @@ namespace {
 class LoggerInit {
 public:
 	LoggerInit() {
-		initLogger(FILTERSETTING_LOGGER_FILE);
+		 using namespace boost::logging;
 #ifdef DEBUG
-	setLoggerLevel(FILTERSETTING_LOGGER, log4cxx::Level::getDebug());
+	init_debug_logger(FILTERSETTING_DEBUG_FILE, false, true);
+	init_app_logger(FILTERSETTING_LOGGER_FILE, false, true);
+	g_log_level()->set_enabled(level::debug);
 #else
-	setLoggerLevel(FILTERSETTING_LOGGER,  log4cxx::Level::getInfo());
+	init_app_logger(FILTERSETTING_LOGGER_FILE);
+	g_log_level()->set_enabled(level::warning);
 #endif
 	}
 };

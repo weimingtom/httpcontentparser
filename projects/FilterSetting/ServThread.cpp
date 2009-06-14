@@ -7,7 +7,7 @@
 #include <PrintScreen.h>
 #include <searchengine_define.h>
 #include <searchkeywordutil.h>
-#include ".\logger_def.h"
+#include ".\log.h"
 
 #define TIME_ESCAPE_SAVE_SCREEN  8000
 #define ID_TIMER_SAVE_SCREEN     1
@@ -42,7 +42,7 @@ namespace {
 		} else {
 			UINT result = WinExec(TEXT("Mainui.exe"), SW_SHOW);
 			if (0 != result) {
-				LOGGER_WINAPIC_FAILED(FILTERSETTING_LOGGER, "WinExec", result);
+				LERR_<<"WinExec failed with return value "<<result<< " LastErorr : "<<GetLastError();
 			}
 		}
 	}
@@ -92,11 +92,6 @@ TCHAR szWindowClass[] = TEXT("None");
 // 创建一个窗口
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
 	try {
-		{
-			TCHAR msgText[1024];
-			_sntprintf(msgText, 1024, "WndProc Msg : %08Xh", message);
-			LOGGER_DEBUG_WRITE(FILTERSETTING_LOGGER, msgText);
-		}
 		// 两个计时器
 		static DWORD tickAutoSaver = GetTickCount();
 		static DWORD tickEyecare = GetTickCount();
@@ -131,7 +126,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 
 				// 保存文件
 				g_configuration.saveConfig(config_path);
-				LOGGER_DEBUG_WRITE(FILTERSETTING_LOGGER, "Save Configuration");
+				LTRC_<<"Save Configuration";
 			}
 
 			// 自动切换模式可能导致用户迷惑，因此先废除它
@@ -146,7 +141,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 					TCHAR fullpath[MAX_PATH];
 					GenScreenSPFile(fullpath, MAX_PATH);
 					GetScreen(fullpath);
-					LOGGER_DEBUG_WRITE(FILTERSETTING_LOGGER, "Screen Snapshot");
+					LTRC_<<"Screen Snapshot";
 				}
 			} else if (ID_TIMER_EYECARE_TRY == wParam) {
 				// 只有运行于子模式才执行此操作
@@ -172,7 +167,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 				// 读取访问网站的信息
 				GetWebSiteFile(filename, MAX_PATH);
 				g_websitesUtil.save(GetWebSiteFile(filename, MAX_PATH));
-				LOGGER_DEBUG_WRITE(FILTERSETTING_LOGGER, "Save History");
+				LTRC_<< "Save History";
 			}
 			// 自动开启
 			break;
@@ -191,7 +186,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 
 		}
 	} catch(...) {
-		LOGGER_WRITE(FILTERSETTING_LOGGER, "WndProc Unknown exception");
+		LERR_<<"WndProc Unknown exception";
 	}
 	return DefWindowProc(hWnd, message, wParam, lParam);
 }
@@ -228,7 +223,8 @@ DWORD ServThread::TreadProc(LPVOID param) {
 		DispatchMessage(&msg);	
 	}
 
-	LOGGER_DEBUG_WRITE(FILTERSETTING_LOGGER, "Thread Exit");
+	LTRC_<<"Thread Exit";
+	LERR_<<"Thread Exit";
 	return 1;
 }
 
@@ -239,6 +235,6 @@ void ServThread::startServer() {
 
 	hThread_ = CreateThread(NULL, 1, (LPTHREAD_START_ROUTINE)TreadProc, (LPVOID)this, 0, &dwThreadId_);
 	if (NULL == hThread_) {
-		LOGGER_WINAPIC_FAILED(FILTERSETTING_LOGGER, "CreateThread", hThread_);
+		LERR_<<"CreateThread failed with return value "<<hThread_<< " LastErorr : "<<GetLastError();
 	} 
 }

@@ -12,7 +12,7 @@
 #include <softwareStatus.h>
 #include <comutil.h>
 #include ".\snowmansetting.h"
-#include ".\logger_def.h"
+#include ".\log.h"
 
 // CSnowmanSetting
 STDMETHODIMP CSnowmanSetting::setHotkey(USHORT wVirtualKeyCode, USHORT wModifiers, LONG type, VARIANT_BOOL* bSuccess) {
@@ -49,14 +49,14 @@ STDMETHODIMP CSnowmanSetting::switchModel(VARIANT_BOOL bParent, BSTR pwd, VARIAN
 
 			// 而且还要停止Eyecare 的计数器
 			g_configuration.getEyecareSetting()->stopTimer();
-			LOGGER_WRITE(FILTERSETTING_LOGGER, "succeed in swithing to parent model");
+			LTRC_<<"succeed in swithing to parent model";
 		} else {
 			// 验证密码失败
 			*bSucc = VARIANT_FALSE;
-			LOGGER_WRITE(FILTERSETTING_LOGGER, "failed in swithing to parent model");
+			LTRC_<<"failed in swithing to parent model";
 		}
 	} else {
-		LOGGER_WRITE(FILTERSETTING_LOGGER, "Try to swith to children model");
+		LTRC_<<"Try to swith to children model";
 		// 如果切换到孩子模式，则不需要密码
 		SettingItem::setModel(SettingItem::MODE_CHILD);
 		*bSucc = VARIANT_TRUE;
