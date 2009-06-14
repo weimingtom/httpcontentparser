@@ -21,7 +21,8 @@ public:
 	int getUserAgent(char *buffer, const int len);
 	int getMainHostName(char *buffer, const int len);
 	int getRequestType() { return http_request_type_;}
-	
+
+	bool openPage();
 	enum {
 		HTTP_REQUEST_OPETYPE_GET = 0,
 		HTTP_REQUEST_OPETYPE_POST,

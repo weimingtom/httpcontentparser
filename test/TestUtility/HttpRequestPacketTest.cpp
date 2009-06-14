@@ -35,6 +35,7 @@ void HttpRequestPacketTest::parseMultiPacket() {
 	HTTPRequestPacket request_packet;
 	const int item_count = request_packet.parsePacket(wsabuf, 1);
 	CPPUNIT_ASSERT(item_count == 4);
+	CPPUNIT_ASSERT(request_packet.openPage() == true);
 
 	char buffer[HTTP_REQUEST_ITEM_MAX_LENGTH];
 	request_packet.getMainHostName(buffer, HTTP_REQUEST_ITEM_MAX_LENGTH);
@@ -68,6 +69,7 @@ void HttpRequestPacketTest::parseMultiPacket() {
 	HTTPRequestPacket request_packet;
 	const int item_count = request_packet.parsePacket(wsabuf, 2);
 	CPPUNIT_ASSERT(item_count == 4);
+	CPPUNIT_ASSERT(request_packet.openPage() == false);
 
 	char buffer[HTTP_REQUEST_ITEM_MAX_LENGTH];
 	request_packet.getMainHostName(buffer, HTTP_REQUEST_ITEM_MAX_LENGTH);
@@ -100,6 +102,7 @@ void HttpRequestPacketTest::parsePacket() {
 	// 测试解析后的可识别的项数
  	const int item_count = request_packet.parsePacket(packet, (int)strlen(packet));
 	CPPUNIT_ASSERT(item_count == 4);
+	CPPUNIT_ASSERT(request_packet.openPage() == true);
 
 	char buffer[HTTP_REQUEST_ITEM_MAX_LENGTH];
 	request_packet.getMainHostName(buffer, HTTP_REQUEST_ITEM_MAX_LENGTH);
@@ -132,7 +135,6 @@ void HttpRequestPacketTest::parsePacket() {
 	CPPUNIT_ASSERT(strcmp("baidu", buffer) == 0);
 	request_packet.getHost(buffer, HTTP_REQUEST_ITEM_MAX_LENGTH);
 	CPPUNIT_ASSERT(strcmp("sAahh1.BAIDU.com", buffer) == 0);
-
 
 	CPPUNIT_ASSERT(HTTPRequestPacket::HTTP_REQUEST_OPETYPE_GET == request_packet.getRequestType());
 
