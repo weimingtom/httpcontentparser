@@ -22,6 +22,8 @@
 #define WM_USER_SCREEN_SAVE (WM_USER + 0x10)
 #define WM_USER_EYECARE (WM_USER + 0x15)
 
+_INIT_FILESCOPT_OSTRSTREAM_
+
 
 // WPARAM (vKey + vModifier) LPARAM (ID)
 // WPARAM , HIWORD = vModifier 
@@ -92,7 +94,6 @@ void ServThread::initialize() {
 TCHAR szWindowClass[] = TEXT("None");
 // 创建一个窗口
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
-	_INIT_OUTPUT_OSTRSTREAM_
 	try {
 		// 两个计时器
 		static DWORD tickAutoSaver = GetTickCount();
@@ -247,5 +248,7 @@ void ServThread::startServer() {
 	hThread_ = CreateThread(NULL, 1, (LPTHREAD_START_ROUTINE)TreadProc, (LPVOID)this, 0, &dwThreadId_);
 	if (NULL == hThread_) {
 		LERR_<<"CreateThread failed with return value "<<hThread_<< " LastErorr : "<<GetLastError();
+		_DEBUG_STREAM_TRC_<<"[Websnow Service] "<<__FUNCTION__<<" CreateThread failed with return value "<<hThread_<< " LastErorr : "<<GetLastError();
+		_OUTPUT_FMT_STRING_
 	} 
 }
