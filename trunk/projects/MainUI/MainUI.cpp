@@ -60,9 +60,6 @@ CMainUIApp theApp;
 
 BOOL CMainUIApp::InitInstance() {
 	{
-		LERR_<<"CATCH(...)";
-		LERR_<<"CATCH(...)";
-		LERR_<<"CATCH(...)";
 		CMutex mutext(0, MUTEX_NAME);
 		CSingleLock(&mutext, true);
 		if (share_hwnd != NULL) {
