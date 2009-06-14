@@ -8,4 +8,13 @@
 #define SNOWMAN_STATUS_UNINSTALL			0x00000003			// Ð¶ÔØ
 #define SNOWMAN_STATUS_UPDATE				0x00000004			// Éý¼¶
 
+inline bool functionEnabled(LONG status) {
+	if (SNOWMAN_STATUS_OVERTIME == status ||
+		SNOWMAN_STATUS_UNINSTALL == status) {
+			return false;
+		} else {
+			return true;
+		}
+}
+
 #endif  // _SNOWMAN_SOFTWARE_STATUS_H__
