@@ -54,6 +54,7 @@ Name: {group}\{cm:UninstallProgram, Websnow}; Filename: {uninstallexe}
 
 
 Filename: {app}\nwrs.exe; Parameters: /service; Flags: shellexec; Tasks: ; Languages: 
+Filename: {app}\Repair.exe; Parameters: /silence
 [Code]
 //importing a custom DLL function, first for Setup, then for uninstall
 function CheckProgram(lpStatus: String):Integer;
