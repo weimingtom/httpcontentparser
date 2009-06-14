@@ -19,4 +19,5 @@ int getAppStatus() {
 
 int refreshAppstatus() {
 	g_licenseInfo.initialize();
+	return 0;
 }

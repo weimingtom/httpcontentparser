@@ -164,6 +164,9 @@ STDMETHODIMP CSnowmanSetting::getApplicationStatus(LONG* status)
 
 STDMETHODIMP CSnowmanSetting::setApplicationStatus(LONG status)
 {
+	// 当应用程序设置为卸载状态时，不需要进行重新获取安装信息的操作
+	// 当时当用户设置其他状态时， 程序重新读取信息
+	// 即，此函数并不能真正按照要求去设置状态。
 	if ( SNOWMAN_STATUS_UNINSTALL== status) {
 		g_configuration.setUninstall(true);
 	} else {
