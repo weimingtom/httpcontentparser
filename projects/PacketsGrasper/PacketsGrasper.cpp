@@ -343,28 +343,9 @@ int WSPAPI WSPSendTo(
 {
 	_DEBUG_STREAM_TRC_<<"WSPSendTo ..."; 	_OUTPUT_FMT_STRING_
 
-	HTTPRequestPacket packet;
-	int item_count = packet.parsePacket(lpBuffers, dwBufferCount);
-
-	// 如果小于2，那么他就不是一个HTTP请求
-	if (item_count < 2) {	
-		_DEBUG_STREAM_TRC_<<"NOT A HTTP Request"; 		_OUTPUT_FMT_STRING_
-		return NextProcTable.lpWSPSendTo(s, lpBuffers, dwBufferCount
-			, lpNumberOfBytesSent, dwFlags, lpTo, iTolen, lpOverlapped
-			, lpCompletionRoutine, lpThreadId, lpErrno);
-	}
-
-	// 检查IP是否正常，如果可以则通过，否则直接返回错误
-	if (accessNetword() && checkHTTPRequest(&packet)){
-		_DEBUG_STREAM_TRC_<<"HTTP Request passed!"; 		_OUTPUT_FMT_STRING_
-		return NextProcTable.lpWSPSendTo(s, lpBuffers, dwBufferCount
-			, lpNumberOfBytesSent, dwFlags, lpTo, iTolen, lpOverlapped
-			, lpCompletionRoutine, lpThreadId, lpErrno);
-	} else {
-		_DEBUG_STREAM_TRC_<<"HTTP Request blocked!"; 		_OUTPUT_FMT_STRING_
-		*lpErrno = WSAETIMEDOUT;
-		return SOCKET_ERROR;
-	}
+	return NextProcTable.lpWSPSendTo(s, lpBuffers, dwBufferCount
+				, lpNumberOfBytesSent, dwFlags, lpTo, iTolen, lpOverlapped
+				, lpCompletionRoutine, lpThreadId, lpErrno);
 }
 
 int WSPAPI WSPRecvFrom (
