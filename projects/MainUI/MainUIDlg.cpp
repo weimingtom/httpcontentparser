@@ -13,6 +13,7 @@
 #include ".\dlgregister.h"
 #include ".\globalvariable.h"
 #include <app_constants.h>
+#include <softwarestatus.h>
 #include <apputility.h>
 #include <comdef.h>
 #include ".\log.h"
@@ -735,6 +736,13 @@ void CMainUIDlg::ShowMainUI() {
 	m_bShown = TRUE;
 }
 void CMainUIDlg::HideMainUI(BOOL autoSwitchCheck) {
+	if (SNOWMAN_STATUS_OVERTIME == Services::getAppStatus()) {
+		CString strTip, strCaption;
+		strCaption.LoadString(AfxGetInstanceHandle(), IDS_APP_NAME);
+		strTip.LoadString(AfxGetInstanceHandle(), IDS_REGISTER_OVER_TIP);
+		MessageBox(strTip, strCaption, MB_OK);
+	}
+		
 	ShowWindow(SW_HIDE);
 	::SetWindowPos(GetSafeHwnd(), CWnd::wndBottom, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
 	

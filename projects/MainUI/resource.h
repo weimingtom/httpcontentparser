@@ -77,6 +77,7 @@
 #define IDS_REGISTER_TRIAL_DAYS         146
 #define IDD_LEV1_TIME_RULE              147
 #define IDS_REGISTER_CANNOT_GETINFO     147
+#define IDS_REGISTER_OVER_TIP           148
 #define IDD_DIALOG1                     149
 #define IDD_DLG_DNS_WHITELIST           149
 #define IDD_CHANGE_PASSWORD             150
