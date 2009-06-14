@@ -63,7 +63,7 @@ BOOL CRepairApp::InitInstance()
 	validator.repair();
 
 
-	if (_tcsstr(GetCommandLine(), "-i")) {
+	if (NULL == _tcsstr(GetCommandLine(), "silence")) {
 		TCHAR errMsg[MAX_PATH];
 		validator.getErrorMessage(errMsg, MAX_PATH);
 		if (_tcslen(errMsg) > 0) {
