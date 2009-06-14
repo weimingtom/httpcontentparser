@@ -84,7 +84,7 @@ BOOL CMainUIApp::InitInstance() {
 
 	// ≥ı ºªØLOGGER
 	AppUtility::AppInstallValidate validator(VLAIDATE_NONE, app_status);
-	validator.repair();
+	// validator.repair();
 
 
 	if (FALSE == Initialize()) {
