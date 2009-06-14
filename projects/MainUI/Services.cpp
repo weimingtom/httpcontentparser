@@ -22,6 +22,8 @@ LONG Services::getAppStatus() {
 	} catch (...) {
 		LERR_<<"CATCH(...)";
 	}
+
+	return SNOWMAN_STATUS_TRIAL;
 }
 
 bool Services::isParentModel() {

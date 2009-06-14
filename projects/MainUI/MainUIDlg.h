@@ -145,6 +145,7 @@ private:
 	// 隐藏或是显示主界面
 	void ShowMainUI();
 	void HideMainUI(BOOL autoSwitchCheck = TRUE);
+	void ShowOverTimeMsgBox();
 	BOOL isShown() const { return m_bShown;}
 
 	// 对话框
