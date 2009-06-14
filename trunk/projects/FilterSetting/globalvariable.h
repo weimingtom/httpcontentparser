@@ -19,5 +19,6 @@ extern WebsitesUtil g_websitesUtil;
 extern software_encrypt::LicenseInfo g_licenseInfo;
 
 int getAppStatus();
+int refreshAppstatus();
 
 #endif  // _FILTER_SETTING_GLOBALVARIABLE_H__
