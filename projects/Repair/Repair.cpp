@@ -62,21 +62,25 @@ BOOL CRepairApp::InitInstance()
 	AppUtility::AppInstallValidate validator(VLAIDATE_NONE, app_status);
 	validator.repair();
 
-
-	if (NULL == _tcsstr(GetCommandLine(), "silence")) {
-		TCHAR errMsg[MAX_PATH];
-		validator.getErrorMessage(errMsg, MAX_PATH);
-		if (_tcslen(errMsg) > 0) {
+	TCHAR errMsg[MAX_PATH];
+	validator.getErrorMessage(errMsg, MAX_PATH);
+	if (_tcslen(errMsg) > 0) {
+		LERR_<<"failed  on repair on reason that "<<errMsg;
+		if (NULL == _tcsstr(GetCommandLine(), "silence")) {
 			AfxMessageBox(errMsg);
-			return FALSE;
 		}
-
-
-		CString strSucc;
-		strSucc.LoadString(IDS_REPAIR_SUCCESS);
-		AfxMessageBox(strSucc);
 		return FALSE;
 	}
+
+
+	CString strSucc;
+	strSucc.LoadString(IDS_REPAIR_SUCCESS);
+	if (NULL == _tcsstr(GetCommandLine(), "silence")) {
+		AfxMessageBox(strSucc);
+	}
+	LTRC_<<"succeeded on repair.";
+	return FALSE;
+
 
 	return TRUE;
 }
