@@ -75,7 +75,7 @@ BOOL CMainUIApp::InitInstance() {
 		ISnowmanSetting * pSetting = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_SnowmanSetting, NULL, CLSCTX_LOCAL_SERVER, IID_ISnowmanSetting, (LPVOID*)&pSetting);
 		if (FAILED(hr)) {
-			LERR_<< "Create Snowsetting with HRESULT vlaue "<<hr;
+			LERR_<< "Create Snowsetting with HRESULT vlaue "<<std::hex<<hr;
 		}
 		pSetting->getApplicationStatus(&app_status);
 	} catch (...) {
@@ -136,7 +136,7 @@ BOOL CMainUIApp::Initialize(void)
 	HRESULT hr = CoCreateInstance(CLSID_DNSSetting, 
 		NULL, CLSCTX_LOCAL_SERVER, IID_IDNSSetting, (LPVOID*)&g_dnssetting);
 	if (FAILED(hr)) {
-		LERR_<<"Create DNSString with HRESULT vlaue "<<hr;
+		LERR_<<"Create DNSString with HRESULT vlaue "<<std::hex<<hr;
 		AfxMessageBox(str);
 		return FALSE;
 	}
