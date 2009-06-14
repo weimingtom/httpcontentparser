@@ -8,6 +8,7 @@
 #include <searchengine_define.h>
 #include <searchkeywordutil.h>
 #include ".\log.h"
+#include <DebugOutput.h>
 
 #define TIME_ESCAPE_SAVE_SCREEN  8000
 #define ID_TIMER_SAVE_SCREEN     1
@@ -91,6 +92,7 @@ void ServThread::initialize() {
 TCHAR szWindowClass[] = TEXT("None");
 // 创建一个窗口
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
+	_INIT_OUTPUT_OSTRSTREAM_
 	try {
 		// 两个计时器
 		static DWORD tickAutoSaver = GetTickCount();
@@ -126,7 +128,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 
 				// 保存文件
 				g_configuration.saveConfig(config_path);
-				LTRC_<<"Save Configuration";
+				_DEBUG_STREAM_TRC_<<"[Websnow Service] Save Configuration path "<<config_path;
+				_OUTPUT_FMT_STRING_
+				LTRC_<<"Save Configuration on path "<<config_path;
 			}
 
 			// 自动切换模式可能导致用户迷惑，因此先废除它
@@ -141,7 +145,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 					TCHAR fullpath[MAX_PATH];
 					GenScreenSPFile(fullpath, MAX_PATH);
 					GetScreen(fullpath);
-					LTRC_<<"Screen Snapshot";
+					_DEBUG_STREAM_TRC_<<"[Websnow Service] Screen Snapshot on path "<<fullpath;
+					_OUTPUT_FMT_STRING_
+					LTRC_<<"Screen Snapshot on path "<<fullpath;
 				}
 			} else if (ID_TIMER_EYECARE_TRY == wParam) {
 				// 只有运行于子模式才执行此操作
@@ -163,11 +169,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 				TCHAR filename[MAX_PATH];
 				GetSearchWordFile(filename, MAX_PATH);
 				g_searchwordUtil.save(GetSearchWordFile(filename, MAX_PATH));
+				_DEBUG_STREAM_TRC_<<"[Websnow Service] Save search word on path "<<filename;;
+				_OUTPUT_FMT_STRING_
 
 				// 读取访问网站的信息
 				GetWebSiteFile(filename, MAX_PATH);
 				g_websitesUtil.save(GetWebSiteFile(filename, MAX_PATH));
-				LTRC_<< "Save History";
+				_DEBUG_STREAM_TRC_<<"[Websnow Service] Save website history on path "<<filename;
+				_OUTPUT_FMT_STRING_
 			}
 			// 自动开启
 			break;
@@ -187,6 +196,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 		}
 	} catch(...) {
 		LERR_<<"WndProc Unknown exception";
+		_DEBUG_STREAM_TRC_<<"[Websnow Service] "<<__FUNCTION__<<" Unknown Exception ";
+		_OUTPUT_FMT_STRING_
 	}
 	return DefWindowProc(hWnd, message, wParam, lParam);
 }

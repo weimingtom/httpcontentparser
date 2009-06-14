@@ -19,6 +19,7 @@
 #include <string>
 #include <time.h>
 #include ".\log.h"
+#include <DebugOutput.h>
 
 #define FILTERSETTING_LOGGER_FILE		".\\log\\service.log"
 #define FILTERSETTING_DEBUG_FILE		".\\log\\dservice.log"
