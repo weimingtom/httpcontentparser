@@ -66,7 +66,7 @@ int CDlgOnlineHour::OnApply() {
 		HRESULT hr = CoCreateInstance(CLSID_AccessNetwork, NULL, CLSCTX_LOCAL_SERVER,
 			IID_IAccessNetwork, (LPVOID*)&accessNetwork);
 		if (FAILED(hr)) {
-			LERR_<<"Create AccessNetwork with HRESULT vaue : "<< hr;
+			LERR_<<"Create AccessNetwork with HRESULT vaue : "<<std::hex<<hr;
 			AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONEXCLAMATION);
 			return -1;
 		}
@@ -102,7 +102,7 @@ void CDlgOnlineHour::restoreSetting() {
 		HRESULT hr = CoCreateInstance(CLSID_AccessNetwork, NULL, CLSCTX_LOCAL_SERVER,
 			IID_IAccessNetwork, (LPVOID*)&accessNetwork);
 		if (FAILED(hr)) {
-			LERR_<<"Create AccessNetwork with HRESULT value "<< hr;
+			LERR_<<"Create AccessNetwork with HRESULT value "<<std::hex<<hr;
 			throw int(SNOWMAN_ERROR_COM_INIT_FAILED);
 		}
 

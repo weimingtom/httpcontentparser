@@ -114,7 +114,7 @@ int CDlgProgramControl::OnApply() {
 		IAppControl *pSetting = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_AppControl, NULL, CLSCTX_LOCAL_SERVER, IID_IAppControl, (LPVOID*)&pSetting);
 		if (FAILED(hr) || NULL == pSetting) {
-			LERR_<<"Create AppControl failed with HRESULT value " << hr;
+			LERR_<<"Create AppControl failed with HRESULT value " <<std::hex<<hr;
 			AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
 			return 0;
 		}
@@ -149,7 +149,7 @@ void CDlgProgramControl::restoreSetting() {
 		IAppControl *pSetting;
 		HRESULT hr = CoCreateInstance(CLSID_AppControl, NULL, CLSCTX_LOCAL_SERVER, IID_IAppControl, (LPVOID*)&pSetting);
 		if (FAILED(hr)) {
-			LERR_<<"Create AppControl failed with HRESULT value "<< hr;
+			LERR_<<"Create AppControl failed with HRESULT value "<<std::hex<<hr;
 			throw int(SNOWMAN_ERROR_COM_INIT_FAILED);
 		}
 	

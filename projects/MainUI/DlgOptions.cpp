@@ -66,7 +66,7 @@ namespace {
 			ISnowmanSetting *app = NULL;
 			HRESULT hr = CoCreateInstance(CLSID_SnowmanSetting, NULL, CLSCTX_LOCAL_SERVER, IID_ISnowmanSetting, (LPVOID*)&app);
 			if (FAILED(hr)) {
-				LERR_<<"Create SnowSetting failed with HRESULT vlaue " << hr;
+				LERR_<<"Create SnowSetting failed with HRESULT vlaue " <<std::hex<<hr;
 				AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONEXCLAMATION);
 				return FALSE;
 			}
