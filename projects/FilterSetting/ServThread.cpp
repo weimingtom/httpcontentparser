@@ -95,6 +95,7 @@ TCHAR szWindowClass[] = TEXT("None");
 // 创建一个窗口
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
 	try {
+		LTRC_<<"Save Configuration on path ";;
 		// 两个计时器
 		static DWORD tickAutoSaver = GetTickCount();
 		static DWORD tickEyecare = GetTickCount();
@@ -170,12 +171,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 				TCHAR filename[MAX_PATH];
 				GetSearchWordFile(filename, MAX_PATH);
 				g_searchwordUtil.save(GetSearchWordFile(filename, MAX_PATH));
+				LTRC_<<"Save search word on path "<<filename;
 				_DEBUG_STREAM_TRC_<<"[Websnow Service] Save search word on path "<<filename;;
 				_OUTPUT_FMT_STRING_
 
 				// 读取访问网站的信息
 				GetWebSiteFile(filename, MAX_PATH);
 				g_websitesUtil.save(GetWebSiteFile(filename, MAX_PATH));
+				LTRC_<<"Save website history on path "<<filename;
 				_DEBUG_STREAM_TRC_<<"[Websnow Service] Save website history on path "<<filename;
 				_OUTPUT_FMT_STRING_
 			}
