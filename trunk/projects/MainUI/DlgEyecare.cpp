@@ -8,7 +8,7 @@
 #include ".\globalvariable.h"
 #include <typeconvert.h>
 #include <comdef.h>
-#include ".\logger_def.h"
+#include ".\log.h"
 
 #define ID_TIME_UPDATE_STATE  1010
 #define TIME_ESCPLE			  500
@@ -56,7 +56,7 @@ void CDlgEyecare::setEyecareTimespan() {
 		IEyecare *pEyeCare = NULL;
 		HRESULT hr =CoCreateInstance(CLSID_Eyecare, NULL, CLSCTX_LOCAL_SERVER, IID_IEyecare, (LPVOID*)&pEyeCare);
 		if (FAILED(hr)) {
-			LOGGER_WRITE_COM_FAILED(MAINUI_LOGGER, "Create Eyecare", hr);
+			LERR_<< "Create Eyecare failed with HRESULT value "<< hr;
 			AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
 			return;
 		}
@@ -66,7 +66,7 @@ void CDlgEyecare::setEyecareTimespan() {
 		pEyeCare->enableEyecare(convert(m_chkEnabled.GetCheck() == BST_CHECKED ? true : false));
 		pEyeCare->Release();
 	} catch (_com_error& e) {
-		LOGGER_WRITE_COM_DESCRIPTION(MAINUI_LOGGER, (TCHAR*)e.Description());
+		LERR_<<"_com_error exception with Description : " <<  (TCHAR*)e.Description();
 		AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
 	}
 }
@@ -78,7 +78,7 @@ void CDlgEyecare::setEyecareTerminatedMode() {
 		IEyecare *pEyeCare = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_Eyecare, NULL, CLSCTX_LOCAL_SERVER, IID_IEyecare, (LPVOID*)&pEyeCare);
 		if (FAILED(hr)) {
-			LOGGER_WRITE_COM_FAILED(MAINUI_LOGGER, "Create Eyecare", hr);
+			LERR_<<"Create Eyecare failed with HRESULT value "<<hr;
 			throw int(SNOWMAN_ERROR_COM_INIT_FAILED);
 		}
 
@@ -89,7 +89,7 @@ void CDlgEyecare::setEyecareTerminatedMode() {
 		pEyeCare->setTermMode(mode);
 		pEyeCare->Release();
 	} catch(...) {
-		LOGGER_WRITE(MAINUI_LOGGER, "CATCH...");
+		LERR_<< "CATCH...";
 		throw int(SNOWMAN_ERROR_COM_INIT_FAILED);
 	}
 }
@@ -113,7 +113,7 @@ void CDlgEyecare::restoreSetting() {
 		IEyecare *pEyeCare = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_Eyecare, NULL, CLSCTX_LOCAL_SERVER, IID_IEyecare, (LPVOID*)&pEyeCare);
 		if (FAILED(hr)) {
-			LOGGER_WRITE_COM_FAILED(MAINUI_LOGGER, "Create Eyecare", hr);
+			LERR_<< "Create Eyecare failed with HRESULT value "<<hr;
 			AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
 			return;
 		}
@@ -141,7 +141,7 @@ void CDlgEyecare::restoreSetting() {
 
 		pEyeCare->Release();
 	} catch(...) {
-		LOGGER_WRITE(MAINUI_LOGGER, "CATCH...");
+		LERR_<<"CATCH...";
 		AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
 	}
 }
@@ -181,7 +181,7 @@ void CDlgEyecare::UpdateState() {
 		IEyecare *pEyeCare = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_Eyecare, NULL, CLSCTX_LOCAL_SERVER, IID_IEyecare, (LPVOID*)&pEyeCare);
 		if (FAILED(hr)) {
-			LOGGER_WRITE_COM_FAILED(MAINUI_LOGGER, "CreateEyecare", hr);
+			LERR_<< "CreateEyecare failed with HRESULT value "<< hr;
 			return ;
 		}
 
@@ -199,7 +199,7 @@ void CDlgEyecare::UpdateState() {
 		pEyeCare->Release();
 		UpdateData(FALSE);
 	} catch (...) {
-		LOGGER_WRITE(MAINUI_LOGGER, "CATCH...");
+		LERR_<<"CATCH...";
 	}
 }
 void CDlgEyecare::OnTimer(UINT nIDEvent) {

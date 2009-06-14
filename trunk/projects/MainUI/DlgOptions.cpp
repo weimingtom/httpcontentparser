@@ -12,7 +12,7 @@
 #include <com\comutility.h>
 #include <typeconvert.h>
 #include <timeoutswitch.h>
-#include ".\logger_def.h"
+#include ".\log.h"
 
 // CDlgOptions ¶Ô»°¿ò
 
@@ -66,7 +66,7 @@ namespace {
 			ISnowmanSetting *app = NULL;
 			HRESULT hr = CoCreateInstance(CLSID_SnowmanSetting, NULL, CLSCTX_LOCAL_SERVER, IID_ISnowmanSetting, (LPVOID*)&app);
 			if (FAILED(hr)) {
-				LOGGER_WRITE_COM_FAILED(MAINUI_LOGGER, "Create SnowSetting", hr);
+				LERR_<<"Create SnowSetting failed with HRESULT vlaue " << hr;
 				AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONEXCLAMATION);
 				return FALSE;
 			}
@@ -74,7 +74,7 @@ namespace {
 			app->setHotkey(vKey, vModifiers, type, &bSucc);
 			return convert(bSucc);
 		} catch(...) {
-			LOGGER_WRITE(MAINUI_LOGGER, "CATCH(...)");
+			LERR_<< "CATCH(...)";
 			AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
 			return FALSE;
 		}
@@ -153,7 +153,7 @@ int CDlgOptions::setMisc() {
 		ISnowmanSetting *app = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_SnowmanSetting, NULL, CLSCTX_LOCAL_SERVER, IID_ISnowmanSetting, (LPVOID*)&app);
 		if (FAILED(hr)) {
-			LOGGER_WRITE_COM_FAILED(MAINUI_LOGGER, "Create AccessNetwork", hr);
+			LERR_<< "Create AccessNetwork failed with HRESULT value "<<hr;
 			AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONEXCLAMATION);
 			return FAILED_APPLY;
 		}
@@ -164,7 +164,7 @@ int CDlgOptions::setMisc() {
 		app = NULL;
 		return SUCCESS_APPLY;
 	} catch (...) {
-		LOGGER_WRITE(MAINUI_LOGGER, "CATCH(...)");
+		LERR_<<"CATCH(...)";
 		return FAILED_APPLY;
 	}
 }
@@ -189,7 +189,7 @@ void CDlgOptions::restoreSetting() {
 		ISnowmanSetting *app = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_SnowmanSetting, NULL, CLSCTX_LOCAL_SERVER, IID_ISnowmanSetting, (LPVOID*)&app);
 		if (FAILED(hr)) {
-			LOGGER_WRITE_COM_FAILED(MAINUI_LOGGER, "Create AccessNetwork", hr);
+			LERR_<<"Create AccessNetwork failed with HRESULT value "<<hr;
 			throw int(SNOWMAN_ERROR_COM_INIT_FAILED);
 		}
 
@@ -217,7 +217,7 @@ void CDlgOptions::restoreSetting() {
 
 		UpdateData(FALSE);
 	} catch (...) {
-		LOGGER_WRITE(MAINUI_LOGGER, "CATCH(...)");
+		LERR_<<"CATCH(...)";
 		throw int(SNOWMAN_ERROR_COM_INIT_FAILED);
 	}
 }
