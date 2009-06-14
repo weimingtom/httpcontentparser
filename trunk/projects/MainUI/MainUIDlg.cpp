@@ -335,8 +335,9 @@ void CMainUIDlg::OnCancel() {
 }
 
 void CMainUIDlg::OnBnClickedOk()
-{
+{	
 	ASSERT (NULL != m_curDlg);
+	ShowOverTimeMsgBox();
 	try {
 		if ( -1 == m_curDlg->Apply()) {
 			m_curDlg->Restore();
@@ -356,6 +357,7 @@ void CMainUIDlg::OnBnClickedOk()
 void CMainUIDlg::OnBnClickedMainCancel()
 {
 	try {
+		ShowOverTimeMsgBox();
 		HideMainUI();	// Òþ²Ø´°¿Ú
 		m_curDlg->Restore();	// »Ö¸´ÉèÖÃ
 		m_curDlg->SetModify(false);
@@ -369,7 +371,7 @@ void CMainUIDlg::OnBnClickedMainCancel()
 void CMainUIDlg::OnBnClickedApply()
 {
 	ASSERT (NULL != m_curDlg);
-
+	ShowOverTimeMsgBox();
 	try {
 		if ( FAILED_APPLY == m_curDlg->Apply()) {
 			m_curDlg->Restore();
@@ -736,12 +738,6 @@ void CMainUIDlg::ShowMainUI() {
 	m_bShown = TRUE;
 }
 void CMainUIDlg::HideMainUI(BOOL autoSwitchCheck) {
-	if (SNOWMAN_STATUS_OVERTIME == Services::getAppStatus()) {
-		CString strTip, strCaption;
-		strCaption.LoadString(AfxGetInstanceHandle(), IDS_APP_NAME);
-		strTip.LoadString(AfxGetInstanceHandle(), IDS_REGISTER_OVER_TIP);
-		MessageBox(strTip, strCaption, MB_OK);
-	}
 		
 	ShowWindow(SW_HIDE);
 	::SetWindowPos(GetSafeHwnd(), CWnd::wndBottom, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
@@ -820,4 +816,14 @@ BOOL CMainUIDlg::OnHelpInfo(HELPINFO* pHelpInfo)
 		m_curDlg->getHelpLink();
 	}
 	return TRUE;
+}
+
+void CMainUIDlg::ShowOverTimeMsgBox() {
+	LONG status = Services::getAppStatus();
+	if (SNOWMAN_STATUS_OVERTIME == status) {
+		CString strTip, strCaption;
+		strCaption.LoadString(AfxGetInstanceHandle(), IDS_APP_NAME);
+		strTip.LoadString(AfxGetInstanceHandle(), IDS_REGISTER_OVER_TIP);
+		MessageBox( strTip, strCaption, MB_OK);
+	}
 }
