@@ -3,11 +3,6 @@
 
 #include <string>
 
-#ifndef __HIDE_SPI_FUNCTION_CALL__
-#define SPI_FUNCTION_CALL(msg) OutputDebugString(msg)
-#else
-#define SPI_FUNCTION_CALL(msg)
-#endif
 
 
 extern TCHAR 	m_sProcessName[MAX_PATH];
