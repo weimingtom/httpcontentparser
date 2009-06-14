@@ -20,11 +20,11 @@
 
 #define LOGGER_TRACE_WRITE(LOGGER_NAME, LOGGER_TEXT)	{TCHAR buffer[1024];		\
 	_sntprintf(buffer, 1024, "{%s} %s", __FUNCTION__, (LOGGER_TEXT));		\
-	LOG4CXX_INFO(log4cxx::Logger::getLogger(LOGGER_NAME), buffer);}
+	LOG4CXX_TRACE(log4cxx::Logger::getLogger(LOGGER_NAME), buffer);}
 
 #define LOGGER_TRACE_DATA(LOGGER_NAME, LOGGER_TEXT, DATA)	{TCHAR buffer[1024];		\
 	_sntprintf(buffer, 1024, "{%s} %s:%s", __FUNCTION__, (LOGGER_TEXT), DATA);		\
-	LOG4CXX_INFO(log4cxx::Logger::getLogger(LOGGER_NAME), buffer);}
+	LOG4CXX_TRACE(log4cxx::Logger::getLogger(LOGGER_NAME), buffer);}
 
 #define LOGGER_WRITE(LOGGER_NAME, LOGGER_TEXT)	{TCHAR buffer[1024];		\
 	_sntprintf(buffer, 1024, "{%s} %s", __FUNCTION__, (LOGGER_TEXT));		\
