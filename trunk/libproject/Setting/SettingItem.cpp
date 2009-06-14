@@ -17,7 +17,7 @@ void SettingItem::setModel(const int mode) {
 int SettingItem::current_mode_ = SettingItem::MODE_CHILD;
 
 bool SettingItem::modified_ = false;
-
+int  SettingItem::app_status_ = SNOWMAN_STATUS_TRIAL;
 //==========================================
 //
 SettingItem::SettingItem(void) {
