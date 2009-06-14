@@ -841,7 +841,7 @@ BEGIN
     BEGIN
         BLOCK "040903a8"
         BEGIN
-            VALUE "FileDescription", "Control Centrol of Seb Snowman"
+            VALUE "FileDescription", "Control Centrol of Web Snow"
             VALUE "FileVersion", "1.0.0.1"
             VALUE "InternalName", "Web Snowman"
             VALUE "LegalCopyright", "All Copyright Reserve (C) 2009"
