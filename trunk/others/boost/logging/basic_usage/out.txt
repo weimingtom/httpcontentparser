@@ -1,0 +1,2 @@
+10:20.15 1Verbosity: info
+10:20.15 2Parsing dir : d:/workspace/current/others/boost/logging/basic_usage, looking for [.cpp; .c; .h; .hpp]
