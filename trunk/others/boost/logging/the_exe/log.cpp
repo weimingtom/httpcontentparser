@@ -50,5 +50,5 @@ void init_app_logger(const char * filename, bool enable_cout, bool disable_cache
 		 g_log_app()->turn_cache_off();
 	}
 
-	g_log_dbg()->mark_as_initialized();
+	g_log_app()->mark_as_initialized();
 }		
