@@ -15,6 +15,7 @@
 
 #include "stdafx.h"
 #include "log.h"
+#include <DebugOutput.h>
 
 BOOST_DEFINE_LOG_FILTER(g_log_level, boost::logging::level::holder ) 
 BOOST_DEFINE_LOG(g_log_app, log_type )
@@ -82,4 +83,6 @@ void init_logger(HMODULE hModule) {
 	init_app_logger(filename);
 	_sntprintf(filename, MAX_PATH, "%s\\log\\dpgrasper.log", dir);
 	init_debug_logger(filename);
+
+	g_log_level()->set_enabled(boost::logging::level::debug);
 }
