@@ -304,8 +304,9 @@ int WSPAPI WSPSend(
 
 	
 	// 将DNS保存在DNS MAP当中
-	char host[MAX_PATH];
+	char host[MAX_PATH], oper[MAX_PATH];
 	packet.getHost(host, MAX_PATH);
+	packet.getGET(oper, MAX_PATH);
 	//g_select.addDNS(s, host);
 
 	//sprintf(host, "D:\\req\\%d.log", s);
