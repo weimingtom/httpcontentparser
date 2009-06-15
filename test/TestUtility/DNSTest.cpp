@@ -36,8 +36,22 @@ void DNSTest::TestGetMainServName() {
 	}
 
 	{
+	char *dns = "http://www.google.name/coop/cse/";
+	char * result = "www.google.name";
+	get_main_serv_name(buffer, 1024, dns);
+	CPPUNIT_ASSERT(0 == strcmp(buffer, result));
+	}
+
+	{
 	char *dns = "https://www.google.com/accounts/ManageAccount";
 	char * result = "www.google.com";
+	get_main_serv_name(buffer, 1024, dns);
+	CPPUNIT_ASSERT(0 == strcmp(buffer, result));
+	}
+
+	{
+	char *dns = "https://s.google.com/accounts/ManageAccount";
+	char * result = "s.google.com";
 	get_main_serv_name(buffer, 1024, dns);
 	CPPUNIT_ASSERT(0 == strcmp(buffer, result));
 	}
