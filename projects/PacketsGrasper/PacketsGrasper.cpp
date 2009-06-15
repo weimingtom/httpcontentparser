@@ -33,6 +33,7 @@ WSPPROC_TABLE		NextProcTable;				// 保存30个服务提供者指针
 TCHAR				m_sProcessName[MAX_PATH];	// 保存当前进程名称
 
 #define __OUTPUT_DEBUG_CALL__	  _DEBUG_STREAM_TRC_("[PacketFilter Fucntion Trace] "<<__FUNCTION__);
+#define PACKETGRASPER_TRC(FMT)	_DEBUG_STREAM_TRC_("[PacketFilter] "<< FMT);
 
 //CSelectIO g_select;
 
@@ -310,20 +311,19 @@ int WSPAPI WSPSend(
 	//sprintf(host, "D:\\req\\%d.log", s);
 	//DumpBuf(lpBuffers, dwBufferCount, host);
 
-	//sprintf(host, "send request %d", s);
-	//OutputDebugString(host);
-
 	// 检查IP是否正常，如果可以则通过，否则直接返回错误
-	//if (packet.openPage() == true) {
+	if (packet.openPage() == true) {
 		if (accessNetword() && checkHTTPRequest(&packet)){
-			_DEBUG_STREAM_TRC_("[PacketFilter] "<<"HTTP Request passed"); 			 
+			PACKETGRASPER_TRC("HTTP Request passed"); 			 
 			goto return_dir;
 		} else {
-			_DEBUG_STREAM_TRC_("[PacketFilter] "<<"HTTP Request Blocked"); 			 
+			PACKETGRASPER_TRC("HTTP Request Blocked"); 			 
 			*lpErrno = WSAETIMEDOUT;
 			return SOCKET_ERROR;
 		}
-	//}
+	} else {
+		PACKETGRASPER_TRC("Don't open page");
+	}
 
 return_dir:
 	return NextProcTable.lpWSPSend(s, lpBuffers, dwBufferCount
@@ -647,13 +647,13 @@ BOOL WINAPI DllMain(
 	if(ul_reason_for_call == DLL_PROCESS_ATTACH) {
 
  		GetModuleFileName(NULL, m_sProcessName, MAX_PATH);
-		_DEBUG_STREAM_TRC_("[PacketFilter] "<<"New Process Load : "<<m_sProcessName);  
+		PACKETGRASPER_TRC("New Process Load : "<<m_sProcessName);  
 
 		InitializeCriticalSection(&gCriticalSection);
 		EnterCriticalSection(&gCriticalSection); 
 		{
 			m_iRefCount ++; 
-			_DEBUG_STREAM_TRC_("[PacketFilter] "<<"DllMain Attach Count "<< m_iRefCount);  
+			PACKETGRASPER_TRC("DllMain Attach Count "<< m_iRefCount);  
 		} 
 		LeaveCriticalSection(&gCriticalSection);
 	} else if (ul_reason_for_call == DLL_THREAD_ATTACH) {
@@ -662,7 +662,7 @@ BOOL WINAPI DllMain(
 		EnterCriticalSection(&gCriticalSection);
 		{
 			m_iRefCount -- ;
-			_DEBUG_STREAM_TRC_("[PacketFilter] "<<"DllMain Attach Count "<< m_iRefCount);  
+			PACKETGRASPER_TRC("DllMain Attach Count "<< m_iRefCount);  
 		}
 		LeaveCriticalSection(&gCriticalSection);
 
