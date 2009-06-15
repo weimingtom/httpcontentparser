@@ -1,0 +1,9 @@
+LIBRARY	logger
+EXPORTS
+	init_debug_logger
+	init_app_logger
+	logger_trace
+	logger_debug
+	logger_info
+	logger_error
+	logger_fatal
