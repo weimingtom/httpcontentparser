@@ -217,7 +217,7 @@ std::string  DNSList::getFirstDNS() {
 	if (dns_set_.size() == 0) {
 		return std::string("");
 	} else {
-		return dns_set_.begin()->first;
+		return dns_set_.begin()->second;
 	}
 }
 std::string DNSList::getNextDNS(const std::string &name) {
@@ -229,7 +229,7 @@ std::string DNSList::getNextDNS(const std::string &name) {
 		if (iter == dns_set_.end()) {
 			return std::string("");
 		} else {
-			return iter->first;
+			return iter->second;
 		}
 	}
 
@@ -272,7 +272,7 @@ bool DNSList::fuzzeCheckDNS(const std::string &dns_name) const {
 // ´ÓDNSÖÐÒÆ³ý
 bool DNSList::removeDNS(const std::string &dns_name) {
 	TCHAR buffer[1024];
-	get_main_dns_name(buffer, 1024, dns_name.c_str());
+	get_main_serv_name(buffer, 1024, dns_name.c_str());
 
 	DNS_SET::iterator iter = dns_set_.find(buffer);
 	if (dns_set_.end() != iter) {
