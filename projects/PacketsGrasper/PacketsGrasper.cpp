@@ -17,6 +17,7 @@
 #include <AppinstallValidate.h>
 #include <softwareStatus.h>
 #include <DebugOutput.h>
+#include ".\log.h"
 
 
 #pragma data_seg(".inidata")
@@ -31,6 +32,8 @@ WSPUPCALLTABLE		MainUpCallTable;
 CRITICAL_SECTION	gCriticalSection;			// 代码段保护变量
 WSPPROC_TABLE		NextProcTable;				// 保存30个服务提供者指针
 TCHAR				m_sProcessName[MAX_PATH];	// 保存当前进程名称
+
+#define __OUTPUT_DEBUG_CALL__	  _DEBUG_STREAM_TRC_("[PacketFilter Fucntion Trace] "<<__FUNCTION__);
 
 //CSelectIO g_select;
 
@@ -106,7 +109,7 @@ int WSPAPI WSPSelect (
   LPINT			lpErrno                         
 ) 
 {
-	_DEBUG_STREAM_TRC_("[PacketFilter] "<<_T("WSPSelect ..."));
+	__OUTPUT_DEBUG_CALL__
 
 	// 如果应用程序是一个不应该被拦截的应用程序
 	//if (progress_check.isEnabled())
@@ -148,7 +151,7 @@ int WSPAPI WSPRecv(
 	LPINT			lpErrno
 )
 {
-	_DEBUG_STREAM_TRC_("[PacketFilter] "<<_T("WSPRecv ..."));  
+	__OUTPUT_DEBUG_CALL__
 	return NextProcTable.lpWSPRecv(s, lpBuffers, dwBufferCount
 				, lpNumberOfBytesRecvd, lpFlags, lpOverlapped
 				, lpCompletionRoutine, lpThreadId, lpErrno);
@@ -198,7 +201,7 @@ SOCKET WSPAPI WSPSocket(
 	LPINT		lpErrno
 )
 {
-	_DEBUG_STREAM_TRC_("[PacketFilter] "<<_T("WSPSocket ..."));  
+	__OUTPUT_DEBUG_CALL__
 	return NextProcTable.lpWSPSocket(af, type
 		, protocol, lpProtocolInfo, g, dwFlags, lpErrno);
 }
@@ -208,7 +211,7 @@ int WSPAPI WSPCloseSocket(
 	LPINT		lpErrno
 ) 
 { 
-	_DEBUG_STREAM_TRC_("[PacketFilter] "<<_T("WSPCloseSocket ..."));  
+	__OUTPUT_DEBUG_CALL__
 	//g_select.onCloseSocket(s);
 	//char buffer[1024];
 	//sprintf(buffer, "CloseSocket %d", s);
@@ -227,7 +230,7 @@ int WSPAPI WSPConnect(
 	LPINT			lpErrno
 )
 {
-	_DEBUG_STREAM_TRC_("[PacketFilter] "<<"WSPConnect");  
+	__OUTPUT_DEBUG_CALL__
 	// 修复
 	// 注意hModule不能传NULL,  应该如果传NULL，
 	// 应为NULL则获取到的线程为调用者线程的exe
@@ -255,7 +258,6 @@ int WSPAPI WSPConnect(
 		CoUninitialize();
 	}
 
-	_DEBUG_STREAM_TRC_("[PacketFilter] "<<_T("WSPConnect ..."));  
 	return NextProcTable.lpWSPConnect(s, name, namelen, lpCallerData
 		, lpCalleeData, lpSQOS, lpGQOS, lpErrno);
 }
@@ -269,7 +271,7 @@ SOCKET WSPAPI WSPAccept(
 	LPINT			lpErrno
 )
 {
-	_DEBUG_STREAM_TRC_("[PacketFilter] "<<_T("WSPAccept ..."));  
+	__OUTPUT_DEBUG_CALL__
 	return NextProcTable.lpWSPAccept(s, addr, addrlen, lpfnCondition
 		, dwCallbackData, lpErrno);
 }
@@ -286,7 +288,7 @@ int WSPAPI WSPSend(
 	LPINT			lpErrno
 )
 {
-	_DEBUG_STREAM_TRC_("[PacketFilter] "<<_T("WSPSend...")); 	 
+	__OUTPUT_DEBUG_CALL__
 
 	HTTPRequestPacket packet;
 
@@ -340,7 +342,7 @@ int WSPAPI WSPSendTo(
 	LPINT			lpErrno
 )
 {
-	_DEBUG_STREAM_TRC_("[PacketFilter] "<<"WSPSendTo ..."); 	 
+	__OUTPUT_DEBUG_CALL__
 
 	return NextProcTable.lpWSPSendTo(s, lpBuffers, dwBufferCount
 				, lpNumberOfBytesSent, dwFlags, lpTo, iTolen, lpOverlapped
@@ -361,7 +363,7 @@ int WSPAPI WSPRecvFrom (
 	LPINT			lpErrno
 )
 {
-	_DEBUG_STREAM_TRC_("[PacketFilter] "<<"WSPRecvFrom"); 	 
+	__OUTPUT_DEBUG_CALL__
 	int iRet = NextProcTable.lpWSPRecvFrom(s, lpBuffers, dwBufferCount
 		, lpNumberOfBytesRecvd, lpFlags, lpFrom, lpFromlen
 		, lpOverlapped, lpCompletionRoutine, lpThreadId, lpErrno);
@@ -378,7 +380,7 @@ int WSPAPI WSPAddressToString (
   LPINT			lpErrno                      
 )
 {
-	_DEBUG_STREAM_TRC_("[PacketFilter] "<<_T("WSPAddressToString ..."));  	 
+	__OUTPUT_DEBUG_CALL__
 	return NextProcTable.lpWSPAddressToString(lpsaAddress
 		, dwAddressLength, lpProtocolInfo
 		, lpszAddressString, lpdwAddressStringLength, lpErrno);
@@ -392,7 +394,7 @@ int WSPAPI WSPAsyncSelect (
   LPINT			lpErrno        
 )
 {
-	_DEBUG_STREAM_TRC_("[PacketFilter] "<<_T("WSPAsyncSelect ...")); 	 
+	__OUTPUT_DEBUG_CALL__
 	return NextProcTable.lpWSPAsyncSelect(s, hWnd, wMsg, lEvent, lpErrno);
 }
  
@@ -403,7 +405,7 @@ int WSPAPI WSPBind (
   LPINT			lpErrno                       
 )
 {
-	_DEBUG_STREAM_TRC_("[PacketFilter] "<<_T("WSPBind ...")); 	 
+	__OUTPUT_DEBUG_CALL__
 	return NextProcTable.lpWSPBind(s, name, namelen, lpErrno);
 }
 
@@ -411,7 +413,7 @@ int WSPAPI WSPCancelBlockingCall (
   LPINT			lpErrno  
 )
 {
-	_DEBUG_STREAM_TRC_("[PacketFilter] "<<_T("WSPCancelBlockingCall ..."));	 
+	__OUTPUT_DEBUG_CALL__
 	return NextProcTable.lpWSPCancelBlockingCall(lpErrno);
 }
 
@@ -419,7 +421,7 @@ int WSPAPI WSPCleanup (
   LPINT			lpErrno  
 )
 {
-	_DEBUG_STREAM_TRC_("[PacketFilter] "<<_T("WSPCleanup ..."));	 
+	__OUTPUT_DEBUG_CALL__
 	return NextProcTable.lpWSPCleanup(lpErrno);
 }
  
@@ -430,7 +432,7 @@ int WSPAPI WSPDuplicateSocket (
   LPINT			lpErrno                         
 )
 {
-	_DEBUG_STREAM_TRC_("[PacketFilter] "<<_T("WSPDuplicateSocket ...")); 
+	__OUTPUT_DEBUG_CALL__
 
 	return NextProcTable.lpWSPDuplicateSocket(
 		s, dwProcessId, lpProtocolInfo, lpErrno);
@@ -443,7 +445,7 @@ int WSPAPI WSPEnumNetworkEvents (
   LPINT			lpErrno                         
 )
 {
-	_DEBUG_STREAM_TRC_("[PacketFilter] "<<_T("WSPEnumNetworkEvents ...")); 
+	__OUTPUT_DEBUG_CALL__
 	return NextProcTable.lpWSPEnumNetworkEvents(
 		s, hEventObject, lpNetworkEvents, lpErrno);
 }
@@ -455,7 +457,7 @@ int WSPAPI WSPEventSelect (
   LPINT			lpErrno          
 )
 {
-	_DEBUG_STREAM_TRC_("[PacketFilter] "<<_T("WSPEventSelect ...")); 
+	__OUTPUT_DEBUG_CALL__
 	return NextProcTable.lpWSPEventSelect(
 		s, hEventObject, lNetworkEvents, lpErrno);
 }
@@ -469,7 +471,7 @@ BOOL WSPAPI WSPGetOverlappedResult (
   LPINT			lpErrno                   
 )
 {
-	_DEBUG_STREAM_TRC_("[PacketFilter] "<<_T("WSPGetOverlappedResult ...")); 
+	__OUTPUT_DEBUG_CALL__
 	return NextProcTable.lpWSPGetOverlappedResult(s, lpOverlapped
 		, lpcbTransfer, fWait, lpdwFlags, lpErrno);
 }
@@ -481,7 +483,7 @@ int WSPAPI WSPGetPeerName (
   LPINT			lpErrno                  
 )
 {
-	_DEBUG_STREAM_TRC_("[PacketFilter] "<<_T("WSPGetPeerName ...")); 
+	__OUTPUT_DEBUG_CALL__
 	return NextProcTable.lpWSPGetPeerName(s, name, namelen, lpErrno);
 }
 
@@ -492,7 +494,7 @@ int WSPAPI WSPGetSockName (
   LPINT			lpErrno                 
 )
 {
-	_DEBUG_STREAM_TRC_("[PacketFilter] "<<_T("WSPGetSockName ...")); 
+	__OUTPUT_DEBUG_CALL__
 	return NextProcTable.lpWSPGetSockName(s, name, namelen, lpErrno);
 }
 
@@ -505,7 +507,7 @@ int WSPAPI WSPGetSockOpt (
   LPINT			lpErrno        
 ) 
 {
-	_DEBUG_STREAM_TRC_("[PacketFilter] "<<_T("WSPGetSockOpt ...")); 
+	__OUTPUT_DEBUG_CALL__
 	return NextProcTable.lpWSPGetSockOpt(
 		s, level, optname, optval, optlen, lpErrno);
 }
@@ -517,7 +519,7 @@ BOOL WSPAPI WSPGetQOSByName (
   LPINT			lpErrno         
 )
 {
-	_DEBUG_STREAM_TRC_("[PacketFilter] "<<_T("WSPGetQOSByName ...")); 
+	__OUTPUT_DEBUG_CALL__
 	return NextProcTable.lpWSPGetQOSByName(s, lpQOSName, lpQOS, lpErrno);
 }
 
@@ -535,7 +537,7 @@ int WSPAPI WSPIoctl (
   LPINT			lpErrno                                            
 )
 {
-	_DEBUG_STREAM_TRC_("[PacketFilter] "<<_T("WSPIoctl ...")); 
+	__OUTPUT_DEBUG_CALL__
 	return NextProcTable.lpWSPIoctl(s, dwIoControlCode, lpvInBuffer
 		, cbInBuffer, lpvOutBuffer, cbOutBuffer, lpcbBytesReturned
 		, lpOverlapped, lpCompletionRoutine, lpThreadId, lpErrno);
@@ -553,7 +555,7 @@ SOCKET WSPAPI WSPJoinLeaf (
   LPINT			lpErrno                      
 )
 {
-	_DEBUG_STREAM_TRC_("[PacketFilter] "<<_T("WSPJoinLeaf ...")); 
+	__OUTPUT_DEBUG_CALL__
 	return NextProcTable.lpWSPJoinLeaf(s, name, namelen, lpCallerData
 		, lpCalleeData, lpSQOS, lpGQOS, dwFlags, lpErrno);
 }
@@ -564,7 +566,7 @@ int WSPAPI WSPListen (
   LPINT			lpErrno  
 )
 {
-	_DEBUG_STREAM_TRC_("[PacketFilter] "<<_T("WSPListen ...")); 
+	__OUTPUT_DEBUG_CALL__
 	return NextProcTable.lpWSPListen(s, backlog, lpErrno);
 }
 
@@ -574,7 +576,7 @@ int WSPAPI WSPRecvDisconnect (
   LPINT			lpErrno                       
 )
 {
-	_DEBUG_STREAM_TRC_("[PacketFilter] "<<_T("WSPRecvDisconnect ...")); 
+	__OUTPUT_DEBUG_CALL__
 	return NextProcTable.lpWSPRecvDisconnect(s, lpInboundDisconnectData, lpErrno);
 }
 
@@ -585,7 +587,7 @@ int WSPAPI WSPSendDisconnect (
   LPINT			lpErrno                        
 )
 {
-	_DEBUG_STREAM_TRC_("[PacketFilter] "<<_T("WSPSendDisconnect ...")); 
+	__OUTPUT_DEBUG_CALL__
 	return NextProcTable.lpWSPSendDisconnect(
 		s, lpOutboundDisconnectData, lpErrno);
 }
@@ -599,7 +601,7 @@ int WSPAPI WSPSetSockOpt (
   LPINT			lpErrno              
 )
 {
-	_DEBUG_STREAM_TRC_("[PacketFilter] "<<_T("WSPSetSockOpt ...")); 
+	__OUTPUT_DEBUG_CALL__
 	return NextProcTable.lpWSPSetSockOpt(
 		s, level, optname, optval, optlen, lpErrno);
 }
@@ -610,7 +612,7 @@ int WSPAPI WSPShutdown (
   LPINT			lpErrno  
 )
 {
-	_DEBUG_STREAM_TRC_("[PacketFilter] "<<_T("WSPShutdown ...")); 
+	__OUTPUT_DEBUG_CALL__
 	return NextProcTable.lpWSPShutdown(s, how, lpErrno);
 }
 
@@ -623,6 +625,7 @@ int WSPAPI WSPStringToAddress (
   LPINT			lpErrno                         
 )
 { 
+	__OUTPUT_DEBUG_CALL__
 	return NextProcTable.lpWSPStringToAddress(AddressString, AddressFamily
 		, lpProtocolInfo, lpAddress, lpAddressLength, lpErrno);
 }
