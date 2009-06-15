@@ -13,20 +13,11 @@ LOGGER_API void set_logger_level(boost::logging::level::type level) {
 	g_log_level()->set_enabled(level);
 }
 
-LOGGER_API void logger_trace(std::stringstream &s) {
-	LTRC_<<s.str().c_str();
+LOGGER_API void logger_app(std::stringstream &s) {
+	__LAPP__<<s.str().c_str();
 }
 LOGGER_API void  logger_debug(std::stringstream &s) {
-	LDBG_<<s.str().c_str();
-}
-LOGGER_API  void logger_info(std::stringstream &s) {
-	LAPP_<<s.str().c_str();
-}
-LOGGER_API void  logger_error(std::stringstream &s) {
-	LERR_<<s.str().c_str();
-}
-LOGGER_API void  logger_fatal(std::stringstream &s) {
-	LFAT_<<s.str().c_str();
+	__LDBG__<<s.str().c_str();
 }
 
 BOOL APIENTRY DllMain( HANDLE hModule, 
