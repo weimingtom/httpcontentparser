@@ -93,9 +93,9 @@ void init_logger(HMODULE hModule) {
 	GetModuleFileName(NULL, callerpath, MAX_PATH);
 	GetFileName(callerpath, callname, MAX_PATH);
 
-	_sntprintf(filename, MAX_PATH, "%s\\log\\pgrasper_%s.log", dir, callerpath);
+	_sntprintf(filename, MAX_PATH, "%s\\log\\pgrasper_%s.log", dir, callname);
 	init_app_logger(filename);
-	_sntprintf(filename, MAX_PATH, "%s\\log\\dpgrasper_%s.log", dir, callerpath);
+	_sntprintf(filename, MAX_PATH, "%s\\log\\dpgrasper_%s.log", dir, callname);
 	init_debug_logger(filename);
 
 	g_log_level()->set_enabled(boost::logging::level::debug);
