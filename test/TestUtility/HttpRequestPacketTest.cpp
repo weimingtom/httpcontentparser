@@ -102,11 +102,11 @@ void HttpRequestPacketTest::miscTest() {
 	char buffer[buf_len];
 	request_packet.getGET(buffer, buf_len);
 	CPPUNIT_ASSERT(buffer[buf_len-1] == '\0');
-	request_packet.getHost(buffer, 10);
+	request_packet.getHost(buffer, buf_len);
 	CPPUNIT_ASSERT(buffer[buf_len-1] == '\0');
-	request_packet.getMainHostName(buffer, 10);
+	request_packet.getMainHostName(buffer, buf_len);
 	CPPUNIT_ASSERT(buffer[buf_len-1] == '\0');
-	request_packet.getUserAgent(buffer, 10);
+	request_packet.getUserAgent(buffer, buf_len);
 	CPPUNIT_ASSERT(buffer[buf_len-1] == '\0');
 }
 
