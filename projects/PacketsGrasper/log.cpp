@@ -73,15 +73,29 @@ namespace {
 		_sntprintf(directory, len, TEXT("%s%s"), driver, dir);
 		return directory;
 	}
+
+
+	const TCHAR* GetFileName(const TCHAR *fullname, TCHAR * ename, const unsigned len) {
+		TCHAR dir[MAX_PATH], driver[MAX_PATH], name[MAX_PATH], ext[MAX_PATH];
+		_tsplitpath(fullname, driver, dir, name, ext);
+		_sntprintf(ename, len, TEXT("%s%s"), name, ext);
+		return ename;
+	}
 };
 
 void init_logger(HMODULE hModule) {
-	TCHAR filename[MAX_PATH], dir[MAX_PATH];
+	TCHAR filename[MAX_PATH], dir[MAX_PATH], callerpath[MAX_PATH], callname[MAX_PATH];
+	// 获取DLL的路径
 	GetModuleFileName(hModule, filename, MAX_PATH);
 	GetFileNameDir(filename, dir, MAX_PATH);
-	_sntprintf(filename, MAX_PATH, "%s\\log\\pgrasper.log", dir);
+
+	//获取caller_name
+	GetModuleFileName(NULL, callerpath, MAX_PATH);
+	GetFileName(callerpath, callname, MAX_PATH);
+
+	_sntprintf(filename, MAX_PATH, "%s\\log\\pgrasper_%s.log", dir, callerpath);
 	init_app_logger(filename);
-	_sntprintf(filename, MAX_PATH, "%s\\log\\dpgrasper.log", dir);
+	_sntprintf(filename, MAX_PATH, "%s\\log\\dpgrasper_%s.log", dir, callerpath);
 	init_debug_logger(filename);
 
 	g_log_level()->set_enabled(boost::logging::level::debug);
