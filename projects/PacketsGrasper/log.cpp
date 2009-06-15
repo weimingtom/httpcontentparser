@@ -17,6 +17,8 @@
 #include "log.h"
 #include <DebugOutput.h>
 
+TCHAR g_caller_name[MAX_PATH] = {0};
+
 BOOST_DEFINE_LOG_FILTER(g_log_level, boost::logging::level::holder ) 
 BOOST_DEFINE_LOG(g_log_app, log_type )
 BOOST_DEFINE_LOG(g_log_dbg, log_type )
@@ -84,18 +86,18 @@ namespace {
 };
 
 void init_logger(HMODULE hModule) {
-	TCHAR filename[MAX_PATH], dir[MAX_PATH], callerpath[MAX_PATH], callname[MAX_PATH];
+	TCHAR filename[MAX_PATH], dir[MAX_PATH];
 	// 获取DLL的路径
 	GetModuleFileName(hModule, filename, MAX_PATH);
 	GetFileNameDir(filename, dir, MAX_PATH);
+	_sntprintf(filename, MAX_PATH, "%s\\log\\pgrasper.log", dir);
+	init_app_logger(filename);
 
 	//获取caller_name
+	TCHAR callerpath[MAX_PATH];
 	GetModuleFileName(NULL, callerpath, MAX_PATH);
-	GetFileName(callerpath, callname, MAX_PATH);
-
-	_sntprintf(filename, MAX_PATH, "%s\\log\\pgrasper_%s.log", dir, callname);
-	init_app_logger(filename);
-	_sntprintf(filename, MAX_PATH, "%s\\log\\dpgrasper_%s.log", dir, callname);
+	GetFileName(callerpath, g_caller_name, MAX_PATH);
+	_sntprintf(filename, MAX_PATH, "%s\\log\\dpgrasper_%s.log", dir, g_caller_name);
 	init_debug_logger(filename);
 
 	g_log_level()->set_enabled(boost::logging::level::debug);
