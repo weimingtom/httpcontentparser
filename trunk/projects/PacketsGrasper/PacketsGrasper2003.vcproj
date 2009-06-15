@@ -172,6 +172,12 @@
 			<File
 				RelativePath=".\debug.h">
 			</File>
+			<File
+				RelativePath=".\log.cpp">
+			</File>
+			<File
+				RelativePath=".\log.h">
+			</File>
 		</Filter>
 		<Filter
 			Name="precomp"
