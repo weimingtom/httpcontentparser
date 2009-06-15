@@ -12,21 +12,18 @@
 #include ".\appcontrol.h"
 #include ".\log.h"
 
-_INIT_FILESCOPT_OSTRSTREAM_
 
 // CAppControl
 STDMETHODIMP CAppControl::AddNewItem(BSTR path) {
 	g_configuration.getProgramControl()->addItem((TCHAR*)_bstr_t(path));
-	_DEBUG_STREAM_TRC_<<"[Websnow Service]  [" <<__FUNCTION__<<"] Add New Item : "<< (TCHAR*)_bstr_t(path);
-	_OUTPUT_FMT_STRING_
+	_DEBUG_STREAM_TRC_("[Websnow Service]  [" <<__FUNCTION__<<"] Add New Item : "<< (TCHAR*)_bstr_t(path));
 	return S_OK;
 }
 
 
 STDMETHODIMP CAppControl::RemoveItem(BSTR path) {
 	g_configuration.getProgramControl()->removeitem((TCHAR*)_bstr_t(path));
-	_DEBUG_STREAM_TRC_<<"[Websnow Service]  [" <<__FUNCTION__<<"] Remove New Item : "<< (TCHAR*)_bstr_t(path);
-	_OUTPUT_FMT_STRING_
+	_DEBUG_STREAM_TRC_("[Websnow Service]  [" <<__FUNCTION__<<"] Remove New Item : "<< (TCHAR*)_bstr_t(path));
 	return S_OK;
 }
 
@@ -62,12 +59,10 @@ STDMETHODIMP CAppControl::checkApp(BSTR fullpath, VARIANT_BOOL* result)
 	*result = g_configuration.getProgramControl()->check((TCHAR*)_bstr_t(fullpath));
 	if (VARIANT_TRUE == *result) {
 		LTRC_<<"pass app check "<< (char*)_bstr_t(fullpath);
-		_DEBUG_STREAM_TRC_<<"[Websnow Service]  [" <<__FUNCTION__<<"] Check Item :  "<< (TCHAR*)_bstr_t(fullpath)<<true;
-		_OUTPUT_FMT_STRING_
+		_DEBUG_STREAM_TRC_("[Websnow Service]  [" <<__FUNCTION__<<"] Check Item :  "<< (TCHAR*)_bstr_t(fullpath)<<true);
 	} else {
 		LTRC_<<"block app check "<<(char*)_bstr_t(fullpath);
-		_DEBUG_STREAM_TRC_<<"[Websnow Service]  [" <<__FUNCTION__<<"] Check Item : "<< (TCHAR*)_bstr_t(fullpath) << false;
-		_OUTPUT_FMT_STRING_
+		_DEBUG_STREAM_TRC_("[Websnow Service]  [" <<__FUNCTION__<<"] Check Item : "<< (TCHAR*)_bstr_t(fullpath) << false);
 	}
 	return S_OK;
 }
