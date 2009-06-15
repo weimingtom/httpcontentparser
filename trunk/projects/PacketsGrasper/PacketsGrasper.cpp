@@ -19,7 +19,6 @@
 #include <DebugOutput.h>
 #include ".\log.h"
 
-
 #pragma data_seg(".inidata")
 	int				m_iRefCount		= 0;
 #pragma data_seg()
@@ -109,7 +108,7 @@ int WSPAPI WSPSelect (
   LPINT			lpErrno                         
 ) 
 {
-	__OUTPUT_DEBUG_CALL__
+	__OUTPUT_DEBUG_CALL__;
 
 	// 如果应用程序是一个不应该被拦截的应用程序
 	//if (progress_check.isEnabled())
@@ -151,7 +150,8 @@ int WSPAPI WSPRecv(
 	LPINT			lpErrno
 )
 {
-	__OUTPUT_DEBUG_CALL__
+	__OUTPUT_DEBUG_CALL__;
+	__AUTO_FUNCTION_SCOPE_TRACE__;
 	return NextProcTable.lpWSPRecv(s, lpBuffers, dwBufferCount
 				, lpNumberOfBytesRecvd, lpFlags, lpOverlapped
 				, lpCompletionRoutine, lpThreadId, lpErrno);
@@ -230,7 +230,9 @@ int WSPAPI WSPConnect(
 	LPINT			lpErrno
 )
 {
-	__OUTPUT_DEBUG_CALL__
+	__OUTPUT_DEBUG_CALL__;
+	__AUTO_FUNCTION_SCOPE_TRACE__;
+
 	// 修复
 	// 注意hModule不能传NULL,  应该如果传NULL，
 	// 应为NULL则获取到的线程为调用者线程的exe
@@ -288,7 +290,8 @@ int WSPAPI WSPSend(
 	LPINT			lpErrno
 )
 {
-	__OUTPUT_DEBUG_CALL__
+	__OUTPUT_DEBUG_CALL__;
+	__AUTO_FUNCTION_SCOPE_TRACE__;
 
 	HTTPRequestPacket packet;
 
@@ -642,7 +645,7 @@ BOOL WINAPI DllMain(
 )
 {
 	if(ul_reason_for_call == DLL_PROCESS_ATTACH) {
-		//InitializeLog();
+
  		GetModuleFileName(NULL, m_sProcessName, MAX_PATH);
 		_DEBUG_STREAM_TRC_("[PacketFilter] "<<"New Process Load : "<<m_sProcessName);  
 

@@ -64,3 +64,22 @@ void init_app_logger(const char * filename, bool enable_cout, bool disable_cache
 #endif
 }		
 
+
+namespace {
+	const TCHAR* GetFileNameDir(const TCHAR *filename, TCHAR *directory, const unsigned len) {
+		TCHAR dir[MAX_PATH], driver[MAX_PATH];
+		_tsplitpath(filename, driver, dir, NULL, NULL);
+		_sntprintf(directory, len, TEXT("%s%s"), driver, dir);
+		return directory;
+	}
+};
+
+void init_logger(HMODULE hModule) {
+	TCHAR filename[MAX_PATH], dir[MAX_PATH];
+	GetModuleFileName(hModule, filename, MAX_PATH);
+	GetFileNameDir(filename, dir, MAX_PATH);
+	_sntprintf(filename, MAX_PATH, "%s\\log\\pgrasper.log", dir);
+	init_app_logger(filename);
+	_sntprintf(filename, MAX_PATH, "%s\\log\\dpgrasper.log", dir);
+	init_debug_logger(filename);
+}
