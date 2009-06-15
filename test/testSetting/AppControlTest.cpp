@@ -32,6 +32,7 @@ void AppControlTest::testAppConrol() {
 
 	const TCHAR * p[] = {ITEM_FILE_1, ITEM_FILE_2,  ITEM_FILE_3, ITEM_FILE_4, ITEM_FILE_5};
 
+	// TODO: 目前FILENO里面没有属性值
 	strutility::_tstring cur, next;
 	ProgramControl::FILEINFO * info;
 	int cnt = 0;
