@@ -35,20 +35,33 @@ HTTPRequestPacket::~HTTPRequestPacket(void) {
 }
 
 int HTTPRequestPacket::getMainHostName(char *buffer, const int len) {
-	strncpy(buffer, main_host_, getWrittenCount(len));
+	memset(buffer, 0, len);
+	strncpy(buffer, main_host_, getWrittenCount(len-1));
 	return static_cast<int>(strlen(buffer));
 }
 int HTTPRequestPacket::getHost(char *buffer, const int len) {
-	strncpy(buffer, host_, getWrittenCount(len));
+	memset(buffer, 0, len);
+	strncpy(buffer, host_, getWrittenCount(len-1));
 	return static_cast<int>(strlen(buffer));
 }
 int HTTPRequestPacket::getReferer(char *buffer, const int len) {
-	strncpy(buffer, referer_, getWrittenCount(len));
+	memset(buffer, 0, len);
+	strncpy(buffer, referer_, getWrittenCount(len-1));
 	return static_cast<int>(strlen(buffer));
 }
 int HTTPRequestPacket::getUserAgent(char *buffer, const int len) {
-	strncpy(buffer, useagent_, getWrittenCount(len));
+	memset(buffer, 0, len);
+	strncpy(buffer, useagent_, getWrittenCount(len-1));
 	return static_cast<int>(strlen(buffer));
+}
+
+int HTTPRequestPacket::getGET(char *buffer, const int len) {
+	memset(buffer, 0, len);
+	if (HTTP_REQUEST_OPETYPE_GET == getRequestType()) {
+		strncpy(buffer, oper_, len-1);
+		return static_cast<int>(strlen(buffer));
+	}
+	return 0;
 }
 
 void HTTPRequestPacket::reset() {
@@ -70,14 +83,6 @@ int HTTPRequestPacket::parsePacket(WSABUF * wsabuf, const int count) {
 	return parsePacket(buffer, cur);
 }
 
-int HTTPRequestPacket::getGET(char *buffer, const int len) {
-	if (HTTP_REQUEST_OPETYPE_GET == getRequestType()) {
-		strncpy(buffer, oper_, len);
-		return static_cast<int>(strlen(buffer));
-	}
-
-	return 0;
-}
 int HTTPRequestPacket::parsePacket(char * buf, const int len) {
 	using namespace strutility;
 
