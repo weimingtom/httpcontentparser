@@ -33,6 +33,8 @@ void init_debug_logger(const char * filename, bool enable_cout, bool disable_cac
 	 if (true == disable_cache) {
 		 g_log_dbg()->turn_cache_off();
 	}
+
+	 g_log_dbg()->mark_as_initialized();
 }		
 
 void init_app_logger(const char * filename, bool enable_cout, bool disable_cache)	  { 
@@ -47,5 +49,6 @@ void init_app_logger(const char * filename, bool enable_cout, bool disable_cache
 	if (true == disable_cache) {
 		 g_log_app()->turn_cache_off();
 	}
-}		
 
+	g_log_app()->mark_as_initialized();
+}		

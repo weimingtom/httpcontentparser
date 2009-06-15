@@ -25,7 +25,6 @@ BOOST_DECLARE_LOG_FILTER(g_log_level, boost::logging::level::holder )
 BOOST_DECLARE_LOG(g_log_app, log_type)
 BOOST_DECLARE_LOG(g_log_dbg, log_type)
 
-
 #define LTRC_ BOOST_LOG_USE_LOG_IF_LEVEL(g_log_app(), g_log_level(), debug )  <<"[TRACE]{@"<<__FUNCTION__<<"} "
 #define LDBG_ BOOST_LOG_USE_LOG_IF_LEVEL(g_log_dbg(), g_log_level(), debug ) <<"[DEBUG]{@"<<__FUNCTION__<<"} "
 
@@ -37,4 +36,6 @@ BOOST_DECLARE_LOG(g_log_dbg, log_type)
 
 void init_debug_logger(const char * filename, bool enable_cout = false, bool disable_cache=false);
 void init_app_logger(const char * filename, bool enable_cout = false, bool disable_cache=false);	
+
+
 #endif
