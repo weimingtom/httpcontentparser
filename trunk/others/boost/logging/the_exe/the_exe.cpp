@@ -21,14 +21,27 @@
 
 int main(int argc, char* argv[])
 {
-    int i = 0;
-	init_logs();
-    L_EXE_ << "beginning of exe log" << ++i;
-    L_EXE_ << "message from exe - before init_logs on EXE" << ++i;
-    
-    L_EXE_ << "message from exe - after init_logs on EXE" << ++i;
+	init_app_logger("app", true);
+	init_debug_logger("debug", true);
+	using namespace boost::logging;
+	g_log_level()->set_enabled(level::debug);
+	int i = 1;
+	LDBG_ << "this is so cool " << i++;
+	LERR_<< "first error " << i++;
 
-    L_EXE_ << "end of exe log " << ++i;
+	std::string hello = "hello", world = "world";
+	LDBG_<< hello << ", " << world;
+
+	using namespace boost::logging;
+	g_log_level()->set_enabled(level::error);
+	LTRC_<< "this will not be written anywhere";
+	LDBG_<< "this won't be written anywhere either";
+	LAPP_<< "second error " << i++;
+
+	g_log_level()->set_enabled(level::info);
+	LAPP_ << "good to be back ;) " << i++;
+	LERR_ << "third error " << i++;
+
 	return 0;
 }
 
