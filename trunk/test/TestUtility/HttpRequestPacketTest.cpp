@@ -88,6 +88,27 @@ void HttpRequestPacketTest::parseMultiPacket() {
 	}
 }
 
+void HttpRequestPacketTest::miscTest() {
+	HTTPRequestPacket request_packet;
+	char * packet = "GET /iframe/gn/9/2007-04-28/17251.html HTTP/1.1\r\n"
+	"Host: seach.google.com\r\n"
+	"User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.16) Gecko/20080702 Firefox/2.0.0.16 GoogleToolbarFF\r\n"
+	"Connection: keep-alive\r\n"
+	"Referer: http://news.sina.com.cn/c/2008-09-04/202816233711.shtml\r\n";
+
+	// 测试解析后的可识别的项数
+ 	const int item_count = request_packet.parsePacket(packet, (int)strlen(packet));
+	const int buf_len = 5;
+	char buffer[buf_len];
+	request_packet.getGET(buffer, buf_len);
+	CPPUNIT_ASSERT(buffer[buf_len-1] == '\0');
+	request_packet.getHost(buffer, 10);
+	CPPUNIT_ASSERT(buffer[buf_len-1] == '\0');
+	request_packet.getMainHostName(buffer, 10);
+	CPPUNIT_ASSERT(buffer[buf_len-1] == '\0');
+	request_packet.getUserAgent(buffer, 10);
+	CPPUNIT_ASSERT(buffer[buf_len-1] == '\0');
+}
 
 // test
 void HttpRequestPacketTest::parsePacket() {
