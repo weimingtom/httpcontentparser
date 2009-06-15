@@ -44,11 +44,11 @@ class scope_logger_helper {
 public:
 	scope_logger_helper(const TCHAR * logger_text) : _logger_text_(logger_text){
 		assert(logger_text != NULL);
-		LTRC_WITHOUT<<"[PacketGrasper] "<<_logger_text_<<" @scope_begin";
+		LTRC_WITHOUT<<_logger_text_<<" @scope_begin";
 	}
 	
 	~scope_logger_helper() {
-		LTRC_WITHOUT<<"[PacketGrasper] "<<_logger_text_<<" @scope_end";
+		LTRC_WITHOUT<<_logger_text_<<" @scope_end";
 	}
 	
 	const char * _logger_text_;

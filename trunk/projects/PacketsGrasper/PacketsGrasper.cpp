@@ -312,6 +312,7 @@ int WSPAPI WSPSend(
 	//DumpBuf(lpBuffers, dwBufferCount, host);
 
 	// 检查IP是否正常，如果可以则通过，否则直接返回错误
+	LTRC_<<"Send HTTP Request to " << host;
 	if (packet.openPage() == true) {
 		if (accessNetword() && checkHTTPRequest(&packet)){
 			PACKETGRASPER_TRC("HTTP Request passed"); 			 
