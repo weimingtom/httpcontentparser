@@ -14,6 +14,7 @@
 */
 
 #include "dll_log.h"
+#include <boost/logging/format.hpp>
 
 // note : we export this filter & logger
 THE_DLL_API BOOST_DEFINE_LOG_FILTER(g_dll_log_filter, finder::filter ) 
