@@ -10,7 +10,6 @@
 #include <softwareStatus.h>
 #include <DebugOutput.h>
 
-_INIT_FILESCOPT_OSTRSTREAM_
 
 namespace AppUtility {
 
@@ -72,8 +71,7 @@ int AppInstallValidate::repair(HMODULE hModule, bool removefirst) {
 	// 安装路径注册表项
 	if (!validateReigstrInstallPath(install_path)) {
 		repairRegistryInstallPath(install_path);
-		_DEBUG_STREAM_TRC_<<"["<<__FUNCTION__<<"] Repair Registry Install Path";
-		_OUTPUT_FMT_STRING_
+		_DEBUG_STREAM_TRC_("["<<__FUNCTION__<<"] Repair Registry Install Path");
 	}
 
 	// SPI
@@ -125,8 +123,7 @@ bool AppInstallValidate::repairRegistryInstallPath(const TCHAR * path) {
 		return true;
 	} else {
 		setErrNo(F_REGISTRY_OPR_FAILED);
-		_DEBUG_STREAM_TRC_<<"["<<__FUNCTION__<<"] Failed On Registion Operation Errono: "<<GetLastError();
-		_OUTPUT_FMT_STRING_
+		_DEBUG_STREAM_TRC_("["<<__FUNCTION__<<"] Failed On Registion Operation Errono: "<<GetLastError());
 		return false;
 	}
 }
@@ -188,8 +185,7 @@ void AppInstallValidate::installSPI() {
 
 	CXInstall	m_Install;
 	setErrNo(m_Install.InstallProvider(fullpath));
-	_DEBUG_STREAM_TRC_<<"Repair SPI";
-	_OUTPUT_FMT_STRING_
+	_DEBUG_STREAM_TRC_("Repair SPI");
 }
 
 //=========================================
@@ -255,8 +251,7 @@ void AppInstallValidate::repairShellExt(bool removefirst) {
 			uninstallCopyControl();
 		}
 		installCopyHook();
-		_DEBUG_STREAM_TRC_<<"["<<__FUNCTION__<<"] Repair Shell CopyHook Ext";
-		_OUTPUT_FMT_STRING_
+		_DEBUG_STREAM_TRC_("["<<__FUNCTION__<<"] Repair Shell CopyHook Ext");
 	}
 
 	// 安装应用程序控制
@@ -265,8 +260,7 @@ void AppInstallValidate::repairShellExt(bool removefirst) {
 			uninstallCopyControl();
 		}
 		installAppControl();
-		_DEBUG_STREAM_TRC_<<"["<<__FUNCTION__<<"] Repair Shell AppControl Ext";
-		_OUTPUT_FMT_STRING_
+		_DEBUG_STREAM_TRC_("["<<__FUNCTION__<<"] Repair Shell AppControl Ext");
 	}
 }
 //===================================================
