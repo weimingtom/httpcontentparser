@@ -152,16 +152,14 @@ int WSPAPI WSPRecv(
 )
 {
 	__OUTPUT_DEBUG_CALL__;
-	__AUTO_FUNCTION_SCOPE_TRACE__;
+	//__AUTO_FUNCTION_SCOPE_TRACE__;
 	return NextProcTable.lpWSPRecv(s, lpBuffers, dwBufferCount
 				, lpNumberOfBytesRecvd, lpFlags, lpOverlapped
 				, lpCompletionRoutine, lpThreadId, lpErrno);
 
 	// 如果应用程序是一个不应该被拦截的应用程序
 	//if (progress_check.isEnabled())
-	//	return NextProcTable.lpWSPRecv(s, lpBuffers, dwBufferCount
-	//			, lpNumberOfBytesRecvd, lpFlags, lpOverlapped
-	//			, lpCompletionRoutine, lpThreadId, lpErrno);
+	//	goto return_dir;
 
 	//char buffer[1024];
 	//sprintf(buffer, "WSPRecv %d", s);
@@ -169,9 +167,7 @@ int WSPAPI WSPRecv(
 	/*try { 
 		// 对于使用MSG_PEEK抓取的方式
 		if ((*lpFlags) & MSG_PEEK) {
-			return NextProcTable.lpWSPRecv(s, lpBuffers, dwBufferCount
-				, lpNumberOfBytesRecvd, lpFlags, lpOverlapped
-				, lpCompletionRoutine, lpThreadId, lpErrno);
+			goto return_dir;
 		}
 		
 		const int result = g_select.prerecv(s, lpBuffers, dwBufferCount, lpNumberOfBytesRecvd);
@@ -180,12 +176,14 @@ int WSPAPI WSPRecv(
 			return 0; 
 		}
 
+return_dir:
 		int iRet = NextProcTable.lpWSPRecv(s, lpBuffers, dwBufferCount
 				, lpNumberOfBytesRecvd, lpFlags, lpOverlapped
 				, lpCompletionRoutine, lpThreadId, lpErrno);
  
 		return iRet;
 	} catch (...) { 
+		LERR_("Unknown exception");
 		return SOCKET_ERROR; 
 	}*/
 }
@@ -248,10 +246,10 @@ int WSPAPI WSPConnect(
 			if (SUCCEEDED(hr)) {
 				pSetting->getApplicationStatus(&app_status);
 			} else {
-				PACKETGRASPER_TRC("["<<__FUNCTION__<<"] FAILED On Create snowman with HRESULT VALUE " <<std::hex<<hr);  
+				LERR_("FAILED On Create snowman with HRESULT VALUE " <<std::hex<<hr);  
 			}
 		} catch (...) {
-			PACKETGRASPER_TRC("["<<__FUNCTION__<<"] catch...");  
+			LERR_("catch...");  
 		}
 
 
@@ -294,43 +292,47 @@ int WSPAPI WSPSend(
 	__OUTPUT_DEBUG_CALL__;
 	__AUTO_FUNCTION_SCOPE_TRACE__;
 
-	HTTPRequestPacket packet;
+	try {
+		HTTPRequestPacket packet;
 
-	int item_count = packet.parsePacket(lpBuffers, dwBufferCount);
-	if (item_count < 2) {
-		PACKETGRASPER_TRC("NOT A HTTP Request ");
-		goto return_dir;
-	}
-
-	
-	// 将DNS保存在DNS MAP当中
-	char host[MAX_PATH], oper[MAX_PATH];
-	packet.getHost(host, MAX_PATH);
-	packet.getGET(oper, MAX_PATH);
-	//g_select.addDNS(s, host);
-
-	//sprintf(host, "D:\\req\\%d.log", s);
-	//DumpBuf(lpBuffers, dwBufferCount, host);
-
-	// 检查IP是否正常，如果可以则通过，否则直接返回错误
-	LTRC_<<"Send HTTP Request to " << host;
-	if (packet.openPage() == true) {
-		if (accessNetword() && checkHTTPRequest(&packet)){
-			PACKETGRASPER_TRC("HTTP Request passed"); 			 
+		int item_count = packet.parsePacket(lpBuffers, dwBufferCount);
+		if (item_count < 2) {
+			PACKETGRASPER_TRC("NOT A HTTP Request ");
 			goto return_dir;
-		} else {
-			PACKETGRASPER_TRC("HTTP Request Blocked"); 			 
-			*lpErrno = WSAETIMEDOUT;
-			return SOCKET_ERROR;
 		}
-	} else {
-		PACKETGRASPER_TRC("Don't open page");
-	}
+
+
+		// 将DNS保存在DNS MAP当中
+		char host[MAX_PATH], oper[MAX_PATH];
+		packet.getHost(host, MAX_PATH);
+		packet.getGET(oper, MAX_PATH);
+		//g_select.addDNS(s, host);
+
+		//sprintf(host, "D:\\req\\%d.log", s);
+		//DumpBuf(lpBuffers, dwBufferCount, host);
+
+		// 检查IP是否正常，如果可以则通过，否则直接返回错误
+		LTRC_<<"Send HTTP Request to " << host;
+		if (packet.openPage() == true) {
+			if (accessNetword() && checkHTTPRequest(&packet)){
+				PACKETGRASPER_TRC("HTTP Request passed"); 			 
+				goto return_dir;
+			} else {
+				PACKETGRASPER_TRC("HTTP Request Blocked"); 			 
+				*lpErrno = WSAETIMEDOUT;
+				return SOCKET_ERROR;
+			}
+		} else {
+			PACKETGRASPER_TRC("Don't open page");
+		}
 
 return_dir:
-	return NextProcTable.lpWSPSend(s, lpBuffers, dwBufferCount
+		return NextProcTable.lpWSPSend(s, lpBuffers, dwBufferCount
 			, lpNumberOfBytesSent, dwFlags, lpOverlapped
 			, lpCompletionRoutine, lpThreadId, lpErrno);
+	} catch (...) {
+		LERR_("Unknown exception");
+	}
 }
  
 int WSPAPI WSPSendTo(
