@@ -32,8 +32,8 @@ CRITICAL_SECTION	gCriticalSection;			// 代码段保护变量
 WSPPROC_TABLE		NextProcTable;				// 保存30个服务提供者指针
 TCHAR				m_sProcessName[MAX_PATH];	// 保存当前进程名称
 
-#define __OUTPUT_DEBUG_CALL__	  _DEBUG_STREAM_TRC_("[PacketFilter Fucntion Trace] "<<__FUNCTION__);
-#define PACKETGRASPER_TRC(FMT)	_DEBUG_STREAM_TRC_("[PacketFilter] "<< FMT);
+#define __OUTPUT_DEBUG_CALL__	  _DEBUG_STREAM_TRC_("[PacketGrasper Fucntion Trace] "<<__FUNCTION__);
+#define PACKETGRASPER_TRC(FMT)	_DEBUG_STREAM_TRC_("[PacketGrasper] "<< FMT);
 
 //CSelectIO g_select;
 
@@ -248,10 +248,10 @@ int WSPAPI WSPConnect(
 			if (SUCCEEDED(hr)) {
 				pSetting->getApplicationStatus(&app_status);
 			} else {
-				_DEBUG_STREAM_DBG_("[PacketFilter]["<<__FUNCTION__<<"] FAILED On Create snowman with HRESULT VALUE " <<std::hex<<hr);  
+				PACKETGRASPER_TRC("["<<__FUNCTION__<<"] FAILED On Create snowman with HRESULT VALUE " <<std::hex<<hr);  
 			}
 		} catch (...) {
-			_DEBUG_STREAM_DBG_("[PacketFilter]["<<__FUNCTION__<<"] catch...");  
+			PACKETGRASPER_TRC("["<<__FUNCTION__<<"] catch...");  
 		}
 
 
@@ -298,7 +298,7 @@ int WSPAPI WSPSend(
 
 	int item_count = packet.parsePacket(lpBuffers, dwBufferCount);
 	if (item_count < 2) {
-		_DEBUG_STREAM_TRC_("[PacketFilter] "<<"NOT A HTTP Request"); 		 
+		PACKETGRASPER_TRC("NOT A HTTP Request ");
 		goto return_dir;
 	}
 
@@ -645,7 +645,7 @@ BOOL WINAPI DllMain(
 )
 {
 	if(ul_reason_for_call == DLL_PROCESS_ATTACH) {
-
+		init_logger(hModule);
  		GetModuleFileName(NULL, m_sProcessName, MAX_PATH);
 		PACKETGRASPER_TRC("New Process Load : "<<m_sProcessName);  
 
