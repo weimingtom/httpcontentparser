@@ -4,3 +4,4 @@ EXPORTS
 	init_app_logger
 	logger_debug
 	logger_app
+	set_logger_level
