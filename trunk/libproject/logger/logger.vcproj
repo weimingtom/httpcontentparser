@@ -44,10 +44,11 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				CommandLine="copy .\debug\logger.lib ..\..\lib\loggerd.lib
-copy .\debug\logger.dll ..\..\debug"/>
+copy .\debug\logger.dll ..\..\debug
+"/>
 			<Tool
 				Name="VCPreBuildEventTool"
-				CommandLine="copy .\logger.h ..\..\include"/>
+				CommandLine="copy .\logger.h ..\..\include\logger\"/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
 			<Tool
@@ -95,10 +96,11 @@ copy .\debug\logger.dll ..\..\debug"/>
 			<Tool
 				Name="VCPostBuildEventTool"
 				CommandLine="copy .\release\logger.lib ..\..\lib\logger.lib
-copy .\release\logger.dll ..\..\release"/>
+copy .\release\logger.dll ..\..\release
+"/>
 			<Tool
 				Name="VCPreBuildEventTool"
-				CommandLine="copy .\logger.h ..\..\include"/>
+				CommandLine="copy .\logger.h ..\..\include\logger\"/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
 			<Tool
