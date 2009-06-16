@@ -4,7 +4,14 @@
 #include <set>
 #include <string>
 #include <assert.h>
+#include <DebugOutput.h>
 using namespace std;
+
+#ifdef DNS_SETTING_TRACE_ENABLED
+#define DNS_SETTING_TRACE(FMT)		_DEBUG_STREAM_TRC_("[Setting] {"<< __FUNCTION__<<"}"<<FMT)
+#else
+#define DNS_SETTING_TRACE(FMT)	
+#endif
 
 
 //////////////////////////////////////////////////////
@@ -59,8 +66,10 @@ bool DNSSetting::addBlackDNS(const std::string &dns) {
 	setModified(true);
 	assert ( black_dns_list_ != NULL);
 	if (check(dns) == IN_WHITE_LIST) {
+		DNS_SETTING_TRACE("FAILED in add DNS "<<dns<<" into black DNS(Has been in white list))");
 		return false;
 	} else {
+		DNS_SETTING_TRACE("SUCC in add DNS "<<dns<<" into black DNS");
 		black_dns_list_->addDNS(dns);
 		return true;
 	}
@@ -71,8 +80,10 @@ bool DNSSetting::addWhiteDNS(const std::string &dns) {
 	assert ( white_dns_list_ != NULL);
 
 	if (check(dns) == IN_BLACK_LIST) {
+		DNS_SETTING_TRACE("FAILED in add DNS "<<dns<<" into White DNS(has been in black list)");
 		return false;
 	} else {
+		DNS_SETTING_TRACE("SUCC in add DNS "<<dns<<" into White DNS");
 		white_dns_list_->addDNS(dns);
 		return true;
 	}
@@ -95,21 +106,32 @@ std::string DNSSetting::getNextBlackDNS(const std::string &dns) {
 bool DNSSetting::removeBlackDNS(const std::string &dns_name) {
 	setModified(true);
 	assert ( black_dns_list_ != NULL);
-	return black_dns_list_->removeDNS(dns_name); 
+	
+	bool result =  black_dns_list_->removeDNS(dns_name); 
+
+	DNS_SETTING_TRACE("remove DNS : "<<dns_name<< "from black list "<<(result == true?" succ":" failed"));
+	return result;
 }
 
 bool DNSSetting::removeWhiteDNS(const std::string &dns_name) {
 	setModified(true);
 	assert ( white_dns_list_ != NULL);
-	return white_dns_list_->removeDNS(dns_name);
+	
+
+	bool result =  white_dns_list_->removeDNS(dns_name);
+	DNS_SETTING_TRACE("remove DNS : "<<dns_name<< "from white list " << (result == true?" succ":" failed"));
+	return result;
 }
 
 int DNSSetting::check(const std::string &dns) {
 	if (true == white_dns_list_->checkDNS(dns)) {	// 如果在白名单中
+		DNS_SETTING_TRACE("CHECK DNS : "<<dns<<" IN_WHITE_LIST");
 		return (IN_WHITE_LIST);
 	} else if (true == black_dns_list_->checkDNS(dns)) {	// 如果在黑名单中
+		DNS_SETTING_TRACE("CHECK DNS : "<<dns<<" IN_BLACK_LIST");
 		return (IN_BLACK_LIST);
 	} else {	// 如果不在黑名单中
+		DNS_SETTING_TRACE("CHECK DNS : "<<dns<<" NOT_WHITE_LIST");
 		return (NOT_SEPCIFIED);
 	}
 }
@@ -147,6 +169,7 @@ bool DNSSetting::checkDNS(const std::string &dns_name) {
 
 	// 如果是不可用直接返回false, 这里主要为了应对SettingItem::PARENT_MODE
 	if (isEnabled() == false) {
+		DNS_SETTING_TRACE("CHECK DNS : "<<dns_name<<" return true (isEnable() == false)");
 		return true;
 	}
 
@@ -242,7 +265,7 @@ bool DNSList::checkDNS(const std::string &dns_name) const {
 		return false;
 
 	TCHAR buffer[1024];
-	get_main_serv_name(buffer, 1024, dns_name.c_str());
+	get_main_dns_name(buffer, 1024, dns_name.c_str());
 
 	// 表明不在此名单内
 	if (dns_set_.end() != dns_set_.find(buffer)) {
@@ -272,7 +295,7 @@ bool DNSList::fuzzeCheckDNS(const std::string &dns_name) const {
 // 从DNS中移除
 bool DNSList::removeDNS(const std::string &dns_name) {
 	TCHAR buffer[1024];
-	get_main_serv_name(buffer, 1024, dns_name.c_str());
+	get_main_dns_name(buffer, 1024, dns_name.c_str());
 
 	DNS_SET::iterator iter = dns_set_.find(buffer);
 	if (dns_set_.end() != iter) {
@@ -284,9 +307,11 @@ bool DNSList::removeDNS(const std::string &dns_name) {
 
 void DNSList::addDNS(const std::string &dns_name) {
 	// 去除DNS MAIN name
-	TCHAR buffer[1024];
-	get_main_serv_name(buffer, 1024, dns_name.c_str());
-	dns_set_.insert(std::make_pair(buffer, dns_name));
+	const int buf_size = MAX_PATH;
+	TCHAR main_dns[buf_size], main_host_name[buf_size];
+	get_main_dns_name(main_dns, buf_size, dns_name.c_str());
+	get_main_serv_name(main_host_name, buf_size, dns_name.c_str());
+	dns_set_.insert(std::make_pair(main_dns, main_host_name));
 }
 
 
