@@ -141,6 +141,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "wsut", "libproject\wsut\wsu
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "slogger", "libproject\slogger\slogger.vcproj", "{E7ABD6EB-C2B7-4476-A33C-98391D36510A}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "logger", "libproject\logger\logger.vcproj", "{FB01564A-31CF-4D13-BAA3-82971FC7E8F7}"
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
@@ -395,6 +399,14 @@ Global
 		{9C126E38-92C9-4960-BB70-DC3139749754}.Release.Build.0 = Release|Win32
 		{9C126E38-92C9-4960-BB70-DC3139749754}.Release Unicode.ActiveCfg = Release|Win32
 		{9C126E38-92C9-4960-BB70-DC3139749754}.Release Unicode.Build.0 = Release|Win32
+		{E7ABD6EB-C2B7-4476-A33C-98391D36510A}.Debug.ActiveCfg = Debug|Win32
+		{E7ABD6EB-C2B7-4476-A33C-98391D36510A}.Debug.Build.0 = Debug|Win32
+		{E7ABD6EB-C2B7-4476-A33C-98391D36510A}.Debug Unicode.ActiveCfg = Debug|Win32
+		{E7ABD6EB-C2B7-4476-A33C-98391D36510A}.Debug Unicode.Build.0 = Debug|Win32
+		{E7ABD6EB-C2B7-4476-A33C-98391D36510A}.Release.ActiveCfg = Release|Win32
+		{E7ABD6EB-C2B7-4476-A33C-98391D36510A}.Release.Build.0 = Release|Win32
+		{E7ABD6EB-C2B7-4476-A33C-98391D36510A}.Release Unicode.ActiveCfg = Release|Win32
+		{E7ABD6EB-C2B7-4476-A33C-98391D36510A}.Release Unicode.Build.0 = Release|Win32
 		{FB01564A-31CF-4D13-BAA3-82971FC7E8F7}.Debug.ActiveCfg = Debug|Win32
 		{FB01564A-31CF-4D13-BAA3-82971FC7E8F7}.Debug.Build.0 = Debug|Win32
 		{FB01564A-31CF-4D13-BAA3-82971FC7E8F7}.Debug Unicode.ActiveCfg = Debug|Win32
