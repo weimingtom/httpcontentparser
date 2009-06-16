@@ -27,8 +27,10 @@
 
 #ifdef DEBUG
 #pragma comment(lib, "apputilityd.lib")
+#pragma comment(lib, "loggerd.lib")
 #else
 #pragma comment(lib, "apputility.lib")
+#pragma comment(lib, "logger.lib")
 #endif
 
 using namespace ATL;

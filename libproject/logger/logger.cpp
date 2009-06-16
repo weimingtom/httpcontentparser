@@ -3,7 +3,7 @@
 
 #include "stdafx.h"
 #include "logger.h"
-#include "log.h"
+
 
 
 #define DEBUG_LOGGER_FILE ".\\LOG\\DEBUG.LOG"
