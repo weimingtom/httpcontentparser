@@ -332,6 +332,7 @@ return_dir:
 			, lpCompletionRoutine, lpThreadId, lpErrno);
 	} catch (...) {
 		LERR_("Unknown exception");
+		return SOCKET_ERROR; 
 	}
 }
  
