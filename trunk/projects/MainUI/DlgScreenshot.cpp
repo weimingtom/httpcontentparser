@@ -9,7 +9,7 @@
 #include ".\DlgImageBrowser.h"
 #include <apputility.h>
 #include <typeconvert.h>
-#include ".\log.h"
+#include <logger\logger.h>
 
 #define MAX_AUTO_CLEAR_SPAN	30
 #define MIN_AUTO_CLEAR_SPAN	1
@@ -56,7 +56,7 @@ int CDlgScreenshot::OnApply() {
 		IScreenSave * screensave = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_ScreenSave, NULL, CLSCTX_LOCAL_SERVER, IID_IScreenSave, (LPVOID*)&screensave);
 		if(FAILED(hr)) {
-			LERR_<<"Create Sceensave failed with HRESULT value"<<std::hex<<hr;
+			__LERR__("Create Sceensave failed with HRESULT value"<<std::hex<<hr);
 			AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
 			return -1;
 		}
@@ -66,7 +66,7 @@ int CDlgScreenshot::OnApply() {
 		screensave->put_AutocleanEnabled(convert(m_bEnableAutoclean));
 		return 0;
 	} catch (... ) {
-		LERR_<<"CATCH(...)";
+		__LERR__("CATCH(...)");
 		AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
 		return -1;
 	}
@@ -80,7 +80,7 @@ void CDlgScreenshot::restoreSetting() {
 		IScreenSave * screensave = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_ScreenSave, NULL, CLSCTX_LOCAL_SERVER, IID_IScreenSave, (LPVOID*)&screensave);
 		if(FAILED(hr)) {
-			LERR_<<"Create Sceensave failed with HRESULT value"<<hr;
+			__LERR__("Create Sceensave failed with HRESULT value"<<hr);
 			throw int(SNOWMAN_ERROR_COM_INIT_FAILED);
 		}
 
@@ -112,7 +112,7 @@ void CDlgScreenshot::restoreSetting() {
 		setAutoCleanTips();
 		setTimespanTips();
 	} catch (...) {
-		LERR_<<"CATCH(...)";
+		__LERR__("CATCH(...)");
 		throw int(SNOWMAN_ERROR_COM_INIT_FAILED);
 	}
 }

@@ -13,7 +13,7 @@
 #include <AppinstallValidate.h>
 #include <softwareStatus.h>
 #include ".\share.h"
-#include ".\log.h"
+#include <logger\logger.h>
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -75,11 +75,11 @@ BOOL CMainUIApp::InitInstance() {
 		ISnowmanSetting * pSetting = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_SnowmanSetting, NULL, CLSCTX_LOCAL_SERVER, IID_ISnowmanSetting, (LPVOID*)&pSetting);
 		if (FAILED(hr)) {
-			LERR_<< "Create Snowsetting with HRESULT vlaue "<<std::hex<<hr;
+			__LERR__( "Create Snowsetting with HRESULT vlaue "<<std::hex<<hr);
 		}
 		pSetting->getApplicationStatus(&app_status);
 	} catch (...) {
-		LERR_<<"CATCH(...)";
+		__LERR__("CATCH(...)");
 	}
 
 	// ³õÊ¼»¯LOGGER
@@ -136,7 +136,7 @@ BOOL CMainUIApp::Initialize(void)
 	HRESULT hr = CoCreateInstance(CLSID_DNSSetting, 
 		NULL, CLSCTX_LOCAL_SERVER, IID_IDNSSetting, (LPVOID*)&g_dnssetting);
 	if (FAILED(hr)) {
-		LERR_<<"Create DNSString with HRESULT vlaue "<<std::hex<<hr;
+		__LERR__("Create DNSString with HRESULT vlaue "<<std::hex<<hr);
 		AfxMessageBox(str);
 		return FALSE;
 	}
@@ -153,10 +153,10 @@ public:
 #ifdef DEBUG
 	init_debug_logger(WEBSNOW_DEBUG_FILE, false, true);
 	init_app_logger(WEBSNOW_LOGGER_FILE, false, true);
-	g_log_level()->set_enabled(level::debug);
+	set_logger_level(level::debug);
 #else
 	init_app_logger(WEBSNOW_LOGGER_FILE);
-	g_log_level()->set_enabled(level::warning);
+	set_logger_level(level::warning);
 #endif
 	}
 };

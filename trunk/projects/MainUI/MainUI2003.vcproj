@@ -164,12 +164,6 @@
 			Name="头文件"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
-			<File
-				RelativePath=".\log.cpp">
-			</File>
-			<File
-				RelativePath=".\log.h">
-			</File>
 		</Filter>
 		<Filter
 			Name="资源文件"

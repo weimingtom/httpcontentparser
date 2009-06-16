@@ -6,7 +6,7 @@
 #include ".\DlgBlackDNSList.h"
 #include ".\ContentList.h"
 #include ".\globalvariable.h"
-#include ".\log.h"
+#include <logger\logger.h>
 #include <typeconvert.h>
 
 // CDlgBlackDNSList ¶Ô»°¿ò
@@ -73,7 +73,7 @@ void CDlgBlackDNSList::restoreSetting() {
 
 		UpdateData(FALSE);
 	} catch(...) {
-		LERR_<<"CATCH...";
+		__LERR__("CATCH...");
 		throw int(SNOWMAN_ERROR_COM_INIT_FAILED);
 	}
 

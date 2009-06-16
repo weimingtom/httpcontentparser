@@ -8,7 +8,7 @@
 #include ".\Dlgregister.h"
 #include ".\globalvariable.h"
 #include <com\comutility.h>
-#include ".\log.h"
+#include <logger\logger.h>
 
 // CDlgAbout ¶Ô»°¿ò
 
@@ -60,7 +60,7 @@ void CDlgAbout::OnShow() {
 		}
 		
 	} catch (...) {
-		LERR_<<"CATCH...";
+		__LERR__("CATCH...");
 		m_strRegisterInfo.LoadString(IDS_REGISTER_CANNOT_GETINFO);
 	}
 	UpdateData(FALSE);
