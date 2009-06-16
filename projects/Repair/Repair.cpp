@@ -10,7 +10,7 @@
 #include <softwareStatus.h>
 #include <COM\FilterSetting_i.c>
 #include <COM\FilterSetting.h>
-#include ".\log.h"
+#include <logger\logger.h>
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -71,7 +71,7 @@ BOOL CRepairApp::InitInstance()
 	TCHAR errMsg[MAX_PATH];
 	validator.getErrorMessage(errMsg, MAX_PATH);
 	if (_tcslen(errMsg) > 0) {
-		LERR_<<"failed  on repair on reason that "<<errMsg;
+		__LERR__("failed  on repair on reason that "<<errMsg);
 		if (NULL == _tcsstr(GetCommandLine(), "silence")) {
 			AfxMessageBox(errMsg);
 		}
@@ -107,7 +107,7 @@ BOOL CRepairApp::InitInstance()
 	} catch (...) {
 	}
 
-	LTRC_<<"succeeded on repair.";
+	__LTRC__("succeeded on repair.");
 
 
 	return TRUE;
@@ -122,7 +122,7 @@ public:
 #ifdef DEBUG
 	init_debug_logger(".\\log\\drepair.log", false, true);
 	init_app_logger(".\\log\\repair.log", false, true);
-	g_log_level()->set_enabled(level::debug);
+	set_logger_level(level::debug);
 #else
 	init_app_logger(".\\log\\repair.log");
 	g_log_level()->set_enabled(level::warning);

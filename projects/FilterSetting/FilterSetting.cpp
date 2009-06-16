@@ -18,7 +18,7 @@
 #include <softwareStatus.h>
 #include <string>
 #include <time.h>
-#include ".\log.h"
+#include <logger\logger.h>
 #include <DebugOutput.h>
 
 #define FILTERSETTING_LOGGER_FILE		".\\log\\service.log"
@@ -43,7 +43,7 @@ public :
 		HRESULT hr = CoInitializeSecurity(sd, -1, NULL, NULL, RPC_C_AUTHN_LEVEL_PKT,
 				RPC_C_IMP_LEVEL_IMPERSONATE,  NULL, EOAC_NONE, NULL);
 		if (FAILED(hr)) {
-			LERR_<<"CoInitializeSecurity Failed with HRESULT value "<< hr;
+			__LERR__("CoInitializeSecurity Failed with HRESULT value "<< hr);
 		}
 
 		return S_OK;
@@ -61,16 +61,16 @@ void initializeSetting() {
 	TCHAR config_path[MAX_PATH];
 	GetAppConfigFilename(config_path, MAX_PATH);
 	g_configuration.loadConfig(config_path);
-	LTRC_<<"AppConfig files path : "<< config_path;
+	__LTRC__("AppConfig files path : "<< config_path);
 
 	// 读取搜索词汇信息
 	TCHAR filename[MAX_PATH];
 	g_searchwordUtil.load(GetSearchWordFile(filename, MAX_PATH));
-	LTRC_<<"SearchWord files path : "<< filename;
+	__LTRC__("SearchWord files path : "<< filename);
 
 	// 读取访问网站的信息
 	g_websitesUtil.load(GetWebSiteFile(filename, MAX_PATH));
-	LTRC_<<"Website files path : "<< filename;
+	__LTRC__("Website files path : "<< filename);
 }
 
 extern "C" int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, 
@@ -97,13 +97,13 @@ extern "C" int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/
 
 	if (g_configuration.getWebHistoryRecordAutoClean()->shouldExec()) {
 		g_configuration.getWebHistoryRecordAutoClean()->reset();
-		LTRC_<<"Clear WebHistory";
+		__LTRC__("Clear WebHistory");
 		ClearHistory();
 		
 	}
 	if (g_configuration.getScreenshotAutoClean()->shouldExec()) {
 		g_configuration.getScreenshotAutoClean()->reset();
-		LTRC_<<"Clear Screenshot";
+		__LTRC__("Clear Screenshot");
 		ClearScreen();
 	}
 
@@ -127,10 +127,10 @@ public:
 #ifdef DEBUG
 	init_debug_logger(FILTERSETTING_DEBUG_FILE, false, true);
 	init_app_logger(FILTERSETTING_LOGGER_FILE, false, true);
-	g_log_level()->set_enabled(level::debug);
+	set_logger_level(level::debug);
 #else
 	init_app_logger(FILTERSETTING_LOGGER_FILE);
-	g_log_level()->set_enabled(level::warning);
+	set_logger_level(level::warning);
 #endif
 	}
 };
