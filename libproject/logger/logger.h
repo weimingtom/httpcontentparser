@@ -27,13 +27,13 @@ LOGGER_API void init_app_logger(const char * filename, bool enable_cout = false,
 	__output_debug_string_stream__<<HEADER<<FMT;	\
 	logger_app(__output_debug_string_stream__.str().c_str());}\
 
-#define LTRC_(FMT) 	LOGGER_DEBUG_OUTPUT("[TRACE] {"<<__FUNCTION__<<"} ", FMT);
-#define LDBG_(FMT) 	LOGGER_DEBUG_OUTPUT("[DEBUG] {"<<__FUNCTION__<<"} ", FMT);
+#define __LTRC__(FMT) 	LOGGER_DEBUG_OUTPUT("[TRACE] {"<<__FUNCTION__<<"} ", FMT);
+#define __LDBG__(FMT) 	LOGGER_DEBUG_OUTPUT("[DEBUG] {"<<__FUNCTION__<<"} ", FMT);
 
 // 其他三个用于同时记录
-#define LERR_(FMT) 	LOGGER_APP_OUTPUT("[ERROR] {"<<__FUNCTION__<<"} ", FMT);
-#define LAPP_(FMT) 	LOGGER_APP_OUTPUT("[INFOM] {"<<__FUNCTION__<<"} ", FMT);
-#define LFAT_(FMT) 	LOGGER_APP_OUTPUT("[FATAL] {"<<__FUNCTION__<<"} ", FMT);
+#define __LERR__(FMT) 	LOGGER_APP_OUTPUT("[ERROR] {"<<__FUNCTION__<<"} ", FMT);
+#define __LAPP__(FMT) 	LOGGER_APP_OUTPUT("[INFOM] {"<<__FUNCTION__<<"} ", FMT);
+#define __LFAT__(FMT) 	LOGGER_APP_OUTPUT("[FATAL] {"<<__FUNCTION__<<"} ", FMT);
 
 #endif 
 
