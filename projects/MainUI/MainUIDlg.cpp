@@ -16,7 +16,7 @@
 #include <softwarestatus.h>
 #include <apputility.h>
 #include <comdef.h>
-#include ".\log.h"
+#include <logger\logger.h>
 
 #define 	HISTORY_MENU_POS  3
 
@@ -349,7 +349,7 @@ void CMainUIDlg::OnBnClickedOk()
 		m_dlgSwitchChildren_.DoModal();
 		HideMainUI();
 	} catch (...) {
-		LERR_<<"FAILED On create HistoryRecord";
+		__LERR__("FAILED On create HistoryRecord");
 		AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONEXCLAMATION);
 	}
 }
@@ -362,7 +362,7 @@ void CMainUIDlg::OnBnClickedMainCancel()
 		m_curDlg->Restore();	// »Ö¸´ÉèÖÃ
 		m_curDlg->SetModify(false);
 	} catch (...) {
-			LERR_<< "FAILED On create HistoryRecord";
+			__LERR__( "FAILED On create HistoryRecord");
 			AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONEXCLAMATION);
 		}
 	} 
@@ -379,7 +379,7 @@ void CMainUIDlg::OnBnClickedApply()
 		}
 
 	} catch (...) {
-		LERR_<<"FAILED On create HistoryRecord";
+		__LERR__("FAILED On create HistoryRecord");
 	}
 
 	m_curDlg->SetModify(false);
@@ -491,7 +491,7 @@ void CMainUIDlg::showDlg() {
 		m_curDlg->SetWindowPos(&wndTop, rect.left, rect.top, rect.Width(), rect.Height(), SWP_SHOWWINDOW);
 		m_curDlg->OnShow();
 	} catch (...) {
-		LERR_<<"FAILED On create HistoryRecord";
+		__LERR__("FAILED On create HistoryRecord");
 		AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONEXCLAMATION);
 	}
 }
@@ -520,7 +520,7 @@ void CMainUIDlg::initDlgs() {
 		showDlg();
 		
 	} catch (...) {
-		LERR_<<"FAILED On create HistoryRecord";
+		__LERR__("FAILED On create HistoryRecord");
 		AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONEXCLAMATION);
 		EndDialog(IDCANCEL);
 	}
@@ -695,7 +695,7 @@ void CMainUIDlg::OnTvnSelchangedTreeNavig(NMHDR *pNMHDR, LRESULT *pResult)
 
 		*pResult = 0;
 	} catch (...) {
-		LERR_<<"FAILED On create HistoryRecord";
+		__LERR__("FAILED On create HistoryRecord");
 		AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONEXCLAMATION);
 	}
 }
@@ -709,7 +709,7 @@ void CMainUIDlg::SwitchOnClose() {
 		ISnowmanSetting *app = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_SnowmanSetting, NULL, CLSCTX_LOCAL_SERVER, IID_ISnowmanSetting, (LPVOID*)&app);
 		if (FAILED(hr)) {
-			LERR_<<"failed on create snowmansetting with HRESULT value : "<<hr;
+			__LERR__("failed on create snowmansetting with HRESULT value : "<<hr);
 			return;
 		}
 		
@@ -720,7 +720,7 @@ void CMainUIDlg::SwitchOnClose() {
 			Services::switchChildModel();
 		}
 	} catch (...) {
-		LERR_<< "CATCH(...)";
+		__LERR__( "CATCH(...)");
 	}
 }
 // ×¢ÏúÈÈ¼ü

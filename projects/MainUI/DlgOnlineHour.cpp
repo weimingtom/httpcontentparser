@@ -12,7 +12,7 @@
 #include <com\comutility.h>
 #include <typeconvert.h>
 #include <comdef.h>
-#include ".\log.h"
+#include <logger\logger.h>
 
 // CDlgOnlineHour ¶Ô»°¿ò
 IMPLEMENT_DYNAMIC(CDlgOnlineHour, CDialog)
@@ -66,7 +66,7 @@ int CDlgOnlineHour::OnApply() {
 		HRESULT hr = CoCreateInstance(CLSID_AccessNetwork, NULL, CLSCTX_LOCAL_SERVER,
 			IID_IAccessNetwork, (LPVOID*)&accessNetwork);
 		if (FAILED(hr)) {
-			LERR_<<"Create AccessNetwork with HRESULT vaue : "<<std::hex<<hr;
+			__LERR__("Create AccessNetwork with HRESULT vaue : "<<std::hex<<hr);
 			AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONEXCLAMATION);
 			return -1;
 		}
@@ -78,7 +78,7 @@ int CDlgOnlineHour::OnApply() {
 		accessNetwork->Release();
 		return 0;
 	} catch (_com_error & e) {
-		LERR_<<"_com_error exception with description : "<<(TCHAR*)e.Description();
+		__LERR__("_com_error exception with description : "<<(TCHAR*)e.Description());
 		AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
 		return -1;
 	}
@@ -102,7 +102,7 @@ void CDlgOnlineHour::restoreSetting() {
 		HRESULT hr = CoCreateInstance(CLSID_AccessNetwork, NULL, CLSCTX_LOCAL_SERVER,
 			IID_IAccessNetwork, (LPVOID*)&accessNetwork);
 		if (FAILED(hr)) {
-			LERR_<<"Create AccessNetwork with HRESULT value "<<std::hex<<hr;
+			__LERR__("Create AccessNetwork with HRESULT value "<<std::hex<<hr);
 			throw int(SNOWMAN_ERROR_COM_INIT_FAILED);
 		}
 
@@ -121,7 +121,7 @@ void CDlgOnlineHour::restoreSetting() {
 
 		UpdateData(FALSE);
 	} catch (...) {
-		LERR_<<"CATCH(...)";
+		__LERR__("CATCH(...)");
 		throw int(SNOWMAN_ERROR_COM_INIT_FAILED);
 	}
 }

@@ -11,7 +11,7 @@
 #include <com\comutility.h>
 #include <com\resultvalue.h>
 #include <typeconvert.h>
-#include ".\log.h"
+#include <logger\logger.h>
 
 // CDlgProgramControl ¶Ô»°¿ò
 
@@ -114,7 +114,7 @@ int CDlgProgramControl::OnApply() {
 		IAppControl *pSetting = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_AppControl, NULL, CLSCTX_LOCAL_SERVER, IID_IAppControl, (LPVOID*)&pSetting);
 		if (FAILED(hr) || NULL == pSetting) {
-			LERR_<<"Create AppControl failed with HRESULT value " <<std::hex<<hr;
+			__LERR__("Create AppControl failed with HRESULT value " <<std::hex<<hr);
 			AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
 			return 0;
 		}
@@ -129,11 +129,11 @@ int CDlgProgramControl::OnApply() {
 
 		return SUCCESS_APPLY;
 	} catch (_com_error &e) {
-		LERR_<<"_com_error excpetion with Description : "<<(TCHAR*)e.Description();;
+		__LERR__("_com_error excpetion with Description : "<<(TCHAR*)e.Description());
 		AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
 		return FAILED_APPLY;
 	} catch (...) {
-		LERR_<<"CATCH(...)";
+		__LERR__("CATCH(...)");
 		AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
 		return FAILED_APPLY;
 	}
@@ -149,7 +149,7 @@ void CDlgProgramControl::restoreSetting() {
 		IAppControl *pSetting;
 		HRESULT hr = CoCreateInstance(CLSID_AppControl, NULL, CLSCTX_LOCAL_SERVER, IID_IAppControl, (LPVOID*)&pSetting);
 		if (FAILED(hr)) {
-			LERR_<<"Create AppControl failed with HRESULT value "<<std::hex<<hr;
+			__LERR__("Create AppControl failed with HRESULT value "<<std::hex<<hr);
 			throw int(SNOWMAN_ERROR_COM_INIT_FAILED);
 		}
 	
@@ -179,7 +179,7 @@ void CDlgProgramControl::restoreSetting() {
 		pSetting = NULL;
 		UpdateData(FALSE);
 	} catch (...) {
-		LERR_<<"CATCH(...)";
+		__LERR__("CATCH(...)");
 		throw int(SNOWMAN_ERROR_COM_INIT_FAILED);
 	}
 }

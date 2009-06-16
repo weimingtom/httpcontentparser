@@ -12,7 +12,7 @@
 #include <com\comutility.h>
 #include <typeconvert.h>
 #include <timeoutswitch.h>
-#include ".\log.h"
+#include <logger\logger.h>
 
 // CDlgOptions ¶Ô»°¿ò
 
@@ -66,7 +66,7 @@ namespace {
 			ISnowmanSetting *app = NULL;
 			HRESULT hr = CoCreateInstance(CLSID_SnowmanSetting, NULL, CLSCTX_LOCAL_SERVER, IID_ISnowmanSetting, (LPVOID*)&app);
 			if (FAILED(hr)) {
-				LERR_<<"Create SnowSetting failed with HRESULT vlaue " <<std::hex<<hr;
+				__LERR__("Create SnowSetting failed with HRESULT vlaue " <<std::hex<<hr);
 				AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONEXCLAMATION);
 				return FALSE;
 			}
@@ -74,7 +74,7 @@ namespace {
 			app->setHotkey(vKey, vModifiers, type, &bSucc);
 			return convert(bSucc);
 		} catch(...) {
-			LERR_<< "CATCH(...)";
+			__LERR__( "CATCH(...)");
 			AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
 			return FALSE;
 		}
@@ -153,7 +153,7 @@ int CDlgOptions::setMisc() {
 		ISnowmanSetting *app = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_SnowmanSetting, NULL, CLSCTX_LOCAL_SERVER, IID_ISnowmanSetting, (LPVOID*)&app);
 		if (FAILED(hr)) {
-			LERR_<< "Create AccessNetwork failed with HRESULT value "<<hr;
+			__LERR__( "Create AccessNetwork failed with HRESULT value "<<hr);
 			AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONEXCLAMATION);
 			return FAILED_APPLY;
 		}
@@ -164,7 +164,7 @@ int CDlgOptions::setMisc() {
 		app = NULL;
 		return SUCCESS_APPLY;
 	} catch (...) {
-		LERR_<<"CATCH(...)";
+		__LERR__("CATCH(...)");
 		return FAILED_APPLY;
 	}
 }
@@ -189,7 +189,7 @@ void CDlgOptions::restoreSetting() {
 		ISnowmanSetting *app = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_SnowmanSetting, NULL, CLSCTX_LOCAL_SERVER, IID_ISnowmanSetting, (LPVOID*)&app);
 		if (FAILED(hr)) {
-			LERR_<<"Create AccessNetwork failed with HRESULT value "<<hr;
+			__LERR__("Create AccessNetwork failed with HRESULT value "<<hr);
 			throw int(SNOWMAN_ERROR_COM_INIT_FAILED);
 		}
 
@@ -217,7 +217,7 @@ void CDlgOptions::restoreSetting() {
 
 		UpdateData(FALSE);
 	} catch (...) {
-		LERR_<<"CATCH(...)";
+		__LERR__("CATCH(...)");
 		throw int(SNOWMAN_ERROR_COM_INIT_FAILED);
 	}
 }

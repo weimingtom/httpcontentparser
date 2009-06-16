@@ -4,7 +4,7 @@
 #include <com\comutility.h>
 #include <typeconvert.h>
 #include <softwareStatus.h>
-#include ".\log.h"
+#include <logger\logger.h>
 
 LONG Services::getAppStatus() {
 	AutoInitInScale auto_;
@@ -16,11 +16,11 @@ LONG Services::getAppStatus() {
 			pRegInfo->getApplicationStatus(&status);
 			return status;
 		} else {
-			LERR_<< "Create Snowsetting with HRESULT vlaue "<<std::hex<<hr;
+			__LERR__( "Create Snowsetting with HRESULT vlaue "<<std::hex<<hr);
 			return SNOWMAN_STATUS_TRIAL;
 		}
 	} catch (...) {
-		LERR_<<"CATCH(...)";
+		__LERR__("CATCH(...)");
 	}
 
 	return SNOWMAN_STATUS_TRIAL;
@@ -35,7 +35,7 @@ bool Services::isParentModel() {
 			NULL, CLSCTX_LOCAL_SERVER, IID_ISnowmanSetting, (LPVOID*)&appSetting);
 
 		if (FAILED(hr)) {
-			LERR_<< "Create Snowsetting with HRESULT vlaue "<<std::hex<<hr;
+			__LERR__( "Create Snowsetting with HRESULT vlaue "<<std::hex<<hr);
 			return false;
 		}
 
@@ -44,7 +44,7 @@ bool Services::isParentModel() {
 		SafeRelease(appSetting);
 		return convert(bParent);
 	} catch (_com_error & e) {
-		LERR_<< "_com_error exception with description "<< e.Description();
+		__LERR__( "_com_error exception with description "<< e.Description());
 		return false;
 	}
 }
@@ -55,7 +55,7 @@ bool Services::switchParentModel(LPCTSTR password) {
 		ISnowmanSetting *appSetting = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_SnowmanSetting, NULL, CLSCTX_LOCAL_SERVER, IID_ISnowmanSetting, (LPVOID*)&appSetting);
 		if (FAILED(hr)) {
-			LERR_<< "Create Snowsetting with HRESULT vlaue "<<std::hex<<hr;
+			__LERR__( "Create Snowsetting with HRESULT vlaue "<<std::hex<<hr);
 			return false;
 		}
 
@@ -63,7 +63,7 @@ bool Services::switchParentModel(LPCTSTR password) {
 		SafeRelease(appSetting);
 		return convert(bSucc);
 	} catch (_com_error & e) {
-		LERR_<< "_com_error exception with description "<< e.Description();
+		__LERR__( "_com_error exception with description "<< e.Description());
 		return false;
 	}
 }
@@ -75,7 +75,7 @@ void Services::switchChildModel() {
 		ISnowmanSetting *appSetting = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_SnowmanSetting, NULL, CLSCTX_LOCAL_SERVER, IID_ISnowmanSetting, (LPVOID*)&appSetting);
 		if (FAILED(hr)) {
-			LERR_<< "Create Snowsetting with HRESULT vlaue "<<std::hex<<hr;
+			__LERR__( "Create Snowsetting with HRESULT vlaue "<<std::hex<<hr);
 			return;
 		}
 
@@ -83,6 +83,6 @@ void Services::switchChildModel() {
 		SafeRelease(appSetting);
 		return ;
 	} catch (_com_error & e) {
-		LERR_<< "_com_error exception with description "<< e.Description();
+		__LERR__( "_com_error exception with description "<< e.Description());
 	}
 }

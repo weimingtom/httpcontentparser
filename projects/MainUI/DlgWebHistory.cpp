@@ -12,7 +12,7 @@
 #include <typeconvert.h>
 #include <apputility.h>
 #include <comdef.h>
-#include ".\log.h"
+#include <logger\logger.h>
 
 #define MAX_AUTO_CLEAR_SPAN	30
 #define MIN_AUTO_CLEAR_SPAN	1
@@ -63,7 +63,7 @@ void CDlgWebHistory::ChangeRecordType() {
 		IWebHistoryRecorder *pWebHistory = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_WebHistoryRecorder, NULL, CLSCTX_ALL, IID_IWebHistoryRecorder, (LPVOID*)&pWebHistory);
 		if (FAILED(hr)) {
-			LERR_<<"Create historyRecord with HRESULT value"<<std::hex<<hr;
+			__LERR__("Create historyRecord with HRESULT value"<<std::hex<<hr);
 			AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
 			return;
 		}
@@ -75,10 +75,10 @@ void CDlgWebHistory::ChangeRecordType() {
 		pWebHistory->setAutoClearTimespan(m_sliderWebHistoryAutoClean.GetPos());
 		pWebHistory->Release();
 	} catch (_com_error& e) {
-		LERR_<<"_com_error exception with Description " << (TCHAR*)e.Description();
+		__LERR__("_com_error exception with Description " << (TCHAR*)e.Description());
 		AfxMessageBox(IDS_ERROR_WEB_SET_FAILED, MB_OK | MB_ICONERROR);
 	} catch(...) {
-		LERR_<<"CATCH(...)";
+		__LERR__("CATCH(...)");
 		AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
 	}
 }
@@ -100,7 +100,7 @@ void CDlgWebHistory::restoreSetting() {
 		IWebHistoryRecorder *pWebHistory = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_WebHistoryRecorder, NULL, CLSCTX_ALL, IID_IWebHistoryRecorder, (LPVOID*)&pWebHistory);
 		if (FAILED(hr)) {
-			LERR_<<"Create historyRecord with HRESULT value "<<hr;
+			__LERR__("Create historyRecord with HRESULT value "<<hr);
 			throw int(SNOWMAN_ERROR_COM_INIT_FAILED);
 		}
 
@@ -124,7 +124,7 @@ void CDlgWebHistory::restoreSetting() {
 		updateSta();
 		UpdateData(FALSE);
 	} catch(...) {
-		LERR_<< "CATCH(_com_error)";
+		__LERR__( "CATCH(_com_error)");
 		throw int(SNOWMAN_ERROR_COM_INIT_FAILED);
 	}
 }
@@ -147,7 +147,7 @@ void CDlgWebHistory::OnBnClickedBunClearCache() {
 		IWebContentRecord *pWebContent = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_WebContentRecord, NULL, CLSCTX_ALL, IID_IWebContentRecord, (LPVOID*)&pWebContent);
 		if (FAILED(hr)) {
-			LERR_<<"Create historyRecord with HRSULT value " << hr;
+			__LERR__("Create historyRecord with HRSULT value " << hr);
 			AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
 			return;
 		}
@@ -158,7 +158,7 @@ void CDlgWebHistory::OnBnClickedBunClearCache() {
 		str.LoadString(IDS_WEB_HISTORY_CLEAR_SUCC);
 		AfxMessageBox(str);
 	} catch (...) {
-		LERR_<< "CATCH(...)";
+		__LERR__( "CATCH(...)");
 		AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONERROR);
 		return;
 	}

@@ -10,7 +10,7 @@
 #include <webcontenttype.h>
 #include <typeconvert.h>
 #include <comdef.h>
-#include ".\log.h"
+#include <logger\logger.h>
 
 // CDlgImageRule ¶Ô»°¿ò
 
@@ -79,7 +79,7 @@ int CDlgImageRule::OnApply() {
 		IWebContentCheck *contentCheck = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_WebContentCheck, NULL, CLSCTX_LOCAL_SERVER, IID_IWebContentCheck, (LPVOID*)&contentCheck);
 		if (FAILED(hr)) {
-			LERR_<<"Create Webcontent failed with HRESULT vlaue"<<hr;
+			__LERR__("Create Webcontent failed with HRESULT vlaue"<<hr);
 			return -1;
 		}
 
@@ -90,9 +90,9 @@ int CDlgImageRule::OnApply() {
 		contentCheck->enableCheck(convert(m_bCheckPNG),  IMAGE_TYPE_PNG);
 		contentCheck->put_ImageCheckTightness(m_sliderImageCheckDegree.GetPos());
 	} catch (_com_error& e) {
-		LERR_<<"_com_error exception with Description : "<<  (TCHAR*)e.Description();
+		__LERR__("_com_error exception with Description : "<<  (TCHAR*)e.Description());
 	} catch (...) {
-		LERR_<<"CATCH(...)";
+		__LERR__("CATCH(...)");
 	}
 	
 	return 0;
