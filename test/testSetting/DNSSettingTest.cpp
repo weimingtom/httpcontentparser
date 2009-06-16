@@ -156,6 +156,9 @@ void DNSSettingTest::testCheck() {
 	CPPUNIT_ASSERT(true == dns_setting.checkDNS("google.com"));
 	CPPUNIT_ASSERT(false == dns_setting.checkDNS("sohu.com"));
 	CPPUNIT_ASSERT(false == dns_setting.checkDNS("sohu.com"));
+	CPPUNIT_ASSERT(true == dns_setting.addBlackDNS("www.google.com"));
+	CPPUNIT_ASSERT(true == dns_setting.addBlackDNS("s.google.com"));
+	CPPUNIT_ASSERT(true == dns_setting.addBlackDNS("sofang.sohu.com"));
 
 	dns_setting.enableBlackDNSCheck(false);
 	CPPUNIT_ASSERT(true == dns_setting.checkDNS("google.com"));
