@@ -11,7 +11,7 @@
 #include <typeconvert.h>
 #include <app_constants.h>
 #include <winlockdll.h>
-#include ".\log.h"
+#include <logger\logger.h>
 
 #define MAX_LOADSTRING 100
 #define WM_MY_SHOWDIALOG (WM_USER + 0x0001)
@@ -99,7 +99,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
                      int       nCmdShow)
 {
 	if (_tcscmp(lpCmdLine, LAUNCH_PARAM) != 0) {
-		LDBG_<<"call with cmdline";
+		__LDBG__("call with cmdline");
 		return 0;
 	}
 
@@ -207,7 +207,7 @@ LRESULT CALLBACK InputPasswordDlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM
 		}
 		return FALSE;
 	} catch (...) {
-		LERR_<<"Unknown exception";
+		__LERR__("Unknown exception");
 		return FALSE;
 	}
 }
@@ -252,10 +252,10 @@ public:
 #ifdef DEBUG
 	init_debug_logger(".\\log\\dLockPC.log", false, true);
 	init_app_logger(".\\log\\LockPC.log", false, true);
-	g_log_level()->set_enabled(level::debug);
+	set_logger_level(level::debug);
 #else
 	init_app_logger(".\\log\\LockPC.log");
-	g_log_level()->set_enabled(level::warning);
+	set_logger_level(level::warning);
 #endif
 	}
 };

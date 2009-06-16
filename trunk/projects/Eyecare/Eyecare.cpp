@@ -12,7 +12,7 @@
 #include <typeconvert.h>
 #include <app_constants.h>
 #include <winlockdll.h>
-#include "./log.h"
+#include <logger\logger.h>
 
 #define MAX_LOADSTRING 100
 #define WM_MY_SHOWDIALOG (WM_USER + 0x0001)
@@ -138,7 +138,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
                      int       nCmdShow)
 {
 	if (_tcscmp(lpCmdLine, LAUNCH_PARAM) != 0) {
-		LDBG_<<"call with cmdline";
+		__LDBG__("call with cmdline");
 		return 0;
 	}
 
@@ -155,20 +155,20 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 
 	// 如果运行于Enter模式， 则直接退出
 	if (IsRunInEnterModel()) {
-		LFAT_<<"Run in Enter Model";
+		__LFAT__("Run in Enter Model");
 		return 0;
 	}
 
 	// 如果运行于父亲模式
 	if (IsRuninParentModel()) {
-		LFAT_<<"Run in Parent Model";
+		__LFAT__("Run in Parent Model");
 		return 0;
 	}
 
 	// 创建
 	HRESULT hr = CoCreateInstance(CLSID_Eyecare, NULL, CLSCTX_ALL, IID_IEyecare, (LPVOID*)&pEyeCare);
 	if (FAILED(hr)) 
-			LERR_<<"Failed on Create Eyecare with HRESULT value "<<std::hex<<hr;
+			__LERR__("Failed on Create Eyecare with HRESULT value "<<std::hex<<hr);
 
  	// TODO: Place code here.
 	MSG msg;
@@ -267,7 +267,7 @@ LRESULT CALLBACK InputPasswordDlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM
 			} catch (...) {
 				HRESULT hr = CoCreateInstance(CLSID_Eyecare, NULL, CLSCTX_ALL, IID_IEyecare, (LPVOID*)&pEyeCare);
 				if (FAILED(hr)) 
-					LERR_<<"Failed on Create Eyecare with HRESULT value "<<std::hex<<hr;
+					__LERR__("Failed on Create Eyecare with HRESULT value "<<std::hex<<hr);
 			}
 			break;
 		case WM_KILLFOCUS:
@@ -281,7 +281,7 @@ LRESULT CALLBACK InputPasswordDlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM
 			catch (...) {
 				HRESULT hr = CoCreateInstance(CLSID_Eyecare, NULL, CLSCTX_ALL, IID_IEyecare, (LPVOID*)&pEyeCare);
 				if (FAILED(hr)) 
-					LERR_<<"Failed on Create Eyecare with HRESULT value "<<std::hex<<hr;
+					__LERR__("Failed on Create Eyecare with HRESULT value "<<std::hex<<hr);
 			}
 
 			SetWindowText(hDlg, szBuffer);
@@ -349,10 +349,10 @@ public:
 #ifdef DEBUG
 	init_debug_logger(".\\log\\dEyecare.log", false, true);
 	init_app_logger(".\\log\\Eyecare.log", false, true);
-	g_log_level()->set_enabled(level::debug);
+	set_logger_level(level::debug);
 #else
 	init_app_logger(".\\log\\Eyecare.log");
-	g_log_level()->set_enabled(level::warning);
+	set_logger_level(level::warning);
 #endif
 	}
 };
