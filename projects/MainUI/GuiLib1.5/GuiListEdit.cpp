@@ -228,7 +228,7 @@ void CGuiListEdit::PreSubclassWindow()
 	m_MiniTool.AddButton(10,LST_INSERT,NULL,_T(""),_T("Insert"));
 	m_MiniTool.AutoSize(TRUE);
 	m_MiniTool.SetBorder(CGuiMiniTool::STYLEPRESS);
-	m_MiniTool.SetCaption(_T("Options:"),CGuiMiniTool::ALIGN_LEFT);
+	m_MiniTool.SetCaption(_T("Websites:"),CGuiMiniTool::ALIGN_LEFT);
 	m_MiniTool.AlingButtons(CGuiMiniTool::ALIGN_RIGHT);
 	m_MiniTool.SetColorCaption(RGB(0,0,0));
 	m_list->ModifyStyleEx(0,WS_EX_CLIENTEDGE);
