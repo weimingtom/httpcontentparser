@@ -210,9 +210,9 @@ int CDlgProgramControl::addNewFile(const CFileInfo &info) {
 	}
 
 	int iItemIndex = iItemIndex = m_list.InsertItem(m_list.GetItemCount(), displayName, iconIndex);
-	m_list.SetItemText(iItemIndex, 1, info.getCompanyName().c_str());
-	m_list.SetItemText(iItemIndex, 2, info.getDescription().c_str());
-	m_list.SetItemText(iItemIndex, 3, info.getFilePath().c_str());
+	m_list.SetItemText(iItemIndex, 1, info.getFilePath().c_str());
+	m_list.SetItemText(iItemIndex, 2, info.getCompanyName().c_str());
+	m_list.SetItemText(iItemIndex, 3, info.getDescription().c_str());
 
 	ITEMDATA *pData = new ITEMDATA(displayName, info.getCompanyName().c_str(), info.getDescription().c_str(), info.getFilePath().c_str());
 	listdata_.insert(std::make_pair(info.getFilePath(), pData));
@@ -278,9 +278,9 @@ BOOL CDlgProgramControl::OnInitDialog()
 	} colData[] =
 	{
 		{IDS_DLG_PROGRAM_CONTROL_NAME,			 LVCFMT_LEFT,  80}, 
+		{IDS_DLG_PROGRAM_CONTROL_FULLPATH,		 LVCFMT_LEFT, 100},
 		{IDS_DLG_PROGRAM_CONTROL_COMPANY,	 LVCFMT_LEFT, 90},
 		{IDS_DLG_PROGRAM_CONTROL_DESCRIPT,		 LVCFMT_LEFT, 130},
-		{IDS_DLG_PROGRAM_CONTROL_FULLPATH,		 LVCFMT_LEFT, 100},
 	};
 	const int nColCount = sizeof colData / sizeof colData[0];
 
