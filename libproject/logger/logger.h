@@ -13,7 +13,7 @@
 
 
 
-LOGGER_API void set_logger_leve(boost::logging::level::type type);
+LOGGER_API void set_logger_level(boost::logging::level::type type);
 LOGGER_API void logger_debug(std::stringstream &s);
 LOGGER_API void logger_app(std::stringstream &s);
 LOGGER_API void init_debug_logger(const char * filename, bool enable_cout = false, bool disable_cache=false);
@@ -21,11 +21,11 @@ LOGGER_API void init_app_logger(const char * filename, bool enable_cout = false,
 
 #define LOGGER_DEBUG_OUTPUT(HEADER, FMT) { std::stringstream __output_debug_string_stream__;	\
 	__output_debug_string_stream__<<HEADER<<FMT;	\
-	logger_debug(__output_debug_string_stream__.str().c_str());}\
+	logger_debug(__output_debug_string_stream__);}\
 
 #define LOGGER_APP_OUTPUT(HEADER, FMT) { std::stringstream __output_debug_string_stream__;	\
 	__output_debug_string_stream__<<HEADER<<FMT;	\
-	logger_app(__output_debug_string_stream__.str().c_str());}\
+	logger_app(__output_debug_string_stream__);}\
 
 #define __LTRC__(FMT) 	LOGGER_DEBUG_OUTPUT("[TRACE] {"<<__FUNCTION__<<"} ", FMT);
 #define __LDBG__(FMT) 	LOGGER_DEBUG_OUTPUT("[DEBUG] {"<<__FUNCTION__<<"} ", FMT);
