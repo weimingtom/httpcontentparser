@@ -242,7 +242,7 @@ bool DNSList::checkDNS(const std::string &dns_name) const {
 		return false;
 
 	TCHAR buffer[1024];
-	get_main_dns_name(buffer, 1024, dns_name.c_str());
+	get_main_serv_name(buffer, 1024, dns_name.c_str());
 
 	// 表明不在此名单内
 	if (dns_set_.end() != dns_set_.find(buffer)) {
@@ -285,7 +285,7 @@ bool DNSList::removeDNS(const std::string &dns_name) {
 void DNSList::addDNS(const std::string &dns_name) {
 	// 去除DNS MAIN name
 	TCHAR buffer[1024];
-	get_main_dns_name(buffer, 1024, dns_name.c_str());
+	get_main_serv_name(buffer, 1024, dns_name.c_str());
 	dns_set_.insert(std::make_pair(buffer, dns_name));
 }
 

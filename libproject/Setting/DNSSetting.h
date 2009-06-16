@@ -44,7 +44,7 @@ public:
 
 	bool isSettingEnabled() const { return enabled_;}
 protected:
-	typedef std::multimap<std::string, std::string> DNS_SET;
+	typedef std::map<std::string, std::string> DNS_SET;
 	DNS_SET dns_set_;
 
 	bool enabled_;
