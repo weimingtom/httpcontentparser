@@ -245,6 +245,9 @@
 				RelativePath=".\res\icon3.ico">
 			</File>
 			<File
+				RelativePath=".\res\inform.ico">
+			</File>
+			<File
 				RelativePath=".\res\key.bmp">
 			</File>
 			<File

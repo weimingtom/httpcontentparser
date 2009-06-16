@@ -144,6 +144,8 @@
 #define IDB_BMP_LOGO                    207
 #define IDB_BMP_SMALL_LOGO              208
 #define IDI_ICO_SMALL_LOGO              212
+#define IDI_TREE_INFO                   213
+#define IDI_ICON1                       215
 #define IDC_TREE_NAVIG                  1000
 #define IDS_TREE_ROOT                   1001
 #define IDS_TREE_DNS_RULE               1002
@@ -327,7 +329,7 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        213
+#define _APS_NEXT_RESOURCE_VALUE        216
 #define _APS_NEXT_COMMAND_VALUE         32813
 #define _APS_NEXT_CONTROL_VALUE         1122
 #define _APS_NEXT_SYMED_VALUE           112

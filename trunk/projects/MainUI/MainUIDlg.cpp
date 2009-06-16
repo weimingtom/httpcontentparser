@@ -455,6 +455,7 @@ void CMainUIDlg::InitTreeNodes() {
 	const int INDEX_HOME		= m_imageList.Add(AfxGetApp()->LoadIcon(IDI_TREE_HOME));
 	const int INDEX_TIME			= m_imageList.Add(AfxGetApp()->LoadIcon(IDI_TREE_TIME));
 	const int INDEX_OPTION	=m_imageList.Add(AfxGetApp()->LoadIcon(IDI_TREE_OPTION));
+	const int INDEX_INFORM = m_imageList.Add(AfxGetApp()->LoadIcon(IDI_TREE_INFO));
 	m_treeNavigation.SetImageList(&m_imageList, TVSIL_NORMAL);
 
 	CString strRoot;
@@ -477,6 +478,8 @@ void CMainUIDlg::InitTreeNodes() {
 
 	strItem.LoadString(IDS_TREE_ABOUT);
 	hItem = m_treeNavigation.InsertItem(strItem, hRoot);
+	m_treeNavigation.SetItemData(hItem, IDS_TREE_ABOUT);
+	m_treeNavigation.SetItemImage(hItem, INDEX_INFORM, INDEX_INFORM);
 	m_treeNavigation.SetItemData(hItem, IDS_TREE_ABOUT);
 
 	m_treeNavigation.Expand(hRoot, TVE_EXPAND);
