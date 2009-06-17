@@ -9,6 +9,7 @@
 #include <searchkeywordutil.h>
 #include <logger\logger.h>
 #include <DebugOutput.h>
+#include <softwareStatus.h>
 
 #define TIME_ESCAPE_SAVE_SCREEN  8000
 #define ID_TIMER_SAVE_SCREEN     1
@@ -134,12 +135,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 
 			if (ID_TIMER_SAVE_SCREEN == wParam) {
 				// 自动保存屏幕
-				if (g_configuration.getScreenshotSetting()->shouldSave()) {
-					TCHAR fullpath[MAX_PATH];
-					GenScreenSPFile(fullpath, MAX_PATH);
-					GetScreen(fullpath);
-					_DEBUG_STREAM_TRC_("[Websnow Service] Screen Snapshot on path "<<fullpath);
-					__LTRC__("Screen Snapshot on path "<<fullpath);
+				if (SettingItem::MODE_CHILD == SettingItem::getModel()) {
+					if (g_configuration.getScreenshotSetting()->shouldSave()) {
+						TCHAR fullpath[MAX_PATH];
+						GenScreenSPFile(fullpath, MAX_PATH);
+						GetScreen(fullpath);
+						_DEBUG_STREAM_TRC_("[Websnow Service] Screen Snapshot on path "<<fullpath);
+						__LTRC__("Screen Snapshot on path "<<fullpath);
+					}
 				}
 			} else if (ID_TIMER_EYECARE_TRY == wParam) {
 				// 只有运行于子模式才执行此操作
@@ -149,7 +152,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 					if (g_configuration.getEyecareSetting()->getState() == EyecareSetting::EYECARE_TIME) {
 						// 启动进程
 						HWND hwnd = GetEyecareApp();
-						if (NULL == hwnd) {
+						if (NULL == hwnd && functionEnabled(getAppStatus())) {
 							StartEyecare();
 						};
 					}
