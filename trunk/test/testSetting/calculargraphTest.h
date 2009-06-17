@@ -7,8 +7,9 @@
 class CalculargraphTest  : public CPPUNIT_NS::TestFixture {
 public:
 	CPPUNIT_TEST_SUITE(CalculargraphTest);
-	CPPUNIT_TEST(testMulitSetTimeLeft);
+	CPPUNIT_TEST(TestSetASmallerTime);
 	CPPUNIT_TEST(TestCulargraph);
+	CPPUNIT_TEST(testMulitSetTimeLeft);
 	CPPUNIT_TEST(testMultiStopTimer);
 	CPPUNIT_TEST(testCalarStopTimer);
 	CPPUNIT_TEST(TestSetTimeEscape);
@@ -16,6 +17,7 @@ public:
 	CPPUNIT_TEST_SUITE_END();
 
 public:
+	void TestSetASmallerTime();
 	void TestCulargraph();
 	void testCalarStopTimer();
 	void testMulitSetTimeLeft();
