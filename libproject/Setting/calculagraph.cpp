@@ -35,7 +35,13 @@ void Calculagraph::setTimeEscape(const int seconds) {
 
 // …Ë÷√
 void Calculagraph::setTimespan(const int seconds) {
+	const int leftsecond = getRemainTime();
 	time_span_ = seconds * MILION_SECONDS;
+	if (leftsecond >= seconds) {
+		setTimeEscape(0);
+	} else {
+		setTimeEscape(seconds - leftsecond);
+	}
 }
 
 // ∫¡√Î
