@@ -31,17 +31,12 @@ extern HINSTANCE g_hInstance;
 
 namespace {
 
-	void startEyecare() {
-		// TODO 这里该干啥啊？
-		// HWND hwnd = FindWindow(, );
-	}
-
 	void startMainUI() {
 		HWND hwnd = FindWindow(MAIN_WINDOW_CLASS, MAIN_WINDOW_TITLE);
 		if (hwnd != NULL) {
 			ShowWindow(hwnd, SW_SHOW);
 		} else {
-			UINT result = WinExec(TEXT("Mainui.exe"), SW_SHOW);
+			UINT result = WinExec(APPLICATION_MAIN_EXE_FILE, SW_SHOW);
 			if (0 != result) {
 				__LERR__("WinExec failed with return value "<<result<< " LastErorr : "<<GetLastError());
 			}
