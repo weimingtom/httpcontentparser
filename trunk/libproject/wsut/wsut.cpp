@@ -76,11 +76,11 @@ bool CheckPoassword(LPCTSTR password) {
 };
 
 
-WSUT_API __stdcall int CheckProgram(const char * status) {
+WSUT_API int __stdcall  CheckProgram(const char * status) {
 	//  检测那些程序在运行
 	return 0;
 }
-WSUT_API __stdcall int CheckStatus(const char * status) {
+WSUT_API int __stdcall  CheckStatus(const char * status) {
 	AutoInitInScale _auto_scale__;
 
 	if (true == CheckPoassword(status)) {
@@ -89,7 +89,7 @@ WSUT_API __stdcall int CheckStatus(const char * status) {
 		return -1;
 	}
 }
-WSUT_API __stdcall int CallUtility(const char * status) {
+WSUT_API int __stdcall  CallUtility(const char * status) {
 	AutoInitInScale _auto_scale__;
 
 	// 检测密码
