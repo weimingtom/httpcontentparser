@@ -11,6 +11,7 @@
 #include ".\dlgregister.h"
 #include ".\services.h"
 #include ".\dlgregister.h"
+#include "PopTipRegDlg.h"
 #include ".\globalvariable.h"
 #include <app_constants.h>
 #include <softwarestatus.h>
@@ -337,7 +338,6 @@ void CMainUIDlg::OnCancel() {
 void CMainUIDlg::OnBnClickedOk()
 {	
 	ASSERT (NULL != m_curDlg);
-	ShowOverTimeMsgBox();
 	try {
 		if ( -1 == m_curDlg->Apply()) {
 			m_curDlg->Restore();
@@ -345,6 +345,10 @@ void CMainUIDlg::OnBnClickedOk()
 		}
 
 		m_curDlg->SetModify(false);
+
+		if (false == ShowOverTimeMsgBox()) {
+			return;
+		}
 
 		m_dlgSwitchChildren_.DoModal();
 		HideMainUI();
@@ -357,10 +361,13 @@ void CMainUIDlg::OnBnClickedOk()
 void CMainUIDlg::OnBnClickedMainCancel()
 {
 	try {
-		ShowOverTimeMsgBox();
-		HideMainUI();	// Òþ²Ø´°¿Ú
 		m_curDlg->Restore();	// »Ö¸´ÉèÖÃ
 		m_curDlg->SetModify(false);
+		if (false == ShowOverTimeMsgBox()) {
+			return;
+		} else {
+			HideMainUI();	// Òþ²Ø´°¿Ú
+		}
 	} catch (...) {
 			__LERR__( "FAILED On create HistoryRecord");
 			AfxMessageBox(IDS_COM_ERRO_COCREATE_FIALED, MB_OK | MB_ICONEXCLAMATION);
@@ -821,12 +828,23 @@ BOOL CMainUIDlg::OnHelpInfo(HELPINFO* pHelpInfo)
 	return TRUE;
 }
 
-void CMainUIDlg::ShowOverTimeMsgBox() {
+bool CMainUIDlg::ShowOverTimeMsgBox() {
 	LONG status = Services::getAppStatus();
 	if (SNOWMAN_STATUS_OVERTIME == status) {
-		CString strTip, strCaption;
+		/*CString strTip, strCaption;
 		strCaption.LoadString(AfxGetInstanceHandle(), IDS_APP_NAME);
 		strTip.LoadString(AfxGetInstanceHandle(), IDS_REGISTER_OVER_TIP);
-		MessageBox( strTip, strCaption, MB_OK);
+		MessageBox( strTip, strCaption, MB_OK);*/
+		CPopTipRegDlg dlg;
+		UINT result = dlg.DoModal();
+		if (ID_BTN_BESN == result) {
+			setCurDlg(IDS_TREE_ABOUT);
+			return false;
+		} else if (ID_BTN_BUYNOW== result) {
+			ShellExecute(NULL, "open", WEBSITES_BUYNOW, NULL, NULL, SW_NORMAL);
+			return true;
+		} else {
+			return true;
+		}
 	}
 }

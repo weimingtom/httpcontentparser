@@ -145,7 +145,7 @@
 #define IDB_BMP_SMALL_LOGO              208
 #define IDI_ICO_SMALL_LOGO              212
 #define IDI_TREE_INFO                   213
-#define IDI_ICON1                       215
+#define IDD_POP_TIPREG                  217
 #define IDC_TREE_NAVIG                  1000
 #define IDS_TREE_ROOT                   1001
 #define IDS_TREE_DNS_RULE               1002
@@ -289,6 +289,8 @@
 #define IDC_WEBSITE_URL                 1119
 #define IDC_OUR_EMAIL                   1120
 #define IDC_OUR_MAILLIST                1121
+#define ID_BTN_BESN                     1123
+#define ID_BTN_BUYNOW                   1124
 #define IDC_EDIT1                       4011
 #define IDC_EDIT2                       4012
 #define IDC_EDT_RETRY                   4013
@@ -329,9 +331,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        216
+#define _APS_NEXT_RESOURCE_VALUE        218
 #define _APS_NEXT_COMMAND_VALUE         32813
-#define _APS_NEXT_CONTROL_VALUE         1122
+#define _APS_NEXT_CONTROL_VALUE         1125
 #define _APS_NEXT_SYMED_VALUE           112
 #endif
 #endif

@@ -127,7 +127,10 @@ protected:
 	afx_msg void OnWebhistoryImages();
 	afx_msg void OnWebhistorySearchkeyword();
 	afx_msg void OnWebhistoryWebsites();
+	afx_msg void OnMainRegister();
+	afx_msg BOOL OnHelpInfo(HELPINFO* pHelpInfo);
 
+	virtual HRESULT get_accHelp(VARIANT varChild, BSTR *pszHelp);
 	virtual BOOL OnInitDialog();
 	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV 支持
 	virtual void OnOK();
@@ -145,7 +148,7 @@ private:
 	// 隐藏或是显示主界面
 	void ShowMainUI();
 	void HideMainUI(BOOL autoSwitchCheck = TRUE);
-	void ShowOverTimeMsgBox();
+	bool ShowOverTimeMsgBox();
 	BOOL isShown() const { return m_bShown;}
 
 	// 对话框
@@ -159,8 +162,4 @@ private:
 
 private:
 	void SwitchOnClose();
-public:
-	virtual HRESULT get_accHelp(VARIANT varChild, BSTR *pszHelp);
-	afx_msg void OnMainRegister();
-	afx_msg BOOL OnHelpInfo(HELPINFO* pHelpInfo);
 };
