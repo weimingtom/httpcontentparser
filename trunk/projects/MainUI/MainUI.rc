@@ -591,6 +591,18 @@ BEGIN
     LTEXT           "Copyright (C) 2009",IDC_STATIC,111,29,70,13
 END
 
+IDD_POP_TIPREG DIALOGEX 0, 0, 177, 88
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | 
+    WS_SYSMENU
+CAPTION "Register"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "I have serial number",ID_BTN_BESN,15,67,77,14
+    PUSHBUTTON      "Buy Now.",ID_BTN_BUYNOW,110,67,50,14
+    LTEXT           "The trial days has been exceed. Do you want to register it know. ",
+                    IDC_STATIC,26,20,144,31
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -815,6 +827,14 @@ BEGIN
         RIGHTMARGIN, 181
         TOPMARGIN, 7
         BOTTOMMARGIN, 88
+    END
+
+    IDD_POP_TIPREG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 170
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 81
     END
 END
 #endif    // APSTUDIO_INVOKED

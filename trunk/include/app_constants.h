@@ -80,6 +80,7 @@ TCHAR * getHotkeyname(const int type) {
 #define EYECARE_MUTEX_NAME		TEXT("8EF40F9D-71A7-40d9-A229-599105419DAE")
 
 #define HOME_WEBSITES			TEXT("www.family007.com")
+#define WEBSITES_BUYNOW			TEXT("www.family007.com")
 
 #define WINDIR_INI_FILE_CONTENT TEXT("#the setting of the product\r\n[AutoRun]\r\nvalue=true\r\n")
 

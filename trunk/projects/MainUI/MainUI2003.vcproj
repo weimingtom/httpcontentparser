@@ -139,6 +139,9 @@
 				RelativePath=".\MainUI.h">
 			</File>
 			<File
+				RelativePath=".\PopTipRegDlg.cpp">
+			</File>
+			<File
 				RelativePath=".\Resource.h">
 			</File>
 			<File
@@ -164,6 +167,9 @@
 			Name="头文件"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
+			<File
+				RelativePath=".\PopTipRegDlg.h">
+			</File>
 		</Filter>
 		<Filter
 			Name="资源文件"
