@@ -7,7 +7,10 @@ XMLConfiguration g_configuration;
 HINSTANCE g_hInstance;
 SeachKeywordUtil g_searchwordUtil;
 WebsitesUtil g_websitesUtil;
+
+namespace {
 software_encrypt::LicenseInfo g_licenseInfo;
+};
 
 int getAppStatus() {
 	if ( true == g_configuration.uninstall()) {
@@ -19,5 +22,18 @@ int getAppStatus() {
 
 int refreshAppstatus() {
 	g_licenseInfo.initialize();
+	SettingItem::setAppStatus(getAppStatus());
 	return 0;
+}
+
+int getInstallDays() {
+	return g_licenseInfo.getInstallDays();
+}
+
+bool tryRegister(const char *sn) {
+	return g_licenseInfo.regApp(sn);
+}
+
+bool registered() {
+	return g_licenseInfo.registered();
 }

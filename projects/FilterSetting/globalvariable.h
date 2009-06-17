@@ -16,9 +16,12 @@ extern XMLConfiguration g_configuration;
 extern HINSTANCE g_hInstance;
 extern  SeachKeywordUtil g_searchwordUtil;
 extern WebsitesUtil g_websitesUtil;
-extern software_encrypt::LicenseInfo g_licenseInfo;
+
 
 int getAppStatus();
 int refreshAppstatus();
+int getInstallDays();
+bool registered();
+bool tryRegister(const char * sn);
 
 #endif  // _FILTER_SETTING_GLOBALVARIABLE_H__
