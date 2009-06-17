@@ -36,6 +36,7 @@
 
 // 应用程序的名称
 #define APPLICATION_MAINUI_NAME	TEXT("Websnow")
+#define APPLICATION_MAINUI_EXE_FILE	TEXT("family007.exe")
 
 // 注册表项名称
 #define REGISTER_MAINUI_KEY	APPLICATION_MAINUI_NAME
