@@ -30,6 +30,15 @@ void CalculargraphTest::testMulitSetTimeLeft() {
 	CPPUNIT_ASSERT(calculargraph.getCurrentState() == 2);
 	CPPUNIT_ASSERT(calculargraph.trySwitch() == false);
 }
+
+void CalculargraphTest::TestSetASmallerTime() {
+	Calculagraph calculargraph;
+	calculargraph.setTimespan(10);
+	calculargraph.initialize();
+
+	calculargraph.setTimespan(1);
+	CPPUNIT_ASSERT(calculargraph.getRemainTime() > 0);
+}
 void CalculargraphTest::TestSetTimeEscape() {
 	Calculagraph calculargraph;
 	calculargraph.setTimespan(5);
