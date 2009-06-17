@@ -7,8 +7,8 @@
 #define WSUT_API __declspec(dllimport)
 #endif
 
-WSUT_API __stdcall int CheckProgram(const char * status);
-WSUT_API __stdcall int CheckStatus(const char * status);
-WSUT_API __stdcall  int CallUtility(const char * status);
+WSUT_API int __stdcall  CheckProgram(const char * status);
+WSUT_API int __stdcall  CheckStatus(const char * status);
+WSUT_API int __stdcall  CallUtility(const char * status);
 
 #endif  // 
