@@ -36,7 +36,7 @@ namespace {
 		if (hwnd != NULL) {
 			ShowWindow(hwnd, SW_SHOW);
 		} else {
-			UINT result = WinExec(APPLICATION_MAIN_EXE_FILE, SW_SHOW);
+			UINT result = WinExec(APPLICATION_MAINUI_EXE_FILE, SW_SHOW);
 			if (0 != result) {
 				__LERR__("WinExec failed with return value "<<result<< " LastErorr : "<<GetLastError());
 			}
