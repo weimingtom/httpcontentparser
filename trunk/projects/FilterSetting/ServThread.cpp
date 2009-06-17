@@ -146,16 +146,16 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 				}
 			} else if (ID_TIMER_EYECARE_TRY == wParam) {
 				// 只有运行于子模式才执行此操作
-				if (SettingItem::MODE_CHILD == SettingItem::getModel()) {
-					// 如果试图改变状态成功，且状态为EYECARE_TIME,
-					g_configuration.getEyecareSetting()->trySwitch();
-					if (g_configuration.getEyecareSetting()->getState() == EyecareSetting::EYECARE_TIME) {
-						// 启动进程
-						HWND hwnd = GetEyecareApp();
-						if (NULL == hwnd && functionEnabled(getAppStatus())) {
-							StartEyecare();
-						};
-					}
+				// 如果试图改变状态成功，且状态为EYECARE_TIME,
+				g_configuration.getEyecareSetting()->trySwitch();
+				if (g_configuration.getEyecareSetting()->shouldStartEyecare()) {
+					// 启动进程
+					HWND hwnd = GetEyecareApp();
+					if (NULL == hwnd && functionEnabled(getAppStatus())) {
+						StartEyecare();
+						_DEBUG_STREAM_TRC_("[Websnow Service] Launch Eyecare ");
+						__LTRC__("Launch Eyecare  ");
+					};
 				} 
 			} else if (ID_TIMER_SAVE_HISTORY == wParam && g_configuration.getWebHistoryRecordSetting()->recordSeachKeyword()) {
 				// 保存记录的历史

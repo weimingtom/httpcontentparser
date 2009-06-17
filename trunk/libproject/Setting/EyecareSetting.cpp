@@ -58,6 +58,19 @@ bool EyecareSetting::setPassword(const std::string &password, const std::string 
 	}
 }
 
+// 是否应该启动程序
+bool EyecareSetting::shouldStartEyecare() {
+	if (isEnabled() == false) {
+		return false;
+	}
+
+	if (getState() == EyecareSetting::EYECARE_TIME) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
 // 获取剩余时间
 int EyecareSetting::getRemainTime() {
 	// 在不使用时应该听表啊

@@ -41,6 +41,7 @@ public:
 	int getEnterTime() const  { return calculagraph_.getTimespan(ENTERT_TIME);}
 	int getEyecareTime() const { return calculagraph_.getTimespan(EYECARE_TIME);}
 
+	bool shouldStartEyecare();
 	bool trySwitch(); // 尝试切换状态，如果时间已经达标则自动切换，否则不改变
 	int switchState(const std::string &password); // 切换状态
 

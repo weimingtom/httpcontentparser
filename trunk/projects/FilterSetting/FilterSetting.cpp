@@ -54,9 +54,6 @@ public :
 CFilterSettingModule _AtlModule;
 
 void initializeSetting() {
-	// 获取注册信息
-	g_licenseInfo.initialize();
-
 	// 初始化配置
 	TCHAR config_path[MAX_PATH];
 	GetAppConfigFilename(config_path, MAX_PATH);
@@ -85,7 +82,7 @@ extern "C" int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/
 
 
 	g_hInstance = hInstance;
-	g_licenseInfo.initialize();
+	refreshAppstatus();
 
 	// 修复项
 	// todo 此处应该直接使用函数获取状态
