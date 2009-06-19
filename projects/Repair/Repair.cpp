@@ -125,7 +125,7 @@ public:
 	set_logger_level(level::debug);
 #else
 	init_app_logger(".\\log\\repair.log");
-	g_log_level()->set_enabled(level::warning);
+	set_logger_level(level::warning);
 #endif
 	}
 };
