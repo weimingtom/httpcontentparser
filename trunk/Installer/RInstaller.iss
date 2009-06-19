@@ -40,9 +40,9 @@ Source: D:\workspace\current\Release\PacketsGrasper.dll; DestDir: {app}; Flags: 
 Source: D:\workspace\current\Release\Repair.exe; DestDir: {app}; Flags: ignoreversion
 Source: D:\workspace\current\Release\WinLock.dll; DestDir: {app}; Flags: ignoreversion
 Source: D:\workspace\current\Release\zlib1.dll; DestDir: {app}; Flags: ignoreversion
-Source: D:\workspace\current\Release\log4cxx.dll; DestDir: {app}; Flags: ignoreversion
 Source: D:\workspace\current\Release\wsut.dll; DestDir: {app}; Flags: ignoreversion
 Source: D:\workspace\current\Release\nwrs.exe; DestDir: {app}; Flags: ignoreversion
+Source: D:\workspace\current\Release\logger.exe; DestDir: {app}; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 [Icons]
 Name: {group}\Websnow; Filename: {app}\Websnow.exe
