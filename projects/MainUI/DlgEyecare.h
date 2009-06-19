@@ -1,7 +1,6 @@
 #pragma once
 
 #include ".\basedlg.h"
-#include  ".\Guilib1.5\GuiGroupBox.h"
 #include "afxwin.h"
 // CDlgEyecare ¶Ô»°¿ò
 
@@ -30,9 +29,9 @@ protected:
 	afx_msg void OnDestroy();
 
 	// controls
-	CGuiGroupBox m_staAfterTerm;
-	CGuiGroupBox m_staEyecare;
-	CGuiGroupBox m_staState;
+	CStatic m_staAfterTerm;
+	CStatic m_staEyecare;
+	CStatic m_staState;
 	CEdit m_edtEnterTime;
 	CEdit m_edtRestTime;
 	CButton m_chkEnabled;

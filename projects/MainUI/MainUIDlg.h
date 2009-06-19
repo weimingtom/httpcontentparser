@@ -24,7 +24,6 @@
 #include ".\Lev1DlgTools.h"
 #include ".\basedlg.h"
 #include ".\newMenu\NewMenu.h"
-#include  ".\Guilib1.5\GuiGroupBox.h"
 #include  ".\Guilib1.5\GuiSysTray.h"
 #include ".\DlgSwitchChildren.h"
 #include ".\dlgregister.h"
@@ -93,7 +92,7 @@ private:
 	CGuiSysTray		m_sysTray;
 	CNewMenu		m_trayMenu;
 	
-	CGuiGroupBox m_staFunFrame;
+	CStatic m_staFunFrame;
 	CGuiButton m_btnOkBAK; // if remove it, some error happens.
 	CImageList image_list_;
 

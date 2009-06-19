@@ -3,7 +3,6 @@
 
 #include ".\basedlg.h"
 #include "afxwin.h"
-#include  ".\Guilib1.5\GuiGroupBox.h"
 #include "afxcmn.h"
 
 // CDlgScreenshot ¶Ô»°¿ò
@@ -31,9 +30,9 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 public:
-	CGuiGroupBox m_staFunction;
-	CGuiGroupBox m_staTimespan;
-	CGuiGroupBox m_staAutoClear;
+	CStatic m_staFunction;
+	CStatic m_staTimespan;
+	CStatic m_staAutoClear;
 	CSliderCtrl m_sliderSaveTimespan;
 	CSliderCtrl m_sliderAutoclearTimespan;
 	

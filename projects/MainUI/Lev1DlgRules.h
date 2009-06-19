@@ -4,8 +4,6 @@
 #include ".\basedlg.h"
 #include "afxwin.h"
 
-#include  ".\Guilib1.5\GuiGroupBox.h"
-
 
 class CLev1DlgRules : public CBaseDlg {
 	DECLARE_DYNAMIC(CLev1DlgRules)
@@ -32,5 +30,5 @@ public:
 	virtual BOOL OnInitDialog();
 	CString m_strComment;
 	CEdit m_edit;
-	CGuiGroupBox m_staComment;
+	CStatic m_staComment;
 };
