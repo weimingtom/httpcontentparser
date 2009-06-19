@@ -161,4 +161,5 @@ private:
 
 private:
 	void SwitchOnClose();
+	void ShowRegTipDlg();
 };

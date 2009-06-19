@@ -12,13 +12,19 @@ public:
 	virtual ~CPopTipRegDlg();
 
 // 对话框数据
-	enum { IDD = IDD_POP_TIPREG };
-
+	enum { IDD = IDD_POP_REGTIP };
+public:
+	afx_msg void OnBnClickedBtnBesn();
+	afx_msg void OnBnClickedBtnBuynow();
+public:
+	bool shouldShow();
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 支持
 
 	DECLARE_MESSAGE_MAP()
+
+private:
+	static int show_count_;
 public:
-	afx_msg void OnBnClickedBtnBesn();
-	afx_msg void OnBnClickedBtnBuynow();
+	virtual BOOL OnInitDialog();
 };
