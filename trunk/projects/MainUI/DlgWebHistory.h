@@ -1,6 +1,5 @@
 #pragma once
 #include ".\basedlg.h"
-#include ".\Guilib1.5\GuiGroupBox.h"
 #include "afxwin.h"
 #include "afxcmn.h"
 
@@ -43,9 +42,9 @@ protected:
 	CButton m_btnExportWebSiteList;
 	CButton m_btnViewtheHistory;
 	CButton m_btnClearCache;
-	CGuiGroupBox m_staTools;
-	CGuiGroupBox m_staHistory;
-	CGuiGroupBox m_staTypes;
+	CStatic m_staTools;
+	CStatic m_staHistory;
+	CStatic m_staTypes;
 	CSliderCtrl m_sliderWebHistoryAutoClean;
 	CString m_strAutoClean;
 

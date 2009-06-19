@@ -1,6 +1,5 @@
 #pragma once
 #include ".\basedlg.h"
-#include  ".\Guilib1.5\GuiGroupBox.h"
 #include "afxwin.h"
 #include "afxcmn.h"
 
@@ -34,9 +33,9 @@ protected:
 	CButton m_chkBMP;
 	CButton m_chkPNG;
 	
-	CGuiGroupBox m_staImageCheck;
-	CGuiGroupBox m_staImageSize;
-	CGuiGroupBox m_staImageType;
+	CStatic m_staImageCheck;
+	CStatic m_staImageSize;
+	CStatic m_staImageType;
 	CSliderCtrl m_sliderImageCheckDegree;
 	CEdit m_editMin;
 	CEdit m_editMax;

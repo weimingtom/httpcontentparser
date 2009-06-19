@@ -1,7 +1,6 @@
 #pragma once
 #include ".\basedlg.h"
 #include "afxwin.h"
-#include  ".\Guilib1.5\GuiGroupBox.h"
 #include ".\HyperLink.h"
 
 // CDlgAbout ¶Ô»°¿ò
@@ -31,7 +30,7 @@ protected:
 	afx_msg BOOL OnHelpInfo(HELPINFO* pHelpInfo);
 	DECLARE_MESSAGE_MAP()
 
-	CGuiGroupBox m_staAbout;
+	CStatic m_staAbout;
 	
 	CHyperLink m_sWebURL;
 	CHyperLink m_sEmail;

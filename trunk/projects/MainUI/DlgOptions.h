@@ -1,7 +1,6 @@
 #pragma once
 
 #include ".\basedlg.h"
-#include  ".\Guilib1.5\GuiGroupBox.h"
 #include <afxcmn.h>
 #include "afxcmn.h"
 #include "afxwin.h"
@@ -37,8 +36,8 @@ protected:
 protected:
 	// control variables
 	CButton m_chkAutoLoad;
-	CGuiGroupBox m_staSystemOption;
-	CGuiGroupBox m_staHotkey;
+	CStatic m_staSystemOption;
+	CStatic m_staHotkey;
 	CHotKeyCtrl m_hotkeyLaunch;
 	CHotKeyCtrl m_hotKeyShowDlg;
 	CHotKeyCtrl m_hotkeySwitchUser;
