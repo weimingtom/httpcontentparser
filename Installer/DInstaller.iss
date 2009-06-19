@@ -41,7 +41,7 @@ Source: D:\workspace\current\debug\PacketsGrasper.dll; DestDir: {app}; Flags: ig
 Source: D:\workspace\current\debug\Repair.exe; DestDir: {app}; Flags: ignoreversion
 Source: D:\workspace\current\debug\WinLock.dll; DestDir: {app}; Flags: ignoreversion
 Source: D:\workspace\current\debug\zlib1.dll; DestDir: {app}; Flags: ignoreversion
-Source: D:\workspace\current\debug\log4cxx.dll; DestDir: {app}; Flags: ignoreversion
+Source: D:\workspace\current\Release\logger.exe; DestDir: {app}; Flags: ignoreversion
 Source: D:\workspace\current\debug\wsut.dll; DestDir: {app}; Flags: ignoreversion
 Source: D:\workspace\current\debug\nwrs.exe; DestDir: {app}; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
