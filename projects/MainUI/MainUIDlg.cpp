@@ -831,10 +831,6 @@ BOOL CMainUIDlg::OnHelpInfo(HELPINFO* pHelpInfo)
 bool CMainUIDlg::ShowOverTimeMsgBox() {
 	LONG status = Services::getAppStatus();
 	if (SNOWMAN_STATUS_OVERTIME == status) {
-		/*CString strTip, strCaption;
-		strCaption.LoadString(AfxGetInstanceHandle(), IDS_APP_NAME);
-		strTip.LoadString(AfxGetInstanceHandle(), IDS_REGISTER_OVER_TIP);
-		MessageBox( strTip, strCaption, MB_OK);*/
 		CPopTipRegDlg dlg;
 		UINT result = dlg.DoModal();
 		if (ID_BTN_BESN == result) {
