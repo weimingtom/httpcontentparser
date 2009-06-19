@@ -842,5 +842,7 @@ bool CMainUIDlg::ShowOverTimeMsgBox() {
 		} else {
 			return true;
 		}
+	} else {
+		return true;
 	}
 }
