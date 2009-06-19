@@ -8,6 +8,9 @@
 
 
 // CPopTipRegDlg 对话框
+#define SHOW_TIMES		5
+
+int CPopTipRegDlg::show_count_ = -1;
 
 IMPLEMENT_DYNAMIC(CPopTipRegDlg, CDialog)
 CPopTipRegDlg::CPopTipRegDlg(CWnd* pParent /*=NULL*/)
@@ -31,6 +34,10 @@ BEGIN_MESSAGE_MAP(CPopTipRegDlg, CDialog)
 END_MESSAGE_MAP()
 
 
+bool CPopTipRegDlg::shouldShow() {
+	show_count_++;
+	return ((show_count_ % SHOW_TIMES) == 0);
+}
 // CPopTipRegDlg 消息处理程序
 
 void CPopTipRegDlg::OnBnClickedBtnBesn()
@@ -41,4 +48,11 @@ void CPopTipRegDlg::OnBnClickedBtnBesn()
 void CPopTipRegDlg::OnBnClickedBtnBuynow()
 {
 	EndDialog(ID_BTN_BUYNOW);
+}
+
+BOOL CPopTipRegDlg::OnInitDialog()
+{
+	CDialog::OnInitDialog();
+
+	return TRUE; 
 }

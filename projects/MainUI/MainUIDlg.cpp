@@ -8,10 +8,12 @@
 #include ".\DlgImageBrowser.h"
 #include ".\dlgprogramcontrol.h"
 #include ".\DlgImageBrowser.h"
+#include ".\poptiptrayenddlg.h"
 #include ".\dlgregister.h"
 #include ".\services.h"
 #include ".\dlgregister.h"
 #include "PopTipRegDlg.h"
+#include ".\poptipregdlg.h"
 #include ".\globalvariable.h"
 #include <app_constants.h>
 #include <softwarestatus.h>
@@ -742,6 +744,8 @@ void CMainUIDlg::OnDestroy()
 }
 
 void CMainUIDlg::ShowMainUI() {
+	ShowRegTipDlg();
+
 	ShowWindow(SW_SHOW);
 	::SetWindowPos(GetSafeHwnd(), CWnd::wndTop, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
 	SetForegroundWindow ();
@@ -828,10 +832,19 @@ BOOL CMainUIDlg::OnHelpInfo(HELPINFO* pHelpInfo)
 	return TRUE;
 }
 
+void CMainUIDlg::ShowRegTipDlg() {
+	LONG status = Services::getAppStatus();
+	if (SNOWMAN_STATUS_REGISTERED != status) {
+		CPopTipRegDlg dlg;
+		if (dlg.shouldShow()) {
+			dlg.DoModal();
+		}
+	}
+}
 bool CMainUIDlg::ShowOverTimeMsgBox() {
 	LONG status = Services::getAppStatus();
 	if (SNOWMAN_STATUS_OVERTIME == status) {
-		CPopTipRegDlg dlg;
+		CPopTipTrayendDlg dlg;
 		UINT result = dlg.DoModal();
 		if (ID_BTN_BESN == result) {
 			setCurDlg(IDS_TREE_ABOUT);
