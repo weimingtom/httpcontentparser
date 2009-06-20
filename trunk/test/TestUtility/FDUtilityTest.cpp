@@ -12,7 +12,7 @@ FDUtilityTest::~FDUtilityTest(void) {
 void FDUtilityTest::testNone() {
 	{
 		fd_set *s1 = NULL, s2;
-		SOCKET s;
+		SOCKET s = 0;
 		FD_ZERO(&s2);
 		CPPUNIT_ASSERT(NULL == (FDSET_Add(s1, &s2)));
 		CPPUNIT_ASSERT(NULL == (FDSET_Add(&s2, s1)));
