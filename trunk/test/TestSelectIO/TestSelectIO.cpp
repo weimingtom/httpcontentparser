@@ -4,7 +4,9 @@
 #include "stdafx.h"
 #include ".\selectiotest.h"
 #include ".\buffercomcallertest.h"
+#include ".\serviceutilitytest.h"
 
+CPPUNIT_TEST_SUITE_REGISTRATION(ServiceutilityTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(BufferCOMCallerTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(SelectIOTest);
 
