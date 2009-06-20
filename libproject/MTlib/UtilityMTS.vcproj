@@ -77,19 +77,11 @@
 				Name="VCMIDLTool"/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy .\release\utilityd.lib ..\..\lib\utilitymt.lib
+				CommandLine="copy .\release\utility.lib ..\..\lib\utilitymt.lib
 "/>
 			<Tool
 				Name="VCPreBuildEventTool"
-				CommandLine="copy .\fd_set_utility.h ..\..\include\utility
-copy .\httppacket.h ..\..\include\utility
-copy .\dns.h ..\..\include\utility
-copy .\httprequestpacket.h ..\..\include\utility
-copy .\strutility.h ..\..\include\utility
-copy .\timeutility.h ..\..\include\utility
-copy .\SeachPacket.h ..\..\include\utility
-copy .\replacepacket.h ..\..\include\utility
-copy .\syncutility.h ..\..\include\utility
+				CommandLine="
 "/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
