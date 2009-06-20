@@ -27,10 +27,10 @@ LOGGER_API void set_logger_level(boost::logging::level::type level) {
 }
 
 LOGGER_API void logger_app(std::stringstream &s) {
-	__LAPP__<<s.str().c_str();
+	BOOST_LOG_USE_LOG_IF_LEVEL(g_log_app(), g_log_level(), debug ) <<s.str().c_str();
 }
 LOGGER_API void  logger_debug(std::stringstream &s) {
-	__LDBG__<<s.str().c_str();
+	BOOST_LOG_USE_LOG_IF_LEVEL(g_log_dbg(), g_log_level(), debug ) <<s.str().c_str();
 }
 
 
