@@ -11,6 +11,7 @@
 #include <COM\FilterSetting_i.c>
 #include <COM\FilterSetting.h>
 #include <logger\logger.h>
+#include <logger\loggerlevel.h>
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -40,9 +41,10 @@ CRepairApp theApp;
 
 BOOL CRepairApp::InitInstance()
 {
-	// 如果一个运行在 Windows XP 上的应用程序清单指定要
-	// 使用 ComCtl32.dll 版本 6 或更高版本来启用可视化方式，
-	//则需要 InitCommonControls()。否则，将无法创建窗口。
+	init_debug_logger(".\\log\\dEyecare.log");
+	init_app_logger(".\\log\\Eyecare.log");
+	set_logger_level(LOGGER_LEVEL);
+
 	InitCommonControls();
 
 	CWinApp::InitInstance();
@@ -112,22 +114,3 @@ BOOL CRepairApp::InitInstance()
 
 	return TRUE;
 }
-
-
-namespace {
-class LoggerInit {
-public:
-	LoggerInit() {
-		using namespace boost::logging;
-#ifdef DEBUG
-	init_debug_logger(".\\log\\drepair.log", false, true);
-	init_app_logger(".\\log\\repair.log", false, true);
-	set_logger_level(level::debug);
-#else
-	init_app_logger(".\\log\\repair.log");
-	set_logger_level(level::warning);
-#endif
-	}
-};
-LoggerInit g_logger_init;
-};
