@@ -213,10 +213,11 @@ LRESULT CALLBACK InputPasswordDlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM
 			__LTRC__("WM_KILLFOCUS");
 			break;
 		case WM_INITDIALOG:
-			__LTRC__("WM_KILLFOCUS");
+			__LTRC__("WM_INITDIALOG");
 			return TRUE;
 		// ÑéÖ¤´úÂë
 		case WM_COMMAND:
+			__LTRC__("WM_COMMAND");
 			GetDlgItemText(hDlg, IDC_PASSWORD, szBuffer, MAX_PATH);
 			if (LOWORD(wParam) == IDOK) {
 				if (ValidatePassword(szBuffer)) {
@@ -267,7 +268,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		UnlockScreen();
 		break;
 	case WM_DESTROY:
-		__LTRC__("WM_MY_SHOWDIALOG");
+		__LTRC__("WM_DESTROY");
 		PostQuitMessage(0);
 		break;
 	default:
