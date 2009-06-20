@@ -172,6 +172,12 @@
 			<File
 				RelativePath=".\SelectIOTest.h">
 			</File>
+			<File
+				RelativePath=".\ServiceutilityTest.cpp">
+			</File>
+			<File
+				RelativePath=".\ServiceutilityTest.h">
+			</File>
 		</Filter>
 	</Files>
 	<Globals>

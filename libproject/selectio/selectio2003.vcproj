@@ -49,6 +49,7 @@ copy .\DNSMap.H ..\..\include
 copy .\bufferresult.h ..\..\include
 copy .\handlequeue.h ..\..\include
 copy .\socketpackets.h ..\..\include
+copy .\ServiceUtility.h ..\..\include
 "/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
@@ -217,6 +218,16 @@ copy .\socketpackets.h ..\..\include
 			</File>
 			<File
 				RelativePath=".\SelectIO.h">
+			</File>
+		</Filter>
+		<Filter
+			Name="ServiceUtility"
+			Filter="">
+			<File
+				RelativePath=".\ServiceUtility.cpp">
+			</File>
+			<File
+				RelativePath=".\ServiceUtility.h">
 			</File>
 		</Filter>
 	</Files>
