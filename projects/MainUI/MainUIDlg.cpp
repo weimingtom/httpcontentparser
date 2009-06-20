@@ -168,6 +168,10 @@ void CMainUIDlg::setupTrayMenu() {
 	m_trayMenu.ModifyODMenu(0,_T("Web sites"),  IDB_TRAY_HISTORY_WEBSITE);
 	m_trayMenu.ModifyODMenu(0,_T("Search Keyword"),  IDB_TRAY_HISTORY_SEARCH);
 	m_trayMenu.ModifyODMenu(0,_T("Images"),  IDB_TRAY_DESKTOPIMAGE);
+
+	if (! Services::showRegisterMenuItem()) {
+		m_trayMenu.RemoveMenu(ID_MAIN_REGISTER, MF_BYCOMMAND);
+	}
 }
 
 BOOL CMainUIDlg::OnInitDialog()
