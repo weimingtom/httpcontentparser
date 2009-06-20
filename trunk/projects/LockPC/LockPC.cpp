@@ -179,6 +179,7 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
 	__AUTO_FUNCTION_SCOPE_TRACE__;
+
    HWND hWnd;
 
    hInst = hInstance; // Store instance handle in our global variable
