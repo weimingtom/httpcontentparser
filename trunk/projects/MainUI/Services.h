@@ -8,6 +8,7 @@ public:
 	static bool switchParentModel(LPCTSTR password);
 	static void switchChildModel();
 	static LONG getAppStatus();
+	static bool autoSwithOnClose();
 };
 
 #endif  // _MAINUI_MODEL_H__

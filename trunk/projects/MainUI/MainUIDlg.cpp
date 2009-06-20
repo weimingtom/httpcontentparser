@@ -716,23 +716,8 @@ void CMainUIDlg::OnTvnSelchangedTreeNavig(NMHDR *pNMHDR, LRESULT *pResult)
 // 工具函数
 // 根据COM设置，在最小化窗口时，切换模式
 void CMainUIDlg::SwitchOnClose() {
-	// 设置
-	try {
-		ISnowmanSetting *app = NULL;
-		HRESULT hr = CoCreateInstance(CLSID_SnowmanSetting, NULL, CLSCTX_LOCAL_SERVER, IID_ISnowmanSetting, (LPVOID*)&app);
-		if (FAILED(hr)) {
-			__LERR__("failed on create snowmansetting with HRESULT value : "<<hr);
-			return;
-		}
-		
-		// 是否需要切换到模式
-		VARIANT_BOOL val;
-		app->get_autoSwitchOnClose(&val);
-		if (VARIANT_TRUE == val) {
-			Services::switchChildModel();
-		}
-	} catch (...) {
-		__LERR__( "CATCH(...)");
+	if (true == Services::autoSwithOnClose()) {
+		Services::switchChildModel();
 	}
 }
 // 注销热键
