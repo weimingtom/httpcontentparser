@@ -9,6 +9,8 @@
 #endif
 
 #include <sstream>
+#include <iostream>
+#include <ios>
 #include <boost/logging/format.hpp>
 
 
@@ -35,5 +37,27 @@ LOGGER_API void init_app_logger(const char * filename, bool enable_cout = false,
 #define __LAPP__(FMT) 	LOGGER_APP_OUTPUT("[INFOM] {"<<__FUNCTION__<<"} ", FMT);
 #define __LFAT__(FMT) 	LOGGER_APP_OUTPUT("[FATAL] {"<<__FUNCTION__<<"} ", FMT);
 
+class scope_logger_helper {
+public:
+	scope_logger_helper(const std::stringstream s)  {
+		_s_<<s.str();
+	}
+	scope_logger_helper(const TCHAR * logger_text) {
+		assert(logger_text != NULL);
+		_s_<<logger_text;
+		LOGGER_DEBUG_OUTPUT("[SCOPE TRACE] ",  _s_.str().c_str()<<" @scope_begin");
+	}
+	
+	~scope_logger_helper() {
+		LOGGER_DEBUG_OUTPUT("[SCOPE TRACE] ", _s_.str().c_str()<<" @scope_end");
+	}
+	
+	std::stringstream _s_;
+};
+
+#define __AUTO_FUNCTION_SCOPE_TRACE__			scope_logger_helper __scope_logger_helper__(__FUNCTION__)
+#define __DEINFED_MSG_SCOPE_TRACE__(MSG)		{	std::stringstream s; \
+	s<<MSG;	\
+	scope_logger_helper __scope_logger_helper__(s.str().c_str()); }
 #endif 
 

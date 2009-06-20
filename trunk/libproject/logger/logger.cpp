@@ -5,6 +5,7 @@
 #include "logger.h"
 
 
+char TITLE[MAX_PATH] = {0};
 
 #define DEBUG_LOGGER_FILE ".\\LOG\\DEBUG.LOG"
 #define APP_LOGGER_FILE		".\\LOG\\APP.LOG"
@@ -27,15 +28,30 @@ LOGGER_API void set_logger_level(boost::logging::level::type level) {
 }
 
 LOGGER_API void logger_app(std::stringstream &s) {
-	BOOST_LOG_USE_LOG_IF_LEVEL(g_log_app(), g_log_level(), debug ) <<s.str().c_str();
+	BOOST_LOG_USE_LOG_IF_LEVEL(g_log_app(), g_log_level(), debug ) <<"["<<TITLE<<"] "<<s.str().c_str();
 }
 LOGGER_API void  logger_debug(std::stringstream &s) {
-	BOOST_LOG_USE_LOG_IF_LEVEL(g_log_dbg(), g_log_level(), debug ) <<s.str().c_str();
+	BOOST_LOG_USE_LOG_IF_LEVEL(g_log_dbg(), g_log_level(), debug ) <<"["<<TITLE<<"] "<<s.str().c_str();
+}
+
+const TCHAR* GetFileName(const TCHAR *fullname, TCHAR * ename, const unsigned len) {
+	TCHAR dir[MAX_PATH], driver[MAX_PATH], name[MAX_PATH], ext[MAX_PATH];
+	_tsplitpath(fullname, driver, dir, name, ext);
+	_sntprintf(ename, len, TEXT("%s%s"), name, ext);
+	return ename;
+}
+void init_title() {
+	if (TITLE[0] == '\0') {
+		TCHAR  filepath[MAX_PATH];
+		GetModuleFileName(NULL, filepath, MAX_PATH);
+		GetFileName(filepath, TITLE, MAX_PATH);
+	}
 }
 
 
 void init_debug_logger(const char * filename, bool enable_cout, bool disable_cache)	  { 
 	using namespace boost::logging;
+	init_title();
     g_log_dbg()->writer().add_destination( destination::file(filename, destination::file_settings().do_append(true) ));		
 	g_log_dbg()->writer().add_formatter( formatter::time(" [$yyyy-$MM-$dd $hh:$mm.$ss] ") );		
     g_log_dbg()->writer().add_formatter( formatter::append_newline() );	
@@ -52,6 +68,7 @@ void init_debug_logger(const char * filename, bool enable_cout, bool disable_cac
 
 void init_app_logger(const char * filename, bool enable_cout, bool disable_cache)	  { 
 	using namespace boost::logging;
+	init_title();
     g_log_app()->writer().add_destination( destination::file(filename, destination::file_settings().do_append(true) ));		
 	g_log_app()->writer().add_formatter( formatter::time(" [$yyyy-$MM-$dd $hh:$mm.$ss] ") );		
     g_log_app()->writer().add_formatter( formatter::append_newline() );	
