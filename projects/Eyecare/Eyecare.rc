@@ -23,34 +23,6 @@ LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
 #pragma code_page(936)
 #endif //_WIN32
 
-/////////////////////////////////////////////////////////////////////////////
-//
-// Icon
-//
-
-// Icon with lowest ID value placed first to ensure application icon
-// remains consistent on all systems.
-IDI_EYECARE             ICON                    "Eyecare.ico"
-IDI_SMALL               ICON                    "small.ico"
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// Menu
-//
-
-IDC_EYECARE MENU 
-BEGIN
-    POPUP "文件(&F)"
-    BEGIN
-        MENUITEM "退出(&X)",                    IDM_EXIT
-    END
-    POPUP "帮助(&H)"
-    BEGIN
-        MENUITEM "关于(&A)...",                 IDM_ABOUT
-    END
-END
-
-
 #ifdef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -77,6 +49,46 @@ BEGIN
 END
 
 #endif    // APSTUDIO_INVOKED
+
+#endif    // 中文(中华人民共和国) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// 英语(美国) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDI_EYECARE             ICON                    "Eyecare.ico"
+IDI_SMALL               ICON                    "small.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDC_EYECARE MENU 
+BEGIN
+    POPUP "??(&F)"
+    BEGIN
+        MENUITEM "??(&X)",                      IDM_EXIT
+    END
+    POPUP "??(&H)"
+    BEGIN
+        MENUITEM "??(&A)...",                   IDM_ABOUT
+    END
+END
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -115,6 +127,13 @@ BEGIN
     EDITTEXT        IDC_PASSWORD,89,76,97,14,ES_PASSWORD | ES_AUTOHSCROLL
 END
 
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// RT_MANIFEST
+//
+
+1                       RT_MANIFEST             ".\\res\\Eyecare.exe.manifest"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -172,25 +191,6 @@ BEGIN
     IDC_EYECARE             "EYECARE"
 END
 
-#endif    // 中文(中华人民共和国) resources
-/////////////////////////////////////////////////////////////////////////////
-
-
-/////////////////////////////////////////////////////////////////////////////
-// 英语(美国) resources
-
-#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
-#ifdef _WIN32
-LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
-#pragma code_page(1252)
-#endif //_WIN32
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// RT_MANIFEST
-//
-
-1                       RT_MANIFEST             ".\\res\\Eyecare.exe.manifest"
 #endif    // 英语(美国) resources
 /////////////////////////////////////////////////////////////////////////////
 
