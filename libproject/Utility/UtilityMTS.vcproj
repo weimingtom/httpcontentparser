@@ -2,7 +2,7 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="7.10"
-	Name="Utility"
+	Name="UtilityMT"
 	ProjectGUID="{CD11D86D-3173-4945-8215-7450A0D9CB3C}"
 	Keyword="Win32Proj">
 	<Platforms>
@@ -37,8 +37,7 @@
 				Name="VCMIDLTool"/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy .\Debug\utilityd.lib ..\..\lib
-"/>
+				CommandLine="copy .\Debug\utilityd.lib ..\..\lib\utilitymtd.lib"/>
 			<Tool
 				Name="VCPreBuildEventTool"
 				CommandLine="copy .\fd_set_utility.h ..\..\include\utility
@@ -74,7 +73,7 @@ copy .\syncutility.h ..\..\include\utility
 				Name="VCCLCompilerTool"
 				AdditionalIncludeDirectories="../../include"
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB"
-				RuntimeLibrary="2"
+				RuntimeLibrary="0"
 				UsePrecompiledHeader="3"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="TRUE"
@@ -88,7 +87,7 @@ copy .\syncutility.h ..\..\include\utility
 				Name="VCMIDLTool"/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy .\release\utility.lib ..\..\lib
+				CommandLine="copy .\release\utilityd.lib ..\..\lib\utilitymt.lib
 "/>
 			<Tool
 				Name="VCPreBuildEventTool"
