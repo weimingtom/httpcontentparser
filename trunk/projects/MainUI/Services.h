@@ -9,6 +9,9 @@ public:
 	static void switchChildModel();
 	static LONG getAppStatus();
 	static bool autoSwithOnClose();
+
+	//  «∑Òœ‘ æ◊¢≤·œÓ
+	static bool showRegisterMenuItem();
 };
 
 #endif  // _MAINUI_MODEL_H__

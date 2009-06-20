@@ -9,6 +9,7 @@
 // 当窗口关闭时，是否转换为父亲模式
 bool Services::autoSwithOnClose() {
 	// 设置
+	AutoInitInScale auto_;
 	try {
 		ISnowmanSetting *app = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_SnowmanSetting, NULL, CLSCTX_LOCAL_SERVER, IID_ISnowmanSetting, (LPVOID*)&app);
@@ -91,6 +92,14 @@ bool Services::switchParentModel(LPCTSTR password) {
 	} catch (_com_error & e) {
 		__LERR__( "_com_error exception with description "<< e.Description());
 		return false;
+	}
+}
+
+bool Services::showRegisterMenuItem() {
+	if (getAppStatus() == SNOWMAN_STATUS_REGISTERED) {
+		return false;
+	} else {
+		return true;
 	}
 }
 
