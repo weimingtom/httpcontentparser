@@ -2,8 +2,8 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="7.10"
-	Name="UtilityMT"
-	ProjectGUID="{CD11D86D-3173-4945-8215-7450A0D9CB3C}"
+	Name="AppUtilityMT"
+	ProjectGUID="{850E07E5-8AEA-42C9-9537-9A4DEF89E925}"
 	Keyword="Win32Proj">
 	<Platforms>
 		<Platform
@@ -12,18 +12,19 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="Debug"
-			IntermediateDirectory="Debug"
+			OutputDirectory="DebugMT"
+			IntermediateDirectory="DebugMT"
 			ConfigurationType="4"
+			UseOfMFC="0"
 			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="../../include"
+				AdditionalIncludeDirectories="..\..\include"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
 				MinimalRebuild="TRUE"
 				BasicRuntimeChecks="3"
-				RuntimeLibrary="3"
+				RuntimeLibrary="1"
 				UsePrecompiledHeader="3"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="TRUE"
@@ -32,23 +33,16 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="$(OutDir)/Utilityd.lib"/>
+				OutputFile="$(OutDir)/apputility.lib"/>
 			<Tool
 				Name="VCMIDLTool"/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy .\Debug\utilityd.lib ..\..\lib\utilitymtd.lib"/>
+				CommandLine="copy .\debugMT\AppUtility.lib ..\..\lib\apputilityMTd.lib
+"/>
 			<Tool
 				Name="VCPreBuildEventTool"
-				CommandLine="copy .\fd_set_utility.h ..\..\include\utility
-copy .\httppacket.h ..\..\include\utility
-copy .\dns.h ..\..\include\utility
-copy .\httprequestpacket.h ..\..\include\utility
-copy .\strutility.h ..\..\include\utility
-copy .\timeutility.h ..\..\include\utility
-copy .\SeachPacket.h ..\..\include\utility
-copy .\replacepacket.h ..\..\include\utility
-copy .\syncutility.h ..\..\include\utility
+				CommandLine="
 "/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
@@ -65,13 +59,14 @@ copy .\syncutility.h ..\..\include\utility
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="Release"
-			IntermediateDirectory="Release"
+			OutputDirectory="ReleaseMT"
+			IntermediateDirectory="ReleaseMT"
 			ConfigurationType="4"
+			UseOfMFC="0"
 			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../../include"
+				AdditionalIncludeDirectories="..\..\include"
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB"
 				RuntimeLibrary="0"
 				UsePrecompiledHeader="3"
@@ -82,24 +77,19 @@ copy .\syncutility.h ..\..\include\utility
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="$(OutDir)/Utility.lib"/>
+				OutputFile="$(OutDir)/apputility.lib"/>
 			<Tool
 				Name="VCMIDLTool"/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy .\release\utilityd.lib ..\..\lib\utilitymt.lib
+				CommandLine="
+copy .\releaseMT\Apputility.lib ..\..\lib\ApputilityMT.lib
 "/>
 			<Tool
 				Name="VCPreBuildEventTool"
-				CommandLine="copy .\fd_set_utility.h ..\..\include\utility
-copy .\httppacket.h ..\..\include\utility
-copy .\dns.h ..\..\include\utility
-copy .\httprequestpacket.h ..\..\include\utility
-copy .\strutility.h ..\..\include\utility
-copy .\timeutility.h ..\..\include\utility
-copy .\SeachPacket.h ..\..\include\utility
-copy .\replacepacket.h ..\..\include\utility
-copy .\syncutility.h ..\..\include\utility
+				CommandLine="copy .\apputility.h ..\..\include
+copy .\AppInstallValidate.h ..\..\include
+copy .\Fileinfo.h ..\..\include
 "/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
@@ -123,7 +113,7 @@ copy .\syncutility.h ..\..\include\utility
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
 			<File
-				RelativePath=".\stdafx.cpp">
+				RelativePath="..\Apputility\stdafx.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
 					<Tool
@@ -143,89 +133,67 @@ copy .\syncutility.h ..\..\include\utility
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
 			<File
-				RelativePath=".\stdafx.h">
+				RelativePath="..\Apputility\stdafx.h">
 			</File>
 		</Filter>
 		<Filter
-			Name="DNS"
+			Name="资源文件"
+			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx"
+			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}">
+		</Filter>
+		<Filter
+			Name="install"
 			Filter="">
 			<File
-				RelativePath=".\dns.cpp">
+				RelativePath="..\Apputility\XInstall.cpp">
 			</File>
 			<File
-				RelativePath=".\dns.h">
+				RelativePath="..\Apputility\XInstall.h">
 			</File>
 		</Filter>
 		<Filter
-			Name="HTTP"
+			Name="registry"
 			Filter="">
 			<File
-				RelativePath=".\fd_set_utility.cpp">
+				RelativePath="..\Apputility\AppInstallValidate.cpp">
 			</File>
 			<File
-				RelativePath=".\fd_set_utility.h">
-			</File>
-			<File
-				RelativePath=".\HttpDataExtractor.cpp">
-			</File>
-			<File
-				RelativePath=".\HttpDataExtractor.h">
-			</File>
-			<File
-				RelativePath=".\HttpPacket.cpp">
-			</File>
-			<File
-				RelativePath=".\HttpPacket.h">
-			</File>
-			<File
-				RelativePath=".\HTTPRequestPacket.cpp">
-			</File>
-			<File
-				RelativePath=".\HTTPRequestPacket.h">
-			</File>
-			<File
-				RelativePath=".\ReplacePacket.cpp">
-			</File>
-			<File
-				RelativePath=".\ReplacePacket.h">
-			</File>
-			<File
-				RelativePath=".\SeachPacket.cpp">
-			</File>
-			<File
-				RelativePath=".\SeachPacket.h">
+				RelativePath="..\Apputility\AppInstallValidate.h">
 			</File>
 		</Filter>
 		<Filter
-			Name="strutility"
+			Name="filesystem"
 			Filter="">
 			<File
-				RelativePath=".\strutility.cpp">
+				RelativePath="..\Apputility\FileSystemValidator.cpp">
 			</File>
 			<File
-				RelativePath=".\strutility.h">
+				RelativePath="..\Apputility\FileSystemValidator.h">
 			</File>
 		</Filter>
 		<Filter
-			Name="timeutility"
+			Name="apputility"
 			Filter="">
 			<File
-				RelativePath=".\timeutility.cpp">
+				RelativePath="..\Apputility\apputility.cpp">
 			</File>
 			<File
-				RelativePath=".\timeutility.h">
+				RelativePath="..\Apputility\apputility.h">
 			</File>
 		</Filter>
 		<Filter
-			Name="SyncUtility"
+			Name="FileInfo"
 			Filter="">
 			<File
-				RelativePath=".\syncutility.cpp">
+				RelativePath="..\Apputility\FileInfo.cpp">
 			</File>
 			<File
-				RelativePath=".\syncutility.h">
+				RelativePath="..\Apputility\FileInfo.h">
 			</File>
 		</Filter>
+		<File
+			RelativePath="..\Apputility\ReadMe.txt">
+		</File>
 	</Files>
 	<Globals>
 	</Globals>
