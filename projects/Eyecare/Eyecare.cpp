@@ -13,6 +13,7 @@
 #include <app_constants.h>
 #include <winlockdll.h>
 #include <logger\logger.h>
+#include <logger\loggerlevel.h>
 
 #define MAX_LOADSTRING 100
 #define WM_MY_SHOWDIALOG (WM_USER + 0x0001)
@@ -63,6 +64,8 @@ HHOOK hhkLowLevelKybd = NULL;
 // 锁定电脑
 // 主要指禁用 ATL+CTRL+DEL, ATL+ESC, SWITCH, WIN...
 void LockScreen() {
+	__AUTO_FUNCTION_SCOPE_TRACE__;
+
 	hhkLowLevelKybd  = SetWindowsHookEx(WH_KEYBOARD_LL, LowLevelKeyboardProc, hInst, 0);
 
 	CtrlAltDel_Enable_Disable(FALSE);
@@ -70,6 +73,8 @@ void LockScreen() {
 }
 
 void UnlockScreen() {
+	__AUTO_FUNCTION_SCOPE_TRACE__;
+
 	assert (NULL != hhkLowLevelKybd);
 	UnhookWindowsHookEx(hhkLowLevelKybd);
 	hhkLowLevelKybd = NULL;
@@ -81,6 +86,8 @@ void UnlockScreen() {
 };
 
 BOOL IsRunInEnterModel() {
+	__AUTO_FUNCTION_SCOPE_TRACE__;
+
 	try {
 		IEyecare *pEyeCare = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_Eyecare, NULL, CLSCTX_ALL, IID_IEyecare, (LPVOID*)&pEyeCare);
@@ -98,6 +105,8 @@ BOOL IsRunInEnterModel() {
 	}
 }
 BOOL IsRuninParentModel() {
+	__AUTO_FUNCTION_SCOPE_TRACE__;
+
 	try {
 		VARIANT_BOOL parent_mode = VARIANT_FALSE;
 		ISnowmanSetting *app = NULL;
@@ -114,6 +123,8 @@ BOOL IsRuninParentModel() {
 	}
 }
 BOOL TRYEndEyecare(LPCTSTR password) {
+	__AUTO_FUNCTION_SCOPE_TRACE__;
+
 	try {
 		VARIANT_BOOL succeeded = FALSE;
 		IEyecare *eyecare = NULL;
@@ -137,6 +148,12 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
                      LPTSTR    lpCmdLine,
                      int       nCmdShow)
 {
+	init_debug_logger(".\\log\\dEyecare.log");
+	init_app_logger(".\\log\\Eyecare.log");
+	set_logger_level(LOGGER_LEVEL);
+
+	__AUTO_FUNCTION_SCOPE_TRACE__;
+
 	if (_tcscmp(lpCmdLine, LAUNCH_PARAM) != 0) {
 		__LDBG__("call with cmdline");
 		return 0;
@@ -195,6 +212,8 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 
 ATOM MyRegisterClass(HINSTANCE hInstance)
 {
+	__AUTO_FUNCTION_SCOPE_TRACE__;
+
 	WNDCLASSEX wcex;
 
 	wcex.cbSize = sizeof(WNDCLASSEX);
@@ -216,6 +235,8 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 
 BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
+	__AUTO_FUNCTION_SCOPE_TRACE__;
+
    HWND hWnd;
 
    hInst = hInstance; // Store instance handle in our global variable
@@ -238,6 +259,8 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 
 LRESULT CALLBACK InputPasswordDlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
+	__DEINFED_MSG_SCOPE_TRACE__("InputPasswordDlg[ " <<std::ios::hex<<(unsigned int)message<<"]");
+
 	try {
 		TCHAR szBuffer[MAX_PATH];
 		LONG state;
@@ -245,6 +268,7 @@ LRESULT CALLBACK InputPasswordDlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM
 		switch (message)
 		{
 		case WM_TIMER:
+			__LTRC__("WM_TIMER");
 			try {
 				_tcscpy(szBuffer, "Login System");
 
@@ -271,9 +295,11 @@ LRESULT CALLBACK InputPasswordDlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM
 			}
 			break;
 		case WM_KILLFOCUS:
+			__LTRC__("WM_KILLFOCUS");
 			SetFocus(hDlg);
 			break;
 		case WM_INITDIALOG:
+			__LTRC__("WM_INITDIALOG");
 			try {
 				_tcscpy(szBuffer, "Login System");
 				pEyeCare->getTimeLeft(&seconds);
@@ -289,6 +315,7 @@ LRESULT CALLBACK InputPasswordDlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM
 			return TRUE;
 		// 验证代码
 		case WM_COMMAND:
+			__LTRC__("WM_COMMAND");
 			GetDlgItemText(hDlg, IDC_PASSWORD, szBuffer, MAX_PATH);
 			if (LOWORD(wParam) == IDOK) {
 				if (TRYEndEyecare(szBuffer)) {
@@ -300,6 +327,7 @@ LRESULT CALLBACK InputPasswordDlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM
 			}
 			break;
 		case WM_DESTROY:
+			__LTRC__("WM_DESTROY");
 			KillTimer(hDlg, ID_TIMER);
 			break;
 		}
@@ -311,17 +339,25 @@ LRESULT CALLBACK InputPasswordDlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
+	__DEINFED_MSG_SCOPE_TRACE__("WndProc MSG[ " <<std::ios::hex<<(unsigned int)message<<"]");
+
 	static bool bShowDialog = false;
 	switch (message)
 	{
 	case WM_CREATE:
+		__LTRC__("WM_CREATE");
 		break;
 	case WM_SIZE:
+		__LTRC__("WM_SIZE");
 		PostMessage(hWnd,WM_MY_SHOWDIALOG , 0, 0);
 		break;
 	case WM_MY_SHOWDIALOG:
-		if (bShowDialog)
+		__LTRC__("WM_MY_SHOWDIALOG");
+
+		if (bShowDialog) {
+			__LTRC__("Dialog has been show");
 			break;
+		}
 
 		bShowDialog  = true;
 
@@ -333,6 +369,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		UnlockScreen();
 		break;
 	case WM_DESTROY:
+		__LTRC__("WM_DESTROY");
 		PostQuitMessage(0);
 		break;
 	default:
@@ -340,22 +377,3 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	}
 	return 0;
 }
-
-namespace {
-class LoggerInit {
-public:
-	LoggerInit() {
-		using namespace boost::logging;
-#ifdef DEBUG
-	init_debug_logger(".\\log\\dEyecare.log", false, true);
-	init_app_logger(".\\log\\Eyecare.log", false, true);
-	set_logger_level(level::debug);
-#else
-	init_app_logger(".\\log\\Eyecare.log");
-	set_logger_level(level::warning);
-#endif
-	}
-};
-};
-LoggerInit g_logger_init;
-

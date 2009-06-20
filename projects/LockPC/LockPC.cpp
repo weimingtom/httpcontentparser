@@ -12,6 +12,10 @@
 #include <app_constants.h>
 #include <winlockdll.h>
 #include <logger\logger.h>
+#include <logger\loggerlevel.h>
+#include <iostream>
+#include <ios>
+#include <sstream>
 
 #define MAX_LOADSTRING 100
 #define WM_MY_SHOWDIALOG (WM_USER + 0x0001)
@@ -31,6 +35,8 @@ namespace {
 
 LRESULT CALLBACK LowLevelKeyboardProc(int nCode, WPARAM wParam, LPARAM lParam) 
 {
+	__AUTO_FUNCTION_SCOPE_TRACE__;
+
 	BOOL fEatKeystroke = FALSE;
 	if (nCode == HC_ACTION) {
 		switch (wParam) {
@@ -57,6 +63,8 @@ HHOOK hhkLowLevelKybd = NULL;
 // 锁定电脑
 // 主要指禁用 ATL+CTRL+DEL, ATL+ESC, SWITCH, WIN...
 void LockScreen() {
+	__AUTO_FUNCTION_SCOPE_TRACE__;
+
 	hhkLowLevelKybd  = SetWindowsHookEx(WH_KEYBOARD_LL, LowLevelKeyboardProc, hInst, 0);
 
 	CtrlAltDel_Enable_Disable(FALSE);
@@ -64,6 +72,8 @@ void LockScreen() {
 }
 
 void UnlockScreen() {
+	__AUTO_FUNCTION_SCOPE_TRACE__;
+
 	assert (NULL != hhkLowLevelKybd);
 	UnhookWindowsHookEx(hhkLowLevelKybd);
 	hhkLowLevelKybd = NULL;
@@ -76,6 +86,7 @@ void UnlockScreen() {
 
 BOOL ValidatePassword(LPCTSTR password) {
 	try {
+		__AUTO_FUNCTION_SCOPE_TRACE__;
 		VARIANT_BOOL succeeded = FALSE;
 		IAuthorize *authorize = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_Authorize, NULL, CLSCTX_LOCAL_SERVER, IID_IAuthorize, (LPVOID*)&authorize);
@@ -98,8 +109,16 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
                      LPTSTR    lpCmdLine,
                      int       nCmdShow)
 {
+	using namespace boost::logging;
+
+	init_app_logger(".\\log\\dLockPC.log");
+	init_debug_logger(".\\log\\dLockPC.log", false, true);
+	set_logger_level(LOGGER_LEVEL);
+
+	__AUTO_FUNCTION_SCOPE_TRACE__;
+
 	if (_tcscmp(lpCmdLine, LAUNCH_PARAM) != 0) {
-		__LDBG__("call with cmdline");
+		__LDBG__("[LockPC ]  call with cmdline");
 		return 0;
 	}
 
@@ -137,6 +156,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 
 ATOM MyRegisterClass(HINSTANCE hInstance)
 {
+	__AUTO_FUNCTION_SCOPE_TRACE__;
 	WNDCLASSEX wcex;
 
 	wcex.cbSize = sizeof(WNDCLASSEX);
@@ -158,6 +178,7 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 
 BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
+	__AUTO_FUNCTION_SCOPE_TRACE__;
    HWND hWnd;
 
    hInst = hInstance; // Store instance handle in our global variable
@@ -180,6 +201,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 
 LRESULT CALLBACK InputPasswordDlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
+	__DEINFED_MSG_SCOPE_TRACE__("Dialog Proc MSG[ " <<std::ios::hex<<message<<"]");
 	try {
 		TCHAR szBuffer[MAX_PATH];
 
@@ -187,8 +209,10 @@ LRESULT CALLBACK InputPasswordDlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM
 		{
 		case WM_KILLFOCUS:
 			SetFocus(hDlg);
+			__LTRC__("WM_KILLFOCUS");
 			break;
 		case WM_INITDIALOG:
+			__LTRC__("WM_KILLFOCUS");
 			return TRUE;
 		// 验证代码
 		case WM_COMMAND:
@@ -196,13 +220,16 @@ LRESULT CALLBACK InputPasswordDlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM
 			if (LOWORD(wParam) == IDOK) {
 				if (ValidatePassword(szBuffer)) {
 					EndDialog(hDlg, LOWORD(wParam));
+					__LTRC__("Check password successful");
 					return TRUE;
 				} else {
 					MessageBox(hDlg, "Wrong Password!", "Error", MB_OK | MB_ICONERROR);
+					__LTRC__("Check password successful");
 				}
 			}
 			break;
 		case WM_DESTROY:
+			__LTRC__("WM_DESTROY");
 			break;
 		}
 		return FALSE;
@@ -214,20 +241,23 @@ LRESULT CALLBACK InputPasswordDlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
+	__DEINFED_MSG_SCOPE_TRACE__("WndProc MSG[ " <<std::ios::hex<<(unsigned int)message<<"]");
 	static bool bShowDialog = false;
 	switch (message)
 	{
 	case WM_CREATE:
+		__LTRC__("WM_CREATE");
 		break;
 	case WM_SIZE:
+		__LTRC__("WM_SIZE");
 		PostMessage(hWnd,WM_MY_SHOWDIALOG , 0, 0);
 		break;
 	case WM_MY_SHOWDIALOG:
+		__LTRC__("WM_MY_SHOWDIALOG");
 		if (bShowDialog)
 			break;
 
 		bShowDialog  = true;
-
 		LockScreen();
 
 		DialogBox(hInst, (LPCTSTR)IDD_PASSWORD, hWnd, (DLGPROC)InputPasswordDlg);
@@ -236,6 +266,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		UnlockScreen();
 		break;
 	case WM_DESTROY:
+		__LTRC__("WM_MY_SHOWDIALOG");
 		PostQuitMessage(0);
 		break;
 	default:
@@ -243,21 +274,3 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	}
 	return 0;
 }
-
-namespace {
-class LoggerInit {
-public:
-	LoggerInit() {
-		using namespace boost::logging;
-#ifdef DEBUG
-	init_debug_logger(".\\log\\dLockPC.log", false, true);
-	init_app_logger(".\\log\\LockPC.log", false, true);
-	set_logger_level(level::debug);
-#else
-	init_app_logger(".\\log\\LockPC.log");
-	set_logger_level(level::warning);
-#endif
-	}
-};
-};
-LoggerInit g_logger_init;
