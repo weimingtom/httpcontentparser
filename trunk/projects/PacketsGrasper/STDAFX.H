@@ -9,10 +9,10 @@
 
  
 #ifdef _DEBUG
-#	pragma comment(lib, "utilityd.lib")
+#	pragma comment(lib, "utilitymtd.lib")
 #	pragma comment(lib, "selectiod.lib")
 #else
-#	pragma comment(lib, "utility.lib")
+#	pragma comment(lib, "utilitymt.lib")
 #	pragma comment(lib, "selectio.lib")
 #endif
 

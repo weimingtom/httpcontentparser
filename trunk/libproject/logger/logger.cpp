@@ -18,10 +18,6 @@ BOOST_DECLARE_LOG(g_log_app, log_type)
 BOOST_DECLARE_LOG(g_log_dbg, log_type)
 
 
-#define __LDBG__ BOOST_LOG_USE_LOG_IF_LEVEL(g_log_dbg(), g_log_level(), debug )
-#define __LAPP__ BOOST_LOG_USE_LOG_IF_LEVEL(g_log_app(), g_log_level(), info )
-
-
 BOOST_DEFINE_LOG_FILTER(g_log_level, boost::logging::level::holder ) 
 BOOST_DEFINE_LOG(g_log_app, log_type )
 BOOST_DEFINE_LOG(g_log_dbg, log_type )

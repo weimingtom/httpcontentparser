@@ -14,11 +14,9 @@
 #include <com\comutility.h>
 
 #ifdef _DEBUG
-#	pragma comment(lib, "tinyxmld.lib")
-#	pragma comment(lib, "utilityd.lib")
+#	pragma comment(lib, "utilitymtd.lib")
 #else
-#	pragma comment(lib, "tinyxml.lib")
-#	pragma comment(lib, "utility.lib")
+#	pragma comment(lib, "utilitymt.lib")
 #endif
 
 // TODO: 在此处引用程序要求的附加头文件
