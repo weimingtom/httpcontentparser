@@ -86,11 +86,7 @@
 copy .\releaseMT\Apputility.lib ..\..\lib\ApputilityMT.lib
 "/>
 			<Tool
-				Name="VCPreBuildEventTool"
-				CommandLine="copy .\apputility.h ..\..\include
-copy .\AppInstallValidate.h ..\..\include
-copy .\Fileinfo.h ..\..\include
-"/>
+				Name="VCPreBuildEventTool"/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
 			<Tool

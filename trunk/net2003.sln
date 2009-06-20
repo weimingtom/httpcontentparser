@@ -35,6 +35,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MainUI", "projects\MainUI\M
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Repair", "projects\Repair\Repair2003.vcproj", "{EFEF1557-82DB-4A74-A5C4-A215AE1FE1C9}"
 	ProjectSection(ProjectDependencies) = postProject
+		{950E97E5-8DCB-44E9-9237-9A4DEF89E925} = {950E97E5-8DCB-44E9-9237-9A4DEF89E925}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PacketsGrasper", "projects\PacketsGrasper\PacketsGrasper2003.vcproj", "{AC87FE40-8934-49B5-8353-942817AED586}"
@@ -46,6 +47,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PacketsGrasper", "projects\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LockPC", "projects\LockPC\LockPC.vcproj", "{E4AA2F92-28F1-4568-A04A-9212C435BDAB}"
 	ProjectSection(ProjectDependencies) = postProject
+		{950E97E5-8DCB-44E9-9237-9A4DEF89E925} = {950E97E5-8DCB-44E9-9237-9A4DEF89E925}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WinLockDLL", "libproject\WinLock\WinLockDLL.vcproj", "{D7EE016E-A747-4BAA-A5F0-3034C18D5DD2}"
