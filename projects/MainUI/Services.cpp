@@ -6,6 +6,32 @@
 #include <softwareStatus.h>
 #include <logger\logger.h>
 
+// 当窗口关闭时，是否转换为父亲模式
+bool Services::autoSwithOnClose() {
+	// 设置
+	try {
+		ISnowmanSetting *app = NULL;
+		HRESULT hr = CoCreateInstance(CLSID_SnowmanSetting, NULL, CLSCTX_LOCAL_SERVER, IID_ISnowmanSetting, (LPVOID*)&app);
+		if (FAILED(hr)) {
+			__LERR__("failed on create snowmansetting with HRESULT value : "<<hr);
+			return false;
+		}
+		
+		// 是否需要切换到模式
+		VARIANT_BOOL val;
+		hr = app->get_autoSwitchOnClose(&val);
+		if (FAILED(hr)) {
+			__LERR__("failed call function  SnowmanSetting get_autoSwitchOnClose () with HRESULT value : "<<hr);
+			return false;
+		} else {
+			return convert(VARIANT_TRUE);
+		}
+
+	} catch (...) {
+		__LERR__( "CATCH(...)");
+		return false;
+	}
+}
 LONG Services::getAppStatus() {
 	AutoInitInScale auto_;
 	try {
