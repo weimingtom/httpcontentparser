@@ -96,11 +96,7 @@ bool Services::switchParentModel(LPCTSTR password) {
 }
 
 bool Services::showRegisterMenuItem() {
-	if (getAppStatus() == SNOWMAN_STATUS_REGISTERED) {
-		return false;
-	} else {
-		return true;
-	}
+	return  ! registered();
 }
 
 void Services::switchChildModel() {
