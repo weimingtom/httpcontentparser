@@ -15,6 +15,8 @@
 #include <logger\logger.h>
 #include <logger\loggerlevel.h>
 
+#define COM_EYECARE_MUTEX		TEXT("46EAF855-A09E-4139-877B-5D33B8B22C06")
+
 #pragma data_seg("Shared") 
 int volatile eyecare_initialize =0; 
 #pragma data_seg() 
@@ -146,23 +148,42 @@ BOOL TRYEndEyecare(LPCTSTR password) {
 		return FALSE;
 	}
 }
+
+// Æô¶¯»¥³â´úÂë
+bool exit_directly() {
+	HANDLE hMutex = CreateMutex(NULL, FALSE, COM_EYECARE_MUTEX);
+	if (hMutex == NULL) {
+		__LFAT__("CreateMutex FAILED with ERRNO : " << GetLastError());
+	}
+
+	WaitForSingleObject(hMutex, INFINITE);
+
+	if (eyecare_initialize != 0) {
+		CloseHandle(hMutex);
+		return true;
+	}	else {
+		eyecare_initialize++;
+		CloseHandle(hMutex);
+		return false;
+	}
+}
  
 
 int APIENTRY _tWinMain(HINSTANCE hInstance,
                      HINSTANCE hPrevInstance,
                      LPTSTR    lpCmdLine,
-                     int       nCmdShow)
+					 int       nCmdShow)
 {
-	//======================
-	// »¥³â´úÂë
-	if (eyecare_initialize != 0) {
-		return -1;
-	}
-	eyecare_initialize++;
-
 	init_debug_logger(".\\log\\dEyecare.log");
 	init_app_logger(".\\log\\Eyecare.log");
 	set_logger_level(LOGGER_LEVEL);
+
+
+	if (exit_directly()) {
+		return -1;
+	}
+
+
 
 	__AUTO_FUNCTION_SCOPE_TRACE__;
 
