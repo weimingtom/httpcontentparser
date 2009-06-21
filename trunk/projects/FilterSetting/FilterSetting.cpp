@@ -19,10 +19,19 @@
 #include <string>
 #include <time.h>
 #include <logger\logger.h>
+#include <logger\loggerlevel.h>
 #include <DebugOutput.h>
 
 #define FILTERSETTING_LOGGER_FILE		".\\log\\service.log"
 #define FILTERSETTING_DEBUG_FILE		".\\log\\dservice.log"
+
+void initlogger() {
+	using namespace boost::logging;
+	init_debug_logger(".\\log\\dEyecare.log");
+	init_app_logger(".\\log\\Eyecare.log");
+	set_logger_level(LOGGER_LEVEL);
+}
+
 
 
 class CFilterSettingModule : public CAtlServiceModuleT< CFilterSettingModule, IDS_SERVICENAME >
@@ -80,6 +89,7 @@ extern "C" int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/
 		return 0;
 	}
 
+	initlogger();
 
 	g_hInstance = hInstance;
 	refreshAppstatus();
@@ -115,21 +125,3 @@ void CFilterSettingModule::ServiceMain(DWORD dwArgc, LPTSTR* lpszArgv)
 {
 	CAtlServiceModuleT<CFilterSettingModule,IDS_SERVICENAME>::ServiceMain(dwArgc, lpszArgv);
 }
-
-namespace {
-class LoggerInit {
-public:
-	LoggerInit() {
-		 using namespace boost::logging;
-#ifdef DEBUG
-	init_debug_logger(FILTERSETTING_DEBUG_FILE, false, true);
-	init_app_logger(FILTERSETTING_LOGGER_FILE, false, true);
-	set_logger_level(level::debug);
-#else
-	init_app_logger(FILTERSETTING_LOGGER_FILE);
-	set_logger_level(level::warning);
-#endif
-	}
-};
-LoggerInit g_logger_init;
-};
