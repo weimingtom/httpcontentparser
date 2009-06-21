@@ -162,4 +162,9 @@ private:
 private:
 	void SwitchOnClose();
 	void ShowRegTipDlg();
+
+	// 注意m_nHistoryMenuItem在默认情况下为3，
+	// 当用户注册以后，会变成2
+	int getHistoryMenuPos() const { return m_nHistoryMenuItem;}
+	int m_nHistoryMenuItem;
 };
