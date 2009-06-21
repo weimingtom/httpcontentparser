@@ -695,16 +695,6 @@
 				RelativePath=".\HyperLink.h">
 			</File>
 		</Filter>
-		<Filter
-			Name="comfunc"
-			Filter="">
-			<File
-				RelativePath=".\comfunc.cpp">
-			</File>
-			<File
-				RelativePath=".\confunc.h">
-			</File>
-		</Filter>
 		<File
 			RelativePath=".\MainUI.exe.manifest">
 		</File>

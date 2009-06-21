@@ -80,8 +80,10 @@
 #define IDS_REGISTER_OVER_TIP           148
 #define IDD_DIALOG1                     149
 #define IDD_DLG_DNS_WHITELIST           149
+#define IDS_REGISTER_WRONGSN            149
 #define IDD_CHANGE_PASSWORD             150
 #define IDD_POPUP_CHANGE_PASSWORD       150
+#define IDS_REGISTER_RIGHT              150
 #define IDD_DLG_CHKPASSWORD             151
 #define IDD_POPDLG_CHKPASSWORD          151
 #define IDD_TOOLS                       152
@@ -293,9 +295,8 @@
 #define IDC_OUR_MAILLIST                1121
 #define ID_BTN_BESN                     1123
 #define ID_BTN_BUYNOW                   1124
-#define ID_BTN_                         1125
-#define ID_BTN_REGNOW                   1126
 #define IDC_EDIT1                       4011
+#define IDC_EDIT_REGSN                  4011
 #define IDC_EDIT2                       4012
 #define IDC_EDT_RETRY                   4013
 #define IDC_WND_HELLO                   5000
