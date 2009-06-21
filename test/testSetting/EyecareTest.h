@@ -7,6 +7,7 @@
 class EyecareTest : public CPPUNIT_NS::TestFixture {
 public:
 	CPPUNIT_TEST_SUITE(EyecareTest);
+	CPPUNIT_TEST(TestMultiModelSwitch);
 	CPPUNIT_TEST(TestAfterModelSwitch);
 	CPPUNIT_TEST(TestSetLeft);
 	CPPUNIT_TEST(TestTimeSetting);
@@ -20,6 +21,7 @@ private:
 	void TestSwitchState();
 	void TestTimeSetting();
 	void TestSetLeft();
+	void TestMultiModelSwitch();
 	void TestAfterModelSwitch();
 public:
 	EyecareTest(void);

@@ -15,6 +15,7 @@
 #include ".\hotkeysettingtest.h"
 #include ".\appcontroltest.h"
 
+CPPUNIT_TEST_SUITE_REGISTRATION(EyecareTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(DNSSettingTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(AppControlTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(CalculargraphTest);
@@ -25,7 +26,6 @@ CPPUNIT_TEST_SUITE_REGISTRATION(OnlineHourSettingTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(SearchRuleTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(ConfigReaderTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(ContentSettingTest);
-CPPUNIT_TEST_SUITE_REGISTRATION(EyecareTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(AuthorizeTest);
 
 int _tmain(int argc, _TCHAR* argv[]) {
