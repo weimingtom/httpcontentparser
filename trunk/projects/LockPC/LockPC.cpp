@@ -103,6 +103,31 @@ BOOL ValidatePassword(LPCTSTR password) {
 	}
 }
  
+// 启动互斥代码
+#define COM_LOCKPC_MUTEX			TEXT("5DB981F7-74B5-4803-80D5-CE472FA2B7BC")
+
+#pragma data_seg("Shared") 
+int volatile lockpc_initialize =0; 
+#pragma data_seg() 
+#pragma comment(linker,"/section:Shared,RWS") 
+
+bool exit_directly() {
+	HANDLE hMutex = CreateMutex(NULL, FALSE, COM_LOCKPC_MUTEX);
+	if (hMutex == NULL) {
+		__LFAT__("CreateMutex FAILED with ERRNO : " << GetLastError());
+	}
+
+	WaitForSingleObject(hMutex, INFINITE);
+
+	if (lockpc_initialize != 0) {
+		CloseHandle(hMutex);
+		return true;
+	}	else {
+		lockpc_initialize++;
+		CloseHandle(hMutex);
+		return false;
+	}
+}
 
 int APIENTRY _tWinMain(HINSTANCE hInstance,
                      HINSTANCE hPrevInstance,
@@ -122,10 +147,8 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 		return 0;
 	}
 
-	// 首先确定应用程序是否已经打开，
-	HWND hOld = GetEyecareApp();
-	if (NULL != hOld) {
-		return 0;
+	if (exit_directly()) {
+		return -1;
 	}
 
 	CoInitialize(NULL);
