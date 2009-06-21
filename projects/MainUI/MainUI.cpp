@@ -14,6 +14,7 @@
 #include <softwareStatus.h>
 #include ".\share.h"
 #include <logger\logger.h>
+#include <logger\loggerlevel.h>
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -35,7 +36,16 @@ extern bool g_parentModel = false;
 // 初始化COM
 namespace {
 AutoInitInScale g_auto_com_init;
+
+void initlogger() {
+	using namespace boost::logging;
+	init_debug_logger(".\\log\\dEyecare.log");
+	init_app_logger(".\\log\\Eyecare.log");
+	set_logger_level(LOGGER_LEVEL);
+}
+
 };
+
 
 
 // CMainUIApp
@@ -68,6 +78,8 @@ BOOL CMainUIApp::InitInstance() {
 			return 0;
 		}
 	}
+
+	initlogger();
 
 	// 获取应用程序状态
 	LONG app_status = SNOWMAN_STATUS_TRIAL;
@@ -144,21 +156,3 @@ BOOL CMainUIApp::Initialize(void)
 	g_parentModel = Services::isParentModel();
 	return TRUE;
 }
-
-namespace {
-class LoggerInit {
-public:
-	LoggerInit() {
-		using namespace boost::logging;
-#ifdef DEBUG
-	init_debug_logger(WEBSNOW_DEBUG_FILE, false, true);
-	init_app_logger(WEBSNOW_LOGGER_FILE, false, true);
-	set_logger_level(level::debug);
-#else
-	init_app_logger(WEBSNOW_LOGGER_FILE);
-	set_logger_level(level::warning);
-#endif
-	}
-};
-LoggerInit g_logger_init;
-};
