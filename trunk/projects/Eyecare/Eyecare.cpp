@@ -15,6 +15,11 @@
 #include <logger\logger.h>
 #include <logger\loggerlevel.h>
 
+#pragma data_seg("Shared") 
+int volatile eyecare_initialize =0; 
+#pragma data_seg() 
+#pragma comment(linker,"/section:Shared,RWS") 
+
 #define MAX_LOADSTRING 100
 #define WM_MY_SHOWDIALOG (WM_USER + 0x0001)
 
@@ -148,6 +153,13 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
                      LPTSTR    lpCmdLine,
                      int       nCmdShow)
 {
+	//======================
+	// 互斥代码
+	if (eyecare_initialize != 0) {
+		return -1;
+	}
+	eyecare_initialize++;
+
 	init_debug_logger(".\\log\\dEyecare.log");
 	init_app_logger(".\\log\\Eyecare.log");
 	set_logger_level(LOGGER_LEVEL);
@@ -158,13 +170,6 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 		__LDBG__("call with cmdline");
 		return 0;
 	}
-
-	// 首先确定应用程序是否已经打开，
-	HWND hOld = GetEyecareApp();
-	if (NULL != hOld) {
-		return 0;
-	}
-	
 
 	CoInitialize(NULL);
 	UNREFERENCED_PARAMETER(hPrevInstance);
