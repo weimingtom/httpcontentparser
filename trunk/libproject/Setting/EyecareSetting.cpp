@@ -79,10 +79,6 @@ int EyecareSetting::getRemainTime() {
 
 // 获取当前状态
 int EyecareSetting::getState() const {
-	// 处于parent 模式时，永远处于enter mode
-	if (SettingItem::getModel() == SettingItem::MODE_PARENT) {
-		return EyecareSetting::ENTERT_TIME;
-	}
 	return calculagraph_.getCurrentState();
 }
 
