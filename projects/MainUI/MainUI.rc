@@ -526,10 +526,10 @@ FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
     DEFPUSHBUTTON   "OK",IDOK,72,74,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,131,74,50,14
-    EDITTEXT        IDC_EDIT1,65,49,116,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_REGSN,65,49,116,14,ES_AUTOHSCROLL
     LTEXT           "Serial Number:",IDC_STATIC,9,53,49,8
     LTEXT           "Version 1.0.1213.0",IDC_STATIC,112,14,61,13
-    ICON            IDI_ICO_SMALL_LOGO,IDC_STATIC,15,15,21,20
+    ICON            IDI_ICO_SMALL_LOGO,IDC_STATIC,15,15,20,20
     LTEXT           "Web Snowman",IDC_STATIC,54,14,48,16
     LTEXT           "Copyright (C) 2009",IDC_STATIC,111,29,70,13
 END
@@ -867,9 +867,9 @@ BEGIN
         BEGIN
             VALUE "FileDescription", "Control Centrol of Web Snow"
             VALUE "FileVersion", "1.0.0.1"
-            VALUE "InternalName", "Web Snowman"
+            VALUE "InternalName", "Family007"
             VALUE "LegalCopyright", "All Copyright Reserve (C) 2009"
-            VALUE "ProductName", "Web Snowman"
+            VALUE "ProductName", "Family007"
             VALUE "ProductVersion", "1.0.0.1"
         END
     END
@@ -1008,6 +1008,8 @@ BEGIN
     IDS_REGISTER_TRIAL_DAYS "%d days Left, Please Register as soon as possibile"
     IDS_REGISTER_CANNOT_GETINFO "Get Information from service failed!"
     IDS_REGISTER_OVER_TIP   "30 days tail day is over. All function has been disabled. Please register as soon as possible."
+    IDS_REGISTER_WRONGSN    "The serial number you just input is wrong."
+    IDS_REGISTER_RIGHT      "Register successfully. \nThank you!"
 END
 
 #endif    // Ó¢Óï(ÃÀ¹ú) resources

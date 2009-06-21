@@ -1,6 +1,7 @@
 #ifndef _MAINUI_MODEL_H__
 #define _MAINUI_MODEL_H__
 
+#include <string>
 // 控制模式的切换
 class Services {
 public:
@@ -12,6 +13,9 @@ public:
 
 	// 是否显示注册项
 	static bool showRegisterMenuItem();
+	static bool registered();
+	static int trialLeftDays();	
+	static bool registerSN(const std::string &sn);
 };
 
 #endif  // _MAINUI_MODEL_H__

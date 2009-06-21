@@ -121,3 +121,75 @@ void Services::switchChildModel() {
 		__LERR__( "_com_error exception with description "<< e.Description());
 	}
 }
+
+bool Services::registered() {
+	try {
+		IAppRegInfo *pAppReg  = NULL;
+		HRESULT hr = CoCreateInstance(CLSID_AppRegInfo, NULL, CLSCTX_LOCAL_SERVER, IID_IAppRegInfo, (LPVOID*)&pAppReg);
+		if (FAILED(hr)) {
+			__LERR__( "Create APPRegInfo with HRESULT vlaue "<<std::hex<<hr);
+			return false;
+		}
+
+		VARIANT_BOOL bRegistered;
+		pAppReg->Registered(&bRegistered);
+		pAppReg->Release();
+		return convert(bRegistered);
+	} catch(_com_error &e) {
+		__LERR__( "registered called failed with exception ..."<< e.Description());
+		return false;
+	} catch (...) {
+		__LERR__( "registered called failed with exception ...");
+		return false;
+	}
+}
+int Services::trialLeftDays() {
+	try {
+		IAppRegInfo *pAppReg  = NULL;
+		HRESULT hr = CoCreateInstance(CLSID_AppRegInfo, NULL, CLSCTX_LOCAL_SERVER, IID_IAppRegInfo, (LPVOID*)&pAppReg);
+		if (FAILED(hr)) {
+			__LERR__( "Create APPRegInfo with HRESULT vlaue "<<std::hex<<hr);
+			return 1;
+		}
+
+		VARIANT_BOOL bRegistered;
+		LONG leftDays;
+		pAppReg->Registered(&bRegistered);
+
+		// 如果没有注册则返回剩余天数，否则返回-1
+		if (bRegistered != VARIANT_TRUE) {
+			pAppReg->get_LeftDays(&leftDays);
+			return leftDays;
+		} else {
+			return -1;
+		}
+	} catch(_com_error &e) {
+		__LERR__( "registered called failed with exception ..."<< e.Description());
+		return false;
+	} catch (...) {
+		__LERR__( "registered called failed with exception ...");
+		return 1;
+	}
+}
+
+bool Services::registerSN(const std::string &sn) {
+	try {
+		IAppRegInfo *pAppReg  = NULL;
+		HRESULT hr = CoCreateInstance(CLSID_AppRegInfo, NULL, CLSCTX_LOCAL_SERVER, IID_IAppRegInfo, (LPVOID*)&pAppReg);
+		if (FAILED(hr)) {
+			__LERR__( "Create APPRegInfo with HRESULT vlaue "<<std::hex<<hr);
+			return false;
+		}
+
+		VARIANT_BOOL bSucc;
+		pAppReg->Register(_bstr_t(sn.c_str()), &bSucc);
+
+		return convert(bSucc);
+	} catch(_com_error &e) {
+		__LERR__( "registered called failed with exception ..."<< e.Description());
+		return false;
+	} catch (...) {
+		__LERR__( "registered called failed with exception ...");
+		return false;
+	}
+}

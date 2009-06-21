@@ -5,13 +5,15 @@
 #include "MainUI.h"
 #include "DlgRegister.h"
 #include ".\dlgregister.h"
+#include ".\services.h"
 
 
 // CDlgRegister 对话框
 
 IMPLEMENT_DYNAMIC(CDlgRegister, CPopupDialog)
 CDlgRegister::CDlgRegister(CWnd* pParent /*=NULL*/)
-	: CPopupDialog(CDlgRegister::IDD, pParent) {
+: CPopupDialog(CDlgRegister::IDD, pParent) , m_strSN(_T(""))
+{
 }
 
 CDlgRegister::~CDlgRegister() {
@@ -20,6 +22,7 @@ CDlgRegister::~CDlgRegister() {
 void CDlgRegister::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
+	DDX_Text(pDX, IDC_EDIT_REGSN, m_strSN);
 }
 
 
@@ -33,12 +36,19 @@ END_MESSAGE_MAP()
 
 void CDlgRegister::OnBnClickedOk()
 {
-	// TODO: 在此添加控件通知处理程序代码
+	UpdateData(TRUE);
+	CString tipMessage, tipTitle;
+	tipTitle.LoadString(IDS_APP_NAME);
+	if (true == Services::registerSN(std::string((LPCTSTR)m_strSN))) {
+		tipMessage.LoadString(IDS_REGISTER_RIGHT);
+	} else {
+		tipMessage.LoadString(IDS_REGISTER_WRONGSN);
+	}
+	::MessageBox(NULL, tipMessage, tipTitle, MB_OK);
 	OnOK();
 }
 
 void CDlgRegister::OnBnClickedCancel()
 {
-	// TODO: 在此添加控件通知处理程序代码
 	OnCancel();
 }

@@ -21,6 +21,8 @@ protected:
 	afx_msg void OnBnClickedCancel();
 
 	DECLARE_MESSAGE_MAP()
+
+	CString m_strSN;
 };
 
 #endif  // _MAINUI_CDLGREGISTER_H__
