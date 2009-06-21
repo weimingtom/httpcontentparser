@@ -25,7 +25,7 @@ bool Services::autoSwithOnClose() {
 			__LERR__("failed call function  SnowmanSetting get_autoSwitchOnClose () with HRESULT value : "<<hr);
 			return false;
 		} else {
-			return convert(VARIANT_TRUE);
+			return convert(val);
 		}
 
 	} catch (...) {
@@ -39,12 +39,12 @@ LONG Services::getAppStatus() {
 		LONG status;
 		ISnowmanSetting *pRegInfo = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_SnowmanSetting, NULL, CLSCTX_LOCAL_SERVER, IID_ISnowmanSetting, (LPVOID*)&pRegInfo);
-		if (SUCCEEDED(hr)) {
-			pRegInfo->getApplicationStatus(&status);
-			return status;
-		} else {
+		if (FAILED(hr)) {
 			__LERR__( "Create Snowsetting with HRESULT vlaue "<<std::hex<<hr);
 			return SNOWMAN_STATUS_TRIAL;
+		} else {
+			pRegInfo->getApplicationStatus(&status);
+			return status;
 		}
 	} catch (...) {
 		__LERR__("CATCH(...)");
