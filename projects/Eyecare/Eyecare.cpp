@@ -15,13 +15,6 @@
 #include <logger\logger.h>
 #include <logger\loggerlevel.h>
 
-#define COM_EYECARE_MUTEX		TEXT("46EAF855-A09E-4139-877B-5D33B8B22C06")
-
-#pragma data_seg("Shared") 
-int volatile eyecare_initialize =0; 
-#pragma data_seg() 
-#pragma comment(linker,"/section:Shared,RWS") 
-
 #define MAX_LOADSTRING 100
 #define WM_MY_SHOWDIALOG (WM_USER + 0x0001)
 
@@ -150,6 +143,13 @@ BOOL TRYEndEyecare(LPCTSTR password) {
 }
 
 // Æô¶¯»¥³â´úÂë
+#define COM_EYECARE_MUTEX		TEXT("46EAF855-A09E-4139-877B-5D33B8B22C06")
+
+#pragma data_seg("Shared") 
+int volatile eyecare_initialize =0; 
+#pragma data_seg() 
+#pragma comment(linker,"/section:Shared,RWS") 
+
 bool exit_directly() {
 	HANDLE hMutex = CreateMutex(NULL, FALSE, COM_EYECARE_MUTEX);
 	if (hMutex == NULL) {
