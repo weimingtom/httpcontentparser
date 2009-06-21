@@ -341,6 +341,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	__DEINFED_MSG_SCOPE_TRACE__("WndProc MSG[ " <<std::ios::hex<<(unsigned int)message<<"]");
 
+	int result = 0;
 	static bool bShowDialog = false;
 	switch (message)
 	{
@@ -363,7 +364,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 		LockScreen();
 
-		DialogBox(hInst, (LPCTSTR)IDD_PASSWORD, hWnd, (DLGPROC)InputPasswordDlg);
+		result = DialogBox(hInst, MAKEINTRESOURCE(IDD_PASSWORD), hWnd, (DLGPROC)InputPasswordDlg);
+		if (-1 == result) {
+			__LTRC__("DialogBox failed. GetLastError : "<< GetLastError());
+		}
+
 		DestroyWindow(hWnd);
 
 		UnlockScreen();
