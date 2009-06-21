@@ -110,6 +110,37 @@ void EyecareTest::TestSwitchState() {
 	CPPUNIT_ASSERT (setting.getState() == EyecareSetting::ENTERT_TIME);
 }
 
+void EyecareTest::TestMultiModelSwitch() {
+	CPPUNIT_ASSERT(SettingItem::MODE_CHILD == SettingItem::getModel());
+
+	Authorize authorize;
+	string supassword = "123", eyecarePassword = "456";
+	CPPUNIT_ASSERT(authorize.setNewPassword(eyecarePassword, PASSWORD_EYECARE));
+
+	EyecareSetting setting;
+	setting.initialize(&authorize, EyecareSetting::ENTERT_TIME);
+	setting.setEyecareTime(1);
+	setting.setEnterTime(1);
+
+	// 初始状态ENTERT_TIME
+	CPPUNIT_ASSERT(setting.getState() == EyecareSetting::ENTERT_TIME);
+
+	// 经过一段时间可以成功转换装在
+	Sleep(1200);
+	CPPUNIT_ASSERT(true == setting.trySwitch());
+	CPPUNIT_ASSERT(setting.getState() == EyecareSetting::EYECARE_TIME);	
+	Sleep(200);
+	CPPUNIT_ASSERT(setting.getState() == EyecareSetting::EYECARE_TIME);	// 时间不长， 不会切换状态
+	Sleep(200);
+	CPPUNIT_ASSERT(false == setting.trySwitch());
+	CPPUNIT_ASSERT(setting.getState() == EyecareSetting::EYECARE_TIME);
+
+	// 经过一段时间可以成功转换装在
+	Sleep(800);
+	CPPUNIT_ASSERT(setting.getState() == EyecareSetting::EYECARE_TIME);
+	CPPUNIT_ASSERT(true == setting.trySwitch());
+	CPPUNIT_ASSERT(setting.getState() == EyecareSetting::ENTERT_TIME);
+}
 void EyecareTest::TestAfterModelSwitch() {
 	CPPUNIT_ASSERT(SettingItem::MODE_CHILD == SettingItem::getModel());
 
