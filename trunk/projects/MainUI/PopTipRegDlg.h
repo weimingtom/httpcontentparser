@@ -25,6 +25,8 @@ protected:
 
 private:
 	static int show_count_;
-public:
+
 	virtual BOOL OnInitDialog();
+
+	bool call_should_show_before_init;
 };
