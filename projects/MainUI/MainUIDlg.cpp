@@ -21,8 +21,6 @@
 #include <comdef.h>
 #include <logger\logger.h>
 
-#define 	HISTORY_MENU_POS  3
-
 // 在Mainui.cpp中定义，他是一个共享变量
 extern HWND share_hwnd;
 
@@ -37,6 +35,9 @@ extern HWND share_hwnd;
 #define ID_TIMER    100
 #define TIME_ESCPSE	500
 
+const int HISTORY_MENU_ITEM_UNREG			  = 3;
+const int HISTORY_MENU_ITEM_REGISTERED = HISTORY_MENU_ITEM_UNREG - 1;
+
 
 // CMainUIDlg 对话框
 CMainUIDlg::CMainUIDlg(CWnd* pParent /*=NULL*/)
@@ -45,6 +46,8 @@ CMainUIDlg::CMainUIDlg(CWnd* pParent /*=NULL*/)
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 	m_curDlg = NULL;
 	m_bShown = TRUE;
+
+	m_nHistoryMenuItem = HISTORY_MENU_ITEM_UNREG;
 }
 
 CMainUIDlg::~CMainUIDlg() {
@@ -113,7 +116,7 @@ void CMainUIDlg::UpdateUIStateByModel() {
 		}
 
 		// 使历史几个菜单项可用
-		CMenu* pHistory = pMenu->GetSubMenu(HISTORY_MENU_POS);
+		CMenu* pHistory = pMenu->GetSubMenu(getHistoryMenuPos());
 		for (UINT i = 0; i < pHistory->GetMenuItemCount(); ++i) {
 			const UINT uID = pHistory->GetMenuItemID(i);
 			pHistory->EnableMenuItem(uID, MF_ENABLED);
@@ -124,6 +127,7 @@ void CMainUIDlg::UpdateUIStateByModel() {
 		pMenu->CheckMenuItem(ID_TRAYMENU_MODEL_CHILDREN, MF_UNCHECKED);
 	} else {
 		// 如果在孩子模式下，很多按钮将不可用
+		int history_menu_pos = -1;
 		for (UINT i = 0; i < pMenu->GetMenuItemCount(); ++i) {
 			const UINT uID = pMenu->GetMenuItemID(i);
 			if (uID == ID_TRAYMENU_MAINUI ||
@@ -134,7 +138,7 @@ void CMainUIDlg::UpdateUIStateByModel() {
 		}
 
 		// 使历史几个菜单项不可用
-		CMenu* pHistory = pMenu->GetSubMenu(HISTORY_MENU_POS);
+		CMenu* pHistory = pMenu->GetSubMenu(getHistoryMenuPos());
 		for (UINT i = 0; i < pHistory->GetMenuItemCount(); ++i) {
 			const UINT uID = pHistory->GetMenuItemID(i);
 			pHistory->EnableMenuItem(uID, MF_GRAYED);
@@ -171,6 +175,7 @@ void CMainUIDlg::setupTrayMenu() {
 
 	if (! Services::showRegisterMenuItem()) {
 		m_trayMenu.RemoveMenu(ID_MAIN_REGISTER, MF_BYCOMMAND);
+		m_nHistoryMenuItem = HISTORY_MENU_ITEM_REGISTERED;
 	}
 }
 
