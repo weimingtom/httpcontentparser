@@ -359,6 +359,7 @@ void CMainUIDlg::OnBnClickedOk()
 		m_curDlg->SetModify(false);
 
 		if (false == ShowOverTimeMsgBox()) {
+			// 如果用户点击注册， 则应该打开相应网页而不是关闭窗口
 			return;
 		}
 
@@ -376,8 +377,10 @@ void CMainUIDlg::OnBnClickedMainCancel()
 		m_curDlg->Restore();	// 恢复设置
 		m_curDlg->SetModify(false);
 		if (false == ShowOverTimeMsgBox()) {
+			// 如果用户点击注册， 则应该打开相应网页而不是关闭窗口
 			return;
 		} else {
+			m_dlgSwitchChildren_.DoModal();
 			HideMainUI();	// 隐藏窗口
 		}
 	} catch (...) {

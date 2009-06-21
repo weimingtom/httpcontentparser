@@ -407,9 +407,6 @@
 				<File
 					RelativePath=".\MainUIDlg.cpp">
 				</File>
-				<File
-					RelativePath=".\MainUIDlg.h">
-				</File>
 			</Filter>
 			<Filter
 				Name="ruledlg"
@@ -425,6 +422,9 @@
 				</File>
 				<File
 					RelativePath=".\Lev1DlgTools.h">
+				</File>
+				<File
+					RelativePath=".\MainUIDlg.h">
 				</File>
 			</Filter>
 			<Filter

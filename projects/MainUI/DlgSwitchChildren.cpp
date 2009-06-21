@@ -8,6 +8,8 @@
 #include <com\comutility.h>
 #include <typeconvert.h>
 #include <comdef.h>
+#include <logger\logger.h>
+
 
 // CDlgSwitchChildren dialog
 
@@ -69,8 +71,7 @@ BOOL CDlgSwitchChildren::OnInitDialog()
 }
 
 
-void CDlgSwitchChildren::OnBnClickedOk()
-{
+void CDlgSwitchChildren::putParameterToCOM(const bool autoswitchOnClose) {
 	// 首
 	try {
 		UpdateData(TRUE);
@@ -78,32 +79,27 @@ void CDlgSwitchChildren::OnBnClickedOk()
 		ISnowmanSetting * appSetting = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_SnowmanSetting, NULL, CLSCTX_LOCAL_SERVER, IID_ISnowmanSetting, (LPVOID*)&appSetting);
 		if (FAILED(hr)) {
+			__LERR__("Create SnowmanSetting Failed with HRESULT value "<< hr);
 			return OnOK();
 		} else {
-			appSetting->put_autoSwitchOnClose(VARIANT_TRUE);
+			appSetting->put_autoSwitchOnClose(autoswitchOnClose ? VARIANT_TRUE : VARIANT_FALSE);
 			appSetting->put_askMeAgain(convert(!m_bDontAskmeAgain));	// 正好相反
 		}
-	} catch (...) {
+	} catch (_com_error & e) {
+		__LERR__("A exception catched  with description "<< e.Description());
+	} catch(...) {
+		__LERR__("Unknown exception ");
 	}
+}
+void CDlgSwitchChildren::OnBnClickedOk()
+{	
+	putParameterToCOM(true);
 	OnOK();
 }
 
 
 void CDlgSwitchChildren::OnBnClickedCancel()
 {
-		// 首
-	try {
-		UpdateData(TRUE);
-		AutoInitInScale auto_scale_;
-		ISnowmanSetting * appSetting = NULL;
-		HRESULT hr = CoCreateInstance(CLSID_SnowmanSetting, NULL, CLSCTX_LOCAL_SERVER, IID_ISnowmanSetting, (LPVOID*)&appSetting);
-		if (FAILED(hr)) {
-			return OnOK();
-		} else {
-			appSetting->put_autoSwitchOnClose(VARIANT_FALSE);
-			appSetting->put_askMeAgain(convert(!m_bDontAskmeAgain));
-		}
-	} catch (...) {
-	}
+	putParameterToCOM(false);
 	OnCancel();
 }
