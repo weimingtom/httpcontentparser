@@ -3,9 +3,10 @@
 
 #include "stdafx.h"
 #include "MainUI.h"
+#include ".\services.h"
 #include "PopTipRegDlg.h"
 #include ".\poptipregdlg.h"
-
+#include <assert.h>
 
 // CPopTipRegDlg 对话框
 #define SHOW_TIMES		5
@@ -16,6 +17,7 @@ IMPLEMENT_DYNAMIC(CPopTipRegDlg, CDialog)
 CPopTipRegDlg::CPopTipRegDlg(CWnd* pParent /*=NULL*/)
 	: CDialog(CPopTipRegDlg::IDD, pParent)
 {
+	call_should_show_before_init = false;
 }
 
 CPopTipRegDlg::~CPopTipRegDlg()
@@ -35,8 +37,15 @@ END_MESSAGE_MAP()
 
 
 bool CPopTipRegDlg::shouldShow() {
-	show_count_++;
-	return ((show_count_ % SHOW_TIMES) == 0);
+	if (!Services::registered()) {
+		// 如果没有注册
+		show_count_++;
+		call_should_show_before_init = true;
+		return ((show_count_ % SHOW_TIMES) == 0);
+	} else {
+		// 如果已经注册，永远都不应该弹出
+		return false;
+	}
 }
 // CPopTipRegDlg 消息处理程序
 
@@ -52,6 +61,7 @@ void CPopTipRegDlg::OnBnClickedBtnBuynow()
 
 BOOL CPopTipRegDlg::OnInitDialog()
 {
+	assert (call_should_show_before_init);
 	CDialog::OnInitDialog();
 
 	return TRUE; 
