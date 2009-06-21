@@ -202,7 +202,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 
 LRESULT CALLBACK InputPasswordDlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	__DEINFED_MSG_SCOPE_TRACE__("Dialog Proc MSG[ " <<std::ios::hex<<message<<"]");
+	__DEINFED_MSG_SCOPE_TRACE__("DialogProc MSG[ " <<message<<"]");
 	try {
 		TCHAR szBuffer[MAX_PATH];
 
@@ -243,8 +243,9 @@ LRESULT CALLBACK InputPasswordDlg(HWND hDlg, UINT message, WPARAM wParam, LPARAM
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	__DEINFED_MSG_SCOPE_TRACE__("WndProc MSG[ " <<std::ios::hex<<(unsigned int)message<<"]");
+	__DEINFED_MSG_SCOPE_TRACE__("WndProc MSG[ " <<message<<"]");
 	static bool bShowDialog = false;
+	int result = 0;
 	switch (message)
 	{
 	case WM_CREATE:
@@ -262,7 +263,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		bShowDialog  = true;
 		LockScreen();
 
-		DialogBox(hInst, (LPCTSTR)IDD_PASSWORD, hWnd, (DLGPROC)InputPasswordDlg);
+		result = DialogBox(hInst, MAKEINTRESOURCE(IDD_PASSWORD), hWnd, (DLGPROC)InputPasswordDlg);
+		if (-1 == result) {
+			__LTRC__("DialogBox failed. GetLastError : "<< GetLastError());
+		}
+
 		DestroyWindow(hWnd);
 
 		UnlockScreen();
