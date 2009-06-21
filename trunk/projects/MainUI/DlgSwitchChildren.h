@@ -20,7 +20,7 @@ public:
 
 	BOOL switchToChildren() const;
 
-protected:
+private:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	
 	virtual BOOL OnInitDialog();
@@ -29,6 +29,8 @@ protected:
 	afx_msg void OnBnClickedCancel();
 
 	DECLARE_MESSAGE_MAP()
+
+	void putParameterToCOM(const bool autoswitchOnClose);
 private:
 	BOOL m_bDontAskmeAgain;
 };
