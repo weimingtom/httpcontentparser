@@ -14,6 +14,23 @@ EyecareTest::EyecareTest(void) {
 EyecareTest::~EyecareTest(void) {
 }
 
+void EyecareTest::TestModelsInParentAndChild() {
+	// 无论是在那种模式下， 用户的状态都不会改变
+	// 该是什么状态就是什么状态
+	CPPUNIT_ASSERT(SettingItem::MODE_CHILD == SettingItem::getModel());
+	Authorize authorize;
+	string supassword = "123", eyecarePassword = "456";
+	CPPUNIT_ASSERT(authorize.setNewPassword(eyecarePassword, PASSWORD_EYECARE));
+	
+	EyecareSetting setting;
+	setting.initialize(&authorize, EyecareSetting::EYECARE_TIME);
+
+	CPPUNIT_ASSERT(setting.getState() == EyecareSetting::EYECARE_TIME);
+	SettingItem::setModel(SettingItem::MODE_PARENT);
+	CPPUNIT_ASSERT(setting.getState() == EyecareSetting::EYECARE_TIME);
+	SettingItem::setModel(SettingItem::MODE_CHILD);
+	CPPUNIT_ASSERT(setting.getState() == EyecareSetting::EYECARE_TIME);
+}
 void EyecareTest::TestSetLeft() {
 	CPPUNIT_ASSERT(SettingItem::MODE_CHILD == SettingItem::getModel());
 

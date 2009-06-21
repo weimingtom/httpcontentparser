@@ -7,6 +7,7 @@
 class EyecareTest : public CPPUNIT_NS::TestFixture {
 public:
 	CPPUNIT_TEST_SUITE(EyecareTest);
+	CPPUNIT_TEST(TestModelsInParentAndChild);
 	CPPUNIT_TEST(TestMultiModelSwitch);
 	CPPUNIT_TEST(TestAfterModelSwitch);
 	CPPUNIT_TEST(TestSetLeft);
@@ -23,6 +24,7 @@ private:
 	void TestSetLeft();
 	void TestMultiModelSwitch();
 	void TestAfterModelSwitch();
+	void TestModelsInParentAndChild();
 public:
 	EyecareTest(void);
 	~EyecareTest(void);
