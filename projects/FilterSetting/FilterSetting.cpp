@@ -22,6 +22,8 @@
 #include <logger\loggerlevel.h>
 #include <DebugOutput.h>
 
+#define COM_SERVICE_MUTEX	TEXT("7F6E3389-60CF-4b19-B1BD-BC6258E63BDC")
+
 #define FILTERSETTING_LOGGER_FILE		".\\log\\service.log"
 #define FILTERSETTING_DEBUG_FILE		".\\log\\dservice.log"
 
