@@ -13,6 +13,7 @@ Calculagraph::~Calculagraph(void) {
 
 void Calculagraph::Reset() {
 	state_begin_ = GetTickCount();
+	last_time_escape_ = getTimespan();
 }
 
 bool Calculagraph::trySwitch() {
@@ -70,8 +71,8 @@ int Calculagraph::getRemainTimeMS() const {
 }
 
 int Calculagraph::getRemainTime() const {
-	int a = getRemainTimeMS();
-	return (int)(getRemainTimeMS() / MILION_SECONDS);  
+	int remainMS = getRemainTimeMS();
+	return (int)(remainMS / MILION_SECONDS);  
 }
 
 
