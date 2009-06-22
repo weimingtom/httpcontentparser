@@ -1,0 +1,23 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "configfilereader", "configfilereader.vcproj", "{C498B059-CEFB-42A3-9441-81F409B55909}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		Release = Release
+	EndGlobalSection
+	GlobalSection(ProjectDependencies) = postSolution
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{C498B059-CEFB-42A3-9441-81F409B55909}.Debug.ActiveCfg = Debug|Win32
+		{C498B059-CEFB-42A3-9441-81F409B55909}.Debug.Build.0 = Debug|Win32
+		{C498B059-CEFB-42A3-9441-81F409B55909}.Release.ActiveCfg = Release|Win32
+		{C498B059-CEFB-42A3-9441-81F409B55909}.Release.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal
