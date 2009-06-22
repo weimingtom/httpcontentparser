@@ -157,6 +157,7 @@ void EyecareTest::TestMultiModelSwitch() {
 	CPPUNIT_ASSERT(setting.getState() == EyecareSetting::EYECARE_TIME);
 	CPPUNIT_ASSERT(true == setting.trySwitch());
 	CPPUNIT_ASSERT(setting.getState() == EyecareSetting::ENTERT_TIME);
+	SettingItem::setModel(SettingItem::MODE_CHILD);
 }
 void EyecareTest::TestAfterModelSwitch() {
 	CPPUNIT_ASSERT(SettingItem::MODE_CHILD == SettingItem::getModel());
@@ -185,8 +186,6 @@ void EyecareTest::TestAfterModelSwitch() {
 
 	// Ω¯»ÎEYECARE_MODE
 	setting.switchState("123");
-
-	// 
 	setting.switchState("123"); 
 	CPPUNIT_ASSERT (setting.getState() == EyecareSetting::ENTERT_TIME);
 	CPPUNIT_ASSERT(SettingItem::MODE_PARENT == SettingItem::getModel());
