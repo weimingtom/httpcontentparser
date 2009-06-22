@@ -23,11 +23,11 @@
 #ifdef _DEBUG
 #	pragma comment(lib, "cppunitd.lib")
 #	pragma comment(lib, "testrunnerd.lib")
-#	pragma comment(lib, "selectiod.lib")
+#	pragma comment(lib, "selectioMDd.lib")
 #else 
 #	pragma comment(lib, "TestRunner.lib")
 #	pragma comment(lib, "cppunit.lib")
-#	pragma comment(lib, "selectio.lib")
+#	pragma comment(lib, "selectioMD.lib")
 #endif
 
 #endif  // _TEST_SELECTIO_STDAFX_H__
