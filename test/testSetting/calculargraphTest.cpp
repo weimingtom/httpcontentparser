@@ -1,11 +1,30 @@
 #include "StdAfx.h"
 #include ".\calculargraphtest.h"
 #include <calculagraph.h>
+#include <iostream>
+using namespace std;
 
 CalculargraphTest::CalculargraphTest(void) {
 }
 
 CalculargraphTest::~CalculargraphTest(void) {
+}
+
+void CalculargraphTest::TestForceswitch() {
+	const int type = 2;
+	MultiCalculagraph<type> calculargraph;
+	calculargraph.setTimespan(2, 0);
+	calculargraph.setTimespan(2, 1);
+	calculargraph.initialize(0);
+
+	calculargraph.setRemainTimeMS(-791);
+	CPPUNIT_ASSERT(true == calculargraph.trySwitch());
+	CPPUNIT_ASSERT(1 == calculargraph.getCurrentState());
+	CPPUNIT_ASSERT(1000 <= calculargraph.getRemainTimeMS());
+	calculargraph.forceSwitch(0);
+	CPPUNIT_ASSERT(0 == calculargraph.getCurrentState());
+	CPPUNIT_ASSERT(1000 <= calculargraph.getRemainTimeMS());
+
 }
 
 void CalculargraphTest::testMulitSetTimeLeft() {
