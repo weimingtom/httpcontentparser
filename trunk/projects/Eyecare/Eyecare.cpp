@@ -92,6 +92,7 @@ BOOL IsRunInEnterModel() {
 		IEyecare *pEyeCare = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_Eyecare, NULL, CLSCTX_ALL, IID_IEyecare, (LPVOID*)&pEyeCare);
 		if (FAILED(hr)) {
+			__LERR__("Eyecare FAILED with HRESULT : " << hr);
 			return FALSE;
 		}
 
@@ -100,7 +101,8 @@ BOOL IsRunInEnterModel() {
 	
 		pEyeCare->Release();
 		return state == EyecareSetting::ENTERT_TIME ? TRUE : FALSE;
-	} catch (_com_error &) {
+	} catch (_com_error &e) {
+		__LERR__("exception with descripion : " <<e.Description());
 		return FALSE;
 	}
 }
@@ -112,13 +114,15 @@ BOOL IsRuninParentModel() {
 		ISnowmanSetting *app = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_SnowmanSetting, NULL, CLSCTX_LOCAL_SERVER, IID_ISnowmanSetting, (LPVOID*)&app);
 		if (FAILED(hr)) {
+			__LERR__("Setting FAILED with HRESULT : " << hr);
 			return FALSE;
 		}
 
 		app->get_ParentModel(&parent_mode);
 
 		return convert(parent_mode);
-	} catch (_com_error &) {
+	} catch (_com_error &e) {
+		__LERR__("exception with descripion : " <<e.Description());
 		return FALSE;
 	}
 }
@@ -130,6 +134,7 @@ BOOL TRYEndEyecare(LPCTSTR password) {
 		IEyecare *eyecare = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_Eyecare, NULL, CLSCTX_LOCAL_SERVER, IID_IEyecare, (LPVOID*)&eyecare);
 		if (FAILED(hr)) {
+			__LERR__("Eyecare FAILED with HRESULT : " << hr);
 			return FALSE;
 		}
 
@@ -137,7 +142,8 @@ BOOL TRYEndEyecare(LPCTSTR password) {
 		eyecare->Release();
 
 		return convert(succeeded);
-	} catch (_com_error &) {
+	} catch (_com_error &e) {
+		__LERR__("exception with descripion : " <<e.Description());
 		return FALSE;
 	}
 }
@@ -153,7 +159,7 @@ int volatile eyecare_initialize =0;
 bool exit_directly() {
 	HANDLE hMutex = CreateMutex(NULL, FALSE, COM_EYECARE_MUTEX);
 	if (hMutex == NULL) {
-		__LFAT__("CreateMutex FAILED with ERRNO : " << GetLastError());
+		__LERR__("CreateMutex FAILED with ERRNO : " << GetLastError());
 	}
 
 	WaitForSingleObject(hMutex, INFINITE);
