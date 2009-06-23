@@ -75,7 +75,9 @@ int XMLConfiguration::saveConfig(const TCHAR * configpath) {
 	TiXmlElement * root_element = new TiXmlElement( CONFIG_ROOT_VALUE );
 
 	// 是否卸载
-	root_element->SetAttribute(CONFIG_ATTRIBUTE_INSTALL, enabledFromBool(uninstall()));
+	// 在配置文件当中保存的是反值
+	// 因此应该去反，另外在保存的时候也应该取反
+	root_element->SetAttribute(CONFIG_ATTRIBUTE_INSTALL, enabledFromBool(!uninstall()));
 	
 	saveRules(root_element);
 	saveAppSetting(root_element);
@@ -196,6 +198,8 @@ int XMLConfiguration::parseConfiguration(TiXmlElement * root) {
 	// 获取uninstall及initialize
 	const TCHAR * install = root->Attribute(CONFIG_ATTRIBUTE_INSTALL);
 	if ( NULL != install) {
+		// 在配置文件当中保存的是反值
+		// 因此应该去反，另外在保存的时候也应该取反
 		setUninstall(!enabledFromString(install));
 	}
 	const TCHAR * initialize = root->Attribute(CONFIG_ATTRIBUTE_FIRSTTIME);
