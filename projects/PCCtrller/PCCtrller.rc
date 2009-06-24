@@ -64,16 +64,21 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 // Dialog
 //
 
-IDD_PASSWORD DIALOGEX 0, 0, 191, 121
+IDD_PASSWORD DIALOGEX 0, 0, 260, 141
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | DS_CENTER | WS_POPUP | 
     WS_CAPTION
 CAPTION "Family007"
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
-    LTEXT           "Password",IDC_STATIC,16,81,32,8
-    EDITTEXT        IDC_EDIT_PWD,61,79,115,14,ES_PASSWORD | ES_AUTOHSCROLL
-    PUSHBUTTON      "OK",IDC_BTN_OK,69,100,50,14
-    CONTROL         102,IDC_STATIC,"Static",SS_BITMAP,7,7,177,64
+    LTEXT           "Password:",IDC_STATIC,52,98,34,8
+    EDITTEXT        IDC_EDIT_PWD,93,95,109,14,ES_PASSWORD | ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK",IDC_BTN_OK,148,120,50,14
+    DEFPUSHBUTTON   "Cancel",IDOK2,205,120,48,14,WS_DISABLED
+    ICON            IDI_TEXT_LEFT,IDC_STATIC,20,63,20,20
+    LTEXT           "Computer has been locked.",IDC_STATIC,50,63,143,10
+    CONTROL         106,IDC_STATIC,"Static",SS_BITMAP,0,0,260,55
+    LTEXT           "Please input parents' password if you want to unlock",
+                    IDC_STATIC,50,75,199,10
 END
 
 
@@ -87,21 +92,11 @@ GUIDELINES DESIGNINFO
 BEGIN
     IDD_PASSWORD, DIALOG
     BEGIN
-        LEFTMARGIN, 7
-        RIGHTMARGIN, 184
-        TOPMARGIN, 7
-        BOTTOMMARGIN, 114
+        BOTTOMMARGIN, 134
     END
 END
 #endif    // APSTUDIO_INVOKED
 
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// Bitmap
-//
-
-IDB_BMP_TOP             BITMAP                  "res\\top.bmp"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -111,6 +106,7 @@ IDB_BMP_TOP             BITMAP                  "res\\top.bmp"
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
 IDI_LOCKPC              ICON                    "res\\app.ico"
+IDI_TEXT_LEFT           ICON                    "res\\ICON.ico"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -118,6 +114,13 @@ IDI_LOCKPC              ICON                    "res\\app.ico"
 //
 
 1                       RT_MANIFEST             "res\\rt_manif.bin"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_TOP_PART            BITMAP                  "res\\toppart.bmp"
 #endif    // Ó¢Óï(ÃÀ¹ú) resources
 /////////////////////////////////////////////////////////////////////////////
 

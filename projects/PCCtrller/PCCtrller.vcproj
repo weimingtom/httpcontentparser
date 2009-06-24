@@ -191,6 +191,9 @@
 				RelativePath=".\res\app.ico">
 			</File>
 			<File
+				RelativePath=".\res\ICON.ico">
+			</File>
+			<File
 				RelativePath=".\PCCtrller.rc">
 			</File>
 			<File
@@ -198,6 +201,9 @@
 			</File>
 			<File
 				RelativePath=".\res\top.bmp">
+			</File>
+			<File
+				RelativePath=".\res\toppart.bmp">
 			</File>
 		</Filter>
 		<File
