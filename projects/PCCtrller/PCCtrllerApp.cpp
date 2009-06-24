@@ -7,7 +7,7 @@
 #include <logger\loggerlevel.h>
 #include <app_constants.h>
 #include <sstream>
-
+#include <DebugOutput.h>
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -76,10 +76,11 @@ BOOL PCCtrllerApp::InitInstance() {
 	set_logger_level(LOGGER_LEVEL);
 
 	__LTRC__("InitInstance");
-
+	_DEBUG_STREAM_TRC_("InitInstance");
 	// 如果已经有一个启动了
 	if (exit_directly()) {
 		__LTRC__("exit directly");
+		_DEBUG_STREAM_TRC_("exit directly");
 		return FALSE;
 	}
 
@@ -97,22 +98,29 @@ BOOL PCCtrllerApp::InitInstance() {
 	}
 	AfxEnableControlContainer();
 
-	LockScreen();
+	
 
 	CBkFrame* pFrame = new CBkFrame;
 	if (!pFrame)
 		return FALSE;
 	m_pMainWnd = pFrame;
 
+	LockScreen();
 	pFrame->Create();
 	pFrame->ShowWindow(SW_SHOW);
 	pFrame->UpdateWindow();
+
+	// 放在这里而不放在ExitInstance里的原因
+	// 如果程序已经启动，他会自动退出
+	// 此时LockScreen并没有调用
+	// 而我们却调用了Unlockscreen
+	// 可能导致出错
+	UnlockScreen();
 
 	return TRUE;
 }
 int PCCtrllerApp::ExitInstance()
 {
 	__LTRC__("ExitInstance");
-	UnlockScreen();
 	return CWinApp::ExitInstance();
 }
