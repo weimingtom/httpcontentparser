@@ -4,6 +4,7 @@
 //
 #define IDR_RT_MANIFEST                 1
 #define IDC_CLEAR                       2
+#define IDOK2                           2
 #define IDC_SEARCH_CLEAR                3
 #define IDM_ABOUTBOX                    0x0010
 #define IDS_ABOUTBOX                    101
@@ -150,6 +151,9 @@
 #define IDD_POP_TIPREG                  217
 #define IDD_POP_REGTIP                  217
 #define IDD_POP_TRAYENDTIP              218
+#define IDD_POPUP_SETPWDFIRST           219
+#define IDB_BITMAP5                     220
+#define IDB_TOP_PART                    220
 #define IDC_TREE_NAVIG                  1000
 #define IDS_TREE_ROOT                   1001
 #define IDS_TREE_DNS_RULE               1002
@@ -336,7 +340,7 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        218
+#define _APS_NEXT_RESOURCE_VALUE        221
 #define _APS_NEXT_COMMAND_VALUE         32813
 #define _APS_NEXT_CONTROL_VALUE         1127
 #define _APS_NEXT_SYMED_VALUE           112

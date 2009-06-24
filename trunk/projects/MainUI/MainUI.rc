@@ -93,6 +93,7 @@ IDB_TRAY_HISTORY_WEBSITE BITMAP                  "res\\website.bmp"
 IDB_TRAY_HISTORY_SEARCH BITMAP                  "res\\search.bmp"
 IDB_BMP_LOGO            BITMAP                  "res\\logo.bmp"
 IDB_BMP_SMALL_LOGO      BITMAP                  "res\\SmallLogo.bmp"
+IDB_TOP_PART            BITMAP                  "res\\toppart.bmp"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -558,6 +559,25 @@ BEGIN
                     IDC_STATIC,26,20,144,31
 END
 
+IDD_POPUP_SETPWDFIRST DIALOGEX 0, 0, 260, 153
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION
+CAPTION "Set Parents' Password"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,146,132,48,14
+    LTEXT           "New Password",IDC_STATIC,46,95,48,8
+    EDITTEXT        IDC_EDT_NEW,115,94,95,12,ES_PASSWORD | ES_AUTOHSCROLL
+    LTEXT           "Confirm Password",IDC_STATIC,45,112,58,8
+    EDITTEXT        IDC_EDT_RETRY,115,111,95,12,ES_PASSWORD | ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "Cancel",IDOK2,206,132,48,14,WS_DISABLED
+    CONTROL         "",IDC_STATIC,"Static",SS_BLACKFRAME,15,60,20,20
+    LTEXT           "Please set the password for parents.",IDC_STATIC,43,60,
+                    143,10
+    CONTROL         220,IDC_STATIC,"Static",SS_BITMAP,0,0,260,55
+    LTEXT           "The password will be used to change the setting of the software",
+                    IDC_STATIC,43,72,212,10
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -806,6 +826,13 @@ BEGIN
         RIGHTMARGIN, 170
         TOPMARGIN, 7
         BOTTOMMARGIN, 81
+    END
+
+    IDD_POPUP_SETPWDFIRST, DIALOG
+    BEGIN
+        RIGHTMARGIN, 258
+        VERTGUIDE, 7
+        BOTTOMMARGIN, 146
     END
 END
 #endif    // APSTUDIO_INVOKED

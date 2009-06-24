@@ -133,6 +133,9 @@
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
 			<File
+				RelativePath=".\FirstPwdDlg.cpp">
+			</File>
+			<File
 				RelativePath=".\MainUI.cpp">
 			</File>
 			<File
@@ -165,6 +168,9 @@
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
 			<File
+				RelativePath=".\FirstPwdDlg.h">
+			</File>
+			<File
 				RelativePath=".\PopTipRegDlg.cpp">
 			</File>
 			<File
@@ -195,6 +201,9 @@
 			</File>
 			<File
 				RelativePath=".\res\bitmap5.bmp">
+			</File>
+			<File
+				RelativePath=".\res\bitmap6.bmp">
 			</File>
 			<File
 				RelativePath=".\res\blackwhiteside.ico">
@@ -314,10 +323,16 @@
 				RelativePath=".\res\sym7_0.ico">
 			</File>
 			<File
+				RelativePath=".\res\Tips.bmp">
+			</File>
+			<File
 				RelativePath=".\res\tools.ico">
 			</File>
 			<File
 				RelativePath=".\res\top.bmp">
+			</File>
+			<File
+				RelativePath=".\res\toppart.bmp">
 			</File>
 			<File
 				RelativePath=".\res\website.bmp">
