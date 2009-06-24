@@ -83,7 +83,9 @@ BOOL PCCtrllerApp::InitInstance() {
 		return FALSE;
 	}
 
-	initializeAppModel();
+	if (UNKNOW_MODEL == initializeAppModel()) {
+		return FALSE;
+	}
 
 	InitCommonControls();
 
