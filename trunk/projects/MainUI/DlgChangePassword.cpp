@@ -65,17 +65,6 @@ void CDlgChangePassword::resetFileds() {
 	UpdateData(TRUE);
 }
 
-bool CDlgChangePassword::validate() {
-	if (m_strNew != m_strRetype) {
-		return false;
-	}
-
-	// 验证密码
-	// if () {
-	// }
-
-	return true;
-}
 
 BEGIN_MESSAGE_MAP(CDlgChangePassword, CPopupDialog)
 	ON_BN_CLICKED(IDOK, OnBnClickedOk)
@@ -108,14 +97,11 @@ void CDlgChangePassword::OnBnClickedOk()
 {
 	try {
 		UpdateData(TRUE);
-		if (validate() == false) {
+		int msgId = Services::validatePwd(m_strNew, m_strRetype);
+		if (msgId != 0) {
+			AfxMessageBox(msgId);
 			resetFileds();
-			AfxMessageBox(IDS_PWD_NOT_SAME_WITH_CONFIRM);
-			return;
-		} else if (checkOriginalPassword() == false) {
-			AfxMessageBox(IDS_PWD_CHECK_FAILED);
-			return;
-		} else {
+		}  else {
 			// 更改密码
 			if (Services::setNewPwd(m_strNew, m_strOrgin) == false) {
 				AfxMessageBox(IDS_PWD_FAILED_ON_CHANGE);
