@@ -85,7 +85,7 @@ LRESULT CBkFrame::OnShowDlg(WPARAM wParam, LPARAM lParam) {
 
 BOOL CBkFrame::OnEraseBkgnd(CDC* pDC)
 {
-	CBrush backBrush(RGB(58, 110, 165));
+	CBrush backBrush(RGB(0, 78, 152));
     CBrush* pOldBrush = pDC->SelectObject(&backBrush);
     CRect rect;
     pDC->GetClipBox(&rect);     // 擦掉所要画的区域
