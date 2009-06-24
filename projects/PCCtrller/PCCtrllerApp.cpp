@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include ".\pcctrllerapp.h"
-#include "lockutility.h"
 #include ".\bkframe.h"
 #include "COMutility.h"
 #include <logger\logger.h>
@@ -105,18 +104,11 @@ BOOL PCCtrllerApp::InitInstance() {
 		return FALSE;
 	m_pMainWnd = pFrame;
 
-	LockScreen();
 	pFrame->Create();
 	pFrame->ShowWindow(SW_SHOW);
 	pFrame->UpdateWindow();
 
-	// 放在这里而不放在ExitInstance里的原因
-	// 如果程序已经启动，他会自动退出
-	// 此时LockScreen并没有调用
-	// 而我们却调用了Unlockscreen
-	// 可能导致出错
-	UnlockScreen();
-
+	
 	return TRUE;
 }
 int PCCtrllerApp::ExitInstance()

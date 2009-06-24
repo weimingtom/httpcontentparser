@@ -23,9 +23,12 @@ public:
 	virtual BOOL OnInitDialog();
 	afx_msg void OnBnClickedBtnOk();
 	afx_msg void OnTimer(UINT nIDEvent);
-private:
-	CString m_strPwd;
-public:
+
 	void OnOK() {}
 	void OnCancel(){}
+private:
+	CString m_strPwd;
+
+	// 注意在Eyecare和LockPC模式下应该调用两个不同的函数
+	BOOL checkPwd();
 };
