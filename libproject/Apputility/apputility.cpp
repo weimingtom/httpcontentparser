@@ -8,7 +8,9 @@
 #include <stdlib.h> 
 #include  <io.h>
 
-
+#define EYECARE_APP_FILENAME				TEXT("PCCtrller.exe")
+#define LOCKPC_APP_FILENAME					TEXT("PCCtrller.exe")
+#define CONFIG_FILE_NAME							TEXT("nwist.dll")
 
 #define SCREEN_SAVE_TYPE	TEXT("jpg")
 namespace {
@@ -127,7 +129,7 @@ void LockComputer() {
 	GetInstallPath(install_path, MAX_PATH);
 	
 	_sntprintf(fullpath, MAX_PATH, "%s%s", install_path, LOCKPC_APP_FILENAME);
-	_sntprintf(cmdLine, MAX_PATH *2, "%s %s", fullpath, LAUNCH_PARAM);
+	_sntprintf(cmdLine, MAX_PATH *2, "%s %s", fullpath, LAUNCH_LOCK_PARAM);
 	WinExec(cmdLine, SW_MAXIMIZE);
 }
 
@@ -142,7 +144,7 @@ void StartEyecare() {
 	GetInstallPath(install_path, MAX_PATH);
 
 	_sntprintf(fullpath, MAX_PATH, "%s%s", install_path, EYECARE_APP_FILENAME);
-	_sntprintf(cmdLine, MAX_PATH *2, "%s %s", fullpath, LAUNCH_PARAM);
+	_sntprintf(cmdLine, MAX_PATH *2, "%s %s", fullpath, LAUNCH_EYECARE_PARAM);
 	WinExec(cmdLine, SW_MAXIMIZE);
 }
 
