@@ -1,10 +1,14 @@
 #include "stdafx.h"
 #include ".\services.h"
 #include ".\globalvariable.h"
+#include ".\resource.h"
 #include <com\comutility.h>
 #include <typeconvert.h>
 #include <softwareStatus.h>
 #include <logger\logger.h>
+
+
+#define PASSWORD_MIN_LENGTH 8
 
 // 当窗口关闭时，是否转换为父亲模式
 bool Services::autoSwithOnClose() {
@@ -242,5 +246,16 @@ bool Services::firstOpen() {
 	} catch (_com_error & e) {
 		__LERR__( "_com_error exception with description "<< e.Description());
 		return false;
+	}
+}
+
+int Services::validatePwd(const CString &strNewPwd, const CString & strPwdConfirm){
+	if (strNewPwd != strPwdConfirm) {
+		return IDS_PWD_NOT_SAME_WITH_CONFIRM;
+	} else if (strNewPwd.GetLength() < PASSWORD_MIN_LENGTH) {
+		// 密码长度不能短于8位
+		return IDS_PWD_NEW_PWD_TOO_SHORT;
+	} else {
+		return 0;
 	}
 }

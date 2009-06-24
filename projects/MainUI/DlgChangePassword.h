@@ -39,7 +39,6 @@ public:
 	afx_msg void OnShowWindow(BOOL bShow, UINT nStatus);
 private:
 	bool checkOriginalPassword();
-	bool validate();
 	void resetFileds();
 private:
 	// 此静态变量用于标识对话框是否打开

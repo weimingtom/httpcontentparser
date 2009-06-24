@@ -7,8 +7,6 @@
 #include ".\firstpwddlg.h"
 #include ".\services.h"
 
-#define PASSWORD_MIN_LENGTH 8
-
 
 // CFirstPwdDlg 对话框
 
@@ -39,23 +37,32 @@ END_MESSAGE_MAP()
 
 // CFirstPwdDlg 消息处理程序
 
+void CFirstPwdDlg::resetField() {
+	m_strNewPwd = "";
+	m_strPwdConfirm = "";
+	UpdateData(FALSE);
+}
 void CFirstPwdDlg::OnBnClickedOk()
 {
 	UpdateData(TRUE);
 	CString tip, caption;
 	caption.LoadString(IDS_APP_NAME);
-	if (m_strNewPwd != m_strPwdConfirm) {
-		tip.LoadString(IDS_PWD_NOT_SAME_WITH_CONFIRM);
+	int msgId = Services::validatePwd(m_strNewPwd, m_strPwdConfirm);
+	if (0 != msgId) {
+		tip.LoadString(msgId);
 		::MessageBox(NULL, tip, caption,MB_OK | MB_ICONEXCLAMATION);
-	} else if (m_strNewPwd.GetLength() < PASSWORD_MIN_LENGTH) {
-		// 密码长度不能短于8位
-		tip.LoadString(IDS_PWD_NEW_PWD_TOO_SHORT);
-		::MessageBox(NULL, tip, caption,MB_OK | MB_ICONEXCLAMATION);
+		resetField();
 	} else {
-		// 设置密码并关闭对话框
-		tip.LoadString(IDS_PWD_SET_SUCCESS);
-		::MessageBox(NULL, tip, caption,MB_OK | MB_ICONEXCLAMATION);
-		Services::setPwdForFirstTime(m_strNewPwd);
-		OnOK();
+		// 如果设置失败，应该重新设置
+		if (false == Services::setPwdForFirstTime(m_strNewPwd)) {
+			resetField();
+			tip.LoadString(IDS_PWD_FAILED_ON_CHANGE);
+			::MessageBox(NULL, tip, caption,MB_OK | MB_ICONEXCLAMATION);
+			return ;
+		} else {
+			tip.LoadString(IDS_PWD_SET_SUCCESS);
+			::MessageBox(NULL, tip, caption,MB_OK | MB_ICONEXCLAMATION);
+			OnOK();
+		}
 	}
 }

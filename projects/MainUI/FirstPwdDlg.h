@@ -19,7 +19,8 @@ protected:
 
 	afx_msg void OnBnClickedOk();
 	DECLARE_MESSAGE_MAP()
-	
+private:
+	void resetField();
 private:
 	CString m_strNewPwd;
 	CString m_strPwdConfirm;
