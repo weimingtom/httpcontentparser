@@ -39,8 +39,8 @@ AutoInitInScale g_auto_com_init;
 
 void initlogger() {
 	using namespace boost::logging;
-	init_debug_logger(".\\log\\dEyecare.log");
-	init_app_logger(".\\log\\Eyecare.log");
+	init_debug_logger(".\\log\\dFamily007.log");
+	init_app_logger(".\\log\\Family007.log");
 	set_logger_level(LOGGER_LEVEL);
 }
 
