@@ -49,10 +49,17 @@ BOOL CPWDChkDlg::OnInitDialog()
 	// 异常: OCX 属性页应返回 FALSE
 }
 
+BOOL CPWDChkDlg::checkPwd() {
+	UpdateData(TRUE);
+	if (theApp.getAppModel() != EYECARE_MODEL) {
+		return ValidatePassword(m_strPwd);
+	} else {
+		return TRYEndEyecare(m_strPwd);
+	}
+}
 void CPWDChkDlg::OnBnClickedBtnOk()
 {
-	UpdateData(TRUE);
-	if (ValidatePassword(m_strPwd)) {
+	if (TRUE == checkPwd()) {
 		EndDialog(IDOK);
 	} else {
 		::MessageBox(GetSafeHwnd(), "Wrong Password!", "Error", MB_OK | MB_ICONERROR);

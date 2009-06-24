@@ -3,6 +3,7 @@
 #include ".\PWDChkDlg.h"
 #include <logger\logger.h>
 #include <logger\loggerlevel.h>
+#include "lockutility.h"
 #include <sstream>
 
 #ifdef _DEBUG
@@ -22,6 +23,7 @@ BEGIN_MESSAGE_MAP(CBkFrame, CFrameWnd)
 	ON_WM_ERASEBKGND()
 	ON_WM_SIZE()
 	ON_MESSAGE(WM_MY_SHOWLDG, OnShowDlg)
+	ON_WM_DESTROY()
 END_MESSAGE_MAP()
 
 
@@ -46,6 +48,7 @@ BOOL CBkFrame::Create() {
 
 int CBkFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
+	LockScreen();
 	if (CFrameWnd::OnCreate(lpCreateStruct) == -1)
 		return -1;
 	else {
@@ -96,4 +99,10 @@ void CBkFrame::OnSize(UINT nType, int cx, int cy)
 {
 	PostMessage(WM_MY_SHOWLDG, 0, 0);
 	CFrameWnd::OnSize(nType, cx, cy);
+}
+
+void CBkFrame::OnDestroy()
+{
+	CFrameWnd::OnDestroy();
+	UnlockScreen();
 }
