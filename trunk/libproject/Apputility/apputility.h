@@ -3,10 +3,6 @@
 
 #include <utility\strutility.h>
 
-#define CONFIG_FILE_NAME					TEXT("nwist.dll")
-#define EYECARE_APP_FILENAME				TEXT("Eyecare.exe")
-#define LOCKPC_APP_FILENAME					TEXT("LockPC.exe")
-
 // ±£´æÆÁÄ»
 DWORD GenScreenSPFile(TCHAR *fullpath, const int len);
 
