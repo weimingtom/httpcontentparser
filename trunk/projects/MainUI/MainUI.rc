@@ -56,6 +56,15 @@ END
 
 #endif    // APSTUDIO_INVOKED
 
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDI_TEXT_LEFT           ICON                    "res\\text_left.ico"
 #endif    // 中文(中华人民共和国) resources
 /////////////////////////////////////////////////////////////////////////////
 
@@ -570,7 +579,7 @@ BEGIN
     LTEXT           "Confirm Password",IDC_STATIC,45,112,58,8
     EDITTEXT        IDC_EDT_RETRY,115,111,95,12,ES_PASSWORD | ES_AUTOHSCROLL
     DEFPUSHBUTTON   "Cancel",IDOK2,206,132,48,14,WS_DISABLED
-    CONTROL         "",IDC_STATIC,"Static",SS_BLACKFRAME,15,60,20,20
+    ICON            IDI_TEXT_LEFT,IDC_STATIC,15,60,20,20
     LTEXT           "Please set the password for parents.",IDC_STATIC,43,60,
                     143,10
     CONTROL         220,IDC_STATIC,"Static",SS_BITMAP,0,0,260,55
@@ -1037,6 +1046,14 @@ BEGIN
     IDS_REGISTER_OVER_TIP   "30 days tail day is over. All function has been disabled. Please register as soon as possible."
     IDS_REGISTER_WRONGSN    "The serial number you just input is wrong."
     IDS_REGISTER_RIGHT      "Register successfully. \nThank you!"
+    IDS_PWD_NOT_SAME_WITH_CONFIRM 
+                            "The two password are not same, Please re-input!"
+    IDS_PWD_NEW_PWD_TOO_SHORT 
+                            "The password is too short, Please input one with 8 chars at least."
+    IDS_PWD_CHECK_FAILED    "Wrong password!"
+    IDS_UNKNOW_ERROR        "Unknown error"
+    IDS_PWD_FAILED_ON_CHANGE "Failed on change password, Please try again!"
+    IDS_PWD_SET_SUCCESS     "Succeeded in set new password!"
 END
 
 #endif    // 英语(美国) resources
