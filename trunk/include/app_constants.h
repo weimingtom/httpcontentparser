@@ -88,7 +88,8 @@ TCHAR * getHotkeyname(const int type) {
 #define UNINSTALL_UTILITY		("mvs.exe")
 
 // 在启动LockPC和Eyecare时指定，如果没有指定程序直接退出
-#define LAUNCH_PARAM			TEXT("websnowman")
+#define LAUNCH_LOCK_PARAM					TEXT("websnowman_lockpc")
+#define LAUNCH_EYECARE_PARAM			TEXT("websnowman_eyecare")
 
 // Author Name
 #define ANOTHER_GENERIC		TEXT("#generic")	// generic
