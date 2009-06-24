@@ -15,6 +15,7 @@
 #include ".\share.h"
 #include <logger\logger.h>
 #include <logger\loggerlevel.h>
+#include ".\firstpwddlg.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -97,6 +98,11 @@ BOOL CMainUIApp::InitInstance() {
 	// ≥ı ºªØLOGGER
 	AppUtility::AppInstallValidate validator(VLAIDATE_NONE, app_status);
 	// validator.repair();
+
+	if (Services::firstOpen()) {
+		CFirstPwdDlg dlg;
+		dlg.DoModal();
+	}
 
 
 	if (FALSE == Initialize()) {

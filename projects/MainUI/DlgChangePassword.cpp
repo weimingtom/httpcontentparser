@@ -5,10 +5,12 @@
 #include "MainUI.h"
 #include "DlgChangePassword.h"
 #include ".\dlgchangepassword.h"
+#include ".\services.h"
 #include <typeconvert.h>
 #include <com\FilterSetting_i.c>
 #include <com\FilterSetting.h>
 #include <comdef.h>
+#include <logger\logger.h>
 
 // 初始化静态变量
 int CDlgChangePassword::static_dlg_show_cnt = false;
@@ -108,33 +110,23 @@ void CDlgChangePassword::OnBnClickedOk()
 		UpdateData(TRUE);
 		if (validate() == false) {
 			resetFileds();
-			AfxMessageBox("The Two password are not same!");
+			AfxMessageBox(IDS_PWD_NOT_SAME_WITH_CONFIRM);
 			return;
 		} else if (checkOriginalPassword() == false) {
-			AfxMessageBox("wrong password!");
+			AfxMessageBox(IDS_PWD_CHECK_FAILED);
 			return;
 		} else {
 			// 更改密码
-			IAuthorize *authorize = NULL;
-			HRESULT hr = CoCreateInstance(CLSID_Authorize, NULL, CLSCTX_LOCAL_SERVER, IID_IAuthorize, (LPVOID*)&authorize);
-			if (FAILED(hr)) {
-				AfxMessageBox("check password failed!");
-				return ;
-			}
-
-			VARIANT_BOOL changed;
-			authorize->changePassword(_bstr_t(m_strNew), _bstr_t(m_strOrgin), &changed);
-			authorize->Release();
-
-			if (changed == false) {
-				AfxMessageBox("change password failed!");
+			if (Services::setNewPwd(m_strNew, m_strOrgin) == false) {
+				AfxMessageBox(IDS_PWD_FAILED_ON_CHANGE);
 				return;
 			}
 		}
-	} catch (_com_error &) {
-		AfxMessageBox("Unknown error!");
+	} catch (_com_error &e) {
+		AfxMessageBox(IDS_UNKNOW_ERROR);
+		__LERR__( "_com_error exception with description "<< e.Description());
 	}
-	
+
 	OnOK();
 }
 

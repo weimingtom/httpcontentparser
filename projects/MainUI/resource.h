@@ -87,12 +87,18 @@
 #define IDS_REGISTER_RIGHT              150
 #define IDD_DLG_CHKPASSWORD             151
 #define IDD_POPDLG_CHKPASSWORD          151
+#define IDS_PWD_NOT_SAME_WITH_CONFIRM   151
 #define IDD_TOOLS                       152
+#define IDS_PWD_NEW_PWD_TOO_SHORT       152
 #define IDD_LEV1_TOOLS                  153
+#define IDS_PWD_CHECK_FAILED            153
 #define IDD_TEMPLATE                    154
+#define IDS_UNKNOW_ERROR                154
 #define IDD_DLG_SCREEN_SAVER            155
 #define IDD_DLG_SCREENSHOT              155
+#define IDS_PWD_FAILED_ON_CHANGE        155
 #define IDD_DLG_WEB_HISTORY             156
+#define IDS_PWD_SET_SUCCESS             156
 #define IDB_BMP_ACCESSABLE              157
 #define IDB_BITMAP3                     158
 #define IDB_BMP_BLOCK                   158
@@ -152,8 +158,8 @@
 #define IDD_POP_REGTIP                  217
 #define IDD_POP_TRAYENDTIP              218
 #define IDD_POPUP_SETPWDFIRST           219
-#define IDB_BITMAP5                     220
 #define IDB_TOP_PART                    220
+#define IDI_TEXT_LEFT                   221
 #define IDC_TREE_NAVIG                  1000
 #define IDS_TREE_ROOT                   1001
 #define IDS_TREE_DNS_RULE               1002
@@ -340,7 +346,7 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        221
+#define _APS_NEXT_RESOURCE_VALUE        222
 #define _APS_NEXT_COMMAND_VALUE         32813
 #define _APS_NEXT_CONTROL_VALUE         1127
 #define _APS_NEXT_SYMED_VALUE           112

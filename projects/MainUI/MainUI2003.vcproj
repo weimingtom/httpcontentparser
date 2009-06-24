@@ -133,9 +133,6 @@
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
 			<File
-				RelativePath=".\FirstPwdDlg.cpp">
-			</File>
-			<File
 				RelativePath=".\MainUI.cpp">
 			</File>
 			<File
@@ -167,9 +164,6 @@
 			Name="RegisterDlg"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
-			<File
-				RelativePath=".\FirstPwdDlg.h">
-			</File>
 			<File
 				RelativePath=".\PopTipRegDlg.cpp">
 			</File>
@@ -323,6 +317,9 @@
 				RelativePath=".\res\sym7_0.ico">
 			</File>
 			<File
+				RelativePath=".\res\text_left.ico">
+			</File>
+			<File
 				RelativePath=".\res\Tips.bmp">
 			</File>
 			<File
@@ -415,6 +412,12 @@
 			</File>
 			<File
 				RelativePath=".\DlgWhiteDNSList.h">
+			</File>
+			<File
+				RelativePath=".\FirstPwdDlg.cpp">
+			</File>
+			<File
+				RelativePath=".\FirstPwdDlg.h">
 			</File>
 			<Filter
 				Name="maindlg"

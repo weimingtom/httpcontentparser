@@ -189,3 +189,58 @@ bool Services::registerSN(const std::string &sn) {
 		return false;
 	}
 }
+
+bool Services::setNewPwd(LPCTSTR newpwd, LPCTSTR oldpwd) {
+	// 直接查看密码是不是默认密码
+	AutoInitInScale auto_;
+	try {
+		IAuthorize *pAuthor = NULL;
+		HRESULT hr = CoCreateInstance(CLSID_Authorize, NULL, CLSCTX_LOCAL_SERVER, IID_IAuthorize, (LPVOID*)&pAuthor);
+		if (FAILED(hr)) {
+			__LERR__( "Create Authorize with HRESULT vlaue "<<std::hex<<hr);
+			return false;
+		}
+
+		VARIANT_BOOL succ;
+		hr = pAuthor->changePassword(_bstr_t(newpwd), _bstr_t(oldpwd),  &succ);
+		if (FAILED(hr)) {
+			__LERR__( "call setpwd failed with HRESULT vlaue "<<std::hex<<hr);
+			return false;
+		}
+
+		SafeRelease(pAuthor);
+		return convert(succ);
+	} catch (_com_error & e) {
+		__LERR__( "_com_error exception with description "<< e.Description());
+		return false;
+	}
+}
+bool Services::setPwdForFirstTime(LPCTSTR newpwd) {
+	return setNewPwd(newpwd, DEFAULT_INIT_PASSWORD);
+}
+
+bool Services::firstOpen() {
+	// 直接查看密码是不是默认密码
+	AutoInitInScale auto_;
+	try {
+		IAuthorize *pAuthor = NULL;
+		HRESULT hr = CoCreateInstance(CLSID_Authorize, NULL, CLSCTX_LOCAL_SERVER, IID_IAuthorize, (LPVOID*)&pAuthor);
+		if (FAILED(hr)) {
+			__LERR__( "Create Authorize with HRESULT vlaue "<<std::hex<<hr);
+			return false;
+		}
+
+		VARIANT_BOOL succ;
+		hr = pAuthor->checkPassword(_bstr_t(DEFAULT_INIT_PASSWORD),  &succ);
+		if (FAILED(hr)) {
+			__LERR__( "call check failed with HRESULT vlaue "<<std::hex<<hr);
+			return false;
+		}
+
+		SafeRelease(pAuthor);
+		return convert(succ);
+	} catch (_com_error & e) {
+		__LERR__( "_com_error exception with description "<< e.Description());
+		return false;
+	}
+}

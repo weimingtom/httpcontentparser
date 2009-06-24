@@ -5,6 +5,9 @@
 #include "MainUI.h"
 #include "FirstPwdDlg.h"
 #include ".\firstpwddlg.h"
+#include ".\services.h"
+
+#define PASSWORD_MIN_LENGTH 8
 
 
 // CFirstPwdDlg 对话框
@@ -38,6 +41,21 @@ END_MESSAGE_MAP()
 
 void CFirstPwdDlg::OnBnClickedOk()
 {
-	// TODO: 在此添加控件通知处理程序代码
-	OnOK();
+	UpdateData(TRUE);
+	CString tip, caption;
+	caption.LoadString(IDS_APP_NAME);
+	if (m_strNewPwd != m_strPwdConfirm) {
+		tip.LoadString(IDS_PWD_NOT_SAME_WITH_CONFIRM);
+		::MessageBox(NULL, tip, caption,MB_OK | MB_ICONEXCLAMATION);
+	} else if (m_strNewPwd.GetLength() < PASSWORD_MIN_LENGTH) {
+		// 密码长度不能短于8位
+		tip.LoadString(IDS_PWD_NEW_PWD_TOO_SHORT);
+		::MessageBox(NULL, tip, caption,MB_OK | MB_ICONEXCLAMATION);
+	} else {
+		// 设置密码并关闭对话框
+		tip.LoadString(IDS_PWD_SET_SUCCESS);
+		::MessageBox(NULL, tip, caption,MB_OK | MB_ICONEXCLAMATION);
+		Services::setPwdForFirstTime(m_strNewPwd);
+		OnOK();
+	}
 }
