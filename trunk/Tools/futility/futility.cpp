@@ -10,6 +10,14 @@
 #include <com\FilterSetting.h>
 #include <shell\shellutility.h>
 #include <crypt.h>
+#include <softwareEncrypt\serialNumber.h>
+#include <softwareEncrypt\LicenseInfo.h>
+#include <softwareEncrypt\baseEncrypt.h>
+#include <softwareencrypt\installdate.h>
+#include <boost/date_time/gregorian/gregorian.hpp>
+#include <boost/date_time/posix_time/posix_time.hpp>
+#include <iostream>
+#include <time.h>
 
 using namespace std;
 void printUsage();
@@ -20,6 +28,9 @@ void printInstallStatus();
 void getconfigfile();
 void GetCOMPath(TCHAR *path, const int len) ;
 void SetUninstallStatus() ;
+void setinstallDate();
+void setInvalidateSN();
+void setTrialState();
 
 int _tmain(int argc, _TCHAR* argv[])
 {
@@ -44,11 +55,35 @@ int _tmain(int argc, _TCHAR* argv[])
 			SetUninstallStatus();
 			break;
 		case 6:
+			setInvalidateSN();
+			break;
+		case 7:
+			setInvalidateSN();
+			setinstallDate();
 			break;
 	}
 	return 0;
 }
 
+void setInvalidateSN() {
+	string sn = "aaa23infadhf-2u3nfad";
+	software_encrypt::internal_utility::storeSN(sn);
+}
+
+void setinstallDate() {
+	SYSTEMTIME st = {0};
+	FILETIME ft = {0};
+	cout<<"\tplease input year : ";
+	cin>>st.wYear;cout<<endl;
+	cout<<"\tplease input month : ";
+	cin>>st.wMonth;cout<<endl;
+	cout<<"\tplease input days : ";
+	cin>>st.wDay;cout<<endl;
+	SystemTimeToFileTime(&st, &ft); 
+	software_encrypt::internal_utility::setInstallDateFile(ft);
+	software_encrypt::internal_utility::setInstallDataOnRegistry(ft);
+	software_encrypt::internal_utility::setInstallDateInWin(ft);
+}
 void printUsage() {
 	cout<<"Usage : "<<endl;
 	cout<<"\t1. Install all component."<<endl;
@@ -77,6 +112,10 @@ void SetAppStatus(const int state) {
 		pSetting = NULL;
 	} catch (_com_error &) {
 	}
+}
+
+void setTrialState() {
+	SetAppStatus(SNOWMAN_STATUS_TRIAL);
 }
 
 void SetUninstallStatus() {
