@@ -101,10 +101,12 @@ void CDlgChangePassword::OnBnClickedOk()
 		if (msgId != 0) {
 			AfxMessageBox(msgId);
 			resetFileds();
+			return;	// 直接返回不关闭对话框
 		}  else {
 			// 更改密码
 			if (Services::setNewPwd(m_strNew, m_strOrgin) == false) {
 				AfxMessageBox(IDS_PWD_FAILED_ON_CHANGE);
+				resetFileds(); // 直接返回不关闭对话框
 				return;
 			} else {
 				AfxMessageBox(IDS_PWD_SET_SUCCESS);
