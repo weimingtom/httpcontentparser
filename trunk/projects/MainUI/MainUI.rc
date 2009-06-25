@@ -1053,7 +1053,7 @@ BEGIN
     IDS_PWD_CHECK_FAILED    "Wrong password!"
     IDS_UNKNOW_ERROR        "Unknown error"
     IDS_PWD_FAILED_ON_CHANGE "Failed on change password, Please try again!"
-    IDS_PWD_SET_SUCCESS     "Succeeded in set new password!"
+    IDS_PWD_SET_SUCCESS     "Set new password successfully!"
 END
 
 #endif    // Ó¢Óï(ÃÀ¹ú) resources

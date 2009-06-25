@@ -106,6 +106,8 @@ void CDlgChangePassword::OnBnClickedOk()
 			if (Services::setNewPwd(m_strNew, m_strOrgin) == false) {
 				AfxMessageBox(IDS_PWD_FAILED_ON_CHANGE);
 				return;
+			} else {
+				AfxMessageBox(IDS_PWD_SET_SUCCESS);
 			}
 		}
 	} catch (_com_error &e) {
