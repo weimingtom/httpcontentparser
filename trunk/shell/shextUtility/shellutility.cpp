@@ -28,6 +28,10 @@ bool isInstallCopyHook() {
 }
 
 bool installCopyHook() {
+	// 如果已经安装， 先卸载掉
+	if (isInstallCopyHook()) {
+		uninstallCopyControl();
+	}
 	return addSzItemInSubKey(HKEY_CLASSES_ROOT, INSTALL_ITEM_COPY_HOOK, COPY_HOOK_CLSID);
 }
 
@@ -37,6 +41,10 @@ int uninstallCopyControl() {
 
 // 安装应用程序控制
 int installAppControl() {
+	// 如果已经安装， 先卸载掉
+	if (isInstallAppControl()) {
+		uninstallAppControl();
+	}
 	return addSzItemInSubKey(HKEY_LOCAL_MACHINE, INSTALL_ITEM_APP_CONTROL, APP_CONTROL_CLSID);
 }
 bool isInstallAppControl() {
