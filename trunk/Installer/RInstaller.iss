@@ -30,8 +30,7 @@ Name: desktopicon; Description: {cm:CreateDesktopIcon}; GroupDescription: {cm:Ad
 [Files]
 Source: D:\workspace\current\Release\Websnow.exe; DestDir: {app}; Flags: ignoreversion
 Source: D:\workspace\current\Release\exts.dll; DestDir: {app}; Flags: ignoreversion
-Source: D:\workspace\current\Release\Eyecare.exe; DestDir: {app}; Flags: ignoreversion
-Source: D:\workspace\current\Release\LockPC.exe; DestDir: {app}; Flags: ignoreversion
+Source: D:\workspace\current\Release\PCCtrller.exe; DestDir: {app}; Flags: ignoreversion
 Source: D:\workspace\current\Release\mfc71.dll; DestDir: {app}; Flags: ignoreversion
 Source: D:\workspace\current\Release\msvcp71.dll; DestDir: {app}; Flags: ignoreversion
 Source: D:\workspace\current\Release\msvcr71.dll; DestDir: {app}; Flags: ignoreversion
