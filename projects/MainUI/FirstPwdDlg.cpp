@@ -58,6 +58,8 @@ void CFirstPwdDlg::OnBnClickedOk()
 			resetField();
 			tip.LoadString(IDS_PWD_FAILED_ON_CHANGE);
 			::MessageBox(NULL, tip, caption,MB_OK | MB_ICONEXCLAMATION);
+			// 同时切换到父模式
+			Services::switchParentModel(m_strNewPwd);
 			return ;
 		} else {
 			tip.LoadString(IDS_PWD_SET_SUCCESS);
