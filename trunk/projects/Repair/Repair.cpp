@@ -13,6 +13,11 @@
 #include <logger\logger.h>
 #include <logger\loggerlevel.h>
 
+
+#define INSTALLER_PARAMETER		TEXT("installer")
+#define SILENCE_PARAMETER	TEXT("silence")
+
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -38,6 +43,53 @@ CRepairApp theApp;
 
 
 // CRepairApp 初始化
+LONG setAppStatusForInstaller() {
+	// 设置状态， 如果
+	LONG app_status = SNOWMAN_STATUS_TRIAL;
+	try {
+		// 获取应用程序状态
+		ISnowmanSetting * pSetting = NULL;
+		HRESULT hr = CoCreateInstance(CLSID_SnowmanSetting, NULL, CLSCTX_LOCAL_SERVER, IID_ISnowmanSetting, (LPVOID*)&pSetting);
+		if (SUCCEEDED(hr)) {
+			hr = pSetting->getApplicationStatus(&app_status);
+			if (FAILED(hr)) {
+				__LERR__("failed  on get state with HRESULT "<<hr);
+			}
+
+			// 如果程序为卸载状态， 则设置为trial状态
+			// 这一措施用于保证用户在安装程序的时候
+			// 不需要覆盖设置， 就可以达到重新安装的目的
+			// 但是这一行为必须保证用户能够正确获取状态信息
+			// 不能是用户安装之后，从超期状态到注册状态
+
+			if (app_status == SNOWMAN_STATUS_UNINSTALL) {
+				pSetting->setApplicationStatus(SNOWMAN_STATUS_TRIAL);
+			}
+		} else {
+			__LERR__("failed  on create snowman with HRESULT "<<hr);
+		}
+	} catch (...) {
+	}
+
+	return app_status;
+}
+
+LONG getAppStatus() {
+	LONG status = SNOWMAN_STATUS_TRIAL;
+	try {
+		// 获取应用程序状态
+		ISnowmanSetting * pSetting = NULL;
+		HRESULT hr = CoCreateInstance(CLSID_SnowmanSetting, NULL, CLSCTX_LOCAL_SERVER, IID_ISnowmanSetting, (LPVOID*)&pSetting);
+		if (SUCCEEDED(hr)) {
+			pSetting->getApplicationStatus(&status);
+		} else {
+			__LERR__("failed  on create snowman with HRESULT "<<hr);
+		}
+	} catch (...) {
+	}
+
+	return status;
+}
 
 BOOL CRepairApp::InitInstance()
 {
@@ -53,20 +105,14 @@ BOOL CRepairApp::InitInstance()
 
 	CoInitialize(NULL);
 
-	// 如果用户出去OVERTIME状态，则直接退出。
-	// 无论用户处于任何状态，都有该修复
-	// 万一用户无法访问呢？
-
-	LONG app_status = SNOWMAN_STATUS_TRIAL;
-	try {
-		// 获取应用程序状态
-		ISnowmanSetting * pSetting = NULL;
-		HRESULT hr = CoCreateInstance(CLSID_SnowmanSetting, NULL, CLSCTX_LOCAL_SERVER, IID_ISnowmanSetting, (LPVOID*)&pSetting);
-		if (SUCCEEDED(hr)) 
-			pSetting->getApplicationStatus(&app_status);
-	} catch (...) {
+	// 如果是Installer调用， 则他会检测是否处于卸载状态
+	// 如果是设为试用状态
+	if (NULL != _tcsstr(GetCommandLine(), INSTALLER_PARAMETER)) {
+		__LTRC__("installer call repair");
+		setAppStatusForInstaller();
 	}
 
+	LONG app_status = getAppStatus();	//SNOWMAN_STATUS_TRIAL;
 	AppUtility::AppInstallValidate validator(VLAIDATE_NONE, app_status);
 	validator.repair(true);
 
@@ -74,7 +120,7 @@ BOOL CRepairApp::InitInstance()
 	validator.getErrorMessage(errMsg, MAX_PATH);
 	if (_tcslen(errMsg) > 0) {
 		__LERR__("failed  on repair on reason that "<<errMsg);
-		if (NULL == _tcsstr(GetCommandLine(), "silence")) {
+		if (NULL == _tcsstr(GetCommandLine(), SILENCE_PARAMETER)) {
 			AfxMessageBox(errMsg);
 		}
 		return FALSE;
@@ -83,30 +129,8 @@ BOOL CRepairApp::InitInstance()
 
 	CString strSucc;
 	strSucc.LoadString(IDS_REPAIR_SUCCESS);
-	if (NULL == _tcsstr(GetCommandLine(), "silence")) {
+	if (NULL == _tcsstr(GetCommandLine(), SILENCE_PARAMETER)) {
 		AfxMessageBox(strSucc);
-	}
-
-	// 设置状态， 如果
-	app_status = SNOWMAN_STATUS_TRIAL;
-	try {
-		// 获取应用程序状态
-		ISnowmanSetting * pSetting = NULL;
-		HRESULT hr = CoCreateInstance(CLSID_SnowmanSetting, NULL, CLSCTX_LOCAL_SERVER, IID_ISnowmanSetting, (LPVOID*)&pSetting);
-		if (SUCCEEDED(hr)) {
-			pSetting->getApplicationStatus(&app_status);
-
-			// 如果程序为卸载状态， 则设置为trial状态
-			// 这一措施用于保证用户在安装程序的时候
-			// 不需要覆盖设置， 就可以达到重新安装的目的
-			// 但是这一行为必须保证用户能够正确获取状态信息
-			// 不能是用户安装之后，从超期状态到注册状态
-
-			if (app_status == SNOWMAN_STATUS_UNINSTALL) {
-				pSetting->setApplicationStatus(SNOWMAN_STATUS_TRIAL);
-			}
-		}
-	} catch (...) {
 	}
 
 	__LTRC__("succeeded on repair.");
