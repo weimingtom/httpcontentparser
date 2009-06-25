@@ -105,7 +105,7 @@ bool AppInstallValidate::shouldRepairRegistry() {
 // 修复注册表项
 bool AppInstallValidate::repairRegistryInstallPath(const TCHAR * path) {
 	HKEY hKey;
-	long   ret = ::RegOpenKeyEx(HKEY_LOCAL_MACHINE, REG_SOFTWARE_DIR,  0,   KEY_READ,   &hKey);
+	long   ret = ::RegOpenKeyEx(HKEY_LOCAL_MACHINE, REG_SOFTWARE_DIR,  0,   KEY_WRITE,   &hKey);
 	if (ERROR_FILE_NOT_FOUND == ret) {
 		// 如果没有键值， 则创建
 		ret = ::RegCreateKey(HKEY_LOCAL_MACHINE, REG_SOFTWARE_DIR, &hKey);
@@ -118,12 +118,13 @@ bool AppInstallValidate::repairRegistryInstallPath(const TCHAR * path) {
 		return false;
 	}
 
-	if (ERROR_SUCCESS == RegSetValueEx( hKey, REG_SOFTWARE_INSTALLPATH , 0, REG_SZ, (const BYTE*)(LPCSTR)path, (DWORD)_tcslen(path))) {
+	ret = RegSetValueEx( hKey, REG_SOFTWARE_INSTALLPATH , 0, REG_SZ, (const BYTE*)(LPCSTR)path, (DWORD)_tcslen(path));
+	if (ERROR_SUCCESS == ret) {
 		RegCloseKey(hKey);
 		return true;
 	} else {
 		setErrNo(F_REGISTRY_OPR_FAILED);
-		_DEBUG_STREAM_TRC_("["<<__FUNCTION__<<"] Failed On Registion Operation Errono: "<<GetLastError());
+		_DEBUG_STREAM_TRC_("["<<__FUNCTION__<<"] Failed On Registion Operation Errono : " << ret);
 		return false;
 	}
 }
