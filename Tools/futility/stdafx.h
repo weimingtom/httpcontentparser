@@ -13,8 +13,10 @@
 #ifdef _DEBUG
 #pragma comment(lib, "apputilityd.lib")
 #pragma comment(lib, "cryptd.lib")
+#	pragma comment(lib, "softwareencryptd.lib")
 #else
 #pragma comment(lib, "crypt.lib")
 #pragma comment(lib, "apputility.lib")
+#	pragma comment(lib, "softwareencrypt.lib")
 #endif
 
