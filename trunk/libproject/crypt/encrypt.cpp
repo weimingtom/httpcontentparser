@@ -70,9 +70,7 @@ bool EncryptFile(
     }
     else
     { 
-        MyHandleError(
-            TEXT("Error opening source plaintext file!\n"), 
-            GetLastError());
+        MyHandleError( TEXT("Error opening source plaintext file!\n"),  GetLastError());
         goto Exit_MyEncryptFile;
     } 
 
@@ -94,9 +92,7 @@ bool EncryptFile(
     }
     else
     {
-        MyHandleError(
-            TEXT("Error opening destination file!\n"), 
-            GetLastError()); 
+        MyHandleError(TEXT("Error opening destination file!\n"),  GetLastError()); 
         goto Exit_MyEncryptFile;
     }
 
@@ -114,9 +110,7 @@ bool EncryptFile(
     }
     else
     {
-        MyHandleError(
-            TEXT("Error during CryptAcquireContext!\n"), 
-            GetLastError());
+        MyHandleError( TEXT("Error during CryptAcquireContext!\n"),   GetLastError());
         goto Exit_MyEncryptFile;
     }
 
@@ -141,9 +135,7 @@ bool EncryptFile(
         } 
         else
         {
-            MyHandleError(
-                TEXT("Error during CryptGenKey. \n"), 
-                GetLastError()); 
+            MyHandleError(TEXT("Error during CryptGenKey. \n"), GetLastError()); 
             goto Exit_MyEncryptFile;
         }
 
@@ -168,19 +160,13 @@ bool EncryptFile(
                     CRYPT_EXPORTABLE, 
                     &hXchgKey))
                 {
-                    MyHandleError(
-                        TEXT("Could not create "
-                            "a user public key.\n"), 
-                        GetLastError()); 
+                    MyHandleError( TEXT("Could not create a user public key.\n"), GetLastError()); 
                     goto Exit_MyEncryptFile;
                 }
             }
             else
             {
-                MyHandleError(
-                    TEXT("User public key is not available and may ")
-                        TEXT("not exist.\n"), 
-                    GetLastError()); 
+                MyHandleError(TEXT("User public key is not available and may not exist.\n"),  GetLastError()); 
                 goto Exit_MyEncryptFile;
             }
         }
@@ -201,9 +187,7 @@ bool EncryptFile(
         }
         else
         {  
-            MyHandleError(
-                TEXT("Error computing BLOB length! \n"), 
-                GetLastError());
+            MyHandleError(TEXT("Error computing BLOB length! \n"), GetLastError());
             goto Exit_MyEncryptFile;
         }
 
@@ -233,9 +217,7 @@ bool EncryptFile(
         } 
         else
         {
-            MyHandleError(
-                TEXT("Error during CryptExportKey!\n"), 
-                GetLastError());
+            MyHandleError(TEXT("Error during CryptExportKey!\n"), GetLastError());
             goto Exit_MyEncryptFile;
         } 
          
@@ -245,9 +227,7 @@ bool EncryptFile(
         {
             if(!(CryptDestroyKey(hXchgKey)))
             {
-                MyHandleError(
-                    TEXT("Error during CryptDestroyKey.\n"), 
-                    GetLastError()); 
+                MyHandleError(TEXT("Error during CryptDestroyKey.\n"), GetLastError()); 
                 goto Exit_MyEncryptFile;
             }
       
@@ -263,9 +243,7 @@ bool EncryptFile(
             &dwCount,
             NULL))
         { 
-            MyHandleError(
-                TEXT("Error writing header.\n"), 
-                GetLastError());
+            MyHandleError(TEXT("Error writing header.\n"), GetLastError());
             goto Exit_MyEncryptFile;
         }
         else
@@ -320,9 +298,7 @@ bool EncryptFile(
         }
         else
         { 
-            MyHandleError(
-                TEXT("Error during CryptCreateHash!\n"), 
-                GetLastError());
+            MyHandleError(TEXT("Error during CryptCreateHash!\n"),  GetLastError());
             goto Exit_MyEncryptFile;
         }  
 
@@ -339,9 +315,7 @@ bool EncryptFile(
         }
         else
         {
-            MyHandleError(
-                TEXT("Error during CryptHashData. \n"), 
-                GetLastError()); 
+            MyHandleError(TEXT("Error during CryptHashData. \n"), GetLastError()); 
             goto Exit_MyEncryptFile;
         }
 
@@ -360,9 +334,7 @@ bool EncryptFile(
         }
         else
         {
-            MyHandleError(
-                TEXT("Error during CryptDeriveKey!\n"), 
-                GetLastError()); 
+            MyHandleError(TEXT("Error during CryptDeriveKey!\n"),  GetLastError()); 
             goto Exit_MyEncryptFile;
         }
     } 
@@ -418,9 +390,7 @@ bool EncryptFile(
             &dwCount, 
             NULL))
         {
-            MyHandleError(
-                TEXT("Error reading plaintext!\n"), 
-                GetLastError());
+            MyHandleError(TEXT("Error reading plaintext!\n"), GetLastError());
             goto Exit_MyEncryptFile;
         }
 
@@ -440,9 +410,7 @@ bool EncryptFile(
             &dwCount, 
             dwBufferLen))
         { 
-            MyHandleError(
-                TEXT("Error during CryptEncrypt. \n"), 
-                GetLastError()); 
+            MyHandleError(TEXT("Error during CryptEncrypt. \n"), GetLastError()); 
             goto Exit_MyEncryptFile;
         } 
 
@@ -455,10 +423,8 @@ bool EncryptFile(
             &dwCount,
             NULL))
         { 
-            MyHandleError(
-                TEXT("Error writing ciphertext.\n"), 
-                GetLastError());
-            goto Exit_MyEncryptFile;
+            MyHandleError(TEXT("Error writing ciphertext.\n"), GetLastError());
+			goto Exit_MyEncryptFile;
         }
 
         //-----------------------------------------------------------
@@ -496,9 +462,7 @@ Exit_MyEncryptFile:
     {
         if(!(CryptDestroyHash(hHash)))
         {
-            MyHandleError(
-                TEXT("Error during CryptDestroyHash.\n"), 
-                GetLastError()); 
+            MyHandleError( TEXT("Error during CryptDestroyHash.\n"),  GetLastError()); 
         }
 
         hHash = NULL;
@@ -510,9 +474,7 @@ Exit_MyEncryptFile:
     {
         if(!(CryptDestroyKey(hKey)))
         {
-            MyHandleError(
-                TEXT("Error during CryptDestroyKey!\n"), 
-                GetLastError());
+            MyHandleError(TEXT("Error during CryptDestroyKey!\n"), GetLastError());
         }
     }
 
@@ -522,9 +484,7 @@ Exit_MyEncryptFile:
     {
         if(!(CryptReleaseContext(hCryptProv, 0)))
         {
-            MyHandleError(
-                TEXT("Error during CryptReleaseContext!\n"), 
-                GetLastError());
+            MyHandleError(TEXT("Error during CryptReleaseContext!\n"), GetLastError());
         }
     }
     
