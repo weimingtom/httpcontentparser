@@ -10,8 +10,27 @@
 #include <utility\strutility.h>
 #include <DebugOutput.h>
 #include ".\appcontrol.h"
+#include <apputility.h>
 #include <logger\logger.h>
 
+
+namespace {
+bool checkInSameDirectory(LPCTSTR lpstr) {
+	TCHAR exefiledir[MAX_PATH]; 
+	GetFileNameDir(lpstr, exefiledir, MAX_PATH);
+	
+	// 获取本文件的路径
+	TCHAR myselfdir[MAX_PATH], myfilepath[MAX_PATH];
+	GetModuleFileName(NULL, myfilepath, MAX_PATH);
+	GetFileNameDir(myfilepath, myselfdir, MAX_PATH);
+
+	if (_tcscpy(myselfdir, exefiledir) != NULL) {
+		return true;
+	} else {
+		return false;
+	}
+}
+};
 
 // CAppControl
 STDMETHODIMP CAppControl::AddNewItem(BSTR path) {
@@ -56,13 +75,17 @@ STDMETHODIMP CAppControl::GetNextItem(BSTR cur, BSTR* nxt, LONG * hasValue) {
 }
 STDMETHODIMP CAppControl::checkApp(BSTR fullpath, VARIANT_BOOL* result)
 {
-	*result = g_configuration.getProgramControl()->check((TCHAR*)_bstr_t(fullpath));
-	if (VARIANT_TRUE == *result) {
-		__LTRC__("pass app check "<< (char*)_bstr_t(fullpath));
+	// 如果是在本目录下的文件永远都能够运行
+	if (true == checkInSameDirectory((TCHAR*)_bstr_t(fullpath))) {
 		_DEBUG_STREAM_TRC_("[Websnow Service]  [" <<__FUNCTION__<<"] Check Item :  "<< (TCHAR*)_bstr_t(fullpath)<<true);
+		*result = VARIANT_TRUE; 
 	} else {
-		__LTRC__("block app check "<<(char*)_bstr_t(fullpath));
-		_DEBUG_STREAM_TRC_("[Websnow Service]  [" <<__FUNCTION__<<"] Check Item : "<< (TCHAR*)_bstr_t(fullpath) << false);
+		*result = g_configuration.getProgramControl()->check((TCHAR*)_bstr_t(fullpath));
+
+		__LTRC__(((VARIANT_TRUE == *result) ? "pass " : "block ")<<"app check "<< (char*)_bstr_t(fullpath));
+		_DEBUG_STREAM_TRC_("[Websnow Service]  [" <<__FUNCTION__<<"] Check Item :  "
+			<< (TCHAR*)_bstr_t(fullpath)
+			<< (VARIANT_TRUE == *result) ?"true" : "false");
 	}
 	return S_OK;
 }
