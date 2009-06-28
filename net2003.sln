@@ -7,6 +7,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Selectio", "libproject\sele
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Setting", "libproject\Setting\Setting2003.vcproj", "{CCEEE3B2-3B59-4DE4-B088-2093F3582E42}"
 	ProjectSection(ProjectDependencies) = postProject
+		{C99B0EB6-4E0D-48A0-A3A6-CF82F903AB5A} = {C99B0EB6-4E0D-48A0-A3A6-CF82F903AB5A}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Utility", "libproject\Utility\Utility2003.vcproj", "{CD11D86D-3173-4945-8215-7450A0D9CB3C}"
