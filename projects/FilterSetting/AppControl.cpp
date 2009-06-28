@@ -35,14 +35,14 @@ bool checkInSameDirectory(LPCTSTR lpstr) {
 // CAppControl
 STDMETHODIMP CAppControl::AddNewItem(BSTR path) {
 	g_configuration.getProgramControl()->addItem((TCHAR*)_bstr_t(path));
-	_DEBUG_STREAM_TRC_("[Websnow Service]  [" <<__FUNCTION__<<"] Add New Item : "<< (TCHAR*)_bstr_t(path));
+	_DEBUG_STREAM_TRC_("[Family007 Service]  [" <<__FUNCTION__<<"] Add New Item : "<< (TCHAR*)_bstr_t(path));
 	return S_OK;
 }
 
 
 STDMETHODIMP CAppControl::RemoveItem(BSTR path) {
 	g_configuration.getProgramControl()->removeitem((TCHAR*)_bstr_t(path));
-	_DEBUG_STREAM_TRC_("[Websnow Service]  [" <<__FUNCTION__<<"] Remove New Item : "<< (TCHAR*)_bstr_t(path));
+	_DEBUG_STREAM_TRC_("[Family007 Service]  [" <<__FUNCTION__<<"] Remove New Item : "<< (TCHAR*)_bstr_t(path));
 	return S_OK;
 }
 
@@ -77,13 +77,13 @@ STDMETHODIMP CAppControl::checkApp(BSTR fullpath, VARIANT_BOOL* result)
 {
 	// 如果是在本目录下的文件永远都能够运行
 	if (true == checkInSameDirectory((TCHAR*)_bstr_t(fullpath))) {
-		_DEBUG_STREAM_TRC_("[Websnow Service]  [" <<__FUNCTION__<<"] Check Item :  "<< (TCHAR*)_bstr_t(fullpath)<<true);
+		_DEBUG_STREAM_TRC_("[Family007 Service]  [" <<__FUNCTION__<<"] Check Item :  "<< (TCHAR*)_bstr_t(fullpath)<<true);
 		*result = VARIANT_TRUE; 
 	} else {
 		*result = g_configuration.getProgramControl()->check((TCHAR*)_bstr_t(fullpath));
 
 		__LTRC__(((VARIANT_TRUE == *result) ? "pass " : "block ")<<"app check "<< (char*)_bstr_t(fullpath));
-		_DEBUG_STREAM_TRC_("[Websnow Service]  [" <<__FUNCTION__<<"] Check Item :  "
+		_DEBUG_STREAM_TRC_("[Family007 Service]  [" <<__FUNCTION__<<"] Check Item :  "
 			<< (TCHAR*)_bstr_t(fullpath)
 			<< (VARIANT_TRUE == *result) ?"true" : "false");
 	}
