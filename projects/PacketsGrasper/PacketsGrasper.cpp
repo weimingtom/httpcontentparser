@@ -675,7 +675,7 @@ BOOL WINAPI DllMain(
 		//g_select.finalize();
 
 		//UninitializeLog();
-		ODS2(m_sProcessName,_T(" Exit ..."));
+		PACKETGRASPER_TRC(m_sProcessName<<_T(" Exit ..."));
 	}
 
 	return TRUE;
