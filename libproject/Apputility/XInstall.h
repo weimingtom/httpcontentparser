@@ -28,7 +28,7 @@ public:
 	int		InstallProvider(TCHAR *sPathName);
 	int		RemoveProvider();
 
-public:
+private:
 	BOOL ReadReg(
 		TCHAR	*sKey,
 		BYTE	*pBuffer,
