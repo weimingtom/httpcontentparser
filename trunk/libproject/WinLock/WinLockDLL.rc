@@ -43,13 +43,9 @@ BEGIN
     BEGIN
         BLOCK "040904b0"
         BEGIN
-            VALUE "Comments", "Lock Windows Desktop"
             VALUE "CompanyName", "AMF"
-            VALUE "FileDescription", "Lock Windows Desktop"
             VALUE "FileVersion", "1.1"
             VALUE "InternalName", "WinLockDll"
-            VALUE "LegalCopyright", "Copyright © A. Miguel Feijão, 2004"
-            VALUE "LegalTrademarks", "A. Miguel Feijão, 2004"
             VALUE "OriginalFilename", "WinLockDll.dll"
             VALUE "ProductName", "WinLock"
             VALUE "ProductVersion", "1.1"

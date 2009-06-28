@@ -79,17 +79,18 @@ VS_VERSION_INFO VERSIONINFO
 BEGIN
     BLOCK "StringFileInfo"
     BEGIN
-        BLOCK "080403a8"
+        BLOCK "040903a8"
         BEGIN
+            VALUE "FileVersion", "1, 0, 0, 1"
             VALUE "LegalCopyright", "All Copyright Reserve (C) 2009"
             VALUE "OriginalFilename", "FilterSetting.exe"
-            VALUE "ProductName", "Web Snowman"
+            VALUE "ProductName", "Family007"
             VALUE "ProductVersion", "1.0.0.1"
         END
     END
     BLOCK "VarFileInfo"
     BEGIN
-        VALUE "Translation", 0x804, 936
+        VALUE "Translation", 0x409, 936
     END
 END
 
