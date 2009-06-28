@@ -10,7 +10,7 @@
 #define REG_PROTOCOL_CATALOG_ITEM	_T("PackedCatalogItem")
 
 // 保存软件安装的注册表信息
-#define REG_SOFTWARE_DIR			_T("SOFTWARE\\Websnow")
+#define REG_SOFTWARE_DIR			_T("SOFTWARE\\Family007")
 #define REG_SOFTWARE_INSTALLPATH		_T("InstallPath")
 #define REG_SOFTWARE_INSTALLDATE		_T("InstallKey")		// 安装日期
 #define REG_SOFTWARE_PRODUCTSN		_T("ProductSN")	// 序列号
@@ -34,7 +34,7 @@
 #define PACKETSFILTERED_REG_DELETE_FAILED		-808
 
 // 应用程序的名称
-#define APPLICATION_MAINUI_NAME	TEXT("Websnow")
+#define APPLICATION_MAINUI_NAME	TEXT("Family007")
 #define APPLICATION_MAINUI_EXE_FILE	TEXT("family007.exe")
 
 // 注册表项名称
@@ -67,16 +67,8 @@ TCHAR * getHotkeyname(const int type) {
 
 // 应用程序的常量， 窗口名称 窗口类
 
-#define MAIN_WINDOW_TITLE (TEXT("MainUI"))
-#define MAIN_WINDOW_CLASS (TEXT("#32770"))
-
 #define MAIN_WINDOW_PROP_NAME	(TEXT("Unicode_value"))
 #define MAIN_WINDOW_PROP_VALUE  7777
-
-// for Eyecare windows
-#define EYECARE_MAIN_WND_CLASS (TEXT("Eyecare_main_wnd_class"))
-#define EYECARE_MAIN_WND_TITLE (TEXT(""))
-#define EYECARE_MUTEX_NAME		TEXT("8EF40F9D-71A7-40d9-A229-599105419DAE")
 
 #define HOME_WEBSITES			TEXT("www.family007.com")
 #define WEBSITES_BUYNOW			TEXT("www.family007.com")
