@@ -16,7 +16,7 @@ namespace AppUtility {
 
 UINT UninstallSPI() {
 	CXInstall	m_Install;
-	m_Install.DeleteReg();
+	m_Install.RemoveProvider();
 	return 0;
 }
 UINT UninstallService() {
@@ -55,7 +55,7 @@ int AppInstallValidate::uninstall() {
 
 	// É¾³ýSPI
 	CXInstall	m_Install;
-	m_Install.DeleteReg();
+	m_Install.RemoveProvider();
 
 	// ×¢ÏúCOM·þÎñ
 	internal_utility::UnRegisterServices();
