@@ -15,6 +15,7 @@
 
 
 #define INSTALLER_PARAMETER		TEXT("installer")
+#define UNINSTALL_PARAMETER	TEXT("uninstaller")
 #define SILENCE_PARAMETER	TEXT("silence")
 
 
@@ -91,6 +92,41 @@ LONG getAppStatus() {
 	return status;
 }
 
+void Uninstall() {
+	LONG app_status = getAppStatus();	//SNOWMAN_STATUS_TRIAL;
+	AppUtility::AppInstallValidate validator(VLAIDATE_NONE, app_status);
+	validator.uninstall();
+}
+
+void Install() {
+	// 设置应用程序状态
+	// 确保其不会被卸载
+	setAppStatusForInstaller();
+
+	LONG app_status = getAppStatus();	//SNOWMAN_STATUS_TRIAL;
+	AppUtility::AppInstallValidate validator(VLAIDATE_NONE, app_status);
+	validator.repair(true);
+
+	TCHAR errMsg[MAX_PATH];
+	validator.getErrorMessage(errMsg, MAX_PATH);
+	if (_tcslen(errMsg) > 0) {
+		__LERR__("failed  on repair on reason that "<<errMsg);
+		if (NULL == _tcsstr(GetCommandLine(), SILENCE_PARAMETER)) {
+			AfxMessageBox(errMsg);
+		}
+		return;
+	}
+
+
+	CString strSucc;
+	strSucc.LoadString(IDS_REPAIR_SUCCESS);
+	if (NULL == _tcsstr(GetCommandLine(), SILENCE_PARAMETER)) {
+		AfxMessageBox(strSucc);
+	}
+
+	__LTRC__("succeeded on repair.");
+}
+
 BOOL CRepairApp::InitInstance()
 {
 	init_debug_logger(".\\log\\dEyecare.log");
@@ -109,32 +145,14 @@ BOOL CRepairApp::InitInstance()
 	// 如果是设为试用状态
 	if (NULL != _tcsstr(GetCommandLine(), INSTALLER_PARAMETER)) {
 		__LTRC__("installer call repair");
-		setAppStatusForInstaller();
+		Install();
+	} else if (NULL != _tcsstr(GetCommandLine(), UNINSTALL_PARAMETER)) {
+		__LTRC__("uninstaller call repair");
+		Uninstall();
+	} else {
+		__LTRC__("user double click");
+		Install();
 	}
-
-	LONG app_status = getAppStatus();	//SNOWMAN_STATUS_TRIAL;
-	AppUtility::AppInstallValidate validator(VLAIDATE_NONE, app_status);
-	validator.repair(true);
-
-	TCHAR errMsg[MAX_PATH];
-	validator.getErrorMessage(errMsg, MAX_PATH);
-	if (_tcslen(errMsg) > 0) {
-		__LERR__("failed  on repair on reason that "<<errMsg);
-		if (NULL == _tcsstr(GetCommandLine(), SILENCE_PARAMETER)) {
-			AfxMessageBox(errMsg);
-		}
-		return FALSE;
-	}
-
-
-	CString strSucc;
-	strSucc.LoadString(IDS_REPAIR_SUCCESS);
-	if (NULL == _tcsstr(GetCommandLine(), SILENCE_PARAMETER)) {
-		AfxMessageBox(strSucc);
-	}
-
-	__LTRC__("succeeded on repair.");
-
 
 	return TRUE;
 }
