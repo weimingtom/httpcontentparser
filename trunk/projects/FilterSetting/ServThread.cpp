@@ -123,7 +123,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 
 				// 保存文件
 				g_configuration.saveConfig(config_path);
-				_DEBUG_STREAM_TRC_("[Websnow Service] Save Configuration path "<<config_path);
+				_DEBUG_STREAM_TRC_("[Family007 Service] Save Configuration path "<<config_path);
 				__LTRC__("Save Configuration on path "<<config_path);
 			}
 
@@ -140,7 +140,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 						TCHAR fullpath[MAX_PATH];
 						GenScreenSPFile(fullpath, MAX_PATH);
 						GetScreen(fullpath);
-						_DEBUG_STREAM_TRC_("[Websnow Service] Screen Snapshot on path "<<fullpath);
+						_DEBUG_STREAM_TRC_("[Family007 Service] Screen Snapshot on path "<<fullpath);
 						__LTRC__("Screen Snapshot on path "<<fullpath);
 					}
 				}
@@ -157,7 +157,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 					// 启动进程
 					if (functionEnabled(getAppStatus())) {
 						StartEyecare();
-						_DEBUG_STREAM_TRC_("[Websnow Service] Launch Eyecare ");
+						_DEBUG_STREAM_TRC_("[Family007 Service] Launch Eyecare ");
 						__LTRC__("Launch Eyecare  ");
 					}
 				} 
@@ -169,13 +169,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 				GetSearchWordFile(filename, MAX_PATH);
 				g_searchwordUtil.save(GetSearchWordFile(filename, MAX_PATH));
 				__LTRC__("Save search word on path "<<filename);
-				_DEBUG_STREAM_TRC_("[Websnow Service] Save search word on path "<<filename);
+				_DEBUG_STREAM_TRC_("[Family007 Service] Save search word on path "<<filename);
 
 				// 读取访问网站的信息
 				GetWebSiteFile(filename, MAX_PATH);
 				g_websitesUtil.save(GetWebSiteFile(filename, MAX_PATH));
 				__LTRC__("Save website history on path "<<filename);
-				_DEBUG_STREAM_TRC_("[Websnow Service] Save website history on path "<<filename);
+				_DEBUG_STREAM_TRC_("[Family007 Service] Save website history on path "<<filename);
 			}
 			// 自动开启
 			break;
@@ -195,7 +195,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 		}
 	} catch(...) {
 		__LERR__("WndProc Unknown exception");
-		_DEBUG_STREAM_TRC_("[Websnow Service] "<<__FUNCTION__<<" Unknown Exception ");
+		_DEBUG_STREAM_TRC_("[Family007 Service] "<<__FUNCTION__<<" Unknown Exception ");
 	}
 	return DefWindowProc(hWnd, message, wParam, lParam);
 }
@@ -245,6 +245,6 @@ void ServThread::startServer() {
 	hThread_ = CreateThread(NULL, 1, (LPTHREAD_START_ROUTINE)TreadProc, (LPVOID)this, 0, &dwThreadId_);
 	if (NULL == hThread_) {
 		__LERR__("CreateThread failed with return value "<<hThread_<< " LastErorr : "<<GetLastError());
-		_DEBUG_STREAM_TRC_("[Websnow Service] "<<__FUNCTION__<<" CreateThread failed with return value "<<hThread_<< " LastErorr : "<<GetLastError());
+		_DEBUG_STREAM_TRC_("[Family007 Service] "<<__FUNCTION__<<" CreateThread failed with return value "<<hThread_<< " LastErorr : "<<GetLastError());
 	} 
 }
