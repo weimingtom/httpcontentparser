@@ -24,7 +24,7 @@ bool checkInSameDirectory(LPCTSTR lpstr) {
 	GetModuleFileName(NULL, myfilepath, MAX_PATH);
 	GetFileNameDir(myfilepath, myselfdir, MAX_PATH);
 
-	if (_tcscpy(myselfdir, exefiledir) != NULL) {
+	if (_tcsstr(myselfdir, exefiledir) != NULL) {
 		return true;
 	} else {
 		return false;
@@ -77,15 +77,15 @@ STDMETHODIMP CAppControl::checkApp(BSTR fullpath, VARIANT_BOOL* result)
 {
 	// 如果是在本目录下的文件永远都能够运行
 	if (true == checkInSameDirectory((TCHAR*)_bstr_t(fullpath))) {
-		_DEBUG_STREAM_TRC_("[Family007 Service]  [" <<__FUNCTION__<<"] Check Item :  "<< (TCHAR*)_bstr_t(fullpath)<<true);
+		_DEBUG_STREAM_TRC_("[Family007 Service]  [" <<__FUNCTION__<<"] Check Item :  "<< (TCHAR*)_bstr_t(fullpath)<<" In the same path with ext");
 		*result = VARIANT_TRUE; 
 	} else {
-		*result = g_configuration.getProgramControl()->check((TCHAR*)_bstr_t(fullpath));
+		*result = convert(g_configuration.getProgramControl()->check((TCHAR*)_bstr_t(fullpath)));
 
 		__LTRC__(((VARIANT_TRUE == *result) ? "pass " : "block ")<<"app check "<< (char*)_bstr_t(fullpath));
 		_DEBUG_STREAM_TRC_("[Family007 Service]  [" <<__FUNCTION__<<"] Check Item :  "
 			<< (TCHAR*)_bstr_t(fullpath)
-			<< (VARIANT_TRUE == *result) ?"true" : "false");
+			<< "  result : "<<(VARIANT_TRUE == *result) ? "passed" : "blocked");
 	}
 	return S_OK;
 }
