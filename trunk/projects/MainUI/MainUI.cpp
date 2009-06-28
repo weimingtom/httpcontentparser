@@ -28,8 +28,8 @@ HWND share_hwnd = 0;
 #pragma data_seg()
 
 #define MUTEX_NAME TEXT("2A144C85-AF84-4f88-8F7D-6C794A2800EB")
-#define WEBSNOW_LOGGER_FILE		".\\log\\websnow.log"
-#define WEBSNOW_DEBUG_FILE		".\\log\\dwebsnow.log"
+#define LOGGER_FILE		".\\log\\Family007.log"
+#define DEBUG_LOGGER_FILE		".\\log\\dFamily007.log"
 
 IDNSSetting *g_dnssetting = NULL;
 extern bool g_parentModel = false;
@@ -40,8 +40,8 @@ AutoInitInScale g_auto_com_init;
 
 void initlogger() {
 	using namespace boost::logging;
-	init_debug_logger(".\\log\\dFamily007.log");
-	init_app_logger(".\\log\\Family007.log");
+	init_debug_logger(DEBUG_LOGGER_FILE);
+	init_app_logger(LOGGER_FILE);
 	set_logger_level(LOGGER_LEVEL);
 }
 
