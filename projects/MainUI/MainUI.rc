@@ -174,7 +174,7 @@ BEGIN
     LTEXT           "About",IDC_STA_ABOUT,7,176,208,8,NOT WS_VISIBLE
     LTEXT           "Version 1.0.1213.0",IDC_STATIC,128,26,61,13
     ICON            IDI_ICO_SMALL_LOGO,IDC_STATIC,23,26,20,20
-    LTEXT           "Web Snowman",IDC_STATIC,62,26,48,16
+    LTEXT           "Family007",IDC_STATIC,62,26,48,16
     LTEXT           "Copyright (C) 2009",IDC_STATIC,129,41,70,13
     GROUPBOX        "About",IDC_STATIC,7,4,208,58
     GROUPBOX        "Register",IDC_STATIC,7,71,208,41
@@ -540,7 +540,7 @@ BEGIN
     LTEXT           "Serial Number:",IDC_STATIC,9,53,49,8
     LTEXT           "Version 1.0.1213.0",IDC_STATIC,112,14,61,13
     ICON            IDI_ICO_SMALL_LOGO,IDC_STATIC,15,15,20,20
-    LTEXT           "Web Snowman",IDC_STATIC,54,14,48,16
+    LTEXT           "Family007",IDC_STATIC,54,14,48,16
     LTEXT           "Copyright (C) 2009",IDC_STATIC,111,29,70,13
 END
 
@@ -901,7 +901,7 @@ BEGIN
     BEGIN
         BLOCK "040903a8"
         BEGIN
-            VALUE "FileDescription", "Control Centrol of Web Snow"
+            VALUE "FileDescription", "Control Centrol of Family007"
             VALUE "FileVersion", "1.0.0.1"
             VALUE "InternalName", "Family007"
             VALUE "LegalCopyright", "All Copyright Reserve (C) 2009"

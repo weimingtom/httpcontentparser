@@ -129,12 +129,12 @@ BEGIN
     BEGIN
         BLOCK "040904b0"
         BEGIN
-            VALUE "FileDescription", "Repair the installation of Web snowman"
+            VALUE "FileDescription", "Repair the installation of Family007"
             VALUE "FileVersion", "1.0.0.1"
             VALUE "InternalName", "Repair.exe"
             VALUE "LegalCopyright", "All Copyright Reserve (C) 2009"
             VALUE "OriginalFilename", "Repair.exe"
-            VALUE "ProductName", "Web Snowman"
+            VALUE "ProductName", "Family007"
             VALUE "ProductVersion", "1.0.0.1"
         END
     END
@@ -179,7 +179,7 @@ END
 
 STRINGTABLE 
 BEGIN
-    IDS_ABOUTBOX            "?? Repair(&A)..."
+    IDS_ABOUTBOX            "About Repair"
     IDS_FILENOT_FOUNT       "Some Important file lost, Please Reinstall the software."
     IDS_REPAIR_SUCCESS      "Repair Successfully!"
     IDS_INSTALL_FAILED      "Install Failed!"

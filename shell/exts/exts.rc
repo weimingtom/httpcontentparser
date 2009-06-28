@@ -86,7 +86,7 @@ BEGIN
             VALUE "InternalName", "exts.dll"
             VALUE "LegalCopyright", "All Copyright Reserve"
             VALUE "OriginalFilename", "exts.dll"
-            VALUE "ProductName", "Web Snowman"
+            VALUE "ProductName", "Family007"
             VALUE "ProductVersion", "1.0.0.1"
         END
     END
