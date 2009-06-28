@@ -10,7 +10,7 @@ bool EncryptFile(LPTSTR pszSourceFile,
 
 bool DecryptFile( LPTSTR pszSourceFile, LPTSTR pszDestinationFile);
 
-#define PASSWORD "40B3A4B6-7DC1-4DE0-BDC3-8D519F0AD7B6"
+#define PASSWORD "40B3A4B67DC14DE0BDC3-8D519F0AD7B6"
 
 };
 
