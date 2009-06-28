@@ -95,7 +95,7 @@ copy .\Debug\nwrs.exe ..\..\debug
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalIncludeDirectories="..\..\include"
-				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG"
+				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;___OUPUT_DEBUG_STRING___"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="3"
 				WarningLevel="3"

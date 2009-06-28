@@ -170,6 +170,7 @@ STDMETHODIMP CSnowmanSetting::setApplicationStatus(LONG status)
 	if ( SNOWMAN_STATUS_UNINSTALL== status) {
 		g_configuration.setUninstall(true);
 	} else {
+		g_configuration.setUninstall(false);
 		refreshAppstatus();
 	}
 	return S_OK;
