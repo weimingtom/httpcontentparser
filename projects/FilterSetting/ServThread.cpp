@@ -33,14 +33,9 @@ extern HINSTANCE g_hInstance;
 namespace {
 
 	void startMainUI() {
-		HWND hwnd = FindWindow(MAIN_WINDOW_CLASS, MAIN_WINDOW_TITLE);
-		if (hwnd != NULL) {
-			ShowWindow(hwnd, SW_SHOW);
-		} else {
-			UINT result = WinExec(APPLICATION_MAINUI_EXE_FILE, SW_SHOW);
-			if (0 != result) {
-				__LERR__("WinExec failed with return value "<<result<< " LastErorr : "<<GetLastError());
-			}
+		UINT result = WinExec(APPLICATION_MAINUI_EXE_FILE, SW_SHOW);
+		if (0 != result) {
+			__LERR__("WinExec failed with return value "<<result<< " LastErorr : "<<GetLastError());
 		}
 	}
 };
