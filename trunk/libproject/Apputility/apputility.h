@@ -18,7 +18,6 @@ void StartEyecare();
 void LockComputer();
 
 // 获取主界面的路径
-HWND GetMainUIHWND();
 void GetMainUIPath(TCHAR * fullpath, const int len);
 // 启动主界面
 void StartMainUI();
@@ -59,9 +58,6 @@ const TCHAR * GetRecordConfigfile(TCHAR *filename, const unsigned len);
 INT RegisterAutoRun(const TCHAR * fullpath, BOOL auto_run);
 
 BOOL isAutoRun();
-
-// 当前的Eyecare是否在运行
-HWND GetEyecareApp();
 
 // 获取目录下的文件
 void GetFilespathInDir(const TCHAR * dir, const TCHAR *exp, std::vector<strutility::_tstring> * files);

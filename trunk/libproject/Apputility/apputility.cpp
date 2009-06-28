@@ -97,12 +97,6 @@ BOOL CALLBACK EnumWndProc(HWND hwnd, LPARAM lParam)
 }
 
 };
-// 获取主程序窗口
-HWND GetMainUIHWND() {
-	HWND hwnd = NULL;
-	EnumWindows(EnumWndProc, (LPARAM)&hwnd);
-	return hwnd;
-}
 
 // 启动主程序
 void GetMainUIPath(TCHAR * fullpath, const int len) {
@@ -134,12 +128,7 @@ void LockComputer() {
 }
 
 void StartEyecare() {
-	// 首先检测应用程序是否已经打开了
-	HWND hOld = GetEyecareApp();
-	if (NULL != hOld) {
-		return;
-	}
-
+	// 检测应用程序是否打开，交给程序本身自己执行
 	TCHAR install_path[MAX_PATH], fullpath[MAX_PATH], cmdLine[MAX_PATH * 2];
 	GetInstallPath(install_path, MAX_PATH);
 
@@ -359,11 +348,7 @@ void DeleteFiles(const TCHAR * dir, const TCHAR * exp) {
 	}
 }
 
-// 当前的Eyecare是否在运行
-HWND GetEyecareApp() {
-	HWND hwnd = FindWindow(EYECARE_MAIN_WND_CLASS, NULL);
-	return hwnd;
-}
+
 //////////////////////////////////////////////////
 // utility functions
 
