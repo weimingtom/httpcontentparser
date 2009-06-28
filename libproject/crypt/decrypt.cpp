@@ -25,7 +25,7 @@ bool DecryptFile(
     LPTSTR pszDestinationFile, 
     LPTSTR encryptKey)
 { 
-	//AES_ECB_Decrypt(encryptKey, pszSourceFile, pszDestinationFile);
+	AES_ECB_Decrypt(encryptKey, pszSourceFile, pszDestinationFile);
     return true;
 }
 
