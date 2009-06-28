@@ -6,18 +6,18 @@
 ; Do not use the same AppId value in installers for other applications.
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
 AppId={{005ECA83-394D-4D5E-A42D-10F1E22AAE95}
-AppName=Websnow
-AppVerName=Websnow 2.3
-AppPublisherURL=http://www.wsnow.com/
-AppSupportURL=http://www.wsnow.com/
-AppUpdatesURL=http://www.wsnow.com/
-DefaultDirName={pf}\Websnow
+AppName=Family007
+AppVerName=Family007 2.3
+AppPublisherURL=http://www.family007.com/
+AppSupportURL=http://www.family007.com/
+AppUpdatesURL=http://www.family007.com/
+DefaultDirName={pf}\Family007
 DisableDirPage=No
-DefaultGroupName=Websnow
+DefaultGroupName=Family007
 DisableProgramGroupPage=No
 LicenseFile=D:\workspace\current\Installer\License.txt
 OutputDir=D:\workspace
-OutputBaseFilename=Websnow
+OutputBaseFilename=Family007
 Compression=lzma
 SolidCompression=yes
 
@@ -28,24 +28,24 @@ Name: english; MessagesFile: compiler:Default.isl
 Name: desktopicon; Description: {cm:CreateDesktopIcon}; GroupDescription: {cm:AdditionalIcons}; Flags: unchecked
 
 [Files]
-Source: D:\workspace\current\Release\Websnow.exe; DestDir: {app}; Flags: ignoreversion
-Source: D:\workspace\current\Release\exts.dll; DestDir: {app}; Flags: ignoreversion
-Source: D:\workspace\current\Release\PCCtrller.exe; DestDir: {app}; Flags: ignoreversion
-Source: D:\workspace\current\Release\mfc71.dll; DestDir: {app}; Flags: ignoreversion
-Source: D:\workspace\current\Release\msvcp71.dll; DestDir: {app}; Flags: ignoreversion
-Source: D:\workspace\current\Release\msvcr71.dll; DestDir: {app}; Flags: ignoreversion
-Source: D:\workspace\current\Release\nwist.dll; DestDir: {app}; Flags: ignoreversion
-Source: D:\workspace\current\Release\PacketsGrasper.dll; DestDir: {app}; Flags: ignoreversion
-Source: D:\workspace\current\Release\Repair.exe; DestDir: {app}; Flags: ignoreversion
-Source: D:\workspace\current\Release\WinLock.dll; DestDir: {app}; Flags: ignoreversion
-Source: D:\workspace\current\Release\zlib1.dll; DestDir: {app}; Flags: ignoreversion
-Source: D:\workspace\current\Release\wsut.dll; DestDir: {app}; Flags: ignoreversion
-Source: D:\workspace\current\Release\nwrs.exe; DestDir: {app}; Flags: ignoreversion
-Source: D:\workspace\current\Release\logger.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\Release\exts.dll; DestDir: {app}; Flags: restartreplace uninsrestartdelete
+Source: ..\Release\PCCtrller.exe; DestDir: {app}; Flags: restartreplace uninsrestartdelete replacesameversion
+Source: ..\Release\mfc71.dll; DestDir: {app}; Flags: restartreplace uninsrestartdelete replacesameversion
+Source: ..\Release\msvcp71.dll; DestDir: {app}; Flags: restartreplace uninsrestartdelete replacesameversion
+Source: ..\Release\msvcr71.dll; DestDir: {app}; Flags: restartreplace uninsrestartdelete replacesameversion
+Source: ..\Release\nwist.dll; DestDir: {app}; Flags: replacesameversion uninsneveruninstall onlyifdoesntexist
+Source: ..\Release\PacketsGrasper.dll; DestDir: {app}; Flags: restartreplace uninsrestartdelete replacesameversion
+Source: ..\Release\Repair.exe; DestDir: {app}; Flags: restartreplace uninsrestartdelete replacesameversion
+Source: ..\Release\WinLock.dll; DestDir: {app}; Flags: restartreplace uninsrestartdelete replacesameversion
+Source: ..\Release\zlib1.dll; DestDir: {app}; Flags: restartreplace uninsrestartdelete replacesameversion
+Source: ..\Release\wsut.dll; DestDir: {app}; Flags: restartreplace uninsrestartdelete replacesameversion
+Source: ..\Release\nwrs.exe; DestDir: {app}; Flags: restartreplace uninsrestartdelete replacesameversion
+Source: ..\Release\logger.dll; DestDir: {app}; Flags: restartreplace uninsrestartdelete replacesameversion
+Source: ..\Release\Family007.exe; DestDir: {app}; Flags: restartreplace uninsrestartdelete replacesameversion; AfterInstall : EnableAutoRun
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 [Icons]
-Name: {group}\Websnow; Filename: {app}\Websnow.exe
-Name: {commondesktop}\Websnow; Filename: {app}\Websnow.exe; Tasks: desktopicon
+Name: {group}\Websnow; Filename: {app}\Family007.exe
+Name: {commondesktop}\Websnow; Filename: {app}\Family007.exe; Tasks: desktopicon
 Name: {group}\{cm:UninstallProgram, Websnow}; Filename: {uninstallexe}
 
 [Run]
@@ -172,10 +172,13 @@ begin
 end;
 
 {开机自动运行选项}
+procedure EnableAutoRun() {
+	RegWriteExpandStringValue(HKEY_LOCAL_MACHINE, 'SOFTWARE\Microsoft\Windows\CurrentVersion\Run', 'Websnow',  ExpandConstant('{app}')+'\Family007.exe');
+}
 function AutoRunText(Sender: TWizardPage): Boolean;
 begin
 	if LaunchAsWindow.Checked = True then begin
-		RegWriteExpandStringValue(HKEY_LOCAL_MACHINE, 'SOFTWARE\Microsoft\Windows\CurrentVersion\Run', 'Websnow',  ExpandConstant('{app}')+'\websnow.exe');
+		EnableAutoRun();
 	end;
 	Result:=True;
 end;
@@ -197,7 +200,7 @@ end;
 
 procedure InitializeWizard();
 begin
-	AutoRunCustomWizard();
+	{AutoRunCustomWizard();} {不在弹出对话框，无论什么时候都直接修改成自动安装}
 end;
 {弹出对话框}
 function InitializeUninstall(): Boolean;
@@ -216,3 +219,5 @@ function UninstallNeedRestart(): Boolean;
 begin
   Result := True;
 end;
+[UninstallRun]
+Filename: {app}\Repair.exe; Parameters: /uninstaller
