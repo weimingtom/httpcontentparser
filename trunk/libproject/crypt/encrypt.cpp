@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include ".\crypt.h"
-#include ".\debug.h"
 #include ".\cryptopputiliy.h"
 
 #define KEYLENGTH  0x00800000
@@ -25,7 +24,7 @@ bool EncryptFile(
     LPTSTR pszDestinationFile, 
     LPTSTR encryptkey)
 { 
-    AES_ECB_Encrypt(encryptkey, pszSourceFile, pszDestinationFile);
+    //AES_ECB_Encrypt(encryptkey, pszSourceFile, pszDestinationFile);
     return true; 
 } // End Encryptfile.
 
