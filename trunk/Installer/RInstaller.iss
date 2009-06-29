@@ -44,14 +44,11 @@ Source: ..\Release\logger.dll; DestDir: {app}; Flags: restartreplace uninsrestar
 Source: ..\Release\Family007.exe; DestDir: {app}; Flags: restartreplace uninsrestartdelete replacesameversion; AfterInstall : EnableAutoRun
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 [Icons]
-Name: {group}\Websnow; Filename: {app}\Family007.exe
-Name: {commondesktop}\Websnow; Filename: {app}\Family007.exe; Tasks: desktopicon
-Name: {group}\{cm:UninstallProgram, Websnow}; Filename: {uninstallexe}
+Name: {group}\Family007; Filename: {app}\Family007.exe
+Name: {commondesktop}\Family007; Filename: {app}\Family007.exe; Tasks: desktopicon
+Name: {group}\{cm:UninstallProgram, Family007}; Filename: {uninstallexe}
 
 [Run]
-
-
-
 Filename: {app}\nwrs.exe; Parameters: /service; Tasks: ; Languages: 
 Filename: {app}\Repair.exe; Parameters: /silence /installer
 [Code]
