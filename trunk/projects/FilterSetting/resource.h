@@ -19,6 +19,8 @@
 #define IDR_REGISTERINOF                116
 #define IDR_APPREGINFO                  117
 #define IDR_SNOWMANSETTING              118
+#define IDR_APPPROTECT                  119
+#define IDR_APPLAUNCHFILTER             120
 #define IDI_ICON1                       201
 
 // Next default values for new objects
@@ -28,6 +30,6 @@
 #define _APS_NEXT_RESOURCE_VALUE        202
 #define _APS_NEXT_COMMAND_VALUE         32768
 #define _APS_NEXT_CONTROL_VALUE         201
-#define _APS_NEXT_SYMED_VALUE           119
+#define _APS_NEXT_SYMED_VALUE           121
 #endif
 #endif

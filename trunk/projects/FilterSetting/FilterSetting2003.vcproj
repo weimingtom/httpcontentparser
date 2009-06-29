@@ -408,6 +408,32 @@ copy .\release\nwrs.exe ..\..\release
 				RelativePath=".\AppRegInfo.rgs">
 			</File>
 		</Filter>
+		<Filter
+			Name="AppProtect"
+			Filter="">
+			<File
+				RelativePath=".\AppProtect.cpp">
+			</File>
+			<File
+				RelativePath=".\AppProtect.h">
+			</File>
+			<File
+				RelativePath=".\AppProtect.rgs">
+			</File>
+		</Filter>
+		<Filter
+			Name="AppLauncher"
+			Filter="">
+			<File
+				RelativePath=".\AppLaunchFilter.cpp">
+			</File>
+			<File
+				RelativePath=".\AppLaunchFilter.h">
+			</File>
+			<File
+				RelativePath=".\AppLaunchFilter.rgs">
+			</File>
+		</Filter>
 		<File
 			RelativePath=".\ReadMe.txt">
 		</File>

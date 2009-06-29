@@ -23,5 +23,6 @@ int refreshAppstatus();
 int getInstallDays();
 bool registered();
 bool tryRegister(const char * sn);
+bool checkApppath(const TCHAR *fullpath);
 
 #endif  // _FILTER_SETTING_GLOBALVARIABLE_H__
