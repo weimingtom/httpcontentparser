@@ -27,14 +27,18 @@ bool exit_directly() {
 
 	WaitForSingleObject(hMutex, INFINITE);
 
+	// 修改值，（在互斥量当中）
+	bool result = false;
 	if (lockpc_initialize != 0) {
-		CloseHandle(hMutex);
-		return true;
+		result= true;
 	}	else {
 		lockpc_initialize++;
-		CloseHandle(hMutex);
-		return false;
+		result = false;
 	}
+
+	ReleaseMutex(hMutex);
+	CloseHandle(hMutex);
+	return result;
 }
 
 
