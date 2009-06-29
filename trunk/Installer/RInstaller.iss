@@ -221,5 +221,3 @@ function UninstallNeedRestart(): Boolean;
 begin
   Result := True;
 end;
-[UninstallRun]
-Filename: {app}\Repair.exe; Parameters: /uninstaller
