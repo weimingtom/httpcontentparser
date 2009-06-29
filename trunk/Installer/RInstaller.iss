@@ -172,9 +172,11 @@ begin
 end;
 
 {开机自动运行选项}
-procedure EnableAutoRun() {
-	RegWriteExpandStringValue(HKEY_LOCAL_MACHINE, 'SOFTWARE\Microsoft\Windows\CurrentVersion\Run', 'Websnow',  ExpandConstant('{app}')+'\Family007.exe');
-}
+procedure EnableAutoRun();
+begin
+	RegWriteExpandStringValue(HKEY_LOCAL_MACHINE, 'SOFTWARE\Microsoft\Windows\CurrentVersion\Run', '',  ExpandConstant('{app}')+'\Family007.exe');
+end;
+
 function AutoRunText(Sender: TWizardPage): Boolean;
 begin
 	if LaunchAsWindow.Checked = True then begin
