@@ -318,7 +318,7 @@ UINT RegisterServices(TCHAR * install_path) {
 	TCHAR fullpath[MAX_PATH], cmd[MAX_PATH];
 	_sntprintf(fullpath, MAX_PATH, TEXT("%s%s"), install_path, SERVICE_FILENAME);
 	if (_taccess(fullpath, 0) != -1) {
-		_sntprintf(cmd, MAX_PATH, "%s /regserver /i", fullpath);
+		_sntprintf(cmd, MAX_PATH, "%s /regserver", fullpath);
 		WinExec(cmd, SW_HIDE);
 		return PACKETSFILTERED_INSTALL_SUCC;
 	} else {
@@ -331,7 +331,7 @@ UINT UnRegisterServices(TCHAR * install_path) {
 	TCHAR fullpath[MAX_PATH], cmd[MAX_PATH];
 	_sntprintf(fullpath, MAX_PATH, TEXT("%s%s"), install_path, SERVICE_FILENAME);
 	if (_taccess(fullpath, 0) != -1) {
-		_sntprintf(cmd, MAX_PATH, "%s /unregserver /i", fullpath);
+		_sntprintf(cmd, MAX_PATH, "%s /unregserver", fullpath);
 		WinExec(cmd, SW_HIDE);
 		return PACKETSFILTERED_INSTALL_SUCC;
 	} else {
