@@ -44,6 +44,27 @@ CRepairApp theApp;
 
 
 // CRepairApp 初始化
+LONG setAppStatusForUninstaller() {
+	// 设置状态， 如果
+	LONG app_status = SNOWMAN_STATUS_TRIAL;
+	try {
+		// 获取应用程序状态
+		ISnowmanSetting * pSetting = NULL;
+		HRESULT hr = CoCreateInstance(CLSID_SnowmanSetting, NULL, CLSCTX_LOCAL_SERVER, IID_ISnowmanSetting, (LPVOID*)&pSetting);
+		if (SUCCEEDED(hr)) {
+			hr = pSetting->getApplicationStatus(&app_status);
+			if (FAILED(hr)) {
+				__LERR__("failed  on get state with HRESULT "<<hr);
+			}
+			pSetting->setApplicationStatus(SNOWMAN_STATUS_UNINSTALL);
+		} else {
+			__LERR__("failed  on create snowman with HRESULT "<<hr);
+		}
+	} catch (...) {
+	}
+
+	return app_status;
+}
 LONG setAppStatusForInstaller() {
 	// 设置状态， 如果
 	LONG app_status = SNOWMAN_STATUS_TRIAL;
@@ -93,7 +114,11 @@ LONG getAppStatus() {
 }
 
 void Uninstall() {
+	// 设置卸载状态
 	LONG app_status = getAppStatus();	//SNOWMAN_STATUS_TRIAL;
+
+	setAppStatusForUninstaller();	// 设置状态为卸载
+
 	AppUtility::AppInstallValidate validator(VLAIDATE_NONE, app_status);
 	validator.uninstall();
 }
