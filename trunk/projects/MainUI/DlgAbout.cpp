@@ -39,6 +39,8 @@ void CDlgAbout::OnShow() {
 	if (Services::registered()) {
 		m_strRegisterInfo.LoadString(IDS_REGISTER_DONE);
 		m_btnRegistered.ShowWindow(SW_HIDE);
+		GetDlgItem(IDC_STA_REGISTER_INFO)->SetWindowText(m_strRegisterInfo);
+		UpdateData(FALSE);
 	} else {
 		m_btnRegistered.ShowWindow(SW_SHOW);
 		LONG days =Services::trialLeftDays();
@@ -77,6 +79,9 @@ END_MESSAGE_MAP()
 void CDlgAbout::OnBnClickedRegister() {
 	CDlgRegister dlg;
 	dlg.DoModal();
+
+	// 如果注册成功，刷新状态
+	OnShow();
 }
 
 BOOL CDlgAbout::OnInitDialog()
