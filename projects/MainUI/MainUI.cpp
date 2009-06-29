@@ -25,6 +25,7 @@
 #pragma   comment(linker,"/section:shared,rws")   
 #pragma data_seg("shared")
 HWND share_hwnd = 0;
+int mainui_app_count = 0;
 #pragma data_seg()
 
 #define MUTEX_NAME TEXT("2A144C85-AF84-4f88-8F7D-6C794A2800EB")
@@ -69,15 +70,36 @@ CMainUIApp theApp;
 
 // CMainUIApp 初始化
 
+bool exit_directly() {
+	HANDLE hMutex = CreateMutex(NULL, FALSE, MUTEX_NAME);
+	if (hMutex == NULL) {
+		__LFAT__("CreateMutex FAILED with ERRNO : " << GetLastError());
+	}
+
+	WaitForSingleObject(hMutex, INFINITE);
+
+	bool result = false;
+	if (mainui_app_count != 0) {
+		result =  true;
+	}	else {
+		mainui_app_count++;
+		result =  false;
+	}
+
+	ReleaseMutex(hMutex);
+	CloseHandle(hMutex);
+	return result;
+}
+
 BOOL CMainUIApp::InitInstance() {
-	{
-		CMutex mutext(0, MUTEX_NAME);
-		CSingleLock(&mutext, true);
+	if (exit_directly() == true) {
+		// 如果share_hwnd已经初始化
 		if (share_hwnd != NULL) {
 			ShowWindow(share_hwnd, SW_SHOW);
 			SetForegroundWindow(share_hwnd);
-			return 0;
 		}
+		__LTRC__("Exit directly");
+		return FALSE;
 	}
 
 	initlogger();
