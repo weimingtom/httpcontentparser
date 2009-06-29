@@ -172,7 +172,7 @@ end;
 {开机自动运行选项}
 procedure EnableAutoRun();
 begin
-	RegWriteExpandStringValue(HKEY_LOCAL_MACHINE, 'SOFTWARE\Microsoft\Windows\CurrentVersion\Run', ExpandConstant('{AppName}'),  ExpandConstant('{app}')+'\Family007.exe');
+	RegWriteExpandStringValue(HKEY_LOCAL_MACHINE, 'SOFTWARE\Microsoft\Windows\CurrentVersion\Run', 'Family007',  ExpandConstant('{app}')+'\Family007.exe');
 end;
 
 function AutoRunText(Sender: TWizardPage): Boolean;
