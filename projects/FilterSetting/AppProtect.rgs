@@ -1,0 +1,39 @@
+HKCR
+{
+	Exts.AppProtect.1 = s 'AppProtect Class'
+	{
+		CLSID = s '{16114555-8805-444D-BB1F-0D9BB3536A7B}'
+	}
+	Exts.AppProtect = s 'AppProtect Class'
+	{
+		CLSID = s '{16114555-8805-444D-BB1F-0D9BB3536A7B}'
+		CurVer = s 'Exts.AppProtect.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {16114555-8805-444D-BB1F-0D9BB3536A7B} = s 'AppProtect Class'
+		{
+			ProgID = s 'Exts.AppProtect.1'
+			VersionIndependentProgID = s 'Exts.AppProtect'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{9CC3632B-91DF-4DE4-B3F6-DAFBBB940E1E}'
+		}
+	}
+	
+	NoRemove Directory
+	{
+		NoRemove Shellex
+		{
+			NoRemove CopyHookHandlers
+			{
+				  ForceRemove Family = s '{16114555-8805-444D-BB1F-0D9BB3536A7B}'
+			}
+		}
+	}
+}
+
+
