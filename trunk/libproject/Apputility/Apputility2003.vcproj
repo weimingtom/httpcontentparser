@@ -164,16 +164,6 @@ copy .\Fileinfo.h ..\..\include
 			</File>
 		</Filter>
 		<Filter
-			Name="filesystem"
-			Filter="">
-			<File
-				RelativePath=".\FileSystemValidator.cpp">
-			</File>
-			<File
-				RelativePath=".\FileSystemValidator.h">
-			</File>
-		</Filter>
-		<Filter
 			Name="apputility"
 			Filter="">
 			<File

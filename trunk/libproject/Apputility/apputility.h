@@ -40,6 +40,7 @@ const TCHAR* GetFileName(const TCHAR *fullname, TCHAR * ename, const unsigned le
 
 // 获取保存图片的路径
 const TCHAR * GetImageDirectory(TCHAR * filename, const unsigned len);
+const TCHAR * GetLogDirectory(TCHAR * filename, const unsigned len);
 
 // 获取文字内容的保存路径
 const TCHAR * GetPageDirectory(TCHAR * filename, const unsigned len);
