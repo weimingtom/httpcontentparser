@@ -50,7 +50,6 @@ Name: {commondesktop}\Family007; Filename: {app}\Family007.exe; Tasks: desktopic
 Name: {group}\{cm:UninstallProgram, Family007}; Filename: {uninstallexe}
 
 [Run]
-Filename: {app}\nwrs.exe; Parameters: /service; Tasks: ; Languages: 
 Filename: {app}\Repair.exe; Parameters: /silence /installer
 [Code]
 //importing a custom DLL function, first for Setup, then for uninstall
