@@ -60,7 +60,7 @@
 				CommandLine="copy .\debug\exts.dll ..\..\debug
 copy .\exts.h ..\..\include\shell
 copy .\exts_i.c ..\..\include\shell
-regsvr32 /s /c ..\..\debug\exts.dll
+
 "/>
 			<Tool
 				Name="VCPreBuildEventTool"/>
@@ -131,7 +131,7 @@ regsvr32 /s /c ..\..\debug\exts.dll
 				CommandLine="copy .\release\exts.dll ..\..\release
 copy .\exts.h ..\..\include\shell
 copy .\exts_i.c ..\..\include\shell
-regsvr32 /s /c ..\..\release\exts.dll
+
 "/>
 			<Tool
 				Name="VCPreBuildEventTool"/>
