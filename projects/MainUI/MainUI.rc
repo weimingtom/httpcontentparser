@@ -116,7 +116,7 @@ CAPTION "Switch To Children Model?"
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
     DEFPUSHBUTTON   "OK",IDOK,15,53,50,14
-    PUSHBUTTON      "Cancel",IDCANCEL,93,53,50,14
+    PUSHBUTTON      "NO",IDCANCEL,93,53,50,14
     CONTROL         "Do not ask me again!",IDC_CHK_DONT_ASKME_AGAIN,"Button",
                     BS_AUTOCHECKBOX | WS_TABSTOP,41,34,83,10
     LTEXT           "Switch to child mode when the dialog closed?",
