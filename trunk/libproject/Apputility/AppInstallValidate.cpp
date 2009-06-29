@@ -340,7 +340,7 @@ UINT UnRegisterServices(TCHAR * install_path) {
 	_sntprintf(fullpath, MAX_PATH, TEXT("%s%s"), install_path, SERVICE_FILENAME);
 	if (_taccess(fullpath, 0) != -1) {
 		_sntprintf(cmd, MAX_PATH, "%s /unregserver", fullpath);
-		WinExec(cmd, SW_HIDE);
+		//WinExec(cmd, SW_HIDE);
 		return PACKETSFILTERED_INSTALL_SUCC;
 	} else {
 		// 如果文件不存在则返回FALSE
