@@ -25,6 +25,7 @@ XMLConfiguration::XMLConfiguration()
 	, white_url_set_(CONFIG_NODE_NAME_WHITEURL) {
 	first_time_ = false;
 	uninstall_ = false;
+	initialize_completed_ = false;
 	defaultSetting();
 }
 
@@ -60,6 +61,12 @@ int XMLConfiguration::saveAppSetting(TiXmlElement * root) {
 //==========================================================
 // XML 保存函数
 int XMLConfiguration::saveConfig(const TCHAR * configpath) {
+	if (false == initialize_completed_) {
+		// 如果没有加载完全，不能够保存文件
+		SettingItem::setModified(false);
+		return 0;
+	}
+
 	using namespace yanglei_utility;
 	CSysMutex mutex(CONFIG_FILE_MUTEX_NAME);
 	SingleLock<CSysMutex> lock(&mutex);
@@ -257,7 +264,9 @@ int XMLConfiguration::readDefaultConfig() {
 //========================================
 // public members
 int XMLConfiguration::loadConfig(const TCHAR * filename) {
+	initialize_completed_ = false;
 	readConfigFromFile(filename);
+	initialize_completed_ = true;
 	return 0;
 }
 
