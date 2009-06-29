@@ -3,13 +3,13 @@
 #pragma once
 #include "resource.h"       // Ö÷·ûºÅ
 #include "exts.h"
-
-#include <comdef.h>
-#include <shlobj.h>
-#include <shlguid.h>
 #include <com\FilterSetting.h>
 #include <com\FilterSetting_i.c>
 #include <com\comutility.h>
+#include <comdef.h>
+#include <shlobj.h>
+#include <shlguid.h>
+
 
 #ifndef _VISUAL_STUDIO_2008_
 struct __declspec(uuid("000214FB-0000-0000-C000-000000000046")) IShellExecuteHook; 
