@@ -84,19 +84,6 @@ INT RegisterAutoRun(const TCHAR * fullpath, BOOL auto_run) {
 
 
 
-namespace {
-BOOL CALLBACK EnumWndProc(HWND hwnd, LPARAM lParam)
-{
-	HANDLE h = GetProp(hwnd, MAIN_WINDOW_PROP_NAME);
-	if( h == (HWND)MAIN_WINDOW_PROP_VALUE)
-	{
-		*(HWND*)lParam = hwnd;
-		return false;
-	}
-	return true;
-}
-
-};
 
 // Æô¶¯Ö÷³ÌÐò
 void GetMainUIPath(TCHAR * fullpath, const int len) {
