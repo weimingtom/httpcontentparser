@@ -128,7 +128,7 @@ copy .\Debug\nwrs.exe ..\..\debug
 				ProxyFileName="FilterSetting_p.c"/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				Description="Ö´ÐÐ×¢²á"
+				Description="¿½±´ÎÄ¼þ"
 				CommandLine="copy .\FilterSetting_i.c ..\..\include\com
 copy .\filtersetting.h ..\..\include\com
 copy .\release\nwrs.exe ..\..\release

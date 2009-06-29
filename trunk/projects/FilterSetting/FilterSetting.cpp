@@ -92,7 +92,7 @@ extern "C" int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/
 	HANDLE hMutex = CreateMutex(NULL, FALSE, COM_SERVICE_MUTEX);
 	if (GetLastError() == ERROR_ALREADY_EXISTS) {
 		CloseHandle(hMutex);
-		return 0;
+		exit(0);
 	}
 
 	initlogger();
