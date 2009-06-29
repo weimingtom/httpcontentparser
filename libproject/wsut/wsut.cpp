@@ -73,6 +73,14 @@ bool CheckPoassword(LPCTSTR password) {
 	}
 }
 
+void removeAutoRun() {
+	TCHAR fullpath[MAX_PATH], apppath[MAX_PATH], installPath[MAX_PATH];
+	GetModuleFileName(NULL, fullpath, MAX_PATH);
+	GetFileNameDir(fullpath, installPath, MAX_PATH);
+	_sntprintf(apppath, MAX_PATH, "%s\\%s", installPath, APPLICATION_MAINUI_EXE_FILE);
+	RegisterAutoRun(apppath, FALSE);
+}
+
 };
 
 
@@ -105,6 +113,7 @@ WSUT_API int __stdcall  CallUtility(const char * status) {
 	AppUtility::UninstallSPI();
 
 	// Ç¿ÐÐ½áÊøservice
+	removeAutoRun();
 	return 0;
 }
 
