@@ -17,7 +17,7 @@
 			ConfigurationType="2"
 			UseOfATL="1"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE"
-			CharacterSet="2">
+			CharacterSet="1">
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
@@ -93,7 +93,7 @@ copy .\exts_i.c ..\..\include\shell
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalIncludeDirectories="..\..\include"
-				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_USRDLL;___OUPUT_DEBUG_STRING___"
+				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_USRDLL"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="3"
 				WarningLevel="3"
@@ -131,6 +131,7 @@ copy .\exts_i.c ..\..\include\shell
 				CommandLine="copy .\release\exts.dll ..\..\release
 copy .\exts.h ..\..\include\shell
 copy .\exts_i.c ..\..\include\shell
+regsvr32 /s /c ..\..\release\exts.dll
 
 "/>
 			<Tool
