@@ -50,8 +50,8 @@ Name: {commondesktop}\Family007; Filename: {app}\Family007.exe; Tasks: desktopic
 Name: {group}\{cm:UninstallProgram, Family007}; Filename: {uninstallexe}
 
 [Run]
-Filename: {app}\nwrs.exe; Parameters: /service
-Filename: {app}\Repair.exe; Parameters: /silence /installer
+Filename: {app}\nwrs.exe; Parameters: /regserver; WorkingDir: {app}
+Filename: {app}\Repair.exe; Parameters: /silence /installer; WorkingDir: {app}
 [Code]
 //importing a custom DLL function, first for Setup, then for uninstall
 function CheckProgram(lpStatus: String):Integer;
