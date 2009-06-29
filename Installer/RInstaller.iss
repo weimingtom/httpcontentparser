@@ -29,7 +29,6 @@ Name: english; MessagesFile: compiler:Default.isl
 Name: desktopicon; Description: {cm:CreateDesktopIcon}; GroupDescription: {cm:AdditionalIcons}; Flags: unchecked
 
 [Files]
-Source: ..\Release\exts.dll; DestDir: {app}; Flags: restartreplace uninsrestartdelete
 Source: ..\Release\PCCtrller.exe; DestDir: {app}; Flags: restartreplace uninsrestartdelete replacesameversion
 Source: ..\Release\mfc71.dll; DestDir: {app}; Flags: restartreplace uninsrestartdelete replacesameversion
 Source: ..\Release\msvcp71.dll; DestDir: {app}; Flags: restartreplace uninsrestartdelete replacesameversion

@@ -112,6 +112,7 @@ int EyecareSetting::switchState(const std::string &password) {
 	// 如果从娱乐状态转变，不需要验证密码
 	if (getState() == ENTERT_TIME) {
 		setState(EYECARE_TIME);
+		setModified(true);
 	} else if (true == checkPassword(password)) {
 		setState(ENTERT_TIME);
 
@@ -120,6 +121,8 @@ int EyecareSetting::switchState(const std::string &password) {
 		} else {
 			SettingItem::setModel(SettingItem::MODE_PARENT);
 		}
+
+		setModified(true);
 	}
 
 	return getState();
