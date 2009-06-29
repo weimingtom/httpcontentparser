@@ -65,11 +65,6 @@ TCHAR * getHotkeyname(const int type) {
 	}
 }
 
-// 应用程序的常量， 窗口名称 窗口类
-
-#define MAIN_WINDOW_PROP_NAME	(TEXT("Unicode_value"))
-#define MAIN_WINDOW_PROP_VALUE  7777
-
 #define HOME_WEBSITES			TEXT("www.family007.com")
 #define WEBSITES_BUYNOW			TEXT("www.family007.com")
 
