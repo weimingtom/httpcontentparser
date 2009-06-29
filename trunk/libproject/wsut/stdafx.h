@@ -9,7 +9,7 @@
 
 
 #ifdef _DEBUG
-#pragma comment(lib, "apputilityd.lib")
+#pragma comment(lib, "apputilityMTd.lib")
 #else
-#pragma comment(lib, "apputility.lib")
+#pragma comment(lib, "apputilityMT.lib")
 #endif
