@@ -173,7 +173,10 @@ void CMainUIDlg::setupTrayMenu() {
 	m_trayMenu.ModifyODMenu(0,_T("Search Keyword"),  IDB_TRAY_HISTORY_SEARCH);
 	m_trayMenu.ModifyODMenu(0,_T("Images"),  IDB_TRAY_DESKTOPIMAGE);
 
-	m_pWebHistoryMenu = m_trayMenu.GetSubMenu(POS_HISTORY_MENU_ITEM);
+	CMenu *pPopMenu = m_trayMenu.GetSubMenu(0);
+	if (pPopMenu != NULL) {
+		m_pWebHistoryMenu = pPopMenu->GetSubMenu(POS_HISTORY_MENU_ITEM);
+	}
 
 	if (! Services::showRegisterMenuItem()) {
 		m_trayMenu.RemoveMenu(ID_MAIN_REGISTER, MF_BYCOMMAND);
