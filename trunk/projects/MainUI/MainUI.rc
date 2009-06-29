@@ -901,7 +901,7 @@ BEGIN
     BEGIN
         BLOCK "040903a8"
         BEGIN
-            VALUE "FileDescription", "Control Centrol of Family007"
+            VALUE "FileDescription", "Control Center of Family007"
             VALUE "FileVersion", "1.0.0.1"
             VALUE "InternalName", "Family007"
             VALUE "LegalCopyright", "All Copyright Reserve (C) 2009"

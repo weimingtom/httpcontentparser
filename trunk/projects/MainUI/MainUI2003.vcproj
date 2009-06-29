@@ -46,7 +46,7 @@
 				MkTypLibCompatible="FALSE"/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy .\Debug\MainUI.exe ..\..\debug\Family007.exe"/>
+				CommandLine="copy .\Debug\Family007.exe ..\..\debug\Family007.exe"/>
 			<Tool
 				Name="VCPreBuildEventTool"/>
 			<Tool
@@ -103,7 +103,7 @@
 				MkTypLibCompatible="FALSE"/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy .\release\MainUI.exe ..\..\release\Family007.exe"/>
+				CommandLine="copy .\release\Family007.exe ..\..\release\Family007.exe"/>
 			<Tool
 				Name="VCPreBuildEventTool"/>
 			<Tool
