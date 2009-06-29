@@ -20,13 +20,13 @@ OutputDir=D:\workspace
 OutputBaseFilename=Family007
 Compression=lzma
 SolidCompression=yes
+AlwaysRestart =yes
 
 [Languages]
 Name: english; MessagesFile: compiler:Default.isl
 
 [Tasks]
 Name: desktopicon; Description: {cm:CreateDesktopIcon}; GroupDescription: {cm:AdditionalIcons}; Flags: unchecked
-Name: restart; Description: ask restart after install; Flags: restart; Languages: 
 
 [Files]
 Source: ..\Release\exts.dll; DestDir: {app}; Flags: restartreplace uninsrestartdelete
