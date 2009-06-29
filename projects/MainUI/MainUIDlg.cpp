@@ -184,12 +184,6 @@ BOOL CMainUIDlg::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 
-	share_hwnd = GetSafeHwnd();
-
-	// 设置一个属性，一边用户在开启新程序时相应
-	// 通过获取此属性，便能判断程序是否已经启动
-	SetProp(this->GetSafeHwnd(), MAIN_WINDOW_PROP_NAME, (HWND)MAIN_WINDOW_PROP_VALUE);
-
 	// 设置字体
 	setControlsFonts();
 
