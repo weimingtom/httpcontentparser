@@ -61,12 +61,12 @@ int AppInstallValidate::uninstall() {
 	internal_utility::UnRegisterServices();
 	return 0;
 }
-int AppInstallValidate::repair(HMODULE hModule, bool removefirst) {
+int AppInstallValidate::repair(bool removefirst) {
 	if (shouldInstall() == false) {
 		return 0;
 	}
 
-	getCurrentPath(hModule);
+	getCurrentPath(NULL);
 
 	// 安装路径注册表项
 	if (!validateReigstrInstallPath(install_path)) {
@@ -81,14 +81,12 @@ int AppInstallValidate::repair(HMODULE hModule, bool removefirst) {
 	repairShellExt(removefirst);
 
 	// COM 服务
-	if (!serviceWorking()) {
-		repairCOM(removefirst);
-	}
+	//if (!serviceWorking()) {
+	repairCOM(removefirst);
+	//}
 	return 0;
 }
-int AppInstallValidate::repair(bool removefirst) {
-	return repair(NULL, removefirst);
-}
+
 
 //===================================
 // 修复注册表项
@@ -192,7 +190,7 @@ void AppInstallValidate::installSPI() {
 //=========================================
 // COM服务
 // COM服务是否注册
-bool AppInstallValidate::serviceWorking() {
+/*bool AppInstallValidate::serviceWorking() {
 	if (!shouldRepairCOM())
 		return true;
 
@@ -217,19 +215,13 @@ bool AppInstallValidate::serviceWorking() {
 	CloseServiceHandle(service_handle);
 	CloseServiceHandle(handle);
 	return true;
-}
+}*/
 
 void AppInstallValidate::repairCOM(bool removefirst) {
-	if (type_ != VALIDATE_SPI) {
+	if (removefirst == TRUE) {
 		setErrNo(internal_utility::UnRegisterServices());
-		setErrNo(internal_utility::RegisterServices());
-	} else {
-		setErrNo(internal_utility::UnRegisterServices(install_path));
-		setErrNo(internal_utility::RegisterServices(install_path));
 	}
-	// COM还是应该继续运行下去
-	// 除非用户从卸载程序卸载
-	// 因此ELSE并不执行卸载部分
+	setErrNo(internal_utility::RegisterServices());
 }
 
 bool AppInstallValidate::shouldRepairCOM() {
@@ -326,7 +318,7 @@ UINT RegisterServices(TCHAR * install_path) {
 	TCHAR fullpath[MAX_PATH], cmd[MAX_PATH];
 	_sntprintf(fullpath, MAX_PATH, TEXT("%s%s"), install_path, SERVICE_FILENAME);
 	if (_taccess(fullpath, 0) != -1) {
-		_sntprintf(cmd, MAX_PATH, "%s /service", fullpath);
+		_sntprintf(cmd, MAX_PATH, "%s /regserver /i", fullpath);
 		WinExec(cmd, SW_HIDE);
 		return PACKETSFILTERED_INSTALL_SUCC;
 	} else {
@@ -339,8 +331,8 @@ UINT UnRegisterServices(TCHAR * install_path) {
 	TCHAR fullpath[MAX_PATH], cmd[MAX_PATH];
 	_sntprintf(fullpath, MAX_PATH, TEXT("%s%s"), install_path, SERVICE_FILENAME);
 	if (_taccess(fullpath, 0) != -1) {
-		_sntprintf(cmd, MAX_PATH, "%s /unregserver", fullpath);
-		//WinExec(cmd, SW_HIDE);
+		_sntprintf(cmd, MAX_PATH, "%s /unregserver /i", fullpath);
+		WinExec(cmd, SW_HIDE);
 		return PACKETSFILTERED_INSTALL_SUCC;
 	} else {
 		// 如果文件不存在则返回FALSE

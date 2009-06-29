@@ -31,7 +31,6 @@ public:
 	~AppInstallValidate(void);
 
 	int repair(bool removefirst=false);		// ÐÞ¸´
-	int repair(HMODULE hModule, bool removefirst=false);
 	bool validateIntact();
 
 	void getErrorMessage(TCHAR * msg, const int len);
@@ -48,7 +47,7 @@ private:
 	bool shouldRepairSPI();
 
 	// COM Service
-	bool serviceWorking();
+	//bool serviceWorking();
 	void repairCOM(bool removefirst);
 	bool shouldRepairCOM();
 
