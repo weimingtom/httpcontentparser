@@ -57,7 +57,7 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="Ö´ÐÐ×¢²á"
-				CommandLine="copy .\debug\exts.dll ..\..\debug
+				CommandLine="copy .\debug\exts.dll ..\..\debug\fexts.dll
 copy .\exts.h ..\..\include\shell
 copy .\exts_i.c ..\..\include\shell
 
@@ -128,10 +128,10 @@ copy .\exts_i.c ..\..\include\shell
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="Ö´ÐÐ×¢²á"
-				CommandLine="copy .\release\exts.dll ..\..\release
+				CommandLine="copy .\release\exts.dll ..\..\release\fexts.dll
 copy .\exts.h ..\..\include\shell
 copy .\exts_i.c ..\..\include\shell
-regsvr32 /s /c ..\..\release\exts.dll
+regsvr32 /s /c ..\..\release\fexts.dll
 
 "/>
 			<Tool
