@@ -5,5 +5,6 @@
 #define PASSWORD_EYECARE	200 
 
 #define DEFAULT_PASSWORD	TEXT("123")
+#define DEFAULT_INIT_PASSWORD		_T("I&lns*31_MaEi(c")
 
 #endif  // _INCLUDE_PASSWORD_TYPE_H__
