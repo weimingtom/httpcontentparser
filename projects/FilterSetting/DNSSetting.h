@@ -35,6 +35,7 @@ END_COM_MAP()
 
 	HRESULT FinalConstruct()
 	{
+		AddRef();
 		return S_OK;
 	}
 	

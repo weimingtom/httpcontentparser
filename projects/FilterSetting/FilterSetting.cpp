@@ -79,6 +79,10 @@ void initializeSetting() {
 	// 读取访问网站的信息
 	g_websitesUtil.load(GetWebSiteFile(filename, MAX_PATH));
 	__LTRC__("Website files path : "<< filename);
+
+	// 如果logdir不存在则创建
+	TCHAR logdir[MAX_PATH];
+	GetLogDirectory(logdir, MAX_PATH);
 }
 
 extern "C" int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, 
@@ -100,7 +104,7 @@ extern "C" int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/
 	// todo 此处应该直接使用函数获取状态
 	// 获取应用程序状态
 	AppUtility::AppInstallValidate validator(VALIDATE_COM, getAppStatus());
-	// validator.repair();
+	validator.repair();
 
 	initializeSetting();
 

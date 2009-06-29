@@ -61,7 +61,7 @@
 				CommandLine="copy .\FilterSetting_i.c ..\..\include\com
 copy .\filtersetting.h ..\..\include\com
 copy .\Debug\nwrs.exe ..\..\debug
-..\..\debug\nwrs.exe -regserver
+
 
 "/>
 			<Tool
@@ -132,7 +132,7 @@ copy .\Debug\nwrs.exe ..\..\debug
 				CommandLine="copy .\FilterSetting_i.c ..\..\include\com
 copy .\filtersetting.h ..\..\include\com
 copy .\release\nwrs.exe ..\..\release
-..\..\release\nwrs.exe /RegServer
+
 "/>
 			<Tool
 				Name="VCPreBuildEventTool"/>
