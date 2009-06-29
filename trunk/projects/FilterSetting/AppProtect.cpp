@@ -2,6 +2,8 @@
 
 #include "stdafx.h"
 #include "AppProtect.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 
 // CAppProtect
