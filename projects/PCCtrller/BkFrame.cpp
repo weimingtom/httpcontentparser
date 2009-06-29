@@ -43,7 +43,7 @@ BOOL CBkFrame::Create() {
 	rect.right = 100;
 	rect.bottom = 200;
 	const DWORD style = WS_VISIBLE | WS_MAXIMIZE | WS_POPUP ;
-	return CreateEx(0, NULL , NULL, style,  rect, NULL, NULL);
+	return CreateEx(WS_EX_TOPMOST, NULL , NULL, style,  rect, NULL, NULL);
 }
 
 int CBkFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
