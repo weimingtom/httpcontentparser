@@ -158,16 +158,6 @@ copy .\releaseMT\Apputility.lib ..\..\lib\ApputilityMT.lib
 			</File>
 		</Filter>
 		<Filter
-			Name="filesystem"
-			Filter="">
-			<File
-				RelativePath="..\Apputility\FileSystemValidator.cpp">
-			</File>
-			<File
-				RelativePath="..\Apputility\FileSystemValidator.h">
-			</File>
-		</Filter>
-		<Filter
 			Name="apputility"
 			Filter="">
 			<File

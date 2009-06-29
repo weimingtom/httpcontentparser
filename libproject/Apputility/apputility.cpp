@@ -200,6 +200,21 @@ const TCHAR * GetSearchWordFile(TCHAR * filename, const unsigned len) {
 	return filename;
 }
 
+const TCHAR * GetLogDirectory(TCHAR * logdir, const unsigned len) {
+	TCHAR installPath[MAX_PATH];
+	GetInstallPath(installPath, MAX_PATH);
+
+	assert (logdir != NULL);
+	assert ( true == strutility::endwith(installPath, TEXT("\\")));
+	GenerateFullPath(logdir, MAX_PATH, installPath, TEXT("log"));
+
+	// 如果路径不存在则创建
+	if (_taccess(logdir, 0) == -1) {
+		_mkdir(logdir);
+	}
+	return logdir;
+}
+
 const TCHAR * GetPageDirectory(TCHAR * pagePath, const unsigned len) {
 	TCHAR installPath[MAX_PATH];
 	GetInstallPath(installPath, MAX_PATH);
