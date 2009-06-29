@@ -11,10 +11,10 @@ UINT CAppProtect::CopyCallback(HWND hwnd, UINT wFunc, UINT wFlags, LPCTSTR pszSr
 
 	// 获取DLL路径
 	GetModuleFileName(g_hInstance, comfilename, MAX_PATH);
-	_splitpath(comfilename, driver, folder, name, ext);
-
+	_tsplitpath(comfilename, driver, folder, name, ext);
+	
 	// 生成目录
-	_sntprintf(path, MAX_PATH, "%s\\%s", driver, folder);
+	_sntprintf(path, MAX_PATH, TEXT("%s\\%s"), driver, folder);
 
 	// 如果操作任何一个本目录下的文件
 	if (NULL != _tcsstr(pszSrcFile, path)) {
