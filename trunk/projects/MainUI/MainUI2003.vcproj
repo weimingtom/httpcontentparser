@@ -96,6 +96,7 @@
 				SubSystem="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
+				OptimizeForWindows98="0"
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
@@ -111,7 +112,7 @@
 			<Tool
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="NDEBUG"
-				Culture="2052"
+				Culture="1033"
 				AdditionalIncludeDirectories="$(IntDir)"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
@@ -425,6 +426,9 @@
 				<File
 					RelativePath=".\MainUIDlg.cpp">
 				</File>
+				<File
+					RelativePath=".\MainUIDlg.h">
+				</File>
 			</Filter>
 			<Filter
 				Name="ruledlg"
@@ -440,9 +444,6 @@
 				</File>
 				<File
 					RelativePath=".\Lev1DlgTools.h">
-				</File>
-				<File
-					RelativePath=".\MainUIDlg.h">
 				</File>
 			</Filter>
 			<Filter
