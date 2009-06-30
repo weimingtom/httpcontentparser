@@ -102,7 +102,7 @@ const TCHAR * GetUninstallUtility(TCHAR * fullpath, const int len) {
 void StartMainUI() {
 	TCHAR  fullpath[MAX_PATH];
 	GetMainUIPath(fullpath, MAX_PATH);
-	WinExec(fullpath, SW_SHOW);
+	WinExec(fullpath, SW_NORMAL);
 }
 
 void LockComputer() {

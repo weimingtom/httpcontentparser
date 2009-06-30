@@ -218,8 +218,14 @@ BOOL CMainUIDlg::OnInitDialog()
 
 	SetTimer(ID_TIMER, TIME_ESCPSE, NULL);
 
+	share_hwnd = GetSafeHwnd();
+
 	// 由于程序刚刚启动，这里不会自动切换到子模式
-	HideMainUI(FALSE);
+	if (Services::isParentModel() == true) {
+		BringWindowToTop();
+	} else {
+		HideMainUI(FALSE);
+	}
 	return TRUE;  // 除非设置了控件的焦点，否则返回 TRUE
 }
 

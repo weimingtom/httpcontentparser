@@ -102,8 +102,6 @@ BOOL CMainUIApp::InitInstance() {
 		return FALSE;
 	}
 
-	initlogger();
-
 	// 获取应用程序状态
 	LONG app_status = SNOWMAN_STATUS_TRIAL;
 	try {
