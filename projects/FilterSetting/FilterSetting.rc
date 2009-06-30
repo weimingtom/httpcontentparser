@@ -52,8 +52,6 @@ END
 // REGISTRY
 //
 
-IDR_APPPROTECT          REGISTRY                "AppProtect.rgs"
-IDR_APPLAUNCHFILTER     REGISTRY                "AppLaunchFilter.rgs"
 #endif    // 中文(中华人民共和国) resources
 /////////////////////////////////////////////////////////////////////////////
 
