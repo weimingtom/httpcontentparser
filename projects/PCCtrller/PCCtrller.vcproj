@@ -100,7 +100,8 @@
 			<Tool
 				Name="VCPreLinkEventTool"/>
 			<Tool
-				Name="VCResourceCompilerTool"/>
+				Name="VCResourceCompilerTool"
+				Culture="1033"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
