@@ -34,30 +34,7 @@ std::string CDlgOptions::getHelpLink() const {
 }
 
 namespace {
-	// 注意API的HOTKEY与MFC定义的值不相同，真是晕菜
-	WORD  getModifierKey(WORD kModify_mfc) {
-		WORD vModifiers  = 0;
-		if (kModify_mfc & HOTKEYF_SHIFT)
-			vModifiers |= MOD_SHIFT;
-		if (kModify_mfc & HOTKEYF_CONTROL)
-			vModifiers |= MOD_CONTROL;
-		if (kModify_mfc & HOTKEYF_ALT)
-			vModifiers |= MOD_ALT;
 
-		return vModifiers;
-	}
-
-	WORD  getModifierKeyMFC(WORD kModify) {
-		WORD vModifiers_mfc  = 0;
-		if (kModify & MOD_SHIFT)
-			vModifiers_mfc |= HOTKEYF_SHIFT;
-		if (kModify & MOD_CONTROL)
-			vModifiers_mfc |= HOTKEYF_CONTROL;
-		if (kModify & MOD_ALT)
-			vModifiers_mfc |= HOTKEYF_ALT;
-
-		return vModifiers_mfc; 
-	}
 
 	BOOL notifyCOMServiceHotkey(WORD vKey, WORD vModifiers, const int type) {
 		try {
@@ -80,11 +57,10 @@ namespace {
 		}
 	}
 
-	BOOL setHotkey(WORD vKey, WORD vModifiers_mfc, const int type) {
+	BOOL setHotkey(WORD vKey, WORD vModifier, const int type) {
 		// 首先注销当前的热键
 		UnregisterHotKey(AfxGetMainWnd()->GetSafeHwnd(), type);
 
-		WORD vModifier = getModifierKey(vModifiers_mfc);
 		if (0 != vModifier && 0 != vKey) {	
 			if (!RegisterHotKey(AfxGetMainWnd()->GetSafeHwnd(), type, vModifier,vKey)) {
 				// 如果失败，则设置为0
@@ -118,26 +94,25 @@ void CDlgOptions::DoDataExchange(CDataExchange* pDX)
 
 int CDlgOptions::setHotKey() {
 	// 注册热键
-	WORD vModifiers_mfc, vKey;
+	WORD vModifier, vKey;
 
 	// 设置显示对话框的热键
-	m_hotKeyShowDlg.GetHotKey(vKey, vModifiers_mfc);
-	if (FALSE == ::setHotkey(vKey, vModifiers_mfc, HOTKEY_SHOW_MAINUI)) {
+	m_hotKeyShowDlg.GetHotKey(vKey, vModifier);
+	if (FALSE == ::setHotkey(vKey, vModifier, HOTKEY_SHOW_MAINUI)) {
 		AfxMessageBox(IDS_HOTKEY_CONFLICT, MB_OK | MB_ICONERROR);;
 		return FAILED_APPLY;
 	}
 
 	// 设置切换用户的热键
-	m_hotkeySwitchUser.GetHotKey(vKey, vModifiers_mfc);
-	if (FALSE == ::setHotkey(vKey, vModifiers_mfc, HOTKEY_SHOW_SWITCH_USER)) {
+	m_hotkeySwitchUser.GetHotKey(vKey, vModifier);
+	if (FALSE == ::setHotkey(vKey, vModifier, HOTKEY_SHOW_SWITCH_USER)) {
 		AfxMessageBox(IDS_HOTKEY_CONFLICT, MB_OK | MB_ICONERROR);
 		return FAILED_APPLY;
 	}
 
 
 	// 设置启动程序， 必须通过COM设置
-	m_hotkeyLaunch.GetHotKey(vKey, vModifiers_mfc);
-	WORD vModifier = getModifierKey(vModifiers_mfc);
+	m_hotkeyLaunch.GetHotKey(vKey, vModifier);
 	if (!notifyCOMServiceHotkey(vKey, vModifier, HOTKEY_LANUCH_MAINUI)) {
 		AfxMessageBox(IDS_HOTKEY_CONFLICT, MB_OK | MB_ICONERROR);
 		return FAILED_APPLY;

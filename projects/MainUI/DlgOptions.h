@@ -4,6 +4,7 @@
 #include <afxcmn.h>
 #include "afxcmn.h"
 #include "afxwin.h"
+#include "AutoTraHotKeyCtrl.h"
 
 // CDlgOptions ¶Ô»°¿ò
 
@@ -38,9 +39,9 @@ protected:
 	CButton m_chkAutoLoad;
 	CStatic m_staSystemOption;
 	CStatic m_staHotkey;
-	CHotKeyCtrl m_hotkeyLaunch;
-	CHotKeyCtrl m_hotKeyShowDlg;
-	CHotKeyCtrl m_hotkeySwitchUser;
+	CAutoTraHotKeyCtrl m_hotkeyLaunch;
+	CAutoTraHotKeyCtrl m_hotKeyShowDlg;
+	CAutoTraHotKeyCtrl m_hotkeySwitchUser;
 
 	BOOL m_bAutoRun;
 	BOOL m_bOld_autorun;
