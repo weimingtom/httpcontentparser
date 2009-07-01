@@ -475,7 +475,7 @@ void CMainUIDlg::OnMainLockcomputer() {
 void CMainUIDlg::InitTreeNodes() {
 	// m_treeNavigation.DeleteAllItems();
 	// ³õÊ¼»¯ImageList
-	m_imageList.Create(16, 16, ILC_COLOR24 | ILC_MASK, 50, 5);
+	m_imageList.Create(16, 16, ILC_COLOR32 | ILC_MASK, 50, 5);
 	m_imageList.Add(AfxGetApp()->LoadIcon(IDI_DEFAULT));
 	const int INDEX_HOME		= m_imageList.Add(AfxGetApp()->LoadIcon(IDI_TREE_HOME));
 	const int INDEX_TIME			= m_imageList.Add(AfxGetApp()->LoadIcon(IDI_TREE_TIME));

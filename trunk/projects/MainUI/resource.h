@@ -120,7 +120,6 @@
 #define IDD_POPDLG_SEACHWORD_HISTORY    170
 #define IDD_DLG_PROGRAM                 172
 #define IDI_DEFAULT                     173
-#define IDI_TREE_WEB                    174
 #define IDI_TREE_TIME                   175
 #define IDI_TREE_SEACH                  176
 #define IDI_TREE_OPTION                 177
@@ -132,7 +131,6 @@
 #define IDI_TREE_SCREENSHOT             183
 #define IDI_TREE_DISCONNECT             184
 #define IDI_TREE_EYECARE                186
-#define IDI_TREE_HOME                   187
 #define IDI_TREE_TOOLS                  188
 #define IDI_MODEL_PROTECTED             189
 #define IDI_MODEL_PARENT                190
@@ -160,6 +158,9 @@
 #define IDD_POPUP_SETPWDFIRST           219
 #define IDB_TOP_PART                    220
 #define IDI_TEXT_LEFT                   221
+#define IDI_TREE_HOME                   222
+#define IDI_ICON1                       224
+#define IDI_TREE_WEB                    224
 #define IDC_TREE_NAVIG                  1000
 #define IDS_TREE_ROOT                   1001
 #define IDS_TREE_DNS_RULE               1002
@@ -346,7 +347,7 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        222
+#define _APS_NEXT_RESOURCE_VALUE        225
 #define _APS_NEXT_COMMAND_VALUE         32813
 #define _APS_NEXT_CONTROL_VALUE         1127
 #define _APS_NEXT_SYMED_VALUE           112

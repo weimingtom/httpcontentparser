@@ -339,6 +339,9 @@
 				RelativePath=".\res\toppart.bmp">
 			</File>
 			<File
+				RelativePath=".\res\webrule.ico">
+			</File>
+			<File
 				RelativePath=".\res\website.bmp">
 			</File>
 			<File
