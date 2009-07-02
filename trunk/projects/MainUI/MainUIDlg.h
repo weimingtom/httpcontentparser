@@ -160,6 +160,7 @@ private:
 	CDlgRegister m_dlgRegister_;
 
 private:
+	void OnRequestShowMainUI();		// 当用户要求执行显示对话框时，调用
 	void SwitchOnClose();
 	void ShowRegTipDlg();
 

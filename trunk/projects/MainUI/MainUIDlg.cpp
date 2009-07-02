@@ -247,18 +247,7 @@ void CMainUIDlg::OnTraymenuMainui() {
 		strMenuItem.LoadString(IDS_TRAYMENU_HIDEUI);
 		HideMainUI();
 	} else {
-		if (Services::isParentModel() == false) {
-			// 如果当前模式不是parent mode, 弹出对话框
-			// 使用户输入密码
-			if (IDOK == m_dlgCheckPassword_.DoModal()) {
-				strMenuItem.LoadString(IDS_TRAYMENU_SHOWUI);
-				ShowMainUI();
-			}
-		} else {
-			// 如果用户是parent model,则直接弹出对话框
-			strMenuItem.LoadString(IDS_TRAYMENU_SHOWUI);
-			ShowMainUI();
-		}
+		OnRequestShowMainUI();
 	}
 }
 
@@ -277,16 +266,7 @@ void CMainUIDlg::OnMainChangepassword()
 // 模式切换
 void CMainUIDlg::OnMainParents()
 {
-	if (Services::isParentModel() == false) {
-		if (IDOK == m_dlgCheckPassword_.DoModal()) {
-			ShowMainUI();
-		}
-	} else {
-		ShowMainUI();
-	}
-
-	// 调整图标
-	AdjustModelIcon();
+	OnRequestShowMainUI();
 }
 void CMainUIDlg::OnMainChildren()
 {
@@ -298,15 +278,11 @@ void CMainUIDlg::OnMainChildren()
 LRESULT CMainUIDlg::OnHotKey(WPARAM wParam, LPARAM lParam) {
 	int id = (int)wParam;
 	if (id == HOTKEY_SHOW_MAINUI) {
-		// 如果工作在子模式下， 则不相应
-		if (Services::isParentModel() == false)
-			return -1;
 		if (isShown()) {
-
 			// 使用热键显示及隐藏是，不检测切换
 			HideMainUI(FALSE);
 		} else {
-			ShowMainUI();
+			OnRequestShowMainUI();
 		}
 	} else if (id == HOTKEY_SHOW_SWITCH_USER) {
 		// 如果工作在父模式下
@@ -314,12 +290,8 @@ LRESULT CMainUIDlg::OnHotKey(WPARAM wParam, LPARAM lParam) {
 			// 切换到孩子模式
 			Services::switchChildModel();
 		} else {
-			// 在孩子模式下， 弹出对话框,如果对话框已经显示， 则直接显示之前的对话框
-			if (IDOK == m_dlgCheckPassword_.DoModal()) {
-				ShowMainUI();
-			} else {
-				HideMainUI(FALSE);	// 本身在子模式下，不需要检测
-			}
+			// 之切换模式，不弹出对话框
+			m_dlgCheckPassword_.DoModal();
 		}
 	}
 
@@ -743,7 +715,28 @@ void CMainUIDlg::OnDestroy()
 	CDialog::OnDestroy();
 }
 
+// 如果程序工作在孩子模式则提示输入密码
+// 否则直接弹出对话框
+void CMainUIDlg::OnRequestShowMainUI() {
+	CString strMenuItem;
+	if (Services::isParentModel() == false) {
+		// 如果当前模式不是parent mode, 弹出对话框
+		// 使用户输入密码
+		if (IDOK == m_dlgCheckPassword_.DoModal()) {
+			strMenuItem.LoadString(IDS_TRAYMENU_SHOWUI);
+			ShowMainUI();
+		}
+	} else {
+		// 如果用户是parent model,则直接弹出对话框
+		strMenuItem.LoadString(IDS_TRAYMENU_SHOWUI);
+		ShowMainUI();
+	}
+
+		// 调整图标
+	AdjustModelIcon();
+}
 void CMainUIDlg::ShowMainUI() {
+	// 显示注册提示
 	ShowRegTipDlg();
 
 	ShowWindow(SW_SHOW);
@@ -787,12 +780,16 @@ void CMainUIDlg::OnLButtonDblClk(UINT nFlags, CPoint point)
 	// 如果运行于父模式之下
 	if (Services::isParentModel() == true) {
 		if (!isShown()) {
-			ShowMainUI();
+			OnRequestShowMainUI();
 		} else {
 			// 如果没有显示则激活
 			HideMainUI(FALSE);
 		}
+	} else {
+		// 如果在子模式下，想要弹出对话框学要输入密码
+		OnRequestShowMainUI();
 	}
+
 	CDialog::OnLButtonDblClk(nFlags, point);
 }
 
