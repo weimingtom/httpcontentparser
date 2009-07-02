@@ -56,8 +56,16 @@ private:
 	void setCurDlg(const DWORD item);
 	void initDlgs();
 	void showDlg();
+	void setRightTitle(const int item);
+	void drawRightIcon(CDC *pDC);
 
-	//
+	// 树的数据分为两部分，高字节保存IDI， 低字节保存IDS
+	void setItemData(HTREEITEM hItem, WORD ids, WORD idi);
+	WORD getItemIcon(HTREEITEM hItem);
+	WORD getItemIDS(HTREEITEM hItem);
+	WORD getItemIcon();
+	WORD getItemIDS();
+
 	void ChangeCurDlg(CBaseDlg *dlg);
 
 	// 设置System Tray Menu;

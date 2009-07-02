@@ -426,7 +426,9 @@ void CMainUIDlg::OnPaint()
 			HideMainUI();
 			return;
 		} else {
+			CPaintDC dc(this); // 用于绘制的设备上下文
 			CDialog::OnPaint();
+			drawRightIcon(&dc);
 		}
 	}
 }
@@ -459,7 +461,8 @@ void CMainUIDlg::InitTreeNodes() {
 
 	HTREEITEM hRoot = m_treeNavigation.InsertItem(strRoot, TVI_ROOT, TVI_LAST);
 	m_treeNavigation.SetItemImage(hRoot, INDEX_HOME, INDEX_HOME);
-	m_treeNavigation.SetItemData(hRoot, -1);
+	setItemData(hRoot, -1, INDEX_HOME);
+
 
 	setRulesDlg();
 	setToolsDlg();
@@ -470,13 +473,12 @@ void CMainUIDlg::InitTreeNodes() {
 	strItem.LoadString(IDS_TREE_OPTIONS);
 	hItem = m_treeNavigation.InsertItem(strItem, hRoot);
 	m_treeNavigation.SetItemImage(hItem, INDEX_OPTION, INDEX_OPTION);
-	m_treeNavigation.SetItemData(hItem, IDS_TREE_OPTIONS);
+	setItemData(hItem, IDS_TREE_OPTIONS, INDEX_OPTION);
 
 	strItem.LoadString(IDS_TREE_ABOUT);
 	hItem = m_treeNavigation.InsertItem(strItem, hRoot);
-	m_treeNavigation.SetItemData(hItem, IDS_TREE_ABOUT);
 	m_treeNavigation.SetItemImage(hItem, INDEX_INFORM, INDEX_INFORM);
-	m_treeNavigation.SetItemData(hItem, IDS_TREE_ABOUT);
+	setItemData(hItem, IDS_TREE_ABOUT, INDEX_INFORM);
 
 	m_treeNavigation.Expand(hRoot, TVE_EXPAND);
 }
@@ -535,33 +537,33 @@ void CMainUIDlg::setToolsDlg() {
 	CString strItem;
 	strItem.LoadString(IDS_TREE_LEV1_TOOLS);
 	HTREEITEM hItemTools = m_treeNavigation.InsertItem(strItem, m_treeNavigation.GetRootItem());
-	m_treeNavigation.SetItemData(hItemTools, IDS_TREE_LEV1_TOOLS);
 	m_treeNavigation.SetItemImage(hItemTools, INDEX_TOOLS, INDEX_TOOLS);
+	setItemData(hItemTools, IDS_TREE_LEV1_TOOLS, INDEX_TOOLS);
 
 	HTREEITEM hItem;
 	// 视力保护
 	strItem.LoadString(IDS_TREE_EYECARE);
 	hItem = m_treeNavigation.InsertItem(strItem, hItemTools);
-	m_treeNavigation.SetItemData(hItem, IDS_TREE_EYECARE);
 	m_treeNavigation.SetItemImage(hItem, INDEX_EYECARE, INDEX_EYECARE);
+	setItemData(hItem, IDS_TREE_EYECARE, INDEX_EYECARE);
 
 	// 应用程序控制
 	strItem.LoadString(IDS_PROGRAM_CONTROL);
 	hItem = m_treeNavigation.InsertItem(strItem, hItemTools);
-	m_treeNavigation.SetItemData(hItem, IDS_PROGRAM_CONTROL);
 	m_treeNavigation.SetItemImage(hItem, INDEX_APP, INDEX_APP);
+	setItemData(hItem, IDS_PROGRAM_CONTROL, INDEX_APP);
 
 	// 屏幕记录
 	strItem.LoadString(IDS_TREE_SCREEN_SAVE);
 	hItem = m_treeNavigation.InsertItem(strItem, hItemTools);
-	m_treeNavigation.SetItemData(hItem, IDS_TREE_SCREEN_SAVE);
 	m_treeNavigation.SetItemImage(hItem, INDEX_SCREEN, INDEX_SCREEN);
+	setItemData(hItem, IDS_TREE_SCREEN_SAVE, INDEX_SCREEN);
 
 	// 上网时间
 	strItem.LoadString(IDS_TREE_ONLINE_HOUR);
 	hItem = m_treeNavigation.InsertItem(strItem, hItemTools);
-	m_treeNavigation.SetItemData(hItem, IDS_TREE_ONLINE_HOUR);
 	m_treeNavigation.SetItemImage(hItem, INDEX_ONLINETIME, INDEX_ONLINETIME);
+	setItemData(hItem, IDS_TREE_ONLINE_HOUR, INDEX_ONLINETIME);
 	
 	// 展开
 	m_treeNavigation.Expand(hItemTools, TVE_EXPAND );
@@ -577,40 +579,58 @@ void CMainUIDlg::setRulesDlg() {
 	CString strItem;
 	strItem.LoadString(IDS_TREE_LEV1_RULES);
 	HTREEITEM hItemRules = m_treeNavigation.InsertItem(strItem, m_treeNavigation.GetRootItem());
-	m_treeNavigation.SetItemData(hItemRules, IDS_TREE_LEV1_RULES);
 	m_treeNavigation.SetItemImage(hItemRules, INDEX_WEB, INDEX_WEB);
+	setItemData(hItemRules, IDS_TREE_LEV1_RULES, INDEX_WEB);
 
 	HTREEITEM hItem;
 
 	// Web 白名单
 	strItem.LoadString(IDS_DNS_WHITE_LIST); 
 	hItem = m_treeNavigation.InsertItem(strItem, hItemRules);
-	m_treeNavigation.SetItemData(hItem, IDS_DNS_WHITE_LIST);
 	m_treeNavigation.SetItemImage(hItem, INDEX_WHITE, INDEX_WHITE);
+	setItemData(hItem, IDS_DNS_WHITE_LIST, INDEX_WHITE);
 	
 	// 黑名单
 	strItem.LoadString(IDS_TREE_DNS_RULE); 
 	hItem = m_treeNavigation.InsertItem(strItem, hItemRules);
-	m_treeNavigation.SetItemData(hItem, IDS_TREE_DNS_RULE);
 	setCurDlg(IDS_TREE_DNS_RULE);
 	m_treeNavigation.SetItemImage(hItem, INDEX_BLACK, INDEX_BLACK);
+	setItemData(hItem, IDS_TREE_DNS_RULE, INDEX_BLACK);
 
 	// 搜索规则
 	strItem.LoadString(IDS_TREE_SEARCH_RULE); 
 	hItem = m_treeNavigation.InsertItem(strItem, hItemRules);
-	m_treeNavigation.SetItemData(hItem, IDS_TREE_SEARCH_RULE);
 	m_treeNavigation.SetItemImage(hItem, INDEX_SEARCH, INDEX_SEARCH);
+	setItemData(hItem, IDS_TREE_SEARCH_RULE, INDEX_SEARCH);
 
 	// WebHistory
 	strItem.LoadString(IDS_TREE_WEB_HISTORY);
 	hItem = m_treeNavigation.InsertItem(strItem, hItemRules);
-	m_treeNavigation.SetItemData(hItem, IDS_TREE_WEB_HISTORY);
 	m_treeNavigation.SetItemImage(hItem, INDEX_HISTORY, INDEX_HISTORY);
+	setItemData(hItem, IDS_TREE_WEB_HISTORY, INDEX_HISTORY);
 
 	m_treeNavigation.SelectItem(hItemRules);
 
 	// 展开
 	m_treeNavigation.Expand(hItemRules, TVE_EXPAND );
+}
+
+void CMainUIDlg::setItemData(HTREEITEM hItem, WORD ids, WORD idi) {
+	m_treeNavigation.SetItemData(hItem, MAKELPARAM(ids, idi));
+}
+
+WORD CMainUIDlg::getItemIcon(HTREEITEM hItem) {
+	return HIWORD(m_treeNavigation.GetItemData(hItem));
+}
+WORD CMainUIDlg::getItemIDS(HTREEITEM hItem) {
+	return LOWORD(m_treeNavigation.GetItemData(hItem));
+}
+
+WORD CMainUIDlg::getItemIcon() {
+	return getItemIcon(m_treeNavigation.GetSelectedItem());
+}
+WORD CMainUIDlg::getItemIDS() {
+	return getItemIDS(m_treeNavigation.GetSelectedItem());
 }
 
 
@@ -668,11 +688,33 @@ void CMainUIDlg::setCurDlg(const DWORD item) {
 			ASSERT(false);
 			break;
 	}
+
+	setRightTitle(item);
+
+	showDlg();
+}
+
+void CMainUIDlg::setRightTitle(const int item) {
+	//设置右侧标题
 	CString strItem;
 	strItem.LoadString(item);
 	GetDlgItem(IDC_RIGHT_TITLE)->SetWindowText(strItem);
 
-	showDlg();
+	CRect rect;
+	CWnd * iconPos = GetDlgItem(IDC_ICON_POS);
+	iconPos->GetWindowRect(&rect);
+	ScreenToClient(&rect);
+	rect.InflateRect(5, 5, 5, 5);
+	InvalidateRect(&rect, TRUE);
+}
+
+void CMainUIDlg::drawRightIcon(CDC *pDC) {
+	CRect rect;
+	CWnd * iconPos = GetDlgItem(IDC_ICON_POS);
+	iconPos->GetWindowRect(&rect);
+	ScreenToClient(&rect);
+	CPoint pt(rect.left, rect.top);
+	m_imageList.Draw(pDC, getItemIcon(), pt, ILD_NORMAL);
 }
 
 void CMainUIDlg::OnTvnSelchangedTreeNavig(NMHDR *pNMHDR, LRESULT *pResult)
@@ -680,7 +722,7 @@ void CMainUIDlg::OnTvnSelchangedTreeNavig(NMHDR *pNMHDR, LRESULT *pResult)
 	LPNMTREEVIEW pNMTreeView = reinterpret_cast<LPNMTREEVIEW>(pNMHDR);
 
 	// HTREEITEM hItem = m_treeNavigation.GetSelectedItem();
-	DWORD itemData = (DWORD)m_treeNavigation.GetItemData(pNMTreeView->itemNew.hItem);
+	DWORD itemData = getItemIDS(pNMTreeView->itemNew.hItem);
 
 	try {
 		// 首先调用
