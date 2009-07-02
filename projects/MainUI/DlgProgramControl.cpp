@@ -257,7 +257,7 @@ BOOL CDlgProgramControl::OnInitDialog()
 	CBaseDlg::OnInitDialog();
 
 	// ³õÊ¼»¯ImageList
-	m_imagelist.Create(16, 16, ILC_COLOR24 | ILC_MASK, 50, 5);
+	m_imagelist.Create(16, 16, ILC_COLOR32 | ILC_MASK, 50, 5);
 	HICON hIcon;
 	VERIFY(hIcon = AfxGetApp()->LoadIcon(IDI_DEFAULT));
 	VERIFY(0 == m_imagelist.Add(hIcon));
