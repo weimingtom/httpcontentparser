@@ -529,7 +529,7 @@ void CMainUIDlg::setToolsDlg() {
 	const int INDEX_TOOLS	= m_imageList.Add(AfxGetApp()->LoadIcon(IDI_TREE_TOOLS));
 	const int INDEX_APP = m_imageList.Add(AfxGetApp()->LoadIcon(IDI_TREE_APPCONTROL));
 	const int INDEX_SCREEN = m_imageList.Add(AfxGetApp()->LoadIcon(IDI_TREE_SCREENSHOT));
-	const int INDEX_DISCONNECT = m_imageList.Add(AfxGetApp()->LoadIcon(IDI_TREE_DISCONNECT));
+	const int INDEX_ONLINETIME = m_imageList.Add(AfxGetApp()->LoadIcon(IDI_TREE_ONLINETIME));
 	const int INDEX_EYECARE = m_imageList.Add(AfxGetApp()->LoadIcon(IDI_TREE_EYECARE));
 
 	CString strItem;
@@ -561,7 +561,7 @@ void CMainUIDlg::setToolsDlg() {
 	strItem.LoadString(IDS_TREE_ONLINE_HOUR);
 	hItem = m_treeNavigation.InsertItem(strItem, hItemTools);
 	m_treeNavigation.SetItemData(hItem, IDS_TREE_ONLINE_HOUR);
-	m_treeNavigation.SetItemImage(hItem, INDEX_DISCONNECT, INDEX_DISCONNECT);
+	m_treeNavigation.SetItemImage(hItem, INDEX_ONLINETIME, INDEX_ONLINETIME);
 	
 	// Õ¹¿ª
 	m_treeNavigation.Expand(hItemTools, TVE_EXPAND );

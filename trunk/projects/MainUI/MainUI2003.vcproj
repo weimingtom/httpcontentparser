@@ -189,9 +189,6 @@
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx"
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}">
 			<File
-				RelativePath=".\res\3.ico">
-			</File>
-			<File
 				RelativePath=".\res\6.ico">
 			</File>
 			<File
@@ -199,12 +196,6 @@
 			</File>
 			<File
 				RelativePath=".\res\appcontrol.ico">
-			</File>
-			<File
-				RelativePath=".\res\bitmap5.bmp">
-			</File>
-			<File
-				RelativePath=".\res\bitmap6.bmp">
 			</File>
 			<File
 				RelativePath=".\res\blackwhiteside.ico">
@@ -222,10 +213,10 @@
 				RelativePath=".\res\default.ico">
 			</File>
 			<File
-				RelativePath=".\res\disconnect.ico">
+				RelativePath=".\res\eyecare.ico">
 			</File>
 			<File
-				RelativePath=".\res\eyecare.ico">
+				RelativePath=".\res\eyecare_big.ico">
 			</File>
 			<File
 				RelativePath=".\res\Folder_A.bmp">
@@ -264,9 +255,6 @@
 				RelativePath=".\res\Home.ico">
 			</File>
 			<File
-				RelativePath=".\res\icon3.ico">
-			</File>
-			<File
 				RelativePath=".\res\inform.ico">
 			</File>
 			<File
@@ -292,6 +280,9 @@
 			</File>
 			<File
 				RelativePath=".\res\MainUI.rc2">
+			</File>
+			<File
+				RelativePath=".\res\online_time.ico">
 			</File>
 			<File
 				RelativePath=".\res\option.bmp">
@@ -328,6 +319,9 @@
 			</File>
 			<File
 				RelativePath=".\res\Tips.bmp">
+			</File>
+			<File
+				RelativePath=".\res\tooks.ico">
 			</File>
 			<File
 				RelativePath=".\res\tools.ico">
