@@ -535,7 +535,7 @@ void CMainUIDlg::setToolsDlg() {
 	CString strItem;
 	strItem.LoadString(IDS_TREE_LEV1_TOOLS);
 	HTREEITEM hItemTools = m_treeNavigation.InsertItem(strItem, m_treeNavigation.GetRootItem());
-	m_treeNavigation.SetItemData(hItemTools, IDS_TREE_LEV1_RULES);
+	m_treeNavigation.SetItemData(hItemTools, IDS_TREE_LEV1_TOOLS);
 	m_treeNavigation.SetItemImage(hItemTools, INDEX_TOOLS, INDEX_TOOLS);
 
 	HTREEITEM hItem;

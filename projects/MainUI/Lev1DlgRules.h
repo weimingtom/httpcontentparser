@@ -17,7 +17,7 @@ public:
 // 对话框数据
 	enum { IDD = IDD_LEV1_RULE };
 
-	
+	virtual BOOL OnInitDialog();
 	virtual int OnApply();
 	virtual void OnShow();
 protected:
@@ -26,9 +26,4 @@ protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 支持
 
 	DECLARE_MESSAGE_MAP()
-public:
-	virtual BOOL OnInitDialog();
-	CString m_strComment;
-	CEdit m_edit;
-	CStatic m_staComment;
 };
