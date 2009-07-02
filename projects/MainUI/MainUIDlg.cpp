@@ -65,7 +65,6 @@ BEGIN_MESSAGE_MAP(CMainUIDlg, CDialog)
 	//}}AFX_MSG_MAP
 	ON_NOTIFY(NM_CLICK, IDC_TREE_NAVIG, OnNMClickTreeNavig)
 	ON_NOTIFY(TVN_SELCHANGED, IDC_TREE_NAVIG, OnTvnSelchangedTreeNavig)
-	ON_WM_KEYDOWN()
 	ON_MESSAGE(WM_HOTKEY, OnHotKey)
 	ON_WM_CONTEXTMENU()
 	ON_BN_CLICKED(IDC_MAIN_OK, OnBnClickedOk)
@@ -343,11 +342,11 @@ void CMainUIDlg::OnToolsDesktopimage() {
 
 // œ‡”¶∞¥≈•
 void CMainUIDlg::OnOK() {
-	HideMainUI();
+	OnBnClickedMainCancel();
 }
 
 void CMainUIDlg::OnCancel() {
-	HideMainUI();
+	OnBnClickedMainCancel();
 }
 
 void CMainUIDlg::OnBnClickedOk()
