@@ -161,7 +161,6 @@
 #define IDI_TREE_APPCONTROL             225
 #define IDI_TREE_ONLINETIME             226
 #define IDI_TREE_EYECARE_BIG            227
-#define IDI_ICON3                       228
 #define IDI_TREE_BLACK_DNS              228
 #define IDC_TREE_NAVIG                  1000
 #define IDS_TREE_ROOT                   1001
@@ -309,6 +308,7 @@
 #define ID_BTN_BESN                     1123
 #define ID_BTN_BUYNOW                   1124
 #define IDC_ICON_POS                    1127
+#define IDC_RADIO1                      1129
 #define IDC_EDIT1                       4011
 #define IDC_EDIT_REGSN                  4011
 #define IDC_EDIT2                       4012
@@ -352,7 +352,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        229
 #define _APS_NEXT_COMMAND_VALUE         32813
-#define _APS_NEXT_CONTROL_VALUE         1129
+#define _APS_NEXT_CONTROL_VALUE         1130
 #define _APS_NEXT_SYMED_VALUE           112
 #endif
 #endif

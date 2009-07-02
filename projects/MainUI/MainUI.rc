@@ -217,10 +217,22 @@ IDD_LEV1_RULE DIALOGEX 0, 0, 250, 197
 STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
-    ICON            IDI_TREE_WHITE_DNS,IDC_STATIC,19,28,21,20
-    ICON            IDI_TREE_BLACK_DNS,IDC_STATIC,19,57,21,20
-    ICON            IDI_TREE_SEACH,IDC_STATIC,20,89,21,20
-    ICON            IDI_TREE_HISTORY,IDC_STATIC,21,121,21,20
+    ICON            IDI_TREE_WHITE_DNS,IDC_STATIC,24,17,21,20
+    ICON            IDI_TREE_BLACK_DNS,IDC_STATIC,24,51,21,20
+    ICON            IDI_TREE_SEACH,IDC_STATIC,24,85,21,20
+    ICON            IDI_TREE_HISTORY,IDC_STATIC,24,119,21,20
+    LTEXT           "White Websites List",IDC_STATIC,55,16,64,8
+    LTEXT           "The websites filled with content good for children",
+                    IDC_STATIC,55,27,158,8
+    LTEXT           "Black Websites List",IDC_STATIC,55,51,61,8
+    LTEXT           "The websites you don't want your children to visit",
+                    IDC_STATIC,55,61,160,8
+    LTEXT           "Black Search Word",IDC_STATIC,55,83,60,8
+    LTEXT           "The word you don't want you children to search by",
+                    IDC_STATIC,55,95,164,8
+    LTEXT           "Web Visit History",IDC_STATIC,55,117,55,8
+    LTEXT           "The websites and search word used to ",IDC_STATIC,55,
+                    129,126,8
 END
 
 IDD_DLG_TEXT DIALOGEX 0, 0, 250, 172
@@ -303,7 +315,7 @@ BEGIN
     LTEXT           "¾²Ì¬",IDC_STA_CURRENT_STATE,72,164,51,8
     LTEXT           "¾²Ì¬",IDC_STA_TIME_LEFT,176,164,47,8
     CONTROL         "Enable Eyecare Function",IDC_CHK_ENABLE_EYECARE,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,7,1,95,10
+                    BS_AUTOCHECKBOX | WS_TABSTOP,7,0,95,10
 END
 
 IDD_LEV1_TIME_RULE DIALOGEX 0, 0, 281, 198
@@ -355,10 +367,22 @@ IDD_LEV1_TOOLS DIALOGEX 0, 0, 250, 202
 STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
-    ICON            IDI_TREE_EYECARE_BIG,IDC_STATIC,24,17,21,20
-    ICON            IDI_TREE_APPCONTROL,IDC_STATIC,24,51,21,20
-    ICON            IDI_TREE_SCREENSHOT,IDC_STATIC,24,85,21,20
-    ICON            IDI_TREE_ONLINETIME,IDC_STATIC,24,119,21,20
+    ICON            IDI_TREE_EYECARE_BIG,IDC_STATIC,24,17,20,20
+    ICON            IDI_TREE_APPCONTROL,IDC_STATIC,24,51,20,20
+    ICON            IDI_TREE_SCREENSHOT,IDC_STATIC,24,85,20,20
+    ICON            IDI_TREE_ONLINETIME,IDC_STATIC,24,119,20,20
+    LTEXT           "Eyelight care",IDC_STATIC,55,18,42,8
+    LTEXT           "Prevent your children using PC every another time",
+                    IDC_STATIC,55,29,162,8
+    LTEXT           "Application Control",IDC_STATIC,55,50,61,8
+    LTEXT           "The application in the list cannot launch",IDC_STATIC,
+                    55,61,126,8
+    LTEXT           "Screen snapshot",IDC_STATIC,55,84,54,8
+    LTEXT           "Record the screen content every another minutes",
+                    IDC_STATIC,55,95,161,8
+    LTEXT           "Online time Control",IDC_STATIC,55,118,62,8
+    LTEXT           "Set the time that Internet not accessable",IDC_STATIC,
+                    55,129,133,8
 END
 
 IDD_TEMPLATE DIALOGEX 0, 0, 250, 200
@@ -522,7 +546,7 @@ BEGIN
     PUSHBUTTON      "Setting...",IDC_BTN_SET,7,178,50,14,NOT WS_VISIBLE
     PUSHBUTTON      "Add...",IDC_BTN_ADD,133,178,50,14
     CONTROL         "Enable Application Control",IDC_CHK_ENABLE_APPCONTROL,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,11,3,99,10
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,2,99,10
 END
 
 IDD_POPLDG_REGISTER DIALOGEX 0, 0, 188, 95
