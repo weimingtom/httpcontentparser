@@ -12,7 +12,6 @@
 IMPLEMENT_DYNAMIC(CLev1DlgRules, CDialog)
 CLev1DlgRules::CLev1DlgRules(CWnd* pParent /*=NULL*/)
 	: CBaseDlg(CLev1DlgRules::IDD, pParent)
-	, m_strComment(_T(""))
 {
 }
 
@@ -28,8 +27,6 @@ std::string CLev1DlgRules::getHelpLink() const {
 void CLev1DlgRules::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
-	DDX_Control(pDX, IDC_COMMENT, m_edit);
-	DDX_Control(pDX, IDC_STA_COMMENT, m_staComment);
 }
 
 
@@ -51,18 +48,6 @@ void CLev1DlgRules::OnShow() {
 BOOL CLev1DlgRules::OnInitDialog()
 {
 	CBaseDlg::OnInitDialog();
-
-	
-	CString strDNS, strImage, strText;
-	strDNS.LoadString(IDS_COMMENT_DNS);
-	strImage.LoadString(IDS_COMMENT_IMAGE);
-	strText.LoadString(IDS_COMMENT_TEXT);
-	m_strComment = "\n";
-	m_strComment += strDNS;
-	m_strComment += strImage;
-	m_strComment += strText;
-
-	m_edit.SetWindowText(m_strComment);
 
 	return TRUE; 
 }
