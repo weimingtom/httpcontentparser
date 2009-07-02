@@ -56,6 +56,15 @@ END
 
 #endif    // APSTUDIO_INVOKED
 
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDI_TREE_EYECARE_BIG    ICON                    "res\\eyecare_big.ico"
 #endif    // 中文(中华人民共和国) resources
 /////////////////////////////////////////////////////////////////////////////
 
@@ -350,6 +359,10 @@ IDD_LEV1_TOOLS DIALOGEX 0, 0, 250, 202
 STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
+    ICON            IDI_TREE_EYECARE_BIG,IDC_STATIC,24,17,21,20
+    ICON            IDI_TREE_APPCONTROL,IDC_STATIC,24,51,21,20
+    ICON            IDI_TREE_SCREENSHOT,IDC_STATIC,24,85,21,20
+    ICON            IDI_TREE_ONLINETIME,IDC_STATIC,24,119,21,20
 END
 
 IDD_TEMPLATE DIALOGEX 0, 0, 250, 200
@@ -845,18 +858,15 @@ END
 IDR_MAINFRAME           ICON                    "res\\MainUI.ico"
 IDI_GUI_ARROWDOWN       ICON                    "res\\guiarrowdown.ico"
 IDI_GUI_ARROWRIGHT      ICON                    "res\\guiarrowright.ico"
-IDI_TREE_TIME           ICON                    "res\\6.ico"
 IDI_TREE_SEACH          ICON                    "res\\sym7_0.ico"
 IDI_TREE_OPTION         ICON                    "res\\option.ico"
 IDI_TREE_RECORD         ICON                    "res\\record.ico"
 IDI_TREE_HISTORY        ICON                    "res\\history.ico"
-IDI_TREE_APPCONTROL     ICON                    "res\\appcontrol.ico"
 IDI_TREE_WHITE_DNS      ICON                    "res\\whitewebsite.ico"
 IDI_TREE_BLACK_DNS      ICON                    "res\\blackwhiteside.ico"
 IDI_TREE_SCREENSHOT     ICON                    "res\\camera.ico"
-IDI_TREE_DISCONNECT     ICON                    "res\\disconnect.ico"
 IDI_TREE_EYECARE        ICON                    "res\\eyecare.ico"
-IDI_TREE_TOOLS          ICON                    "res\\icon3.ico"
+IDI_TREE_TOOLS          ICON                    "res\\tools.ico"
 IDI_MODEL_PROTECTED     ICON                    "res\\shield.ico"
 IDI_MODEL_PARENT        ICON                    "res\\shield_delete.ico"
 IDI_LOCK                ICON                    "res\\lock.ico"
@@ -866,6 +876,8 @@ IDI_TREE_INFO           ICON                    "res\\inform.ico"
 IDI_DEFAULT             ICON                    "res\\default.ico"
 IDI_TREE_HOME           ICON                    "res\\Home.ico"
 IDI_TREE_WEB            ICON                    "res\\webrule.ico"
+IDI_TREE_APPCONTROL     ICON                    "res\\appcontrol.ico"
+IDI_TREE_ONLINETIME     ICON                    "res\\online_time.ico"
 
 /////////////////////////////////////////////////////////////////////////////
 //
