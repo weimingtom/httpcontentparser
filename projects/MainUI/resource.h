@@ -125,7 +125,6 @@
 #define IDI_TREE_RECORD                 178
 #define IDI_TREE_HISTORY                179
 #define IDI_TREE_WHITE_DNS              181
-#define IDI_TREE_BLACK_DNS              182
 #define IDI_TREE_SCREENSHOT             183
 #define IDI_TREE_DISCONNECT             184
 #define IDI_TREE_EYECARE                186
@@ -162,6 +161,8 @@
 #define IDI_TREE_APPCONTROL             225
 #define IDI_TREE_ONLINETIME             226
 #define IDI_TREE_EYECARE_BIG            227
+#define IDI_ICON3                       228
+#define IDI_TREE_BLACK_DNS              228
 #define IDC_TREE_NAVIG                  1000
 #define IDS_TREE_ROOT                   1001
 #define IDS_TREE_DNS_RULE               1002
@@ -349,9 +350,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        228
+#define _APS_NEXT_RESOURCE_VALUE        229
 #define _APS_NEXT_COMMAND_VALUE         32813
-#define _APS_NEXT_CONTROL_VALUE         1128
+#define _APS_NEXT_CONTROL_VALUE         1129
 #define _APS_NEXT_SYMED_VALUE           112
 #endif
 #endif
