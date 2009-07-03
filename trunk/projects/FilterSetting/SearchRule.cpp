@@ -28,6 +28,11 @@ STDMETHODIMP CSearchRule::InterfaceSupportsErrorInfo(REFIID riid)
 
 STDMETHODIMP CSearchRule::check(BSTR search_word, BSTR host_name, VARIANT_BOOL* pass)
 {
+	// 如果不可用直接退出
+	if (false == g_configuration.getSearchRule()->isEnabled()) {
+		*pass = VARIANT_TRUE;
+	}
+
 	const int buffer_length = 1024;
 	char mcbs[buffer_length] = {0};
 
