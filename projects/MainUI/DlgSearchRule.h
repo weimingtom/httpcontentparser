@@ -48,4 +48,5 @@ public:
 	afx_msg void OnBnClickedChkGoogle();
 	afx_msg void OnBnClickedChkYahoo();
 	afx_msg void OnBnClickedChkBaidu();
+	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
 };

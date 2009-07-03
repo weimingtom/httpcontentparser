@@ -32,6 +32,7 @@ protected:
 	afx_msg void OnBnClickedChkAutoload();
 	afx_msg void OnBnClickedChkSwitchchildrenWhenClose();
 	afx_msg void OnBnClickedChkAskmeAgainWhenclose();
+	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
 
 	DECLARE_MESSAGE_MAP()
 protected:

@@ -44,6 +44,7 @@ BEGIN_MESSAGE_MAP(CDlgHelp, CDialog)
 	ON_LBN_KILLFOCUS(IDC_LIST1, OnLbnKillfocusList1)
 	ON_LBN_SELCANCEL(IDC_LIST1, OnLbnSelcancelList1)
 	ON_LBN_SELCHANGE(IDC_LIST1, OnLbnSelchangeList1)
+	ON_WM_CTLCOLOR()
 END_MESSAGE_MAP()
 
 
@@ -70,4 +71,9 @@ void CDlgHelp::OnLbnSelcancelList1()
 void CDlgHelp::OnLbnSelchangeList1()
 {
 	// TODO: 在此添加控件通知处理程序代码
+}
+
+HBRUSH CDlgHelp::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
+{
+	return CBaseDlg::OnCtlColor(pDC, pWnd, nCtlColor);
 }

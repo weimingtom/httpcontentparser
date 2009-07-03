@@ -35,6 +35,7 @@ void CDlgSearchWordList::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(CDlgSearchWordList, CPopupDialog)
 	ON_BN_CLICKED(IDC_SEARCH_CLEAR, OnBnClickedSearchClear)
+	ON_WM_CTLCOLOR()
 END_MESSAGE_MAP()
 
 
@@ -158,4 +159,11 @@ void CDlgSearchWordList::OnBnClickedSearchClear()
 		showOnList();
 	} catch (_com_error &) {
 	}
+}
+
+HBRUSH CDlgSearchWordList::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
+{
+	HBRUSH hbr = CPopupDialog::OnCtlColor(pDC, pWnd, nCtlColor);
+
+	return hbr;
 }

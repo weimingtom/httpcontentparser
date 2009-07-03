@@ -28,4 +28,5 @@ public:
 	afx_msg void OnLbnKillfocusList1();
 	afx_msg void OnLbnSelcancelList1();
 	afx_msg void OnLbnSelchangeList1();
+	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
 };

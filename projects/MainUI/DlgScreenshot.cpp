@@ -142,6 +142,7 @@ BEGIN_MESSAGE_MAP(CDlgScreenshot, CDialog)
 	ON_BN_CLICKED(IDC_BTN_CLEAR, OnBnClickedBtnClear)
 	ON_WM_HSCROLL()
 	ON_BN_CLICKED(IDC_VIEW_HISTORY, OnBnClickedViewHistory)
+	ON_WM_CTLCOLOR()
 END_MESSAGE_MAP()
 
 
@@ -198,4 +199,9 @@ void CDlgScreenshot::OnBnClickedViewHistory()
 	CDlgImageBrowser dlg;
 	dlg.setImageDir(images);
 	dlg.DoModal();
+}
+
+HBRUSH CDlgScreenshot::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
+{
+	return CBaseDlg::OnCtlColor(pDC, pWnd, nCtlColor);
 }

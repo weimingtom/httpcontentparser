@@ -138,6 +138,7 @@ BEGIN_MESSAGE_MAP(CDlgWebHistory, CDialog)
 	ON_BN_CLICKED(IDC_CHK_ALLWEBSITES, OnBnClickedChkAllwebsites)
 	ON_BN_CLICKED(IDC_BTN_HISTORY_SEACHWORD, OnBnClickedBtnHistorySeachword)
 	ON_BN_CLICKED(IDC_CHK_SEARCH_KEYWORD, OnBnClickedChkSearchKeyword)
+	ON_WM_CTLCOLOR()
 END_MESSAGE_MAP()
 
 // CDlgWebHistory 消息处理程序
@@ -221,4 +222,9 @@ void CDlgWebHistory::OnBnClickedChkAllwebsites() {
 void CDlgWebHistory::OnBnClickedChkSearchKeyword()
 {
 	SetModify(TRUE);
+}
+
+HBRUSH CDlgWebHistory::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
+{
+	return CBaseDlg::OnCtlColor(pDC, pWnd, nCtlColor);
 }

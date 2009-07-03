@@ -88,4 +88,5 @@ private:
 public:
 	static const int SUCCESS_ON_APPLY = 0;
 	static const int FAILED_ON_APPLY = -1;
+	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
 };

@@ -37,6 +37,7 @@ void CRightRegionDlg::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(CRightRegionDlg, CDialog)
 	ON_WM_PAINT()
+	ON_WM_CTLCOLOR()
 END_MESSAGE_MAP()
 
 int CRightRegionDlg::initialize(CImageList	*pImageList, CDialog *pParent) {
@@ -252,4 +253,11 @@ WORD CRightRegionDlg::getItemIcon(DWORD data) {
 }
 WORD CRightRegionDlg::getItemIDS(DWORD data) {
 	return LOWORD(data);
+}
+HBRUSH CRightRegionDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
+{
+	HBRUSH hbr = CDialog::OnCtlColor(pDC, pWnd, nCtlColor);
+	return hbr;
+	//pDC->SetBkMode(TRANSPARENT);
+ //   return ::GetSysColorBrush( COLOR_WINDOW );
 }

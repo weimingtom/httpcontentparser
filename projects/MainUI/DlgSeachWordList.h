@@ -49,6 +49,8 @@ protected:
 	DECLARE_MESSAGE_MAP()
 private:
 	HICON m_hIcon;
+public:
+	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
 };
 
 #endif  // _MAINUI_CDLGSEACHWORDLIST_H__

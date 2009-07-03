@@ -128,6 +128,7 @@ void CDlgOnlineHour::restoreSetting() {
 
 BEGIN_MESSAGE_MAP(CDlgOnlineHour, CDialog)
 	ON_BN_CLICKED(IDC_CHK_TIMECTRL, OnBnClickedChkTimectrl)
+	ON_WM_CTLCOLOR()
 END_MESSAGE_MAP()
 
 
@@ -153,4 +154,9 @@ BOOL CDlgOnlineHour::OnInitDialog()
 void CDlgOnlineHour::OnBnClickedChkTimectrl()
 {
 	SetModify(true);
+}
+
+HBRUSH CDlgOnlineHour::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
+{
+	return CBaseDlg::OnCtlColor(pDC, pWnd, nCtlColor);
 }

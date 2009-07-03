@@ -56,6 +56,7 @@ protected:
 	void setTimespanTips();
 public:
 	afx_msg void OnBnClickedViewHistory();
+	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
 };
 
 #endif  // _MAINUI_CDLGSCREENSAVER_H__

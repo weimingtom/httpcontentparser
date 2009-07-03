@@ -65,4 +65,5 @@ protected:
 	void ApplyCOMService();
 public:
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
+	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
 };

@@ -100,6 +100,8 @@ protected:
 
 
 	BOOL m_bEnableAppControl;
+public:
+	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
 };
 
 

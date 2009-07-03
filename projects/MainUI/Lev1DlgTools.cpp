@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "MainUI.h"
 #include "Lev1DlgTools.h"
+#include ".\lev1dlgtools.h"
 
 
 // CLev1DlgTools 对话框
@@ -40,7 +41,13 @@ void CLev1DlgTools::OnShow() {
 }
 
 BEGIN_MESSAGE_MAP(CLev1DlgTools, CDialog)
+	ON_WM_CTLCOLOR()
 END_MESSAGE_MAP()
 
 
 // CLev1DlgTools 消息处理程序
+
+HBRUSH CLev1DlgTools::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
+{
+	return CBaseDlg::OnCtlColor(pDC, pWnd, nCtlColor);
+}

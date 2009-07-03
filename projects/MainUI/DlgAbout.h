@@ -38,4 +38,6 @@ protected:
 
 	CString m_strRegisterInfo;
 	CButton m_btnRegistered;
+public:
+	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
 };

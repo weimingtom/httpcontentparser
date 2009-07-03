@@ -131,6 +131,7 @@ BEGIN_MESSAGE_MAP(CDlgImageRule, CDialog)
 	ON_WM_HSCROLL()
 	ON_WM_VSCROLL()
 	ON_BN_CLICKED(IDC_CHK_ENABLE_SIZE_CHECK, OnBnClickedChkEnableSizeCheck)
+	ON_WM_CTLCOLOR()
 END_MESSAGE_MAP()
 
 
@@ -206,4 +207,9 @@ BOOL CDlgImageRule::PreTranslateMessage(MSG* pMsg)
 			}	
 	}
 	return CBaseDlg::PreTranslateMessage(pMsg);
+}
+
+HBRUSH CDlgImageRule::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
+{
+	return CBaseDlg::OnCtlColor(pDC, pWnd, nCtlColor);
 }
