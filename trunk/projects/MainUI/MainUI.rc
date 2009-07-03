@@ -521,7 +521,7 @@ FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
     CONTROL         "Enable Time Control",IDC_CHK_TIMECTRL,"Button",
                     BS_AUTOCHECKBOX | WS_TABSTOP,6,1,87,10
-    LTEXT           "",IDC_STATIC,0,17,252,169,0,WS_EX_CLIENTEDGE
+    LTEXT           "",IDC_STATIC,0,17,252,169
     LTEXT           "",IDC_STA_CELLS,11,44,215,123,NOT WS_VISIBLE
     LTEXT           "Sun.",IDC_STATIC,231,48,16,8
     LTEXT           "Tues",IDC_STATIC,231,80,16,8

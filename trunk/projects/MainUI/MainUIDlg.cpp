@@ -363,7 +363,7 @@ void CMainUIDlg::setRulesTreeItems() {
 	hItem = m_treeNavigation.InsertItem(strItem, hItemRules);
 	m_treeNavigation.SetItemImage(hItem, INDEX_BLACK, INDEX_BLACK);
 	setItemData(hItem, IDS_TREE_DNS_RULE, INDEX_BLACK);
-	m_treeNavigation.SelectItem(hItem);
+	m_treeNavigation.SelectItem(hItemRules);
 
 	// ËÑË÷¹æÔò
 	strItem.LoadString(IDS_TREE_SEARCH_RULE); 
@@ -447,6 +447,8 @@ void CMainUIDlg::ShowMainUI() {
 	::SetWindowPos(GetSafeHwnd(), CWnd::wndTop, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
 	SetForegroundWindow ();
 	m_bShown = TRUE;
+
+	AdjustModelIcon();
 }
 void CMainUIDlg::HideMainUI(BOOL autoSwitchCheck) {
 		
@@ -458,6 +460,8 @@ void CMainUIDlg::HideMainUI(BOOL autoSwitchCheck) {
 	if (TRUE == autoSwitchCheck) {
 		SwitchOnClose();
 	}
+
+	AdjustModelIcon();
 }
 
 
