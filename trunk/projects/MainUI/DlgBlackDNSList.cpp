@@ -96,6 +96,7 @@ bool CDlgBlackDNSList::ValidateItem(const CString & str, CString &output) {
 
 BEGIN_MESSAGE_MAP(CDlgBlackDNSList, CDialog)
 	ON_BN_CLICKED(IDC_CHK_ENABLE_DNS, OnBnClickedChkBlackDnslist)
+	ON_WM_CTLCOLOR()
 END_MESSAGE_MAP()
 
 
@@ -115,3 +116,8 @@ void CDlgBlackDNSList::OnBnClickedChkBlackDnslist() {
 	SetModify(true);
 }
 
+
+HBRUSH CDlgBlackDNSList::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
+{
+	return CBaseDlg::OnCtlColor(pDC, pWnd, nCtlColor);
+}

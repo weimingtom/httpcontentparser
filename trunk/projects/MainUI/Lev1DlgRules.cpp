@@ -31,6 +31,7 @@ void CLev1DlgRules::DoDataExchange(CDataExchange* pDX)
 
 
 BEGIN_MESSAGE_MAP(CLev1DlgRules, CDialog)
+	ON_WM_CTLCOLOR()
 END_MESSAGE_MAP()
 
 void CLev1DlgRules::restoreSetting() {
@@ -50,4 +51,9 @@ BOOL CLev1DlgRules::OnInitDialog()
 	CBaseDlg::OnInitDialog();
 
 	return TRUE; 
+}
+
+HBRUSH CLev1DlgRules::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
+{
+	return CBaseDlg::OnCtlColor(pDC, pWnd, nCtlColor);
 }

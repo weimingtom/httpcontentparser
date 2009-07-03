@@ -46,4 +46,5 @@ public:
 	virtual void OnDelItem(const CString &str);
 	virtual bool ValidateItem(const CString & str, CString &output);
 	RulesList  rules;
+	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
 };

@@ -32,6 +32,7 @@ protected:
 	void OnOK() {}
 
 	virtual void OnCancel() {}
+
 public:
 	void SetModify(const bool changed);
 
@@ -40,4 +41,8 @@ private:
 	CBaseDlg() {changed_ = false;}
 protected:
 	std::string auther_name_;
+
+public:
+	DECLARE_MESSAGE_MAP()
+	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
 };

@@ -64,4 +64,5 @@ public:
 	afx_msg void OnBnClickedChkAllwebsites();
 	afx_msg void OnBnClickedBtnHistorySeachword();
 	afx_msg void OnBnClickedChkSearchKeyword();
+	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
 };

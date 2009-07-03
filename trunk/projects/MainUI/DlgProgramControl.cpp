@@ -226,6 +226,7 @@ BEGIN_MESSAGE_MAP(CDlgProgramControl, CDialog)
 	ON_BN_CLICKED(IDC_BTN_SET, OnBnClickedBtnSet)
 	ON_BN_CLICKED(IDC_BTN_DEL, OnBnClickedBtnDel)
 	ON_BN_CLICKED(IDC_CHK_ENABLE_APPCONTROL, OnBnClickedChkEnableAppcontrol)
+	ON_WM_CTLCOLOR()
 END_MESSAGE_MAP()
 
 
@@ -333,4 +334,9 @@ void CDlgProgramControl::OnBnClickedBtnDel()
 void CDlgProgramControl::OnBnClickedChkEnableAppcontrol()
 {
 	SetModify(true);
+}
+
+HBRUSH CDlgProgramControl::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
+{
+	return CBaseDlg::OnCtlColor(pDC, pWnd, nCtlColor);
 }

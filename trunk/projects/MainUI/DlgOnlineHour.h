@@ -36,4 +36,5 @@ public:
 
 public:
 	afx_msg void OnBnClickedChkTimectrl();
+	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
 };

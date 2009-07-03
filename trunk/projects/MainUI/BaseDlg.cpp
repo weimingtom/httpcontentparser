@@ -58,3 +58,15 @@ int  CBaseDlg::BeforeChange() {
 		return 1;
 	}
 }
+
+
+BEGIN_MESSAGE_MAP(CBaseDlg, CDialog)
+	ON_WM_CTLCOLOR()
+END_MESSAGE_MAP()
+
+HBRUSH CBaseDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
+{
+	HBRUSH hbr = CDialog::OnCtlColor(pDC, pWnd, nCtlColor);
+
+	return hbr;
+}

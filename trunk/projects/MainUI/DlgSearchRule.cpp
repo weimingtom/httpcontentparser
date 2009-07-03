@@ -165,6 +165,7 @@ BEGIN_MESSAGE_MAP(CDlgSearchRule, CDialog)
 	ON_BN_CLICKED(IDC_CHK_GOOGLE, OnBnClickedChkGoogle)
 	ON_BN_CLICKED(IDC_CHK_YAHOO, OnBnClickedChkYahoo)
 	ON_BN_CLICKED(IDC_CHK_BAIDU, OnBnClickedChkBaidu)
+	ON_WM_CTLCOLOR()
 END_MESSAGE_MAP()
 
 
@@ -198,4 +199,9 @@ void CDlgSearchRule::OnBnClickedChkYahoo()
 void CDlgSearchRule::OnBnClickedChkBaidu()
 {
 	SetModify(TRUE);
+}
+
+HBRUSH CDlgSearchRule::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
+{
+	return CBaseDlg::OnCtlColor(pDC, pWnd, nCtlColor);
 }

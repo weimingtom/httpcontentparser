@@ -71,6 +71,7 @@ void CDlgAbout::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(CDlgAbout, CDialog)
 	ON_BN_CLICKED(IDC_REGISTER, OnBnClickedRegister)
 	ON_WM_HELPINFO()
+	ON_WM_CTLCOLOR()
 END_MESSAGE_MAP()
 
 
@@ -99,4 +100,9 @@ BOOL CDlgAbout::OnInitDialog()
 BOOL CDlgAbout::OnHelpInfo(HELPINFO* pHelpInfo)
 {
 	return TRUE;
+}
+
+HBRUSH CDlgAbout::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
+{
+	return CBaseDlg::OnCtlColor(pDC, pWnd, nCtlColor);
 }

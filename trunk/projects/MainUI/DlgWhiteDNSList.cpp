@@ -100,6 +100,7 @@ bool CDlgWhiteDNSList::ValidateItem(const CString & str, CString &output) {
 BEGIN_MESSAGE_MAP(CDlgWhiteDNSList, CDialog)
 	ON_BN_CLICKED(IDC_CHK_DENY_OTHERS, OnBnClickedChkDenyOthers)
 	ON_BN_CLICKED(IDC_CHK_WHITE_DNSLIST, OnBnClickedChkWhiteDnslist)
+	ON_WM_CTLCOLOR()
 END_MESSAGE_MAP()
 
 
@@ -133,4 +134,9 @@ void CDlgWhiteDNSList::OnBnClickedChkWhiteDnslist() {
 	}
 	UpdateData(FALSE);
 	SetModify(true);
+}
+
+HBRUSH CDlgWhiteDNSList::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
+{
+	return CBaseDlg::OnCtlColor(pDC, pWnd, nCtlColor);
 }

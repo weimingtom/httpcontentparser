@@ -214,6 +214,7 @@ void CDlgOptions::SetAutoRun() {
 }
 
 BEGIN_MESSAGE_MAP(CDlgOptions, CDialog)
+	ON_WM_CTLCOLOR()
 	ON_BN_CLICKED(IDC_CHK_AUTOLOAD, OnBnClickedChkAutoload)
 	ON_BN_CLICKED(IDC_CHK_SWITCHCHILDREN_WHEN_CLOSE, &CDlgOptions::OnBnClickedChkSwitchchildrenWhenClose)
 	ON_BN_CLICKED(IDC_CHK_ASKME_AGAIN_WHENCLOSE, &CDlgOptions::OnBnClickedChkAskmeAgainWhenclose)
@@ -259,4 +260,7 @@ BOOL CDlgOptions::PreTranslateMessage(MSG* pMsg)
 	}
 	return CBaseDlg::PreTranslateMessage(pMsg);
 }
-
+HBRUSH CDlgOptions::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
+{
+	return CBaseDlg::OnCtlColor(pDC, pWnd, nCtlColor);
+}

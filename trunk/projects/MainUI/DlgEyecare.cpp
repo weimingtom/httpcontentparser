@@ -156,6 +156,7 @@ BEGIN_MESSAGE_MAP(CDlgEyecare, CDialog)
 	ON_BN_CLICKED(IDC_CHK_ENABLE_EYECARE, OnBnClickedEnableEyecare)
 	ON_WM_VSCROLL()
 	
+	ON_WM_CTLCOLOR()
 END_MESSAGE_MAP()
 
 
@@ -245,4 +246,9 @@ void CDlgEyecare::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 void CDlgEyecare::OnBnClickedEnableEyecare()
 {
 	SetModify(true);
+}
+
+HBRUSH CDlgEyecare::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
+{
+	return CBaseDlg::OnCtlColor(pDC, pWnd, nCtlColor);
 }

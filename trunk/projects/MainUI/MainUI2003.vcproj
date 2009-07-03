@@ -152,6 +152,9 @@
 				RelativePath=".\RightRegionDlg.cpp">
 			</File>
 			<File
+				RelativePath=".\RightRegionDlg.h">
+			</File>
+			<File
 				RelativePath=".\stdafx.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
@@ -185,9 +188,6 @@
 			</File>
 			<File
 				RelativePath=".\PopTipTrayendDlg.h">
-			</File>
-			<File
-				RelativePath=".\RightRegionDlg.h">
 			</File>
 		</Filter>
 		<Filter
