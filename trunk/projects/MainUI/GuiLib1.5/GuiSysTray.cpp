@@ -38,7 +38,7 @@ IMPLEMENT_DYNAMIC(CGuiSysTray, CWnd)
 
 CGuiSysTray::CGuiSysTray()
 {
-	memset(&tnid,sizeof(NOTIFYICONDATA),0x00);
+	memset(&tnid,0x00, sizeof(NOTIFYICONDATA));
 	tnid.cbSize=sizeof(NOTIFYICONDATA);
 	m_bStartAnimation=FALSE;
 	m_ActualImage=0;

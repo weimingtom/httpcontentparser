@@ -3,34 +3,16 @@
 
 #pragma once
 
-#include ".\DlgImagerule.h"
-#include ".\DlgOnlinehour.h"
-#include ".\DlgHelp.h"
-#include ".\DlgAbout.h"
-#include ".\DlgSearchRule.h"
-#include ".\DlgOptions.h"
-#include ".\DlgEyecare.h"
-#include ".\DlgWhiteDNSList.h"
-#include ".\DlgScreenshot.h"
-#include ".\DlgWebHistory.h"
-#include ".\DlgBlackDNSList.h"
-#include ".\DlgProgramControl.h"
-#include ".\dlgchangepassword.h"
-#include ".\dlgSeachwordlist.h"
-#include ".\dlgImageBrowser.h"
+#include ".\basedlg.h"
 #include ".\dlgwebsites.h"
 #include ".\dlgcheckpassword.h"
-#include ".\Lev1DlgRules.h"
-#include ".\Lev1DlgTools.h"
-#include ".\basedlg.h"
 #include ".\newMenu\NewMenu.h"
-#include  ".\Guilib1.5\GuiSysTray.h"
 #include ".\DlgSwitchChildren.h"
 #include ".\dlgregister.h"
-
+#include ".\RightRegionDlg.h"
+#include ".\guilib1.5\guisystray.h"
 #include "afxwin.h"
 #include "afxcmn.h"
-class CBaseDlg;
 
 // CMainUIDlg 对话框
 class CMainUIDlg : public CDialog
@@ -46,57 +28,31 @@ public:
 protected:
 	HICON m_hIcon;
 	void setControlsFonts();
-	void setRulesDlg();
-	void setToolsDlg();
+	void setRulesTreeItems();
+	void setToolsTreeItems();
 private:
 	CTreeCtrl m_treeNavigation;		// 左侧的导航术
 	CImageList	m_imageList;			// 导航树上的图标
 
 	void InitTreeNodes();		// 初始化树的节点
-	void setCurDlg(const DWORD item);
-	void initDlgs();
-	void showDlg();
-	void setRightTitle(const int item);
-	void drawRightIcon(CDC *pDC);
 
 	// 树的数据分为两部分，高字节保存IDI， 低字节保存IDS
 	void setItemData(HTREEITEM hItem, WORD ids, WORD idi);
-	WORD getItemIcon(HTREEITEM hItem);
-	WORD getItemIDS(HTREEITEM hItem);
 	WORD getItemIcon();
 	WORD getItemIDS();
 
-	void ChangeCurDlg(CBaseDlg *dlg);
+
+	CRightRegionDlg m_dlgRight;
 
 	// 设置System Tray Menu;
 	void setupTrayMenu();
-
-	// dlgs
-	CDlgEyecare	m_dlgEyecare;
-	CDlgOptions m_dlgOptions;
-	// CDlgImageRule m_dlgImageRules;
-	CDlgOnlineHour m_dlgOnlineHour;
-	CDlgSearchRule m_dlgSearchRule;
-	CDlgScreenshot m_dlgScreenSaver;
-	CDlgBlackDNSList m_dlgDnsRule;
-	CDlgWhiteDNSList m_dlgWhiteDNS;
-	CDlgProgramControl m_dlgProgramControl;
-	CDlgAbout m_dlgAbout;
-	CDlgWebHistory m_dlgWebHistory;
-	CBaseDlg	*m_curDlg;
-
-	CLev1DlgTools m_lev1Tools;
-	CLev1DlgRules m_lev1Rules;
 
 	// 右侧树的位置
 	CRect    m_rectRight;
 
 	// fonts
 	CFont	m_fontTree;
-	CFont	m_fontTitle;
-
-	// controls
-	// system Tray
+	
 	CGuiSysTray		m_sysTray;
 	CNewMenu		m_trayMenu;
 	
@@ -111,7 +67,6 @@ protected:
 	afx_msg void OnTvnSelchangedTreeNavig(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg LRESULT OnHotKey(WPARAM wParam, LPARAM lParam);
 	
-	afx_msg void OnTimer(UINT nIDEvent);
 	afx_msg void OnLButtonDblClk(UINT nFlags, CPoint point);
 
 	// 按钮项
