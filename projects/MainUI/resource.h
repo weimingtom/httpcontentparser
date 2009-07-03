@@ -111,6 +111,7 @@
 #define IDI_GUI_ARROWRIGHT              164
 #define IDD_DLG_IMAGEBROWSER            165
 #define IDD_POPDLG_IMAGEBROWSER         165
+#define IDD_RIGHTREGIONDLG              166
 #define IDD_DLG_WEBSITES                167
 #define IDD_POPDLG_WEBSITES             167
 #define IDB_HDRDOWN                     168
@@ -162,6 +163,7 @@
 #define IDI_TREE_ONLINETIME             226
 #define IDI_TREE_EYECARE_BIG            227
 #define IDI_TREE_BLACK_DNS              228
+#define IDD_DLG_RIGHTREGION             230
 #define IDC_TREE_NAVIG                  1000
 #define IDS_TREE_ROOT                   1001
 #define IDS_TREE_DNS_RULE               1002
@@ -308,7 +310,10 @@
 #define ID_BTN_BESN                     1123
 #define ID_BTN_BUYNOW                   1124
 #define IDC_ICON_POS                    1127
+#define IDC_PAGE_ICON_POS               1127
 #define IDC_RADIO1                      1129
+#define IDC_PAGE_TITLE                  1130
+#define IDC_POS_SUBPAGE                 1131
 #define IDC_EDIT1                       4011
 #define IDC_EDIT_REGSN                  4011
 #define IDC_EDIT2                       4012
@@ -350,9 +355,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        229
+#define _APS_NEXT_RESOURCE_VALUE        231
 #define _APS_NEXT_COMMAND_VALUE         32813
-#define _APS_NEXT_CONTROL_VALUE         1130
-#define _APS_NEXT_SYMED_VALUE           112
+#define _APS_NEXT_CONTROL_VALUE         1133
+#define _APS_NEXT_SYMED_VALUE           167
 #endif
 #endif

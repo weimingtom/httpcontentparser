@@ -56,6 +56,40 @@ END
 
 #endif    // APSTUDIO_INVOKED
 
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_RIGHTREGIONDLG DIALOG  0, 0, 186, 95
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "对话框"
+FONT 9, "宋体"
+BEGIN
+    DEFPUSHBUTTON   "确定",IDOK,129,7,50,16
+    PUSHBUTTON      "取消",IDCANCEL,129,26,50,16
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO 
+BEGIN
+    IDD_RIGHTREGIONDLG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 179
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 88
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
 #endif    // 中文(中华人民共和国) resources
 /////////////////////////////////////////////////////////////////////////////
 
@@ -137,19 +171,15 @@ BEGIN
     CONTROL         "",IDC_POSITION_LEFT,"Static",SS_BLACKFRAME | NOT 
                     WS_VISIBLE,7,7,124,233
     CONTROL         "",IDC_STA_FRAME,"Static",SS_BLACKFRAME,136,7,268,233
-    LTEXT           "Title",IDC_RIGHT_TITLE,167,18,217,11
-    CONTROL         "",IDC_STATIC,"Static",SS_BLACKFRAME,148,31,244,1
     CONTROL         "",IDC_TREE_NAVIG,"SysTreeView32",TVS_HASBUTTONS | 
-                    TVS_NOSCROLL | WS_TABSTOP,7,11,123,229,WS_EX_STATICEDGE
-    CONTROL         "",IDC_POSITION_RIGHT,"Static",SS_BLACKFRAME | NOT 
-                    WS_VISIBLE,143,40,254,194
+                    TVS_NOTOOLTIPS | TVS_NOSCROLL | WS_TABSTOP,7,7,123,233,
+                    WS_EX_CLIENTEDGE
     PUSHBUTTON      "Apply",IDC_MAIN_APPLY,355,246,49,14
     PUSHBUTTON      "OK",IDC_MAIN_OK,219,246,49,14
     PUSHBUTTON      "OK",IDC_OK2,156,242,49,14,NOT WS_VISIBLE
     PUSHBUTTON      "Cancel",IDC_MAIN_CANCEL,286,246,49,14
     PUSHBUTTON      "Restore to Default Setting",IDC_BUTTON1,7,246,92,14,NOT 
                     WS_VISIBLE
-    LTEXT           "",IDC_ICON_POS,151,18,8,8,NOT WS_VISIBLE
 END
 
 IDD_DLG_HELP DIALOGEX 0, 0, 266, 177
@@ -492,7 +522,7 @@ BEGIN
     CONTROL         "Enable Time Control",IDC_CHK_TIMECTRL,"Button",
                     BS_AUTOCHECKBOX | WS_TABSTOP,6,1,87,10
     LTEXT           "",IDC_STATIC,4,17,272,190,0,WS_EX_DLGMODALFRAME
-    LTEXT           "",IDC_STA_CELLS,11,29,215,123,NOT WS_VISIBLE
+    LTEXT           "",IDC_STA_CELLS,11,44,215,123,NOT WS_VISIBLE
     LTEXT           "Sun.",IDC_STATIC,233,48,16,8
     LTEXT           "Tues",IDC_STATIC,233,80,16,8
     LTEXT           "Wed.",IDC_STATIC,233,96,18,8
@@ -606,6 +636,17 @@ BEGIN
     CONTROL         220,IDC_STATIC,"Static",SS_BITMAP,0,0,260,55
     LTEXT           "The password will be used to change the setting of the software",
                     IDC_STATIC,43,72,212,10
+END
+
+IDD_DLG_RIGHTREGION DIALOGEX 0, 0, 273, 240
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    LTEXT           "",IDC_POS_SUBPAGE,5,36,262,194,NOT WS_VISIBLE,
+                    WS_EX_CLIENTEDGE
+    LTEXT           "Title",IDC_PAGE_TITLE,27,14,217,11
+    CONTROL         "",IDC_STATIC,"Static",SS_BLACKFRAME,6,27,244,1
+    LTEXT           "",IDC_PAGE_ICON_POS,9,14,8,8,NOT WS_VISIBLE
 END
 
 
@@ -863,6 +904,14 @@ BEGIN
         RIGHTMARGIN, 258
         VERTGUIDE, 7
         BOTTOMMARGIN, 146
+    END
+
+    IDD_DLG_RIGHTREGION, DIALOG
+    BEGIN
+        LEFTMARGIN, 5
+        RIGHTMARGIN, 267
+        TOPMARGIN, 5
+        BOTTOMMARGIN, 235
     END
 END
 #endif    // APSTUDIO_INVOKED

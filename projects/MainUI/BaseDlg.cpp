@@ -12,14 +12,14 @@ CBaseDlg::~CBaseDlg(void)
 }
 void CBaseDlg::SetModify(const bool changed) {
 	changed_ = changed;
-	GetParent()->GetDlgItem(IDC_MAIN_OK)->EnableWindow(changed);
-	GetParent()->GetDlgItem(IDC_MAIN_APPLY)->EnableWindow(changed);
+	AfxGetMainWnd()->GetDlgItem(IDC_MAIN_OK)->EnableWindow(changed);
+	AfxGetMainWnd()->GetDlgItem(IDC_MAIN_APPLY)->EnableWindow(changed);
 }
 
 // 在切换窗口之后
 int  CBaseDlg::AfterChange() {
-	GetParent()->GetDlgItem(IDC_MAIN_OK)->EnableWindow(FALSE);
-	GetParent()->GetDlgItem(IDC_MAIN_APPLY)->EnableWindow(FALSE);
+	AfxGetMainWnd()->GetDlgItem(IDC_MAIN_OK)->EnableWindow(FALSE);
+	AfxGetMainWnd()->GetDlgItem(IDC_MAIN_APPLY)->EnableWindow(FALSE);
 	return 0;
 }
 
