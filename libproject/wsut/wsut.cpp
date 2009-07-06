@@ -33,6 +33,30 @@ public:
 	}
 };
 LoggerInit g_logger_init;
+
+bool checkInstalled() {
+	AutoInitInScale auto_;
+	bool result = false;
+	try {
+		ISnowmanSetting * pSetting = NULL;
+		HRESULT hr = CoCreateInstance(CLSID_SnowmanSetting, NULL, CLSCTX_LOCAL_SERVER,
+			IID_ISnowmanSetting, (LPVOID*)&pSetting);
+		if (FAILED(hr)) {
+			// 如果接口显示为没有注册， 则退出安装
+			result =   false;
+		} else {
+			result = true;
+		}
+		
+		pSetting->Release();
+		pSetting = NULL;
+	} catch (_com_error & e) {
+		LERR_<<"_com_error exception with Description :  "<< e.Description();
+	}
+
+	return result;
+}
+
 void SetUninstallStatus() {
 	AutoInitInScale auto_;
 	try {
@@ -117,6 +141,21 @@ WSUT_API int __stdcall  CallUtility(const char * status) {
 	return 0;
 }
 
+// 查看软件是否已经安装
+WSUT_API bool __stdcall  Installed() {
+	return checkInstalled();
+}
+
+// 如果已经安装则通知软件卸载，并且
+// 此软件进行安装
+WSUT_API int __stdcall MakePrepareInstall() {
+	// 设置应用程序为卸载模式
+	return 0;
+}
+
+WSUT_API int __stdcall GetInstallAppPath(char *buffer, const int length) {
+	return 0;
+}
 BOOL APIENTRY DllMain( HANDLE hModule, 
                        DWORD  ul_reason_for_call, 
                        LPVOID lpReserved
