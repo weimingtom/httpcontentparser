@@ -247,7 +247,7 @@ void PrintProtocolInfo(
 	IN	TCHAR				*sPathName
 	) {
 	};
-#endif
+#endif		 // _SHOW_DETAIL
 
 void DumpBuf(WSABUF *buf, const int count, const std::string &filename) {
 	using namespace std;
