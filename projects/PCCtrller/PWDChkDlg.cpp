@@ -42,8 +42,13 @@ BOOL CPWDChkDlg::OnInitDialog()
 	CDialog::OnInitDialog();
 
 	if (theApp.getAppModel() == EYECARE_MODEL) {
+		SetWindowText("Eyelight Care");
 		SetTimer(ID_TIMER_1, TIME_SPAN_SECONDS, NULL);
+	} else {
+		SetWindowText("Lock Computer");
 	}
+
+	
 
 	return TRUE;  // return TRUE unless you set the focus to a control
 	// 异常: OCX 属性页应返回 FALSE
