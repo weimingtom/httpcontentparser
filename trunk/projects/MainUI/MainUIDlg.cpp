@@ -581,6 +581,7 @@ void CMainUIDlg::OnMainChildren()
 {
 	Services::switchChildModel();
 	AdjustModelIcon();
+	HideMainUI();
 }
 
 void CMainUIDlg::OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu)
