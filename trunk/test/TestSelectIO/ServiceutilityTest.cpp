@@ -13,6 +13,7 @@ ServiceutilityTest::~ServiceutilityTest(void)
 {
 }
 
+// 这里的测试与COM的状态有关。
 void ServiceutilityTest::TestCheckSeachRule() {
 	{
 	char * require = "GET /search?hl=en&q=hello1&btnG=Google+Search&aq=f&oq= HTTP/1.1\r\n"
