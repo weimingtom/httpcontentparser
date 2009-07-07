@@ -36,6 +36,7 @@
 				OutputFile="$(OutDir)/TestSelectIO.exe"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="..\..\lib"
+				IgnoreDefaultLibraryNames=""
 				GenerateDebugInformation="TRUE"
 				ProgramDatabaseFile="$(OutDir)/TestSelectIO.pdb"
 				SubSystem="1"
