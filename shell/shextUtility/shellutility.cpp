@@ -7,8 +7,8 @@
 #include <stdlib.h>
 #include <comdef.h>
 
-#define INSTALL_ITEM_APP_CONTROL	TEXT("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\ShellExecuteHooks\\")
-#define INSTALL_ITEM_COPY_HOOK		TEXT("Directory\\Shellex\\CopyHookHandlers")
+#define INSTALL_ITEM_APP_CONTROL	TEXT("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\ShellExecuteHooks")
+#define INSTALL_ITEM_COPY_HOOK		TEXT("Directory\\Shellex\\CopyHookHandlers\\Family007")
 
 #define MAX_KEY_LENGTH 255
 #define MAX_VALUE_NAME 16383
