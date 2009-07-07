@@ -42,7 +42,8 @@
 			<Tool
 				Name="VCMIDLTool"/>
 			<Tool
-				Name="VCPostBuildEventTool"/>
+				Name="VCPostBuildEventTool"
+				CommandLine="COPY .\DEBUG\FUTILITY.EXE ..\..\RELEASE"/>
 			<Tool
 				Name="VCPreBuildEventTool"/>
 			<Tool
