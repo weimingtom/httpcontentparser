@@ -13,10 +13,4 @@
 
 #include <com\comutility.h>
 
-#ifdef _DEBUG
-#	pragma comment(lib, "utilitymtd.lib")
-#else
-#	pragma comment(lib, "utilitymt.lib")
-#endif
-
 // TODO: 在此处引用程序要求的附加头文件
