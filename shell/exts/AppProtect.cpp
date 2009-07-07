@@ -13,6 +13,7 @@ UINT CAppProtect::CopyCallback(HWND hwnd, UINT wFunc, UINT wFlags, LPCTSTR pszSr
 	GetModuleFileName(NULL, comfilename, MAX_PATH);
 
 	_DEBUG_STREAM_TRC_("[AppProtected] programm path " << comfilename);
+	return IDYES;
 
 	_tsplitpath(comfilename, driver, folder, name, ext);
 	
