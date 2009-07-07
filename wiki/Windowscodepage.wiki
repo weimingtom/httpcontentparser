@@ -1,0 +1,10 @@
+#summary windows下的编码转换
+
+= Introduction =
+
+本文主要介绍windows下的编码装欢
+
+
+= Details =
+
+其实在windows下， MultiByteToWideChar提供了所有的编码装换方法，当然有些编码不能互相转换。例如同为MCBS，不可能直接用这个函数转换。 这时候可以通过UTF16作为中介，先将字符转换为宽字符，再换变回来的方法进行编码转换。
