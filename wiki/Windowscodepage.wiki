@@ -51,3 +51,4 @@ WC_ERR_INVALID_CHARS(after vista), 如果字符里有错， 他会返回
 ||1200      || utf16||
 || 12000    || utf32||
 || 65001    || uft8||
+|| 54936    || GB18030 || 
