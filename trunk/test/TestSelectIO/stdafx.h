@@ -24,10 +24,12 @@
 #	pragma comment(lib, "cppunitd.lib")
 #	pragma comment(lib, "testrunnerd.lib")
 #	pragma comment(lib, "selectioMDd.lib")
+#	pragma comment(lib, "utilityd.lib")
 #else 
 #	pragma comment(lib, "TestRunner.lib")
 #	pragma comment(lib, "cppunit.lib")
-#	pragma comment(lib, "selectioMD.lib")
+#	pragma comment(lib, "selectioMDd.lib")
+#	pragma comment(lib, "utility.lib")
 #endif
 
 #endif  // _TEST_SELECTIO_STDAFX_H__
