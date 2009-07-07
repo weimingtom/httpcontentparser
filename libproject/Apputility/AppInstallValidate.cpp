@@ -71,7 +71,7 @@ int AppInstallValidate::repair(bool removefirst) {
 	// 安装路径注册表项
 	if (!validateReigstrInstallPath(install_path)) {
 		repairRegistryInstallPath(install_path);
-		_DEBUG_STREAM_TRC_("["<<__FUNCTION__<<"] Repair Registry Install Path");
+		_DEBUG_STREAM_TRC_("[AppInstallValidate] ["<<__FUNCTION__<<"] Repair Registry Install Path");
 	}
 
 	// SPI
@@ -218,6 +218,9 @@ void AppInstallValidate::installSPI() {
 }*/
 
 void AppInstallValidate::repairCOM(bool removefirst) {
+	if (!shouldRepairCOM())
+		return;
+
 	if (removefirst == TRUE) {
 		setErrNo(internal_utility::UnRegisterServices());
 	}
@@ -244,6 +247,7 @@ void AppInstallValidate::repairShellExt(bool removefirst) {
 			uninstallCopyControl();
 		}
 		installCopyHook();
+		_DEBUG_STREAM_TRC_("============");
 		_DEBUG_STREAM_TRC_("["<<__FUNCTION__<<"] Repair Shell CopyHook Ext");
 	}
 
@@ -253,6 +257,7 @@ void AppInstallValidate::repairShellExt(bool removefirst) {
 			uninstallCopyControl();
 		}
 		installAppControl();
+		_DEBUG_STREAM_TRC_("============");
 		_DEBUG_STREAM_TRC_("["<<__FUNCTION__<<"] Repair Shell AppControl Ext");
 	}
 }
