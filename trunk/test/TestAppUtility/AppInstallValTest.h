@@ -11,7 +11,6 @@ public:
 
 public:
 	CPPUNIT_TEST_SUITE(AppInstallValTest);
-	CPPUNIT_TEST(testServieInstall);
 	CPPUNIT_TEST(testRunInSPI);
 	CPPUNIT_TEST(testShouldRepair);
 	CPPUNIT_TEST(testRunInCOM);

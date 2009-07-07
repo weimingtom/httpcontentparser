@@ -62,25 +62,10 @@ AppInstallValTest::~AppInstallValTest(void)
 {
 }
 
-void AppInstallValTest::testServieInstall() {
-	using namespace AppUtility;
-	using namespace AppUtility::internal_utility;
-
-	TCHAR path[] = "D:\\workspace\\current\\debug\\";
-	AppInstallValidate appval(VLAIDATE_NONE, SNOWMAN_STATUS_REGISTERED);
-
-	UnRegisterServices(path);
-	CPPUNIT_ASSERT(false == appval.serviceWorking());
-	CPPUNIT_ASSERT(PACKETSFILTERED_INSTALL_SUCC == UnRegisterServices(path));
-	CPPUNIT_ASSERT(PACKETSFILTERED_INSTALL_SUCC == RegisterServices(path));
-	CPPUNIT_ASSERT(true == appval.serviceWorking());
-	CPPUNIT_ASSERT(PACKETSFILTERED_INSTALL_SUCC == UnRegisterServices(path));
-	CPPUNIT_ASSERT(false == appval.serviceWorking());
-}
-
 void AppInstallValTest::testRunInCOM() {
 	AppUtility::AppInstallValidate t1(VALIDATE_COM, SNOWMAN_STATUS_REGISTERED);
 	t1.repair();
+	// 这里失败是因为COM文件也不存在，也返回了错误
 	CPPUNIT_ASSERT(t1.errno_ == PACKETSFILTERED_FILE_NOT_FOUND);
 }
 void AppInstallValTest::testRunInSPI() {
