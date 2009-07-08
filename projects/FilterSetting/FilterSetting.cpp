@@ -22,8 +22,6 @@
 #include <logger\loggerlevel.h>
 #include <DebugOutput.h>
 
-#define COM_SERVICE_MUTEX	TEXT("7F6E3389-60CF-4b19-B1BD-BC6258E63BDC")
-
 #define FILTERSETTING_LOGGER_FILE		".\\log\\service.log"
 #define FILTERSETTING_DEBUG_FILE		".\\log\\dservice.log"
 
@@ -88,13 +86,6 @@ void initializeSetting() {
 extern "C" int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, 
                                 LPTSTR /*lpCmdLine*/, int nShowCmd)
 {
-	// 如果已经有程序启动，则直接推出
-	HANDLE hMutex = CreateMutex(NULL, FALSE, COM_SERVICE_MUTEX);
-	if (GetLastError() == ERROR_ALREADY_EXISTS) {
-		CloseHandle(hMutex);
-		exit(0);
-	}
-
 	initlogger();
 
 	g_hInstance = hInstance;
