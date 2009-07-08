@@ -15,7 +15,6 @@
 
 #ifndef LOG_H
 #define LOG_H
-#pragma once
 
 #include <boost/logging/format.hpp>
 
