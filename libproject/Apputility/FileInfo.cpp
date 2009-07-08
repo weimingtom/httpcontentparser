@@ -61,7 +61,10 @@ void CFileInfo::getInformation() {
 		_sntprintf(SubBlock, MAX_PATH, TEXT("\\StringFileInfo\\%04x%04x\\%s"),lpTranslate[i].wLanguage,
 			lpTranslate[i].wCodePage, FILE_PROPERY_DESCRITPTION);
 		VerQueryValue(pBlock, SubBlock, &lpBuffer, &dwBytes); 
-		description_  = (TCHAR *) lpBuffer;
+		if (NULL != lpBuffer) 
+			description_  = (TCHAR *) lpBuffer;
+		else
+			description_ = "";
 
 		// Retrieve file Internal Name for language and code page "i". 
 		_sntprintf(SubBlock, MAX_PATH, TEXT("\\StringFileInfo\\%04x%04x\\%s"),lpTranslate[i].wLanguage,
@@ -69,11 +72,21 @@ void CFileInfo::getInformation() {
 		VerQueryValue(pBlock, SubBlock, &lpBuffer, &dwBytes); 
 		product_name_ = (TCHAR *) lpBuffer;
 
+		if (NULL != lpBuffer) 
+			product_name_  = (TCHAR *) lpBuffer;
+		else
+			product_name_ = "";
+
 		// Retrieve file Internal Name for language and code page "i". 
 		_sntprintf(SubBlock, MAX_PATH, TEXT("\\StringFileInfo\\%04x%04x\\%s"),lpTranslate[i].wLanguage,
 			lpTranslate[i].wCodePage, FILE_PROPERY_COMPANY_NAME);
 		VerQueryValue(pBlock, SubBlock, &lpBuffer, &dwBytes); 
 		company_ = (TCHAR *) lpBuffer;
+
+		if (NULL != lpBuffer) 
+			company_  = (TCHAR *) lpBuffer;
+		else
+			company_ = "";
 	}
 
 	// ªÒ»°Õº±»
