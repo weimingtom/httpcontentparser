@@ -10,6 +10,7 @@
 #include <com\FilterSetting.h>
 #include <shell\shellutility.h>
 #include <crypt.h>
+#include <appinstallvalidate.h>
 #include <softwareEncrypt\serialNumber.h>
 #include <softwareEncrypt\LicenseInfo.h>
 #include <softwareEncrypt\baseEncrypt.h>
@@ -60,6 +61,20 @@ int _tmain(int argc, _TCHAR* argv[])
 		case 7:
 			setInvalidateSN();
 			setinstallDate();
+		case 8:
+			AppUtility::UninstallSPI();
+			break;
+		case 9:
+			AppUtility::UninstallSPI();
+			break;
+		case 10:
+			{
+			AppUtility::AppInstallValidate valiedate(VALIDATE_SPI, SNOWMAN_STATUS_REGISTERED);
+			valiedate.repair(true);
+			break;
+			}
+		case 11:
+			AppUtility::UninstallShellExt();
 			break;
 	}
 	return 0;
@@ -93,6 +108,8 @@ void printUsage() {
 	cout<<"\t5. Set app into uninstall model. "<<endl;
 	cout<<"\t6. set app into tail model. "<<endl;
 	cout<<"\t7. set install date. "<<endl;
+	cout<<"\t8. uninstall SPI."<<endl;
+	cout<<"\t11. uninstall Ext."<<endl;
 	cout<<"\t0. exit"<<endl;
 	cout<<"please input you option : ";
 }
