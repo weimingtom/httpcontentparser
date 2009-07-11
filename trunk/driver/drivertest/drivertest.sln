@@ -1,0 +1,23 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "drivertest", "drivertest.vcproj", "{83D1B726-4C9B-4635-920D-DFBBD00849DB}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		Release = Release
+	EndGlobalSection
+	GlobalSection(ProjectDependencies) = postSolution
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{83D1B726-4C9B-4635-920D-DFBBD00849DB}.Debug.ActiveCfg = Debug|Win32
+		{83D1B726-4C9B-4635-920D-DFBBD00849DB}.Debug.Build.0 = Debug|Win32
+		{83D1B726-4C9B-4635-920D-DFBBD00849DB}.Release.ActiveCfg = Release|Win32
+		{83D1B726-4C9B-4635-920D-DFBBD00849DB}.Release.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal
