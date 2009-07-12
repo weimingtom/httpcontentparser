@@ -23,6 +23,9 @@ AppController::~AppController() {
 int AppController::InstallDriver()
 {
 	int rc = 0;
+	SC_HANDLE service_handle = NULL;
+	SC_HANDLE serverMan =NULL;
+
 	_DEBUG_STREAM_TRC_("[DriverMngr] Install Driver");
 	// 在当前路径下获取DRIVER的路径
 	// 获取驱动程序的路径
@@ -39,7 +42,7 @@ int AppController::InstallDriver()
 
 	// 注册服务
 	//create service
-	SC_HANDLE serverMan=OpenSCManager(0,0,SC_MANAGER_ALL_ACCESS);
+	serverMan=OpenSCManager(0,0,SC_MANAGER_ALL_ACCESS);
 	if (NULL == serverMan) {
 		rc =Family007::ErrorCode::ERROR_OPEN_SCMGR_FAILED;
 		REPORT_FATAL_ERROR_WITH_ERRNO(rc, "OpenSCManager", 
@@ -48,32 +51,43 @@ int AppController::InstallDriver()
 		goto exit;
 	}
 
-	SC_HANDLE service_handle=CreateService(serverMan, APPCONTROL_SERVICE, 
-					APPCONTROL_SERVICE,
-					SERVICE_START | SERVICE_STOP,   SERVICE_KERNEL_DRIVER, 
-					SERVICE_DEMAND_START,    SERVICE_ERROR_NORMAL,
-					namebuff, 0, 0, 0, 0, 0);
+	service_handle = OpenService(serverMan, APPCONTROL_SERVICE, SERVICE_START | SERVICE_STOP);
 	if (NULL == service_handle) {
-		rc = Family007::ErrorCode::ERROR_CREATE_SERVICE_FAILED;
-		REPORT_FATAL_ERROR_WITH_ERRNO(rc, "CreateService", 
-			"CreateService() failed", __FUNCTION__);
-		_DEBUG_STREAM_TRC_("[DriverMngr] CreateService failed Windows Error : "<<GetLastError());
-		goto exit;
-	}
+		// 如果打开Service是吧
+		service_handle=CreateService(serverMan, APPCONTROL_SERVICE, 
+						APPCONTROL_SERVICE,
+						SERVICE_START | SERVICE_STOP,   SERVICE_KERNEL_DRIVER, 
+						SERVICE_DEMAND_START,    SERVICE_ERROR_NORMAL,
+						namebuff, 0, 0, 0, 0, 0);
+		if (NULL == service_handle) {
+			rc = Family007::ErrorCode::ERROR_CREATE_SERVICE_FAILED;
+			REPORT_FATAL_ERROR_WITH_ERRNO(rc, "CreateService", 
+				"CreateService() failed", __FUNCTION__);
+			_DEBUG_STREAM_TRC_("[DriverMngr] CreateService failed Windows Error : "<<GetLastError());
+			goto exit;
+		}
+	} 
 
-	BOOL result = StartService(service_handle,0,0);
-	if (!result) {
+	// 启动
+	if (FALSE == StartService(service_handle,0,0)) {
 		rc = Family007::ErrorCode::ERROR_START_SERVICE_FAILED;
 		REPORT_FATAL_ERROR_WITH_ERRNO(rc, "StartService", 
 			"StartService() failed", __FUNCTION__);
 		_DEBUG_STREAM_TRC_("[DriverMngr] StartService failed Windows Error : "<<GetLastError());
 		goto exit;
 	}
+
 	CloseServiceHandle(service_handle);
 
 	_DEBUG_STREAM_TRC_("[DriverMngr] install service %s"<<namebuff);
 
 exit:
+	if (NULL != service_handle) {
+		CloseServiceHandle (service_handle);
+	}
+	if (NULL != serverMan ) {
+		CloseServiceHandle(serverMan); 
+	}
 	return rc;
 }
 
@@ -82,8 +96,11 @@ int AppController::UninstallDriver()
 	_DEBUG_STREAM_TRC_("[DriverMngr] Uninstall Driver");
 
 	int rc = 0;
+	SC_HANDLE serverMan = NULL;
+	SC_HANDLE servHandle = NULL;
+	SERVICE_STATUS stat ;
 
-	SC_HANDLE serverMan=OpenSCManager(0,0,SC_MANAGER_ALL_ACCESS);
+	serverMan=OpenSCManager(0,0,SC_MANAGER_ALL_ACCESS);
 	if (NULL == serverMan) {
 		rc =Family007::ErrorCode::ERROR_OPEN_SCMGR_FAILED;
 		REPORT_FATAL_ERROR_WITH_ERRNO(rc, "OpenSCManager", 
@@ -92,8 +109,7 @@ int AppController::UninstallDriver()
 		goto exit;
 	}
 
-	SERVICE_STATUS stat;
-	SC_HANDLE servHandle=OpenService(serverMan, APPCONTROL_SERVICE, SERVICE_ALL_ACCESS);
+	servHandle=OpenService(serverMan, APPCONTROL_SERVICE, SERVICE_ALL_ACCESS);
 	if (NULL == serverMan) {
 		rc =Family007::ErrorCode::ERROR_OPEN_SERVICE_FAILED;
 		REPORT_FATAL_ERROR_WITH_ERRNO(rc, "OpenService", 
@@ -102,10 +118,29 @@ int AppController::UninstallDriver()
 		goto exit;
 	}
 
-	ControlService(servHandle,SERVICE_CONTROL_STOP,&stat);   
-	DeleteService(servHandle);
+	if (FALSE == ControlService(servHandle,SERVICE_CONTROL_STOP,&stat)) {
+		rc =Family007::ErrorCode::ERROR_CONTROL_SERVICE_FAILED;
+		REPORT_FATAL_ERROR_WITH_ERRNO(rc, "ControlService", 
+			"call ControlService() to stop server", __FUNCTION__);
+		_DEBUG_STREAM_TRC_("[DriverMngr] ControlService failed Windows Error : "<<GetLastError());
+		goto exit;
+	}
+
+	if (FALSE == DeleteService(servHandle)) {
+		rc =Family007::ErrorCode::ERROR_DELETE_SERVICE_FAILED;
+		REPORT_FATAL_ERROR_WITH_ERRNO(rc, "DeleteService", 
+			"DeleteService() failed", __FUNCTION__);
+		_DEBUG_STREAM_TRC_("[DriverMngr] DeleteService failed Windows Error : "<<GetLastError());
+		goto exit;
+	}
 
 exit:
+	if (NULL != servHandle) {
+		CloseServiceHandle (servHandle);
+	}
+	if (NULL != serverMan ) {
+		CloseServiceHandle(serverMan); 
+	}
 	return rc;
 }
 
@@ -114,6 +149,7 @@ int  AppController::begin()
 {
 	int rc = 0;
 	// 避免错误，先卸载再加载
+	UninstallDriver();
 	InstallDriver(); 
 
 	//create processing thread
@@ -126,13 +162,9 @@ int  AppController::begin()
 	device=CreateFile(APPCONTROL_FILE,GENERIC_READ | GENERIC_WRITE, 0, 0, 
 		OPEN_EXISTING, FILE_ATTRIBUTE_SYSTEM, 0);
 	if (INVALID_HANDLE_VALUE == device) {
-		using Family007::ErrorCode;
-		rc = ErrorCode::ERROR_OPEN_DEVICE_FAILED;
-		Family007::ErrorCode::reportError(rc, ErrorCode::ERROR_LEVEL_FATAL, 
-			"CreateFile()", 
-			"CreateFile() to open a device to load appcontrol driver failed",
-			GetLastError(),
-			__FUNCTION__);
+		rc =Family007::ErrorCode::ERROR_OPEN_DEVICE_FAILED;
+		REPORT_FATAL_ERROR_WITH_ERRNO(rc, "CreateFile", 
+			"CreateFile() to open a device to load appcontrol driver failed", __FUNCTION__);
 
 		_DEBUG_STREAM_TRC_("[DriverMngr] CreateFile failed Windows Error : "<<GetLastError());
 
