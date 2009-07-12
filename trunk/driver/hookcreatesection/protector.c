@@ -1,5 +1,14 @@
 
 #include "ntddk.h"
+#include "..\..\include\driver_const.h"
+
+// 系统路径及系统路径长度
+// 由于无法调用相关API, 
+// 安装程序将在加载驱动程序时传入相关参数
+
+const WCHAR devicename[]=L"\\Device\\Protector";
+const WCHAR devicelink[]=L"\\DosDevices\\PROTECTOR";
+
 
 struct SYS_SERVICE_TABLE { 
 	void **ServiceTable; 
@@ -8,28 +17,9 @@ struct SYS_SERVICE_TABLE {
 	void **ArgumentsTable; 
 }; 
 
-// 系统路径及系统路径长度
-// 由于无法调用相关API, 
-// 安装程序将在加载驱动程序时传入相关参数
-const int PATH_BUF_MAX = 260;
-char SystemDir[260];
+char SystemDir[PATH_BUF_MAX];
 int  LenSystemDir = 0;
 
-const WCHAR devicename[]=L"\\Device\\Protector";
-const WCHAR devicelink[]=L"\\DosDevices\\PROTECTOR";
-
-// 注意这个INDEX只是一个顺序， 传入的数据是CHAR类型
-// 而实际保存数据的是DWORD类型，因为我们必须要在乘4
-const int INDEX_INPUT_DATA_NTCREATESECTION = 0;
-const int INDEX_INPUT_DATA_EXCHANGE_BUFFER = 1;
-const int INDEX_INPUT_DATA_SYSDIR          = 2;
-const int INDEX_INPUT_DATA_SENDTHREADMSG   = 3;
-const int INDEX_INPUT_DATA_HWND			   = 4;
-#define  WM_MSG_CHECKAPP				(0x0400 + 0x100)
-
-typedef ULONG (__stdcall *SENDMESSAGE)(ULONG hWnd, ULONG Msg, ULONG wParam, ULONG lParam);
-SENDMESSAGE Proc_SendMessage = 0;
-ULONG g_hWnd = 0;
 
 // 保证能够互斥调用Check
 KEVENT g_mutex_event; 
@@ -40,31 +30,37 @@ ULONG RealCallee;
 char * exchange_buffer;
 extern struct SYS_SERVICE_TABLE *KeServiceDescriptorTable; 
 
-int checkfilepath(ANSI_STRING *str) {
+int checkfilepath(const char *str) {
 	const char * DOTEXT = ".exe";
 	const int DOTEXE_LENGTH = 4;
+	int len = 0;
 	
 	// 这种情况其实不该出现，防御编码
 	if (NULL == str) {
 		goto passed;
 	} 
+	
+	len = strlen(str);
+	if (len < DOTEXE_LENGTH) {
+		// 太短了吧
+		goto passed;
+	}
 
 	// 比较最后字符字符是不是.exe
-	if(_strnicmp(&(str->Buffer[str->Length - DOTEXE_LENGTH]), DOTEXT, DOTEXE_LENGTH)) { 
-		DbgPrint("[Protector] [NOT EXE]%s passed", str->Buffer);
+	if(_strnicmp(&(str[len - DOTEXE_LENGTH]), DOTEXT, DOTEXE_LENGTH)) { 
+		DbgPrint("[Protector] [NOT EXE]%s passed", str);
 		goto passed;
 	}
 	
 	// 如果以{systemdir}开头则返回为真
-	if(0 == _strnicmp(str->Buffer, SystemDir, LenSystemDir)) { 
-		DbgPrint("[Protector] [IN SYSTEM DIR] %s passed", str->Buffer);
+	if(0 == _strnicmp(str, SystemDir, LenSystemDir)) { 
+		DbgPrint("[Protector] [IN SYSTEM DIR] %s passed", str);
 		goto passed;
 	}
 
-	DbgPrint("[Protector] Need to check %s Failed", str->Buffer);
+	DbgPrint("[Protector] Need to check %s Failed", str);
 	return 0;
 passed:
-	RtlFreeAnsiString(str);
 	return 1;
 }
 
@@ -72,16 +68,20 @@ passed:
 //this function decides whether we should allow NtCreateSection() call to be successfull
 ULONG __stdcall check(PULONG arg)
 {
+	NTSTATUS status;
 	HANDLE hand=0;
-	PFILE_OBJECT file=0;
+	PFILE_OBJECT fileObject=0;
 	POBJECT_HANDLE_INFORMATION info;
 	ULONG notify = 0;
 	ULONG result = 0;
 	ULONG notcheck = 0;
 	const int max_check_num = 5;
 	int cnt = 0;
-	char*buff;
-	ANSI_STRING str; 
+	ANSI_STRING deviceVolumn_a = {0};
+	UNICODE_STRING deviceVolumn_u = {0};
+	ANSI_STRING filepath_withoutV = {0};
+	char filepath[PATH_BUF_MAX] = {0};
+	
 	
 	//check the flags. If PAGE_EXECUTE access to the section is not requested,
 	//it does not make sense to be bothered about it	
@@ -93,22 +93,32 @@ ULONG __stdcall check(PULONG arg)
 
 	//get the file name via the file handle
 	hand=(HANDLE)arg[6];		// 第六个参数保存有可执行文件的句柄
-	ObReferenceObjectByHandle(hand,0,0,KernelMode,&file,(POBJECT_HANDLE_INFORMATION)&info);
-	if(!file)
-		return 1;
-
-	RtlUnicodeStringToAnsiString(&str,&file->FileName,1);
-
+	ObReferenceObjectByHandle(hand,0,0,KernelMode,&fileObject,(POBJECT_HANDLE_INFORMATION)&info);
+	if(!fileObject) {
+		result = 1;
+		goto exit;
+	}
+	
+	// 获取盘符
+	RtlVolumeDeviceToDosName(fileObject->DeviceObject,&deviceVolumn_u);
+	RtlUnicodeStringToAnsiString(&deviceVolumn_a,&deviceVolumn_u,1);
+	RtlUnicodeStringToAnsiString(&deviceVolumn_a,&deviceVolumn_u,1);
+	RtlUnicodeStringToAnsiString(&filepath_withoutV,&fileObject->FileName,1);
+	
+	if (PATH_BUF_MAX < deviceVolumn_a.Length + filepath_withoutV.Length) {
+		result = 1;
+		goto exit;
+	}
+	strncpy(filepath,deviceVolumn_a.Buffer,PATH_BUF_MAX); 
+	strncat(filepath, filepath_withoutV.Buffer, PATH_BUF_MAX);
+	
 
 	//  检测应用程序
-	buff=str.Buffer;
-	if (checkfilepath(&str)) {
-		return 1;
+	if (checkfilepath(filepath)) {
+		result = 1;
+		goto exit;
 	}
 
-	// 释放句柄
-	ObDereferenceObject(file);
-	
 
 	//now we are going to ask user's opinion. Write file name to the buffer, and wait until
 	//the user indicates the response (1 as a first DWORD means we can proceed)
@@ -119,10 +129,12 @@ ULONG __stdcall check(PULONG arg)
 
 	// 将文件路径及路径长度放入到缓冲区之中
 	// 通过此种方式上传给应用程序
-	strcpy(&exchange_buffer[8],buff);
-	RtlFreeAnsiString(&str);
+	// 使用memcpy保证所有'\0'都可以复制到缓冲区当中
+	memcpy(&exchange_buffer[ADDR_EXCHANGE_FILEPATH],filepath, PATH_BUF_MAX);
+	
+	// 重置“应用程序完成”缓冲区
 	notify = 1;
-	memmove(&exchange_buffer[0],&notify,4);
+	memmove(&exchange_buffer[ADDR_EXCHANGE_NOTIFY_APP],&notify,4);
 
 	// 等待应用程序作出回应
 	while(1)
@@ -133,7 +145,7 @@ ULONG __stdcall check(PULONG arg)
 		KeDelayExecutionThread(KernelMode, FALSE, &li);
 		
 		// checked保存了客户应用程序是否做出了相应
-		memmove(&notcheck,&exchange_buffer[0],4);
+		memmove(&notcheck,&exchange_buffer[ADDR_EXCHANGE_APP_COMP],4);
 		
 		// 为了避免当用用户程序结束，而迟迟得不到结果导致的死锁
 		// 我们最多在这里等待5次
@@ -142,16 +154,30 @@ ULONG __stdcall check(PULONG arg)
 			break;
 		}
 		if(!notcheck) {
-			memmove(&result,&exchange_buffer[4],4);
+			// 获取结果
+			memmove(&result,&exchange_buffer[ADDR_EXCHANGE_APP_RESULT],4);
 			break;
 		}
 		
 		cnt++;
 	}
 
-
+exit:
+	// 重置请求缓冲区
+	// 如果应用程序没有启动，这里可能不被重置，因此我们还是在这里手动重置一次
+	memset(&exchange_buffer[ADDR_EXCHANGE_NOTIFY_APP], 0, 4);
 	// 使其他请求可以运行
 	KeSetEvent(&g_mutex_event,0,0);
+	
+	if (0 != fileObject) {
+		ObDereferenceObject(fileObject);
+	}
+	
+	RtlFreeAnsiString(&deviceVolumn_a);
+	RtlFreeAnsiString(&filepath_withoutV);
+	RtlFreeUnicodeString(&deviceVolumn_u);
+	
+	DbgPrint("[Protector] Check complete, path %s return %d", filepath, result);
 	return result;
 }
 
@@ -159,7 +185,6 @@ ULONG __stdcall check(PULONG arg)
 //just saves execution contect and calls check() 
 _declspec(naked) Proxy()
 {
-	DbgPrint("[Protector] Proxy");
 	_asm{
 		//save execution contect and calls check() -the rest depends upon the value check() returns
 		// if it is 1, proceed to the actual callee. Otherwise,return STATUS_ACCESS_DENIED
