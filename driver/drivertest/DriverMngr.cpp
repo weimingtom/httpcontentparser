@@ -10,6 +10,17 @@
 #define  APPCONTROL_FILE						TEXT("\\\\.\\PROTECTOR")
 #define  APPCONTROL_DRIVER_FILE		TEXT("protector.sys")
 
+//=============================
+// 构造函数与析构函数
+AppController::AppController(CheckProcessCreate * checker) : checker_(checker) {
+	dwThreadId = 0;
+	exit_thread_ = 0;
+	assert (checker != NULL);
+}
+AppController::~AppController() {
+	end();
+}
+
 int AppController::InstallDriver()
 {
 	int rc = 0;
@@ -169,7 +180,13 @@ int AppController::checkpassed(const char * filename) {
 	_DEBUG_STREAM_TRC_("Do you want to run"<<exchange_buffer_.get_filepath());
 
 	// 将结果写入内存
-	exchange_buffer_.set_check_result(true);
+	assert (NULL != checker_);
+	if (NULL != checker_) {
+		result = checker_->enable_process_create(filename);
+	}
+
+	exchange_buffer_.set_check_result(result);
+
 	return result;
 }
 
@@ -177,7 +194,8 @@ int AppController::checkpassed() {
 	return checkpassed(exchange_buffer_.get_filepath().c_str());
 }
 
-
+// ==========================================
+// 线程
 DWORD CALLBACK CheckAppProc(LPVOID param) {
 	_DEBUG_STREAM_TRC_("Begin Thread Proc");
 	AppController * controlloer = (AppController*)param;
@@ -202,7 +220,8 @@ DWORD CALLBACK CheckAppProc(LPVOID param) {
 	return 0;
 }
 
-// 
+// =======================================
+// 交换缓冲区类
 AppController::ExchangeBuffer::ExchangeBuffer() {
 	ZeroMemory(exchange_buffer, sizeof(exchange_buffer));
 }

@@ -4,17 +4,16 @@
 #include <string>
 
 
+class CheckProcessCreate {
+public:
+	virtual bool enable_process_create(const char * process_path_name) = 0;
+};
 
 class AppController {
 	class ExchangeBuffer;
 public:
-	AppController() {
-		dwThreadId = 0;
-		exit_thread_ = 0;
-	}
-	~AppController() {
-		end();
-	}
+	AppController(CheckProcessCreate * checker) ;
+	~AppController();
 
 	// 安装驱动
 
@@ -46,6 +45,9 @@ private:
 
 	volatile int exit_thread_;
 
+	CheckProcessCreate * checker_;
+
+	// 控制交换缓冲区
 	class ExchangeBuffer {
 	public:
 		ExchangeBuffer();
@@ -63,6 +65,10 @@ private:
 	};
 
 	ExchangeBuffer exchange_buffer_;
+
+protected:
+	AppController();
+	AppController(const AppController &);
 };
 
 #endif  // _APPCONTROLLER_H__
