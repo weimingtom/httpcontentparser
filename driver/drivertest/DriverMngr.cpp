@@ -150,7 +150,10 @@ int  AppController::begin()
 	int rc = 0;
 	// ±‹√‚¥ÌŒÛ£¨œ»–∂‘ÿ‘Ÿº”‘ÿ
 	UninstallDriver();
-	InstallDriver(); 
+	rc = InstallDriver(); 
+	if (!rc) {
+		goto exit;
+	}
 
 	//create processing thread
 	HANDLE hThread = CreateThread(NULL, 0, 
@@ -188,8 +191,7 @@ int  AppController::begin()
 	DeviceIoControl(device,IO_CONTROL_BUFFER_INIT, buffer_init,512, buffer_init, 512, &dw, NULL);
 
 exit:
-	if (rc) {
-	}
+
 	return rc;
 }
 
