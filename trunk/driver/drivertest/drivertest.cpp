@@ -7,6 +7,7 @@
 class MyCheck : public CheckProcessCreate {
 public:
 	virtual bool enable_process_create(const char * process_path_name) {
+		OutputDebugString("enable_process_create");
 		char buffer[1024];
 		sprintf(buffer, "Enable process %s create?", process_path_name);
 		if (IDYES == MessageBox(NULL, buffer, "create process", MB_YESNO | MB_ICONMASK)) {
