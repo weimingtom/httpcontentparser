@@ -2,6 +2,7 @@
 #define _APPCONTROLLER_H__
 
 #include <string>
+#include <driver_const.h>
 
 
 class CheckProcessCreate {
@@ -39,8 +40,6 @@ public:
 private:
 	HANDLE device;
 	DWORD dwThreadId;
-	
-	const static int IO_CONTROL_BUFFER_INIT = 1000;
 	friend DWORD CALLBACK CheckAppProc(LPVOID param);
 
 	volatile int exit_thread_;
@@ -61,7 +60,7 @@ private:
 
 		void reset_status();
 	private:
-		char exchange_buffer[MAX_PATH * 2];
+		char exchange_buffer[EXCHANGE_BUFFER_SIZE];
 	};
 
 	ExchangeBuffer exchange_buffer_;

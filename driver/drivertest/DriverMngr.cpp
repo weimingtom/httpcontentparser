@@ -79,7 +79,7 @@ int AppController::InstallDriver()
 
 	CloseServiceHandle(service_handle);
 
-	_DEBUG_STREAM_TRC_("[DriverMngr] install service %s"<<namebuff);
+	_DEBUG_STREAM_TRC_("[DriverMngr] install service"<<namebuff);
 
 exit:
 	if (NULL != service_handle) {
@@ -269,13 +269,14 @@ std::string  AppController::ExchangeBuffer::get_filepath() {
 
 void AppController::ExchangeBuffer::set_check_result(const bool passed) {
 	DWORD result = 1;
+	DWORD status = 0;
 	if (passed) {
 		result = 1;
 	} else {
 		result = 0;
 	}
-	
-	memmove(&result, &(exchange_buffer[ADDR_EXCHANGE_APP_COMP]), 4);
+	memmove(&(exchange_buffer[ADDR_EXCHANGE_APP_COMP]), &status, 4);
+	memmove(&(exchange_buffer[ADDR_EXCHANGE_APP_RESULT]), &result, 4);
 }
 
 void AppController::ExchangeBuffer::reset_status() {
