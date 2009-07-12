@@ -23,7 +23,7 @@ AppController::~AppController() {
 int AppController::InstallDriver()
 {
 	int rc = 0;
-	_DEBUG_STREAM_TRC_("[DriverMngr]Install Driver");
+	_DEBUG_STREAM_TRC_("[DriverMngr] Install Driver");
 	// 在当前路径下获取DRIVER的路径
 	// 获取驱动程序的路径
 	char namebuff[MAX_PATH]; 
@@ -44,7 +44,7 @@ int AppController::InstallDriver()
 		rc =Family007::ErrorCode::ERROR_OPEN_SCMGR_FAILED;
 		REPORT_FATAL_ERROR_WITH_ERRNO(rc, "OpenSCManager", 
 			"OpenSCManager() to open a SCManager", __FUNCTION__);
-		_DEBUG_STREAM_TRC_("[DriverMngr]OpenSCManager failed Windows Error : "<<GetLastError());
+		_DEBUG_STREAM_TRC_("[DriverMngr] OpenSCManager failed Windows Error : "<<GetLastError());
 		goto exit;
 	}
 
@@ -57,7 +57,7 @@ int AppController::InstallDriver()
 		rc = Family007::ErrorCode::ERROR_CREATE_SERVICE_FAILED;
 		REPORT_FATAL_ERROR_WITH_ERRNO(rc, "CreateService", 
 			"CreateService() failed", __FUNCTION__);
-		_DEBUG_STREAM_TRC_("[DriverMngr]CreateService failed Windows Error : "<<GetLastError());
+		_DEBUG_STREAM_TRC_("[DriverMngr] CreateService failed Windows Error : "<<GetLastError());
 		goto exit;
 	}
 
@@ -66,12 +66,12 @@ int AppController::InstallDriver()
 		rc = Family007::ErrorCode::ERROR_START_SERVICE_FAILED;
 		REPORT_FATAL_ERROR_WITH_ERRNO(rc, "StartService", 
 			"StartService() failed", __FUNCTION__);
-		_DEBUG_STREAM_TRC_("[DriverMngr]StartService failed Windows Error : "<<GetLastError());
+		_DEBUG_STREAM_TRC_("[DriverMngr] StartService failed Windows Error : "<<GetLastError());
 		goto exit;
 	}
 	CloseServiceHandle(service_handle);
 
-	_DEBUG_STREAM_TRC_("[DriverMngr]install service %s"<<namebuff);
+	_DEBUG_STREAM_TRC_("[DriverMngr] install service %s"<<namebuff);
 
 exit:
 	return rc;
@@ -79,7 +79,7 @@ exit:
 
 int AppController::UninstallDriver()
 {
-	_DEBUG_STREAM_TRC_("[DriverMngr]Uninstall Driver");
+	_DEBUG_STREAM_TRC_("[DriverMngr] Uninstall Driver");
 
 	int rc = 0;
 
@@ -88,7 +88,7 @@ int AppController::UninstallDriver()
 		rc =Family007::ErrorCode::ERROR_OPEN_SCMGR_FAILED;
 		REPORT_FATAL_ERROR_WITH_ERRNO(rc, "OpenSCManager", 
 			"OpenSCManager() to open a SCManager", __FUNCTION__);
-		_DEBUG_STREAM_TRC_("[DriverMngr]OpenSCManager failed Windows Error : "<<GetLastError());
+		_DEBUG_STREAM_TRC_("[DriverMngr] OpenSCManager failed Windows Error : "<<GetLastError());
 		goto exit;
 	}
 
@@ -98,7 +98,7 @@ int AppController::UninstallDriver()
 		rc =Family007::ErrorCode::ERROR_OPEN_SERVICE_FAILED;
 		REPORT_FATAL_ERROR_WITH_ERRNO(rc, "OpenService", 
 			"OpenService() to open a SCManager", __FUNCTION__);
-		_DEBUG_STREAM_TRC_("[DriverMngr]OpenService failed Windows Error : "<<GetLastError());
+		_DEBUG_STREAM_TRC_("[DriverMngr] OpenService failed Windows Error : "<<GetLastError());
 		goto exit;
 	}
 
@@ -134,7 +134,7 @@ int  AppController::begin()
 			GetLastError(),
 			__FUNCTION__);
 
-		_DEBUG_STREAM_TRC_("[DriverMngr]CreateFile failed Windows Error : "<<GetLastError());
+		_DEBUG_STREAM_TRC_("[DriverMngr] CreateFile failed Windows Error : "<<GetLastError());
 
 		goto exit;
 	}
@@ -175,7 +175,7 @@ int AppController::end() {
 
 int AppController::checkpassed(const char * filename) {
 	int result = 1;
-	_DEBUG_STREAM_TRC_("[DriverMngr]Do you want to run"<<exchange_buffer_.get_filepath());
+	_DEBUG_STREAM_TRC_("[DriverMngr] Do you want to run"<<exchange_buffer_.get_filepath());
 
 	// 将结果写入内存
 	assert (NULL != checker_);
@@ -195,7 +195,7 @@ int AppController::checkpassed() {
 // ==========================================
 // 线程
 DWORD CALLBACK CheckAppProc(LPVOID param) {
-	_DEBUG_STREAM_TRC_("[DriverMngr]Begin Thread Proc");
+	_DEBUG_STREAM_TRC_("[DriverMngr] Begin Thread Proc");
 	AppController * controlloer = (AppController*)param;
 	while(1)
 	{
@@ -213,7 +213,7 @@ DWORD CALLBACK CheckAppProc(LPVOID param) {
 		}
 	}
 
-	_DEBUG_STREAM_TRC_("[DriverMngr]End Thread Proc");
+	_DEBUG_STREAM_TRC_("[DriverMngr] End Thread Proc");
 
 	return 0;
 }
