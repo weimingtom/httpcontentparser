@@ -1,7 +1,10 @@
 #include "stdafx.h"
 #include ".\DriverMngr.h"
-#include <DebugOutput.h>
 #include "ErrorCode.h"
+#include <DebugOutput.h>
+#include <driver_const.h>
+#include <assert.h>
+#include <string>
 
 #define  APPCONTROL_SERVICE				TEXT("protectorservice")
 #define  APPCONTROL_FILE						TEXT("\\\\.\\PROTECTOR")
@@ -134,13 +137,14 @@ int  AppController::begin()
 	// 初始化缓冲区
 	DWORD dw;
 	DWORD buffer_init[64];
-	DWORD * addr=(DWORD *)(1+(DWORD)GetProcAddress(GetModuleHandle("ntdll.dll"),"NtCreateSection"));
+	// TODO:不能兼容64为
+	DWORD * addr=(DWORD *)(1+(DWORD)GetProcAddress(GetModuleHandle("ntdll.dll"),"NtCreateSection"));  
 	ZeroMemory(buffer_init,sizeof(buffer_init));
                           
 	buffer_init[0] = addr[0];                                                                              // 传入函数NtCreateSection的路径
-	buffer_init[1] = (DWORD)&exchange_buffer[0];                                   // 传入交换缓冲区的内容
+	buffer_init[1] = (DWORD)exchange_buffer_.get_buffer_addr();         // 传入交换缓冲区的内容
 	buffer_init[2] = (DWORD)&SYSTEM_DIR[0];                                          // 传入SystemDir
-	DeviceIoControl(device,IO_CONTROL_BUFFER_INIT, buffer_init,256, buffer_init, 256, &dw, NULL);
+	DeviceIoControl(device,IO_CONTROL_BUFFER_INIT, buffer_init,512, buffer_init, 512, &dw, NULL);
 
 exit:
 	if (rc) {
@@ -160,32 +164,17 @@ int AppController::end() {
 	return rc;
 }
 
-// 重置状态
-void AppController::resetState() {
-	int status = 0;
-	memmove(exchange_buffer, &(status), 4);
-}
 int AppController::checkpassed(const char * filename) {
 	int result = 1;
-	// ask user's permission to run the program
-	const int MSG_BUF_LEN = 512;
-	char msgbuff[MSG_BUF_LEN];
-	_snprintf(msgbuff, MSG_BUF_LEN, "Do you want to run %s", getFilePath());
-	_DEBUG_STREAM_TRC_(msgbuff);
+	_DEBUG_STREAM_TRC_("Do you want to run"<<exchange_buffer_.get_filepath());
 
 	// 将结果写入内存
-	memmove(&exchange_buffer[4], &result, 4);
+	exchange_buffer_.set_check_result(true);
 	return result;
 }
 
 int AppController::checkpassed() {
-	return checkpassed(getFilePath());
-}
-
-int AppController::getState() {
-	int status;
-	memmove(&status, &(exchange_buffer[0]), 4);
-	return status;
+	return checkpassed(exchange_buffer_.get_filepath().c_str());
 }
 
 
@@ -195,13 +184,12 @@ DWORD CALLBACK CheckAppProc(LPVOID param) {
 	while(1)
 	{
 		//if nothing is there, Sleep() 10 ms and check again
-		while( ! controlloer->getState()) {
+		while( ! controlloer->get_exchange_buffer()->need_check()) {
 			Sleep(50);
 		}
 
 		// if user's reply is positive, add the program to the white list
 		int passed = controlloer->checkpassed();
-		controlloer->resetState();
 
 		// 如果调用了end函数， 退出线程
 		if (controlloer->exitThread()) {
@@ -212,4 +200,34 @@ DWORD CALLBACK CheckAppProc(LPVOID param) {
 	_DEBUG_STREAM_TRC_("End Thread Proc");
 
 	return 0;
+}
+
+// 
+AppController::ExchangeBuffer::ExchangeBuffer() {
+	ZeroMemory(exchange_buffer, sizeof(exchange_buffer));
+}
+
+bool AppController::ExchangeBuffer::need_check() {
+	int status;
+	memmove(&status, &(exchange_buffer[ADDR_EXCHANGE_NOTIFY_APP]), 4);
+	return status == 1;
+}
+
+std::string  AppController::ExchangeBuffer::get_filepath() {
+	assert(need_check());
+	return std::string(&(exchange_buffer[ADDR_EXCHANGE_FILEPATH]));
+}
+
+void AppController::ExchangeBuffer::set_check_result(const bool passed) {
+	DWORD result = 1;
+	if (passed) {
+		result = 1;
+	} else {
+		result = 0;
+	}
+	
+	memmove(&result, &(exchange_buffer[ADDR_EXCHANGE_APP_COMP]), 4);
+}
+
+void AppController::ExchangeBuffer::reset_status() {
 }
