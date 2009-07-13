@@ -98,6 +98,11 @@ protected:
 	void executeDelete(IAppControl *pSetting);
 	void executeAdd(IAppControl *pSetting);
 
+	// 检测路径是否符合要求
+	// 这些要求通常包括，是否是system32路径下的进程
+	// 是不是本路径下的进程
+	bool checkPath(LPCTSTR lpstrFilepath);
+
 
 	BOOL m_bEnableAppControl;
 public:
