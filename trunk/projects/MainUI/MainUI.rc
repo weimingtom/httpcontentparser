@@ -1124,6 +1124,8 @@ BEGIN
     IDS_UNKNOW_ERROR        "Unknown error"
     IDS_PWD_FAILED_ON_CHANGE "Failed on change password, Please try again!"
     IDS_PWD_SET_SUCCESS     "Set new password successfully!"
+    IDS_DLG_PROGRAM_PATH_IN_LIMITDIR 
+                            "You cannot add file in Familly007 or in system directory."
 END
 
 #endif    // Ó¢Óï(ÃÀ¹ú) resources
