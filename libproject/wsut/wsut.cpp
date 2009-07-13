@@ -132,7 +132,6 @@ WSUT_API int __stdcall  CallUtility(const char * status) {
 	SetUninstallStatus();
 
 	// 调用过程
-	AppUtility::UninstallShellExt();
 	AppUtility::UninstallService();
 	AppUtility::UninstallSPI();
 

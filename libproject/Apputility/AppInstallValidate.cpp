@@ -6,7 +6,6 @@
 #include <process.h>
 #include <stdlib.h>
 #include <io.h>
-#include <shell\shellutility.h>
 #include <softwareStatus.h>
 #include <DebugOutput.h>
 
@@ -23,11 +22,7 @@ UINT UninstallService() {
 	internal_utility::UnRegisterServices();
 	return 0;
 }
-UINT UninstallShellExt() {
-	uninstallCopyControl();
-	uninstallAppControl();
-	return 0;
-}
+
 
 AppInstallValidate::AppInstallValidate(int type, int status) : type_(type), status_(status)
 {
@@ -49,10 +44,6 @@ void AppInstallValidate::getCurrentPath(HMODULE hModule) {
 }
 
 int AppInstallValidate::uninstall() {
-	// 删除Shell ext
-	uninstallCopyControl();
-	uninstallAppControl();
-
 	// 删除SPI
 	CXInstall	m_Install;
 	m_Install.RemoveProvider();
@@ -76,9 +67,6 @@ int AppInstallValidate::repair(bool removefirst) {
 
 	// SPI
 	repairSPI(removefirst);
-
-	// 修复外科扩展
-	repairShellExt(removefirst);
 
 	// COM 服务
 	//if (!serviceWorking()) {
@@ -235,32 +223,7 @@ bool AppInstallValidate::shouldRepairCOM() {
 		return true;
 }
 
-//===================================================
-// 修复外科应用程序
-void AppInstallValidate::repairShellExt(bool removefirst) {
-	if (shouldRepairShellExt() == false)
-		return;
 
-	// 安装应用程序
-	if (!isInstallCopyHook()) {
-		if (removefirst) {
-			uninstallCopyControl();
-		}
-		installCopyHook();
-		_DEBUG_STREAM_TRC_("============");
-		_DEBUG_STREAM_TRC_("["<<__FUNCTION__<<"] Repair Shell CopyHook Ext");
-	}
-
-	// 安装应用程序控制
-	if(!isInstallAppControl()) {
-		if (removefirst) {
-			uninstallCopyControl();
-		}
-		installAppControl();
-		_DEBUG_STREAM_TRC_("============");
-		_DEBUG_STREAM_TRC_("["<<__FUNCTION__<<"] Repair Shell AppControl Ext");
-	}
-}
 //===================================================
 // 设置当前错误号
 void AppInstallValidate::setErrNo(int new_error) {
