@@ -73,9 +73,6 @@ int _tmain(int argc, _TCHAR* argv[])
 			valiedate.repair(true);
 			break;
 			}
-		case 11:
-			AppUtility::UninstallShellExt();
-			break;
 	}
 	return 0;
 }
@@ -192,7 +189,6 @@ void installAllComponent() {
 }
 
 void uninstallAllComponent() {
-	AppUtility::UninstallShellExt();
 	AppUtility::UninstallService();
 	AppUtility::UninstallSPI();
 }
