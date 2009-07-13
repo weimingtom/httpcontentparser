@@ -102,6 +102,7 @@
 #define IDB_BMP_ACCESSABLE              157
 #define IDB_BITMAP3                     158
 #define IDB_BMP_BLOCK                   158
+#define IDS_DLG_PROGRAM_PATH_IN_LIMITDIR 158
 #define IDB_BITMAP1                     159
 #define IDB_GUI_DOCKBAR                 160
 #define IDB_GUI_DOCKBAROFFICE           161
