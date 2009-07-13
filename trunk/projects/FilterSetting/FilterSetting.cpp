@@ -22,14 +22,24 @@
 #include <logger\loggerlevel.h>
 #include <DebugOutput.h>
 
-#define FILTERSETTING_LOGGER_FILE		".\\log\\service.log"
-#define FILTERSETTING_DEBUG_FILE		".\\log\\dservice.log"
+#define FILTERSETTING_LOGGER_FILE		TEXT(".\\log\\service.log")
+#define FILTERSETTING_DEBUG_FILE		TEXT(".\\log\\dservice.log")
+
+#define COM_SERVICE_MUTEX		TEXT("D2C30A28-477B-4651-B392-81246240A169")
 
 void initlogger() {
 	using namespace boost::logging;
 	init_debug_logger(".\\log\\dEyecare.log");
 	init_app_logger(".\\log\\Eyecare.log");
 	set_logger_level(LOGGER_LEVEL);
+}
+
+bool checkEmbedding(LPCTSTR lpstrCmdLine) {
+	if (0 == _tcsicmp(lpstrCmdLine, TEXT("-Embedding"))) {
+		return false;
+	} else {
+		return true;
+	}
 }
 
 
@@ -84,37 +94,52 @@ void initializeSetting() {
 }
 
 extern "C" int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, 
-                                LPTSTR /*lpCmdLine*/, int nShowCmd)
+                                LPTSTR lpCmdLine, int nShowCmd)
 {
-	initlogger();
+	// 根据lpCmdLine进行区分， 如果是注册组件或者卸载组件
+	// 则直接运行_AtlModule.WinMain(nShowCmd);
+	// 如果是COM方式运行，则应该执行下面一些列操作
 
-	g_hInstance = hInstance;
-	refreshAppstatus();
+	//_DEBUG_STREAM_TRC_("[Family007 Service] Cmd line "<<lpCmdLine);
 
-	// 修复项
-	// todo 此处应该直接使用函数获取状态
-	// 获取应用程序状态
-	AppUtility::AppInstallValidate validator(VALIDATE_COM, getAppStatus());
-	validator.repair();
+	if (checkEmbedding(lpCmdLine)) {
+		// 只应该运行一次
+		HANDLE hMutex = CreateMutex(NULL, FALSE, COM_SERVICE_MUTEX);
+		if (GetLastError() == ERROR_ALREADY_EXISTS) {
+			CloseHandle(hMutex);
+			return 0;
+		}
 
-	initializeSetting();
+		initlogger();
 
-	if (g_configuration.getWebHistoryRecordAutoClean()->shouldExec()) {
-		g_configuration.getWebHistoryRecordAutoClean()->reset();
-		__LTRC__("Clear WebHistory");
-		ClearHistory();
-		
-	}
-	if (g_configuration.getScreenshotAutoClean()->shouldExec()) {
-		g_configuration.getScreenshotAutoClean()->reset();
-		__LTRC__("Clear Screenshot");
-		ClearScreen();
-	}
+		g_hInstance = hInstance;
+		refreshAppstatus();
 
-	 // 开启服务线程
-	ServThread::getInstance();
-	
-    return _AtlModule.WinMain(nShowCmd);
+		// 修复项
+		// todo 此处应该直接使用函数获取状态
+		// 获取应用程序状态
+		AppUtility::AppInstallValidate validator(VALIDATE_COM, getAppStatus());
+		validator.repair();
+
+		initializeSetting();
+
+		if (g_configuration.getWebHistoryRecordAutoClean()->shouldExec()) {
+			g_configuration.getWebHistoryRecordAutoClean()->reset();
+			__LTRC__("Clear WebHistory");
+			ClearHistory();
+			
+		}
+		if (g_configuration.getScreenshotAutoClean()->shouldExec()) {
+			g_configuration.getScreenshotAutoClean()->reset();
+			__LTRC__("Clear Screenshot");
+			ClearScreen();
+		}
+
+		// 开启服务线程
+		ServThread::getInstance();
+	} 
+
+	 return _AtlModule.WinMain(nShowCmd);
 }
 
 
