@@ -7,7 +7,6 @@
 #include <windows.h>
 #include <tchar.h>
 
-#pragma comment(lib, "Advapi32.lib")
 #ifdef _DEBUG
 #pragma comment(lib, "apputilityd.lib")
 #else
