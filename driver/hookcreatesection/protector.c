@@ -1,14 +1,6 @@
 
 #include "ntddk.h"
-#include "..\..\include\driver_const.h"
-
-// 系统路径及系统路径长度
-// 由于无法调用相关API, 
-// 安装程序将在加载驱动程序时传入相关参数
-
-const WCHAR devicename[]=L"\\Device\\Protector";
-const WCHAR devicelink[]=L"\\DosDevices\\PROTECTOR";
-
+#include "driver_const.h"
 
 struct SYS_SERVICE_TABLE { 
 	void **ServiceTable; 
@@ -16,6 +8,13 @@ struct SYS_SERVICE_TABLE {
 	unsigned long ServiceLimit; 
 	void **ArgumentsTable; 
 }; 
+
+const WCHAR devicename[]=L"\\Device\\Protector";
+const WCHAR devicelink[]=L"\\DosDevices\\PROTECTOR";
+
+// 系统路径及系统路径长度
+// 由于无法调用相关API, 
+// 安装程序将在加载驱动程序时传入相关参数
 
 char SystemDir[PATH_BUF_MAX];
 int  LenSystemDir = 0;
@@ -25,6 +24,8 @@ int  LenSystemDir = 0;
 KEVENT g_mutex_event; 
 ULONG Index;
 ULONG RealCallee;
+ULONG disable_driver = 0; // 如果检测进程结束，则被迫进行禁止"进程创建功能"
+const int max_check_num = 10; // 如果检测一段时间，上层程序没有反应，则直接返回true
 
 // 与上层程序交互的程序。
 char * exchange_buffer;
@@ -75,7 +76,6 @@ ULONG __stdcall check(PULONG arg)
 	ULONG notify = 0;
 	ULONG result = 0;
 	ULONG notcheck = 0;
-	const int max_check_num = 5;
 	int cnt = 0;
 	ANSI_STRING deviceVolumn_a = {0};
 	UNICODE_STRING deviceVolumn_u = {0};
@@ -88,6 +88,10 @@ ULONG __stdcall check(PULONG arg)
 	if((arg[4]&0xf0)==0)
 		return 1;
 	if((arg[5]&0x01000000)==0)
+		return 1;
+	
+	// 如果驱动程序被禁用
+	if (disable_driver == 1)
 		return 1;
 
 
@@ -150,11 +154,13 @@ ULONG __stdcall check(PULONG arg)
 		// 为了避免当用用户程序结束，而迟迟得不到结果导致的死锁
 		// 我们最多在这里等待5次
 		if (cnt > max_check_num) {
+			DbgPrint("[Protector] check timeout");
 			result = 1;
 			break;
 		}
 		if(!notcheck) {
 			// 获取结果
+			DbgPrint("[Protector] result return");
 			memmove(&result,&exchange_buffer[ADDR_EXCHANGE_APP_RESULT],4);
 			break;
 		}
@@ -223,7 +229,7 @@ NTSTATUS DrvDispatch(IN PDEVICE_OBJECT device,IN PIRP Irp)
 	PIO_STACK_LOCATION loc=IoGetCurrentIrpStackLocation(Irp);
 
 	DbgPrint("[Protector] DrvDispatch");
-	if(loc->Parameters.DeviceIoControl.IoControlCode==1000)
+	if(loc->Parameters.DeviceIoControl.IoControlCode==IO_CONTROL_BUFFER_INIT)
 	{
 		buff=(UCHAR*)Irp->AssociatedIrp.SystemBuffer;
 
@@ -246,15 +252,15 @@ NTSTATUS DrvDispatch(IN PDEVICE_OBJECT device,IN PIRP Irp)
 
 		// 获取交换缓冲区
 		memmove(&a,&buff[INDEX_INPUT_DATA_EXCHANGE_BUFFER*4],4);
-		exchange_buffer=(char*)MmMapIoSpace(MmGetPhysicalAddress((void*)a),256,0);
+		exchange_buffer=(char*)MmMapIoSpace(MmGetPhysicalAddress((void*)a),EXCHANGE_BUFFER_SIZE,0);
 		
 		// 获取系统路径
 		// 注意对于此处的内存来说，如果client使用零食内存会导致错误
 		// 因此我们在这里拷贝到自身缓冲区
 		// 避免因为内存释放而引起的错误
 		memmove(&a,&buff[INDEX_INPUT_DATA_SYSDIR*4],4);
-		tmp=(char*)MmMapIoSpace(MmGetPhysicalAddress((void*)a),256,0);
-		memcpy(SystemDir, tmp, 256);
+		tmp=(char*)MmMapIoSpace(MmGetPhysicalAddress((void*)a),PATH_BUF_MAX,0);
+		memcpy(SystemDir, tmp, PATH_BUF_MAX);
 		LenSystemDir = strlen(SystemDir);
 	}
 
@@ -268,9 +274,25 @@ NTSTATUS DrvDispatch(IN PDEVICE_OBJECT device,IN PIRP Irp)
 
 
 // nothing special
-NTSTATUS DrvCreateClose(IN PDEVICE_OBJECT device,IN PIRP Irp)
+NTSTATUS DrvClose(IN PDEVICE_OBJECT device,IN PIRP Irp)
 {
-	DbgPrint("[Protector] CreateClose");
+	DbgPrint("[Protector] DrvClose==============");
+	// 当应用程序程序关闭时，此函数会被调用
+	// 及时程序被非法关闭
+	disable_driver = 1;
+	
+	Irp->IoStatus.Information=0;
+	Irp->IoStatus.Status=0;
+	IoCompleteRequest(Irp,IO_NO_INCREMENT);
+	return 0;
+}
+
+NTSTATUS DrvCreate(IN PDEVICE_OBJECT device,IN PIRP Irp)
+{
+	DbgPrint("[Protector] DrvCreate==============");
+
+	disable_driver = 0;
+	
 	Irp->IoStatus.Information=0;
 	Irp->IoStatus.Status=0;
 	IoCompleteRequest(Irp,IO_NO_INCREMENT);
@@ -298,7 +320,7 @@ void DrvUnload(IN PDRIVER_OBJECT driver)
 	}
 
 	MmUnmapIoSpace((char*)base,4);
-	MmUnmapIoSpace(exchange_buffer,256);
+	MmUnmapIoSpace(exchange_buffer, EXCHANGE_BUFFER_SIZE);
 
 	RtlInitUnicodeString(&devlink,devicelink);
 	IoDeleteSymbolicLink(&devlink);
@@ -323,8 +345,8 @@ NTSTATUS DriverEntry(IN PDRIVER_OBJECT driver,IN PUNICODE_STRING path)
 
 
 	driver->MajorFunction[IRP_MJ_DEVICE_CONTROL]=DrvDispatch;
-	driver->MajorFunction[IRP_MJ_CREATE]=DrvCreateClose;
-	driver->MajorFunction[IRP_MJ_CLOSE]=DrvCreateClose;
+	driver->MajorFunction[IRP_MJ_CREATE]=DrvCreate;
+	driver->MajorFunction[IRP_MJ_CLOSE]=DrvClose;
 	driver->DriverUnload=DrvUnload;
 	KeInitializeEvent(&g_mutex_event,SynchronizationEvent,1);
 
