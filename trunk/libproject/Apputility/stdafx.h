@@ -33,8 +33,6 @@
 #pragma comment(lib, "ws2_32.lib")
 #ifdef _DEBUG
 #	pragma comment(lib, "utilityd.lib")
-# pragma comment(lib, "shextUtilityd.lib")
 #else 
 #	pragma comment(lib, "utility.lib")
-# pragma comment(lib, "shextUtility.lib")
 #endif

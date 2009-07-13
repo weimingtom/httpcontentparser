@@ -52,8 +52,6 @@ private:
 	bool shouldRepairCOM();
 
 	// install shell extension
-	void repairShellExt(bool removefirst);
-	bool shouldRepairShellExt() { return true;}
 
 	void getCurrentPath(HMODULE hModule);
 private:
@@ -73,7 +71,6 @@ private:
 
 UINT UninstallSPI();
 UINT UninstallService();
-UINT UninstallShellExt();
 
 namespace internal_utility {
 	UINT RegisterServices();
