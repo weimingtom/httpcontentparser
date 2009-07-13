@@ -6,6 +6,7 @@
 #include "DlgProgramControl.h"
 #include ".\dlgprogramcontrol.h"
 #include ".\globalvariable.h"
+#include <apputility.h>
 #include <fileinfo.h>
 #include <comdef.h>
 #include <com\comutility.h>
@@ -238,11 +239,16 @@ void CDlgProgramControl::OnBnClickedBtnAdd()
 
 	CFileDialog dlg(TRUE, NULL, NULL, OFN_FILEMUSTEXIST, FILE_FILTER);
 	if (IDOK == dlg.DoModal()) {
-			// 获取信息
+		if (false == checkPath((LPCTSTR)dlg.GetPathName())) {
+			AfxMessageBox(IDS_DLG_PROGRAM_PATH_IN_LIMITDIR, MB_OK | MB_ICONEXCLAMATION);
+			return;
+		}
+
+		// 获取信息
 		CFileInfo info((LPCTSTR)dlg.GetPathName());
 		int iIndex = addNewFile(info);
 		if (iIndex < 0) {
-			AfxMessageBox(IDS_DLG_PROGRAM_CONTROL_DUPLICATE_ITEM, MB_OK | MB_ICONEXCLAMATION);
+			AfxMessageBox(IDS_DLG_PROGRAM_PATH_IN_LIMITDIR, MB_OK | MB_ICONEXCLAMATION);
 		} else {
 			addItem((LPCTSTR)dlg.GetPathName(), iIndex);
 			SetModify(true);
@@ -339,4 +345,24 @@ void CDlgProgramControl::OnBnClickedChkEnableAppcontrol()
 HBRUSH CDlgProgramControl::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 {
 	return CBaseDlg::OnCtlColor(pDC, pWnd, nCtlColor);
+}
+
+//========================
+// utility functions
+bool CDlgProgramControl::checkPath(LPCTSTR lpstrFilepath) {
+	TCHAR limitpath[MAX_PATH], moduleFile[MAX_PATH];
+	// 获取windows路径
+	GetWindowsDirectory(limitpath, MAX_PATH);
+	if (0 == _tcsnicmp(limitpath, lpstrFilepath, _tcslen(limitpath))) {
+		return false;
+	}
+
+	// 获取软件安装路径
+	GetModuleFileName(NULL, moduleFile, MAX_PATH);
+	GetFileNameDir(moduleFile, limitpath, MAX_PATH);
+	if (0 == _tcsnicmp(limitpath, lpstrFilepath, _tcslen(limitpath))) {
+		return false;
+	}
+
+	return true;
 }
