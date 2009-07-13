@@ -29,8 +29,9 @@
 
 #pragma comment(lib, "strsafe.lib")
 #pragma comment(lib, "Version.lib")
-
+#pragma comment(lib, "Advapi32.lib")
 #pragma comment(lib, "ws2_32.lib")
+
 #ifdef _DEBUG
 #	pragma comment(lib, "utilityd.lib")
 #else 
