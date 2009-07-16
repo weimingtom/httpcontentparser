@@ -25,9 +25,9 @@ public:
 protected:
 	int InstallDriver();
 	int UninstallDriver();
-
-	int stopService();
 	
+	int InstallService();
+	int DeleteService();
 public:
 	int checkpassed(const char * filename);
 	int checkpassed();
