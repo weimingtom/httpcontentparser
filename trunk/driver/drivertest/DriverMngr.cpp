@@ -20,141 +20,35 @@ AppController::AppController(CheckProcessCreate * checker) : checker_(checker) {
 AppController::~AppController() {
 }
 
-int AppController::InstallDriver()
-{
+int AppController::InstallDriver() {
 	int rc = 0;
-	SC_HANDLE service_handle = NULL;
-	SC_HANDLE serverMan =NULL;
 
-	_DEBUG_STREAM_TRC_("[DriverMngr] Install Driver");
-	// 在当前路径下获取DRIVER的路径
-	// 获取驱动程序的路径
-	char namebuff[MAX_PATH]; 
-	GetModuleFileName(NULL, namebuff, MAX_PATH);
-	DWORD  a=strlen(namebuff);
-	while(1)
-	{
-		if(namebuff[a]=='\\')break;
-		a--;
-	}
-	a++;
-	strcpy(&namebuff[a], APPCONTROL_DRIVER_FILE);
-
-	// 注册服务
-	//create service
-	serverMan=OpenSCManager(0,0,SC_MANAGER_ALL_ACCESS);
-	if (NULL == serverMan) {
-		rc =Family007::ErrorCode::ERROR_OPEN_SCMGR_FAILED;
-		REPORT_FATAL_ERROR_WITH_ERRNO(rc, "OpenSCManager", 
-			"OpenSCManager() to open a SCManager", __FUNCTION__);
-		_DEBUG_STREAM_TRC_("[DriverMngr] OpenSCManager failed Windows Error : "<<GetLastError());
+	// 避免错误，先卸载再加载
+	rc = DeleteService();
+	if (!rc) {
 		goto exit;
 	}
-
-
-	// 如果打开Service是吧
-	service_handle=CreateService(serverMan, APPCONTROL_SERVICE, 
-		APPCONTROL_SERVICE,
-		SERVICE_START | SERVICE_STOP,   SERVICE_KERNEL_DRIVER, 
-		SERVICE_DEMAND_START,    SERVICE_ERROR_NORMAL,
-		namebuff, 0, 0, 0, 0, 0);
-	if (NULL == service_handle) {
-		rc = Family007::ErrorCode::ERROR_CREATE_SERVICE_FAILED;
-		REPORT_FATAL_ERROR_WITH_ERRNO(rc, "CreateService", 
-			"CreateService() failed", __FUNCTION__);
-		_DEBUG_STREAM_TRC_("[DriverMngr] CreateService failed Windows Error : "<<GetLastError());
+	
+	rc = InstallService();
+	if (!rc) {
 		goto exit;
 	}
- 
-
-	// 启动
-	if (FALSE == StartService(service_handle,0,0)) {
-		rc = Family007::ErrorCode::ERROR_START_SERVICE_FAILED;
-		REPORT_FATAL_ERROR_WITH_ERRNO(rc, "StartService", 
-			"StartService() failed", __FUNCTION__);
-		_DEBUG_STREAM_TRC_("[DriverMngr] StartService failed Windows Error : "<<GetLastError());
-		goto exit;
-	}
-
-	CloseServiceHandle(service_handle);
-
-	_DEBUG_STREAM_TRC_("[DriverMngr] install service"<<namebuff);
-
 exit:
-	if (NULL != service_handle) {
-		CloseServiceHandle (service_handle);
-	}
-	if (NULL != serverMan ) {
-		CloseServiceHandle(serverMan); 
-	}
 	return rc;
 }
 
-int stopService() {
-	return 0;
-}
 int AppController::UninstallDriver()
 {
-	_DEBUG_STREAM_TRC_("[DriverMngr] Uninstall Driver");
-
 	int rc = 0;
-	SC_HANDLE serverMan = NULL;
-	SC_HANDLE servHandle = NULL;
-	SERVICE_STATUS_PROCESS ssp;
-	DWORD dwBytesNeeded;
-	SERVICE_STATUS stat ;
 
-	serverMan=OpenSCManager(0,0,SC_MANAGER_ALL_ACCESS);
-	if (NULL == serverMan) {
-		rc =Family007::ErrorCode::ERROR_OPEN_SCMGR_FAILED;
-		REPORT_FATAL_ERROR_WITH_ERRNO(rc, "OpenSCManager", 
-			"OpenSCManager() to open a SCManager", __FUNCTION__);
-		_DEBUG_STREAM_TRC_("[DriverMngr] OpenSCManager failed Windows Error : "<<GetLastError());
-		goto exit;
-	}
-
-	servHandle=OpenService(serverMan, APPCONTROL_SERVICE, SERVICE_ALL_ACCESS);
-	if (NULL == serverMan) {
-		rc =Family007::ErrorCode::ERROR_OPEN_SERVICE_FAILED;
-		REPORT_FATAL_ERROR_WITH_ERRNO(rc, "OpenService", 
-			"OpenService() to open a SCManager", __FUNCTION__);
-		_DEBUG_STREAM_TRC_("[DriverMngr] OpenService failed Windows Error : "<<GetLastError());
-		goto exit;
-	}
-
-	if (FALSE == ControlService(servHandle,SERVICE_CONTROL_STOP,&stat)) {
-		rc =Family007::ErrorCode::ERROR_CONTROL_SERVICE_FAILED;
-		REPORT_FATAL_ERROR_WITH_ERRNO(rc, "ControlService", 
-			"call ControlService() to stop server", __FUNCTION__);
-		_DEBUG_STREAM_TRC_("[DriverMngr] ControlService failed Windows Error : "<<GetLastError());
-		goto exit;
-
-	}
-
-	if (FALSE == DeleteService(servHandle)) {
-		rc =Family007::ErrorCode::ERROR_DELETE_SERVICE_FAILED;
-		REPORT_FATAL_ERROR_WITH_ERRNO(rc, "DeleteService", 
-			"DeleteService() failed", __FUNCTION__);
-		_DEBUG_STREAM_TRC_("[DriverMngr] DeleteService failed Windows Error : "<<GetLastError());
-		goto exit;
-	}
-
-exit:
-	if (NULL != servHandle) {
-		CloseServiceHandle (servHandle);
-	}
-	if (NULL != serverMan ) {
-		CloseServiceHandle(serverMan); 
-	}
+	rc = DeleteService();
 	return rc;
 }
-
 
 int  AppController::begin()
 {
 	int rc = 0;
-	// 避免错误，先卸载再加载
-	UninstallDriver();
+
 	rc = InstallDriver(); 
 	if (!rc) {
 		goto exit;
@@ -292,4 +186,166 @@ void AppController::ExchangeBuffer::set_check_result(const bool passed) {
 }
 
 void AppController::ExchangeBuffer::reset_status() {
+}
+
+int AppController::InstallService() {
+	int rc = 0;
+	SC_HANDLE service_handle = NULL;
+	SC_HANDLE serverMan =NULL;
+
+	_DEBUG_STREAM_TRC_("[DriverMngr] Install Driver");
+	// 在当前路径下获取DRIVER的路径
+	// 获取驱动程序的路径
+	char namebuff[MAX_PATH]; 
+	GetModuleFileName(NULL, namebuff, MAX_PATH);
+	DWORD  a=strlen(namebuff);
+	while(1)
+	{
+		if(namebuff[a]=='\\')break;
+		a--;
+	}
+	a++;
+	strcpy(&namebuff[a], APPCONTROL_DRIVER_FILE);
+
+	// 注册服务
+	//create service
+	serverMan=OpenSCManager(0,0,SC_MANAGER_ALL_ACCESS);
+	if (NULL == serverMan) {
+		rc =Family007::ErrorCode::ERROR_OPEN_SCMGR_FAILED;
+		REPORT_FATAL_ERROR_WITH_ERRNO(rc, "OpenSCManager", 
+			"OpenSCManager() to open a SCManager", __FUNCTION__);
+		_DEBUG_STREAM_TRC_("[DriverMngr] OpenSCManager failed Windows Error : "<<GetLastError());
+		goto exit;
+	}
+
+
+	// 如果打开Service是吧
+	service_handle=CreateService(serverMan, APPCONTROL_SERVICE, 
+		APPCONTROL_SERVICE,
+		SERVICE_START | SERVICE_STOP,   SERVICE_KERNEL_DRIVER, 
+		SERVICE_DEMAND_START,    SERVICE_ERROR_NORMAL,
+		namebuff, 0, 0, 0, 0, 0);
+	if (NULL == service_handle) {
+		rc = Family007::ErrorCode::ERROR_CREATE_SERVICE_FAILED;
+		REPORT_FATAL_ERROR_WITH_ERRNO(rc, "CreateService", 
+			"CreateService() failed", __FUNCTION__);
+		_DEBUG_STREAM_TRC_("[DriverMngr] CreateService failed Windows Error : "<<GetLastError());
+		goto exit;
+	}
+
+
+	// 启动
+	if (FALSE == StartService(service_handle,0,0)) {
+		rc = Family007::ErrorCode::ERROR_START_SERVICE_FAILED;
+		REPORT_FATAL_ERROR_WITH_ERRNO(rc, "StartService", 
+			"StartService() failed", __FUNCTION__);
+		_DEBUG_STREAM_TRC_("[DriverMngr] StartService failed Windows Error : "<<GetLastError());
+		goto exit;
+	}
+
+	CloseServiceHandle(service_handle);
+
+	_DEBUG_STREAM_TRC_("[DriverMngr] install service"<<namebuff);
+
+exit:
+	if (NULL != service_handle) {
+		CloseServiceHandle (service_handle);
+	}
+	if (NULL != serverMan ) {
+		CloseServiceHandle(serverMan); 
+	}
+	return rc;
+}
+
+
+// 调用此函数， 首先应该关闭句柄，否则会超时
+int AppController::DeleteService() {
+	SC_HANDLE schSCManager = NULL;
+	SC_HANDLE schService = NULL;
+	SERVICE_STATUS_PROCESS ssp;
+	DWORD dwStartTime = GetTickCount();
+	DWORD dwBytesNeeded;
+	const DWORD dwTimeout = 30000; // 30-second time-out
+	int rc = 0;
+
+	schSCManager = OpenSCManager(NULL, NULL,   SC_MANAGER_ALL_ACCESS);  
+	if (NULL == schSCManager) 
+	{
+		rc =Family007::ErrorCode::ERROR_OPEN_SCMGR_FAILED;
+		REPORT_FATAL_ERROR_WITH_ERRNO(rc, "OpenSCManager", 
+			"OpenSCManager() failed", __FUNCTION__);
+		_DEBUG_STREAM_TRC_("[DriverMngr] OpenSCManager failed Windows Error : "<<GetLastError());
+		goto exit;
+	}
+
+	// 获取句柄
+	schService = OpenService( schSCManager,APPCONTROL_SERVICE,  
+		SERVICE_STOP | SERVICE_QUERY_STATUS | SERVICE_ENUMERATE_DEPENDENTS);  
+	if (schService == NULL) 	{ 
+		rc =Family007::ErrorCode::ERROR_OPEN_SERVICE_FAILED;
+		REPORT_FATAL_ERROR_WITH_ERRNO(rc, "OpenService", 
+			"OpenService() to open a SCManager", __FUNCTION__);
+		_DEBUG_STREAM_TRC_("[DriverMngr] OpenService failed Windows Error : "<<GetLastError());
+		goto exit;
+	}    
+
+	// 获取状态
+	if ( !QueryServiceStatusEx(schService, SC_STATUS_PROCESS_INFO,
+				(LPBYTE)&ssp,  	sizeof(SERVICE_STATUS_PROCESS), &dwBytesNeeded ) ) {
+		rc = Family007::ErrorCode::ERROR_QUERY_STATUX_EX_FAILED;
+		REPORT_FATAL_ERROR_WITH_ERRNO(rc, "QueryServiceStatusEx", 
+			"QueryServiceStatusEx() to open a SCManager", __FUNCTION__);
+		_DEBUG_STREAM_TRC_("[DriverMngr] QueryServiceStatusEx failed Windows Error : "<<GetLastError());
+		goto exit;
+	}
+
+	// 如果已经停止，直接退出
+	if ( ssp.dwCurrentState == SERVICE_STOPPED )     {
+		goto exit;
+	} else {
+		// 如果没有停止，则尝试停止
+		 SERVICE_STATUS  stat;
+		if (FALSE == ControlService(schService,SERVICE_CONTROL_STOP,&stat)) {
+			rc =Family007::ErrorCode::ERROR_CONTROL_SERVICE_FAILED;
+			REPORT_FATAL_ERROR_WITH_ERRNO(rc, "ControlService", 
+				"call ControlService() to stop server", __FUNCTION__);
+			_DEBUG_STREAM_TRC_("[DriverMngr] ControlService failed Windows Error : "<<GetLastError());
+			goto exit;
+		}
+	}
+
+	// 等待知道停止
+	while ( ssp.dwCurrentState == SERVICE_STOP_PENDING )   {
+        Sleep( ssp.dwWaitHint );
+        if ( !QueryServiceStatusEx(schService, SC_STATUS_PROCESS_INFO,  (LPBYTE)&ssp, 
+                 sizeof(SERVICE_STATUS_PROCESS),  &dwBytesNeeded ) )   {
+			rc = Family007::ErrorCode::ERROR_QUERY_STATUX_EX_FAILED;
+			goto exit;		
+        }
+
+		// 如果等待超市
+		if ( GetTickCount() - dwStartTime > dwTimeout ) {
+			rc = Family007::ErrorCode::ERROR_CONTROL_STOP_TIMEOUT;
+			goto exit;
+		 }
+	}
+
+	// 删除服务
+	if (FALSE == ::DeleteService(schService)) {
+		rc =Family007::ErrorCode::ERROR_DELETE_SERVICE_FAILED;
+		REPORT_FATAL_ERROR_WITH_ERRNO(rc, "DeleteService", 
+			"DeleteService() failed", __FUNCTION__);
+		_DEBUG_STREAM_TRC_("[DriverMngr] DeleteService failed Windows Error : "<<GetLastError());
+		goto exit;
+	}
+	
+exit:
+	if (NULL != schService) {
+		CloseServiceHandle (schService);
+	}
+	if (NULL != schSCManager ) {
+		CloseServiceHandle(schSCManager); 
+	}
+
+	return rc;
 }
