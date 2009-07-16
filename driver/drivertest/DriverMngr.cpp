@@ -228,10 +228,13 @@ int AppController::InstallService() {
 				goto exit;
 			}
 	
+			// 如果状态处于，则开启状体
 			if (ssp.dwCurrentState == SERVICE_STOPPED || ssp.dwCurrentState== SERVICE_STOP_PENDING) {
 				goto start_serv;
+			} else {
+				// 其他状态，直接跳过
+				goto exit;
 			}
-
 	}
 
 	// 如果打开Service是吧
