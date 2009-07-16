@@ -25,8 +25,9 @@ public:
 protected:
 	int InstallDriver();
 	int UninstallDriver();
-protected:
 
+	int stopService();
+	
 public:
 	int checkpassed(const char * filename);
 	int checkpassed();
@@ -37,8 +38,9 @@ public:
 	ExchangeBuffer * get_exchange_buffer() {
 		return &exchange_buffer_;
 	}
+
 private:
-	HANDLE device;
+	HANDLE m_hDevice;
 	DWORD dwThreadId;
 	friend DWORD CALLBACK CheckAppProc(LPVOID param);
 
