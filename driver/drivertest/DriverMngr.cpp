@@ -7,8 +7,8 @@
 #include <string>
 
 #define  APPCONTROL_SERVICE				TEXT("protectorservice")
-#define  APPCONTROL_FILE						TEXT("\\\\.\\PROTECTOR")
-#define  APPCONTROL_DRIVER_FILE		TEXT("protector.sys")
+#define  APPCONTROL_FILE				TEXT("\\\\.\\PROTECTOR")
+#define  APPCONTROL_DRIVER_FILE			TEXT("protector.sys")
 
 //=============================
 // 构造函数与析构函数
@@ -51,22 +51,21 @@ int AppController::InstallDriver()
 		goto exit;
 	}
 
-	service_handle = OpenService(serverMan, APPCONTROL_SERVICE, SERVICE_START | SERVICE_STOP);
+
+	// 如果打开Service是吧
+	service_handle=CreateService(serverMan, APPCONTROL_SERVICE, 
+		APPCONTROL_SERVICE,
+		SERVICE_START | SERVICE_STOP,   SERVICE_KERNEL_DRIVER, 
+		SERVICE_DEMAND_START,    SERVICE_ERROR_NORMAL,
+		namebuff, 0, 0, 0, 0, 0);
 	if (NULL == service_handle) {
-		// 如果打开Service是吧
-		service_handle=CreateService(serverMan, APPCONTROL_SERVICE, 
-						APPCONTROL_SERVICE,
-						SERVICE_START | SERVICE_STOP,   SERVICE_KERNEL_DRIVER, 
-						SERVICE_DEMAND_START,    SERVICE_ERROR_NORMAL,
-						namebuff, 0, 0, 0, 0, 0);
-		if (NULL == service_handle) {
-			rc = Family007::ErrorCode::ERROR_CREATE_SERVICE_FAILED;
-			REPORT_FATAL_ERROR_WITH_ERRNO(rc, "CreateService", 
-				"CreateService() failed", __FUNCTION__);
-			_DEBUG_STREAM_TRC_("[DriverMngr] CreateService failed Windows Error : "<<GetLastError());
-			goto exit;
-		}
-	} 
+		rc = Family007::ErrorCode::ERROR_CREATE_SERVICE_FAILED;
+		REPORT_FATAL_ERROR_WITH_ERRNO(rc, "CreateService", 
+			"CreateService() failed", __FUNCTION__);
+		_DEBUG_STREAM_TRC_("[DriverMngr] CreateService failed Windows Error : "<<GetLastError());
+		goto exit;
+	}
+ 
 
 	// 启动
 	if (FALSE == StartService(service_handle,0,0)) {
@@ -91,6 +90,9 @@ exit:
 	return rc;
 }
 
+int stopService() {
+	return 0;
+}
 int AppController::UninstallDriver()
 {
 	_DEBUG_STREAM_TRC_("[DriverMngr] Uninstall Driver");
@@ -98,6 +100,8 @@ int AppController::UninstallDriver()
 	int rc = 0;
 	SC_HANDLE serverMan = NULL;
 	SC_HANDLE servHandle = NULL;
+	SERVICE_STATUS_PROCESS ssp;
+	DWORD dwBytesNeeded;
 	SERVICE_STATUS stat ;
 
 	serverMan=OpenSCManager(0,0,SC_MANAGER_ALL_ACCESS);
@@ -124,6 +128,7 @@ int AppController::UninstallDriver()
 			"call ControlService() to stop server", __FUNCTION__);
 		_DEBUG_STREAM_TRC_("[DriverMngr] ControlService failed Windows Error : "<<GetLastError());
 		goto exit;
+
 	}
 
 	if (FALSE == DeleteService(servHandle)) {
@@ -162,9 +167,10 @@ int  AppController::begin()
 
 
 	// open device
-	device=CreateFile(APPCONTROL_FILE,GENERIC_READ | GENERIC_WRITE, 0, 0, 
+	// 此处将导致驱动程序真正加载
+	m_hDevice=CreateFile(APPCONTROL_FILE,GENERIC_READ | GENERIC_WRITE, 0, 0, 
 		OPEN_EXISTING, FILE_ATTRIBUTE_SYSTEM, 0);
-	if (INVALID_HANDLE_VALUE == device) {
+	if (INVALID_HANDLE_VALUE == m_hDevice) {
 		rc =Family007::ErrorCode::ERROR_OPEN_DEVICE_FAILED;
 		REPORT_FATAL_ERROR_WITH_ERRNO(rc, "CreateFile", 
 			"CreateFile() to open a device to load appcontrol driver failed", __FUNCTION__);
@@ -176,7 +182,7 @@ int  AppController::begin()
 
 	// 获取系统路径
 	char SYSTEM_DIR[MAX_PATH];
-	GetSystemDirectory(SYSTEM_DIR, MAX_PATH);
+	GetWindowsDirectory(SYSTEM_DIR, MAX_PATH);
 
 	// 初始化缓冲区
 	DWORD dw;
@@ -184,11 +190,11 @@ int  AppController::begin()
 	// TODO:不能兼容64为
 	DWORD * addr=(DWORD *)(1+(DWORD)GetProcAddress(GetModuleHandle("ntdll.dll"),"NtCreateSection"));  
 	ZeroMemory(buffer_init,sizeof(buffer_init));
-                          
+
 	buffer_init[0] = addr[0];                                                                              // 传入函数NtCreateSection的路径
 	buffer_init[1] = (DWORD)exchange_buffer_.get_buffer_addr();         // 传入交换缓冲区的内容
 	buffer_init[2] = (DWORD)&SYSTEM_DIR[0];                                          // 传入SystemDir
-	DeviceIoControl(device,IO_CONTROL_BUFFER_INIT, buffer_init,512, buffer_init, 512, &dw, NULL);
+	DeviceIoControl(m_hDevice,IO_CONTROL_BUFFER_INIT, buffer_init,512, buffer_init, 512, &dw, NULL);
 
 exit:
 
@@ -197,6 +203,10 @@ exit:
 
 int AppController::end() {
 	int rc = 0;
+
+	// 关闭
+	CloseHandle(m_hDevice);
+	m_hDevice = NULL;
 
 	// 卸载驱动程序
 	UninstallDriver();
