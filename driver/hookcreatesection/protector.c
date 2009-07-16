@@ -2,6 +2,7 @@
 #include "ntddk.h"
 #include "driver_const.h"
 
+
 struct SYS_SERVICE_TABLE { 
 	void **ServiceTable; 
 	unsigned long CounterTable; 
@@ -24,7 +25,6 @@ int  LenSystemDir = 0;
 KEVENT g_mutex_event; 
 ULONG Index;
 ULONG RealCallee;
-ULONG disable_driver = 0; // 如果检测进程结束，则被迫进行禁止"进程创建功能"
 const int max_check_num = 10; // 如果检测一段时间，上层程序没有反应，则直接返回true
 
 // 与上层程序交互的程序。
@@ -82,6 +82,7 @@ ULONG __stdcall check(PULONG arg)
 	ANSI_STRING filepath_withoutV = {0};
 	char filepath[PATH_BUF_MAX] = {0};
 	
+	DbgPrint("Check");
 	
 	//check the flags. If PAGE_EXECUTE access to the section is not requested,
 	//it does not make sense to be bothered about it	
@@ -89,11 +90,6 @@ ULONG __stdcall check(PULONG arg)
 		return 1;
 	if((arg[5]&0x01000000)==0)
 		return 1;
-	
-	// 如果驱动程序被禁用
-	if (disable_driver == 1)
-		return 1;
-
 
 	//get the file name via the file handle
 	hand=(HANDLE)arg[6];		// 第六个参数保存有可执行文件的句柄
@@ -191,6 +187,7 @@ exit:
 //just saves execution contect and calls check() 
 _declspec(naked) Proxy()
 {
+	DbgPrint("[Protector] Proxy==============");
 	_asm{
 		//save execution contect and calls check() -the rest depends upon the value check() returns
 		// if it is 1, proceed to the actual callee. Otherwise,return STATUS_ACCESS_DENIED
@@ -278,8 +275,9 @@ NTSTATUS DrvClose(IN PDEVICE_OBJECT device,IN PIRP Irp)
 {
 	DbgPrint("[Protector] DrvClose==============");
 	// 当应用程序程序关闭时，此函数会被调用
-	// 及时程序被非法关闭
-	disable_driver = 1;
+	// 即使是程序被非法关闭
+	// 那么既然此函数已经被调用，
+	// 那么上面的检测应用程序创建的代码应该也已经失效了吧
 	
 	Irp->IoStatus.Information=0;
 	Irp->IoStatus.Status=0;
@@ -290,8 +288,6 @@ NTSTATUS DrvClose(IN PDEVICE_OBJECT device,IN PIRP Irp)
 NTSTATUS DrvCreate(IN PDEVICE_OBJECT device,IN PIRP Irp)
 {
 	DbgPrint("[Protector] DrvCreate==============");
-
-	disable_driver = 0;
 	
 	Irp->IoStatus.Information=0;
 	Irp->IoStatus.Status=0;
@@ -331,16 +327,37 @@ void DrvUnload(IN PDRIVER_OBJECT driver)
 //DriverEntry just creates our device - nothing special here
 NTSTATUS DriverEntry(IN PDRIVER_OBJECT driver,IN PUNICODE_STRING path)
 {
-	PDEVICE_OBJECT devobject=0;
+	PDEVICE_OBJECT devobject = 0;
 	UNICODE_STRING devlink,devname;
+	NTSTATUS ntStatus;
+	NTSTATUS ntResult;
 	ULONG a,b;
 
 	DbgPrint("[Protector] DriverEntry");
 	RtlInitUnicodeString(&devname,devicename);
 	RtlInitUnicodeString(&devlink,devicelink);
 
-	IoCreateDevice(driver,256,&devname,FILE_DEVICE_UNKNOWN,0,TRUE,&devobject);
-	IoCreateSymbolicLink(&devlink,&devname);
+	// 如果设备已经存在，则先删除它
+	
+	ntStatus = IoCreateDevice(driver,256,&devname,FILE_DEVICE_UNKNOWN,0,TRUE,&devobject);
+	if (STATUS_SUCCESS == ntStatus) {
+		IoCreateSymbolicLink(&devlink,&devname);
+		ntResult = ntStatus;
+	} else if (STATUS_OBJECT_NAME_EXISTS == ntStatus){
+		// 如果已经创建代表用户已经打开驱动
+		// 直接退出，并返回失败
+		DbgPrint("[Protector] The Device has exist.");
+		ntResult = ntStatus;
+		goto exit;
+	} else if(STATUS_OBJECT_NAME_COLLISION == ntStatus){
+		// STATUS_INSUFFICIENT_RESOURCES
+		ntResult = ntStatus;
+		goto exit;
+	} else {
+		// 直接返回吧
+		ntResult = ntStatus;
+		goto exit;
+	}
 
 
 
@@ -349,6 +366,8 @@ NTSTATUS DriverEntry(IN PDRIVER_OBJECT driver,IN PUNICODE_STRING path)
 	driver->MajorFunction[IRP_MJ_CLOSE]=DrvClose;
 	driver->DriverUnload=DrvUnload;
 	KeInitializeEvent(&g_mutex_event,SynchronizationEvent,1);
-
-	return 0;
+	
+	ntResult = STATUS_SUCCESS;
+exit:
+	return ntResult;
 }
