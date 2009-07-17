@@ -20,9 +20,14 @@ const WCHAR devicelink[]=L"\\DosDevices\\PROTECTOR";
 char SystemDir[PATH_BUF_MAX];
 int  LenSystemDir = 0;
 
+// 当用户应用程序启动后， 此函数设为1
+// 当应用程序关闭后，此变量设为0
+// 当此变量值为1的时候，不再接受IoControl的控制
+// 当此函数为0是，不在检测应用程序创建
+int  ClientAppLaunch = 0;
 
 // 保证能够互斥调用Check
-KEVENT g_mutex_event; 
+FAST_MUTEX mutex_exchange_buffer;
 ULONG Index;
 ULONG RealCallee;
 const int max_check_num = 10; // 如果检测一段时间，上层程序没有反应，则直接返回true
@@ -31,39 +36,9 @@ const int max_check_num = 10; // 如果检测一段时间，上层程序没有反应，则直接返回t
 char * exchange_buffer;
 extern struct SYS_SERVICE_TABLE *KeServiceDescriptorTable; 
 
-int checkfilepath(const char *str) {
-	const char * DOTEXT = ".exe";
-	const int DOTEXE_LENGTH = 4;
-	int len = 0;
-	
-	// 这种情况其实不该出现，防御编码
-	if (NULL == str) {
-		goto passed;
-	} 
-	
-	len = strlen(str);
-	if (len < DOTEXE_LENGTH) {
-		// 太短了吧
-		goto passed;
-	}
-
-	// 比较最后字符字符是不是.exe
-	if(_strnicmp(&(str[len - DOTEXE_LENGTH]), DOTEXT, DOTEXE_LENGTH)) { 
-		DbgPrint("[Protector] [NOT EXE]%s passed", str);
-		goto passed;
-	}
-	
-	// 如果以{systemdir}开头则返回为真
-	if(0 == _strnicmp(str, SystemDir, LenSystemDir)) { 
-		DbgPrint("[Protector] [IN SYSTEM DIR] %s passed", str);
-		goto passed;
-	}
-
-	DbgPrint("[Protector] Need to check %s Failed", str);
-	return 0;
-passed:
-	return 1;
-}
+int InstallAPIHook();
+int UninstallAPIHook();
+int checkfilepath(const char *str);
 
 
 //this function decides whether we should allow NtCreateSection() call to be successfull
@@ -82,7 +57,10 @@ ULONG __stdcall check(PULONG arg)
 	ANSI_STRING filepath_withoutV = {0};
 	char filepath[PATH_BUF_MAX] = {0};
 	
-	DbgPrint("Check");
+	// 客户应用程序已经关闭
+	if (ClientAppLaunch == 0) {
+		return 1;
+	}
 	
 	//check the flags. If PAGE_EXECUTE access to the section is not requested,
 	//it does not make sense to be bothered about it	
@@ -118,20 +96,16 @@ ULONG __stdcall check(PULONG arg)
 		result = 1;
 		goto exit;
 	}
-
-
-	//now we are going to ask user's opinion. Write file name to the buffer, and wait until
-	//the user indicates the response (1 as a first DWORD means we can proceed)
+	
+	DbgPrint("[Protector] {%s} Need to poat to application to check!", filepath);
 
 	//synchronize access to the buffer
-	KeWaitForSingleObject(&g_mutex_event,Executive,KernelMode,0,0);
-
+	ExAcquireFastMutex(&mutex_exchange_buffer);
 
 	// 将文件路径及路径长度放入到缓冲区之中
 	// 通过此种方式上传给应用程序
 	// 使用memcpy保证所有'\0'都可以复制到缓冲区当中
-	memcpy(&exchange_buffer[ADDR_EXCHANGE_FILEPATH],filepath, PATH_BUF_MAX);
-	
+	memcpy(&exchange_buffer[ADDR_EXCHANGE_FILEPATH],filepath, PATH_BUF_MAX);	
 	// 重置“应用程序完成”缓冲区
 	notify = 1;
 	memmove(&exchange_buffer[ADDR_EXCHANGE_NOTIFY_APP],&notify,4);
@@ -163,14 +137,15 @@ ULONG __stdcall check(PULONG arg)
 		
 		cnt++;
 	}
-
-exit:
+	
 	// 重置请求缓冲区
 	// 如果应用程序没有启动，这里可能不被重置，因此我们还是在这里手动重置一次
 	memset(&exchange_buffer[ADDR_EXCHANGE_NOTIFY_APP], 0, 4);
 	// 使其他请求可以运行
-	KeSetEvent(&g_mutex_event,0,0);
 	
+	ExReleaseFastMutex(&mutex_exchange_buffer);
+	
+exit:
 	if (0 != fileObject) {
 		ObDereferenceObject(fileObject);
 	}
@@ -178,8 +153,7 @@ exit:
 	RtlFreeAnsiString(&deviceVolumn_a);
 	RtlFreeAnsiString(&filepath_withoutV);
 	RtlFreeUnicodeString(&deviceVolumn_u);
-	
-	DbgPrint("[Protector] Check complete, path %s return %d", filepath, result);
+
 	return result;
 }
 
@@ -187,7 +161,6 @@ exit:
 //just saves execution contect and calls check() 
 _declspec(naked) Proxy()
 {
-	DbgPrint("[Protector] Proxy==============");
 	_asm{
 		//save execution contect and calls check() -the rest depends upon the value check() returns
 		// if it is 1, proceed to the actual callee. Otherwise,return STATUS_ACCESS_DENIED
@@ -215,37 +188,32 @@ block:popad
 	}
 }
 
-
 NTSTATUS DrvDispatch(IN PDEVICE_OBJECT device,IN PIRP Irp)
 {
 	UCHAR * buff = NULL; 
 	UCHAR * tmp = NULL;
 	ULONG a;
-	ULONG base;
-
+	
 	PIO_STACK_LOCATION loc=IoGetCurrentIrpStackLocation(Irp);
+	
+	
+	if (ClientAppLaunch == 1) {
+		DbgPrint("[Protector] ClientApp Has Initialize, Return directly");
+		goto exit;
+	} else {
+		DbgPrint("[Protector] DrvDispatch Initialize");
+		ClientAppLaunch = 1;
+	}
 
-	DbgPrint("[Protector] DrvDispatch");
+	
+	ExAcquireFastMutex(&mutex_exchange_buffer);
 	if(loc->Parameters.DeviceIoControl.IoControlCode==IO_CONTROL_BUFFER_INIT)
 	{
 		buff=(UCHAR*)Irp->AssociatedIrp.SystemBuffer;
 
 		// hook service dispatch table
 		memmove(&Index,&(buff[INDEX_INPUT_DATA_NTCREATESECTION*4]),4);
-		a=4*Index+(ULONG)KeServiceDescriptorTable->ServiceTable;
-		base=(ULONG)MmMapIoSpace(MmGetPhysicalAddress((void*)a),4,0);
-		a=(ULONG)&Proxy;
-
-		_asm
-		{
-			mov eax,base
-			mov ebx,dword ptr[eax]
-			mov RealCallee,ebx
-			mov ebx,a
-			mov dword ptr[eax],ebx
-		}
-
-		MmUnmapIoSpace((char*)base,4);
+		InstallAPIHook();
 
 		// 获取交换缓冲区
 		memmove(&a,&buff[INDEX_INPUT_DATA_EXCHANGE_BUFFER*4],4);
@@ -261,8 +229,8 @@ NTSTATUS DrvDispatch(IN PDEVICE_OBJECT device,IN PIRP Irp)
 		LenSystemDir = strlen(SystemDir);
 	}
 
-
-
+	ExReleaseFastMutex(&mutex_exchange_buffer);
+exit:
 	Irp->IoStatus.Status=0;
 	IoCompleteRequest(Irp,IO_NO_INCREMENT);
 	return 0;
@@ -279,8 +247,19 @@ NTSTATUS DrvClose(IN PDEVICE_OBJECT device,IN PIRP Irp)
 	// 那么既然此函数已经被调用，
 	// 那么上面的检测应用程序创建的代码应该也已经失效了吧
 	
+	ExAcquireFastMutex(&mutex_exchange_buffer);
+	
+	// 如果安装了APIHook则卸载它
+	// 玩一起他程序在调用一次IOCtrl, 那不是安装了两次API Hook
+	if (ClientAppLaunch != 0) {
+		UninstallAPIHook();
+	}
+	
+	ClientAppLaunch = 0;
 	Irp->IoStatus.Information=0;
 	Irp->IoStatus.Status=0;
+	ExReleaseFastMutex(&mutex_exchange_buffer);
+	
 	IoCompleteRequest(Irp,IO_NO_INCREMENT);
 	return 0;
 }
@@ -288,7 +267,7 @@ NTSTATUS DrvClose(IN PDEVICE_OBJECT device,IN PIRP Irp)
 NTSTATUS DrvCreate(IN PDEVICE_OBJECT device,IN PIRP Irp)
 {
 	DbgPrint("[Protector] DrvCreate==============");
-	
+		
 	Irp->IoStatus.Information=0;
 	Irp->IoStatus.Status=0;
 	IoCompleteRequest(Irp,IO_NO_INCREMENT);
@@ -296,27 +275,11 @@ NTSTATUS DrvCreate(IN PDEVICE_OBJECT device,IN PIRP Irp)
 }
 
 
-
 // nothing special -just a cleanup
 void DrvUnload(IN PDRIVER_OBJECT driver)
 {
 	UNICODE_STRING devlink;
-	ULONG a,base;
-
 	DbgPrint("[Protector] DrvUnload");
-	//unhook dispatch table
-	a=4*Index+(ULONG)KeServiceDescriptorTable->ServiceTable;
-	base=(ULONG)MmMapIoSpace(MmGetPhysicalAddress((void*)a),4,0);
-
-	_asm
-	{
-		mov eax,base
-			mov ebx,RealCallee
-			mov dword ptr[eax],ebx
-	}
-
-	MmUnmapIoSpace((char*)base,4);
-	MmUnmapIoSpace(exchange_buffer, EXCHANGE_BUFFER_SIZE);
 
 	RtlInitUnicodeString(&devlink,devicelink);
 	IoDeleteSymbolicLink(&devlink);
@@ -365,9 +328,76 @@ NTSTATUS DriverEntry(IN PDRIVER_OBJECT driver,IN PUNICODE_STRING path)
 	driver->MajorFunction[IRP_MJ_CREATE]=DrvCreate;
 	driver->MajorFunction[IRP_MJ_CLOSE]=DrvClose;
 	driver->DriverUnload=DrvUnload;
-	KeInitializeEvent(&g_mutex_event,SynchronizationEvent,1);
+	ExInitializeFastMutex(&mutex_exchange_buffer);
 	
 	ntResult = STATUS_SUCCESS;
 exit:
 	return ntResult;
+}
+
+InstallAPIHook() {
+	ULONG a;
+	ULONG base;
+	a=4*Index+(ULONG)KeServiceDescriptorTable->ServiceTable;
+	base=(ULONG)MmMapIoSpace(MmGetPhysicalAddress((void*)a),4,0);
+	a=(ULONG)&Proxy;
+
+	_asm
+	{
+		mov eax,base
+		mov ebx,dword ptr[eax]
+		mov RealCallee,ebx
+		mov ebx,a
+		mov dword ptr[eax],ebx
+	}
+
+	MmUnmapIoSpace((char*)base,4);
+}
+
+int UninstallAPIHook() {
+	ULONG a,base;
+	//unhook dispatch table
+	a=4*Index+(ULONG)KeServiceDescriptorTable->ServiceTable;
+	base=(ULONG)MmMapIoSpace(MmGetPhysicalAddress((void*)a),4,0);
+
+	_asm
+	{
+		mov eax,base
+		mov ebx,RealCallee
+		mov dword ptr[eax],ebx
+	}
+
+	MmUnmapIoSpace((char*)base,4);
+	MmUnmapIoSpace(exchange_buffer, EXCHANGE_BUFFER_SIZE);
+}
+
+int checkfilepath(const char *str) {
+	const char * DOTEXT = ".exe";
+	const int DOTEXE_LENGTH = 4;
+	int len = 0;
+	
+	// 这种情况其实不该出现，防御编码
+	if (NULL == str) {
+		goto passed;
+	} 
+	
+	len = strlen(str);
+	if (len < DOTEXE_LENGTH) {
+		// 太短了吧
+		goto passed;
+	}
+
+	// 比较最后字符字符是不是.exe
+	if(_strnicmp(&(str[len - DOTEXE_LENGTH]), DOTEXT, DOTEXE_LENGTH)) { 
+		goto passed;
+	}
+	
+	// 如果以{systemdir}开头则返回为真
+	if(0 == _strnicmp(str, SystemDir, LenSystemDir)) { 
+		goto passed;
+	}
+
+	return 0;
+passed:
+	return 1;
 }

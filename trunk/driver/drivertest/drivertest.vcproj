@@ -143,7 +143,10 @@
 				RelativePath=".\DriverMngr.h">
 			</File>
 			<File
-				RelativePath=".\ErrorCode.h">
+				RelativePath=".\ErrorcReport.cpp">
+			</File>
+			<File
+				RelativePath=".\ErrorReport.h">
 			</File>
 			<File
 				RelativePath=".\stdafx.h">
