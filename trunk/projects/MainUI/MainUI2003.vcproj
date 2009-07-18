@@ -258,6 +258,9 @@
 				RelativePath=".\res\Home.ico">
 			</File>
 			<File
+				RelativePath=".\res\icon3.ico">
+			</File>
+			<File
 				RelativePath=".\res\inform.ico">
 			</File>
 			<File
@@ -718,6 +721,16 @@
 			</File>
 			<File
 				RelativePath=".\HyperLink.h">
+			</File>
+		</Filter>
+		<Filter
+			Name="TrayIconPos"
+			Filter="">
+			<File
+				RelativePath=".\TrayIconPosition.cpp">
+			</File>
+			<File
+				RelativePath=".\TrayIconPosition.h">
 			</File>
 		</Filter>
 		<File

@@ -35,9 +35,11 @@
 #ifdef _DEBUG
 #pragma comment(lib, "apputilityd.lib")
 #pragma comment(lib, "loggerd.lib")
+#pragma comment(lib, "PPTooltipd.lib")
 #else
 #pragma comment(lib, "apputility.lib")
 #pragma comment(lib, "logger.lib")
+#pragma comment(lib, "PPTooltip.lib")
 #endif 
 
 
