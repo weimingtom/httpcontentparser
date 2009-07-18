@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <time.h>
 #include <typeconvert.h>
+#include <DebugOutput.h>
 
 // CAccessNetwork
 
@@ -32,6 +33,15 @@ STDMETHODIMP CAccessNetwork::accessNetwork(VARIANT_BOOL* bAccessable)
 	struct tm * local= localtime(&t);
 	bool accessable = g_configuration.getOnlineSetting()->getHour(local->tm_wday, local->tm_hour);
 	*bAccessable = convert(accessable);
+
+		//  通知上层应用程序
+	if (VARIANT_FALSE  == *bAccessable) {
+		const int msg_buffer_size = 512;
+		TCHAR msg_buffer[msg_buffer_size];
+		_sntprintf(msg_buffer, msg_buffer_size, "The network will not be acessable in this hour");
+		NotifyUser(msg_buffer);
+	}
+
 	return S_OK;
 }
 

@@ -68,6 +68,14 @@ STDMETHODIMP CSearchRule::check(BSTR search_word, BSTR host_name, VARIANT_BOOL* 
 		g_searchwordUtil.addKeyword(std::string(mcbs), getSearchEngineType(main_name));
 	}
 
+	//  通知上层应用程序
+	if (VARIANT_FALSE  == *pass) {
+		const int msg_buffer_size = 512;
+		TCHAR msg_buffer[msg_buffer_size];
+		_sntprintf(msg_buffer, msg_buffer_size, "You can search by keyword <b>\"%s\"</b>", mcbs);
+		NotifyUser(msg_buffer);
+	}
+
 	return S_OK;
 }
 
