@@ -22,12 +22,11 @@ bool checkApppath(const TCHAR *fullpath) {
 		_DEBUG_STREAM_TRC_("[Family007 Service]  [" <<__FUNCTION__<<"] Check Item :  "<< (TCHAR*)_bstr_t(fullpath)<<" In the same path with ext");
 		return true;
 	} else {
-		bool result =  g_configuration.getProgramControl()->check((TCHAR*)_bstr_t(fullpath));
+		bool result =  g_configuration.getProgramControl()->check(fullpath);
 
-		__LTRC__((result? "pass " : "block ")<<"app check "<< (char*)_bstr_t(fullpath));
+		__LTRC__((result? "pass " : "block ")<<"app check "<< (fullpath);)
 		_DEBUG_STREAM_TRC_("[Family007 Service]  [" <<__FUNCTION__<<"] Check Item :  "
-			<< (TCHAR*)_bstr_t(fullpath)
-			<< "  result : "<<(result ? "passed" : "blocked"));
+			<< fullpath << "  result : "<<(result ? "passed" : "blocked"));
 		return result;
 	}
 }
