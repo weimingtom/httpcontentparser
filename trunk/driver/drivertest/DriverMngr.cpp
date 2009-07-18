@@ -108,7 +108,6 @@ int AppController::checkpassed(const char * filename) {
 	}
 
 	exchange_buffer_.set_check_result(result);
-
 	return result;
 }
 
@@ -169,7 +168,6 @@ void AppController::ExchangeBuffer::set_check_result(const bool passed) {
 	}
 	memmove(&(exchange_buffer[ADDR_EXCHANGE_APP_COMP]), &status, 4);
 	memmove(&(exchange_buffer[ADDR_EXCHANGE_APP_RESULT]), &result, 4);
-	memset(&(exchange_buffer[ADDR_EXCHANGE_APP_RESULT]), 0, EXCHANGE_BUFFER_SIZE);
 }
 
 void AppController::ExchangeBuffer::reset_status() {
