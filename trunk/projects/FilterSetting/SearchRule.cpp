@@ -8,6 +8,7 @@
 #include <utility\dns.h>
 #include <searchengine_define.h>
 #include <comutil.h>
+#include <DebugOutput.h>
 
 // CSearchRule
 
@@ -47,10 +48,14 @@ STDMETHODIMP CSearchRule::check(BSTR search_word, BSTR host_name, VARIANT_BOOL* 
 	}
 
 	char  buffer[buffer_length] = {0};
-	strutility::extUTF8FromStr(utf8, buffer,  search_word_len);
-	strutility::utf8ToDBCS(buffer, mcbs, search_word_len);
+	if (NULL != strstr((char*)_bstr_t(host_name), "baidu")) {
+		strutility::extUTF8FromStr(utf8, mcbs,  search_word_len);
+	} else {
+		strutility::extUTF8FromStr(utf8, buffer,  search_word_len);
+		strutility::utf8ToDBCS(buffer, mcbs, search_word_len);
+	}
 
-	bool passed = g_configuration.getSearchRule()->check((TCHAR*)bstr_t(host_name), mcbs);
+	bool passed = g_configuration.getSearchRule()->check((char*)_bstr_t(host_name), mcbs);
 	*pass = convert(passed);
 
 	// ¼ÇÂ¼
