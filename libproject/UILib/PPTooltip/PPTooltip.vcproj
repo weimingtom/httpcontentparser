@@ -40,7 +40,8 @@
 				CommandLine="copy .\Debug\PPTooltip.lib ..\..\..\lib\PPTooltipd.lib"/>
 			<Tool
 				Name="VCPreBuildEventTool"
-				CommandLine="copy .\PPTooltip.h ..\..\..\include\UILib\PPTooltip"/>
+				CommandLine="copy .\PPTooltip.h ..\..\..\include\UILib\PPTooltip
+copy .\TrayIconPosition.h ..\..\..\include\UILib\PPTooltip"/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
 			<Tool
@@ -81,7 +82,8 @@
 				CommandLine="copy .\release\PPTooltip.lib ..\..\..\lib\PPTooltip.lib"/>
 			<Tool
 				Name="VCPreBuildEventTool"
-				CommandLine="copy .\PPTooltip.h ..\..\..\include\UILib\PPTooltip"/>
+				CommandLine="copy .\PPTooltip.h ..\..\..\include\UILib\PPTooltip
+copy .\TrayIconPosition.h ..\..\..\include\UILib\PPTooltip"/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
 			<Tool
@@ -158,6 +160,12 @@
 			</File>
 			<File
 				RelativePath=".\PPTooltip.h">
+			</File>
+			<File
+				RelativePath=".\TrayIconPosition.cpp">
+			</File>
+			<File
+				RelativePath=".\TrayIconPosition.h">
 			</File>
 		</Filter>
 		<File
