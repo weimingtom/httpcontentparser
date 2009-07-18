@@ -3,12 +3,25 @@
 
 #include "stdafx.h"
 #include "DriverMngr.h"
+#include <DebugOutput.h>
 
 class MyCheck : public CheckProcessCreate {
 public:
-	virtual bool enable_process_create(const char * process_path_name) {
-		return true;
+	MyCheck() {
+		a = 0;
 	}
+	virtual bool enable_process_create(const char * process_path_name) {
+		a++;
+		if (a % 2== 0) {
+			_DEBUG_STREAM_TRC_("MyCheck ===============" << a);
+			return true;
+		} else {
+			_DEBUG_STREAM_TRC_("MyCheck ++++++++++++++" << a);
+			return false;
+		}
+	}
+private:
+	int a;
 }g_checker;
 
 AppController g_controller(&g_checker);
