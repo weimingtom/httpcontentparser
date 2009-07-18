@@ -1,9 +1,11 @@
 #include "stdafx.h"
 #include ".\globalvariable.h"
+#include ".\ServThread.h"
 #include <softwareStatus.h>
 #include <logger/logger.h>
 #include <DebugOutput.h>
 #include <apputility.h>
+#include <definedmsg.h>
 
 // extern Authorize g_authorize;
 XMLConfiguration g_configuration;
@@ -27,6 +29,15 @@ bool checkApppath(const TCHAR *fullpath) {
 		__LTRC__((result? "pass " : "block ")<<"app check "<< (fullpath);)
 		_DEBUG_STREAM_TRC_("[Family007 Service]  [" <<__FUNCTION__<<"] Check Item :  "
 			<< fullpath << "  result : "<<(result ? "passed" : "blocked"));
+
+		if (false == result) {
+			const int msg_buffer_size = 512;
+			TCHAR msg_buffer[msg_buffer_size];
+			TCHAR filename[MAX_PATH];
+			GetFileName(fullpath, filename, MAX_PATH);
+			_sntprintf(msg_buffer, msg_buffer_size, "The file <b>\"%s\"</b> are not allowed to executed", filename);
+			NotifyUser(msg_buffer);
+		}
 		return result;
 	}
 }
@@ -55,6 +66,20 @@ bool tryRegister(const char *sn) {
 
 bool registered() {
 	return g_licenseInfo.registered();
+}
+
+void NotifyUser(const char * msg) {
+	COPYDATASTRUCT copydata;
+	copydata.dwData =WM_SHOW_MSG_TOOLTIP ;
+	copydata.cbData = _tcslen(msg) + 1;	// 连最后的"\0"一起发送
+	copydata.lpData = (PVOID)msg;
+
+	HWND hWndMainUI = GetMainUIHWND();
+	_DEBUG_STREAM_TRC_("[Family007 Service]  [NotifyUser] GetMainUIHWND : "<<hWndMainUI);
+	if (NULL != hWndMainUI) {
+		SendMessage(hWndMainUI, WM_COPYDATA, NULL, (LPARAM)&copydata);
+		SendMessage(hWndMainUI, WM_SHOW_MSG_TOOLTIP, 0, 0);
+	}
 }
 
 namespace {

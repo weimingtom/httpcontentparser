@@ -25,4 +25,7 @@ bool registered();
 bool tryRegister(const char * sn);
 bool checkApppath(const TCHAR *fullpath);
 
+// 显示通知消息
+void NotifyUser(const char * msg);
+
 #endif  // _FILTER_SETTING_GLOBALVARIABLE_H__

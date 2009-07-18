@@ -60,15 +60,29 @@ STDMETHODIMP CDNSSetting::enableBlackDNSCheck(VARIANT_BOOL enable) {
 	return S_OK;
 }
 STDMETHODIMP CDNSSetting::checkDNS(BSTR dns_name, VARIANT_BOOL* passed) {
-	if (NULL != _tcsstr((const TCHAR*)_bstr_t(dns_name), HOME_WEBSITES)) {
+	_bstr_t bstrDNS(dns_name);
+	LPCTSTR lpstrDNS = (LPCTSTR)bstrDNS;
+	if (NULL != _tcsstr(lpstrDNS, HOME_WEBSITES)) {
 		*passed = VARIANT_TRUE;
 	}
 	// 保存到访问网站的列表当中
 	if (SettingItem::MODE_PARENT != SettingItem::getModel()) {
-		g_websitesUtil.addWebsite(std::string((TCHAR*)_bstr_t(dns_name)));
+		g_websitesUtil.addWebsite(std::string(lpstrDNS));
 	}
 
-	*passed = convert(g_configuration.getDNSSetting()->checkDNS((char*)_bstr_t(dns_name)));
+	*passed = convert(g_configuration.getDNSSetting()->checkDNS(lpstrDNS));
+	
+	// 发送消息
+	if (VARIANT_FALSE  == *passed) {
+		const int dns_max_length = 64;	// 如果DNS大于这个长度将被截断
+		const int msg_buffer_size = 512;
+		TCHAR msg_buffer[msg_buffer_size];
+		TCHAR dns[dns_max_length] = {0};
+		_tcsncpy(dns, lpstrDNS, dns_max_length-1);
+		_sntprintf(msg_buffer, msg_buffer_size, "The Webpage \"%s\" is not accessable!", dns);
+		NotifyUser(msg_buffer);
+	}
+
 	return S_OK;
 }
 
