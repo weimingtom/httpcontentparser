@@ -5,6 +5,7 @@
 #include "globalvariable.h"
 #include "FilterSetting.h"
 #include ".\servthread.h"
+#include ".\driverMngr.h"
 #include <utility\timeutility.h>
 #include <AppinstallValidate.h>
 #include <apputility.h>
@@ -27,22 +28,18 @@
 
 #define COM_SERVICE_MUTEX		TEXT("D2C30A28-477B-4651-B392-81246240A169")
 
-void initlogger() {
-	using namespace boost::logging;
-	init_debug_logger(".\\log\\dEyecare.log");
-	init_app_logger(".\\log\\Eyecare.log");
-	set_logger_level(LOGGER_LEVEL);
-}
-
-bool checkEmbedding(LPCTSTR lpstrCmdLine) {
-	if (0 == _tcsicmp(lpstrCmdLine, TEXT("-Embedding"))) {
-		return false;
-	} else {
-		return true;
+void initlogger() ;
+void initializeSetting();
+bool checkEmbedding(LPCTSTR lpstrCmdLine) ;
+class AppCheck : public CheckProcessCreate {
+public:
+	virtual bool enable_process_create(const char * process_path_name) {
+		return checkApppath(process_path_name);
 	}
-}
+};
 
-
+AppCheck appchecker;
+AppController appcontroller(&appchecker);
 
 class CFilterSettingModule : public CAtlServiceModuleT< CFilterSettingModule, IDS_SERVICENAME >
 {
@@ -72,26 +69,7 @@ public :
 
 CFilterSettingModule _AtlModule;
 
-void initializeSetting() {
-	// 初始化配置
-	TCHAR config_path[MAX_PATH];
-	GetAppConfigFilename(config_path, MAX_PATH);
-	g_configuration.loadConfig(config_path);
-	__LTRC__("AppConfig files path : "<< config_path);
 
-	// 读取搜索词汇信息
-	TCHAR filename[MAX_PATH];
-	g_searchwordUtil.load(GetSearchWordFile(filename, MAX_PATH));
-	__LTRC__("SearchWord files path : "<< filename);
-
-	// 读取访问网站的信息
-	g_websitesUtil.load(GetWebSiteFile(filename, MAX_PATH));
-	__LTRC__("Website files path : "<< filename);
-
-	// 如果logdir不存在则创建
-	TCHAR logdir[MAX_PATH];
-	GetLogDirectory(logdir, MAX_PATH);
-}
 
 extern "C" int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, 
                                 LPTSTR lpCmdLine, int nShowCmd)
@@ -100,9 +78,8 @@ extern "C" int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/
 	// 则直接运行_AtlModule.WinMain(nShowCmd);
 	// 如果是COM方式运行，则应该执行下面一些列操作
 
-	//_DEBUG_STREAM_TRC_("[Family007 Service] Cmd line "<<lpCmdLine);
-
 	if (checkEmbedding(lpCmdLine)) {
+		_DEBUG_STREAM_TRC_("[Family007 Service] Cmd line "<<lpCmdLine);
 		// 只应该运行一次
 		HANDLE hMutex = CreateMutex(NULL, FALSE, COM_SERVICE_MUTEX);
 		if (GetLastError() == ERROR_ALREADY_EXISTS) {
@@ -137,7 +114,12 @@ extern "C" int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/
 
 		// 开启服务线程
 		ServThread::getInstance();
-	} 
+
+		// 开启检测应用程序的线程
+		appcontroller.begin();
+	} else {
+		_DEBUG_STREAM_TRC_("[Family007 Service] Cmd line without "<<lpCmdLine);
+	}
 
 	 return _AtlModule.WinMain(nShowCmd);
 }
@@ -146,4 +128,37 @@ extern "C" int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/
 void CFilterSettingModule::ServiceMain(DWORD dwArgc, LPTSTR* lpszArgv)
 {
 	CAtlServiceModuleT<CFilterSettingModule,IDS_SERVICENAME>::ServiceMain(dwArgc, lpszArgv);
+}
+
+void initlogger() {
+	using namespace boost::logging;
+	init_debug_logger(".\\log\\dEyecare.log");
+	init_app_logger(".\\log\\Eyecare.log");
+	set_logger_level(LOGGER_LEVEL);
+}
+
+
+bool checkEmbedding(LPCTSTR lpstrCmdLine) {
+	return true;
+}
+
+void initializeSetting() {
+	// 初始化配置
+	TCHAR config_path[MAX_PATH];
+	GetAppConfigFilename(config_path, MAX_PATH);
+	g_configuration.loadConfig(config_path);
+	__LTRC__("AppConfig files path : "<< config_path);
+
+	// 读取搜索词汇信息
+	TCHAR filename[MAX_PATH];
+	g_searchwordUtil.load(GetSearchWordFile(filename, MAX_PATH));
+	__LTRC__("SearchWord files path : "<< filename);
+
+	// 读取访问网站的信息
+	g_websitesUtil.load(GetWebSiteFile(filename, MAX_PATH));
+	__LTRC__("Website files path : "<< filename);
+
+	// 如果logdir不存在则创建
+	TCHAR logdir[MAX_PATH];
+	GetLogDirectory(logdir, MAX_PATH);
 }
