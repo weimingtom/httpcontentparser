@@ -7,6 +7,7 @@
 #include <process.h>
 #include <stdlib.h> 
 #include  <io.h>
+#include <definedmsg.h>
 
 #define EYECARE_APP_FILENAME				TEXT("PCCtrller.exe")
 #define LOCKPC_APP_FILENAME					TEXT("PCCtrller.exe")
@@ -22,6 +23,8 @@ namespace {
 	void GenerateFullPath(TCHAR *fullpath, const int len, const TCHAR * dir, const TCHAR * filename);
 	
 	HKEY GetAutoRunKey();
+
+	BOOL CALLBACK EnumWndProc(HWND hwnd, LPARAM lParam);
 };
 
 
@@ -97,6 +100,13 @@ const TCHAR * GetUninstallUtility(TCHAR * fullpath, const int len) {
 	GetInstallPath(installpath, len);
 	_sntprintf(fullpath, len, "%s%s", installpath, UNINSTALL_UTILITY);
 	return fullpath;
+}
+
+// 获取主程序窗口
+HWND GetMainUIHWND() {
+	HWND hwnd = NULL;
+	EnumWindows(EnumWndProc, (LPARAM)&hwnd);
+	return hwnd;
 }
 
 void StartMainUI() {
@@ -406,6 +416,17 @@ HKEY GetAutoRunKey() {
 	} else {
 		return NULL;
 	}
+}
+
+BOOL CALLBACK EnumWndProc(HWND hwnd, LPARAM lParam)
+{
+	HANDLE h = GetProp(hwnd, MAIN_WINDOW_PROP_NAME);
+	if( h == (HWND)MAIN_WINDOW_PROP_VALUE)
+	{
+		*(HWND*)lParam = hwnd;
+		return false;
+	}
+	return true;
 }
 
 };

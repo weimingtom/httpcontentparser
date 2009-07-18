@@ -17,6 +17,9 @@ void StartEyecare();
 // 锁定计算机
 void LockComputer();
 
+// 获取主界面的HWND
+HWND GetMainUIHWND();
+
 // 获取主界面的路径
 void GetMainUIPath(TCHAR * fullpath, const int len);
 // 启动主界面
