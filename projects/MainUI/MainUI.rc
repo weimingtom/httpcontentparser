@@ -948,6 +948,7 @@ IDI_TREE_APPCONTROL     ICON                    "res\\appcontrol.ico"
 IDI_TREE_ONLINETIME     ICON                    "res\\online_time.ico"
 IDI_TREE_EYECARE_BIG    ICON                    "res\\eyecare_big.ico"
 IDI_TREE_BLACK_DNS      ICON                    "res\\blackwhiteside.ico"
+IDI_BLANK_BLACK         ICON                    "res\\icon3.ico"
 
 /////////////////////////////////////////////////////////////////////////////
 //

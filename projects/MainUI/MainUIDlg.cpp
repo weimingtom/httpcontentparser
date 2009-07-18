@@ -20,6 +20,7 @@
 #include <apputility.h>
 #include <comdef.h>
 #include <logger\logger.h>
+#include <definedmsg.h>
 
 // 在Mainui.cpp中定义，他是一个共享变量
 extern HWND share_hwnd;
@@ -31,6 +32,10 @@ extern HWND share_hwnd;
 #define CALLMESSAGE WM_USER + 0x10
 const int POS_HISTORY_MENU_ITEM			 = 3;
 
+#define MAX_TOOLTIPS_SHOWTIME		   5000		//  能够出现的最长时间
+#define MAX_TOOLTIPS_FREQUENCY		   5000		//  能够出现的最大时间间隔
+#define TIMER_ID_HIDE_TOOLTIP				5
+
 #define NAGTREE_FONT_NAME			TEXT("MS Shell Dlg")
 
 // CMainUIDlg 对话框
@@ -40,6 +45,7 @@ CMainUIDlg::CMainUIDlg(CWnd* pParent /*=NULL*/)
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 	m_bShown = TRUE;
 	m_pWebHistoryMenu = NULL;
+	dwAppearLastTime_ = GetTickCount();
 }
 
 CMainUIDlg::~CMainUIDlg() {
@@ -91,6 +97,15 @@ BOOL CMainUIDlg::OnInitDialog()
 	
 	// 所有实例共享变量，当用户双击程序时，显示该窗口
 	share_hwnd = GetSafeHwnd();
+
+	// 设置属性便于查找
+	SetProp(this->GetSafeHwnd(), MAIN_WINDOW_PROP_NAME, (HWND)MAIN_WINDOW_PROP_VALUE);
+
+	// 创建Tooltip
+	m_traytip.Create(this);
+	m_traytip.SetSize(CPPToolTip::PPTTSZ_MARGIN_CX, 4);
+	m_traytip.SetSize(CPPToolTip::PPTTSZ_MARGIN_CY, 4);
+	m_traytip.SetDelayTime(3000, 500);
 
 	// 由于程序刚刚启动，这里不会自动切换到子模式
 	if (Services::isParentModel() == true) {
@@ -516,9 +531,10 @@ void CMainUIDlg::UpdateUIStateByModel() {
 
 // 设置托盘的图标
 void CMainUIDlg::setupTrayMenu() {
+	const int SYSTRAY_ID = 1;
 	m_trayMenu.LoadMenu(IDC_MENU_TRAY_PARENT);
 	// 设置// system Tray
-	m_sysTray.Create(this,10200, CALLMESSAGE, AfxGetApp()->LoadIcon(IDI_MODEL_PROTECTED),_T(""));
+	m_sysTray.Create(this,SYSTRAY_ID, CALLMESSAGE, AfxGetApp()->LoadIcon(IDI_MODEL_PROTECTED),_T(""));
 	m_sysTray.SetSysMenu(&m_trayMenu);
 	AdjustModelIcon();
 
@@ -543,6 +559,9 @@ void CMainUIDlg::setupTrayMenu() {
 	if (! Services::showRegisterMenuItem()) {
 		m_trayMenu.RemoveMenu(ID_MAIN_REGISTER, MF_BYCOMMAND);
 	}
+
+	// 用于获取sysTray的位置
+	m_tray_pos.InitializePositionTracking(this->GetSafeHwnd(),SYSTRAY_ID);
 }
 
 void CMainUIDlg::OnMainLockcomputer() {
@@ -645,6 +664,44 @@ HRESULT CMainUIDlg::get_accHelp(VARIANT varChild, BSTR *pszHelp)
 	return CDialog::get_accHelp(varChild, pszHelp);
 }
 
+LRESULT CMainUIDlg::OnShowServerMsg(WPARAM wParam, LPARAM lParam) {
+	return -1;
+}
+
+BOOL CMainUIDlg::OnCopyData(CWnd* pWnd, COPYDATASTRUCT* pCopyDataStruct)
+{
+	if (pCopyDataStruct->dwData == WM_SHOW_MSG_TOOLTIP) {
+		// 保证它不会出现的太频繁
+		if (GetTickCount() - dwAppearLastTime_ > MAX_TOOLTIPS_FREQUENCY) {
+			CPoint ptIcon;
+			BOOL bIconFound = m_tray_pos.GetTrayIconPosition(ptIcon);
+			if (bIconFound == -1)
+				return TRUE;
+
+			m_tray_pos.RestoreTrayIcon(AfxGetApp()->LoadIcon(IDI_MODEL_PROTECTED));
+			CString tooltips;
+			tooltips.Format("<table><tr>"
+							"<td><icon idres=128></td>"
+							"<td>"
+								"<right><a><icon idres=158 width=16 height=16 style=g hotstyle></a></right>"
+								"<br><center><h2>Familly 007</h2><br><hr color=blue></center><br>"
+								"Some of your operation is blocked by family007. <br>"
+								"<b>Detail</b><br>     %s  <br>   "
+							"</td>"
+							"</tr></table>", pCopyDataStruct->lpData);
+			
+			m_traytip.ShowHelpTooltip(&ptIcon, tooltips);
+			dwAppearLastTime_ = GetTickCount();
+
+			KillTimer(TIMER_ID_HIDE_TOOLTIP);
+			SetTimer(TIMER_ID_HIDE_TOOLTIP, MAX_TOOLTIPS_SHOWTIME, NULL);
+			return TRUE;
+		}
+	}
+
+	return CDialog::OnCopyData(pWnd, pCopyDataStruct);
+}
+
 BOOL CMainUIDlg::OnHelpInfo(HELPINFO* pHelpInfo)
 {
 	/*if (NULL != m_curDlg) {
@@ -722,11 +779,31 @@ BEGIN_MESSAGE_MAP(CMainUIDlg, CDialog)
 	ON_COMMAND(ID_WEBHISTORY_SEARCHKEYWORD, OnWebhistorySearchkeyword)
 	ON_COMMAND(ID_WEBHISTORY_WEBSITES, OnWebhistoryWebsites)
 	ON_COMMAND(ID_MAIN_REGISTER, OnMainRegister)
+	ON_MESSAGE(WM_SHOW_MSG_TOOLTIP, OnShowServerMsg)
 	ON_WM_HELPINFO()
+	ON_WM_COPYDATA()
+	ON_WM_TIMER()
 END_MESSAGE_MAP()
 
 //当用户拖动最小化窗口时系统调用此函数取得光标显示。
 HCURSOR CMainUIDlg::OnQueryDragIcon()
 {
 	return static_cast<HCURSOR>(m_hIcon);
+}
+
+BOOL CMainUIDlg::PreTranslateMessage(MSG* pMsg)
+{
+	m_traytip.RelayEvent(pMsg);
+	return CDialog::PreTranslateMessage(pMsg);
+}
+
+
+void CMainUIDlg::OnTimer(UINT nIDEvent)
+{
+	if (TIMER_ID_HIDE_TOOLTIP == nIDEvent) {
+		m_traytip.HideTooltip();
+		KillTimer(TIMER_ID_HIDE_TOOLTIP);
+		return;
+	}
+	CDialog::OnTimer(nIDEvent);
 }

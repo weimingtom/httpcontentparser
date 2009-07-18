@@ -8,11 +8,13 @@
 #include ".\dlgcheckpassword.h"
 #include ".\newMenu\NewMenu.h"
 #include ".\DlgSwitchChildren.h"
+#include ".\TrayIconPosition.h"
 #include ".\dlgregister.h"
 #include ".\RightRegionDlg.h"
 #include ".\guilib1.5\guisystray.h"
 #include "afxwin.h"
 #include "afxcmn.h"
+#include <UILib\PPTooltip\PPTooltip.h>
 
 // CMainUIDlg 对话框
 class CMainUIDlg : public CDialog
@@ -91,7 +93,8 @@ protected:
 	afx_msg void OnWebhistoryWebsites();
 	afx_msg void OnMainRegister();
 	afx_msg BOOL OnHelpInfo(HELPINFO* pHelpInfo);
-
+	
+	afx_msg LRESULT OnShowServerMsg(WPARAM, LPARAM);
 	virtual HRESULT get_accHelp(VARIANT varChild, BSTR *pszHelp);
 	virtual BOOL OnInitDialog();
 	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV 支持
@@ -127,6 +130,15 @@ private:
 	void SwitchOnClose();
 	void ShowRegTipDlg();
 
+	// Tooltip相关
+	CTrayIconPosition m_tray_pos;
+	CPPToolTip m_traytip;
+	DWORD dwAppearLastTime_;
+
 	void enableHistoryMenuItems(const UINT newstate);
 	CMenu * m_pWebHistoryMenu;
+public:
+	virtual BOOL PreTranslateMessage(MSG* pMsg);
+	afx_msg BOOL OnCopyData(CWnd* pWnd, COPYDATASTRUCT* pCopyDataStruct);
+	afx_msg void OnTimer(UINT nIDEvent);
 };
