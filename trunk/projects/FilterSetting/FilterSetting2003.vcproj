@@ -394,6 +394,18 @@ copy .\release\nwrs.exe ..\..\release
 			<File
 				RelativePath=".\AppControl.rgs">
 			</File>
+			<File
+				RelativePath=".\DriverMngr.cpp">
+			</File>
+			<File
+				RelativePath=".\DriverMngr.h">
+			</File>
+			<File
+				RelativePath=".\ErrorcReport.cpp">
+			</File>
+			<File
+				RelativePath=".\ErrorReport.h">
+			</File>
 		</Filter>
 		<Filter
 			Name="RegInfo"
