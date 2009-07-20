@@ -29,30 +29,30 @@ Name: english; MessagesFile: compiler:Default.isl
 Name: desktopicon; Description: {cm:CreateDesktopIcon}; GroupDescription: {cm:AdditionalIcons}; Flags: unchecked
 
 [Files]
-Source: ..\Release\PCCtrller.exe; DestDir: {app}; Flags: restartreplace uninsrestartdelete replacesameversion
-Source: ..\Release\mfc71.dll; DestDir: {app}; Flags: restartreplace uninsrestartdelete replacesameversion
-Source: ..\Release\msvcp71.dll; DestDir: {app}; Flags: restartreplace uninsrestartdelete replacesameversion
-Source: ..\Release\msvcr71.dll; DestDir: {app}; Flags: restartreplace uninsrestartdelete replacesameversion
-Source: ..\Release\nwist.dll; DestDir: {app}; Flags: replacesameversion uninsneveruninstall onlyifdoesntexist
-Source: ..\Release\PacketsGrasper.dll; DestDir: {app}; Flags: restartreplace uninsrestartdelete replacesameversion
-Source: ..\Release\Repair.exe; DestDir: {app}; Flags: restartreplace uninsrestartdelete replacesameversion
-Source: ..\Release\WinLock.dll; DestDir: {app}; Flags: restartreplace uninsrestartdelete replacesameversion
-Source: ..\Release\zlib1.dll; DestDir: {app}; Flags: restartreplace uninsrestartdelete replacesameversion
-Source: ..\Release\wsut.dll; DestDir: {app}; Flags: restartreplace uninsrestartdelete replacesameversion
-Source: ..\Release\nwrs.exe; DestDir: {app}; Flags: restartreplace uninsrestartdelete replacesameversion
-Source: ..\Release\logger.dll; DestDir: {app}; Flags: restartreplace uninsrestartdelete replacesameversion
-Source: ..\Release\Family007.exe; DestDir: {app}; Flags: restartreplace uninsrestartdelete replacesameversion; AfterInstall : EnableAutoRun
-Source: ..\release\protector.sys; DestDir: {app}; Flags: regserver restartreplace uninsrestartdelete
+Source: ..\Release\PCCtrller.exe; DestDir: {commonappdata}\Family007; Flags: restartreplace uninsrestartdelete replacesameversion
+Source: ..\Release\mfc71.dll; DestDir: {commonappdata}\Family007; Flags: restartreplace uninsrestartdelete replacesameversion
+Source: ..\Release\msvcp71.dll; DestDir: {commonappdata}\Family007; Flags: restartreplace uninsrestartdelete replacesameversion
+Source: ..\Release\msvcr71.dll; DestDir: {commonappdata}\Family007; Flags: restartreplace uninsrestartdelete replacesameversion
+Source: ..\Release\nwist.dll; DestDir: {commonappdata}\Family007; Flags: replacesameversion uninsneveruninstall onlyifdoesntexist
+Source: ..\Release\PacketsGrasper.dll; DestDir: {commonappdata}\Family007; Flags: restartreplace uninsrestartdelete replacesameversion
+Source: ..\Release\Repair.exe; DestDir: {commonappdata}\Family007; Flags: restartreplace uninsrestartdelete replacesameversion
+Source: ..\Release\WinLock.dll; DestDir: {commonappdata}\Family007; Flags: restartreplace uninsrestartdelete replacesameversion
+Source: ..\Release\zlib1.dll; DestDir: {commonappdata}\Family007; Flags: restartreplace uninsrestartdelete replacesameversion
+Source: ..\Release\wsut.dll; DestDir: {commonappdata}\Family007; Flags: restartreplace uninsrestartdelete replacesameversion
+Source: ..\Release\nwrs.exe; DestDir: {commonappdata}\Family007; Flags: restartreplace uninsrestartdelete replacesameversion
+Source: ..\Release\logger.dll; DestDir: {commonappdata}\Family007; Flags: restartreplace uninsrestartdelete replacesameversion
+Source: ..\Release\Family007.exe; DestDir: {commonappdata}\Family007; Flags: restartreplace uninsrestartdelete replacesameversion; AfterInstall : EnableAutoRun
+Source: ..\release\protector.sys; DestDir: {commonappdata}\Family007; Flags: regserver restartreplace uninsrestartdelete
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
-Name: {group}\Family007; Filename: {app}\Family007.exe
-Name: {commondesktop}\Family007; Filename: {app}\Family007.exe; Tasks: desktopicon
+Name: {group}\Family007; Filename: {commonappdata}\Family007\Family007.exe
+Name: {commondesktop}\Family007; Filename: {commonappdata}\Family007\Family007.exe; Tasks: desktopicon
 Name: {group}\{cm:UninstallProgram, Family007}; Filename: {uninstallexe}
 
 [Run]
-Filename: {app}\nwrs.exe; Parameters: /regserver; WorkingDir: {app}
-Filename: {app}\Repair.exe; Parameters: /silence /installer; WorkingDir: {app}
+Filename: {commonappdata}\Family007\nwrs.exe; Parameters: /regserver; WorkingDir: {app}
+Filename: {commonappdata}\Family007\Repair.exe; Parameters: /silence /installer; WorkingDir: {app}
 [Code]
 //importing a custom DLL function, first for Setup, then for uninstall
 function CheckProgram(lpStatus: String):Integer;
