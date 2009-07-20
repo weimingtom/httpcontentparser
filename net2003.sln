@@ -67,7 +67,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SoftwareEncrypt", "Register
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "wsut", "libproject\wsut\wsut.vcproj", "{9C126E38-92C9-4960-BB70-DC3139749754}"
 	ProjectSection(ProjectDependencies) = postProject
-		{950E97E5-8DCB-44E9-9237-9A4DEF89E925} = {950E97E5-8DCB-44E9-9237-9A4DEF89E925}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "logger", "libproject\logger\logger.vcproj", "{FB01564A-31CF-4D13-BAA3-82971FC7E8F7}"
@@ -91,10 +90,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SelectioMD", "libproject\se
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PCCtrller", "projects\PCCtrller\PCCtrller.vcproj", "{55D5B3EC-EDD2-4A6B-9F9D-00A67839ED5A}"
-	ProjectSection(ProjectDependencies) = postProject
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DBHelper", "libproject\DBHelper\DBHelper.vcproj", "{84DD36AA-3841-47D0-95AD-63D939ECEA7D}"
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
 EndProject
@@ -268,14 +263,6 @@ Global
 		{55D5B3EC-EDD2-4A6B-9F9D-00A67839ED5A}.Release.Build.0 = Release|Win32
 		{55D5B3EC-EDD2-4A6B-9F9D-00A67839ED5A}.Release Unicode.ActiveCfg = Release|Win32
 		{55D5B3EC-EDD2-4A6B-9F9D-00A67839ED5A}.Release Unicode.Build.0 = Release|Win32
-		{84DD36AA-3841-47D0-95AD-63D939ECEA7D}.Debug.ActiveCfg = Debug|Win32
-		{84DD36AA-3841-47D0-95AD-63D939ECEA7D}.Debug.Build.0 = Debug|Win32
-		{84DD36AA-3841-47D0-95AD-63D939ECEA7D}.Debug Unicode.ActiveCfg = Debug|Win32
-		{84DD36AA-3841-47D0-95AD-63D939ECEA7D}.Debug Unicode.Build.0 = Debug|Win32
-		{84DD36AA-3841-47D0-95AD-63D939ECEA7D}.Release.ActiveCfg = Release|Win32
-		{84DD36AA-3841-47D0-95AD-63D939ECEA7D}.Release.Build.0 = Release|Win32
-		{84DD36AA-3841-47D0-95AD-63D939ECEA7D}.Release Unicode.ActiveCfg = Release|Win32
-		{84DD36AA-3841-47D0-95AD-63D939ECEA7D}.Release Unicode.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 	EndGlobalSection
