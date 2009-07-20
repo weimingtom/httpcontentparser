@@ -33,7 +33,7 @@ void init_debug_logger(const char * filename, bool enable_cout, bool disable_cac
 	 if (true == disable_cache) {
 		 g_log_dbg()->turn_cache_off();
 	}
-}		
+}
 
 void init_app_logger(const char * filename, bool enable_cout, bool disable_cache)	  { 
 	using namespace boost::logging;
