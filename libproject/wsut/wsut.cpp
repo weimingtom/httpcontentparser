@@ -155,6 +155,13 @@ WSUT_API int __stdcall MakePrepareInstall() {
 WSUT_API int __stdcall GetInstallAppPath(char *buffer, const int length) {
 	return 0;
 }
+
+WSUT_API int		__stdcall		InstallDriver() {
+	return 0;
+}
+WSUT_API int		__stdcall		UninstallDriver() {
+	return 0;
+}
 BOOL APIENTRY DllMain( HANDLE hModule, 
                        DWORD  ul_reason_for_call, 
                        LPVOID lpReserved
