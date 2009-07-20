@@ -9,6 +9,7 @@
 #include <passwordtype.h>
 #include <tinyXML\tinyxml.h>
 #include <webcontenttype.h>
+#include <DebugOutput.h>
 #include <apputility.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -92,9 +93,14 @@ int XMLConfiguration::saveConfig(const TCHAR * configpath) {
 	doc.LinkEndChild(root_element);
 
 	
-	doc.SaveFile(encryptfile);
+	if (false == doc.SaveFile(encryptfile)) {
+		_DEBUG_STREAM_TRC_("[XMLConfiguration] TiXmlDocument::SaveFile Failed "<< GetLastError());
+	}
+
 	yanglei_utility::EncryptFile((LPTSTR)encryptfile, (LPTSTR)configpath);
-	DeleteFile(encryptfile);
+	if(FALSE == DeleteFile(encryptfile)) {
+		_DEBUG_STREAM_TRC_("[XMLConfiguration] Delete File Failed "<< GetLastError());
+	}
 
 	SettingItem::setModified(false);
 	return 0;
@@ -242,6 +248,7 @@ int XMLConfiguration::readConfigFromFile(const TCHAR *encrpytedfile) {
 
 	TiXmlDocument doc(decryptfile);
 	if (!doc.LoadFile()) {
+		_DEBUG_STREAM_TRC_("[XMLConfiguration]readConfigFromFile failed "<<GetLastError())
 		readDefaultConfig();
 		return -1;
 	}
@@ -249,7 +256,9 @@ int XMLConfiguration::readConfigFromFile(const TCHAR *encrpytedfile) {
 	TiXmlElement * root = doc.RootElement();
 	parseConfiguration(root);
 
-	DeleteFile(decryptfile);
+	if (FALSE == DeleteFile(decryptfile)) {
+		_DEBUG_STREAM_TRC_("[XMLConfiguration]DeleteFile{read} failed "<<GetLastError())
+	}
 
 	return 0;
 }
