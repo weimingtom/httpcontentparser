@@ -104,8 +104,8 @@ extern "C" int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/
 			g_configuration.getWebHistoryRecordAutoClean()->reset();
 			__LTRC__("Clear WebHistory");
 			ClearHistory();
-			
 		}
+
 		if (g_configuration.getScreenshotAutoClean()->shouldExec()) {
 			g_configuration.getScreenshotAutoClean()->reset();
 			__LTRC__("Clear Screenshot");

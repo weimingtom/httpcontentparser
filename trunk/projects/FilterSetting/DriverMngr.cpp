@@ -88,9 +88,6 @@ int AppController::end() {
 	CloseHandle(m_hDevice);
 	m_hDevice = NULL;
 
-	// 卸载驱动程序
-	UninstallDriver();
-
 	// 结束线程
 	exit_thread_ = 1;
 
