@@ -233,32 +233,7 @@ int WSPAPI WSPConnect(
 	__OUTPUT_DEBUG_CALL__;
 	__AUTO_FUNCTION_SCOPE_TRACE__;
 
-	// 修复
-	// 注意hModule不能传NULL,  应该如果传NULL，
-	// 应为NULL则获取到的线程为调用者线程的exe
-	static bool repaired = false;
-	if (!repaired) {
-		CoInitialize(NULL);
-		// 获取应用程序状态
-		LONG app_status = SNOWMAN_STATUS_TRIAL;
-		try {
-			ISnowmanSetting * pSetting = NULL;
-			HRESULT hr = CoCreateInstance(CLSID_SnowmanSetting, NULL, CLSCTX_LOCAL_SERVER, IID_ISnowmanSetting, (LPVOID*)&pSetting);
-			if (SUCCEEDED(hr)) {
-				pSetting->getApplicationStatus(&app_status);
-			} else {
-				LERR_("FAILED On Create snowman with HRESULT VALUE " <<std::hex<<hr);  
-			}
-		} catch (...) {
-			LERR_("catch...");  
-		}
-
-
-		repaired = true;
-		AppUtility::AppInstallValidate validator(VALIDATE_SPI, app_status);
-		validator.repair();
-		CoUninitialize();
-	}
+	repairApplication();
 
 	return NextProcTable.lpWSPConnect(s, name, namelen, lpCallerData
 		, lpCalleeData, lpSQOS, lpGQOS, lpErrno);
