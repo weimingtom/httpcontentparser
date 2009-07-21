@@ -177,10 +177,6 @@ void printInstallStatus() {
 
 	GetInstallPathFromRegistry(path, MAX_PATH);
 	cout<<"Install Path In Registry : " << path<<endl;
-
-	cout<<endl<<"---------Shell Extension Installation status---------"<<endl;
-	cout<<"Shell Extension CopyHook: Installed : " << ( isInstallAppControl() ? "true" : "false") <<endl;
-	cout<< "Shell Extension CopyHook Installed : "<< (isInstallCopyHook() ? "true" : "false" ) <<endl;
 }
 
 void installAllComponent() {
