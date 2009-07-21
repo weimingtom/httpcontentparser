@@ -44,7 +44,6 @@ CMainUIDlg::CMainUIDlg(CWnd* pParent /*=NULL*/)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 	m_bShown = TRUE;
-	m_pWebHistoryMenu = NULL;
 	dwAppearLastTime_ = GetTickCount();
 }
 
@@ -479,20 +478,6 @@ void CMainUIDlg::HideMainUI(BOOL autoSwitchCheck) {
 	AdjustModelIcon();
 }
 
-
-// =====================================
-// 托盘菜单
-void CMainUIDlg::enableHistoryMenuItems(const UINT STATE) {
-	if (NULL != m_pWebHistoryMenu) {
-			for (UINT i = 0; i < m_pWebHistoryMenu->GetMenuItemCount(); ++i) {
-				const UINT uID = m_pWebHistoryMenu->GetMenuItemID(i);
-				m_pWebHistoryMenu->EnableMenuItem(uID, STATE);
-			}
-		} else {
-			__LERR__("m_pWebHistoryMenu is NULL");
-		}
-}
-
 // 设置状态
 void CMainUIDlg::UpdateUIStateByModel() {
 	CMenu *pMenu = m_trayMenu.GetSubMenu(0);
@@ -501,9 +486,6 @@ void CMainUIDlg::UpdateUIStateByModel() {
 			const UINT uID = pMenu->GetMenuItemID(i);
 			pMenu->EnableMenuItem(uID, MF_ENABLED);
 		}
-
-		// 使历史几个菜单项可用
-		enableHistoryMenuItems(MF_ENABLED);
 		
 		// 选中家长模式
 		pMenu->CheckMenuItem(ID_TRAYMENU_MODEL_PARENTS, MF_CHECKED);
@@ -520,7 +502,6 @@ void CMainUIDlg::UpdateUIStateByModel() {
 		}
 
 		// 使历史几个菜单项不可用
-		enableHistoryMenuItems(MF_GRAYED);
 		pMenu->CheckMenuItem(ID_TRAYMENU_MODEL_PARENTS, MF_UNCHECKED);
 		pMenu->CheckMenuItem(ID_TRAYMENU_MODEL_CHILDREN, MF_CHECKED);
 
@@ -551,10 +532,6 @@ void CMainUIDlg::setupTrayMenu() {
 	m_trayMenu.ModifyODMenu(0,_T("Search Keyword"),  IDB_TRAY_HISTORY_SEARCH);
 	m_trayMenu.ModifyODMenu(0,_T("Images"),  IDB_TRAY_DESKTOPIMAGE);
 
-	CMenu *pPopMenu = m_trayMenu.GetSubMenu(0);
-	if (pPopMenu != NULL) {
-		m_pWebHistoryMenu = pPopMenu->GetSubMenu(POS_HISTORY_MENU_ITEM);
-	}
 
 	if (! Services::showRegisterMenuItem()) {
 		m_trayMenu.RemoveMenu(ID_MAIN_REGISTER, MF_BYCOMMAND);

@@ -165,7 +165,6 @@
 #define IDI_TREE_EYECARE_BIG            227
 #define IDI_TREE_BLACK_DNS              228
 #define IDD_DLG_RIGHTREGION             230
-#define IDI_ICON3                       231
 #define IDI_BLANK_BLACK                 232
 #define IDC_TREE_NAVIG                  1000
 #define IDS_TREE_ROOT                   1001
@@ -353,13 +352,14 @@
 #define ID_WEBHISTORY_WEBSITES          32810
 #define ID_WEBHISTORY_SEARCHKEYWORD     32811
 #define ID_WEBHISTORY_IMAGES            32812
+#define ID_Menu32813                    32813
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        233
-#define _APS_NEXT_COMMAND_VALUE         32813
+#define _APS_NEXT_COMMAND_VALUE         32814
 #define _APS_NEXT_CONTROL_VALUE         1133
 #define _APS_NEXT_SYMED_VALUE           167
 #endif

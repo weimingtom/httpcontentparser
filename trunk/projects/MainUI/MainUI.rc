@@ -997,17 +997,15 @@ BEGIN
     POPUP "Main"
     BEGIN
         MENUITEM "Register",                    ID_MAIN_REGISTER
+        MENUITEM SEPARATOR
         POPUP "Websites"
         BEGIN
             MENUITEM "www.sina.com",                ID_WEBSITES_WWW32788
         END
+        MENUITEM SEPARATOR
+        MENUITEM "Search Keyword",              ID_WEBHISTORY_SEARCHKEYWORD
+        MENUITEM "Web sites",                   ID_WEBHISTORY_WEBSITES
         MENUITEM "Desktop Image",               ID_TRAYMENU_DESKTOPIMAGE
-        POPUP "Web History"
-        BEGIN
-            MENUITEM "Web sites",                   ID_WEBHISTORY_WEBSITES
-            MENUITEM "Search Keyword",              ID_WEBHISTORY_SEARCHKEYWORD
-
-        END
         MENUITEM "Lock Computer",               ID_TRAYMENU_LOCKCOMPUTER
         MENUITEM SEPARATOR
         MENUITEM "Change Password",             ID_TRAYMENU_CHANGEPASSWORD
