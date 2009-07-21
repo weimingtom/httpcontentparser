@@ -34,8 +34,8 @@ WSPPROC_TABLE		NextProcTable;				// 保存30个服务提供者指针
 TCHAR				m_sProcessName[MAX_PATH];	// 保存当前进程名称
 TCHAR				m_sFileName[MAX_PATH] = {0};	// 只保存一个名称
 
-#define __OUTPUT_DEBUG_CALL__	  _DEBUG_STREAM_TRC_("[PacketGrasper Fucntion Trace] {"<<m_sFileName<<"}"<<__FUNCTION__);
-#define PACKETGRASPER_TRC(FMT)	_DEBUG_STREAM_TRC_("[PacketGrasper] {"<<m_sFileName<<"}"<< FMT);
+#define __OUTPUT_DEBUG_CALL__	  _DEBUG_STREAM_TRC_("[Family007][PacketGrasper Fucntion Trace] {"<<m_sFileName<<"}"<<__FUNCTION__);
+#define PACKETGRASPER_TRC(FMT)	_DEBUG_STREAM_TRC_("[Family007][PacketGrasper] {"<<m_sFileName<<"}"<< FMT);
 
 //CSelectIO g_select;
 
