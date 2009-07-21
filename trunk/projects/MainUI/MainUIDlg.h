@@ -93,13 +93,15 @@ protected:
 	afx_msg void OnWebhistoryWebsites();
 	afx_msg void OnMainRegister();
 	afx_msg BOOL OnHelpInfo(HELPINFO* pHelpInfo);
-	
+	afx_msg BOOL OnCopyData(CWnd* pWnd, COPYDATASTRUCT* pCopyDataStruct);
+	afx_msg void OnTimer(UINT nIDEvent);
 	afx_msg LRESULT OnShowServerMsg(WPARAM, LPARAM);
 	virtual HRESULT get_accHelp(VARIANT varChild, BSTR *pszHelp);
 	virtual BOOL OnInitDialog();
 	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV Ö§³Ö
 	virtual void OnOK();
 	virtual void OnCancel();
+	virtual BOOL PreTranslateMessage(MSG* pMsg);
 
 	DECLARE_MESSAGE_MAP()
 protected:
@@ -134,8 +136,4 @@ private:
 	CTrayIconPosition m_tray_pos;
 	CPPToolTip m_traytip;
 	DWORD dwAppearLastTime_;
-public:
-	virtual BOOL PreTranslateMessage(MSG* pMsg);
-	afx_msg BOOL OnCopyData(CWnd* pWnd, COPYDATASTRUCT* pCopyDataStruct);
-	afx_msg void OnTimer(UINT nIDEvent);
 };
