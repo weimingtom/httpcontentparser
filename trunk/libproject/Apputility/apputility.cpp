@@ -14,6 +14,8 @@
 #define CONFIG_FILE_NAME							TEXT("nwist.dll")
 
 #define SCREEN_SAVE_TYPE	TEXT("jpg")
+
+#define SUBKEY_AUTO_RUN		TEXT("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run")
 namespace {
 	void GetScreenRecordDir(TCHAR *moduleDir, const int len);	//
 	void GetImageRecordDir(TCHAR *moduleDir, const int len);	// 保存图像的目录
@@ -22,7 +24,9 @@ namespace {
 	void GetHistoryRecordDir(TCHAR *moduleDir, const int len);
 	void GenerateFullPath(TCHAR *fullpath, const int len, const TCHAR * dir, const TCHAR * filename);
 	
-	HKEY GetAutoRunKey();
+	int GetAutoRunKey(HKEY &hKey);
+	int      EnableAutoRun(const char * path);
+	int      DisableAutoRun();
 
 	BOOL CALLBACK EnumWndProc(HWND hwnd, LPARAM lParam);
 };
@@ -31,58 +35,48 @@ namespace {
 
 // 程序是否是自动运行的
 BOOL isAutoRun() {
+	int rc = 0;
 	TCHAR fullpath[MAX_PATH];
 	GetModuleFileName(NULL, fullpath, MAX_PATH);
 
 	// 获取自动运行HKEY
-	HKEY hKey = GetAutoRunKey();
-	if (NULL == hKey) {
-		return FALSE;
+	HKEY hKey;
+	rc = GetAutoRunKey(hKey);
+	if (rc != ERROR_SUCCESS) {
+		goto exit;
 	}
 
 	TCHAR value[MAX_PATH] = {0};
 	DWORD length = MAX_PATH;
 	DWORD type = REG_SZ;
-	LONG result = RegQueryValueEx (hKey, REGISTER_MAINUI_KEY, NULL, &type, (LPBYTE)value, &length);
-	RegCloseKey(hKey);
-
+	rc = RegQueryValueEx (hKey, REGISTER_MAINUI_KEY, NULL, &type, (LPBYTE)value, &length);
 	
-	if (ERROR_SUCCESS != result) {
-		return FALSE;
+	if (ERROR_SUCCESS != rc) {
+		goto exit;
 	}
 
 	if (_tcscmp(fullpath, value) != 0) {
-		return FALSE;
+		rc = -1;
 	}
 
-	return TRUE;
+exit:
+	if (NULL != hKey) {
+		RegCloseKey(hKey);
+	}
+	return (rc == 0 ? TRUE : FALSE);
 }
-
-
 
 // 开机自动运行
 INT RegisterAutoRun(const TCHAR * fullpath, BOOL auto_run) {
-	HKEY hKey = GetAutoRunKey();
-	if (NULL == hKey) {
-		return -1;
-	}
+	int rc = 0;
 
 	// 生成注册表项
 	if ( TRUE == auto_run) {
-		if (ERROR_SUCCESS == RegSetValueEx( hKey,REGISTER_MAINUI_KEY , 0, REG_SZ, (const BYTE*)(LPCSTR)fullpath, (DWORD)_tcslen(fullpath))) {
-			RegCloseKey(hKey);
-			return 0;
-		} else {
-			return -1;
-		}
+		rc= EnableAutoRun(fullpath);
 	} else {
-		if (ERROR_SUCCESS == RegDeleteKey(hKey, REGISTER_MAINUI_KEY)) {
-			RegCloseKey(hKey);
-			return 0;
-		} else {
-			return -1;
-		}
+		rc  = DisableAutoRun();
 	}
+	return rc;
 }
 
 
@@ -321,9 +315,6 @@ const TCHAR * GetInstallPathFromRegistry(TCHAR * install_path, const DWORD len) 
 	}
 }
 
-
-
-
 void GetFilespathInDir(const TCHAR * dir,  const TCHAR *exp, 
 					   std::vector<strutility::_tstring> * files) {
 	using namespace std;
@@ -409,13 +400,52 @@ void GetTextRecordDir(TCHAR *textdir, const int len) {
 
 
 // 获取自动运行的表项
-HKEY GetAutoRunKey() {
-	HKEY hKey;
-	if( RegOpenKeyEx(HKEY_LOCAL_MACHINE, TEXT("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run"), 0, KEY_ALL_ACCESS, &hKey )  == ERROR_SUCCESS )  {
-		return hKey;
-	} else {
-		return NULL;
+int GetAutoRunKey(HKEY &hKey) {
+	int rc  = RegOpenKeyEx(HKEY_LOCAL_MACHINE, SUBKEY_AUTO_RUN, 0, KEY_ALL_ACCESS, &hKey );
+	return rc;
+}
+
+
+int EnableAutoRun(const char * path) {
+	LONG rc = 0;
+	HKEY  hKey;
+	rc = GetAutoRunKey(hKey);
+	if (rc) {
+		goto exit;
 	}
+
+	rc = RegSetValueEx( hKey,REGISTER_MAINUI_KEY , 0, REG_SZ, (const BYTE*)(LPCSTR)path, (DWORD)_tcslen(path));
+	if (ERROR_SUCCESS != rc) {
+		goto exit;
+	}
+
+exit:
+	if (NULL != hKey) {
+		RegCloseKey(hKey);
+	}
+
+	return rc;
+}
+int      DisableAutoRun() {
+ 	HKEY hKey;
+	int rc = GetAutoRunKey(hKey);
+	if (ERROR_SUCCESS != rc) {
+		rc = 1;
+		goto exit;
+	}
+
+	rc = RegDeleteValue(hKey, REGISTER_MAINUI_KEY);
+	if (ERROR_SUCCESS != rc) {
+		rc = 2;
+		goto exit;
+	}
+
+exit:
+	if (NULL != hKey) {
+		RegCloseKey(hKey);
+		hKey = NULL;
+	}
+	return rc;
 }
 
 BOOL CALLBACK EnumWndProc(HWND hwnd, LPARAM lParam)
