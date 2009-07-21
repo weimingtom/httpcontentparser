@@ -72,6 +72,7 @@ copy .\ServiceUtility.h ..\..\include
 			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
+				Optimization="0"
 				AdditionalIncludeDirectories="..\..\include"
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB"
 				RuntimeLibrary="0"

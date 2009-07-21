@@ -81,6 +81,7 @@ copy .\miscsetting.h ..\..\include
 			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
+				Optimization="0"
 				AdditionalIncludeDirectories="..\..\include"
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;TIXML_USE_STL;___OUPUT_DEBUG_STRING___"
 				RuntimeLibrary="2"
