@@ -152,7 +152,6 @@ int WSPAPI WSPRecv(
 )
 {
 	__OUTPUT_DEBUG_CALL__;
-	//__AUTO_FUNCTION_SCOPE_TRACE__;
 	return NextProcTable.lpWSPRecv(s, lpBuffers, dwBufferCount
 				, lpNumberOfBytesRecvd, lpFlags, lpOverlapped
 				, lpCompletionRoutine, lpThreadId, lpErrno);
