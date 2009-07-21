@@ -7,7 +7,7 @@
 
 // class CFileInfo
 // 用于获取文件的版本信息， 图标等
-APPUTILITYDLL_API class CFileInfo {
+class APPUTILITYDLL_API  CFileInfo {
 public:
 	CFileInfo(const strutility::_tstring &filename);
 	~CFileInfo(void);

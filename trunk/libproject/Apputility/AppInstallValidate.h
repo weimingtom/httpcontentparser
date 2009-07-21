@@ -26,7 +26,7 @@ namespace AppUtility {
 // 第三类	， 超期，    用户没有注册且使用超期，这时候只要卸载组建即可（）
 // 注意，这三种情况应该通过COM Service获取， 此类只要简单的根据各种
 // 情况进行操作就可以了！
-APPUTILITYDLL_API class AppInstallValidate {
+class APPUTILITYDLL_API AppInstallValidate {
 public:
 	AppInstallValidate(int type, int status);
 	~AppInstallValidate(void);
