@@ -72,7 +72,9 @@ STDMETHODIMP CSearchRule::check(BSTR search_word, BSTR host_name, VARIANT_BOOL* 
 	if (VARIANT_FALSE  == *pass) {
 		const int msg_buffer_size = 512;
 		TCHAR msg_buffer[msg_buffer_size];
-		_sntprintf(msg_buffer, msg_buffer_size, "You can search by keyword <b>\"%s\"</b>", mcbs);
+		CString str;
+		str.LoadString(IDS_TIP_CANSEARCH);
+		_sntprintf(msg_buffer, msg_buffer_size, (LPCSTR)str, mcbs);
 		NotifyUser(msg_buffer);
 	}
 

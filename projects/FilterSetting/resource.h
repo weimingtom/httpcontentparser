@@ -4,9 +4,13 @@
 //
 #define IDS_SERVICENAME                 100
 #define IDR_FILTERSETTING               101
+#define IDS_TIP_CANSEARCH               101
 #define IDR_AUTHORIZE                   102
+#define IDS_TIP_WEBSITE_NOT_ACCESS      102
 #define IDR_APPSETTING                  103
+#define IDS_TIP_NETWORK_NOT_ACCESSABLE  103
 #define IDR_DNSSETTING                  104
+#define IDS_TIP_APP_CANNOTBE_LAUNCHED   104
 #define IDR_EYECARE                     105
 #define IDR_SCREENSAVE                  106
 #define IDR_WEBHISTORYRECORDER          107

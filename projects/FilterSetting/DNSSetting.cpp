@@ -78,8 +78,10 @@ STDMETHODIMP CDNSSetting::checkDNS(BSTR dns_name, VARIANT_BOOL* passed) {
 		const int msg_buffer_size = 512;
 		TCHAR msg_buffer[msg_buffer_size];
 		TCHAR dns[dns_max_length] = {0};
+		CString str;
+		str.LoadString(IDS_TIP_WEBSITE_NOT_ACCESS);
 		_tcsncpy(dns, lpstrDNS, dns_max_length-1);
-		_sntprintf(msg_buffer, msg_buffer_size, "The Webpage \"%s\" is not accessable!", dns);
+		_sntprintf(msg_buffer, msg_buffer_size, (LPCTSTR)str, dns);
 		NotifyUser(msg_buffer);
 	}
 
