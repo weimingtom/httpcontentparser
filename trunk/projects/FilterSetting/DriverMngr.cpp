@@ -5,6 +5,9 @@
 #include <driver_const.h>
 #include <assert.h>
 #include <string>
+#include <apputility.h>
+#include ".\globalvariable.h"
+#include "resource.h"
 
 #define  APPCONTROL_SERVICE				TEXT("protectorservice")
 #define  APPCONTROL_FILE				TEXT("\\\\.\\PROTECTOR")
@@ -94,17 +97,29 @@ int AppController::end() {
 	return rc;
 }
 
-int AppController::checkpassed(const char * filename) {
+int AppController::checkpassed(const char * fullpath) {
 	int result = 1;
 	_DEBUG_STREAM_TRC_("[DriverMngr] Do you want to run"<<exchange_buffer_.get_filepath());
 
 	// 将结果写入内存
 	assert (NULL != checker_);
 	if (NULL != checker_) {
-		result = checker_->enable_process_create(filename);
+		result = checker_->enable_process_create(fullpath);
 	}
 
 	exchange_buffer_.set_check_result(result);
+
+	// 给出提示
+	if (false == result) {
+		const int msg_buffer_size = 512;
+		TCHAR msg_buffer[msg_buffer_size];
+		TCHAR filename[MAX_PATH];
+		CString str;
+		str.LoadString(IDS_TIP_APP_CANNOTBE_LAUNCHED);
+		GetFileName(fullpath, filename, MAX_PATH);
+		_sntprintf(msg_buffer, msg_buffer_size, (LPCTSTR)str, filename);
+		NotifyUser(msg_buffer);
+	}
 
 	return result;
 }
