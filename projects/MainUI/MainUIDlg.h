@@ -134,9 +134,6 @@ private:
 	CTrayIconPosition m_tray_pos;
 	CPPToolTip m_traytip;
 	DWORD dwAppearLastTime_;
-
-	void enableHistoryMenuItems(const UINT newstate);
-	CMenu * m_pWebHistoryMenu;
 public:
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
 	afx_msg BOOL OnCopyData(CWnd* pWnd, COPYDATASTRUCT* pCopyDataStruct);
