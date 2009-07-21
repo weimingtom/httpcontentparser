@@ -3,9 +3,11 @@
 
 #include <string>
 #include <utility\strutility.h>
+#include <ApputilityDLL.H>
+
 // class CFileInfo
 // 用于获取文件的版本信息， 图标等
-class CFileInfo {
+APPUTILITYDLL_API class CFileInfo {
 public:
 	CFileInfo(const strutility::_tstring &filename);
 	~CFileInfo(void);

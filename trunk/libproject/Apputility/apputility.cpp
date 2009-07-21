@@ -34,7 +34,7 @@ namespace {
 
 
 // 程序是否是自动运行的
-BOOL isAutoRun() {
+APPUTILITYDLL_API   BOOL isAutoRun() {
 	int rc = 0;
 	TCHAR fullpath[MAX_PATH];
 	GetModuleFileName(NULL, fullpath, MAX_PATH);
@@ -67,7 +67,7 @@ exit:
 }
 
 // 开机自动运行
-INT RegisterAutoRun(const TCHAR * fullpath, BOOL auto_run) {
+APPUTILITYDLL_API    INT RegisterAutoRun(const TCHAR * fullpath, BOOL auto_run) {
 	int rc = 0;
 
 	// 生成注册表项
@@ -83,13 +83,13 @@ INT RegisterAutoRun(const TCHAR * fullpath, BOOL auto_run) {
 
 
 // 启动主程序
-void GetMainUIPath(TCHAR * fullpath, const int len) {
+APPUTILITYDLL_API   void GetMainUIPath(TCHAR * fullpath, const int len) {
 	TCHAR installpath[MAX_PATH];
 	GetInstallPath(installpath, len);
 	_sntprintf(fullpath, len, "%s%s", installpath, APPLICATION_MAINUI_NAME);
 }
 
-const TCHAR * GetUninstallUtility(TCHAR * fullpath, const int len) {
+APPUTILITYDLL_API   const TCHAR * GetUninstallUtility(TCHAR * fullpath, const int len) {
 	TCHAR installpath[MAX_PATH];
 	GetInstallPath(installpath, len);
 	_sntprintf(fullpath, len, "%s%s", installpath, UNINSTALL_UTILITY);
@@ -97,19 +97,19 @@ const TCHAR * GetUninstallUtility(TCHAR * fullpath, const int len) {
 }
 
 // 获取主程序窗口
-HWND GetMainUIHWND() {
+APPUTILITYDLL_API   HWND GetMainUIHWND() {
 	HWND hwnd = NULL;
 	EnumWindows(EnumWndProc, (LPARAM)&hwnd);
 	return hwnd;
 }
 
-void StartMainUI() {
+APPUTILITYDLL_API   void StartMainUI() {
 	TCHAR  fullpath[MAX_PATH];
 	GetMainUIPath(fullpath, MAX_PATH);
 	WinExec(fullpath, SW_NORMAL);
 }
 
-void LockComputer() {
+APPUTILITYDLL_API   void LockComputer() {
 	TCHAR install_path[MAX_PATH], fullpath[MAX_PATH], cmdLine[MAX_PATH * 2];
 	GetInstallPath(install_path, MAX_PATH);
 	
@@ -118,7 +118,7 @@ void LockComputer() {
 	WinExec(cmdLine, SW_MAXIMIZE);
 }
 
-void StartEyecare() {
+APPUTILITYDLL_API   void StartEyecare() {
 	// 检测应用程序是否打开，交给程序本身自己执行
 	TCHAR install_path[MAX_PATH], fullpath[MAX_PATH], cmdLine[MAX_PATH * 2];
 	GetInstallPath(install_path, MAX_PATH);
@@ -128,11 +128,11 @@ void StartEyecare() {
 	WinExec(cmdLine, SW_MAXIMIZE);
 }
 
-DWORD GetScreenRecordPath(TCHAR * fullpath, const int len) {
+APPUTILITYDLL_API   DWORD GetScreenRecordPath(TCHAR * fullpath, const int len) {
 	GetScreenRecordDir(fullpath, MAX_PATH);
 	return (DWORD) strlen (fullpath);
 }
-DWORD GenScreenSPFile(TCHAR *fullpath, const int len) {
+APPUTILITYDLL_API   DWORD GenScreenSPFile(TCHAR *fullpath, const int len) {
 	TCHAR dir[MAX_PATH];
 	GetScreenRecordDir(dir, MAX_PATH);
 
@@ -149,7 +149,7 @@ DWORD GenScreenSPFile(TCHAR *fullpath, const int len) {
 	_sntprintf(fullpath, MAX_PATH, TEXT("%s%s"), dir, filename);
 	return (DWORD)_tcslen(fullpath);
 }
-void ClearHistory() {
+APPUTILITYDLL_API   void ClearHistory() {
 	TCHAR dir[MAX_PATH] = {0}, filepath[MAX_PATH] = {0};
 	GetImageRecordDir(dir, MAX_PATH);
 	DeleteFiles(dir, TEXT("*.*"));
@@ -167,13 +167,13 @@ void ClearHistory() {
 	DeleteFile(filepath);
 }
 
-void ClearScreen() {
+APPUTILITYDLL_API   void ClearScreen() {
 	TCHAR dir[MAX_PATH];
 	GetScreenRecordDir(dir, MAX_PATH);
 	DeleteFiles(dir, TEXT("*.jpg"));
 }
 
-const TCHAR * GetAppConfigFilename(TCHAR *fullpath, const int len) {
+APPUTILITYDLL_API   const TCHAR * GetAppConfigFilename(TCHAR *fullpath, const int len) {
 	TCHAR filename[MAX_PATH], directory[MAX_PATH];
 	GetModuleFileName(NULL, filename, MAX_PATH);
 	GetFileNameDir(filename, directory, MAX_PATH);
@@ -182,21 +182,21 @@ const TCHAR * GetAppConfigFilename(TCHAR *fullpath, const int len) {
 	return fullpath;
 }
 
-const TCHAR* GetFileNameDir(const TCHAR *filename, TCHAR *directory, const unsigned len) {
+APPUTILITYDLL_API   const TCHAR* GetFileNameDir(const TCHAR *filename, TCHAR *directory, const unsigned len) {
 	TCHAR dir[MAX_PATH], driver[MAX_PATH];
 	_tsplitpath(filename, driver, dir, NULL, NULL);
 	_sntprintf(directory, len, TEXT("%s%s"), driver, dir);
 	return directory;
 }
 
-const TCHAR* GetFileName(const TCHAR *fullname, TCHAR * ename, const unsigned len) {
+APPUTILITYDLL_API   const TCHAR* GetFileName(const TCHAR *fullname, TCHAR * ename, const unsigned len) {
 	TCHAR dir[MAX_PATH], driver[MAX_PATH], name[MAX_PATH], ext[MAX_PATH];
 	_tsplitpath(fullname, driver, dir, name, ext);
 	_sntprintf(ename, len, TEXT("%s%s"), name, ext);
 	return ename;
 }
 
-const TCHAR * GetSearchWordFile(TCHAR * filename, const unsigned len) {
+APPUTILITYDLL_API   const TCHAR * GetSearchWordFile(TCHAR * filename, const unsigned len) {
 	TCHAR installpath[MAX_PATH];
 	GetInstallPath(installpath, MAX_PATH);
 
@@ -204,7 +204,7 @@ const TCHAR * GetSearchWordFile(TCHAR * filename, const unsigned len) {
 	return filename;
 }
 
-const TCHAR * GetLogDirectory(TCHAR * logdir, const unsigned len) {
+APPUTILITYDLL_API   const TCHAR * GetLogDirectory(TCHAR * logdir, const unsigned len) {
 	TCHAR installPath[MAX_PATH];
 	GetInstallPath(installPath, MAX_PATH);
 
@@ -219,7 +219,7 @@ const TCHAR * GetLogDirectory(TCHAR * logdir, const unsigned len) {
 	return logdir;
 }
 
-const TCHAR * GetPageDirectory(TCHAR * pagePath, const unsigned len) {
+APPUTILITYDLL_API   const TCHAR * GetPageDirectory(TCHAR * pagePath, const unsigned len) {
 	TCHAR installPath[MAX_PATH];
 	GetInstallPath(installPath, MAX_PATH);
 
@@ -237,7 +237,7 @@ const TCHAR * GetPageDirectory(TCHAR * pagePath, const unsigned len) {
 	return pagePath;
 }
 
-const TCHAR * GetImageDirectory(TCHAR * imagepath, const unsigned len) {
+APPUTILITYDLL_API   const TCHAR * GetImageDirectory(TCHAR * imagepath, const unsigned len) {
 	TCHAR installPath[MAX_PATH];
 	GetInstallPath(installPath, MAX_PATH);
 
@@ -256,7 +256,7 @@ const TCHAR * GetImageDirectory(TCHAR * imagepath, const unsigned len) {
 	return imagepath;
 }
 
-const TCHAR * GetWebSiteFile(TCHAR *filename, const unsigned len) {
+APPUTILITYDLL_API   const TCHAR * GetWebSiteFile(TCHAR *filename, const unsigned len) {
 	TCHAR installPath[MAX_PATH];
 	GetInstallPath(installPath, MAX_PATH);
 
@@ -265,7 +265,7 @@ const TCHAR * GetWebSiteFile(TCHAR *filename, const unsigned len) {
 	GenerateFullPath(filename, MAX_PATH, installPath, TEXT("History\\websites\\websites.txt"));
 	return filename;
 }
-const TCHAR * GetPornWebSiteFile(TCHAR *filename, const unsigned len) {
+APPUTILITYDLL_API   const TCHAR * GetPornWebSiteFile(TCHAR *filename, const unsigned len) {
 	TCHAR installPath[MAX_PATH];
 	GetInstallPath(installPath, MAX_PATH);
 
@@ -276,7 +276,7 @@ const TCHAR * GetPornWebSiteFile(TCHAR *filename, const unsigned len) {
 }
 
 // 获取记录图片 文字历史的文件的路径
-const TCHAR * GetRecordConfigfile(TCHAR *filename, const unsigned len) {
+APPUTILITYDLL_API   const TCHAR * GetRecordConfigfile(TCHAR *filename, const unsigned len) {
 	TCHAR installPath[MAX_PATH];
 	GetInstallPath(installPath, MAX_PATH);
 
@@ -287,14 +287,14 @@ const TCHAR * GetRecordConfigfile(TCHAR *filename, const unsigned len) {
 }
 
 // 获取软件所在目录
-const TCHAR * GetInstallPath(TCHAR *install_path, const int len) {
+APPUTILITYDLL_API   const TCHAR * GetInstallPath(TCHAR *install_path, const int len) {
 	TCHAR moduleName[MAX_PATH];
 	DWORD length = GetModuleFileName(NULL, moduleName, MAX_PATH);
 	GetFileNameDir(moduleName, install_path, MAX_PATH);
 	return install_path;
 }
 
-const TCHAR * GetInstallPathFromRegistry(TCHAR * install_path, const DWORD len) {
+APPUTILITYDLL_API   const TCHAR * GetInstallPathFromRegistry(TCHAR * install_path, const DWORD len) {
 	HKEY hKey;
 	long   ret = ::RegOpenKeyEx(HKEY_LOCAL_MACHINE, REG_SOFTWARE_DIR,  0,   KEY_READ,   &hKey);
 	if (ERROR_SUCCESS != ret)
@@ -315,7 +315,7 @@ const TCHAR * GetInstallPathFromRegistry(TCHAR * install_path, const DWORD len) 
 	}
 }
 
-void GetFilespathInDir(const TCHAR * dir,  const TCHAR *exp, 
+APPUTILITYDLL_API   void GetFilespathInDir(const TCHAR * dir,  const TCHAR *exp, 
 					   std::vector<strutility::_tstring> * files) {
 	using namespace std;
 	using namespace strutility;
@@ -337,7 +337,7 @@ void GetFilespathInDir(const TCHAR * dir,  const TCHAR *exp,
 	FindClose(hFind);
 }
 
-void DeleteFiles(const TCHAR * dir, const TCHAR * exp) {
+APPUTILITYDLL_API   void DeleteFiles(const TCHAR * dir, const TCHAR * exp) {
 	// 获取所有文件
 	using namespace std;
 	using namespace strutility;
