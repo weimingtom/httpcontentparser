@@ -6,6 +6,7 @@
 #include <DebugOutput.h>
 #include <apputility.h>
 #include <definedmsg.h>
+#include "resource.h"
 
 // extern Authorize g_authorize;
 XMLConfiguration g_configuration;
@@ -34,8 +35,10 @@ bool checkApppath(const TCHAR *fullpath) {
 			const int msg_buffer_size = 512;
 			TCHAR msg_buffer[msg_buffer_size];
 			TCHAR filename[MAX_PATH];
+			CString str;
+			str.LoadString(IDS_TIP_APP_CANNOTBE_LAUNCHED);
 			GetFileName(fullpath, filename, MAX_PATH);
-			_sntprintf(msg_buffer, msg_buffer_size, "The file <b>\"%s\"</b> are not allowed to executed", filename);
+			_sntprintf(msg_buffer, msg_buffer_size, (LPCTSTR)str, filename);
 			NotifyUser(msg_buffer);
 		}
 		return result;

@@ -46,12 +46,6 @@ END
 
 #endif    // APSTUDIO_INVOKED
 
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// REGISTRY
-//
-
 #endif    // 中文(中华人民共和国) resources
 /////////////////////////////////////////////////////////////////////////////
 
@@ -137,6 +131,12 @@ IDI_ICON1               ICON                    "res\\app.ico"
 STRINGTABLE 
 BEGIN
     IDS_SERVICENAME         "FilterSetting"
+    IDS_TIP_CANSEARCH       "You cannot search by keyword <b>""%s""</b>"
+    IDS_TIP_WEBSITE_NOT_ACCESS "The Webpage ""%s"" is not accessable!"
+    IDS_TIP_NETWORK_NOT_ACCESSABLE 
+                            "The network will not be acessable in this hour"
+    IDS_TIP_APP_CANNOTBE_LAUNCHED 
+                            "The file <b>""%s""</b> are not allowed to executed"
 END
 
 #endif    // 英语(美国) resources

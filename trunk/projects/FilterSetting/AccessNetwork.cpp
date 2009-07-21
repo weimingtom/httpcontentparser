@@ -38,7 +38,9 @@ STDMETHODIMP CAccessNetwork::accessNetwork(VARIANT_BOOL* bAccessable)
 	if (VARIANT_FALSE  == *bAccessable) {
 		const int msg_buffer_size = 512;
 		TCHAR msg_buffer[msg_buffer_size];
-		_sntprintf(msg_buffer, msg_buffer_size, "The network will not be acessable in this hour");
+		CString str;
+		str.LoadString(IDS_TIP_NETWORK_NOT_ACCESSABLE);
+		_sntprintf(msg_buffer, msg_buffer_size, (LPCTSTR)str);
 		NotifyUser(msg_buffer);
 	}
 
