@@ -12,6 +12,7 @@ bool accessNetword();
 bool checkHTTPRequest(HTTPRequestPacket * packet);
 bool checkSeachRule(HTTPRequestPacket * packet);
 bool checkDNS(const char * dns_name);
+void repairApplication();
 
 
 

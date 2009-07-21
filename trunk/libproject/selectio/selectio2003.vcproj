@@ -101,6 +101,7 @@ copy .\DNSMap.H ..\..\include
 copy .\bufferresult.h ..\..\include
 copy .\handlequeue.h ..\..\include
 copy .\socketpackets.h ..\..\include
+copy .\ServiceUtility.h ..\..\include
 "/>
 			<Tool
 				Name="VCPreLinkEventTool"/>

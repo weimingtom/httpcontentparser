@@ -8,6 +8,8 @@
 #include <utility\strutility.h>
 #include <utility\seachpacket.h>
 #include <utility\dns.h>
+#include <AppinstallValidate.h>
+#include <softwareStatus.h>
 #include <typeconvert.h>
 #include <string>
 #include <vector>
@@ -17,6 +19,32 @@ using namespace std;
 namespace {
 	void getSearchKeyword(char * keyword, char * hostname);
 };
+
+void repairApplication() {
+	static bool repaired = false;
+	if (!repaired) {
+		CoInitialize(NULL);
+		// 获取应用程序状态
+		LONG app_status = SNOWMAN_STATUS_TRIAL;
+		try {
+			ISnowmanSetting * pSetting = NULL;
+			HRESULT hr = CoCreateInstance(CLSID_SnowmanSetting, NULL, CLSCTX_LOCAL_SERVER, IID_ISnowmanSetting, (LPVOID*)&pSetting);
+			if (SUCCEEDED(hr)) {
+				pSetting->getApplicationStatus(&app_status);
+			} else {
+				//LERR_("FAILED On Create snowman with HRESULT VALUE " <<std::hex<<hr);  
+			}
+		} catch (...) {
+			//LERR_("catch...");  
+		}
+
+
+		repaired = true;
+		AppUtility::AppInstallValidate validator(VALIDATE_SPI, app_status);
+		validator.repair();
+		CoUninitialize();
+	}
+}
 
 bool checkDNS(const char * dns_name) {
 	AutoInitInScale _auto_com_init;
