@@ -12,8 +12,9 @@
 #define F_COM_FILE_NOT_FOUND	1
 #define F_REGISTRY_OPR_FAILED	2
 
-namespace AppUtility {
+#include <ApputilityDLL.H>
 
+namespace AppUtility {
 
 // 此类负责检测安装情况
 // 另外本程序还会根据程序的使用情况
@@ -25,7 +26,7 @@ namespace AppUtility {
 // 第三类	， 超期，    用户没有注册且使用超期，这时候只要卸载组建即可（）
 // 注意，这三种情况应该通过COM Service获取， 此类只要简单的根据各种
 // 情况进行操作就可以了！
-class AppInstallValidate {
+APPUTILITYDLL_API class AppInstallValidate {
 public:
 	AppInstallValidate(int type, int status);
 	~AppInstallValidate(void);
@@ -69,14 +70,14 @@ private:
 	TCHAR install_path[MAX_PATH];	// 安装路径
 };
 
-UINT UninstallSPI();
-UINT UninstallService();
+APPUTILITYDLL_API UINT UninstallSPI();
+APPUTILITYDLL_API UINT UninstallService();
 
 namespace internal_utility {
-	UINT RegisterServices();
-	UINT UnRegisterServices();
-	UINT RegisterServices(TCHAR * install_path);
-	UINT UnRegisterServices(TCHAR * install_path);
+	APPUTILITYDLL_API UINT RegisterServices();
+	APPUTILITYDLL_API UINT UnRegisterServices();
+	APPUTILITYDLL_API UINT RegisterServices(TCHAR * install_path);
+	APPUTILITYDLL_API UINT UnRegisterServices(TCHAR * install_path);
 };
 
 }; // namespace AppUtility
