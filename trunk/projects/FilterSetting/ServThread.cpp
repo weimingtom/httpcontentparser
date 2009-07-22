@@ -36,23 +36,11 @@
 extern HINSTANCE g_hInstance;
 
 namespace {
-
-	void startMainUI() {
-		UINT result = WinExec(APPLICATION_MAINUI_EXE_FILE, SW_SHOW);
-		if (0 != result) {
-			__LERR__("WinExec failed with return value "<<result<< " LastErorr : "<<GetLastError());
-		}
-	}
-
-	void saveConfiguration() {
-		TCHAR config_path[MAX_PATH];
-		GetAppConfigFilename(config_path, MAX_PATH);
-		
-		_DEBUG_STREAM_TRC_("[Family007 Service] Save Configuration path "<<config_path);
-		__LTRC__("Save Configuration on path "<<config_path);
-		// 保存文件
-		g_configuration.saveConfig(config_path);	
-	}
+void startMainUI() ;
+void saveConfiguration() ;
+void saveScreenSnapshot();
+void saveHistory();
+void startEyecare();
 };
 
 //==================================
@@ -99,9 +87,6 @@ TCHAR szWindowClass[] = TEXT("None");
 // 创建一个窗口
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
 	try {
-		// 两个计时器
-		static DWORD tickAutoSaver = GetTickCount();
-		static DWORD tickEyecare = GetTickCount();
 		ServThread *server = ServThread::getInstance();
 
 		switch (message) {
@@ -143,47 +128,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 
 			if (ID_TIMER_SAVE_SCREEN == wParam) {
 				// 自动保存屏幕
-				if (SettingItem::MODE_CHILD == SettingItem::getModel()) {
-					if (g_configuration.getScreenshotSetting()->shouldSave()) {
-						TCHAR fullpath[MAX_PATH];
-						GenScreenSPFile(fullpath, MAX_PATH);
-						GetScreen(fullpath);
-						_DEBUG_STREAM_TRC_("[Family007 Service] Screen Snapshot on path "<<fullpath);
-						__LTRC__("Screen Snapshot on path "<<fullpath);
-					}
-				}
+				 saveScreenSnapshot();
 			} else if (ID_TIMER_EYECARE_TRY == wParam) {
-				// 只有运行于子模式才执行此操作
-				// 如果试图改变状态成功，且状态为EYECARE_TIME,
-				/*_DEBUG_STREAM_TRC_("EyecareSettint state " 
-					<< (g_configuration.getEyecareSetting()->getState()==EyecareSetting::EYECARE_TIME ? "EYECARE " : "ENTERTAIN")
-					<< " Left time : "<<g_configuration.getEyecareSetting()->getRemainTime());
-				_DEBUG_STREAM_TRC_(" (getAppStatus() : " << getAppStatus());*/
-
-				g_configuration.getEyecareSetting()->trySwitch();
-				if (g_configuration.getEyecareSetting()->shouldStartEyecare()) {
-					// 启动进程
-					if (functionEnabled(getAppStatus())) {
-						StartEyecare();
-						_DEBUG_STREAM_TRC_("[Family007 Service] Launch Eyecare ");
-						__LTRC__("Launch Eyecare  ");
-					}
-				} 
-			} else if (ID_TIMER_SAVE_HISTORY == wParam && g_configuration.getWebHistoryRecordSetting()->recordSeachKeyword()) {
+				startEyecare();
+			} else if (ID_TIMER_SAVE_HISTORY == wParam) {
 				// 保存记录的历史
-
-				// 读取搜索词汇信息
-				TCHAR filename[MAX_PATH];
-				GetSearchWordFile(filename, MAX_PATH);
-				g_searchwordUtil.save(GetSearchWordFile(filename, MAX_PATH));
-				__LTRC__("Save search word on path "<<filename);
-				_DEBUG_STREAM_TRC_("[Family007 Service] Save search word on path "<<filename);
-
-				// 读取访问网站的信息
-				GetWebSiteFile(filename, MAX_PATH);
-				g_websitesUtil.save(GetWebSiteFile(filename, MAX_PATH));
-				__LTRC__("Save website history on path "<<filename);
-				_DEBUG_STREAM_TRC_("[Family007 Service] Save website history on path "<<filename);
+				saveHistory();
 			}
 			// 自动开启
 			break;
@@ -256,3 +206,71 @@ void ServThread::startServer() {
 		_DEBUG_STREAM_TRC_("[Family007 Service] "<<__FUNCTION__<<" CreateThread failed with return value "<<hThread_<< " LastErorr : "<<GetLastError());
 	} 
 }
+
+namespace {
+
+void startMainUI() {
+	UINT result = WinExec(APPLICATION_MAINUI_EXE_FILE, SW_SHOW);
+	if (0 != result) {
+		__LERR__("WinExec failed with return value "<<result<< " LastErorr : "<<GetLastError());
+	}
+}
+
+void saveConfiguration() {
+	TCHAR config_path[MAX_PATH];
+	GetAppConfigFilename(config_path, MAX_PATH);
+
+	_DEBUG_STREAM_TRC_("[Family007 Service] Save Configuration path "<<config_path);
+	__LTRC__("Save Configuration on path "<<config_path);
+	// 保存文件
+	g_configuration.saveConfig(config_path);	
+}
+
+void saveScreenSnapshot() {
+	if (SettingItem::MODE_CHILD == SettingItem::getModel()) {
+		if (g_configuration.getScreenshotSetting()->shouldSave()) {
+			TCHAR fullpath[MAX_PATH];
+			GenScreenSPFile(fullpath, MAX_PATH);
+			GetScreen(fullpath);
+			_DEBUG_STREAM_TRC_("[Family007 Service] Screen Snapshot on path "<<fullpath);
+			__LTRC__("Screen Snapshot on path "<<fullpath);
+		}
+	}
+}
+
+void saveHistory() {
+	if (true == g_configuration.getWebHistoryRecordSetting()->recordSeachKeyword()) {
+		// 读取搜索词汇信息
+		TCHAR filename[MAX_PATH];
+		GetSearchWordFile(filename, MAX_PATH);
+		g_searchwordUtil.save(GetSearchWordFile(filename, MAX_PATH));
+		__LTRC__("Save search word on path "<<filename);
+		_DEBUG_STREAM_TRC_("[Family007 Service] Save search word on path "<<filename);
+
+		// 读取访问网站的信息
+		GetWebSiteFile(filename, MAX_PATH);
+		g_websitesUtil.save(GetWebSiteFile(filename, MAX_PATH));
+		__LTRC__("Save website history on path "<<filename);
+		_DEBUG_STREAM_TRC_("[Family007 Service] Save website history on path "<<filename);
+	}
+}
+
+void startEyecare() {
+	// 只有运行于子模式才执行此操作
+	// 如果试图改变状态成功，且状态为EYECARE_TIME,
+	/*_DEBUG_STREAM_TRC_("EyecareSettint state " 
+	<< (g_configuration.getEyecareSetting()->getState()==EyecareSetting::EYECARE_TIME ? "EYECARE " : "ENTERTAIN")
+	<< " Left time : "<<g_configuration.getEyecareSetting()->getRemainTime());
+	_DEBUG_STREAM_TRC_(" (getAppStatus() : " << getAppStatus());*/
+
+	g_configuration.getEyecareSetting()->trySwitch();
+	if (g_configuration.getEyecareSetting()->shouldStartEyecare()) {
+		// 启动进程
+		if (functionEnabled(getAppStatus())) {
+			StartEyecare();
+			_DEBUG_STREAM_TRC_("[Family007 Service] Launch Eyecare ");
+			__LTRC__("Launch Eyecare  ");
+		}
+	} 
+}
+};
