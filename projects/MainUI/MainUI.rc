@@ -90,6 +90,13 @@ BEGIN
 END
 #endif    // APSTUDIO_INVOKED
 
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_TRAY_HOMEPAGE       BITMAP                  "res\\Homepage.bmp"
 #endif    // 中文(中华人民共和国) resources
 /////////////////////////////////////////////////////////////////////////////
 
@@ -102,32 +109,6 @@ END
 LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 #pragma code_page(1252)
 #endif //_WIN32
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// Bitmap
-//
-
-IDB_BITMAP_CHECKMARK    BITMAP                  "res\\optionmarks.bmp"
-IDB_BMP_ACCESSABLE      BITMAP                  "res\\accessable.bmp"
-IDB_BMP_BLOCK           BITMAP                  "res\\block.bmp"
-IDB_BITMAP1             BITMAP                  "res\\GuiDefault.bmp"
-IDB_GUI_DOCKBAR         BITMAP                  "res\\guidockbar.bmp"
-IDB_GUI_DOCKBAROFFICE   BITMAP                  "res\\guidockoffice.bmp"
-IDB_GUI_MDIICONS        BITMAP                  "res\\guimdiicons.bmp"
-IDB_HDRDOWN             BITMAP                  "res\\hdrdown.bmp"
-IDB_HDRUP               BITMAP                  "res\\hdrup.bmp"
-IDB_BITMAP2             BITMAP                  "res\\Folder_A.bmp"
-IDB_BITMAP4             BITMAP                  "res\\Folder_B.bmp"
-IDB_TRAY_KEY            BITMAP                  "res\\key.bmp"
-IDB_TRAY_LOCK           BITMAP                  "res\\lock.bmp"
-IDB_TRAY_OPTION         BITMAP                  "res\\option.bmp"
-IDB_TRAY_DESKTOPIMAGE   BITMAP                  "D:\\workspace\\current\\projects\\MainUI\\res\\camera.bmp"
-IDB_TRAY_HISTORY_WEBSITE BITMAP                  "res\\website.bmp"
-IDB_TRAY_HISTORY_SEARCH BITMAP                  "res\\search.bmp"
-IDB_BMP_LOGO            BITMAP                  "res\\logo.bmp"
-IDB_BMP_SMALL_LOGO      BITMAP                  "res\\SmallLogo.bmp"
-IDB_TOP_PART            BITMAP                  "res\\toppart.bmp"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -918,6 +899,32 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
+// Bitmap
+//
+
+IDB_BITMAP_CHECKMARK    BITMAP                  "res\\optionmarks.bmp"
+IDB_BMP_ACCESSABLE      BITMAP                  "res\\accessable.bmp"
+IDB_BMP_BLOCK           BITMAP                  "res\\block.bmp"
+IDB_BITMAP1             BITMAP                  "res\\GuiDefault.bmp"
+IDB_GUI_DOCKBAR         BITMAP                  "res\\guidockbar.bmp"
+IDB_GUI_DOCKBAROFFICE   BITMAP                  "res\\guidockoffice.bmp"
+IDB_GUI_MDIICONS        BITMAP                  "res\\guimdiicons.bmp"
+IDB_HDRDOWN             BITMAP                  "res\\hdrdown.bmp"
+IDB_HDRUP               BITMAP                  "res\\hdrup.bmp"
+IDB_BITMAP2             BITMAP                  "res\\Folder_A.bmp"
+IDB_BITMAP4             BITMAP                  "res\\Folder_B.bmp"
+IDB_TRAY_KEY            BITMAP                  "res\\key.bmp"
+IDB_TRAY_LOCK           BITMAP                  "res\\lock.bmp"
+IDB_TRAY_OPTION         BITMAP                  "res\\option.bmp"
+IDB_TRAY_DESKTOPIMAGE   BITMAP                  "D:\\workspace\\current\\projects\\MainUI\\res\\camera.bmp"
+IDB_TRAY_HISTORY_WEBSITE BITMAP                  "res\\website.bmp"
+IDB_TRAY_HISTORY_SEARCH BITMAP                  "res\\search.bmp"
+IDB_BMP_LOGO            BITMAP                  "res\\logo.bmp"
+IDB_BMP_SMALL_LOGO      BITMAP                  "res\\SmallLogo.bmp"
+IDB_TOP_PART            BITMAP                  "res\\toppart.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
 // Icon
 //
 
@@ -997,11 +1004,8 @@ BEGIN
     POPUP "Main"
     BEGIN
         MENUITEM "Register",                    ID_MAIN_REGISTER
-        MENUITEM SEPARATOR
-        POPUP "Websites"
-        BEGIN
-            MENUITEM "www.sina.com",                ID_WEBSITES_WWW32788
-        END
+        MENUITEM "Buy online",                  ID_TRAYMENU_BUYONLINE
+        MENUITEM "Home Page",                   ID_TRAYMENU_HOMEPAGE
         MENUITEM SEPARATOR
         MENUITEM "Search Keyword",              ID_WEBHISTORY_SEARCHKEYWORD
         MENUITEM "Web sites",                   ID_WEBHISTORY_WEBSITES

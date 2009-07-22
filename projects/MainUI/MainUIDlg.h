@@ -136,4 +136,7 @@ private:
 	CTrayIconPosition m_tray_pos;
 	CPPToolTip m_traytip;
 	DWORD dwAppearLastTime_;
+public:
+	afx_msg void OnTraymenuBuyonline();
+	afx_msg void OnTraymenuHomepage();
 };
