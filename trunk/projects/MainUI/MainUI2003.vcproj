@@ -259,6 +259,9 @@
 				RelativePath=".\res\Home.ico">
 			</File>
 			<File
+				RelativePath=".\res\Homepage.bmp">
+			</File>
+			<File
 				RelativePath=".\res\icon3.ico">
 			</File>
 			<File

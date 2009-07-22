@@ -513,7 +513,9 @@ void CMainUIDlg::UpdateUIStateByModel() {
 // 设置托盘的图标
 void CMainUIDlg::setupTrayMenu() {
 	const int SYSTRAY_ID = 1;
+	CNewMenu::SetMenuDrawMode(CNewMenu::STYLE_XP_2003);
 	m_trayMenu.LoadMenu(IDC_MENU_TRAY_PARENT);
+
 	// 设置// system Tray
 	m_sysTray.Create(this,SYSTRAY_ID, CALLMESSAGE, AfxGetApp()->LoadIcon(IDI_MODEL_PROTECTED),_T(""));
 	m_sysTray.SetSysMenu(&m_trayMenu);
@@ -521,7 +523,8 @@ void CMainUIDlg::setupTrayMenu() {
 
 	// m_trayMenu.ModifyODMenu(0,_T("Register"),  IDB_BITMAP2);
 	m_trayMenu.ModifyODMenu(0,_T("Websites"),  IDB_TRAY_HISTORY_WEBSITE);
-	// m_trayMenu.ModifyODMenu(0,_T("Web History"),  IDB_BITMAP2);
+	//m_trayMenu.ModifyODMenu(0,_T("Web History"),  IDB_TRAY_HOMEPAGE);
+	m_trayMenu.ModifyODMenu(0,_T("Home Page"),  IDB_TRAY_HOMEPAGE);
 	m_trayMenu.ModifyODMenu(0,_T("Option"),  IDB_TRAY_OPTION);
 	m_trayMenu.ModifyODMenu(0,_T("Lock Computer"),  IDB_TRAY_LOCK); 
 	m_trayMenu.ModifyODMenu(0,_T("Desktop Image"),  IDB_TRAY_DESKTOPIMAGE);
@@ -623,6 +626,16 @@ void CMainUIDlg::OnWebhistorySearchkeyword()
 void CMainUIDlg::OnWebhistoryWebsites()
 {
 	m_dlgWebsites_.DoModal();
+}
+
+void CMainUIDlg::OnTraymenuBuyonline()
+{
+	ShellExecute(NULL, "open", WEBSITES_BUYNOW, NULL, NULL, SW_NORMAL);
+}
+
+void CMainUIDlg::OnTraymenuHomepage()
+{
+	ShellExecute(NULL, "open", HOME_WEBSITES, NULL, NULL, SW_NORMAL);
 }
 
 // 调整托盘图标
@@ -760,6 +773,8 @@ BEGIN_MESSAGE_MAP(CMainUIDlg, CDialog)
 	ON_WM_HELPINFO()
 	ON_WM_COPYDATA()
 	ON_WM_TIMER()
+	ON_COMMAND(ID_TRAYMENU_BUYONLINE, OnTraymenuBuyonline)
+	ON_COMMAND(ID_TRAYMENU_HOMEPAGE, OnTraymenuHomepage)
 END_MESSAGE_MAP()
 
 //当用户拖动最小化窗口时系统调用此函数取得光标显示。

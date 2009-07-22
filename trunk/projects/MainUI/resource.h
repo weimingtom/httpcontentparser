@@ -166,6 +166,8 @@
 #define IDI_TREE_BLACK_DNS              228
 #define IDD_DLG_RIGHTREGION             230
 #define IDI_BLANK_BLACK                 232
+#define IDB_BITMAP5                     234
+#define IDB_TRAY_HOMEPAGE               234
 #define IDC_TREE_NAVIG                  1000
 #define IDS_TREE_ROOT                   1001
 #define IDS_TREE_DNS_RULE               1002
@@ -353,13 +355,15 @@
 #define ID_WEBHISTORY_SEARCHKEYWORD     32811
 #define ID_WEBHISTORY_IMAGES            32812
 #define ID_Menu32813                    32813
+#define ID_TRAYMENU_HOMEPAGE            32815
+#define ID_TRAYMENU_BUYONLINE           32817
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        233
-#define _APS_NEXT_COMMAND_VALUE         32814
+#define _APS_NEXT_RESOURCE_VALUE        235
+#define _APS_NEXT_COMMAND_VALUE         32818
 #define _APS_NEXT_CONTROL_VALUE         1133
 #define _APS_NEXT_SYMED_VALUE           167
 #endif
