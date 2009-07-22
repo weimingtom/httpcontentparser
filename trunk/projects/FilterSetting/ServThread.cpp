@@ -21,10 +21,6 @@
 #define ID_TIMER_SAVE_HISTORY 5
 
 
-// 每过一段时间，不管设置是否改变都要改变，都保存一次
-#define TIME_ESCAPE_CONFIG_SAVE	1000 * 60 * 3
-#define ID_TIMER_SAVE_CONFIGURATION	 8
-
 #define WM_USER_SCREEN_SAVE (WM_USER + 0x10)
 #define WM_USER_EYECARE (WM_USER + 0x15)
 
@@ -95,7 +91,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 			SetTimer(hWnd, ID_TIMER_SAVE_SCREEN,	TIME_ESCAPE_SAVE_SCREEN, NULL);
 			SetTimer(hWnd, ID_TIMER_EYECARE_TRY,	TIME_ESCAPE_SAVE_EYECARE, NULL);
 			SetTimer(hWnd, ID_TIMER_SAVE_HISTORY, TIME_ESCAPE_SAVE_HISTORY, NULL);
-			SetTimer(hWnd, ID_TIMER_SAVE_CONFIGURATION, TIME_ESCAPE_CONFIG_SAVE, NULL);
 
 			// 设置HOTKEY
 			{
@@ -113,12 +108,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 			}
 		case WM_TIMER:
 			// 每次都要检测配置文件是否已经改变，如果改变则保存
-			if (SettingItem::isModified() == true) {
-				saveConfiguration();
-			} else if (ID_TIMER_SAVE_CONFIGURATION == wParam) {
-				// 这里使用else是为了防止多次保存
-				saveConfiguration();
-			}
+			saveConfiguration();
 
 			// 自动切换模式可能导致用户迷惑，因此先废除它
 			// 如果可以切换状态的时候，且当前状态是家长模式
@@ -217,13 +207,16 @@ void startMainUI() {
 }
 
 void saveConfiguration() {
-	TCHAR config_path[MAX_PATH];
-	GetAppConfigFilename(config_path, MAX_PATH);
+	// 查看修改时间，如果修改时间与上次保存时间不同，则重新保存
+	if (SettingItem::isModified() == true) {
+		TCHAR config_path[MAX_PATH];
+		GetAppConfigFilename(config_path, MAX_PATH);
 
-	_DEBUG_STREAM_TRC_("[Family007 Service] Save Configuration path "<<config_path);
-	__LTRC__("Save Configuration on path "<<config_path);
-	// 保存文件
-	g_configuration.saveConfig(config_path);	
+		_DEBUG_STREAM_TRC_("[Family007 Service] Save Configuration path "<<config_path);
+		__LTRC__("Save Configuration on path "<<config_path);
+		// 保存文件
+		g_configuration.saveConfig(config_path);	
+	}
 }
 
 void saveScreenSnapshot() {
