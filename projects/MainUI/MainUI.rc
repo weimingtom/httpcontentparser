@@ -1008,7 +1008,8 @@ BEGIN
         MENUITEM "Home Page",                   ID_TRAYMENU_HOMEPAGE
         MENUITEM SEPARATOR
         MENUITEM "Search Keyword",              ID_WEBHISTORY_SEARCHKEYWORD
-        MENUITEM "Web sites",                   ID_WEBHISTORY_WEBSITES
+        MENUITEM "Websites Visited",            ID_WEBHISTORY_WEBSITES_VISITED
+
         MENUITEM "Desktop Image",               ID_TRAYMENU_DESKTOPIMAGE
         MENUITEM "Lock Computer",               ID_TRAYMENU_LOCKCOMPUTER
         MENUITEM SEPARATOR

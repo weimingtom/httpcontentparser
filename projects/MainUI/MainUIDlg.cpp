@@ -496,7 +496,9 @@ void CMainUIDlg::UpdateUIStateByModel() {
 			const UINT uID = pMenu->GetMenuItemID(i);
 			if (uID == ID_TRAYMENU_MAINUI ||
 				uID == ID_TRAYMENU_LOCKCOMPUTER || 
-				uID == ID_TRAYMENU_DESKTOPIMAGE) {
+				uID == ID_TRAYMENU_DESKTOPIMAGE  ||
+				uID == ID_WEBHISTORY_WEBSITES_VISITED  ||
+				uID == ID_WEBHISTORY_SEARCHKEYWORD ) {
 					pMenu->EnableMenuItem(uID, MF_GRAYED);
 				}
 		}
@@ -522,7 +524,7 @@ void CMainUIDlg::setupTrayMenu() {
 	AdjustModelIcon();
 
 	// m_trayMenu.ModifyODMenu(0,_T("Register"),  IDB_BITMAP2);
-	m_trayMenu.ModifyODMenu(0,_T("Websites"),  IDB_TRAY_HISTORY_WEBSITE);
+	m_trayMenu.ModifyODMenu(0,_T("Websites Visited"),  IDB_TRAY_HISTORY_WEBSITE);
 	//m_trayMenu.ModifyODMenu(0,_T("Web History"),  IDB_TRAY_HOMEPAGE);
 	m_trayMenu.ModifyODMenu(0,_T("Home Page"),  IDB_TRAY_HOMEPAGE);
 	m_trayMenu.ModifyODMenu(0,_T("Option"),  IDB_TRAY_OPTION);
@@ -767,7 +769,7 @@ BEGIN_MESSAGE_MAP(CMainUIDlg, CDialog)
 	ON_WM_LBUTTONDBLCLK()
 	ON_COMMAND(ID_WEBHISTORY_IMAGES, OnWebhistoryImages)
 	ON_COMMAND(ID_WEBHISTORY_SEARCHKEYWORD, OnWebhistorySearchkeyword)
-	ON_COMMAND(ID_WEBHISTORY_WEBSITES, OnWebhistoryWebsites)
+	ON_COMMAND(ID_WEBHISTORY_WEBSITES_VISITED, OnWebhistoryWebsites)
 	ON_COMMAND(ID_MAIN_REGISTER, OnMainRegister)
 	ON_MESSAGE(WM_SHOW_MSG_TOOLTIP, OnShowServerMsg)
 	ON_WM_HELPINFO()
