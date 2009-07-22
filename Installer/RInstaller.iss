@@ -42,7 +42,7 @@ Source: ..\Release\wsut.dll; DestDir: {commonappdata}\Family007; Flags: restartr
 Source: ..\Release\nwrs.exe; DestDir: {commonappdata}\Family007; Flags: restartreplace uninsrestartdelete replacesameversion
 Source: ..\Release\logger.dll; DestDir: {commonappdata}\Family007; Flags: restartreplace uninsrestartdelete replacesameversion
 Source: ..\Release\Family007.exe; DestDir: {commonappdata}\Family007; Flags: restartreplace uninsrestartdelete replacesameversion; AfterInstall : EnableAutoRun
-Source: ..\release\protector.sys; DestDir: {commonappdata}\Family007; Flags: regserver restartreplace uninsrestartdelete
+Source: ..\release\protector.sys; DestDir: {commonappdata}\Family007; Flags: restartreplace uninsrestartdelete
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
