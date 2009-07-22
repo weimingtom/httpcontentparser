@@ -269,11 +269,14 @@ int WSPAPI WSPSend(
 	__AUTO_FUNCTION_SCOPE_TRACE__;
 
 	try {
-		HTTPRequestPacket packet;
+		if (accessNetword() == false) {
+			goto return_err;
+		}
 
+		// 分析包
+		HTTPRequestPacket packet;
 		int item_count = packet.parsePacket(lpBuffers, dwBufferCount);
 		if (item_count < 2) {
-			PACKETGRASPER_TRC("NOT A HTTP Request ");
 			goto return_dir;
 		}
 
@@ -289,17 +292,16 @@ int WSPAPI WSPSend(
 
 		// 检查IP是否正常，如果可以则通过，否则直接返回错误
 		LTRC_("Send HTTP Request to " << host << " is a open page request ? : "<< packet.openPage());
+		PACKETGRASPER_TRC("HTTP Request to Host : "<<host); 			
 		if (packet.openPage() == true) {
-			if (accessNetword() && checkHTTPRequest(&packet)){
-				PACKETGRASPER_TRC("HTTP Request to "<<host<<" passed"); 			 
-				goto return_dir;
-			} else {
-				PACKETGRASPER_TRC("HTTP Request to "<<host<<" Blocked"); 			 
-				*lpErrno = WSAETIMEDOUT;
-				return SOCKET_ERROR;
+			if (false == checkHTTPRequest(&packet)){ 
+				goto return_err;
 			}
-		} else {
-			PACKETGRASPER_TRC("Don't open page");
+
+			// 检测应用搜索词汇
+			if(false == checkSeachRule(&packet)) {
+				goto return_err;
+			}
 		}
 
 return_dir:
@@ -310,6 +312,9 @@ return_dir:
 		LERR_("Unknown exception");
 		return SOCKET_ERROR; 
 	}
+return_err:
+	*lpErrno = WSAETIMEDOUT;
+	return SOCKET_ERROR;
 }
  
 int WSPAPI WSPSendTo(
