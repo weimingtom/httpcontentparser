@@ -13,6 +13,7 @@
 #include <utility\HttpPacket.h>
 #include <utility\HTTPRequestPacket.h>
 #include <utility\dns.h>
+#include <utility\syncutility.h>
 #include <logdebug.h>
 #include <app_constants.h>
 #include <AppinstallValidate.h>
@@ -29,7 +30,6 @@ char global_buffer[BUF_SIZE] = {0};
 
 // 进程内全局变量  
 WSPUPCALLTABLE		MainUpCallTable;
-CRITICAL_SECTION	gCriticalSection;			// 代码段保护变量
 WSPPROC_TABLE		NextProcTable;				// 保存30个服务提供者指针
 TCHAR				m_sProcessName[MAX_PATH];	// 保存当前进程名称
 TCHAR				m_sFileName[MAX_PATH] = {0};	// 只保存一个名称
@@ -37,65 +37,16 @@ TCHAR				m_sFileName[MAX_PATH] = {0};	// 只保存一个名称
 #define __OUTPUT_DEBUG_CALL__	  _DEBUG_STREAM_TRC_("[Family007][PacketGrasper Fucntion Trace] {"<<m_sFileName<<"}"<<__FUNCTION__);
 #define PACKETGRASPER_TRC(FMT)	_DEBUG_STREAM_TRC_("[Family007][PacketGrasper] {"<<m_sFileName<<"}"<< FMT);
 
+BOOL GetHookProvider(WSAPROTOCOL_INFOW	*pProtocolInfo, TCHAR *sPathName);
+void GetRightEntryIdItem(IN	WSAPROTOCOL_INFOW	*pProtocolInfo, OUT	TCHAR	*sItem);
+void ShowAllSOCKET(const char *buf, fd_set *readfds);
+
+yanglei_utility::CAutoCreateCS  gCriticalSection;
+
 //CSelectIO g_select;
 
 //ProgressCheck progress_check;
 
-
-void ShowAllSOCKET(const char *buf, fd_set *readfds) {
-	if (readfds == NULL) return;
-
-	char buffer[10240];
-	strncpy(buffer, buf, 10240); 
-
-	if (readfds->fd_count == 0) {
-		_snprintf(buffer, 10240, "%s No Socket", buffer);
-	}
-
-	for (unsigned int i = 0; i < readfds->fd_count; ++i) {
-		_snprintf(buffer, 10240, "%s %d", buffer, readfds->fd_array[i]);
-	}
-	OutputDebugString(buffer);
-}
- 
-//——————————————————————————————————————
-// 私有函数
-void GetRightEntryIdItem(
-	IN	WSAPROTOCOL_INFOW	*pProtocolInfo, 
-	OUT	TCHAR				*sItem
-)
-{
-	if(pProtocolInfo->ProtocolChain.ChainLen <= 1)
-		_stprintf(sItem, _T("%u"), pProtocolInfo->dwCatalogEntryId);
-	else
-		_stprintf(sItem, _T("%u"), pProtocolInfo->ProtocolChain
-			.ChainEntries[pProtocolInfo->ProtocolChain.ChainLen - 1]);
-}
- 
-BOOL GetHookProvider(
-	IN	WSAPROTOCOL_INFOW	*pProtocolInfo,
-	OUT	TCHAR				*sPathName
-)
-{
-	TCHAR sItem[21];
-	GetRightEntryIdItem(pProtocolInfo, sItem);
-
-	HKEY	hSubkey;
-	DWORD	ulDateLenth	= MAX_PATH;
-	TCHAR	sTemp[MAX_PATH];
-
-	if (RegOpenKeyEx(HKEY_LOCAL_MACHINE
-		, REG_INSTALL_KEY, 0, KEY_ALL_ACCESS, &hSubkey) != ERROR_SUCCESS)
-		return FALSE;
-	if (RegQueryValueEx(hSubkey, sItem, 0, NULL, (BYTE*)sTemp, &ulDateLenth)
-		|| ExpandEnvironmentStrings(sTemp, sPathName, ulDateLenth) == 0)
-		return FALSE;
-	if(sPathName[0] == '\0' && sTemp[0] != '\0')
-		_tcscpy(sPathName, sTemp);
-	RegCloseKey(hSubkey);
-
-	return TRUE;
-}
 
 //——————————————————————————————————————
 // Winsock 2 服务提供者钩子函数
@@ -631,32 +582,36 @@ BOOL WINAPI DllMain(
 )
 {
 	if(ul_reason_for_call == DLL_PROCESS_ATTACH) {
-		init_logger(hModule);
- 		GetModuleFileName(NULL, m_sProcessName, MAX_PATH);
-		PACKETGRASPER_TRC("New Process Load : "<<m_sProcessName); 
-		GetFileName(m_sProcessName, m_sFileName, MAX_PATH);
-		LAPP_("Initialize");
-
-		InitializeCriticalSection(&gCriticalSection);
-		EnterCriticalSection(&gCriticalSection); 
-		{
-			m_iRefCount ++; 
-			PACKETGRASPER_TRC("DllMain Attach Count "<< m_iRefCount);  
-		} 
-		LeaveCriticalSection(&gCriticalSection);
+		try {
+			init_logger(hModule);
+ 			GetModuleFileName(NULL, m_sProcessName, MAX_PATH);
+			PACKETGRASPER_TRC("New Process Load : "<<m_sProcessName); 
+			GetFileName(m_sProcessName, m_sFileName, MAX_PATH);
+			LAPP_("Initialize");
+			
+			{
+				yanglei_utility::SingleLock<yanglei_utility::CAutoCreateCS> lock (&gCriticalSection);
+				m_iRefCount ++; 
+				PACKETGRASPER_TRC("DllMain Attach Count "<< m_iRefCount);  
+			} 
+		} catch (...) {
+		}
 	} else if (ul_reason_for_call == DLL_THREAD_ATTACH) {
 	} else if (ul_reason_for_call == DLL_THREAD_DETACH) {
 	} else if (ul_reason_for_call == DLL_PROCESS_DETACH) { 
-		EnterCriticalSection(&gCriticalSection);
-		{
-			m_iRefCount -- ;
-			PACKETGRASPER_TRC("DllMain Attach Count "<< m_iRefCount);  
+		try {
+			
+			{
+				yanglei_utility::SingleLock<yanglei_utility::CAutoCreateCS> lock(&gCriticalSection);
+				m_iRefCount -- ;
+				PACKETGRASPER_TRC("DllMain Attach Count "<< m_iRefCount);  
+			}
+
+			//g_select.finalize();
+
+			PACKETGRASPER_TRC(m_sProcessName<<_T(" Exit ..."));
+		} catch (...) {
 		}
-		LeaveCriticalSection(&gCriticalSection);
-
-		//g_select.finalize();
-
-		PACKETGRASPER_TRC(m_sProcessName<<_T(" Exit ..."));
 	}
 
 	return TRUE;
@@ -691,7 +646,7 @@ int WSPAPI WSPStartup(
 		, lpProtocolInfo, upcallTable, lpProcTable)) != ERROR_SUCCESS)
 		return ErrorCode;
 	
-	EnterCriticalSection(&gCriticalSection);
+	yanglei_utility::SingleLock<yanglei_utility::CAutoCreateCS> lock(&gCriticalSection);
 
 	MainUpCallTable = upcallTable;
 
@@ -730,6 +685,61 @@ int WSPAPI WSPStartup(
 	lpProcTable->lpWSPStringToAddress 		= WSPStringToAddress;
 
 	//g_select.setRecv(NextProcTable.lpWSPRecv);
-	LeaveCriticalSection(&gCriticalSection);
+	
 	return 0;
+}
+
+void ShowAllSOCKET(const char *buf, fd_set *readfds) {
+	if (readfds == NULL) return;
+
+	char buffer[10240];
+	strncpy(buffer, buf, 10240); 
+
+	if (readfds->fd_count == 0) {
+		_snprintf(buffer, 10240, "%s No Socket", buffer);
+	}
+
+	for (unsigned int i = 0; i < readfds->fd_count; ++i) {
+		_snprintf(buffer, 10240, "%s %d", buffer, readfds->fd_array[i]);
+	}
+	OutputDebugString(buffer);
+}
+ 
+//——————————————————————————————————————
+// 私有函数
+void GetRightEntryIdItem(
+	IN	WSAPROTOCOL_INFOW	*pProtocolInfo, 
+	OUT	TCHAR				*sItem
+)
+{
+	if(pProtocolInfo->ProtocolChain.ChainLen <= 1)
+		_stprintf(sItem, _T("%u"), pProtocolInfo->dwCatalogEntryId);
+	else
+		_stprintf(sItem, _T("%u"), pProtocolInfo->ProtocolChain
+			.ChainEntries[pProtocolInfo->ProtocolChain.ChainLen - 1]);
+}
+ 
+BOOL GetHookProvider(
+	IN	WSAPROTOCOL_INFOW	*pProtocolInfo,
+	OUT	TCHAR				*sPathName
+)
+{
+	TCHAR sItem[21];
+	GetRightEntryIdItem(pProtocolInfo, sItem);
+
+	HKEY	hSubkey;
+	DWORD	ulDateLenth	= MAX_PATH;
+	TCHAR	sTemp[MAX_PATH];
+
+	if (RegOpenKeyEx(HKEY_LOCAL_MACHINE
+		, REG_INSTALL_KEY, 0, KEY_ALL_ACCESS, &hSubkey) != ERROR_SUCCESS)
+		return FALSE;
+	if (RegQueryValueEx(hSubkey, sItem, 0, NULL, (BYTE*)sTemp, &ulDateLenth)
+		|| ExpandEnvironmentStrings(sTemp, sPathName, ulDateLenth) == 0)
+		return FALSE;
+	if(sPathName[0] == '\0' && sTemp[0] != '\0')
+		_tcscpy(sPathName, sTemp);
+	RegCloseKey(hSubkey);
+
+	return TRUE;
 }
