@@ -276,6 +276,10 @@ int XMLConfiguration::loadConfig(const TCHAR * filename) {
 	initialize_completed_ = false;
 	readConfigFromFile(filename);
 	initialize_completed_ = true;
+
+	// 之前的可能调用一些函数，导致状态变为以改变
+	// 因为是初始化函数，所以一定不会改变的。
+	SettingItem::setModified(false);
 	return 0;
 }
 
