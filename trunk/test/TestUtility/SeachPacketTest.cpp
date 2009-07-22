@@ -67,7 +67,7 @@ void SeachPacketTest::googleTest() {
 
 	{
 	char * oper = "http://www.google.com/search?hl=en&q=word&btnG=Google+Search&aq=f&oq=wor HTTP/1.1";
-	char * host_name = "search.google.com";
+	char * host_name = "www.google.com";
 	char result[HTTP_REQUEST_ITEM_MAX_LENGTH];
 	SeachPacket packet;
 	CPPUNIT_ASSERT(SeachPacket::SEACH_ENGINE_UNKNOWN ==packet.getSeachEngineType());
@@ -85,7 +85,7 @@ void SeachPacketTest::googleTest() {
 	//Connection: Keep-Alive
 	{
 	char * oper = "GET /search?hl=zh-CN&newwindow=1&q=aaaaa++bbbbb&btnG=Google+%E6%90%9C%E7%B4%A2&meta= HTTP/1.1";
-	char * host_name = "search.google.com";
+	char * host_name = "www.google.cn";
 	char result[HTTP_REQUEST_ITEM_MAX_LENGTH];
 	SeachPacket packet;
 	CPPUNIT_ASSERT(SeachPacket::SEACH_ENGINE_UNKNOWN ==packet.getSeachEngineType());
@@ -93,16 +93,6 @@ void SeachPacketTest::googleTest() {
 	packet.get_seach_word(result, HTTP_REQUEST_ITEM_MAX_LENGTH);
 	CPPUNIT_ASSERT( 0 == strcmp("aaaaa++bbbbb", result));
 	CPPUNIT_ASSERT(SeachPacket::SEACH_ENGINE_GOOGLE == packet.getSeachEngineType());
-	}
-
-	// google suggestion
-	{
-	char * oper = "GET /complete/search?hl=zh-CN&gl=cn&xhr=t&q=hell&cp=4 HTTP/1.1";
-	char * host_name = "search.google.com";
-	char result[HTTP_REQUEST_ITEM_MAX_LENGTH];
-	SeachPacket packet;
-	CPPUNIT_ASSERT(SeachPacket::SEACH_ENGINE_UNKNOWN ==packet.getSeachEngineType());
-	CPPUNIT_ASSERT( 0 == packet.parse(oper, host_name));
 	}
 }
 void SeachPacketTest::baiduTest() {
@@ -116,7 +106,7 @@ void SeachPacketTest::baiduTest() {
 	//Proxy-Connection: Keep-Alive
 
 	char * oper = "http://www.baidu.com/s?wd=word HTTP/1.1";
-	char * host_name = "search.baidu.com";
+	char * host_name = "www.baidu.com";
 	char result[HTTP_REQUEST_ITEM_MAX_LENGTH];
 	SeachPacket packet;
 	CPPUNIT_ASSERT(SeachPacket::SEACH_ENGINE_UNKNOWN ==packet.getSeachEngineType());
@@ -128,7 +118,7 @@ void SeachPacketTest::baiduTest() {
 void SeachPacketTest::getContentTest() {
 	{
 		char * oper = "/s?wd=ddddddddddddddddddd HTTP/1.1";
-		char * host_name = "search.baidu.com";
+		char * host_name = "www.baidu.cn";
 		char result[HTTP_REQUEST_ITEM_MAX_LENGTH];
 		SeachPacket packet;
 		CPPUNIT_ASSERT(SeachPacket::SEACH_ENGINE_UNKNOWN ==packet.getSeachEngineType());
@@ -151,10 +141,24 @@ void SeachPacketTest::getContentTest() {
 	}
 
 	{
+		char * oper = "/search;_ylt=A0oGki5cNGdK0RAAolyl87UF?p=safdasdf&fr=sfp&fr2=&iscqry= HTTP/1.1";
+		char * host_name = "search.yahoo.com";
+		char result[HTTP_REQUEST_ITEM_MAX_LENGTH];
+		SeachPacket packet;
+		CPPUNIT_ASSERT(SeachPacket::SEACH_ENGINE_UNKNOWN ==packet.getSeachEngineType());
+		int aa = packet.parse(oper, host_name);
+		CPPUNIT_ASSERT( 0 != aa);
+		packet.get_seach_word(result, HTTP_REQUEST_ITEM_MAX_LENGTH);
+		CPPUNIT_ASSERT( 0 == strcmp("safdasdf", result));
+		CPPUNIT_ASSERT(SeachPacket::SEACH_ENGINE_YAHOO == packet.getSeachEngineType());
+	}
+
+
+	{
 		// 对于google来说， /search才是开头
 		// 这也不是一个正常的search
 		char * oper = "/s?ie=gb2312&bs=hhhhhhhhhhhhhhhhhhhhhh&sr=&z=&cl=3&f=8&wd=hhhhhhhhhhhhhhhhhhhhhh&ct=0 HTTP/1.1";
-		char * host_name = "search.google.com";
+		char * host_name = "www.google.com";
 
 		SeachPacket packet;
 		CPPUNIT_ASSERT(SeachPacket::SEACH_ENGINE_UNKNOWN == packet.getSeachEngineType());
@@ -165,7 +169,7 @@ void SeachPacketTest::getContentTest() {
 	{
 		// 对于google来说， /search才是开头
 		char * oper = "/search?hl=en&q=aaaaaaaaaaaa&btnG=Google+Search&aq=f&oq= HTTP/1.1";
-		char * host_name = "search.google.com";
+		char * host_name = "www.google.com";
 
 		SeachPacket packet;
 		CPPUNIT_ASSERT(SeachPacket::SEACH_ENGINE_UNKNOWN == packet.getSeachEngineType());
@@ -176,7 +180,7 @@ void SeachPacketTest::getContentTest() {
 	{
 		// 对于google来说， /search才是开头
 		char * oper = "/search?hl=en&q=aaaaaaaaaaaa&btnG=Google+Search&aq=f&oq= HTTP/1.1";
-		char * host_name = "search.baidu.com";
+		char * host_name = "www.baidu.com";
 
 		SeachPacket packet;
 		CPPUNIT_ASSERT(SeachPacket::SEACH_ENGINE_UNKNOWN == packet.getSeachEngineType());
@@ -185,7 +189,7 @@ void SeachPacketTest::getContentTest() {
 
 	{
 		char * oper = "/s?ie=gb2312&bs=hhhhhhhhhhhhhhhhhhhhhh&sr=&z=&cl=3&f=8&wd=hhhhhhhhhhhhhhhhhhhhhh&ct=0 HTTP/1.1";
-		char * host_name = "search.baidu.com";
+		char * host_name = "www.baidu.com";
 		char result[HTTP_REQUEST_ITEM_MAX_LENGTH];
 		SeachPacket packet;
 		CPPUNIT_ASSERT(SeachPacket::SEACH_ENGINE_UNKNOWN ==packet.getSeachEngineType());
@@ -206,7 +210,7 @@ void SeachPacketTest::getContentTest() {
 
 	{
 		char * oper = "/search?hl=en&q=word&btnG=Search HTTP/1.1";
-		char * host_name = "search.google.com//";
+		char * host_name = "www.google.com//";
 		SeachPacket packet;
 		char result[HTTP_REQUEST_ITEM_MAX_LENGTH];
 		CPPUNIT_ASSERT(SeachPacket::SEACH_ENGINE_UNKNOWN ==packet.getSeachEngineType());

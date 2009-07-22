@@ -8,6 +8,7 @@
 #include <utility\strutility.h>
 #include <utility\seachpacket.h>
 #include <utility\dns.h>
+#include <DebugOutput.h>
 #include <AppinstallValidate.h>
 #include <softwareStatus.h>
 #include <typeconvert.h>
@@ -83,6 +84,7 @@ void extractSearchWord(const char * searchword, std::vector<std::string> * vecWo
 
 bool checkSearchWord(const char * searchword, const char * hostname) {
 	// 送到服务器进行检测
+	_DEBUG_STREAM_TRC_("[ServiceUtility] Searchword : " << searchword << " host name : " << hostname);
 	try {
 		AutoInitInScale _auto_com_init;
 		ISearchRule *seach_rule;
@@ -154,11 +156,9 @@ bool checkHTTPRequest(HTTPRequestPacket * packet) {
 	if (!isContainsIP(buffer)) {
 		if (false == checkDNS(buffer)) 
 			return false;
-	} else {
 	}
 
-	// check search rule
-	return checkSeachRule(packet);
+	return true;
 }
 
 bool accessNetword() {
