@@ -17,6 +17,10 @@
 #define SEARCHWORD_TITLE_BAIDU		"wd="
 #define SEARCHWORD_TAIL				"&"
 
+#define GOOGLE_SEARCH_ADDRESS	TEXT("search.google.com")
+#define YAHOO_SEARCH_ADDRESS	TEXT("search.yahoo.com")
+#define BAIDU_SEARCH_ADDRESS	TEXT("search.baidu.com")
+
 
 SeachPacket::SeachPacket(void) {
 	seach_engine_ = SEACH_ENGINE_UNKNOWN;
@@ -94,6 +98,7 @@ int SeachPacket::parse_yahoo(const char * oper) {
 
 //===============================================================
 // 分析包
+
 int SeachPacket::parse(const char * oper, const char * host_name) {
 	if (strlen(host_name) == 0) {
 		return 0;
@@ -109,24 +114,13 @@ int SeachPacket::parse(const char * oper, const char * host_name) {
 		return 0;
 	}
 
-	using namespace strutility;
-
-	// 如果host_name以http://开头
-	const char *http  = "http://";
-	const int http_len = static_cast<int>(strlen(http));
-	if (true == beginwith(host_name, http)) {
-		host_name += http_len;
-	}
-
-	// 获取主机地址
-	const int buf_size = 512;
-	char mainname[buf_size];
-	get_main_dns_name(mainname, buf_size, host_name);
-	if (0 == _tcscmp(mainname, "google")) {
+	// 对于主流的搜索引擎其hostname, 全部都是 search.**.com
+	// 如search.yahoo.com
+	if (0 == _tcsnicmp(host_name, GOOGLE_SEARCH_ADDRESS, strlen(GOOGLE_SEARCH_ADDRESS))) {
 		return parse_google(buffer);
-	} else if (0 == _tcscmp(mainname, "yahoo")) {
+	} else if (0 == _tcsnicmp(host_name, YAHOO_SEARCH_ADDRESS, _tcslen(YAHOO_SEARCH_ADDRESS))) {
 		return parse_yahoo(buffer);
-	} else if (0 == _tcscmp(mainname, "baidu")) {
+	} else if (0 == _tcsnicmp(host_name, BAIDU_SEARCH_ADDRESS, _tcslen(BAIDU_SEARCH_ADDRESS))) {
 		return parse_baidu(buffer);
 	} else {
 		// 如果不是这几个主机
