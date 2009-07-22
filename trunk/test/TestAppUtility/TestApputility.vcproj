@@ -171,12 +171,6 @@
 			<File
 				RelativePath=".\FileInfoTest.h">
 			</File>
-			<File
-				RelativePath=".\ShellExtTest.cpp">
-			</File>
-			<File
-				RelativePath=".\ShellExtTest.h">
-			</File>
 		</Filter>
 		<Filter
 			Name="ShellExt"
