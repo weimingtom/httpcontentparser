@@ -94,12 +94,12 @@ int XMLConfiguration::saveConfig(const TCHAR * configpath) {
 
 	
 	if (false == doc.SaveFile(encryptfile)) {
-		_DEBUG_STREAM_TRC_("[XMLConfiguration] TiXmlDocument::SaveFile Failed "<< GetLastError());
+		_DEBUG_STREAM_TRC_("[XMLConfiguration] TiXmlDocument::SaveFile "<<encryptfile<<" Failed "<< GetLastError());
 	}
 
 	yanglei_utility::EncryptFile((LPTSTR)encryptfile, (LPTSTR)configpath);
 	if(FALSE == DeleteFile(encryptfile)) {
-		_DEBUG_STREAM_TRC_("[XMLConfiguration] Delete File Failed "<< GetLastError());
+		_DEBUG_STREAM_TRC_("[XMLConfiguration] Delete File" << encryptfile <<" Failed "<< GetLastError());
 	}
 
 	SettingItem::setModified(false);
@@ -248,7 +248,7 @@ int XMLConfiguration::readConfigFromFile(const TCHAR *encrpytedfile) {
 
 	TiXmlDocument doc(decryptfile);
 	if (!doc.LoadFile()) {
-		_DEBUG_STREAM_TRC_("[XMLConfiguration]readConfigFromFile failed "<<GetLastError())
+		_DEBUG_STREAM_TRC_("[XMLConfiguration]readConfigFromFile{read} "<< decryptfile << "  failed "<<GetLastError())
 		readDefaultConfig();
 		return -1;
 	}
@@ -257,7 +257,7 @@ int XMLConfiguration::readConfigFromFile(const TCHAR *encrpytedfile) {
 	parseConfiguration(root);
 
 	if (FALSE == DeleteFile(decryptfile)) {
-		_DEBUG_STREAM_TRC_("[XMLConfiguration]DeleteFile{read} failed "<<GetLastError())
+		_DEBUG_STREAM_TRC_("[XMLConfiguration]DeleteFile{read} " << decryptfile<<"  failed "<<GetLastError())
 	}
 
 	return 0;
