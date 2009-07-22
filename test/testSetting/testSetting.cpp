@@ -13,7 +13,7 @@
 #include ".\webhistoryrecordtest.h"
 #include ".\autocleantest.h"
 #include ".\hotkeysettingtest.h"
-#include ".\appcontroltest.h"
+#include ".\appcontroltest.h" 
 
 CPPUNIT_TEST_SUITE_REGISTRATION(CalculargraphTest);
 CPPUNIT_TEST_SUITE_REGISTRATION(EyecareTest);
