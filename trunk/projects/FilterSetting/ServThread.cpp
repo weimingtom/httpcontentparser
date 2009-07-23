@@ -106,6 +106,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 					StartMainUI();
 				}
 			}
+			break;
+		case WM_QUERYENDSESSION:
+			Authorization();
+			break;
 		case WM_TIMER:
 			// 每次都要检测配置文件是否已经改变，如果改变则保存
 			saveConfiguration();
@@ -139,7 +143,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 			KillTimer(hWnd, ID_TIMER_SAVE_SCREEN);
 			KillTimer(hWnd, ID_TIMER_EYECARE_TRY);
 			break;
-
+		default:
+			break;
 		}
 	} catch(...) {
 		__LERR__("WndProc Unknown exception");
