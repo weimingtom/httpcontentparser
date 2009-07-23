@@ -3,3 +3,4 @@ EXPORTS
 	CheckStatus
 	CallUtility
 	CheckProgram
+	AuthorizateEveryone
