@@ -15,4 +15,6 @@ WSUT_API int		__stdcall		MakePrepareInstall();
 WSUT_API int		__stdcall		GetInstallAppPath(char *buffer, const int length);
 WSUT_API int		__stdcall		InstallDriver();
 WSUT_API int		__stdcall		UninstallDriver();
+
+WSUT_API int		__stdcall		AuthorizateEveryone();
 #endif  // 
