@@ -32,7 +32,6 @@ APPUTILITYDLL_API   void ClearHistory();
 // 获取安装路径
 APPUTILITYDLL_API   const TCHAR * GetInstallPath(TCHAR *install_path, const int len);
 APPUTILITYDLL_API   const TCHAR * GetInstallPathFromRegistry(TCHAR * install_path, const DWORD len);
-APPUTILITYDLL_API   const TCHAR * GetUninstallUtility(TCHAR * fullpath, const int len);
 APPUTILITYDLL_API   const TCHAR * GetFileRecordInstallDate(TCHAR * fullpath, const int len);
 
 // 获取配置文件的路径
