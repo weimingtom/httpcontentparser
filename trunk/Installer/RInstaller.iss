@@ -11,7 +11,7 @@ AppVerName=Family007 2.3
 AppPublisherURL=http://www.family007.com/
 AppSupportURL=http://www.family007.com/
 AppUpdatesURL=http://www.family007.com/
-DefaultDirName={pf}\Family007
+DefaultDirName={commonappdata}\Family007
 DisableDirPage=Yes
 DefaultGroupName=Family007
 DisableProgramGroupPage=No
@@ -29,30 +29,30 @@ Name: english; MessagesFile: compiler:Default.isl
 Name: desktopicon; Description: {cm:CreateDesktopIcon}; GroupDescription: {cm:AdditionalIcons}; Flags: unchecked
 
 [Files]
-Source: ..\Release\PCCtrller.exe; DestDir: {commonappdata}\Family007; Flags: restartreplace uninsrestartdelete replacesameversion
-Source: ..\Release\mfc71.dll; DestDir: {commonappdata}\Family007; Flags: restartreplace uninsrestartdelete replacesameversion
-Source: ..\Release\msvcp71.dll; DestDir: {commonappdata}\Family007; Flags: restartreplace uninsrestartdelete replacesameversion
-Source: ..\Release\msvcr71.dll; DestDir: {commonappdata}\Family007; Flags: restartreplace uninsrestartdelete replacesameversion
-Source: ..\Release\nwist.dll; DestDir: {commonappdata}\Family007; Flags: replacesameversion uninsneveruninstall onlyifdoesntexist
-Source: ..\Release\PacketsGrasper.dll; DestDir: {commonappdata}\Family007; Flags: restartreplace uninsrestartdelete replacesameversion
-Source: ..\Release\Repair.exe; DestDir: {commonappdata}\Family007; Flags: restartreplace uninsrestartdelete replacesameversion
-Source: ..\Release\WinLock.dll; DestDir: {commonappdata}\Family007; Flags: restartreplace uninsrestartdelete replacesameversion
-Source: ..\Release\zlib1.dll; DestDir: {commonappdata}\Family007; Flags: restartreplace uninsrestartdelete replacesameversion
-Source: ..\Release\wsut.dll; DestDir: {commonappdata}\Family007; Flags: restartreplace uninsrestartdelete replacesameversion
-Source: ..\Release\nwrs.exe; DestDir: {commonappdata}\Family007; Flags: restartreplace uninsrestartdelete replacesameversion
-Source: ..\Release\logger.dll; DestDir: {commonappdata}\Family007; Flags: restartreplace uninsrestartdelete replacesameversion
-Source: ..\Release\Family007.exe; DestDir: {commonappdata}\Family007; Flags: restartreplace uninsrestartdelete replacesameversion; AfterInstall : EnableAutoRun
-Source: ..\release\protector.sys; DestDir: {commonappdata}\Family007; Flags: restartreplace uninsrestartdelete
+Source: ..\Release\PCCtrller.exe; DestDir: {app}; Flags: restartreplace uninsrestartdelete replacesameversion
+Source: ..\Release\mfc71.dll; DestDir: {app}; Flags: restartreplace uninsrestartdelete replacesameversion
+Source: ..\Release\msvcp71.dll; DestDir: {app}; Flags: restartreplace uninsrestartdelete replacesameversion
+Source: ..\Release\msvcr71.dll; DestDir: {app}; Flags: restartreplace uninsrestartdelete replacesameversion
+Source: ..\Release\nwist.dll; DestDir: {app}; Flags: replacesameversion uninsneveruninstall onlyifdoesntexist
+Source: ..\Release\PacketsGrasper.dll; DestDir: {app}; Flags: restartreplace uninsrestartdelete replacesameversion
+Source: ..\Release\Repair.exe; DestDir: {app}; Flags: restartreplace uninsrestartdelete replacesameversion
+Source: ..\Release\WinLock.dll; DestDir: {app}; Flags: restartreplace uninsrestartdelete replacesameversion
+Source: ..\Release\zlib1.dll; DestDir: {app}; Flags: restartreplace uninsrestartdelete replacesameversion
+Source: ..\Release\wsut.dll; DestDir: {app} Flags: restartreplace uninsrestartdelete replacesameversion
+Source: ..\Release\nwrs.exe; DestDir: {app}; Flags: restartreplace uninsrestartdelete replacesameversion
+Source: ..\Release\logger.dll; DestDir: {app}; Flags: restartreplace uninsrestartdelete replacesameversion
+Source: ..\Release\Family007.exe; DestDir: {app}; Flags: restartreplace uninsrestartdelete replacesameversion; AfterInstall : EnableAutoRun
+Source: ..\release\protector.sys; DestDir: {app}; Flags: restartreplace uninsrestartdelete
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
-Name: {group}\Family007; Filename: {commonappdata}\Family007\Family007.exe
-Name: {commondesktop}\Family007; Filename: {commonappdata}\Family007\Family007.exe; Tasks: desktopicon
+Name: {group}\Family007; Filename: {app}\Family007.exe
+Name: {commondesktop}\Family007; Filename: {app}\Family007.exe; Tasks: desktopicon
 Name: {group}\{cm:UninstallProgram, Family007}; Filename: {uninstallexe}
 
 [Run]
-Filename: {commonappdata}\Family007\nwrs.exe; Parameters: /regserver; WorkingDir: {app}
-Filename: {commonappdata}\Family007\Repair.exe; Parameters: /silence /installer; WorkingDir: {app}
+Filename: {app}\nwrs.exe; Parameters: /regserver; WorkingDir: {app}
+Filename: {app}\Repair.exe; Parameters: /silence /installer; WorkingDir: {app}
 [Code]
 //importing a custom DLL function, first for Setup, then for uninstall
 function CheckProgram(lpStatus: String):Integer;
@@ -64,8 +64,10 @@ external 'CheckStatus@{app}\wsut.dll stdcall uninstallonly';
 function CallUtility(lpStatus: String):Integer;
 external 'CallUtility@{app}\wsut.dll stdcall uninstallonly';
 
+function AuthorizateEveryone():Integer;
+external 'AuthorizateEveryone@{app}\wsut.dll stdcall	';
+
 var
-ResultCode : Integer;
 Status : Integer;
 MsgForm: TSetupForm ;
 PwdEdit: TPasswordEdit;
@@ -199,6 +201,13 @@ begin
 	LaunchAsWindow.Parent := Page.Surface;
 end;
 
+procedure CurPageChanged(CurPageID: Integer);
+begin
+	if wpFinished  = CurPageID then
+	begin
+		AuthorizateEveryone();
+	end;
+end;
 procedure InitializeWizard();
 begin
 	{AutoRunCustomWizard();} {不在弹出对话框，无论什么时候都直接修改成自动安装}
@@ -220,3 +229,4 @@ function UninstallNeedRestart(): Boolean;
 begin
   Result := True;
 end;
+
