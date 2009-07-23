@@ -10,6 +10,7 @@
 #include <utility\timeutility.h>
 #include <boost/scope_exit.hpp>
 #include <boost/exception.hpp>
+#include <apputility.h>
 
 namespace software_encrypt {
 
@@ -118,10 +119,8 @@ boost::posix_time::ptime getInstallDateFromFile() {
 
 // 4, 从windows下的一个文件查看安装时间
 boost::posix_time::ptime getInstallDateFromWin() {
-	TCHAR fullpath[MAX_PATH], windowDir[MAX_PATH];
-	GetWindowsDirectory(windowDir, MAX_PATH);
-	_sntprintf(fullpath, MAX_PATH, "%s\\%s", windowDir, WINDOWS_FILE_TO_STORE_INSTALLDATE);
-
+	TCHAR fullpath[MAX_PATH];
+	GetFileRecordInstallDate(fullpath, MAX_PATH);
 	return makeValidate(getFileCreateTime(fullpath)); 
 }
 
