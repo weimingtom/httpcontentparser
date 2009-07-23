@@ -25,14 +25,42 @@ namespace {
 	void GenerateFullPath(TCHAR *fullpath, const int len, const TCHAR * dir, const TCHAR * filename);
 	
 	int GetAutoRunKey(HKEY &hKey);
+	int GetSoftwareKey(HKEY &hKey);
 	int      EnableAutoRun(const char * path);
 	int      DisableAutoRun();
-
+	DWORD AuthorizeEveryOne(LPSTR pstrObjName, SE_OBJECT_TYPE dwObjType);
+	DWORD AuthorizeEveryOne(HANDLE handleObjName, SE_OBJECT_TYPE dwObjType) ;
 	BOOL CALLBACK EnumWndProc(HWND hwnd, LPARAM lParam);
 };
 
 
+APPUTILITYDLL_API  void Authorization() {
+	// 修改文件的属性
+	TCHAR installPath[MAX_PATH];
+	TCHAR winfile[MAX_PATH];
+	HKEY hAutoRunKey;
+	HKEY hSoftwareKey;
+	
+	GetInstallPath(installPath, MAX_PATH);
+	AuthorizeEveryOne(installPath, SE_FILE_OBJECT);
 
+	// 注册表
+	if (0 == GetAutoRunKey(hAutoRunKey)) {
+		AuthorizeEveryOne((HANDLE)hAutoRunKey, SE_REGISTRY_KEY);
+		CloseHandle(hAutoRunKey);
+		hAutoRunKey =NULL;
+	}
+
+	// 保存软件的注册表项
+	if (0 == GetSoftwareKey(hSoftwareKey)) {
+		AuthorizeEveryOne((HANDLE)hSoftwareKey, SE_REGISTRY_KEY);
+		CloseHandle(hSoftwareKey);
+		hSoftwareKey =NULL;
+	}
+
+	GetFileRecordInstallDate(winfile, MAX_PATH);
+	AuthorizeEveryOne(winfile, SE_FILE_OBJECT);
+}
 // 程序是否是自动运行的
 APPUTILITYDLL_API   BOOL isAutoRun() {
 	int rc = 0;
@@ -79,7 +107,12 @@ APPUTILITYDLL_API    INT RegisterAutoRun(const TCHAR * fullpath, BOOL auto_run) 
 	return rc;
 }
 
-
+APPUTILITYDLL_API   const TCHAR * GetFileRecordInstallDate(TCHAR * fullpath, const int len) {
+	TCHAR windowDir[MAX_PATH];
+	GetWindowsDirectory(windowDir, MAX_PATH);
+	_sntprintf(fullpath, len, "%s\\%s", windowDir, WINDOWS_FILE_TO_STORE_INSTALLDATE);
+	return fullpath;
+}
 
 
 // 启动主程序
@@ -399,6 +432,10 @@ void GetTextRecordDir(TCHAR *textdir, const int len) {
 }
 
 
+int GetSoftwareKey(HKEY &hKey)  {
+	int rc  = RegOpenKeyEx(HKEY_LOCAL_MACHINE, REG_SOFTWARE_DIR, 0, KEY_ALL_ACCESS, &hKey );
+	return rc;
+}
 // 获取自动运行的表项
 int GetAutoRunKey(HKEY &hKey) {
 	int rc  = RegOpenKeyEx(HKEY_LOCAL_MACHINE, SUBKEY_AUTO_RUN, 0, KEY_ALL_ACCESS, &hKey );
@@ -426,7 +463,7 @@ exit:
 
 	return rc;
 }
-int      DisableAutoRun() {
+int    DisableAutoRun() {
  	HKEY hKey;
 	int rc = GetAutoRunKey(hKey);
 	if (ERROR_SUCCESS != rc) {
@@ -459,4 +496,93 @@ BOOL CALLBACK EnumWndProc(HWND hwnd, LPARAM lParam)
 	return true;
 }
 
+DWORD AuthorizeEveryOne(LPSTR pstrObjName, SE_OBJECT_TYPE dwObjType) {
+	DWORD rc  = 0;
+	SECURITY_INFORMATION si =  GROUP_SECURITY_INFORMATION | OWNER_SECURITY_INFORMATION | DACL_SECURITY_INFORMATION;
+	PSECURITY_DESCRIPTOR pSE = NULL;
+	EXPLICIT_ACCESS ea = {0};
+	PSID sidOwner = NULL;
+	PSID sidGroup = NULL;
+	PACL pOldDACL = NULL;
+	PACL pNewDACL = NULL;
+	PACL pSACL = NULL;
+
+	rc = GetNamedSecurityInfo(pstrObjName, dwObjType, si, &sidOwner, &sidGroup, &pOldDACL, &pSACL, &pSE);
+	if (ERROR_SUCCESS != ERROR_SUCCESS) {
+		goto exit;
+	}
+
+	si = DACL_SECURITY_INFORMATION;
+	BuildExplicitAccessWithName(&ea, TEXT("EveryOne"), GENERIC_ALL, SET_ACCESS , CONTAINER_INHERIT_ACE);
+
+	rc = SetEntriesInAcl(1, &ea, pOldDACL, &pNewDACL);
+	if (ERROR_SUCCESS != ERROR_SUCCESS) {
+		goto exit;
+	}
+
+	rc = SetNamedSecurityInfo(pstrObjName, dwObjType, si, NULL, NULL, pNewDACL, NULL);
+	if (ERROR_SUCCESS != ERROR_SUCCESS) {
+		goto exit;
+	}
+
+exit:
+	if (pOldDACL != NULL) {
+		LocalFree(pOldDACL);
+	}
+
+	if (pNewDACL != NULL) {
+		LocalFree(pNewDACL);
+	}
+
+	if (pSE != NULL) {
+		LocalFree(pSE);
+	}
+
+	return rc;
+}
+
+DWORD AuthorizeEveryOne(HANDLE handleObjName, SE_OBJECT_TYPE dwObjType) {
+	DWORD rc  = 0;
+	SECURITY_INFORMATION si =  GROUP_SECURITY_INFORMATION | OWNER_SECURITY_INFORMATION | DACL_SECURITY_INFORMATION;
+	PSECURITY_DESCRIPTOR pSE = NULL;
+	EXPLICIT_ACCESS ea = {0};
+	PSID sidOwner = NULL;
+	PSID sidGroup = NULL;
+	PACL pOldDACL = NULL;
+	PACL pNewDACL = NULL;
+	PACL pSACL = NULL;
+
+	rc = GetSecurityInfo(handleObjName, dwObjType, si, &sidOwner, &sidGroup, &pOldDACL, &pSACL, &pSE);
+	if (ERROR_SUCCESS != ERROR_SUCCESS) {
+		goto exit;
+	}
+
+	si = DACL_SECURITY_INFORMATION;
+	BuildExplicitAccessWithName(&ea, TEXT("EveryOne"), GENERIC_ALL, SET_ACCESS , CONTAINER_INHERIT_ACE);
+
+	rc = SetEntriesInAcl(1, &ea, pOldDACL, &pNewDACL);
+	if (ERROR_SUCCESS != ERROR_SUCCESS) {
+		goto exit;
+	}
+
+	rc = SetSecurityInfo(handleObjName, dwObjType, si, NULL, NULL, pNewDACL, NULL);
+	if (ERROR_SUCCESS != ERROR_SUCCESS) {
+		goto exit;
+	}
+
+exit:
+	if (pOldDACL != NULL) {
+		LocalFree(pOldDACL);
+	}
+
+	if (pNewDACL != NULL) {
+		LocalFree(pNewDACL);
+	}
+
+	if (pSE != NULL) {
+		LocalFree(pSE);
+	}
+
+	return rc;
+}
 };
