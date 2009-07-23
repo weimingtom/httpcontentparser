@@ -230,3 +230,8 @@ function UninstallNeedRestart(): Boolean;
 begin
   Result := True;
 end;
+[Registry]
+Root: HKLM; Subkey: SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run; ValueType: string; ValueName: Family007; ValueData: {app}\Family007; Flags: uninsdeletevalue
+Root: HKLM; Subkey: SOFTWARE\\Family007; ValueType: string; ValueName: InstallPath; ValueData: {app}; Flags: uninsdeletevalue
+Root: HKLM; Subkey: SOFTWARE\\Family007; ValueType: string; ValueName: InstallKey; Flags: createvalueifdoesntexist
+Root: HKLM; Subkey: SOFTWARE\\Family007; ValueType: string; ValueName: ProductSN; Flags: createvalueifdoesntexist
