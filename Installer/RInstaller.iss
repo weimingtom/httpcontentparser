@@ -43,6 +43,7 @@ Source: ..\Release\nwrs.exe; DestDir: {app}; Flags: restartreplace uninsrestartd
 Source: ..\Release\logger.dll; DestDir: {app}; Flags: restartreplace uninsrestartdelete replacesameversion
 Source: ..\Release\Family007.exe; DestDir: {app}; Flags: restartreplace uninsrestartdelete replacesameversion; AfterInstall : EnableAutoRun
 Source: ..\release\protector.sys; DestDir: {app}; Flags: restartreplace uninsrestartdelete
+Source: ..\release\family007.ini; DestDir: {win}; Flags: restartreplace uninsrestartdelete
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
@@ -229,4 +230,3 @@ function UninstallNeedRestart(): Boolean;
 begin
   Result := True;
 end;
-
