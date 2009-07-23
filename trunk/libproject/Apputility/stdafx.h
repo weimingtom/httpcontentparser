@@ -26,6 +26,7 @@
 #include <map>
 #include <set>
 #include <string>
+#include <aclapi.h>
 
 #pragma comment(lib, "strsafe.lib")
 #pragma comment(lib, "Version.lib")

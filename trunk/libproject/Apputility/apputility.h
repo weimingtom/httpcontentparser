@@ -32,8 +32,8 @@ APPUTILITYDLL_API   void ClearHistory();
 // 获取安装路径
 APPUTILITYDLL_API   const TCHAR * GetInstallPath(TCHAR *install_path, const int len);
 APPUTILITYDLL_API   const TCHAR * GetInstallPathFromRegistry(TCHAR * install_path, const DWORD len);
-
 APPUTILITYDLL_API   const TCHAR * GetUninstallUtility(TCHAR * fullpath, const int len);
+APPUTILITYDLL_API   const TCHAR * GetFileRecordInstallDate(TCHAR * fullpath, const int len);
 
 // 获取配置文件的路径
 APPUTILITYDLL_API   const TCHAR * GetAppConfigFilename(TCHAR *fullpath, const int len);
@@ -63,6 +63,8 @@ APPUTILITYDLL_API   const TCHAR * GetRecordConfigfile(TCHAR *filename, const uns
 APPUTILITYDLL_API   INT RegisterAutoRun(const TCHAR * fullpath, BOOL auto_run);
 
 APPUTILITYDLL_API   BOOL isAutoRun();
+
+APPUTILITYDLL_API  void Authorization();
 
 // 获取目录下的文件
 APPUTILITYDLL_API   void GetFilespathInDir(const TCHAR * dir, const TCHAR *exp, std::vector<strutility::_tstring> * files);
