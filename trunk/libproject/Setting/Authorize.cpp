@@ -6,6 +6,8 @@
 #include <passwordtype.h>
 #include <DebugOutput.h>
 
+#define __SETTING_AUTHORIZE_TRC__(FMT)		_DEBUG_STREAM_TRC_("[Family007] [Setting] [Authorize] "<<FMT)
+
 Authorize::Authorize(void) {
 	defaultSetting();
 }
@@ -14,12 +16,12 @@ Authorize::~Authorize(void) {
 }
 
 void Authorize::defaultSetting() {
-	_DEBUG_STREAM_TRC_("[Setting Authorize] defaultSetting  password : " << DEFAULT_PASSWORD);
+	__SETTING_AUTHORIZE_TRC__("defaultSetting  password : " << DEFAULT_PASSWORD);
 	setSuPassword(DEFAULT_PASSWORD);
 }
 
 void Authorize::setSuPassword(const char * password) {
-	_DEBUG_STREAM_TRC_("[Setting Authorize] setSuPassword  password : " <<  password);
+	__SETTING_AUTHORIZE_TRC__("setSuPassword  password : " <<  password);
 	password_set_[PASSWORD_SU] = password;
 }
 
@@ -91,7 +93,7 @@ const char * UserType(const int user_type) {
 class EnumUsersInfo : public Enumerator2<std::string, int> {
 public:
 	virtual int Enum(const std::string &password, const int type) {
-		_DEBUG_STREAM_TRC_("[Setting Authorize] EnumUsersInfo: " << UserType(type)<< " password : " << password);
+		__SETTING_AUTHORIZE_TRC__(" EnumUsersInfo: " << UserType(type)<< " password : " << password);
 
 		TiXmlElement * url_node = new TiXmlElement(CONFIG_APPSET_AUTHORIZE_USER);
 		url_node->SetAttribute(CONFIG_APPSET_AUTHORIZE_NAME, UserType(type));
@@ -114,7 +116,7 @@ private:
 //================================================
 // Authorize
 int Authorize::addUser(const TCHAR *username, const TCHAR *password) {
-	_DEBUG_STREAM_TRC_("[Setting Authorize] Add user : " << username<< " password : " << password);
+	__SETTING_AUTHORIZE_TRC__(" Add user : " << username<< " password : " << password);
 	if ( 0 == _tcscmp(username, CONFIG_APPSET_AUTHORIZE_USERTYPE_SU)) {
 		setSuPassword(password);
 	}
@@ -122,7 +124,7 @@ int Authorize::addUser(const TCHAR *username, const TCHAR *password) {
 }
 
 int Authorize::getAuthorizeSetting(TiXmlElement *ele) {
-	_DEBUG_STREAM_TRC_("[Setting Authorize]"<<__FUNCTION__);
+	__SETTING_AUTHORIZE_TRC__(__FUNCTION__);
 	assert (0 == _tcscmp(ele->Value(), CONFIG_ITEM_APPSET_AUTHORIZE));
 
 	TiXmlNode * node = ele->FirstChild();
@@ -138,7 +140,7 @@ int Authorize::getAuthorizeSetting(TiXmlElement *ele) {
 }
 
 TiXmlElement * Authorize::saveAuthorize(TiXmlElement *app_root) {
-	_DEBUG_STREAM_TRC_("[Setting Authorize]"<<__FUNCTION__);
+	__SETTING_AUTHORIZE_TRC__(__FUNCTION__);
 	TiXmlElement * author_root = new TiXmlElement(CONFIG_ITEM_APPSET_AUTHORIZE);
 	
 	EnumUsers(&EnumUsersInfo(author_root));

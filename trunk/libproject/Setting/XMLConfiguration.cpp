@@ -17,7 +17,18 @@
 #include <string>
 #include <zlib\zlib.h>
 
+#define __SETTING_XMLCONFIGURATION_TRC__(FMT)		_DEBUG_STREAM_TRC_("[Family007][Setting][XMLConfiguration] "<<FMT)
+
 #define CONFIG_FILE_MUTEX_NAME	TEXT("24483F0A-A8B1-4a37-8E47-26E256C10884")
+
+namespace {
+TCHAR * generateTempFile(const TCHAR * filename, TCHAR * fullpath, int buffersize) {
+	TCHAR tempfolder[MAX_PATH];
+	GetTempPath( MAX_PATH, tempfolder );
+	_sntprintf(fullpath, buffersize, "%s\\%s", tempfolder, filename);
+	return fullpath;
+}
+};
 
 //=====================================================
 // constructor and deconstructor
@@ -26,7 +37,6 @@ XMLConfiguration::XMLConfiguration()
 	, white_url_set_(CONFIG_NODE_NAME_WHITEURL) {
 	first_time_ = false;
 	uninstall_ = false;
-	initialize_completed_ = false;
 	defaultSetting();
 }
 
@@ -57,54 +67,6 @@ int XMLConfiguration::saveAppSetting(TiXmlElement * root) {
 	return 0;
 }
 
-///////////////////////////////////////////////////////////////////////////////////
-// 保存规则
-//==========================================================
-// XML 保存函数
-int XMLConfiguration::saveConfig(const TCHAR * configpath) {
-	if (false == initialize_completed_) {
-		// 如果没有加载完全，不能够保存文件
-		SettingItem::setModified(false);
-		return 0;
-	}
-
-	using namespace yanglei_utility;
-	CSysMutex mutex(CONFIG_FILE_MUTEX_NAME);
-	SingleLock<CSysMutex> lock(&mutex);
-
-	TCHAR encryptfile[] = ".\\.configka.xml";
-
-	// Create XML
-	TiXmlDocument doc;
-	TiXmlDeclaration * decl = new TiXmlDeclaration( "1.0", "UTF-8", "" );
-	doc.LinkEndChild(decl);
-
-	// 创建根节点
-	TiXmlElement * root_element = new TiXmlElement( CONFIG_ROOT_VALUE );
-
-	// 是否卸载
-	// 在配置文件当中保存的是反值
-	// 因此应该去反，另外在保存的时候也应该取反
-	root_element->SetAttribute(CONFIG_ATTRIBUTE_INSTALL, enabledFromBool(!uninstall()));
-	
-	saveRules(root_element);
-	saveAppSetting(root_element);
-	
-	doc.LinkEndChild(root_element);
-
-	
-	if (false == doc.SaveFile(encryptfile)) {
-		_DEBUG_STREAM_TRC_("[Family007][XMLConfiguration] TiXmlDocument::SaveFile "<<encryptfile<<" Failed "<< GetLastError());
-	}
-
-	yanglei_utility::EncryptFile((LPTSTR)encryptfile, (LPTSTR)configpath);
-	if(FALSE == DeleteFile(encryptfile)) {
-		_DEBUG_STREAM_TRC_("[Family007][XMLConfiguration] Delete File" << encryptfile <<" Failed "<< GetLastError());
-	}
-
-	SettingItem::setModified(false);
-	return 0;
-}
 int XMLConfiguration::saveRules(TiXmlElement *root) {
 	TiXmlElement * rules_root = new TiXmlElement( CONFIG_NODE_RULES );
 	// 保存上网时间规则
@@ -239,27 +201,91 @@ int XMLConfiguration::parseConfiguration(TiXmlElement * root) {
 
 int XMLConfiguration::readConfigFromFile(const TCHAR *encrpytedfile) {
 	using namespace yanglei_utility;
+	__SETTING_XMLCONFIGURATION_TRC__("readConfigFromFile begin");
+	
+	int rc = 0;
+	TiXmlElement * root  = NULL;
+	TiXmlDocument doc;
+
+	// 生成一个文件名
+	const char * tempfilename = ".configg.xml";
+	TCHAR decryptfile[MAX_PATH];
+	generateTempFile(tempfilename, decryptfile, MAX_PATH);
+	
 	CSysMutex mutex(CONFIG_FILE_MUTEX_NAME);
 	SingleLock<CSysMutex> lock(&mutex);
+
 	
-	TCHAR decryptfile[] = ".\\.configg.xml";
-	yanglei_utility::DecryptFile((LPTSTR)encrpytedfile, decryptfile);
-
-
-	TiXmlDocument doc(decryptfile);
-	if (!doc.LoadFile()) {
-		_DEBUG_STREAM_TRC_("[Family007][XMLConfiguration]readConfigFromFile{read} "<< decryptfile << "  failed "<<GetLastError())
+	if (false == yanglei_utility::DecryptFile((LPTSTR)encrpytedfile, decryptfile)) {
+		__SETTING_XMLCONFIGURATION_TRC__("DecryptFile{read} "<< encrpytedfile << "  failed "<<GetLastError())
 		readDefaultConfig();
-		return -1;
+		rc = 1;
+		goto exit;
 	}
 
-	TiXmlElement * root = doc.RootElement();
+	
+	if (!doc.LoadFile(decryptfile)) {
+		__SETTING_XMLCONFIGURATION_TRC__("readConfigFromFile{read} "<< decryptfile << "  failed "<<GetLastError())
+		readDefaultConfig();
+		rc = 2;
+		goto exit;
+	}
+
+	root = doc.RootElement();
 	parseConfiguration(root);
 
+exit:
 	if (FALSE == DeleteFile(decryptfile)) {
-		_DEBUG_STREAM_TRC_("[Family007][XMLConfiguration]DeleteFile{read} " << decryptfile<<"  failed "<<GetLastError())
+		__SETTING_XMLCONFIGURATION_TRC__("DeleteFile{read} " << decryptfile<<"  failed "<<GetLastError())
 	}
 
+	__SETTING_XMLCONFIGURATION_TRC__("readConfigFromFile end");
+
+	return rc;
+}
+
+///////////////////////////////////////////////////////////////////////////////////
+// 保存规则
+//==========================================================
+// XML 保存函数
+int XMLConfiguration::saveConfig(const TCHAR * configpath) {
+	__SETTING_XMLCONFIGURATION_TRC__("saveConfig begin");
+	using namespace yanglei_utility;
+	CSysMutex mutex(CONFIG_FILE_MUTEX_NAME);
+	SingleLock<CSysMutex> lock(&mutex);
+
+	// 文件保存在个人文件夹当中
+	const char * tempfilename = ".configka.xml";
+	TCHAR encryptfile[MAX_PATH] ;
+	generateTempFile(tempfilename, encryptfile, MAX_PATH);
+
+	// Create XML
+	TiXmlDocument doc;
+	TiXmlDeclaration * decl = new TiXmlDeclaration( "1.0", "UTF-8", "" );
+	doc.LinkEndChild(decl);
+
+	// 创建根节点
+	TiXmlElement * root_element = new TiXmlElement( CONFIG_ROOT_VALUE );
+
+	// 是否卸载
+	// 在配置文件当中保存的是反值
+	// 因此应该去反，另外在保存的时候也应该取反
+	root_element->SetAttribute(CONFIG_ATTRIBUTE_INSTALL, enabledFromBool(!uninstall()));
+	
+	saveRules(root_element);
+	saveAppSetting(root_element);
+	doc.LinkEndChild(root_element);
+
+	doc.SaveFile(encryptfile);
+	__SETTING_XMLCONFIGURATION_TRC__(" TiXmlDocument::SaveFile Uncrypt "<<encryptfile<<"  Errono: "<< GetLastError());
+
+	yanglei_utility::EncryptFile((LPTSTR)encryptfile, (LPTSTR)configpath);
+	DeleteFile(encryptfile);
+	__SETTING_XMLCONFIGURATION_TRC__("Delete File" << encryptfile <<"  Errono: "<< GetLastError());
+
+	SettingItem::setModified(false);
+
+	__SETTING_XMLCONFIGURATION_TRC__("saveConfig end");
 	return 0;
 }
 
@@ -273,9 +299,7 @@ int XMLConfiguration::readDefaultConfig() {
 //========================================
 // public members
 int XMLConfiguration::loadConfig(const TCHAR * filename) {
-	initialize_completed_ = false;
 	readConfigFromFile(filename);
-	initialize_completed_ = true;
 
 	// 之前的可能调用一些函数，导致状态变为以改变
 	// 因为是初始化函数，所以一定不会改变的。
