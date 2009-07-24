@@ -131,6 +131,7 @@ copy .\filtersetting.h ..\..\include\com
 				Description="¿½±´ÎÄ¼þ"
 				CommandLine="copy .\FilterSetting_i.c ..\..\include\com
 copy .\filtersetting.h ..\..\include\com
+copy .\release\nwrs.exe ..\..\release
 
 "/>
 			<Tool
