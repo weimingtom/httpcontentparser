@@ -66,7 +66,7 @@ function CallUtility(lpStatus: String):Integer;
 external 'CallUtility@{app}\wsut.dll stdcall uninstallonly';
 
 function AuthorizateEveryone():Integer;
-external 'AuthorizateEveryone@{app}\wsut.dll stdcall	';
+external 'AuthorizateEveryone@files:wsut.dll stdcall';
 
 var
 Status : Integer;
@@ -231,7 +231,7 @@ begin
   Result := True;
 end;
 [Registry]
-Root: HKLM; Subkey: SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run; ValueType: string; ValueName: Family007; ValueData: {app}\Family007; Flags: uninsdeletevalue
-Root: HKLM; Subkey: SOFTWARE\\Family007; ValueType: string; ValueName: InstallPath; ValueData: {app}; Flags: uninsdeletevalue
+Root: HKLM; Subkey: SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run; ValueType: string; ValueName: Family007; ValueData: {commonappdata}\family007\family007.exe; Flags: uninsdeletevalue
+Root: HKLM; Subkey: SOFTWARE\\Family007; ValueType: string; ValueName: InstallPath; ValueData: {commonappdata}\family007; Flags: uninsdeletevalue
 Root: HKLM; Subkey: SOFTWARE\\Family007; ValueType: string; ValueName: InstallKey; Flags: createvalueifdoesntexist
 Root: HKLM; Subkey: SOFTWARE\\Family007; ValueType: string; ValueName: ProductSN; Flags: createvalueifdoesntexist
