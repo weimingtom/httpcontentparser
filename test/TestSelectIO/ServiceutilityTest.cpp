@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include ".\serviceutilitytest.h"
-#include <serviceUtility.h>
+#include "..\..\projects\PacketsGrasper\serviceUtility.h"
 #include <utility/HTTPRequestPacket.h>
 
 namespace {

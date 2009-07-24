@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include ".\dnsmaptest.h"
-#include <DNSMap.h>
+#include "..\..\projects\PacketsGrasper\DNSMap.h"
 #include <string>
 
 using namespace std;

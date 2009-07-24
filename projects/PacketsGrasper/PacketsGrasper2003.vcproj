@@ -214,6 +214,67 @@
 			Name="logger"
 			Filter="">
 		</Filter>
+		<Filter
+			Name="SELECTIO"
+			Filter="">
+			<File
+				RelativePath=".\BufferCallCOM.h">
+			</File>
+			<File
+				RelativePath=".\BufferResult.cpp">
+			</File>
+			<File
+				RelativePath=".\BufferResult.h">
+			</File>
+			<File
+				RelativePath=".\contentFilter.cpp">
+			</File>
+			<File
+				RelativePath=".\contentFilter.h">
+			</File>
+			<File
+				RelativePath=".\DNSMap.cpp">
+			</File>
+			<File
+				RelativePath=".\DNSMap.h">
+			</File>
+			<File
+				RelativePath=".\DomainAddress.cpp">
+			</File>
+			<File
+				RelativePath=".\DomainAddress.h">
+			</File>
+			<File
+				RelativePath=".\HandleQueue.cpp">
+			</File>
+			<File
+				RelativePath=".\HandleQueue.h">
+			</File>
+			<File
+				RelativePath=".\httpcontentcheck.cpp">
+			</File>
+			<File
+				RelativePath=".\httpcontentcheck.h">
+			</File>
+			<File
+				RelativePath=".\SelectIO.cpp">
+			</File>
+			<File
+				RelativePath=".\SelectIO.h">
+			</File>
+			<File
+				RelativePath=".\ServiceUtility.cpp">
+			</File>
+			<File
+				RelativePath=".\ServiceUtility.h">
+			</File>
+			<File
+				RelativePath=".\SocketPackets.cpp">
+			</File>
+			<File
+				RelativePath=".\SocketPackets.h">
+			</File>
+		</Filter>
 	</Files>
 	<Globals>
 	</Globals>
