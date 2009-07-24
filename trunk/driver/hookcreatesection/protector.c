@@ -1,6 +1,6 @@
 
 #include "ntddk.h"
-#include "driver_const.h"
+#include "..\..\include\driver_const.h"
 
 
 struct SYS_SERVICE_TABLE { 
@@ -28,7 +28,6 @@ int  ClientAppLaunch = 0;
 FAST_MUTEX mutex_exchange_buffer;
 ULONG Index;
 ULONG RealCallee;
-const int max_check_num = 10; // 如果检测一段时间，上层程序没有反应，则直接返回true
 
 // 与上层程序交互的程序。
 char * exchange_buffer;
@@ -49,7 +48,6 @@ ULONG __stdcall check(PULONG arg)
 	ULONG notify = 0;
 	ULONG result = 0;
 	ULONG notcheck = 0;
-	int cnt = 0;
 	ANSI_STRING deviceVolumn_a = {0};
 	UNICODE_STRING deviceVolumn_u = {0};
 	ANSI_STRING filepath_withoutV = {0};
@@ -119,13 +117,6 @@ ULONG __stdcall check(PULONG arg)
 		// checked保存了客户应用程序是否做出了相应
 		memmove(&notcheck,&exchange_buffer[ADDR_EXCHANGE_APP_COMP],4);
 		
-		// 为了避免当用用户程序结束，而迟迟得不到结果导致的死锁
-		// 我们最多在这里等待5次
-		if (cnt > max_check_num) {
-			DbgPrint("[Protector] check timeout");
-			result = 1;
-			break;
-		}
 		if(!notcheck) {
 			// 获取结果
 			memmove(&result,&exchange_buffer[ADDR_EXCHANGE_APP_RESULT],4);
@@ -133,7 +124,6 @@ ULONG __stdcall check(PULONG arg)
 			break;
 		}
 		
-		cnt++;
 	}
 	
 	// 重置请求缓冲区
