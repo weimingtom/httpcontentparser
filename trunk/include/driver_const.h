@@ -24,13 +24,13 @@ const wchar_t devicename[]=L"\\Device\\FPTECTORDRV";
 const wchar_t devicelink[]=L"\\DosDevices\\FPTECTORDRV";
 
 #ifdef TEXT
-#define  APPCONTROL_SERVICE				TEXT("protectorservice")
-#define  APPCONTROL_FILE				TEXT("\\\\.\\FPTECTORDRV")
-#define  APPCONTROL_DRIVER_FILE			TEXT("FPTECTORDRV.sys")
+#define  APPCONTROL_SERVICE				TEXT("FPTECTORDRV")
+#define  APPCONTROL_FILE						TEXT("\\\\.\\FPTECTORDRV")
+#define  APPCONTROL_DRIVER_FILE		TEXT("FPTECTORDRV.sys")
 #else
-#define  APPCONTROL_SERVICE				("protectorservice")
-#define  APPCONTROL_FILE				("\\\\.\\FPTECTORDRV")
-#define  APPCONTROL_DRIVER_FILE			("FPTECTORDRV.sys")
+#define  APPCONTROL_SERVICE				("FPTECTORDRV")
+#define  APPCONTROL_FILE						("\\\\.\\FPTECTORDRV")
+#define  APPCONTROL_DRIVER_FILE		("FPTECTORDRV.sys")
 #endif
 
 #endif // _DRIVER_CONST_H__
