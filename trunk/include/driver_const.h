@@ -20,4 +20,17 @@ const int ADDR_EXCHANGE_FILEPATH = 8;	// Â·¾¶
 
 #define IO_CONTROL_BUFFER_INIT		1000
 
+const wchar_t devicename[]=L"\\Device\\FPTECTORDRV";
+const wchar_t devicelink[]=L"\\DosDevices\\FPTECTORDRV";
+
+#ifdef TEXT
+#define  APPCONTROL_SERVICE				TEXT("protectorservice")
+#define  APPCONTROL_FILE				TEXT("\\\\.\\FPTECTORDRV")
+#define  APPCONTROL_DRIVER_FILE			TEXT("FPTECTORDRV.sys")
+#else
+#define  APPCONTROL_SERVICE				("protectorservice")
+#define  APPCONTROL_FILE				("\\\\.\\FPTECTORDRV")
+#define  APPCONTROL_DRIVER_FILE			("FPTECTORDRV.sys")
+#endif
+
 #endif // _DRIVER_CONST_H__

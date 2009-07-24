@@ -38,11 +38,11 @@ Source: ..\Release\PacketsGrasper.dll; DestDir: {app}; Flags: restartreplace uni
 Source: ..\Release\Repair.exe; DestDir: {app}; Flags: restartreplace uninsrestartdelete replacesameversion
 Source: ..\Release\WinLock.dll; DestDir: {app}; Flags: restartreplace uninsrestartdelete replacesameversion
 Source: ..\Release\zlib1.dll; DestDir: {app}; Flags: restartreplace uninsrestartdelete replacesameversion
-Source: ..\Release\wsut.dll; DestDir: {app} Flags: restartreplace uninsrestartdelete replacesameversion
+Source: ..\Release\wsut.dll; DestDir: {app}; Flags: restartreplace uninsrestartdelete replacesameversion
 Source: ..\Release\nwrs.exe; DestDir: {app}; Flags: restartreplace uninsrestartdelete replacesameversion
 Source: ..\Release\logger.dll; DestDir: {app}; Flags: restartreplace uninsrestartdelete replacesameversion
 Source: ..\Release\Family007.exe; DestDir: {app}; Flags: restartreplace uninsrestartdelete replacesameversion; AfterInstall : EnableAutoRun
-Source: ..\release\protector.sys; DestDir: {app}; Flags: restartreplace uninsrestartdelete
+Source: ..\release\FPTECTORDRV.sys; DestDir: {app}; Flags: restartreplace uninsrestartdelete
 Source: ..\release\family007.ini; DestDir: {win}; Flags: restartreplace uninsrestartdelete
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 

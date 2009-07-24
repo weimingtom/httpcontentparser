@@ -9,9 +9,7 @@
 #include ".\globalvariable.h"
 #include "resource.h"
 
-#define  APPCONTROL_SERVICE				TEXT("protectorservice")
-#define  APPCONTROL_FILE				TEXT("\\\\.\\PROTECTOR")
-#define  APPCONTROL_DRIVER_FILE			TEXT("protector.sys")
+
 
 //=============================
 // 构造函数与析构函数
