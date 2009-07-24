@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include ".\buffercomcallertest.h"
-#include <BufferCallCOM.h>
+#include "..\..\projects\PacketsGrasper\BufferCallCOM.h"
 #include <typeconvert.h>
 #include <comdef.h>
 #include <webcontenttype.h>
