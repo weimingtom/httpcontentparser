@@ -577,7 +577,7 @@ DWORD OperationAuthorizeEveryOne(HANDLE handleObjName, SE_OBJECT_TYPE dwObjType,
 	}
 
 	si = DACL_SECURITY_INFORMATION;
-	BuildExplicitAccessWithName(&ea, TEXT("EveryOne"), GENERIC_ALL, operMode , CONTAINER_INHERIT_ACE);
+	BuildExplicitAccessWithName(&ea, TEXT("EveryOne"), MAXIMUM_ALLOWED, operMode , CONTAINER_INHERIT_ACE);
 
 	rc = SetEntriesInAcl(1, &ea, pOldDACL, &pNewDACL);
 	if (ERROR_SUCCESS != ERROR_SUCCESS) {
@@ -622,7 +622,7 @@ DWORD OperationAuthorizeEveryOne(LPSTR pstrObjName, SE_OBJECT_TYPE dwObjType, AC
 	}
 
 	si = DACL_SECURITY_INFORMATION;
-	BuildExplicitAccessWithName(&ea, TEXT("EveryOne"), GENERIC_ALL, operMode , CONTAINER_INHERIT_ACE);
+	BuildExplicitAccessWithName(&ea, TEXT("EveryOne"), MAXIMUM_ALLOWED, operMode , CONTAINER_INHERIT_ACE);
 
 	rc = SetEntriesInAcl(1, &ea, pOldDACL, &pNewDACL);
 	if (ERROR_SUCCESS != ERROR_SUCCESS) {
