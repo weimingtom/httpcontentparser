@@ -12,16 +12,20 @@
 #include <app_constants.h>
 #include<typeconvert.h>
 #include <apputility.h>
+#include <driver_const.h>
 #include <comdef.h>
 #include ".\logger_def.h"
 #include "resource.h"
 #include ".\log.h"
+
 
 namespace {
 bool checkInstalled();
 void SetUninstallStatus();
 bool CheckPoassword(LPCTSTR password) ;
 void removeAutoRun();
+BOOL LoadNTDriver(const TCHAR * lpszDriverName, TCHAR * lpszDriverPath) ;
+int UnloadNTDriver(const TCHAR * szSvrName) ;
 };
 
 WSUT_API int		__stdcall		AuthorizateEveryone(const char * filepath) {
@@ -76,10 +80,12 @@ WSUT_API int __stdcall GetInstallAppPath(char *buffer, const int length) {
 	return 0;
 }
 
-WSUT_API int		__stdcall		InstallDriver() {
+WSUT_API int		__stdcall		InstallDriver(char * path) {
+	LoadNTDriver(APPCONTROL_SERVICE, path);
 	return 0;
 }
 WSUT_API int		__stdcall		UninstallDriver() {
+	UnloadNTDriver(APPCONTROL_SERVICE);
 	return 0;
 }
 BOOL APIENTRY DllMain( HANDLE hModule, 
@@ -170,17 +176,122 @@ bool checkInstalled() {
 	return result;
 }
 
+int UnloadNTDriver(const TCHAR * szSvrName) 
+{
+	int rc = 0;
+	SC_HANDLE hServiceMgr = NULL;
+	SC_HANDLE hServiceDDK = NULL;
+	SERVICE_STATUS SvrSta;
+
+	hServiceMgr = OpenSCManager(NULL, NULL, SC_MANAGER_ALL_ACCESS);
+	if (hServiceMgr == NULL) {
+		LERR_<<"OpenSCManager() Failed with : " <<GetLastError();
+		rc = 1;
+		goto exit;
+	} 
+
+	hServiceDDK = OpenService(hServiceMgr, szSvrName, SERVICE_ALL_ACCESS);
+	if (NULL == hServiceDDK) {
+		LERR_<<"OpenService() Failed with error : " << GetLastError();
+		rc = 1;
+		goto exit;
+	}
+
+	if ( !ControlService(hServiceDDK, SERVICE_CONTROL_STOP, &SvrSta)) {
+		LERR_<<"ControlService failed with error : " << GetLastError();
+		rc = 1;
+		goto exit;
+	}
+
+	if ( !DeleteService(hServiceDDK)) {
+		LERR_<<"DeleteService failed with error : " << GetLastError();
+		rc = 1;
+		goto exit;
+	}
+
+exit:
+	if (NULL != hServiceDDK) {
+		CloseServiceHandle(hServiceDDK);
+	}
+
+	if (NULL != hServiceMgr) {
+		CloseServiceHandle(hServiceMgr);
+	}
+
+	return rc;
+}
+
+BOOL LoadNTDriver(const TCHAR * lpszDriverName, TCHAR * lpszDriverPath) {
+	int rc = 0;
+	TCHAR szDriverImagePath[MAX_PATH];
+	GetFullPathName(lpszDriverPath, MAX_PATH, szDriverImagePath, NULL);
+	SC_HANDLE hSCM = NULL;
+	SC_HANDLE hSerDDK = NULL;
+
+	hSCM = OpenSCManager(NULL, NULL, SC_MANAGER_ALL_ACCESS);
+	if (NULL != hSCM) {
+		LERR_<<("OpenSCM() Failed : %d"), GetLastError();
+		rc = 1;
+		goto exit;
+	}
+
+	hSerDDK = CreateService(hSCM, lpszDriverName, lpszDriverName, SERVICE_ALL_ACCESS, 
+		SERVICE_KERNEL_DRIVER, SERVICE_DEMAND_START, SERVICE_ERROR_IGNORE, szDriverImagePath,
+		NULL, NULL, NULL, NULL, NULL);
+
+	if (NULL == hSerDDK) {
+		const DWORD dwRtn = GetLastError();
+		if (dwRtn != ERROR_IO_PENDING && dwRtn != ERROR_SERVICE_EXISTS) {
+			rc = 0;
+			LERR_<<("CreateService failed ") << GetLastError();
+			goto exit;
+		}
+
+		// 如果已经存在，则打开
+		hSerDDK = OpenService(hSerDDK, lpszDriverName, SERVICE_ALL_ACCESS);
+		if (NULL == hSerDDK) {
+			LERR_<<("OpenService failed with error ") <<  GetLastError();
+			rc = 1;
+			goto exit;
+		}
+	}
+
+	rc = StartService(hSerDDK, NULL, NULL);
+	if (0 == rc) {
+		const DWORD dwError = GetLastError();
+		if (dwError == ERROR_SERVICE_ALREADY_RUNNING) {
+			LERR_<<("The Service has been running..");
+		} else if (dwError == ERROR_IO_PENDING) {
+			LERR_<<("IO Pending");
+		} else {
+			LERR_<<("StartService failed ") << GetLastError();
+			goto exit;
+		}
+	}
+
+exit:
+	if (NULL != hSerDDK) {
+		CloseServiceHandle(hSerDDK);
+	}
+
+	if (NULL != hSCM) {
+		CloseServiceHandle(hSerDDK);
+	}
+
+	return rc;
+}
+
 class LoggerInit {
 public:
 	LoggerInit() {
 		using namespace boost::logging;
 #ifdef DEBUG
-	init_debug_logger(WSUT_DEBUG_FILE, false, true);
-	init_app_logger(WSUT_LOGGER_FILE, false,true);
-	g_log_level()->set_enabled(level::debug);
+		init_debug_logger(WSUT_DEBUG_FILE, false, true);
+		init_app_logger(WSUT_LOGGER_FILE, false,true);
+		g_log_level()->set_enabled(level::debug);
 #else
-	init_app_logger(WSUT_LOGGER_FILE);
-	g_log_level()->set_enabled(level::warning);
+		init_app_logger(WSUT_LOGGER_FILE);
+		g_log_level()->set_enabled(level::warning);
 #endif
 	}
 };
