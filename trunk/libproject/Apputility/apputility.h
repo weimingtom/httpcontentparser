@@ -3,6 +3,7 @@
 
 #include <utility\strutility.h>
 #include <ApputilityDLL.H>
+#include <aclapi.h>
 
 // ±£´æÆÁÄ»
 APPUTILITYDLL_API DWORD GenScreenSPFile(TCHAR *fullpath, const int len);
