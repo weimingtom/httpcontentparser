@@ -10,8 +10,6 @@ struct SYS_SERVICE_TABLE {
 	void **ArgumentsTable; 
 }; 
 
-const WCHAR devicename[]=L"\\Device\\Protector";
-const WCHAR devicelink[]=L"\\DosDevices\\PROTECTOR";
 
 // 系统路径及系统路径长度
 // 由于无法调用相关API, 
@@ -130,8 +128,8 @@ ULONG __stdcall check(PULONG arg)
 		}
 		if(!notcheck) {
 			// 获取结果
-			DbgPrint("[Protector] result return");
 			memmove(&result,&exchange_buffer[ADDR_EXCHANGE_APP_RESULT],4);
+			DbgPrint("[Protector] result return %d", result);
 			break;
 		}
 		
