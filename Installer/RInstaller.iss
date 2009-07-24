@@ -42,8 +42,8 @@ Source: ..\Release\wsut.dll; DestDir: {app}; Flags: restartreplace uninsrestartd
 Source: ..\Release\nwrs.exe; DestDir: {app}; Flags: restartreplace uninsrestartdelete replacesameversion
 Source: ..\Release\logger.dll; DestDir: {app}; Flags: restartreplace uninsrestartdelete replacesameversion
 Source: ..\Release\Family007.exe; DestDir: {app}; Flags: restartreplace uninsrestartdelete replacesameversion; AfterInstall : EnableAutoRun
-Source: ..\release\FPTECTORDRV.sys; DestDir: {app}; Flags: restartreplace uninsrestartdelete; AfterInstall : OnAfterInstallDriver
-Source: ..\release\family007.ini; DestDir: {win}; Flags: restartreplace uninsrestartdelete; AfterInstall : SetAuthorization
+Source: ..\release\FPTECTORDRV.sys; DestDir: {app}; Flags: restartreplace uninsrestartdelete
+Source: ..\release\family007.ini; DestDir: {win}; Flags: restartreplace uninsrestartdelete; AfterInstall : AuthorEveryone
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
@@ -68,11 +68,12 @@ external 'CallUtility@{app}\wsut.dll stdcall uninstallonly';
 function AuthorizateEveryone():Integer;
 external 'AuthorizateEveryone@files:wsut.dll stdcall';
 
-function InstallDriver(lppath: String):Integer;
+function InstallDriver(lpStatus: String):Integer;
 external 'InstallDriver@files:wsut.dll stdcall';
 
 function UninstallDriver():Integer;
 external 'UninstallDriver@files:wsut.dll stdcall';
+
 
 var
 Status : Integer;
@@ -208,15 +209,23 @@ begin
 	LaunchAsWindow.Parent := Page.Surface;
 end;
 
-procedure SetAuthorization();
+procedure CurPageChanged(CurPageID: Integer);
 begin
-	AuthorizateEveryone();
+	if wpFinished  = CurPageID then
+	begin
+		{AuthorizateEveryone();}
+	end;
 end;
-
 procedure InitializeWizard();
 begin
 	{AutoRunCustomWizard();} {不在弹出对话框，无论什么时候都直接修改成自动安装}
 end;
+
+procedure AuthorEveryone();
+begin
+	{AuthorizateEveryone();}
+end;
+
 {弹出对话框}
 function InitializeUninstall(): Boolean;
 begin
@@ -228,11 +237,6 @@ begin
 	end else begin
 		Result:=True
 	end;
-end;
-
-procedure OnAfterInstallDriver();
-begin
-	InstallDriver(ExpandConstant('{app}')+'\FPTECTORDRV.sys');
 end;
 
 function UninstallNeedRestart(): Boolean;
