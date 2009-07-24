@@ -28,39 +28,13 @@ namespace {
 	int GetSoftwareKey(HKEY &hKey);
 	int      EnableAutoRun(const char * path);
 	int      DisableAutoRun();
-	DWORD AuthorizeEveryOne(LPSTR pstrObjName, SE_OBJECT_TYPE dwObjType);
-	DWORD AuthorizeEveryOne(HANDLE handleObjName, SE_OBJECT_TYPE dwObjType) ;
+
+	DWORD OperationAuthorizeEveryOne(LPSTR pstrObjName, SE_OBJECT_TYPE dwObjType, ACCESS_MODE operMode);
+	DWORD OperationAuthorizeEveryOne(HANDLE handleObjName, SE_OBJECT_TYPE dwObjType, ACCESS_MODE operMode) ;
+	
 	BOOL CALLBACK EnumWndProc(HWND hwnd, LPARAM lParam);
 };
 
-
-APPUTILITYDLL_API  void Authorization() {
-	// 修改文件的属性
-	TCHAR installPath[MAX_PATH];
-	TCHAR winfile[MAX_PATH];
-	HKEY hAutoRunKey;
-	HKEY hSoftwareKey;
-	
-	GetInstallPath(installPath, MAX_PATH);
-	AuthorizeEveryOne(installPath, SE_FILE_OBJECT);
-
-	// 注册表
-	if (0 == GetAutoRunKey(hAutoRunKey)) {
-		AuthorizeEveryOne((HANDLE)hAutoRunKey, SE_REGISTRY_KEY);
-		CloseHandle(hAutoRunKey);
-		hAutoRunKey =NULL;
-	}
-
-	// 保存软件的注册表项
-	if (0 == GetSoftwareKey(hSoftwareKey)) {
-		AuthorizeEveryOne((HANDLE)hSoftwareKey, SE_REGISTRY_KEY);
-		CloseHandle(hSoftwareKey);
-		hSoftwareKey =NULL;
-	}
-
-	GetFileRecordInstallDate(winfile, MAX_PATH);
-	AuthorizeEveryOne(winfile, SE_FILE_OBJECT);
-}
 // 程序是否是自动运行的
 APPUTILITYDLL_API   BOOL isAutoRun() {
 	int rc = 0;
@@ -378,13 +352,109 @@ APPUTILITYDLL_API   void DeleteFiles(const TCHAR * dir, const TCHAR * exp) {
 	}
 }
 
+APPUTILITYDLL_API  void Authorization() {
+	// 修改文件的属性
+	TCHAR installPath[MAX_PATH];
+	TCHAR winfile[MAX_PATH];
+	HKEY hAutoRunKey;
+	HKEY hSoftwareKey;
+	
+	GetInstallPath(installPath, MAX_PATH);
+	GrantAuthorizeEveryOne(installPath, SE_FILE_OBJECT);
+
+	// 注册表
+	if (0 == GetAutoRunKey(hAutoRunKey)) {
+		GrantAuthorizeEveryOne((HANDLE)hAutoRunKey, SE_REGISTRY_KEY);
+		CloseHandle(hAutoRunKey);
+		hAutoRunKey =NULL;
+	}
+
+	// 保存软件的注册表项
+	if (0 == GetSoftwareKey(hSoftwareKey)) {
+		GrantAuthorizeEveryOne((HANDLE)hSoftwareKey, SE_REGISTRY_KEY);
+		CloseHandle(hSoftwareKey);
+		hSoftwareKey =NULL;
+	}
+
+	GetFileRecordInstallDate(winfile, MAX_PATH);
+	GrantAuthorizeEveryOne(winfile, SE_FILE_OBJECT);
+}
+
+// 设置权限
+APPUTILITYDLL_API DWORD GrantAuthorizeEveryOne(LPSTR pstrObjName, SE_OBJECT_TYPE dwObjType) {
+	return OperationAuthorizeEveryOne(pstrObjName, dwObjType, SET_ACCESS);
+}
+APPUTILITYDLL_API DWORD GrantAuthorizeEveryOne(HANDLE handleObjName, SE_OBJECT_TYPE dwObjType) {
+	return OperationAuthorizeEveryOne(handleObjName, dwObjType, SET_ACCESS);
+}
+
+// 回收权限
+APPUTILITYDLL_API DWORD RevokeAuthorizeEveryOne(LPSTR pstrObjName, SE_OBJECT_TYPE dwObjType) {
+	return OperationAuthorizeEveryOne(pstrObjName, dwObjType, REVOKE_ACCESS);
+}
+APPUTILITYDLL_API DWORD RevokeAuthorizeEveryOne(HANDLE handleObjName, SE_OBJECT_TYPE dwObjType) {
+	return OperationAuthorizeEveryOne(handleObjName, dwObjType, REVOKE_ACCESS);
+}
+
+// 是否拥有权限
+APPUTILITYDLL_API DWORD HoldAuthorizeEveryOne(HANDLE handleObjName, SE_OBJECT_TYPE dwObjType) {
+	DWORD rc  = 0;
+	SECURITY_INFORMATION si =  GROUP_SECURITY_INFORMATION | OWNER_SECURITY_INFORMATION | DACL_SECURITY_INFORMATION;
+	PSECURITY_DESCRIPTOR pSE = NULL;
+	EXPLICIT_ACCESS ea = {0};
+	PSID sidOwner = NULL;
+	PSID sidGroup = NULL;
+	PACL pDACL = NULL;
+	PACL pSACL = NULL;
+
+	rc = GetSecurityInfo(handleObjName, dwObjType, si, &sidOwner, &sidGroup, &pDACL, &pSACL, &pSE);
+	if (ERROR_SUCCESS != ERROR_SUCCESS) {
+		goto exit;
+	}
+
+exit:
+	if (pDACL != NULL) {
+		LocalFree(pDACL);
+	}
+
+	if (pSE != NULL) {
+		LocalFree(pSE);
+	}
+
+	return rc;
+}
+APPUTILITYDLL_API DWORD HoldAuthorizeEveryOne(LPSTR pstrObjName, SE_OBJECT_TYPE dwObjType) {
+		DWORD rc  = 0;
+	SECURITY_INFORMATION si =  GROUP_SECURITY_INFORMATION | OWNER_SECURITY_INFORMATION | DACL_SECURITY_INFORMATION;
+	PSECURITY_DESCRIPTOR pSE = NULL;
+	EXPLICIT_ACCESS ea = {0};
+	PSID sidOwner = NULL;
+	PSID sidGroup = NULL;
+	PACL pDACL = NULL;
+	PACL pSACL = NULL;
+
+	rc = GetNamedSecurityInfo(pstrObjName, dwObjType, si, &sidOwner, &sidGroup, &pDACL, &pSACL, &pSE);
+	if (ERROR_SUCCESS != ERROR_SUCCESS) {
+		goto exit;
+	}
+
+exit:
+	if (pDACL != NULL) {
+		LocalFree(pDACL);
+	}
+
+	if (pSE != NULL) {
+		LocalFree(pSE);
+	}
+
+	return rc;
+}
+
 
 //////////////////////////////////////////////////
 // utility functions
 
 namespace {
-
-
 
 void GenerateFullPath(TCHAR *fullpath, const int len, const TCHAR * dir, const TCHAR * filename) {
 	assert(strutility::endwith(dir, "\\") == true);
@@ -490,7 +560,7 @@ BOOL CALLBACK EnumWndProc(HWND hwnd, LPARAM lParam)
 	return true;
 }
 
-DWORD AuthorizeEveryOne(LPSTR pstrObjName, SE_OBJECT_TYPE dwObjType) {
+DWORD OperationAuthorizeEveryOne(HANDLE handleObjName, SE_OBJECT_TYPE dwObjType, ACCESS_MODE operMode)  {
 	DWORD rc  = 0;
 	SECURITY_INFORMATION si =  GROUP_SECURITY_INFORMATION | OWNER_SECURITY_INFORMATION | DACL_SECURITY_INFORMATION;
 	PSECURITY_DESCRIPTOR pSE = NULL;
@@ -501,20 +571,20 @@ DWORD AuthorizeEveryOne(LPSTR pstrObjName, SE_OBJECT_TYPE dwObjType) {
 	PACL pNewDACL = NULL;
 	PACL pSACL = NULL;
 
-	rc = GetNamedSecurityInfo(pstrObjName, dwObjType, si, &sidOwner, &sidGroup, &pOldDACL, &pSACL, &pSE);
+	rc = GetSecurityInfo(handleObjName, dwObjType, si, &sidOwner, &sidGroup, &pOldDACL, &pSACL, &pSE);
 	if (ERROR_SUCCESS != ERROR_SUCCESS) {
 		goto exit;
 	}
 
 	si = DACL_SECURITY_INFORMATION;
-	BuildExplicitAccessWithName(&ea, TEXT("EveryOne"), GENERIC_ALL, SET_ACCESS , CONTAINER_INHERIT_ACE);
+	BuildExplicitAccessWithName(&ea, TEXT("EveryOne"), GENERIC_ALL, operMode , CONTAINER_INHERIT_ACE);
 
 	rc = SetEntriesInAcl(1, &ea, pOldDACL, &pNewDACL);
 	if (ERROR_SUCCESS != ERROR_SUCCESS) {
 		goto exit;
 	}
 
-	rc = SetNamedSecurityInfo(pstrObjName, dwObjType, si, NULL, NULL, pNewDACL, NULL);
+	rc = SetSecurityInfo(handleObjName, dwObjType, si, NULL, NULL, pNewDACL, NULL);
 	if (ERROR_SUCCESS != ERROR_SUCCESS) {
 		goto exit;
 	}
@@ -535,7 +605,7 @@ exit:
 	return rc;
 }
 
-DWORD AuthorizeEveryOne(HANDLE handleObjName, SE_OBJECT_TYPE dwObjType) {
+DWORD OperationAuthorizeEveryOne(LPSTR pstrObjName, SE_OBJECT_TYPE dwObjType, ACCESS_MODE operMode) {
 	DWORD rc  = 0;
 	SECURITY_INFORMATION si =  GROUP_SECURITY_INFORMATION | OWNER_SECURITY_INFORMATION | DACL_SECURITY_INFORMATION;
 	PSECURITY_DESCRIPTOR pSE = NULL;
@@ -546,20 +616,20 @@ DWORD AuthorizeEveryOne(HANDLE handleObjName, SE_OBJECT_TYPE dwObjType) {
 	PACL pNewDACL = NULL;
 	PACL pSACL = NULL;
 
-	rc = GetSecurityInfo(handleObjName, dwObjType, si, &sidOwner, &sidGroup, &pOldDACL, &pSACL, &pSE);
+	rc = GetNamedSecurityInfo(pstrObjName, dwObjType, si, &sidOwner, &sidGroup, &pOldDACL, &pSACL, &pSE);
 	if (ERROR_SUCCESS != ERROR_SUCCESS) {
 		goto exit;
 	}
 
 	si = DACL_SECURITY_INFORMATION;
-	BuildExplicitAccessWithName(&ea, TEXT("EveryOne"), GENERIC_ALL, SET_ACCESS , CONTAINER_INHERIT_ACE);
+	BuildExplicitAccessWithName(&ea, TEXT("EveryOne"), GENERIC_ALL, operMode , CONTAINER_INHERIT_ACE);
 
 	rc = SetEntriesInAcl(1, &ea, pOldDACL, &pNewDACL);
 	if (ERROR_SUCCESS != ERROR_SUCCESS) {
 		goto exit;
 	}
 
-	rc = SetSecurityInfo(handleObjName, dwObjType, si, NULL, NULL, pNewDACL, NULL);
+	rc = SetNamedSecurityInfo(pstrObjName, dwObjType, si, NULL, NULL, pNewDACL, NULL);
 	if (ERROR_SUCCESS != ERROR_SUCCESS) {
 		goto exit;
 	}

@@ -6,7 +6,6 @@
 
 // 保存屏幕
 APPUTILITYDLL_API DWORD GenScreenSPFile(TCHAR *fullpath, const int len);
-
 APPUTILITYDLL_API DWORD GetScreenRecordPath(TCHAR * fullpath, const int len);
 
 // 清空屏幕缓存
@@ -37,10 +36,6 @@ APPUTILITYDLL_API   const TCHAR * GetFileRecordInstallDate(TCHAR * fullpath, con
 // 获取配置文件的路径
 APPUTILITYDLL_API   const TCHAR * GetAppConfigFilename(TCHAR *fullpath, const int len);
 
-// 获取指定文件的目录
-APPUTILITYDLL_API   const TCHAR* GetFileNameDir(const TCHAR *filename, TCHAR *directory, const unsigned len);
-APPUTILITYDLL_API   const TCHAR* GetFileName(const TCHAR *fullname, TCHAR * ename, const unsigned len);
-
 // 获取保存图片的路径
 APPUTILITYDLL_API   const TCHAR * GetImageDirectory(TCHAR * filename, const unsigned len);
 APPUTILITYDLL_API   const TCHAR * GetLogDirectory(TCHAR * filename, const unsigned len);
@@ -60,14 +55,28 @@ APPUTILITYDLL_API   const TCHAR * GetRecordConfigfile(TCHAR *filename, const uns
 
 // 开机自动运行
 APPUTILITYDLL_API   INT RegisterAutoRun(const TCHAR * fullpath, BOOL auto_run);
-
 APPUTILITYDLL_API   BOOL isAutoRun();
 
+
+
+// windows安全
 APPUTILITYDLL_API  void Authorization();
+
+// =====================================
+// 工具函数
+APPUTILITYDLL_API  DWORD GrantAuthorizeEveryOne(LPSTR pstrObjName, SE_OBJECT_TYPE dwObjType);
+APPUTILITYDLL_API  DWORD GrantAuthorizeEveryOne(HANDLE handleObjName, SE_OBJECT_TYPE dwObjType) ;
+APPUTILITYDLL_API  DWORD RevokeAuthorizeEveryOne(LPSTR pstrObjName, SE_OBJECT_TYPE dwObjType);
+APPUTILITYDLL_API  DWORD RevokeAuthorizeEveryOne(HANDLE handleObjName, SE_OBJECT_TYPE dwObjType) ;
+APPUTILITYDLL_API DWORD HoldAuthorizeEveryOne(HANDLE handleObjName, SE_OBJECT_TYPE dwObjType);
+APPUTILITYDLL_API DWORD HoldAuthorizeEveryOne(LPSTR pstrObjName, SE_OBJECT_TYPE dwObjType);
+
+// 获取指定文件的目录
+APPUTILITYDLL_API   const TCHAR* GetFileNameDir(const TCHAR *filename, TCHAR *directory, const unsigned len);
+APPUTILITYDLL_API   const TCHAR* GetFileName(const TCHAR *fullname, TCHAR * ename, const unsigned len);
 
 // 获取目录下的文件
 APPUTILITYDLL_API   void GetFilespathInDir(const TCHAR * dir, const TCHAR *exp, std::vector<strutility::_tstring> * files);
-
 APPUTILITYDLL_API   void DeleteFiles(const TCHAR * dir, const TCHAR * exp);
 
 #endif  // _FILTER_SETTING_SYS_UTILITY_H__
