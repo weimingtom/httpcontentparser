@@ -114,10 +114,6 @@ private:
 	
 	// 保存应用程序设置
 	int saveAppSetting(TiXmlElement * root);
-
-private:
-	// 如果没有加载完全，则不能保存
-	bool initialize_completed_;
 };
 
 #endif  // _SETTING_XMLCONFIGURATION_H__
