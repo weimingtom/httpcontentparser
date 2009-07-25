@@ -97,6 +97,8 @@ namespace internal_utility {
 //====================================
 // 从注册表获取安装时间
 boost::posix_time::ptime getInstallDateFromRegistry() {
+	__SOFTWAREENCRYPT_INSTALLDATE__("getInstallDateFromRegistry");
+
 	FILETIME ft = {0};
 	HKEY hKey;
 	long   ret = ::RegOpenKeyEx(HKEY_LOCAL_MACHINE, REG_SOFTWARE_DIR,  0,   KEY_READ,   &hKey);
@@ -115,14 +117,16 @@ boost::posix_time::ptime getInstallDateFromRegistry() {
 
 boost::posix_time::ptime getInstallDateFromFile() {
 	TCHAR path[MAX_PATH];
-	GetFilePath(path, MAX_PATH);
+	__SOFTWAREENCRYPT_INSTALLDATE__("getInstallDateFromFile");
 
+	GetFilePath(path, MAX_PATH);
 	return makeValidate(getFileCreateTime(path));
 }
 
 // 4, 从windows下的一个文件查看安装时间
 boost::posix_time::ptime getInstallDateFromWin() {
 	TCHAR fullpath[MAX_PATH];
+	__SOFTWAREENCRYPT_INSTALLDATE__("getInstallDateFromWin");
 	GetFileRecordInstallDate(fullpath, MAX_PATH);
 	return makeValidate(getFileCreateTime(fullpath)); 
 }
@@ -136,15 +140,17 @@ void setInstallDateInWin(const FILETIME &ft) {
 	try {
 		// 获取文件路径
 		TCHAR fullpath[MAX_PATH], windowDir[MAX_PATH];
+
+		__SOFTWAREENCRYPT_INSTALLDATE__("setInstallDateInWin");
+
 		GetWindowsDirectory(windowDir, MAX_PATH);
 		_sntprintf(fullpath, MAX_PATH, "%s\\%s", windowDir, WINDOWS_FILE_TO_STORE_INSTALLDATE);
 
 		// 如果文件存在则直接设置创佳时间
-		HANDLE hFile = CreateFile(fullpath, GENERIC_WRITE, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,  NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_HIDDEN,  NULL);
-		int a  = GetLastError();
+		HANDLE hFile = CreateFile(fullpath, GENERIC_WRITE, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,  
+			NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_HIDDEN,  NULL);
 		if (INVALID_HANDLE_VALUE != hFile) {
 			SetFileTime(hFile, &ft, NULL, NULL);
-			int a = GetLastError();
 			// 给文件写入内容
 			DWORD written =  _tcslen(WINDIR_INI_FILE_CONTENT);
 			WriteFile(hFile, WINDIR_INI_FILE_CONTENT, written, &written, NULL);
@@ -161,10 +167,13 @@ void setInstallDateFile(const FILETIME &ft) {
 		// 其他的使用什么文件呢？
 		TCHAR filename[MAX_PATH];
 		GetFilePath(filename, MAX_PATH);
-
 		SYSTEMTIME st;
+		HANDLE hFile = INVALID_HANDLE_VALUE;
+
+		__SOFTWAREENCRYPT_INSTALLDATE__("setInstallDateFile");
+		
 		FileTimeToSystemTime(&ft, &st);
-		HANDLE hFile = CreateFile(filename, GENERIC_WRITE, FILE_SHARE_WRITE | FILE_SHARE_READ,  NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL,  NULL);
+		hFile = CreateFile(filename, GENERIC_WRITE, FILE_SHARE_WRITE | FILE_SHARE_READ,  NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL,  NULL);
 		if (INVALID_HANDLE_VALUE != hFile) {
 			BOOL bFalse = SetFileTime(hFile, &ft, NULL, NULL);
 			CloseHandle(hFile);
@@ -176,6 +185,7 @@ void setInstallDateFile(const FILETIME &ft) {
 
 // 设置注册表的创建时间
 void setInstallDataOnRegistry(const FILETIME &ft) {
+	__SOFTWAREENCRYPT_INSTALLDATE__("setInstallDataOnRegistry");
 	HKEY hKey;
 	long   ret = ::RegOpenKeyEx(HKEY_LOCAL_MACHINE, REG_SOFTWARE_DIR,  0,   KEY_WRITE,   &hKey);
 	if (ERROR_FILE_NOT_FOUND == ret) {
@@ -203,13 +213,14 @@ boost::posix_time::ptime getInstallDataTime() {
 	// 获取三个安装时间
 
 
+	ptime cur = boost::posix_time::second_clock::local_time();
 	ptime pWin = internal_utility::getInstallDateFromWin();
 	ptime pFile  = internal_utility::getInstallDateFromFile();
 	ptime pReg = internal_utility::getInstallDateFromRegistry();
 
 	// 新的时间小，还是老的时间小
 	// 时间越久，时间越小
-	return min(pWin, min(pReg, pFile));
+	return min(pWin, min(pReg, min(cur, pFile)));
 }
 
 //==========================================

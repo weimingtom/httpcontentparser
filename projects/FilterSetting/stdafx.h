@@ -44,7 +44,7 @@
 #	pragma comment(lib, "cryptd.lib")
 #	pragma comment(lib, "shextUtilityd.lib")
 #	pragma comment(lib, "softwareencryptd.lib")
-#pragma comment(lib, "loggerd.lib")
+# pragma comment(lib, "loggerd.lib")
 #else 
 #	pragma comment(lib, "setting.lib")
 #	pragma comment(lib, "apputility.lib")
@@ -53,7 +53,7 @@
 #	pragma comment(lib, "crypt.lib")
 #	pragma comment(lib, "shextUtility.lib")
 #	pragma comment(lib, "softwareencrypt.lib")
-#pragma comment(lib, "logger.lib")
+# pragma comment(lib, "logger.lib")
 #endif
 
 
