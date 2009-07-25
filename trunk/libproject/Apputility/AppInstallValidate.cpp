@@ -159,10 +159,8 @@ void AppInstallValidate::repairSPI(bool removefirst) {
 
 // 安装SPI
 void AppInstallValidate::installSPI() {
-	TCHAR install_path[MAX_PATH], fullpath[MAX_PATH];
-	GetInstallPath(install_path, MAX_PATH);
-
-	_sntprintf(fullpath, MAX_PATH, TEXT("%s%s"), install_path, PACKETSGRASPER_DLL_NAME);
+	TCHAR  fullpath[MAX_PATH];
+	GetSPIInstallPath(fullpath, MAX_PATH);
 
 	// 文件不存在
 	if (_taccess(fullpath, 0) == -1) {
