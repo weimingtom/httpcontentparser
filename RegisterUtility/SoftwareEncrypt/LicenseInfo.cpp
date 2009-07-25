@@ -60,6 +60,9 @@ void LicenseInfo::initialize() {
 	// ªÒ»°SN
 	sn_ = internal_utility::getSN();
 	initialized_ = true;
+
+	// –ﬁ∏¥
+	setInstall();
 }
 
 int LicenseInfo::getAppStatus() {
