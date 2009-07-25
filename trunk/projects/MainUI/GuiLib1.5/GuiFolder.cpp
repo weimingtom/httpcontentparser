@@ -95,8 +95,8 @@ BOOL CGuiFolder::Create(DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, UINT 
 void CGuiFolder::OnLButtonDown(UINT nFlags, CPoint point) 
 {
 	// TODO: Add your message handler code here and/or call default
-	int m_iNumBotton=m_ArrayFolder.GetSize();
-	for( int iCont=0; iCont< m_iNumBotton;iCont++)
+	INT_PTR m_iNumBotton=m_ArrayFolder.GetSize();
+	for( INT_PTR iCont=0; iCont< m_iNumBotton;iCont++)
 	{
 		CFolderBar* cit=(CFolderBar*)m_ArrayFolder[iCont];
 		if (cit->m_rect.PtInRect(point))
@@ -117,8 +117,8 @@ void CGuiFolder::PreSubclassWindow()
 void CGuiFolder::OnLButtonUp(UINT nFlags, CPoint point) 
 {
 	// TODO: Add your message handler code here and/or call default
-	int m_iNumBotton=m_ArrayFolder.GetSize();
-	for( int iCont=0; iCont< m_iNumBotton;iCont++)
+	INT_PTR m_iNumBotton=m_ArrayFolder.GetSize();
+	for( INT_PTR iCont=0; iCont< m_iNumBotton;iCont++)
 	{
 		CFolderBar* cit=(CFolderBar*)m_ArrayFolder[iCont];
 		if (cit->m_rect.PtInRect(point))
@@ -140,7 +140,7 @@ void CGuiFolder::TypeLook(TypeFolder tol)
 
 void CGuiFolder::EfectoScroll()
 {
-	int m_iNumBotton=m_ArrayFolder.GetSize();
+	INT_PTR m_iNumBotton=m_ArrayFolder.GetSize();
 	int m_iSentidoScroll=0;	//1=hacia abajo, 2=hacia arriba
 	if (m_iNumBotton > 0) //si existe un solo folder no haga nada
 	{
@@ -231,7 +231,7 @@ void CGuiFolder::EfectoScroll()
 
 void CGuiFolder::OnMouseMove(UINT nFlags, CPoint point) 
 {
-	int m_iNumBotton= m_ArrayFolder.GetSize();
+	INT_PTR m_iNumBotton= m_ArrayFolder.GetSize();
 	static int m_AntTecla=-1;
 	for( int iCont=0; iCont< m_iNumBotton;iCont++)
 	{
@@ -390,11 +390,11 @@ void CGuiFolder::OnPaint()
 {
 	CPaintDC dc(this); // device context for painting
 	CRect mrect;
-	int m_iNumFolder=m_ArrayFolder.GetSize();
+	INT_PTR m_iNumFolder=m_ArrayFolder.GetSize();
 	//mrect.InflateRect(1,1);
 	//GetClientRect(mrect);
 	//dc.Draw3dRect(mrect, ::GetSysColor(COLOR_BTNSHADOW),::GetSysColor(COLOR_BTNHIGHLIGHT));
-	for ( int iCont=0; iCont< m_iNumFolder; iCont++)
+	for ( INT_PTR iCont=0; iCont< m_iNumFolder; iCont++)
 	{
 		m_iWhatFolderIsDrawNow=iCont;
 		if (m_iSelected== iCont)
@@ -468,11 +468,11 @@ void CGuiFolder::RecalLayout()
 	CRect m_rectFolder;
 	m_iPosDown=0; //a partir de donde se ubica el anterior folder
 	m_iposUp=0;   //a partir de donde se ubica el siguiente folder
-	int m_iNumFolder=m_ArrayFolder.GetSize();
+	INT_PTR m_iNumFolder=m_ArrayFolder.GetSize();
 	GetClientRect(&m_rect);
 	m_rectFolder=m_rect;
 	m_iPosDown=m_rect.bottom;
-	for ( int iCont=0; iCont< m_iNumFolder; iCont++)
+	for ( INT_PTR iCont=0; iCont< m_iNumFolder; iCont++)
 	{
 		CFolderBar* cfd=(CFolderBar*) m_ArrayFolder[iCont];
 		if (iCont==0) //inevitablemente arriba

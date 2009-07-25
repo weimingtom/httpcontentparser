@@ -36,8 +36,8 @@
 #include <setting\programcontrol.h>
 #include <setting\Screenshot.h>
 #include <setting\autoclean.h>
-#include <timeoutswitch.h>
-#include <miscSetting.h>
+#include <setting\timeoutswitch.h>
+#include <setting\miscSetting.h>
 #include <setting\hotkeysetting.h>
 #include <xmldefined.h>
 #include <string>

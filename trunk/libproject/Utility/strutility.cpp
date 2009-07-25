@@ -145,6 +145,7 @@ int charToValue(char c) {
 		return c - '0';
 	} else {
 		assert (false);
+		return '0';
 	}
 }
 };

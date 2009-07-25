@@ -11,7 +11,7 @@
 #include <comdef.h>
 #include <com\comutility.h>
 #include <typeconvert.h>
-#include <timeoutswitch.h>
+#include <setting\timeoutswitch.h>
 #include <logger\logger.h>
 
 // CDlgOptions ¶Ô»°¿ò

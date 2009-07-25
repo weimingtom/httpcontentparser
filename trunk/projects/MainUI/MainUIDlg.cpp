@@ -404,7 +404,7 @@ void CMainUIDlg::OnTvnSelchangedTreeNavig(NMHDR *pNMHDR, LRESULT *pResult)
 	LPNMTREEVIEW pNMTreeView = reinterpret_cast<LPNMTREEVIEW>(pNMHDR);
 
 	HTREEITEM hItem = m_treeNavigation.GetSelectedItem();
-	DWORD itemData = m_treeNavigation.GetItemData(hItem);
+	DWORD_PTR itemData = m_treeNavigation.GetItemData(hItem);
 
 	try {
 		// 首先调用
@@ -721,7 +721,7 @@ bool CMainUIDlg::ShowOverTimeMsgBox() {
 	LONG status = Services::getAppStatus();
 	if (SNOWMAN_STATUS_OVERTIME == status) {
 		CPopTipTrayendDlg dlg;
-		UINT result = dlg.DoModal();
+		INT_PTR result = dlg.DoModal();
 		if (ID_BTN_BESN == result) {
 			m_dlgRight.OnChangeDlgPage(IDS_TREE_ABOUT);
 			return false;

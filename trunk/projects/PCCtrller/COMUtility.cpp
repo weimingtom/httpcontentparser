@@ -9,7 +9,7 @@
 #include <sstream>
 #include <comdef.h>
 #include <winlockdll.h>
-#include <EyecareSetting.h>
+#include <setting\EyecareSetting.h>
 
 BOOL ValidatePassword(LPCTSTR password) {
 	try {
