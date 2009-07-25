@@ -4,7 +4,7 @@
 #include <softwareStatus.h>
 #include <logger/logger.h>
 #include <DebugOutput.h>
-#include <apputility.h>
+#include <apputility\apputility.h>
 #include <definedmsg.h>
 #include "resource.h"
 

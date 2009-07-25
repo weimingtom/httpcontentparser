@@ -4,7 +4,7 @@
 
 #include ".\basedlg.h"
 #include "ContentList.h"
-#include <DNSSetting.h>
+#include <setting\DNSSetting.h>
 #include  ".\Guilib1.5\GuiListEdit.h"
 #include <Enumerate.h>
 

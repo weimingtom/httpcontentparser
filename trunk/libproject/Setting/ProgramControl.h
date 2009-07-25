@@ -1,8 +1,8 @@
 #ifndef _SETTING_PROGRAMCONTROL_H__
 #define _SETTING_PROGRAMCONTROL_H__
 
-#include <settingitem.h>
-#include <configitem.h>
+#include <setting\settingitem.h>
+#include <setting\configitem.h>
 #include <utility\strutility.h>
 #include <map>
 

@@ -1,10 +1,10 @@
 #ifndef _SETTING_SCREEN_SAVER_H__
 #define _SETTING_SCREEN_SAVER_H__
 
-#include <settingitem.h>
-#include <configitem.h>
+#include <setting\settingitem.h>
+#include <setting\configitem.h>
 #include <xmldefined.h>
-#include <autoclean.h>
+#include <setting\autoclean.h>
 #include "calculagraph.h" 
 
 class Screenshot : public SettingItem , public ConfigItem {

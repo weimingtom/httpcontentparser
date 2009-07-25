@@ -3,7 +3,7 @@
 #pragma once
 #include "resource.h"       // Ö÷·ûºÅ
 #include "FilterSetting.h"
-#include <eyecaresetting.h>
+#include <setting\eyecaresetting.h>
 
 // CEyecare
 

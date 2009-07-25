@@ -3,8 +3,8 @@
 
 #include <string>
 #include <comdef.h>
-#include <settingitem.h>
-#include <configitem.h>
+#include <setting\settingitem.h>
+#include <setting\configitem.h>
 #include <xmldefined.h>
 #include "calculagraph.h"
 

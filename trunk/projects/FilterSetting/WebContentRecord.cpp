@@ -6,7 +6,7 @@
 #include ".\globalvariable.h"
 #include <string>
 #include <comutil.h>
-#include <apputility.h>
+#include <apputility\apputility.h>
 
 // CWebContentRecord
 

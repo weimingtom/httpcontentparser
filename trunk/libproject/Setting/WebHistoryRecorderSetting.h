@@ -1,10 +1,11 @@
 #ifndef _SETTING_WEBHISTORY_RECORDER_SETTING_H__
 #define _SETTING_WEBHISTORY_RECORDER_SETTING_H__
 
-#include <settingitem.h>
-#include <configitem.h>
+#include <setting\settingitem.h>
+#include <setting\configitem.h>
+#include <setting\autoclean.h>
 #include <xmldefined.h>
-#include <autoclean.h>
+
 
 class WebHistoryRecorderSetting  : public SettingItem , public ConfigItem {
 public:

@@ -26,19 +26,19 @@
 
 
 
-#include <DNSSetting.h>
-#include <SearchRule.h>
-#include <onlinehoursetting.h>
-#include <eyecaresetting.h>
-#include <authorize.h>
-#include <webhistoryrecordersetting.h>
-#include <contentchecksetting.h>
-#include <programcontrol.h>
-#include <Screenshot.h>
-#include <autoclean.h>
+#include <setting\DNSSetting.h>
+#include <setting\SearchRule.h>
+#include <setting\onlinehoursetting.h>
+#include <setting\eyecaresetting.h>
+#include <setting\authorize.h>
+#include <setting\webhistoryrecordersetting.h>
+#include <setting\contentchecksetting.h>
+#include <setting\programcontrol.h>
+#include <setting\Screenshot.h>
+#include <setting\autoclean.h>
 #include <timeoutswitch.h>
 #include <miscSetting.h>
-#include <hotkeysetting.h>
+#include <setting\hotkeysetting.h>
 #include <xmldefined.h>
 #include <string>
 #include <set>

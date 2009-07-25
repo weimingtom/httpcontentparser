@@ -1,8 +1,8 @@
 #ifndef _SETTING_TIMEOUTSWITCH_H__
 #define _SETTING_TIMEOUTSWITCH_H__
 
-#include <settingitem.h>
-#include <configitem.h>
+#include <setting\settingitem.h>
+#include <setting\configitem.h>
 #include <xmldefined.h>
 #include "calculagraph.h" 
 

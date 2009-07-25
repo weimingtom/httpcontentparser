@@ -4,8 +4,8 @@
 #define _SETTING_CONTENTCHECKSETTING_H__
 
 #include <webcontenttype.h>
-#include <settingitem.h>
-#include <configitem.h>
+#include <setting\settingitem.h>
+#include <setting\configitem.h>
 #include <xmldefined.h>
 
 // class ImageCheckSetting

@@ -1,8 +1,8 @@
 #ifndef _SETTING_MISCSETTING_H__
 #define _SETTING_MISCSETTING_H__
 
-#include <settingitem.h>
-#include <configitem.h>
+#include <setting\settingitem.h>
+#include <setting\configitem.h>
 
 // 用于保存应用程序的一些设置
 class MiscSetting : public ConfigItem, public SettingItem {
