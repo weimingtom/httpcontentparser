@@ -26,6 +26,8 @@
 #define FILTERSETTING_LOGGER_FILE		TEXT(".\\log\\service.log")
 #define FILTERSETTING_DEBUG_FILE		TEXT(".\\log\\dservice.log")
 
+#define _COM_MAIN_(FMT) _DEBUG_STREAM_TRC_("[Family007][Service][COMMain]"<<FMT )
+
 #define COM_SERVICE_MUTEX		TEXT("D2C30A28-477B-4651-B392-81246240A169")
 
 void initlogger() ;
@@ -79,7 +81,7 @@ extern "C" int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/
 	// 如果是COM方式运行，则应该执行下面一些列操作
 
 	if (checkEmbedding(lpCmdLine)) {
-		_DEBUG_STREAM_TRC_("[Family007 Service] Cmd line "<<lpCmdLine);
+		_COM_MAIN_("parameters : "<<lpCmdLine);
 		// 只应该运行一次
 		HANDLE hMutex = CreateMutex(NULL, FALSE, COM_SERVICE_MUTEX);
 		if (GetLastError() == ERROR_ALREADY_EXISTS) {
@@ -118,7 +120,7 @@ extern "C" int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/
 		// 开启检测应用程序的线程
 		appcontroller.begin();
 	} else {
-		_DEBUG_STREAM_TRC_("[Family007 Service] Cmd line without "<<lpCmdLine);
+		_COM_MAIN_("Cmd line without "<<lpCmdLine);
 	}
 
 	 return _AtlModule.WinMain(nShowCmd);
