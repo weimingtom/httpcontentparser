@@ -143,7 +143,7 @@ bool Services::registered() {
 		return false;
 	}
 }
-int Services::trialLeftDays() {
+INT_PTR Services::trialLeftDays() {
 	try {
 		IAppRegInfo *pAppReg  = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_AppRegInfo, NULL, CLSCTX_LOCAL_SERVER, IID_IAppRegInfo, (LPVOID*)&pAppReg);
