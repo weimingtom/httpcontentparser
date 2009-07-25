@@ -23,6 +23,8 @@ typedef boost::logging::logger_format_write< > log_type;
 
 extern TCHAR g_caller_name[MAX_PATH];
 
+#ifndef __ENABLE_TRACE_RECORD__
+
 BOOST_DECLARE_LOG_FILTER(g_log_level, boost::logging::level::holder ) 
 BOOST_DECLARE_LOG(g_log_app, log_type)
 BOOST_DECLARE_LOG(g_log_dbg, log_type) 
@@ -39,6 +41,13 @@ BOOST_DECLARE_LOG(g_log_dbg, log_type)
 	<<"[PacketGrasper][INFOM]{"<<__FUNCTION__<<"} " <<MSG<<" { called by app " << g_caller_name<< "}";
 #define LFAT_(MSG)	BOOST_LOG_USE_LOG_IF_LEVEL(g_log_app(), g_log_level(), fatal )	\
 	<<"[PacketGrasper][FATAL]{"<<__FUNCTION__<<"} " << MSG<<" { called by app " << g_caller_name<< "}";
+#else
+#define LTRC_(MSG)
+#define LDBG_(MSG)
+#define LERR_(MSG)
+#define LFAT_(MSG)	
+#define LFAT_(MSG)
+#endif
 
 
 void init_debug_logger(const char * filename, bool enable_cout = false, bool disable_cache=false);
