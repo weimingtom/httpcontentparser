@@ -26,7 +26,7 @@ CDlgAbout::~CDlgAbout()
 }
 
 
-int CDlgAbout::OnApply() {
+INT_PTR CDlgAbout::OnApply() {
 	return 0;
 }
 

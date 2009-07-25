@@ -30,7 +30,7 @@ protected:
 	CImageList	m_Img;
 	
 public:
-	void  SetImageList(UINT nBitmapID, int cx, int nGrow, COLORREF crMask);
+	void  SetImageList(UINT nBitmapID, INT_PTR cx, INT_PTR nGrow, COLORREF crMask);
 	virtual void DrawFolder(CFolderBar* cfb,Style m_Style);
 public:
 	CGuiVisioFolder(void);

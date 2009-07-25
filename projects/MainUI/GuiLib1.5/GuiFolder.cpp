@@ -141,7 +141,7 @@ void CGuiFolder::TypeLook(TypeFolder tol)
 void CGuiFolder::EfectoScroll()
 {
 	INT_PTR m_iNumBotton=m_ArrayFolder.GetSize();
-	int m_iSentidoScroll=0;	//1=hacia abajo, 2=hacia arriba
+	INT_PTR m_iSentidoScroll=0;	//1=hacia abajo, 2=hacia arriba
 	if (m_iNumBotton > 0) //si existe un solo folder no haga nada
 	{
 		// si es el ultimo folder y no esta abajo no haga nada
@@ -157,7 +157,7 @@ void CGuiFolder::EfectoScroll()
 				return;
 			m_iSentidoScroll =1;
 				//de esta posición todos los folders hacia abajo 
-			for (int iCont=m_iSelected+1;iCont < m_iNumBotton; iCont++)
+			for (INT_PTR iCont=m_iSelected+1;iCont < m_iNumBotton; iCont++)
 				((CFolderBar*)m_ArrayFolder[iCont])->m_posUp =FALSE;
 				
 		}
@@ -165,7 +165,7 @@ void CGuiFolder::EfectoScroll()
 		{
 				m_iSentidoScroll =2;
 				//de esta posición todos los folders van arriba
-				for (int iCont=m_iSelected;iCont >0; iCont--)
+				for (INT_PTR iCont=m_iSelected;iCont >0; iCont--)
 					((CFolderBar*)m_ArrayFolder[iCont])->m_posUp =TRUE;
 		}
 		
@@ -232,8 +232,8 @@ void CGuiFolder::EfectoScroll()
 void CGuiFolder::OnMouseMove(UINT nFlags, CPoint point) 
 {
 	INT_PTR m_iNumBotton= m_ArrayFolder.GetSize();
-	static int m_AntTecla=-1;
-	for( int iCont=0; iCont< m_iNumBotton;iCont++)
+	static INT_PTR m_AntTecla=-1;
+	for( INT_PTR iCont=0; iCont< m_iNumBotton;iCont++)
 	{
 		CFolderBar* cit=(CFolderBar*)m_ArrayFolder[iCont];
 		m_iWhatFolderIsDrawNow=iCont;
@@ -305,7 +305,7 @@ void CGuiFolder::DrawFolder(CFolderBar* cfb,Style m_Style)
 		rcWin.bottom-=4;
 		CRect rcBlack;
 
-		for (int i=0; i < rcWin.Height()-1; i+=4)
+		for (INT_PTR i=0; i < rcWin.Height()-1; i+=4)
 		{
 			CRect rcWindow;
 			CBrush cb;
@@ -350,10 +350,10 @@ void CGuiFolder::DrawFolder(CFolderBar* cfb,Style m_Style)
 			pDC.Draw3dRect(rc, GuiDrawLayer::GetRGBColorShadow(m_StyleDisplay),GuiDrawLayer::GetRGBColorBTNHigh());
 	}
 
-	int OldMode=pDC.SetBkMode(TRANSPARENT);
+	INT_PTR OldMode=pDC.SetBkMode(TRANSPARENT);
 	cfont = pDC.SelectObject(CFont::FromHandle((HFONT)GetStockObject(DEFAULT_GUI_FONT)));
 	CString m_cadBreak=cfb->m_lpMsg;
-	int cont=m_cadBreak.GetLength();
+	INT_PTR cont=m_cadBreak.GetLength();
 	CSize coor=pDC.GetTextExtent(m_cadBreak,m_cadBreak.GetLength());
 	if ( coor.cx > rc.Width()-20)
 	{
@@ -405,7 +405,7 @@ void CGuiFolder::OnPaint()
 	}		
 }
 
-void CGuiFolder::OnSize(UINT nType, int cx, int cy) 
+void CGuiFolder::OnSize(UINT nType, INT_PTR cx, INT_PTR cy) 
 {
 	CWnd::OnSize(nType, cx, cy);
 	if (m_NumFolders > 0)
@@ -445,9 +445,9 @@ void CGuiFolder::OnTimer(UINT nIDEvent)
 	CWnd::OnTimer(nIDEvent);
 }
 
-int CGuiFolder::PointInFolder(CPoint pt)
+INT_PTR CGuiFolder::PointInFolder(CPoint pt)
 {
-	for (int i=0; i <	m_ArrayFolder.GetSize(); i++)
+	for (INT_PTR i=0; i <	m_ArrayFolder.GetSize(); i++)
 	{
 		if ( ((CFolderBar*) m_ArrayFolder[i])->m_rect.PtInRect(pt) )
 			return i;
@@ -493,7 +493,7 @@ void CGuiFolder::RecalLayout()
 			else
 			{
 				
-				for(int iRev=m_iNumFolder-1; iRev>=iCont; iRev--)
+				for(INT_PTR iRev=m_iNumFolder-1; iRev>=iCont; iRev--)
 				{
 					CFolderBar* cfd=(CFolderBar*) m_ArrayFolder[iRev];
 					m_rectFolder.bottom=m_iPosDown;
@@ -508,7 +508,7 @@ void CGuiFolder::RecalLayout()
 	}
 	CFolderBar* cfd=(CFolderBar*) m_ArrayFolder[m_iSelected];
 	CWnd*	m_cwnd=cfd->m_Cwnd;
-	int nAddPos;
+	INT_PTR nAddPos;
 	if (m_iSelected == 0)
 		nAddPos=1;
 	else
@@ -527,7 +527,7 @@ void CGuiFolder::AddFolder(CWnd* pParent,LPCSTR lpMsg, UINT uIMg)
 	  m_numFolderUp=1;
 	if (m_NumFolders > 0)
 	{
-		for( int iCont=0; iCont< m_NumFolders;iCont++)
+		for( INT_PTR iCont=0; iCont< m_NumFolders;iCont++)
 		{
 			CFolderBar* cit=(CFolderBar*)m_ArrayFolder[iCont];
 			cit->m_Cwnd->ShowWindow(SW_HIDE);
@@ -551,7 +551,7 @@ BOOL CGuiFolder::OnEraseBkgnd(CDC* pDC)
 		pDC->FillRect(m_rect,&cbr);
 	else
 	{
-		for (int i=0;i<2; i++)
+		for (INT_PTR i=0;i<2; i++)
 		{
 			pDC->Draw3dRect(m_rect,GuiDrawLayer::GetRGBColorFace(),GuiDrawLayer::GetRGBColorFace());
 			m_rect.DeflateRect(1,1);
@@ -560,7 +560,7 @@ BOOL CGuiFolder::OnEraseBkgnd(CDC* pDC)
 	return TRUE;
 }
 
-void CGuiFolder::DeleteFolder(int m_iNumFolder, BOOL bUpdate)
+void CGuiFolder::DeleteFolder(INT_PTR m_iNumFolder, BOOL bUpdate)
 {
 	if (m_iNumFolder < m_NumFolders)
 	{
@@ -583,7 +583,7 @@ void CGuiFolder::DeleteFolder(int m_iNumFolder, BOOL bUpdate)
 			m_iSelected = m_iNumFolder - 1;
 		if (bUpdate) 
 		{
-			int OldSel = m_iSelected;
+			INT_PTR OldSel = m_iSelected;
 			RecalLayout();
 			SelectFolder(0);
 			SelectFolder(m_NumFolders - 1);
@@ -593,7 +593,7 @@ void CGuiFolder::DeleteFolder(int m_iNumFolder, BOOL bUpdate)
 }
 
 
-void CGuiFolder::SelectFolder(int m_iNumFolder)
+void CGuiFolder::SelectFolder(INT_PTR m_iNumFolder)
 {
 	CFolderBar* cf = (CFolderBar*) m_ArrayFolder[m_iNumFolder];
 	if (cf)
@@ -618,7 +618,7 @@ void CGuiFolder::RemoveAllFolder()
 	//thanks to  Ernesto Garcia	
 void CGuiFolder::OnDestroy()
 {
-	for( int i=0; i<m_NumFolders; i++ )
+	for( INT_PTR i=0; i<m_NumFolders; i++ )
     {
     CFolderBar *pArr = (CFolderBar*)m_ArrayFolder.GetAt(i);
     if( pArr )

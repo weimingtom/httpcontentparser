@@ -69,7 +69,7 @@ END_MESSAGE_MAP()
 void CGuiListEdit::Delete()
 {
 	//solo nos interesa el seleccionado actualmente
-	const int nItem=m_list->GetNextItem(-1,LVNI_SELECTED);
+	const INT_PTR nItem=m_list->GetNextItem(-1,LVNI_SELECTED);
 	OnDelete(GetText(nItem)); // 当被删除时调用，子类可重载
 	m_list->DeleteItem(nItem);
 }
@@ -79,7 +79,7 @@ void CGuiListEdit::Insert(CString &itemText)
 {
 	CRect rc;
 	m_list->SetFocus();
-	int nItem=m_list->GetItemCount();
+	INT_PTR nItem=m_list->GetItemCount();
 	nItem=m_list->InsertItem(nItem,_T(""));
 	EditItem(nItem, CString(""));
 }
@@ -87,14 +87,14 @@ void CGuiListEdit::Insert(CString &itemText)
 void CGuiListEdit::Edit() {
 	CRect rc;
 	m_list->SetFocus();
-	const int nItem=m_list->GetNextItem(-1,LVNI_SELECTED);
+	const INT_PTR nItem=m_list->GetNextItem(-1,LVNI_SELECTED);
 	CString itemText = GetText(nItem);
 	OnBeginEdit(itemText);
 	EditItem(nItem, itemText);
 }
 
 // 在对应的Items上显示Edit Control, 并显示相应文字以供修改
-void CGuiListEdit::EditItem(const int nItem, const CString &itemText) {
+void CGuiListEdit::EditItem(const INT_PTR nItem, const CString &itemText) {
 	CRect rc;
 	m_list->SetItemData (nItem, 0);
     m_list->GetItemRect(0,&rc,LVIS_SELECTED | LVIS_FOCUSED);
@@ -114,7 +114,7 @@ void CGuiListEdit::OnBeginlabeleditList(NMHDR *pNMHDR, LRESULT *pResult)
 	*pResult = 0;
 }
 
-CString CGuiListEdit::GetText(int nItem)
+CString CGuiListEdit::GetText(INT_PTR nItem)
 {
 	if (nItem < 0) return _T("");
 	if (nItem > m_list->GetItemCount()) return _T("");
@@ -122,7 +122,7 @@ CString CGuiListEdit::GetText(int nItem)
 	return m_szA;
 }
 
-int CGuiListEdit::GetNumItem()
+INT_PTR CGuiListEdit::GetNumItem()
 {
 	return m_list->GetItemCount();
 }
@@ -134,7 +134,7 @@ void CGuiListEdit::OnInsert() {
 bool CGuiListEdit::AddItem(CString szCad) {
 	// 首先判断添加啊的内容是否合法
 	if (OnAdd(szCad)) {
-		int nItem=m_list->GetItemCount();
+		INT_PTR nItem=m_list->GetItemCount();
 		nItem=m_list->InsertItem(nItem,szCad);
 		m_list->SetItemData (nItem, 0);
 		return true;
@@ -145,7 +145,7 @@ bool CGuiListEdit::AddItem(CString szCad) {
 }
 
 void CGuiListEdit::OnClickList(NMHDR* pNMHDR, LRESULT* pResult) {
-	int nActual=m_list->GetNextItem(-1,LVNI_SELECTED);
+	INT_PTR nActual=m_list->GetNextItem(-1,LVNI_SELECTED);
 	if (nActual == -1) {
 		Insert();
 	} else {
@@ -175,7 +175,7 @@ void CGuiListEdit::OnEndlabeleditList(NMHDR* pNMHDR, LRESULT* pResult)
 
 void CGuiListEdit::Up()
 {
-	int nActual=m_list->GetNextItem(-1,LVNI_SELECTED);
+	INT_PTR nActual=m_list->GetNextItem(-1,LVNI_SELECTED);
 	if (nActual == -1) return;
 	if (nActual > 0)
 	{
@@ -191,7 +191,7 @@ void CGuiListEdit::Up()
 
 void CGuiListEdit::Down()
 {
-	int nActual=m_list->GetNextItem(-1,LVNI_SELECTED);
+	INT_PTR nActual=m_list->GetNextItem(-1,LVNI_SELECTED);
 	if (nActual == -1) return;
 
 	if (nActual+1 < m_list->GetItemCount())
@@ -277,7 +277,7 @@ void CGuiListEdit::OnPaint()
 	
 }
 
-int CGuiListEdit::OnCreate(LPCREATESTRUCT lpCreateStruct)
+INT_PTR CGuiListEdit::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if (CStatic::OnCreate(lpCreateStruct) == -1)
 		return -1;
@@ -285,7 +285,7 @@ int CGuiListEdit::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	return 0;
 }
 
-void CGuiListEdit::OnSize(UINT nType, int cx, int cy)
+void CGuiListEdit::OnSize(UINT nType, INT_PTR cx, INT_PTR cy)
 {
 	CStatic::OnSize(nType, cx, cy);
 	CWnd* pWnd = GetWindow(GW_CHILD);

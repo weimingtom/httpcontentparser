@@ -21,7 +21,7 @@ public:
 // 对话框数据
 	enum { IDD = IDD_DLG_OPTION };
 
-	virtual int OnApply();
+	virtual INT_PTR OnApply();
 	virtual void OnShow();
 protected:
 	virtual void restoreSetting();
@@ -51,7 +51,7 @@ protected:
 	BOOL m_bAskmeOnClose;
 protected:
 	void SetAutoRun();
-	int setHotKey();
+	INT_PTR setHotKey();
 
-	int setMisc();
+	INT_PTR setMisc();
 };

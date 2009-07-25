@@ -20,7 +20,7 @@ public:
 // 对话框数据
 	enum { IDD = IDD_DLG_SEARCH_RULE };
 
-	virtual int OnApply();
+	virtual INT_PTR OnApply();
 	virtual void OnShow();
 
 	virtual BOOL OnInitDialog();

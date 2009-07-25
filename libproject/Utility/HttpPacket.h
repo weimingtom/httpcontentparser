@@ -18,21 +18,21 @@ public:
 	HTTP_RESPONSE_HEADER();
 	~HTTP_RESPONSE_HEADER();
 
-	int parseHeader(const char *line, const int len);
-	bool isHttpHeader(const char *line, const int len);
+	INT_PTR parseHeader(const char *line, const INT_PTR len);
+	bool isHttpHeader(const char *line, const INT_PTR len);
 public:
-	static const int	TRANENCODING_CHUNKED = 1;
-	static const int    CONTENCODING_GZIP = 1;
-	static const int    NO_DESIGNATION = -1;
-	static const int	CONNECT_CLOSE  = 1;
-	static const int	CONNECT_KEEP_ALIVE = 2;
+	static const INT_PTR	TRANENCODING_CHUNKED = 1;
+	static const INT_PTR    CONTENCODING_GZIP = 1;
+	static const INT_PTR    NO_DESIGNATION = -1;
+	static const INT_PTR	CONNECT_CLOSE  = 1;
+	static const INT_PTR	CONNECT_KEEP_ALIVE = 2;
 
-	int getContentLength() const { return content_length;}
-	unsigned getContentType() const { return content_type;}
+	INT_PTR getContentLength() const { return content_length;}
+	INT_PTR getContentType() const { return content_type;}
 	bool isChunk() const { return transfer_encoding == TRANENCODING_CHUNKED;}
-	int getConnectionState() const { return connection_state;}
-	int getResponseCode() const { return response_code;}
-	int getContentEncoding() const { return content_encoding;}
+	INT_PTR getConnectionState() const { return connection_state;}
+	INT_PTR getResponseCode() const { return response_code;}
+	INT_PTR getContentEncoding() const { return content_encoding;}
 
 	// 是否存在内容
 	bool existContent() const ;
@@ -41,12 +41,12 @@ public:
 	const char * getServer() const { return server;}
 	const char * getHeaderLine() const { return head_line;}
 private:
-	int transfer_encoding;
+	INT_PTR transfer_encoding;
 	unsigned content_type;
-	int content_encoding;		// 内容的编码方式如gzip
-	int content_length;
-	int connection_state;
-	int response_code;	// 返回代码，如404不可达
+	INT_PTR content_encoding;		// 内容的编码方式如gzip
+	INT_PTR content_length;
+	INT_PTR connection_state;
+	INT_PTR response_code;	// 返回代码，如404不可达
 
 	char server[128];
 	char date[128];
@@ -58,10 +58,10 @@ private:
 	void parseLine(const char *line);
 
 public:
-	static const int HTTP_HEADER_MAX_LENGTH = 64*1024;
+	static const INT_PTR HTTP_HEADER_MAX_LENGTH = 64*1024;
 	// 定义每条信息的最大长度
-	static const int HTTP_HEADER_ITEMNAME_LENGTH = 256;
-	static const int HTTP_HEADER_ITEMVALUE_LENGTH = 256;
+	static const INT_PTR HTTP_HEADER_ITEMNAME_LENGTH = 256;
+	static const INT_PTR HTTP_HEADER_ITEMVALUE_LENGTH = 256;
 
 	static const char * HEADER_FIRST ;
 	static const char * HEADER_DATE ;
@@ -77,7 +77,7 @@ public:
 	// 头部
 	static const char * HTTP_PROTOCOL_HEAD;
 	static const char * HTTP_HEADER_TAIL;			// \r\n\r\n
-	static const int  HTTP_HEADER_TAIL_LENGTH = 4;	// \r\n\r\n
+	static const INT_PTR  HTTP_HEADER_TAIL_LENGTH = 4;	// \r\n\r\n
 
 	// 包内容
 	static const char * CONTYPE_JPG_NAME;
@@ -110,18 +110,18 @@ public:
 
 	// 当前包是一个完整的HTTP包吗？？
 	bool isComplete() const;
-	unsigned getDataSize() const;		// 获取数据大小
-	unsigned getHeaderSize() const;		// 获取头部大小
+	INT_PTR getDataSize() const;		// 获取数据大小
+	INT_PTR getHeaderSize() const;		// 获取头部大小
 
-	int addBuffer(const char *buf, const int len, int * written_length);
-	int read(char *buf, const int bufsize, int &bytedread);
+	INT_PTR addBuffer(const char *buf, const INT_PTR len, INT_PTR * written_length);
+	INT_PTR read(char *buf, const INT_PTR bufsize, INT_PTR &bytedread);
 	
-	unsigned getContentType() const { return http_header_.getContentType();}
+	INT_PTR getContentType() const { return http_header_.getContentType();}
 
 	// 将..保存到文件当中
-	int  achieve_data(const char * filename);
-	// int  achieve_header(const char * filename);
-	int  achieve(const char * filename);
+	INT_PTR  achieve_data(const char * filename);
+	// INT_PTR  achieve_header(const char * filename);
+	INT_PTR  achieve(const char * filename);
 
 	// 此函数会返回一个原始的包，当然如果已经不存在了他会返回NULL
 	ProtocolPacket<HTTP_PACKET_SIZE> * getRawPacket();
@@ -130,7 +130,7 @@ public:
 	const HTTP_RESPONSE_HEADER * getHeader() { return &http_header_;}
 
 	// 用于唯一标识一个
-	int  getCode() const { return code_; }
+	INT_PTR  getCode() const { return code_; }
 
 	friend bool operator == (const HTTPPacket &p1, const HTTPPacket &p2) {
 		return p1.getCode() == p2.getCode();
@@ -142,11 +142,11 @@ public:
 	void releaseResource();
 	ProtocolPacket<HTTP_PACKET_SIZE> * getData() { return http_data_; }
 private:
-	bool testHttpHeaderPacket(const char *buf, int len);
+	bool testHttpHeaderPacket(const char *buf, INT_PTR len);
 	// 本函数从给定数据中抽取一个数据单元，并将其加入到
 	// 存储当中，而后返回存储单元的大小
 	// 如果返回0，代表有错误发生
-	int  extractData(const char *buf, const int len);
+	INT_PTR  extractData(const char *buf, const INT_PTR len);
 	
 
 	ProtocolPacket<HTTP_PACKET_SIZE> * http_data_;
@@ -155,11 +155,11 @@ private:
 	
 	// 保存原始的包，按照接收到的顺序
 	ProtocolPacket<HTTP_PACKET_SIZE> *  raw_packets_;
-	void addRawPacket(const char *buf, const int len);
+	void addRawPacket(const char *buf, const INT_PTR len);
 	void clearRawDeque();
 
 	// 分析协议头
-	int parseHeader(const char *buffer, const unsigned len);
+	INT_PTR parseHeader(const char *buffer, const unsigned len);
 
 	// 是否存在头部
 	bool existHeader() const;
@@ -170,15 +170,15 @@ private:
 	HTTP_RESPONSE_HEADER http_header_;
 	HttpDataExtractor * dataextractor_;
 
-	int header_size_;
-	int data_size_;
+	INT_PTR header_size_;
+	INT_PTR data_size_;
 
 	bool header_read_;
 
 	// 用于唯一标识一个HTTPPacket
-	int code_;
-	static int generateCode(); // 生成一个用于唯一标识这个符号的
-	static int cur_code_;
+	INT_PTR code_;
+	static INT_PTR generateCode(); // 生成一个用于唯一标识这个符号的
+	static INT_PTR cur_code_;
 };
 
 #endif  // _UTILITY_HTTP_PACKET_H__

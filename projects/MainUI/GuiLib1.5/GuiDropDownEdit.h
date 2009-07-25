@@ -51,7 +51,7 @@ public:
 	CString GetText();
 	void SetText(CString szCaption);
 	void OnDropButton();
-	void SetLimitText(int numText);
+	void SetLimitText(INT_PTR numText);
 	
 protected:
 	DECLARE_MESSAGE_MAP()
@@ -60,5 +60,5 @@ protected:
 	
 public:
 	afx_msg void OnNcPaint();
-	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+	afx_msg INT_PTR OnCreate(LPCREATESTRUCT lpCreateStruct);
 };

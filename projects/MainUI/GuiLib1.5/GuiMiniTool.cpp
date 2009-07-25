@@ -71,7 +71,7 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CGuiMiniTool message handlers
 
-int CGuiMiniTool::OnCreate(LPCREATESTRUCT lpCreateStruct) 
+INT_PTR CGuiMiniTool::OnCreate(LPCREATESTRUCT lpCreateStruct) 
 {
 	if (CStatic::OnCreate(lpCreateStruct) == -1)
 		return -1;
@@ -96,7 +96,7 @@ void  CGuiMiniTool::PreSubclassWindow()
 }
 
 //********************************************************************************
-void  CGuiMiniTool::AddButton(int nIndex,UINT Cmd,CMenu* pMenu,CString m_szCaption,CString m_ToolTip)
+void  CGuiMiniTool::AddButton(INT_PTR nIndex,UINT Cmd,CMenu* pMenu,CString m_szCaption,CString m_ToolTip)
 {
 	
 	m_arrButtons.SetAtGrow(nNumItems, new CArrButton
@@ -108,12 +108,12 @@ void  CGuiMiniTool::AddButton(int nIndex,UINT Cmd,CMenu* pMenu,CString m_szCapti
 }
 
 //**************************************************************************
-HICON CGuiMiniTool::GetImagIcon(int nNum)
+HICON CGuiMiniTool::GetImagIcon(INT_PTR nNum)
 {
 	return m_imgList.ExtractIcon(nNum);
 }
 //****************************************************************************
-BOOL  CGuiMiniTool::CreateCombo(CGuiComboBoxExt* pControl,UINT nID,int iSize,
+BOOL  CGuiMiniTool::CreateCombo(CGuiComboBoxExt* pControl,UINT nID,INT_PTR iSize,
 				DWORD dwStyle)
 {
 	ASSERT(pControl);
@@ -129,7 +129,7 @@ BOOL  CGuiMiniTool::CreateCombo(CGuiComboBoxExt* pControl,UINT nID,int iSize,
 }
 
 //********************************************************************************
-void  CGuiMiniTool::SetImageList(UINT nBitmapID, int cx, int nGrow, COLORREF crMask)
+void  CGuiMiniTool::SetImageList(UINT nBitmapID, INT_PTR cx, INT_PTR nGrow, COLORREF crMask)
 {
 	CBitmap cbmp;
 	BITMAP bmp;
@@ -148,7 +148,7 @@ void CGuiMiniTool::AutoSize(BOOL mbAutosize)
 }	
 
 //********************************************************************************
-void  CGuiMiniTool::DelButton(int nIndex)
+void  CGuiMiniTool::DelButton(INT_PTR nIndex)
 {
 	nNumItems--;
 	m_arrButtons.RemoveAt(nIndex,nNumItems);
@@ -156,7 +156,7 @@ void  CGuiMiniTool::DelButton(int nIndex)
 }
 
 //********************************************************************************	
-int   CGuiMiniTool::GetCountButton()
+INT_PTR   CGuiMiniTool::GetCountButton()
 {
 	return m_arrButtons.GetSize();
 }
@@ -169,7 +169,7 @@ void  CGuiMiniTool::RecalLayout()
 	GetClientRect(rcClient);
 	rcClient.DeflateRect(1,1);
 	CRect rctemp=rcClient;
-	int nTipo=0;
+	INT_PTR nTipo=0;
 	if (m_bAutoSize)
 		CalcAutoSize(rcClient);
 	if (msz.cx > 0)
@@ -180,7 +180,7 @@ void  CGuiMiniTool::RecalLayout()
 			rctemp.right-=msz.cx;
 	}
 
-	for (int i=0; i < nNumItems;i++)
+	for (INT_PTR i=0; i < nNumItems;i++)
 	{
 		
 		CArrButton* m_cwnd=(CArrButton*) m_arrButtons [i];
@@ -244,8 +244,8 @@ void CGuiMiniTool::CalcAutoSize(CRect m_rc)
 
 	m_nResultCombo=0;
     m_nResultButtons=0; 	
-	int m_numCombo=0;
-	for (int i=0; i < nNumItems;i++)
+	INT_PTR m_numCombo=0;
+	for (INT_PTR i=0; i < nNumItems;i++)
 	{
 		if (((CArrButton*) m_arrButtons [i])->m_btipo ==TRUE)
 		{
@@ -359,7 +359,7 @@ void CGuiMiniTool::OnPaint()
 void CGuiMiniTool::SetColor(COLORREF m_clrFace)
 {
 	m_clrface=m_clrFace;
-	for (int i=0; i < nNumItems;i++)
+	for (INT_PTR i=0; i < nNumItems;i++)
     	if (((CArrButton*) m_arrButtons [i])->m_btipo ==TRUE)
 			((CArrButton*) m_arrButtons [i])->m_bt.SetColor(m_clrface);
 		else
@@ -368,7 +368,7 @@ void CGuiMiniTool::SetColor(COLORREF m_clrFace)
 }
 
 //********************************************************************************
-void CGuiMiniTool::OnSize(UINT nType, int cx, int cy) 
+void CGuiMiniTool::OnSize(UINT nType, INT_PTR cx, INT_PTR cy) 
 {
 	CStatic::OnSize(nType, cx, cy);
 	RecalLayout();	
@@ -416,13 +416,13 @@ CArrButton::CArrButton(CGuiComboBoxExt* m_pComponent)
 BOOL CGuiMiniTool::OnCommand(WPARAM wParam, LPARAM lParam)
 {
 	HWND hwnd = (HWND) lParam;	
-	for (int i=0; i < nNumItems;i++)
+	for (INT_PTR i=0; i < nNumItems;i++)
 	{
 		if (((CArrButton*) m_arrButtons [i])->m_btipo ==TRUE)
 			if (((CArrButton*) m_arrButtons [i])->m_bt.m_hWnd
 				== hwnd)
 			{
-				int x=((CArrButton*) m_arrButtons [i])->m_bt.GetDlgCtrlID();
+				INT_PTR x=((CArrButton*) m_arrButtons [i])->m_bt.GetDlgCtrlID();
 				CWnd* pParent= GetParent();
 				pParent->SendMessage (WM_COMMAND,x);
 				AfxGetMainWnd()->SendMessage(WM_COMMAND,x);
@@ -437,17 +437,14 @@ BOOL CGuiMiniTool::OnCommand(WPARAM wParam, LPARAM lParam)
 CGuiToolButton*  CGuiMiniTool::GetButton(UINT uID_Object)//,CGuiToolButton* m_btn)
 {
 	
-	for (int i=0; i < nNumItems;i++)
+	for (INT_PTR i=0; i < nNumItems;i++)
 	{
 		if (((CArrButton*) m_arrButtons [i])->m_btipo ==TRUE)
-			if (((CArrButton*) m_arrButtons [i])->m_bt.GetDlgCtrlID()==(int signed )uID_Object)
+			if (((CArrButton*) m_arrButtons [i])->m_bt.GetDlgCtrlID()==(UINT_PTR)uID_Object)
 			{
-				
 				CGuiToolButton* m_btn=&((CArrButton*) m_arrButtons [i])->m_bt;
 				return m_btn;
-				
 			}
-	
 	}
 	return NULL;//m_btn=NULL;
 }
@@ -459,7 +456,7 @@ void CGuiMiniTool::Drawtext()
 	CRect rc;
 	GetClientRect(rc);
 	CFont* m_fontOld=dc.SelectObject(&m_cfont);
-	int nMode = dc.SetBkMode(TRANSPARENT);
+	INT_PTR nMode = dc.SetBkMode(TRANSPARENT);
 	dc.SetTextColor(m_clrCaption);
 	if(m_AlinTexto==ALIGN_LEFT)
 	{
@@ -482,7 +479,7 @@ void CGuiMiniTool::Drawtext()
 void CGuiMiniTool::OnDestroy()
 {
 	
-	for( int i=0; i<nNumItems; i++ )
+	for( INT_PTR i=0; i<nNumItems; i++ )
     {
     CArrButton *pArr = (CArrButton*)m_arrButtons.GetAt(i);
     if( pArr )

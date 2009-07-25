@@ -45,7 +45,7 @@ public:
 	CRect rcArea;
 protected:
 	
-	int m_nIcon;
+	INT_PTR m_nIcon;
 	LPCTSTR m_lpMsg;
 	CImageList m_imgList;
 	GuiType bTypeButton;
@@ -55,10 +55,10 @@ protected:
 public:
 	
 	CGuiControlBarButton();
-	void SetData(int nIcon, LPCTSTR lpMsg);
+	void SetData(INT_PTR nIcon, LPCTSTR lpMsg);
 	~CGuiControlBarButton();
-	void Paint(CDC* pDC, int st, CRect rc, COLORREF clrFondo,BOOL isBackDark=FALSE);
-	void SetImageList(UINT nBitmapID, int cx, int nGrow, COLORREF crMask);
+	void Paint(CDC* pDC, INT_PTR st, CRect rc, COLORREF clrFondo,BOOL isBackDark=FALSE);
+	void SetImageList(UINT nBitmapID, INT_PTR cx, INT_PTR nGrow, COLORREF crMask);
 	void SetTypeButton(GuiType bTypeb = GUINORMAL);
 	void SetEnabled(BOOL bEnabled);
 };
@@ -71,11 +71,11 @@ public:
 	
 protected:
 	BOOL	bPress;
-	int		m_iMilliseconds;
+	INT_PTR		m_iMilliseconds;
 
 
 public:
-	void SetWait(int iMilliseconds = 50)
+	void SetWait(INT_PTR iMilliseconds = 50)
 	{
 		m_iMilliseconds = iMilliseconds;
 	};
@@ -98,7 +98,7 @@ public:
 	static BOOL m_Theme;
 	static DWORD m_Style;
 	void		DrawArrow(CDC* pDC, CRect m_rc, BOOL m_bDown = TRUE);
-	HICON		GetIcon(int nIcon);
+	HICON		GetIcon(INT_PTR nIcon);
 	static HICON		LoadIconLib(UINT uIcon);
 	static COLORREF	GetRGBColorXP();
 	static COLORREF	GetRGBFondoXP();
@@ -154,7 +154,7 @@ public:
 
 	static HINSTANCE hTheme;
 	
-	static int verSO()
+	static INT_PTR verSO()
 	{
 		   
 			if (m_SO!=-1)
@@ -240,10 +240,10 @@ public:
 			
 
 	}
-	static void GetNextColor(int nIndex, COLORREF& m_lowColor, COLORREF& m_HighColor)
+	static void GetNextColor(INT_PTR nIndex, COLORREF& m_lowColor, COLORREF& m_HighColor)
 	{
 
-		int nResult= (nIndex >10 ) ? nIndex % 10 : nIndex;
+		INT_PTR nResult= (nIndex >10 ) ? nIndex % 10 : nIndex;
 		switch(nResult)
 		{
 		case 1:
@@ -295,7 +295,7 @@ public:
 protected:
 	CImageList	m_img;
 	CPoint		mHeight;
-	int			m_iWidthDrowDown;
+	INT_PTR			m_iWidthDrowDown;
 	
 };
 
@@ -306,7 +306,7 @@ public:
 	CGradient(CSize=CSize(800,600));
 	virtual ~CGradient();
 	//members
-	virtual void PrepareVertical(CDC* pDC,DWORD m_StyleDisplay=GUISTYLE_XP,COLORREF m_clr=GuiDrawLayer::GetRGBColorTabs(), int nRate=30);
+	virtual void PrepareVertical(CDC* pDC,DWORD m_StyleDisplay=GUISTYLE_XP,COLORREF m_clr=GuiDrawLayer::GetRGBColorTabs(), INT_PTR nRate=30);
 	virtual void PrepareVertical(CDC *pDC,UINT RTop,UINT GTop,UINT BTOP,UINT RBot,UINT GBot,UINT BBot);
 	virtual void PrepareHorizontal(CDC* pDC,DWORD m_StyleDisplay=GUISTYLE_XP,COLORREF m_clr=GuiDrawLayer::GetRGBColorTabs());
 	virtual void PrepareReverseHor(CDC* pDC,DWORD m_StyleDisplay=GUISTYLE_XP,COLORREF m_clr=GuiDrawLayer::GetRGBColorTabs());
@@ -319,7 +319,7 @@ public:
 	void PrepareHorizontal(CDC *pDC,UINT RRight,UINT GRight,UINT BRight,UINT RLeft,UINT GLeft,UINT BLeft);
 	CSize GetDimensions();
 	void  SetDimensions(CSize Size);
-	void Draw(CDC *pDC, int xDest,int yDest,int xSrc, int ySrc, int Width, int Height,DWORD Rop);
+	void Draw(CDC *pDC, INT_PTR xDest,INT_PTR yDest,INT_PTR xSrc, INT_PTR ySrc, INT_PTR Width, INT_PTR Height,DWORD Rop);
 
 protected:
 	CDC *m_dcMem;

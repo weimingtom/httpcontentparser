@@ -37,7 +37,7 @@ bool Services::autoSwithOnClose() {
 		return false;
 	}
 }
-LONG Services::getAppStatus() {
+UINT_PTR Services::getAppStatus() {
 	AutoInitInScale auto_;
 	try {
 		LONG status;
@@ -48,7 +48,7 @@ LONG Services::getAppStatus() {
 			return SNOWMAN_STATUS_TRIAL;
 		} else {
 			pRegInfo->getApplicationStatus(&status);
-			return status;
+			return (UINT_PTR)status;
 		}
 	} catch (...) {
 		__LERR__("CATCH(...)");

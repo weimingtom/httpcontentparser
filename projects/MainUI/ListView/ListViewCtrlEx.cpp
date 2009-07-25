@@ -897,16 +897,16 @@ class CLabelTipCtrl: public CToolTipCtrl
   private:
   CString    m_strClassName;
   RECT       m_rcMargin;
-  int        m_iYOff;
+  INT_PTR        m_iYOff;
   bool       m_bSettingsChanged;
   CListBase* m_pListBase;
   bool       m_bExpandedMargin;
-  int        m_iLastX;
-  int        m_iLastY;
+  INT_PTR        m_iLastX;
+  INT_PTR        m_iLastY;
   bool       m_bMouseInClientArea;
   bool       m_bLabelTipPoppedUp;
-  int        m_iCurrentItem;
-  int        m_iCurrentSubItem;
+  INT_PTR        m_iCurrentItem;
+  INT_PTR        m_iCurrentSubItem;
 };
 
 /*** Public member functions *************************************************/
@@ -1023,7 +1023,7 @@ void CLabelTipCtrl::OnWindowPosChanging(WINDOWPOS* lpwndpos)
   };
 
   CString strFlags;
-  for (int i = 0; i < sizeof td / sizeof td[0]; ++i)
+  for (INT_PTR i = 0; i < sizeof td / sizeof td[0]; ++i)
     if (lpwndpos->flags & td[i].uFlags)
     {
       if (!strFlags.IsEmpty()) strFlags += _T(" | ");
@@ -1121,11 +1121,11 @@ END_MESSAGE_MAP()
 
 UINT                    CListBase::m_winver        = 0; // Windows version
 CListBase::VISUAL_STYLE CListBase::m_visualStyle   = Unknown; // visual style?
-const int               CListBase::m_iFirstColXOff = 2; // x-off of first col
-const int               CListBase::m_iNextColXOff  = 6; // x-off of other cols
+const INT_PTR               CListBase::m_iFirstColXOff = 2; // x-off of first col
+const INT_PTR               CListBase::m_iNextColXOff  = 6; // x-off of other cols
 
 // Width of column separator (applies only to Vista explorer style)
-const int CListBase::m_iColumnSeparatorWidth = 2;
+const INT_PTR CListBase::m_iColumnSeparatorWidth = 2;
 
 /*** Public member functions *************************************************/
 
@@ -1236,7 +1236,7 @@ CListBase::~CListBase()
 /*** Enable or disable coloring of sort column *******************************/
 #pragma runtime_checks("c", off)  // due to a flaw in the definition of
                                   // Get[R|G|B]Value
-BOOL CListBase::ColorSortColumn(BOOL bEnable, int nSortColumn)
+BOOL CListBase::ColorSortColumn(BOOL bEnable, INT_PTR nSortColumn)
 {
   if (bEnable == m_bColorSortColumn &&
       (nSortColumn == 0 || nSortColumn == m_iSortColumn)) return bEnable;
@@ -1326,7 +1326,7 @@ void CListBase::DrawSmallIcon(CDC* pDC, LVITEM* pItem, LPRECT pRect)
 /*** Draw state icon *********************************************************/
 void CListBase::DrawStateIcon(CDC* pDC, LVITEM* pItem, LPRECT pRect)
 {
-  int iImage = (pItem->state & LVIS_STATEIMAGEMASK) >> 12;
+  INT_PTR iImage = (pItem->state & LVIS_STATEIMAGEMASK) >> 12;
 
   if (iImage > 0)
   {
@@ -1382,7 +1382,7 @@ void CListBase::DrawSubItemText(
 }
 
 /*** Enable/disable a column entirely ****************************************/
-void CListBase::EnableColumn(int nColumn, BOOL bEnableIt)
+void CListBase::EnableColumn(INT_PTR nColumn, BOOL bEnableIt)
 {
   ASSERT(nColumn >= 0 && nColumn < m_aColumnData.GetSize());
 
@@ -1410,7 +1410,7 @@ void CListBase::EnableColumn(int nColumn, BOOL bEnableIt)
 }
 
 /*** Allow or disallow the hiding of a column ********************************/
-void CListBase::EnableColumnHiding(int nColumn, BOOL bEnableIt)
+void CListBase::EnableColumnHiding(INT_PTR nColumn, BOOL bEnableIt)
 {
   if (nColumn >= 0 && nColumn < m_aColumnData.GetSize())
     if (bEnableIt)
@@ -1449,7 +1449,7 @@ void CListBase::EnableExplorerStyle()
 }
 
 /*** Enable or disable sort icon *********************************************/
-void CListBase::EnableSortIcon(BOOL bEnable, int nSortColumn)
+void CListBase::EnableSortIcon(BOOL bEnable, INT_PTR nSortColumn)
 {
   ASSERT(m_pListCtrl->GetHeaderCtrl());
 
@@ -1466,9 +1466,9 @@ void CListBase::EnableSortIcon(BOOL bEnable, int nSortColumn)
 /*** Gets the position of the first checked item in the list view control ****/
 POSITION CListBase::GetFirstCheckedItemPosition() const
 {
-  int nItemCount = m_pListCtrl->GetItemCount();
+  INT_PTR nItemCount = m_pListCtrl->GetItemCount();
 
-  for (int nItem = 0; nItem < nItemCount; ++nItem)
+  for (INT_PTR nItem = 0; nItem < nItemCount; ++nItem)
     if (m_pListCtrl->GetCheck(nItem))
       return reinterpret_cast<POSITION>(static_cast<INT_PTR>(nItem + 1));
 
@@ -1476,15 +1476,15 @@ POSITION CListBase::GetFirstCheckedItemPosition() const
 }
 
 /*** Gets the index of the next checked item in the list view control ********/
-int CListBase::GetNextCheckedItem(POSITION& pos) const
+INT_PTR CListBase::GetNextCheckedItem(POSITION& pos) const
 {
   ASSERT(pos);
   
-  int nOldPos    = static_cast<int>(reinterpret_cast<INT_PTR>(pos));
-  int nItemCount = m_pListCtrl->GetItemCount();
+  INT_PTR nOldPos    = static_cast<INT_PTR>(reinterpret_cast<INT_PTR>(pos));
+  INT_PTR nItemCount = m_pListCtrl->GetItemCount();
 
   pos = 0;
-  for (int nItem = nOldPos; nItem < nItemCount; ++nItem)
+  for (INT_PTR nItem = nOldPos; nItem < nItemCount; ++nItem)
     if (m_pListCtrl->GetCheck(nItem))
     {
       pos = reinterpret_cast<POSITION>(static_cast<INT_PTR>(nItem + 1));
@@ -1497,23 +1497,23 @@ int CListBase::GetNextCheckedItem(POSITION& pos) const
 /*** Get attributes of this list view control ********************************/
 BOOL CListBase::GetState(LPBYTE* ppState, LPUINT pnStateLen) const
 {
-  int nColumnCount = static_cast<int>(m_aColumnData.GetSize());
+  INT_PTR nColumnCount = static_cast<INT_PTR>(m_aColumnData.GetSize());
 
   if (nColumnCount > 0 && ppState)
   {
     UINT nStateLen =
-      2 * sizeof(int) + nColumnCount * (sizeof(bool) + 2 * sizeof(int));
+      2 * sizeof(INT_PTR) + nColumnCount * (sizeof(bool) + 2 * sizeof(INT_PTR));
 
     *ppState = new BYTE[nStateLen];
     LPBYTE p = *ppState;
 
     *reinterpret_cast<LPINT>(p) = nColumnCount;
-    p                          += sizeof(int);
+    p                          += sizeof(INT_PTR);
     *reinterpret_cast<LPINT>(p) = m_iSortColumn;
 
-    for (int nColumn = 0; nColumn < nColumnCount; ++nColumn)
+    for (INT_PTR nColumn = 0; nColumn < nColumnCount; ++nColumn)
     {
-      p                          += sizeof(int);
+      p                          += sizeof(INT_PTR);
       *reinterpret_cast<bool*>(p) = m_aColumnData[nColumn]->m_bHidingAllowed ?
                                     m_aColumnData[nColumn]->m_bVisible : true;
       p                          += sizeof(bool);
@@ -1521,7 +1521,7 @@ BOOL CListBase::GetState(LPBYTE* ppState, LPUINT pnStateLen) const
                                     m_aColumnData[nColumn]->m_bVisible   ?
                                     m_pListCtrl->GetColumnWidth(nColumn) :
                                     m_aColumnData[nColumn]->m_nWidth,
-      p                          += sizeof(int);
+      p                          += sizeof(INT_PTR);
       *reinterpret_cast<LPINT>(p) = m_aColumnData[nColumn]->m_nOrder;
     }
 
@@ -1534,7 +1534,7 @@ BOOL CListBase::GetState(LPBYTE* ppState, LPUINT pnStateLen) const
 
 /*** Is the width of a given subitem sufficient to display "pszText"? ********/
 BOOL CListBase::IsSubItemWidthSufficient(
-  int nItem, int nSubItem, LPCTSTR pszText)
+  INT_PTR nItem, INT_PTR nSubItem, LPCTSTR pszText)
 {
   CRect rc;
 
@@ -1579,7 +1579,7 @@ BOOL CListBase::RestoreState(LPCTSTR pszSection, LPCTSTR pszEntry)
 {
   BOOL bSuccess = FALSE;
 
-  if (static_cast<int>(m_aColumnData.GetSize()) > 0)
+  if (static_cast<INT_PTR>(m_aColumnData.GetSize()) > 0)
   {
     LPBYTE pState;
     UINT   nStateLen;
@@ -1614,7 +1614,7 @@ BOOL CListBase::SaveState(LPCTSTR pszSection, LPCTSTR pszEntry) const
 }
 
 /*** Set column to be sorted *************************************************/
-void CListBase::SetSortColumn(int nColumn)
+void CListBase::SetSortColumn(INT_PTR nColumn)
 {
   ASSERT(abs(nColumn) <= m_aColumnData.GetSize());
   if (nColumn != m_iSortColumn)
@@ -1640,16 +1640,16 @@ void CListBase::SetSortColumn(int nColumn)
 /*** Set attributes of this list view control ********************************/
 BOOL CListBase::SetState(LPBYTE pState, UINT nStateLen)
 {
-  int nColumnCount = static_cast<int>(m_aColumnData.GetSize());
+  INT_PTR nColumnCount = static_cast<INT_PTR>(m_aColumnData.GetSize());
 
   if (nColumnCount                    > 0                           &&
       nStateLen                        ==
-      2*sizeof(int) + nColumnCount * (sizeof(bool) + 2*sizeof(int)) &&
+      2*sizeof(INT_PTR) + nColumnCount * (sizeof(bool) + 2*sizeof(INT_PTR)) &&
       *reinterpret_cast<LPINT>(pState) == nColumnCount)
   {
-    pState += sizeof(int);
+    pState += sizeof(INT_PTR);
 
-    int nColumn = *reinterpret_cast<LPINT>(pState);
+    INT_PTR nColumn = *reinterpret_cast<LPINT>(pState);
     if (abs(nColumn) <= nColumnCount)
       SetSortColumn(nColumn);
     else
@@ -1660,7 +1660,7 @@ BOOL CListBase::SetState(LPBYTE pState, UINT nStateLen)
       COLUMN_DATA* pColData = m_aColumnData[nColumn];
 
       // restore display status of column
-      pState += sizeof(int);
+      pState += sizeof(INT_PTR);
       bool bVisible = *reinterpret_cast<bool*>(pState);
       if (bVisible != pColData->m_bVisible)
         if (pColData->m_bHidingAllowed || !pColData->m_bVisible)
@@ -1669,10 +1669,10 @@ BOOL CListBase::SetState(LPBYTE pState, UINT nStateLen)
 
       // restore width of column
       m_pListCtrl->SetColumnWidth(nColumn, *reinterpret_cast<LPINT>(pState));
-      pState += sizeof(int);
+      pState += sizeof(INT_PTR);
 
       // restore column order
-      int nOrder = *reinterpret_cast<LPINT>(pState);
+      INT_PTR nOrder = *reinterpret_cast<LPINT>(pState);
       if (nOrder < nColumnCount)
         pColData->m_nOrder = nOrder;
       else
@@ -1680,7 +1680,7 @@ BOOL CListBase::SetState(LPBYTE pState, UINT nStateLen)
     }
 
     // set column order
-    LPINT pnColOrder = new int[nColumnCount];
+    LPINT pnColOrder = new INT_PTR[nColumnCount];
     for (nColumn = 0; nColumn < nColumnCount; ++nColumn)
       pnColOrder[m_aColumnData[nColumn]->m_nOrder] = nColumn;
     m_pListCtrl->SetColumnOrderArray(nColumnCount, pnColOrder);
@@ -1691,7 +1691,7 @@ BOOL CListBase::SetState(LPBYTE pState, UINT nStateLen)
 }
 
 /*** Show or hide an individual column ***************************************/
-void CListBase::ShowColumn(int nColumn, BOOL bShowIt)
+void CListBase::ShowColumn(INT_PTR nColumn, BOOL bShowIt)
 {
   ASSERT(nColumn >= 0 && nColumn < m_aColumnData.GetSize());
 
@@ -1712,7 +1712,7 @@ void CListBase::ShowColumn(int nColumn, BOOL bShowIt)
 /*** Private member functions ************************************************/
 
 /*** Compare function for sorting of list view control ***********************/
-int CALLBACK CListBase::CompareFunc(
+INT_PTR CALLBACK CListBase::CompareFunc(
   LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort)
 {
   CListBase* pThis = reinterpret_cast<CListBase*>(lParamSort);
@@ -1825,8 +1825,8 @@ void CListBase::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
       if (IndexToOrder(0) == 0 || m_bKeepLabelLeft)
       {
         rcSelection.left = rcLabelArea.left;
-        int nWidthOfCol0 =
-          static_cast<int>(
+        INT_PTR nWidthOfCol0 =
+          static_cast<INT_PTR>(
             m_pListCtrl->DefWindowProc(LVM_GETCOLUMNWIDTH, OrderToIndex(0), 0));
         if (rcSelection.left > nWidthOfCol0) rcSelection.left = nWidthOfCol0;
 
@@ -1856,9 +1856,9 @@ void CListBase::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 	lvc.mask = LVCF_FMT | LVCF_WIDTH;
 
   // display all subitems
-  int  nIndex;
+  INT_PTR  nIndex;
   RECT rcSubItem = {0, 0, 0, 0};        // rectangle bounding subitem
-	for (int nColumn = 0;
+	for (INT_PTR nColumn = 0;
        m_pListCtrl->DefWindowProc(
          LVM_GETCOLUMN, nIndex = OrderToIndex(nColumn),
          reinterpret_cast<LPARAM>(&lvc));
@@ -1866,8 +1866,8 @@ void CListBase::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
   {
     LVITEM* pSubItem = nIndex > 0 ? GetLVITEM(pItem->iItem, nIndex) : pItem;
 	  RECT    rcText;                     // output rectangle
-    int     iAbsSortColumn = abs(m_iSortColumn) - 1;
-    int     iLogicalIndex  = GetLogicalIndex(nIndex);
+    INT_PTR     iAbsSortColumn = abs(m_iSortColumn) - 1;
+    INT_PTR     iLogicalIndex  = GetLogicalIndex(nIndex);
 
     // consider column margins
     if (nColumn > 0)
@@ -1959,7 +1959,7 @@ void CListBase::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 
               case LVCFMT_CENTER:
               {
-                int nSelectionWidth = rcLabel.Width();
+                INT_PTR nSelectionWidth = rcLabel.Width();
                 rcSubItemSelection.left  =
                   rcLabelArea.left + (rcLabelArea.Width() - nSelectionWidth) / 2;
                 rcSubItemSelection.right =
@@ -2202,13 +2202,13 @@ void CListBase::EraseRect(CDC* pDC, LPRECT pRect)
 
 /*** Retrieves the bounding rectangle of the label text of an item or ********/
 /*** subitem                                                          ********/
-bool CListBase::GetLabelRect(int nItem, int nSubItem, LPRECT pRect)
+bool CListBase::GetLabelRect(INT_PTR nItem, INT_PTR nSubItem, LPRECT pRect)
 {
   // Determine the rectangle bounding the text selection area
   CRect rcLabel;
   if (m_pListCtrl->GetSubItemRect(nItem, nSubItem, LVIR_LABEL, rcLabel))
   {
-    int nWidth =
+    INT_PTR nWidth =
       m_pListCtrl->GetStringWidth(m_pListCtrl->GetItemText(nItem, nSubItem)) +
       (nSubItem               == 0 && !m_bKeepLabelLeft ||
        IndexToOrder(nSubItem) == 0 &&  m_bKeepLabelLeft ?
@@ -2241,11 +2241,11 @@ bool CListBase::GetLabelRect(int nItem, int nSubItem, LPRECT pRect)
 }
 
 /*** Retrieve for a given physical column number the logical column number ***/
-int CListBase::GetLogicalIndex(int nPhysicalIndex) const
+INT_PTR CListBase::GetLogicalIndex(INT_PTR nPhysicalIndex) const
 {
   INT_PTR nColumnCount = m_aColumnData.GetSize();
 
-  for (int i = 0; i < nColumnCount; ++i)
+  for (INT_PTR i = 0; i < nColumnCount; ++i)
     if (m_aColumnData[i]->m_bEnabled && m_aColumnData[i]->m_bVisible)
     {
       if (i == nPhysicalIndex) return nPhysicalIndex;
@@ -2258,9 +2258,9 @@ int CListBase::GetLogicalIndex(int nPhysicalIndex) const
 }
 
 /*** Retrieve for a given physical column order the logical column order *****/
-int CListBase::GetLogicalOrder(int nPhysicalOrder) const
+INT_PTR CListBase::GetLogicalOrder(INT_PTR nPhysicalOrder) const
 {
-  for (int i = 0; i <= nPhysicalOrder; ++i)
+  for (INT_PTR i = 0; i <= nPhysicalOrder; ++i)
     for (INT_PTR j = m_aColumnData.GetUpperBound(); j >= 0; --j)
       if (m_aColumnData[j]->m_nOrder == i)
       {
@@ -2278,7 +2278,7 @@ int CListBase::GetLogicalOrder(int nPhysicalOrder) const
 }
 
 /*** Get all attributes of a given physical item or subitem ******************/
-LVITEM* CListBase::GetLVITEM(int nItem, int nSubItem) const
+LVITEM* CListBase::GetLVITEM(INT_PTR nItem, INT_PTR nSubItem) const
 {
   #pragma warning(push)
   #pragma warning(disable:4616 6211)
@@ -2290,7 +2290,7 @@ LVITEM* CListBase::GetLVITEM(int nItem, int nSubItem) const
   pItem->stateMask = ~0U;
 
   // enlarge text buffer gradually until it's large enough
-  for (int nLen = 128;; nLen += nLen)
+  for (INT_PTR nLen = 128;; nLen += nLen)
   {
     LPTSTR pszText = new TCHAR[nLen];
 
@@ -2313,7 +2313,7 @@ LVITEM* CListBase::GetLVITEM(int nItem, int nSubItem) const
       delete pItem;
       return 0;
     }
-    if (static_cast<int>(_tcslen(pItem->pszText)) < nLen-1) break;
+    if (static_cast<INT_PTR>(_tcslen(pItem->pszText)) < nLen-1) break;
     delete[] pItem->pszText;
   }
 
@@ -2322,22 +2322,22 @@ LVITEM* CListBase::GetLVITEM(int nItem, int nSubItem) const
 }
 
 /*** Returns the physical index of a given column index **********************/
-int CListBase::GetPhysicalIndex(int nColumnIndex) const
+INT_PTR CListBase::GetPhysicalIndex(INT_PTR nColumnIndex) const
 {
-  int nIndex = 0;
+  INT_PTR nIndex = 0;
 
-  for (int i = 0; i < nColumnIndex; ++i)
+  for (INT_PTR i = 0; i < nColumnIndex; ++i)
     if (m_aColumnData[i]->m_bEnabled && m_aColumnData[i]->m_bVisible) ++nIndex;
 
   return nIndex;
 }
 
 /*** Returns the physical order of a given column order **********************/
-int CListBase::GetPhysicalOrder(int nColumnOrder) const
+INT_PTR CListBase::GetPhysicalOrder(INT_PTR nColumnOrder) const
 {
-  int nOrder = 0;
+  INT_PTR nOrder = 0;
 
-  for (int i = 0; i < nColumnOrder; ++i)
+  for (INT_PTR i = 0; i < nColumnOrder; ++i)
     for (INT_PTR j = m_aColumnData.GetUpperBound(); j >= 0; --j)
       if (m_aColumnData[j]->m_nOrder == i)
       {
@@ -2350,7 +2350,7 @@ int CListBase::GetPhysicalOrder(int nColumnOrder) const
 }
 
 /*** Retrieves the bounding rectangle for the state icon of an item **********/
-bool CListBase::GetStateIconRect(int nItem, LPRECT pRect)
+bool CListBase::GetStateIconRect(INT_PTR nItem, LPRECT pRect)
 {
   bool  bRet = false;
   CRect rcSubItem;
@@ -2380,7 +2380,7 @@ bool CListBase::GetStateIconRect(int nItem, LPRECT pRect)
 
           if (pImageList->GetImageInfo(0, &ii))
           {
-            int nXOff =
+            INT_PTR nXOff =
               pRect->right - (ii.rcImage.right - ii.rcImage.left) -
               pRect->left;
 
@@ -2403,7 +2403,7 @@ bool CListBase::GetStateIconRect(int nItem, LPRECT pRect)
       pRect->left += m_iIconXOff;
 
       // clip at right column border
-      int nWidth = rcSubItem.Width();
+      INT_PTR nWidth = rcSubItem.Width();
       if (pRect->right >= rcSubItem.left + nWidth)
         pRect->right = pRect->left - m_iIconXOff + nWidth - 1;
 
@@ -2416,12 +2416,12 @@ bool CListBase::GetStateIconRect(int nItem, LPRECT pRect)
 }
 
 /*** Hide an individual column ***********************************************/
-void CListBase::HideColumn(int nColumn)
+void CListBase::HideColumn(INT_PTR nColumn)
 {
   ASSERT(nColumn >= 0 && nColumn < m_aColumnData.GetSize());
 
   // hide column
-  int nPhysicalColumn = GetPhysicalIndex(nColumn);
+  INT_PTR nPhysicalColumn = GetPhysicalIndex(nColumn);
 
   m_aColumnData[nColumn]->m_nWidth =
     m_pListCtrl->GetColumnWidth(nColumn);
@@ -2434,7 +2434,7 @@ void CListBase::HideColumn(int nColumn)
 }
 
 /*** Return the order in the header control of a subitem, based on its index */
-int CListBase::IndexToOrder(int nIndex)
+INT_PTR CListBase::IndexToOrder(INT_PTR nIndex)
 {
   ASSERT(m_pListCtrl->GetHeaderCtrl());
 
@@ -2448,7 +2448,7 @@ int CListBase::IndexToOrder(int nIndex)
 /*** Invalidate client area not covered by list control items ****************/
 void CListBase::InvalidateNonItemArea()
 {
-  int nSortColumn = abs(m_iSortColumn) - 1;
+  INT_PTR nSortColumn = abs(m_iSortColumn) - 1;
 
   if (m_bColorSortColumn                     &&
       m_iSortColumn != 0                     &&
@@ -2467,7 +2467,7 @@ void CListBase::InvalidateNonItemArea()
         rcThis.left, rcHdrItem.bottom, rcThis.right, rcThis.bottom
       };
 
-      int iItemCount = m_pListCtrl->GetItemCount();
+      INT_PTR iItemCount = m_pListCtrl->GetItemCount();
       if (iItemCount > 0)
       {
         // erase area above top item
@@ -2496,7 +2496,7 @@ void CListBase::InvalidateNonItemArea()
 
 /*** Rejustify first column of listview control to enable a right- ***********/
 /*** justified or centerd first column                             ***********/
-void CListBase::JustifyFirstColumn(int nFormat)
+void CListBase::JustifyFirstColumn(INT_PTR nFormat)
 {
   m_iFormatOfSubItem0 = nFormat;
 
@@ -2543,7 +2543,7 @@ LRESULT CListBase::OnCancelEditLabel()
 BOOL CListBase::OnColumnclick(NMHDR* pNMHDR, LRESULT* pResult) 
 {
 	LPNMLISTVIEW pNMListView        = reinterpret_cast<LPNMLISTVIEW>(pNMHDR);
-  int          iPhysicalColumn    = pNMListView->iSubItem;
+  INT_PTR          iPhysicalColumn    = pNMListView->iSubItem;
   bool         bSortColumnChanged = false;
 
   pNMListView->iSubItem = GetLogicalIndex(iPhysicalColumn);
@@ -2566,7 +2566,7 @@ BOOL CListBase::OnColumnclick(NMHDR* pNMHDR, LRESULT* pResult)
 BOOL CListBase::OnCommand(WPARAM wParam)
 {
   if (HIWORD(wParam) == 0)
-    ShowColumn(static_cast<int>(wParam), !m_aColumnData[wParam]->m_bVisible);
+    ShowColumn(static_cast<INT_PTR>(wParam), !m_aColumnData[wParam]->m_bVisible);
   return TRUE;
 }
 
@@ -2636,7 +2636,7 @@ void CListBase::OnCustomDraw(NMHDR* pNMHDR, LRESULT* pResult)
 
     case CDDS_ITEMPREPAINT | CDDS_SUBITEM:
     {
-      int iSortColumn = abs(m_iSortColumn) - 1;
+      INT_PTR iSortColumn = abs(m_iSortColumn) - 1;
 
       if (m_bColorSortColumn                     &&
           m_iSortColumn != 0                     &&
@@ -2655,12 +2655,12 @@ void CListBase::OnCustomDraw(NMHDR* pNMHDR, LRESULT* pResult)
     {
       // special treatment for first subitem:
       // fill empty area left of text label
-      int   iItem    = static_cast<int>(pNMLVCustomDraw->nmcd.dwItemSpec);
-      int   iSubItem = pNMLVCustomDraw->iSubItem;
+      INT_PTR   iItem    = static_cast<INT_PTR>(pNMLVCustomDraw->nmcd.dwItemSpec);
+      INT_PTR   iSubItem = pNMLVCustomDraw->iSubItem;
       CRect rcItem;
       m_pListCtrl->GetHeaderCtrl()->GetItemRect(iSubItem, rcItem);
-      int   iColumnWidth = rcItem.Width();
-      int   iLeftX       = rcItem.left - m_pListCtrl->GetScrollPos(SB_HORZ);
+      INT_PTR   iColumnWidth = rcItem.Width();
+      INT_PTR   iLeftX       = rcItem.left - m_pListCtrl->GetScrollPos(SB_HORZ);
       bool  bFirstColumn = rcItem.left == 0;
       bool  bHasFocus    = m_pListCtrl->GetFocus() == m_pListCtrl;
       CDC*  pDC          = CDC::FromHandle(pNMLVCustomDraw->nmcd.hdc);
@@ -2744,7 +2744,7 @@ void CListBase::OnCustomDraw(NMHDR* pNMHDR, LRESULT* pResult)
         CImageList* pimglst = m_pListCtrl->GetImageList(LVSIL_STATE);
         if (pimglst)
         {
-          int iImage = (item.state & LVIS_STATEIMAGEMASK) >> 12;
+          INT_PTR iImage = (item.state & LVIS_STATEIMAGEMASK) >> 12;
           if (iImage > 0)
           {
             IMAGEINFO imgInfo;
@@ -2753,8 +2753,8 @@ void CListBase::OnCustomDraw(NMHDR* pNMHDR, LRESULT* pResult)
                 GetStateIconRect(item.iItem, rc)          &&
                 rc.Width() > 0)
             {
-              int  iRcWidth   = rc.Width();
-              int  iRcHeight  = rc.Height();
+              INT_PTR  iRcWidth   = rc.Width();
+              INT_PTR  iRcHeight  = rc.Height();
               long lImgWidth  = imgInfo.rcImage.right  - imgInfo.rcImage.left;
               long lImgHeight = imgInfo.rcImage.bottom - imgInfo.rcImage.top;
               long lDiffHorz  = iRcWidth  - lImgWidth;
@@ -2794,7 +2794,7 @@ void CListBase::OnCustomDraw(NMHDR* pNMHDR, LRESULT* pResult)
             if (pimglst->GetImageInfo(item.iImage, &imgInfo) &&
                 m_pListCtrl->GetSubItemRect(iItem, iSubItem, LVIR_ICON, rc))
             {
-              int nIconOffset = rc.left - iLeftX;
+              INT_PTR nIconOffset = rc.left - iLeftX;
               if (iColumnWidth > nIconOffset)
                 pimglst->DrawIndirect(
                   pDC, item.iImage, rc.TopLeft(),
@@ -2825,7 +2825,7 @@ void CListBase::OnCustomDraw(NMHDR* pNMHDR, LRESULT* pResult)
       // If a selected item has just been drawn, redraw all visible items which
       // were selected during the previous drawing cycle and aren't selected
       // anymore during this drawing cycle.
-      int iItemJustDrawn = static_cast<int>(pNMLVCustomDraw->nmcd.dwItemSpec);
+      INT_PTR iItemJustDrawn = static_cast<INT_PTR>(pNMLVCustomDraw->nmcd.dwItemSpec);
 
       LVITEM item;
       item.mask      = LVIF_STATE;
@@ -2846,7 +2846,7 @@ void CListBase::OnCustomDraw(NMHDR* pNMHDR, LRESULT* pResult)
              pos;)
         {
           POSITION posCurrent = pos;
-          int      iItem      =
+          INT_PTR      iItem      =
             m_lstVisibleItemsPreviouslySelected.GetNext(pos);
 
           if (iItem != iItemJustDrawn)
@@ -2886,7 +2886,7 @@ void CListBase::OnCustomDraw(NMHDR* pNMHDR, LRESULT* pResult)
              pos;)
         {
           POSITION posCurrent = pos;
-          int      iItem      =
+          INT_PTR      iItem      =
             m_lstVisibleItemsPreviouslySelected.GetNext(pos);
 
           if (iItem == iItemJustDrawn)
@@ -2925,8 +2925,8 @@ LRESULT CListBase::OnDeleteAllItems()
 
   if (!(m_pListCtrl->GetStyle() & LVS_OWNERDATA))
     // First remove all item data ..
-    for (int nItem =
-           static_cast<int>(
+    for (INT_PTR nItem =
+           static_cast<INT_PTR>(
              m_pListCtrl->DefWindowProc(LVM_GETITEMCOUNT, 0, 0));
          --nItem >= 0;)
     {
@@ -2951,7 +2951,7 @@ LRESULT CListBase::OnDeleteAllItems()
 /*** A column will be deleted ************************************************/
 LRESULT CListBase::OnDeleteColumn(WPARAM wParam)
 {
-  int     nColumn      = static_cast<int>(wParam);
+  INT_PTR     nColumn      = static_cast<INT_PTR>(wParam);
   INT_PTR nColumnCount = m_aColumnData.GetSize();
   if (nColumn < 0 || nColumn >= nColumnCount) return FALSE;
 
@@ -2963,7 +2963,7 @@ LRESULT CListBase::OnDeleteColumn(WPARAM wParam)
   if (lResult)
   {
     // adjust column order
-    int i;
+    INT_PTR i;
     for (i = 0; i < nColumnCount; ++i)
       if (m_aColumnData[i]->m_nOrder > m_aColumnData[nColumn]->m_nOrder)
         --m_aColumnData[i]->m_nOrder;
@@ -2986,7 +2986,7 @@ LRESULT CListBase::OnDeleteColumn(WPARAM wParam)
     }
 
     // delete subitem structures belonging to column
-    for (i = static_cast<int>(m_pListCtrl->DefWindowProc(
+    for (i = static_cast<INT_PTR>(m_pListCtrl->DefWindowProc(
            LVM_GETITEMCOUNT, 0, 0)); --i >= 0;)
     {
       LVITEM lvItem = {LVIF_PARAM, i, 0};
@@ -3013,7 +3013,7 @@ LRESULT CListBase::OnDeleteColumn(WPARAM wParam)
 /*** An item will be removed *************************************************/
 LRESULT CListBase::OnDeleteItem(WPARAM wParam)
 {
-  int nItem = static_cast<int>(wParam);
+  INT_PTR nItem = static_cast<INT_PTR>(wParam);
   if (nItem < 0) return FALSE;
 
   LVITEM lvItem = {LVIF_PARAM, nItem, 0};
@@ -3060,7 +3060,7 @@ BOOL CListBase::OnEndLabelEdit(NMHDR* pNMHDR)
     if (!m_bLabelEditingCancelled)
     {
       m_pLabelEdit->GetWindowText(m_strEditedLabel);
-      int iBufLen = __max(m_strEditedLabel.GetLength() + 1, 260);
+      INT_PTR iBufLen = __max(m_strEditedLabel.GetLength() + 1, 260);
       pItem->pszText    = m_strEditedLabel.GetBuffer(iBufLen);
       pItem->cchTextMax = iBufLen;
     }
@@ -3088,7 +3088,7 @@ BOOL CListBase::OnEraseBkgnd(CDC* pDC)
 {
   if (m_bColorSortColumn && m_iSortColumn != 0 && m_visualStyle != Present)
   {
-    int iAbsSortColumn = abs(m_iSortColumn) - 1;
+    INT_PTR iAbsSortColumn = abs(m_iSortColumn) - 1;
 
     if (m_aColumnData[iAbsSortColumn]->m_bEnabled &&
         m_aColumnData[iAbsSortColumn]->m_bVisible)
@@ -3098,9 +3098,9 @@ BOOL CListBase::OnEraseBkgnd(CDC* pDC)
             GetPhysicalIndex(iAbsSortColumn), rc))
         return m_pListCtrl->Default() != 0;
 
-      int nXScrlOff = m_pListCtrl->GetScrollPos(SB_HORZ);
-      int nLeftX    = rc.left  - nXScrlOff;
-      int nRightX   = rc.right - nXScrlOff;
+      INT_PTR nXScrlOff = m_pListCtrl->GetScrollPos(SB_HORZ);
+      INT_PTR nLeftX    = rc.left  - nXScrlOff;
+      INT_PTR nRightX   = rc.right - nXScrlOff;
 
       pDC->GetClipBox(rc);      // get area to be erased
       if (nLeftX < rc.right && nRightX > rc.left)
@@ -3140,16 +3140,16 @@ BOOL CListBase::OnEraseBkgnd(CDC* pDC)
 /*** A specific item will be searched ****************************************/
 LRESULT CListBase::OnFindItem(WPARAM wParam, LPARAM lParam)
 {
-  int iStart = static_cast<int>(wParam);
+  INT_PTR iStart = static_cast<INT_PTR>(wParam);
   ASSERT(iStart >= -1);
 
   const LVFINDINFO* plvfi = reinterpret_cast<const LVFINDINFO*>(lParam);
 
   if (plvfi->flags & LVFI_PARAM)
   {
-    int nItemCount = m_pListCtrl->GetItemCount();
+    INT_PTR nItemCount = m_pListCtrl->GetItemCount();
 
-    for (int nItem = iStart; ++nItem < nItemCount;)
+    for (INT_PTR nItem = iStart; ++nItem < nItemCount;)
     {
       LVITEM lvItem = {LVIF_PARAM, nItem, 0};
 
@@ -3161,7 +3161,7 @@ LRESULT CListBase::OnFindItem(WPARAM wParam, LPARAM lParam)
 
     // wrap around?
     if (iStart >= 0 && plvfi->flags & LVFI_WRAP)
-      for (int nItem = 0; nItem <= iStart; ++nItem)
+      for (INT_PTR nItem = 0; nItem <= iStart; ++nItem)
       {
         LVITEM lvItem = {LVIF_PARAM, nItem, 0};
 
@@ -3180,7 +3180,7 @@ LRESULT CListBase::OnFindItem(WPARAM wParam, LPARAM lParam)
 /*** The attributes of a column will be retrieved ****************************/
 LRESULT CListBase::OnGetColumn(WPARAM wParam, LPARAM lParam)
 {
-  int nColumn = static_cast<int>(wParam);
+  INT_PTR nColumn = static_cast<INT_PTR>(wParam);
   if (nColumn < 0 || nColumn >= m_aColumnData.GetSize()) return FALSE;
 
   LVCOLUMN* pLVColumn = reinterpret_cast<LVCOLUMN*>(lParam);
@@ -3250,8 +3250,8 @@ LRESULT CListBase::OnGetColumnOrderArray(WPARAM wParam, LPARAM lParam)
 
   LPINT pArray = reinterpret_cast<LPINT>(lParam);
 
-  for (int i = 0; i < nCount; ++i)
-    for (int j = 0; j < nColumnCount; ++j)
+  for (INT_PTR i = 0; i < nCount; ++i)
+    for (INT_PTR j = 0; j < nColumnCount; ++j)
       if (m_aColumnData[j]->m_nOrder == i) pArray[i] = j;
 
   return nCount;
@@ -3260,7 +3260,7 @@ LRESULT CListBase::OnGetColumnOrderArray(WPARAM wParam, LPARAM lParam)
 /*** The width of a column will be retrieved *********************************/
 LRESULT CListBase::OnGetColumnWidth(WPARAM wParam)
 {
-  int nColumn = static_cast<int>(wParam);
+  INT_PTR nColumn = static_cast<INT_PTR>(wParam);
   if (nColumn < 0 || nColumn >= m_aColumnData.GetSize()) return 0;
 
   if (m_aColumnData[nColumn]->m_bEnabled && m_aColumnData[nColumn]->m_bVisible)
@@ -3280,7 +3280,7 @@ BOOL CListBase::OnGetdispinfo(NMHDR* pNMHDR)
   LVITEM* pLVItem       = &reinterpret_cast<NMLVDISPINFO*>(pNMHDR)->item;
   bool    bNotifyParent = true;
 
-  int iOrigSubItem  = pLVItem->iSubItem;
+  INT_PTR iOrigSubItem  = pLVItem->iSubItem;
   pLVItem->iSubItem = GetLogicalIndex(iOrigSubItem);
 
   LPARAM  origLParam    = pLVItem->lParam;
@@ -3323,7 +3323,7 @@ BOOL CListBase::OnGetdispinfo(NMHDR* pNMHDR)
 LRESULT CListBase::OnGetItem(LPARAM lParam)
 {
   LVITEM* pLVItem = reinterpret_cast<LVITEM*>(lParam);
-  int     nColumn = pLVItem->iSubItem;
+  INT_PTR     nColumn = pLVItem->iSubItem;
 
   if (nColumn < 0 || nColumn >= m_aColumnData.GetSize() || pLVItem->iItem < 0)
     return FALSE;
@@ -3406,7 +3406,7 @@ LRESULT CListBase::OnGetItemRect(WPARAM wParam, LPARAM lParam)
       if (m_bKeepLabelLeft)
         return
           m_pListCtrl->GetSubItemRect(
-            static_cast<int>(wParam), GetLogicalIndex(OrderToIndex(0)),
+            static_cast<INT_PTR>(wParam), GetLogicalIndex(OrderToIndex(0)),
             pRc->left, *pRc);
       else
         return m_pListCtrl->Default();
@@ -3424,7 +3424,7 @@ LRESULT CListBase::OnGetItemText(WPARAM wParam, LPARAM lParam)
 {
   INT_PTR nItem   = wParam;
   LVITEM* pLVItem = reinterpret_cast<LVITEM*>(lParam);
-  int     nColumn = pLVItem->iSubItem;
+  INT_PTR     nColumn = pLVItem->iSubItem;
 
   if (nColumn < 0 || nColumn >= m_aColumnData.GetSize() || nItem < 0)
     return FALSE;
@@ -3442,7 +3442,7 @@ LRESULT CListBase::OnGetItemText(WPARAM wParam, LPARAM lParam)
   {
     if (m_pListCtrl->GetStyle() & LVS_OWNERDATA) return 0;
 
-    LVITEM lvItem = {LVIF_PARAM, static_cast<int>(nItem), 0};
+    LVITEM lvItem = {LVIF_PARAM, static_cast<INT_PTR>(nItem), 0};
 
     if (m_pListCtrl->DefWindowProc(
           LVM_GETITEM, 0, reinterpret_cast<LPARAM>(&lvItem)))
@@ -3484,7 +3484,7 @@ LRESULT CListBase::OnGetItemText(WPARAM wParam, LPARAM lParam)
 LRESULT CListBase::OnGetSubItemRect(WPARAM wParam, LPARAM lParam)
 {
   CRect* pRc      = reinterpret_cast<CRect*>(lParam);
-  int    iSubItem = pRc->top;
+  INT_PTR    iSubItem = pRc->top;
 
   ASSERT(iSubItem >= 0);
 
@@ -3492,8 +3492,8 @@ LRESULT CListBase::OnGetSubItemRect(WPARAM wParam, LPARAM lParam)
   if (!m_aColumnData[iSubItem]->m_bEnabled ||
       !m_aColumnData[iSubItem]->m_bVisible) return 0L;
 
-  int iItem            = static_cast<int>(wParam);
-  int iPhysicalSubItem = GetPhysicalIndex(iSubItem);
+  INT_PTR iItem            = static_cast<INT_PTR>(wParam);
+  INT_PTR iPhysicalSubItem = GetPhysicalIndex(iSubItem);
 
   switch (pRc->left)
   {
@@ -3516,7 +3516,7 @@ LRESULT CListBase::OnGetSubItemRect(WPARAM wParam, LPARAM lParam)
           {
             pRc->right = rc.right;
 
-            int iOrder = IndexToOrder(0);
+            INT_PTR iOrder = IndexToOrder(0);
             if (iOrder > 0)
             {
               // The left edge of subitem 0 is identical with the right edge of
@@ -3567,7 +3567,7 @@ LRESULT CListBase::OnGetSubItemRect(WPARAM wParam, LPARAM lParam)
                   reinterpret_cast<LPARAM>(&rcIcon0)) &&
                 m_pListCtrl->GetSubItemRect(iItem, 0, LVIR_BOUNDS, rcSubItem0))
             {
-              int nSmallIconXOff = __max(rcIcon0.left - rcSubItem0.left, 4);
+              INT_PTR nSmallIconXOff = __max(rcIcon0.left - rcSubItem0.left, 4);
 
               rcIcon.left += nSmallIconXOff;
               rcIcon.right = rcIcon.left + rcIcon0.Width();
@@ -3657,7 +3657,7 @@ LRESULT CListBase::OnGetSubItemRect(WPARAM wParam, LPARAM lParam)
 }
 
 /*** Determines which list view item, if any, is at a specified position *****/
-int CListBase::OnHitTest(LPARAM lParam)
+INT_PTR CListBase::OnHitTest(LPARAM lParam)
 {
   if (m_pListCtrl->Default() != -1)
   {
@@ -3719,7 +3719,7 @@ void CListBase::OnHScroll()
 /*** A new column will be inserted *******************************************/
 LRESULT CListBase::OnInsertColumn(WPARAM wParam, LPARAM lParam)
 {
-  int     nColumn      = static_cast<int>(wParam);
+  INT_PTR     nColumn      = static_cast<INT_PTR>(wParam);
   INT_PTR nColumnCount = m_aColumnData.GetSize();
   if (nColumn < 0 || nColumn > nColumnCount) return -1;
 
@@ -3755,7 +3755,7 @@ LRESULT CListBase::OnInsertColumn(WPARAM wParam, LPARAM lParam)
                                nColumn;
 
     // adjust column order
-    for (int i = 0; i < nColumnCount; ++i)
+    for (INT_PTR i = 0; i < nColumnCount; ++i)
       if (m_aColumnData[i]->m_nOrder >= pColumnData->m_nOrder)
         ++m_aColumnData[i]->m_nOrder;
 
@@ -3772,8 +3772,8 @@ LRESULT CListBase::OnInsertColumn(WPARAM wParam, LPARAM lParam)
         if (nColumn < m_iSortColumn) ++m_iSortColumn;
 
     // insert subitem placeholders belonging to column
-    for (int i =
-           static_cast<int>(
+    for (INT_PTR i =
+           static_cast<INT_PTR>(
              m_pListCtrl->DefWindowProc(LVM_GETITEMCOUNT, 0, 0));
          --i >= 0;)
     {
@@ -3823,7 +3823,7 @@ LRESULT CListBase::OnInsertItem(LPARAM lParam)
   {
     // correct item data
     pLVItem->mask    = pLVItemSrc->mask;
-    pLVItem->iItem   = static_cast<int>(lResult);
+    pLVItem->iItem   = static_cast<INT_PTR>(lResult);
     pLVItem->pszText = pszOrigText;
 
     // insert item into administration data for column 0
@@ -3831,7 +3831,7 @@ LRESULT CListBase::OnInsertItem(LPARAM lParam)
 
     // insert placeholders for other columns
     INT_PTR nColumnCount = m_aColumnData.GetSize();
-    for (int nColumn = 1; nColumn < nColumnCount; ++nColumn)
+    for (INT_PTR nColumn = 1; nColumn < nColumnCount; ++nColumn)
       pItemData->m_apLVItem.InsertAt(nColumn, 0, 1);
 
     RefreshToolTips();
@@ -3855,7 +3855,7 @@ void CListBase::OnKeyDown(UINT nChar)
     case VK_SPACE:
     {
       // Space --> toggle checkbox state of all selected items
-      int nItem = m_pListCtrl->GetNextItem(-1, LVNI_FOCUSED);
+      INT_PTR nItem = m_pListCtrl->GetNextItem(-1, LVNI_FOCUSED);
 
       if (m_dwExtendedStyle & LVS_EX_CHECKBOXES && nItem >= 0)
       {
@@ -3879,23 +3879,23 @@ void CListBase::OnKeyDown(UINT nChar)
         LVCOLUMN lvc;
 	      lvc.mask = LVCF_FMT;
 
-        int iIndex;
-      	for (int nColumn = 0;
+        INT_PTR iIndex;
+      	for (INT_PTR nColumn = 0;
              m_pListCtrl->DefWindowProc(
                LVM_GETCOLUMN, iIndex = OrderToIndex(nColumn),
                reinterpret_cast<LPARAM>(&lvc));
              ++nColumn)
         {
-          int iLogicalIndex = GetLogicalIndex(iIndex);
-          int iOptWidth;
+          INT_PTR iLogicalIndex = GetLogicalIndex(iIndex);
+          INT_PTR iOptWidth;
 
           if (iIndex == 0 || nColumn == 0)
           {
             // calculate needed column width
             iOptWidth = 0;
-            for (int iItem = m_pListCtrl->GetItemCount(); --iItem >= 0;)
+            for (INT_PTR iItem = m_pListCtrl->GetItemCount(); --iItem >= 0;)
             {
-              int iWidth =
+              INT_PTR iWidth =
                 m_pListCtrl->GetStringWidth(
                   m_pListCtrl->GetItemText(iItem, iLogicalIndex));
               if (iWidth > iOptWidth) iOptWidth = iWidth;
@@ -3963,7 +3963,7 @@ void CListBase::OnKillFocus()
   m_pListCtrl->Default();
 
 	// manually remove focus state so that custom drawing will function properly
-  int nItem = m_pListCtrl->GetNextItem(-1, LVNI_SELECTED);
+  INT_PTR nItem = m_pListCtrl->GetNextItem(-1, LVNI_SELECTED);
   if (nItem >= 0) m_pListCtrl->SetItemState(nItem, 0, LVIS_FOCUSED);
 
   // Reset current tooltip item
@@ -3977,7 +3977,7 @@ void CListBase::OnKillFocus()
 void CListBase::OnLButtonDblClk(CPoint point) 
 {
   UINT flags = 0;
-  int  nItem = m_pListCtrl->HitTest(point, &flags);
+  INT_PTR  nItem = m_pListCtrl->HitTest(point, &flags);
 
   if (nItem            >= 0                 &&
       m_dwExtendedStyle & LVS_EX_CHECKBOXES &&
@@ -4002,7 +4002,7 @@ void CListBase::OnLButtonDown(CPoint point)
   if (m_hCursorCustom) SetCursor(m_hCursorCustom);
 
   LVHITTESTINFO info  = {{point.x, point.y}};
-  int           nItem = m_pListCtrl->SubItemHitTest(&info);
+  INT_PTR           nItem = m_pListCtrl->SubItemHitTest(&info);
 
   if (nItem >= 0                            &&
       m_dwExtendedStyle & LVS_EX_CHECKBOXES &&
@@ -4072,7 +4072,7 @@ LRESULT CListBase::OnMouseLeave()
       (LVS_EX_UNDERLINEHOT | LVS_EX_ONECLICKACTIVATE |
        LVS_EX_TWOCLICKACTIVATE))
   {
-    int iOldHotItem;
+    INT_PTR iOldHotItem;
 
     if (m_pListCtrl->GetStyle() & LVS_OWNERDRAWFIXED)
     {
@@ -4175,7 +4175,7 @@ void CListBase::OnMouseMove(CPoint point)
   }
 
   LVHITTESTINFO info  = {{point.x, point.y}};
-  int           nItem = m_pListCtrl->SubItemHitTest(&info);
+  INT_PTR           nItem = m_pListCtrl->SubItemHitTest(&info);
   SetHotCursorAndItem(&info);
 
   // Reset current rooltip item if this application has been deactivated
@@ -4382,17 +4382,17 @@ BOOL CListBase::OnNotify(LPARAM lParam)
             ))
         {
           // calculate needed column width
-          int iFirstItem;
-          int iLastItem;
-          int iOptWidth       = 0;
-          int iLogicalSubItem = GetLogicalIndex(pNMHeader->iItem);
+          INT_PTR iFirstItem;
+          INT_PTR iLastItem;
+          INT_PTR iOptWidth       = 0;
+          INT_PTR iLogicalSubItem = GetLogicalIndex(pNMHeader->iItem);
 
           if (m_pListCtrl->GetStyle() & LVS_OWNERDATA)
           {
             // In a virtual list view control
             // at least the visible items and
             // at most the cached items will be considered.
-            int iFirstVisibleItem = m_pListCtrl->GetTopIndex();
+            INT_PTR iFirstVisibleItem = m_pListCtrl->GetTopIndex();
 
             iFirstItem = __min(m_iFirstCachedItem, iFirstVisibleItem);
             iLastItem  =
@@ -4408,9 +4408,9 @@ BOOL CListBase::OnNotify(LPARAM lParam)
             iLastItem  = m_pListCtrl->GetItemCount() - 1;
           }
 
-          for (int iItem = iFirstItem; iItem <= iLastItem; ++iItem)
+          for (INT_PTR iItem = iFirstItem; iItem <= iLastItem; ++iItem)
           {
-            int iWidth =
+            INT_PTR iWidth =
               m_pListCtrl->GetStringWidth(
                 m_pListCtrl->GetItemText(iItem, iLogicalSubItem));
             if (iWidth > iOptWidth) iOptWidth = iWidth;
@@ -4448,8 +4448,8 @@ BOOL CListBase::OnNotify(LPARAM lParam)
         bRet = m_pListCtrl->Default() != 0;
         if (pNMHeader->pitem->iOrder >= 0)
         {
-          int nColumn = GetLogicalIndex(pNMHeader->iItem);
-          int nOrder  = GetLogicalOrder(pNMHeader->pitem->iOrder);
+          INT_PTR nColumn = GetLogicalIndex(pNMHeader->iItem);
+          INT_PTR nOrder  = GetLogicalOrder(pNMHeader->pitem->iOrder);
 
           if (nOrder < m_aColumnData[nColumn]->m_nOrder)
           {
@@ -4531,11 +4531,11 @@ void CListBase::OnPaint()
     CPen* ppenPrev = dc.SelectObject(&penSeparator);
     
 	  // the border of the column is offset by the horz scroll
-	  int          iBorderX    = -m_pListCtrl->GetScrollPos(SB_HORZ);
+	  INT_PTR          iBorderX    = -m_pListCtrl->GetScrollPos(SB_HORZ);
 	  CHeaderCtrl* pHeaderCtrl = m_pListCtrl->GetHeaderCtrl();
-	  int          iItemCount  = pHeaderCtrl->GetItemCount();
+	  INT_PTR          iItemCount  = pHeaderCtrl->GetItemCount();
 
-	  for (int iItem = 0; iItem < iItemCount; ++iItem)
+	  for (INT_PTR iItem = 0; iItem < iItemCount; ++iItem)
 	  {
       CRect rcItem;
       pHeaderCtrl->GetItemRect(OrderToIndex(iItem), rcItem);
@@ -4623,7 +4623,7 @@ LRESULT CListBase::OnSetBkImage()
 /*** The attributes of a column will be set **********************************/
 LRESULT CListBase::OnSetColumn(WPARAM wParam, LPARAM lParam)
 {
-  int     nColumn      = static_cast<int>(wParam);
+  INT_PTR     nColumn      = static_cast<INT_PTR>(wParam);
   INT_PTR nColumnCount = m_aColumnData.GetSize();
   if (nColumn < 0 || nColumn >= nColumnCount) return FALSE;
 
@@ -4650,12 +4650,12 @@ LRESULT CListBase::OnSetColumn(WPARAM wParam, LPARAM lParam)
     if (pLVColumn->mask & LVCF_IMAGE) pLVColumnDst->iImage = pLVColumn->iImage;
     if (pLVColumn->mask & LVCF_ORDER)
     {
-      int nOrder = reinterpret_cast<LVCOLUMN*>(lParam)->iOrder;
+      INT_PTR nOrder = reinterpret_cast<LVCOLUMN*>(lParam)->iOrder;
 
       if (nOrder < m_aColumnData[nColumn]->m_nOrder)
       {
         // adjust column order
-        for (int i = 0; i < nColumnCount; ++i)
+        for (INT_PTR i = 0; i < nColumnCount; ++i)
           if (m_aColumnData[i]->m_nOrder >= nOrder &&
               m_aColumnData[i]->m_nOrder <  m_aColumnData[nColumn]->m_nOrder)
             ++m_aColumnData[i]->m_nOrder;
@@ -4664,7 +4664,7 @@ LRESULT CListBase::OnSetColumn(WPARAM wParam, LPARAM lParam)
       else if (nOrder > m_aColumnData[nColumn]->m_nOrder)
       {
         // adjust column order
-        for (int i = 0; i < nColumnCount; ++i)
+        for (INT_PTR i = 0; i < nColumnCount; ++i)
           if (m_aColumnData[i]->m_nOrder >  m_aColumnData[nColumn]->m_nOrder &&
               m_aColumnData[i]->m_nOrder <= nOrder)
             --m_aColumnData[i]->m_nOrder;
@@ -4695,12 +4695,12 @@ LRESULT CListBase::OnSetColumnOrderArray(WPARAM wParam, LPARAM lParam)
   if (nCount > nColumnCount) nCount = nColumnCount;
 
   LPINT pArraySrc = reinterpret_cast<LPINT>(lParam);
-  LPINT pArrayDst = new int[nCount];
+  LPINT pArrayDst = new INT_PTR[nCount];
 
-  int n = 0;
-  for (int i = 0; i < nCount; ++i)
+  INT_PTR n = 0;
+  for (INT_PTR i = 0; i < nCount; ++i)
   {
-    int nColumn = pArraySrc[i];
+    INT_PTR nColumn = pArraySrc[i];
     if (nColumn >= nColumnCount)
     {
       // illegal column index
@@ -4721,13 +4721,13 @@ LRESULT CListBase::OnSetColumnOrderArray(WPARAM wParam, LPARAM lParam)
 
   if (lResult)
     // adjust column order
-    for (int i = 0; i < nCount; ++i)
+    for (INT_PTR i = 0; i < nCount; ++i)
     {
-      int nColumn = pArraySrc[i];
+      INT_PTR nColumn = pArraySrc[i];
 
       if (i < m_aColumnData[nColumn]->m_nOrder)
       {
-        for (int j = 0; j < nColumnCount; ++j)
+        for (INT_PTR j = 0; j < nColumnCount; ++j)
           if (m_aColumnData[j]->m_nOrder >= i &&
               m_aColumnData[j]->m_nOrder <  m_aColumnData[nColumn]->m_nOrder)
             ++m_aColumnData[j]->m_nOrder;
@@ -4735,7 +4735,7 @@ LRESULT CListBase::OnSetColumnOrderArray(WPARAM wParam, LPARAM lParam)
       }
       else if (i > m_aColumnData[nColumn]->m_nOrder)
       {
-        for (int j = 0; j < nColumnCount; ++j)
+        for (INT_PTR j = 0; j < nColumnCount; ++j)
           if (m_aColumnData[j]->m_nOrder >  m_aColumnData[nColumn]->m_nOrder &&
               m_aColumnData[j]->m_nOrder <= i) --m_aColumnData[j]->m_nOrder;
         m_aColumnData[nColumn]->m_nOrder = i;
@@ -4748,7 +4748,7 @@ LRESULT CListBase::OnSetColumnOrderArray(WPARAM wParam, LPARAM lParam)
 /*** The width of a column will be changed ***********************************/
 LRESULT CListBase::OnSetColumnWidth(WPARAM wParam, LPARAM lParam)
 {
-  int nColumn = static_cast<int>(wParam);
+  INT_PTR nColumn = static_cast<INT_PTR>(wParam);
   if (nColumn < 0 || nColumn >= m_aColumnData.GetSize()) return FALSE;
 
   if (m_aColumnData[nColumn]->m_bEnabled && m_aColumnData[nColumn]->m_bVisible)
@@ -4758,7 +4758,7 @@ LRESULT CListBase::OnSetColumnWidth(WPARAM wParam, LPARAM lParam)
   else
   {
     // remember new column width
-    m_aColumnData[nColumn]->m_nWidth = static_cast<int>(lParam);
+    m_aColumnData[nColumn]->m_nWidth = static_cast<INT_PTR>(lParam);
     return TRUE;
   }
 }
@@ -4814,7 +4814,7 @@ void CListBase::OnSetFocus()
   m_pListCtrl->Default();
 
 	// manually set focus state so that custom drawing will function properly
-  int nItem = m_pListCtrl->GetNextItem(-1, LVNI_SELECTED);
+  INT_PTR nItem = m_pListCtrl->GetNextItem(-1, LVNI_SELECTED);
   if (nItem >= 0) m_pListCtrl->SetItemState(nItem, LVIS_FOCUSED, LVIS_FOCUSED);
 
   m_bFocusSet = true;
@@ -4846,7 +4846,7 @@ LRESULT CListBase::OnSetImageList(WPARAM wParam)
 LRESULT CListBase::OnSetItem(LPARAM lParam)
 {
   LVITEM* pLVItemSrc = reinterpret_cast<LVITEM*>(lParam);
-  int     nColumn    = pLVItemSrc->iSubItem;
+  INT_PTR     nColumn    = pLVItemSrc->iSubItem;
 
   if (nColumn           < 0 || nColumn >= m_aColumnData.GetSize() ||
       pLVItemSrc->iItem < 0) return FALSE;
@@ -4963,7 +4963,7 @@ LRESULT CListBase::OnSetItem(LPARAM lParam)
 /*** The text of an item or a subitem will be changed ************************/
 LRESULT CListBase::OnSetItemText(WPARAM wParam, LPARAM lParam)
 {
-  int     nItem     = static_cast<int>(wParam);
+  INT_PTR     nItem     = static_cast<INT_PTR>(wParam);
   LVITEM  lvItemSrc = *reinterpret_cast<LVITEM*>(lParam);
 
   if (lvItemSrc.iSubItem <  0                       ||
@@ -5098,7 +5098,7 @@ void CListBase::OnSysColorChange()
 }
 
 /*** Return the index of a subitem, based in its order in the header control */
-int CListBase::OrderToIndex(int nOrder)
+INT_PTR CListBase::OrderToIndex(INT_PTR nOrder)
 {
   ASSERT(m_pListCtrl->GetHeaderCtrl());
 
@@ -5153,7 +5153,7 @@ void CListBase::InitializeSubCtrls()
 }
 
 /*** Redisplay an individual column ******************************************/
-void CListBase::RedisplayColumn(int nColumn)
+void CListBase::RedisplayColumn(INT_PTR nColumn)
 {
   ASSERT(nColumn >= 0 && nColumn < m_aColumnData.GetSize());
 
@@ -5169,7 +5169,7 @@ void CListBase::RedisplayColumn(int nColumn)
 
   m_aColumnData[nColumn]->m_bVisible = true;
 
-  int      iPhysicalColumn = GetPhysicalIndex(nColumn);
+  INT_PTR      iPhysicalColumn = GetPhysicalIndex(nColumn);
   LVCOLUMN lvColumn        = *m_aColumnData[nColumn]->m_pLVColumn;
 
   lvColumn.mask  |= LVCF_ORDER;
@@ -5185,7 +5185,7 @@ void CListBase::RedisplayColumn(int nColumn)
 
     if (m_iSortColumn != 0)
     {
-      int  iSortColumn        = abs(m_iSortColumn)-1;
+      INT_PTR  iSortColumn        = abs(m_iSortColumn)-1;
       bool bRecolorSortColumn = false;
 
       if (iSortColumn == nColumn)
@@ -5207,7 +5207,7 @@ void CListBase::RedisplayColumn(int nColumn)
     if (!(m_pListCtrl->GetStyle() & LVS_OWNERDATA))
     {
       if (iPhysicalColumn > 0)
-        for (int nItem = m_pListCtrl->GetItemCount(); --nItem >= 0;)
+        for (INT_PTR nItem = m_pListCtrl->GetItemCount(); --nItem >= 0;)
         {
           LVITEM lvItem = {LVIF_PARAM, nItem, 0};
 
@@ -5252,7 +5252,7 @@ void CListBase::SetHotCursorAndItem(LPLVHITTESTINFO pInfo)
   {
     // determine item under mouse cursor (hot item) and
     // the appropriate mouse cursor
-    int iOldHotItem = m_iHotItem;
+    INT_PTR iOldHotItem = m_iHotItem;
 
     m_iHotItem =
       pInfo->iItem >= 0 &&
@@ -5304,7 +5304,7 @@ void CListBase::SetHotCursorAndItem(LPLVHITTESTINFO pInfo)
   if (m_hTheme && m_pListCtrl->GetStyle() & LVS_OWNERDRAWFIXED)
   {
     // determine item under mouse cursor
-    int iOldItemUnderCursor = m_iItemUnderCursor;
+    INT_PTR iOldItemUnderCursor = m_iItemUnderCursor;
 
     m_iItemUnderCursor =
       pInfo->iItem >= 0 &&
@@ -5347,13 +5347,13 @@ void CListBase::SetSortIcon()
   CHeaderCtrl* pHeaderCtrl = m_pListCtrl->GetHeaderCtrl();
   ASSERT(pHeaderCtrl);
 
-  for (int col = static_cast<int>(m_aColumnData.GetUpperBound());
+  for (INT_PTR col = static_cast<INT_PTR>(m_aColumnData.GetUpperBound());
        col >= 0;
        --col)
     if (m_aColumnData[col]->m_bEnabled && m_aColumnData[col]->m_bVisible)
     {
       HDITEM hdrItem;
-      int    nPhysicalCol = GetPhysicalIndex(col);
+      INT_PTR    nPhysicalCol = GetPhysicalIndex(col);
 
       if (m_visualStyle == Present)
       {

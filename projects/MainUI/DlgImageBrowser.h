@@ -32,7 +32,7 @@ protected:
 	CThumbCtrl * m_ThumbCtrl;
 	DECLARE_MESSAGE_MAP()
 
-	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+	afx_msg INT_PTR OnCreate(LPCREATESTRUCT lpCreateStruct);
 	virtual BOOL OnInitDialog();
 
 	// Â·¾¶

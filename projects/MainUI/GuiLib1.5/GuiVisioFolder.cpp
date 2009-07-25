@@ -34,7 +34,7 @@ static char THIS_FILE[]=__FILE__;
 
 IMPLEMENT_DYNAMIC(CGuiVisioFolder, CGuiFolder)
 
-void  CGuiVisioFolder::SetImageList(UINT nBitmapID, int cx, int nGrow, COLORREF crMask)
+void  CGuiVisioFolder::SetImageList(UINT nBitmapID, INT_PTR cx, INT_PTR nGrow, COLORREF crMask)
 {
 	CBitmap cbmp;
 	BITMAP bmp;
@@ -51,7 +51,7 @@ void CGuiVisioFolder::DrawFolder(CFolderBar* cfb,Style m_Style)
 {
 	CRect rc=cfb->m_rect;
 	CRect rcWin=cfb->m_rect;
-	int nNuImage=cfb->m_img;
+	INT_PTR nNuImage=cfb->m_img;
 	CString szStringPoints=_T("...");
 	CBrush cb;
 	CClientDC pDC(this);
@@ -72,10 +72,10 @@ void CGuiVisioFolder::DrawFolder(CFolderBar* cfb,Style m_Style)
 		pDC.Draw3dRect(rc, GuiDrawLayer::GetRGBColorBTNHigh(),GuiDrawLayer::GetRGBColorShadow());
 	else if (m_Style == mPush) //el mouse esta sobre el folder y presiona
 		pDC.Draw3dRect(rc, GuiDrawLayer::GetRGBColorShadow(),GuiDrawLayer::GetRGBColorBTNHigh());
-	int OldMode=pDC.SetBkMode(TRANSPARENT);
+	INT_PTR OldMode=pDC.SetBkMode(TRANSPARENT);
 	cfont = pDC.SelectObject(CFont::FromHandle((HFONT)GetStockObject(DEFAULT_GUI_FONT)));
 	CString m_cadBreak=cfb->m_lpMsg;
-	int cont=m_cadBreak.GetLength();
+	INT_PTR cont=m_cadBreak.GetLength();
 	CSize coor=pDC.GetTextExtent(m_cadBreak,m_cadBreak.GetLength());
 	CSize szImage=CSize(0,0);
 
@@ -121,7 +121,7 @@ void CGuiVisioFolder::DrawFolder(CFolderBar* cfb,Style m_Style)
 	rcWin.left=rcWin.right-3;
 	rcWin.bottom-=4;
 
-	for (int i=0; i < rcWin.Height(); i+=2)
+	for (INT_PTR i=0; i < rcWin.Height(); i+=2)
 	{
 		CRect rcWindow;
 		CBrush cb;

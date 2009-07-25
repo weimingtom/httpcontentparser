@@ -67,7 +67,7 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CGuiContainer message handlers
 
-int CGuiContainer::OnCreate(LPCREATESTRUCT lpCreateStruct) 
+INT_PTR CGuiContainer::OnCreate(LPCREATESTRUCT lpCreateStruct) 
 {
 	if (CWnd::OnCreate(lpCreateStruct) == -1)
 		return -1;
@@ -125,7 +125,7 @@ void CGuiContainer::OnSysColorChange()
 {
 	CWnd::OnSysColorChange();
 	m_clrface=GuiDrawLayer::GetRGBColorFace(GuiDrawLayer::m_Style);
-	for (int i=0; i < m_nItems;i++)
+	for (INT_PTR i=0; i < m_nItems;i++)
 	{
 		
 		CComponents* m_cwnd=(CComponents*) m_arrContainer[i];
@@ -136,7 +136,7 @@ void CGuiContainer::OnSysColorChange()
 }
 
 //********************************************************************************
-void CGuiContainer::OnSize(UINT nType, int cx, int cy) 
+void CGuiContainer::OnSize(UINT nType, INT_PTR cx, INT_PTR cy) 
 {
 	CWnd::OnSize(nType, cx, cy);
 	RecalLayout();
@@ -167,9 +167,9 @@ void  CGuiContainer::RecalLayout()
 	GetClientRect(rcClient);
 	rcClient.DeflateRect(1,1);
 	CRect rctemp=rcClient;
-	int nTipo=0;
+	INT_PTR nTipo=0;
 	CalcAutoSize(rcClient);
-	for (int i=0; i < m_nItems;i++)
+	for (INT_PTR i=0; i < m_nItems;i++)
 	{
 		
 		CComponents* m_cwnd=(CComponents*) m_arrContainer[i];
@@ -209,9 +209,9 @@ void CGuiContainer::CalcAutoSize(CRect m_rc)
 	if (m_nItems == -1) return;
 	m_nResultCWnd=0;
     m_nResultTools=0; 	
-	int m_numCWnd=0;
+	INT_PTR m_numCWnd=0;
 	BOOL m_bExisteCWnd=FALSE;
-	for (int i=0; i < m_nItems;i++)
+	for (INT_PTR i=0; i < m_nItems;i++)
 	{
 		if (((CComponents*) m_arrContainer [i])->bMiniTool==TRUE ||
 			((CComponents*) m_arrContainer [i])->bTypeSmall ==TRUE)
@@ -386,7 +386,7 @@ BOOL CGuiContainer::OnNotify(WPARAM wParam, LPARAM lParam, LRESULT* pResult)
 //thanks to  Ernesto Garcia	
 void CGuiContainer::OnDestroy()
 {
-	for( int i=0; i<m_nItems; i++ )
+	for( INT_PTR i=0; i<m_nItems; i++ )
     {
     CComponents *pArr = (CComponents*)m_arrContainer.GetAt(i);
     if( pArr )

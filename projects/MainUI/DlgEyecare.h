@@ -17,7 +17,7 @@ public:
 // 对话框数据
 	enum { IDD = IDD_DLG_EYECARE };
 
-	virtual int OnApply();
+	virtual INT_PTR OnApply();
 	virtual void OnShow();
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 支持
@@ -37,8 +37,8 @@ protected:
 	CButton m_chkEnabled;
 	CString m_strCurrentState;
 	CString m_strTimeLeft;
-	int m_nEnterTime;
-	int m_nEyecareTime;
+	INT_PTR m_nEnterTime;
+	INT_PTR m_nEyecareTime;
 public:
 	
 	// 设置Eyecare 结束后的状态

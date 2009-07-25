@@ -47,7 +47,7 @@ void CFirstPwdDlg::OnBnClickedOk()
 	UpdateData(TRUE);
 	CString tip, caption;
 	caption.LoadString(IDS_APP_NAME);
-	int msgId = Services::validatePwd(m_strNewPwd, m_strPwdConfirm);
+	INT_PTR msgId = Services::validatePwd(m_strNewPwd, m_strPwdConfirm);
 	if (0 != msgId) {
 		tip.LoadString(msgId);
 		::MessageBox(NULL, tip, caption,MB_OK | MB_ICONEXCLAMATION);

@@ -56,7 +56,7 @@ CGuiButton::CGuiButton()
 
 CGuiButton::~CGuiButton()
 {
-	for (int i = 0; i < 3; i++)
+	for (INT_PTR i = 0; i < 3; i++)
 	{
 		if (m_hicon[i] != NULL)
 			DestroyIcon(m_hicon[i]);
@@ -89,7 +89,7 @@ void CGuiButton::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 	CSize SizeCad(0, 0);
 	CSize pt;
 	CPoint m_point;
-	int m_Index = 0;
+	INT_PTR m_Index = 0;
 	ZeroMemory(&bm, sizeof(ICONINFO));
 	CDC* pDC= CDC::FromHandle(lpDrawItemStruct->hDC);
 	CRect m_rect = &lpDrawItemStruct->rcItem;
@@ -133,7 +133,7 @@ void CGuiButton::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 		pDC->FillRect(&m_rect, &cb);	
 	}
 	//********************************************************************
-	int nMode = pDC->SetBkMode(TRANSPARENT);
+	INT_PTR nMode = pDC->SetBkMode(TRANSPARENT);
 	if (m_caption.GetLength() > 0)
 		SizeCad = pDC->GetTextExtent(m_caption);
 	
@@ -176,7 +176,7 @@ void CGuiButton::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 	{
 		if (m_Index != -1)
 		{
-			int calculodify;
+			INT_PTR calculodify;
 			m_rect.right = m_rect.left + sizeImag.cx + 5;
 			calculodify = m_rect.Height()- (sizeImag.cy);
 			calculodify /= 2;
@@ -197,8 +197,8 @@ void CGuiButton::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 	//-----------------------------------------------------------------------
 	else if (m_viewImage == TRUE && m_ViewText == TRUE)
 	{
-		int calculodifx = 0;
-		int calculodify = 0;
+		INT_PTR calculodifx = 0;
+		INT_PTR calculodify = 0;
 		if (m_Index != -1)
 		{
 			CRect rectletra;
@@ -255,8 +255,8 @@ void CGuiButton::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 	else if (m_ViewText == TRUE)
 	{
 		CSize sz = pDC->GetTextExtent(m_caption);
-		int ntempcx = m_rect.Width() - sz.cx;
-		int ntempcy = m_rect.Height() - sz.cy;
+		INT_PTR ntempcx = m_rect.Width() - sz.cx;
+		INT_PTR ntempcy = m_rect.Height() - sz.cy;
 		pt = CSize(m_rect.left+ (ntempcx/2), m_rect.top+ (ntempcy/2));
 		if (m_State & ODS_DISABLED)
 			pDC->DrawState(pt, SizeCad, m_caption, DSS_DISABLED, TRUE, 0, (HBRUSH)NULL);
@@ -373,7 +373,7 @@ void CGuiButton::OnSysColorChange()
 }
 
 //*************************************************************************
-void CGuiButton::DrawBottonXP(CDC* pDC, CRect rc, int Estado)
+void CGuiButton::DrawBottonXP(CDC* pDC, CRect rc, INT_PTR Estado)
 {
 	COLORREF clrPress  = ::GetSysColor(COLOR_HIGHLIGHT);
 	COLORREF clrShadow = ::GetSysColor(COLOR_BTNSHADOW);
@@ -487,7 +487,7 @@ void CGuiButton::CalLayout()
 	CString m_str;
 	CRect m_rect;
 	CSize sizeImag = CSize(0, 0);
-	int m_High = 0;
+	INT_PTR m_High = 0;
 	if (GetSafeHwnd() == NULL)
 		return;
 	GetWindowText(m_str);
@@ -711,7 +711,7 @@ void CGuiButton::SetAlingMsg(AlingMsg m_AlingMsg)
 }
 
 //*****************************************************************************
-int CGuiButton::OnCreate(LPCREATESTRUCT lpCreateStruct) 
+INT_PTR CGuiButton::OnCreate(LPCREATESTRUCT lpCreateStruct) 
 {
 	if (CButton::OnCreate(lpCreateStruct) == -1)
 		return -1;
@@ -786,7 +786,7 @@ void CGuiButton::SetPopupMenu(CMenu* pMenu)
 void CGuiButton::ShowMenu()
 {
 	CRect rcW;
-	int x, y;
+	INT_PTR x, y;
 	GetWindowRect(&rcW);
 	if (m_iStyleArrow == ARROW_RIGHT)
 	{
@@ -802,7 +802,7 @@ void CGuiButton::ShowMenu()
 	if (m_pMenu->GetSafeHmenu() != NULL && m_iMenuActivo == FALSE)
 	{
 		m_iMenuActivo  = TRUE;	
-		int m_iResMenu = m_pMenu->GetSubMenu(0)->TrackPopupMenu(TPM_LEFTALIGN | TPM_LEFTBUTTON | TPM_NONOTIFY | TPM_RETURNCMD, 
+		INT_PTR m_iResMenu = m_pMenu->GetSubMenu(0)->TrackPopupMenu(TPM_LEFTALIGN | TPM_LEFTBUTTON | TPM_NONOTIFY | TPM_RETURNCMD, 
 												x, y,  GetParent(), NULL);
 		if (m_iResMenu != 0)
 		{

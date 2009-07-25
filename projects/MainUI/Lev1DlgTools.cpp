@@ -33,7 +33,7 @@ void CLev1DlgTools::restoreSetting() {
 
 }
 
-int CLev1DlgTools::OnApply() {
+INT_PTR CLev1DlgTools::OnApply() {
 	return 0;
 }
 

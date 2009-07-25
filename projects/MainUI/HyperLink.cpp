@@ -319,7 +319,7 @@ LONG CHyperLink::GetRegKey(HKEY key, LPCTSTR subkey, LPTSTR retdata)
 	return retval;
 }
 
-void CHyperLink::ReportError(int nError)
+void CHyperLink::ReportError(INT_PTR nError)
 {
 	CString str;
 	switch (nError) {
@@ -342,7 +342,7 @@ void CHyperLink::ReportError(int nError)
 	AfxMessageBox(str, MB_ICONEXCLAMATION | MB_OK);
 }
 
-HINSTANCE CHyperLink::GotoURL(LPCTSTR url, int showcmd)
+HINSTANCE CHyperLink::GotoURL(LPCTSTR url, INT_PTR showcmd)
 {
 	TCHAR key[MAX_PATH + MAX_PATH];
 

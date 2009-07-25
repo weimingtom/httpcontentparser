@@ -5,7 +5,7 @@
 #include ".\globalvariable.h"
 #include <com\resultvalue.h>
 #include <typeconvert.h>
-#include <programcontrol.h>
+#include <setting\programcontrol.h>
 #include <comdef.h>
 #include <utility\strutility.h>
 #include <DebugOutput.h>

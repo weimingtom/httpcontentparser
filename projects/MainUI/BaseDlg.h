@@ -11,8 +11,8 @@ public:
 	~CBaseDlg(void);
 
 	// 在改变对话框之前应该调用此函数
-	virtual int  BeforeChange();
-	int  AfterChange();
+	virtual INT_PTR  BeforeChange();
+	INT_PTR  AfterChange();
 	
 	virtual std::string getHelpLink() const = 0;
 
@@ -22,12 +22,12 @@ public:
 	}
 
 	// 恢复设置
-	int Restore();
-	int Apply();
+	INT_PTR Restore();
+	INT_PTR Apply();
 	virtual void OnShow() = 0;
 
 protected:
-	virtual int OnApply() = 0;
+	virtual INT_PTR OnApply() = 0;
 	virtual void restoreSetting() = 0;
 	void OnOK() {}
 

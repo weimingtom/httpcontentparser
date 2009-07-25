@@ -37,7 +37,7 @@ public:
 
 public:
 	void RecalTabs();
-	CSize CalcDynamicLayout(int nLength, DWORD nMode);
+	CSize CalcDynamicLayout(INT_PTR nLength, DWORD nMode);
 
 protected:
 	CGuiTabWnd  m_tabwnd;
@@ -45,9 +45,9 @@ protected:
 protected:
 	
 	//{{AFX_VIRTUAL(CGuiDocSpecial)
-	afx_msg void OnSize(UINT  nType, int cx, int cy);	
+	afx_msg void OnSize(UINT  nType, INT_PTR cx, INT_PTR cy);	
 	afx_msg void OnNcPaint();
-	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+	afx_msg INT_PTR OnCreate(LPCREATESTRUCT lpCreateStruct);
 	//}}AFX_VIRTUAL
 	
 	DECLARE_MESSAGE_MAP()

@@ -51,7 +51,7 @@ CGuiDocSpecial::~CGuiDocSpecial()
 {
 }
 
-CSize CGuiDocSpecial::CalcDynamicLayout(int nLength,DWORD nMode)
+CSize CGuiDocSpecial::CalcDynamicLayout(INT_PTR nLength,DWORD nMode)
 {
 	CSize sz=CControlBar::CalcDynamicLayout(nLength,nMode);
 //	sz.cx+=1;
@@ -59,7 +59,7 @@ CSize CGuiDocSpecial::CalcDynamicLayout(int nLength,DWORD nMode)
 	return sz;
 }
 
-int CGuiDocSpecial::OnCreate(LPCREATESTRUCT lpCreateStruct)
+INT_PTR CGuiDocSpecial::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if (CDockBar::OnCreate(lpCreateStruct) == -1)
 		return -1;
@@ -71,7 +71,7 @@ void CGuiDocSpecial::OnNcPaint()
 {
 	CRect rcWindow;
 	CRect rcClient;
-	int m_iBorder=2; 
+	INT_PTR m_iBorder=2; 
 	CWindowDC	dc(this);
 	GetWindowRect(&rcWindow);
 	GetClientRect(&rcClient);
@@ -83,7 +83,7 @@ void CGuiDocSpecial::OnNcPaint()
 	rcClient.OffsetRect(-rcWindow.left,-rcWindow.top);
 	dc.ExcludeClipRect(rcClient);   
 	rcWindow.OffsetRect(-rcWindow.left, -rcWindow.top);
-	int ibotton=rcWindow.bottom;
+	INT_PTR ibotton=rcWindow.bottom;
 	rcWindow.top=rcWindow.bottom-m_iBorder;
 	dc.FillRect(rcWindow,&cbr); 
 	rcWindow.top=0;
@@ -96,7 +96,7 @@ void CGuiDocSpecial::OnNcPaint()
 }
 
 
-void CGuiDocSpecial::OnSize(UINT nType,int cx,int cy)
+void CGuiDocSpecial::OnSize(UINT nType,INT_PTR cx,INT_PTR cy)
 {
 	CDockBar::OnSize(nType,cx,cy);
 	Invalidate();
@@ -106,17 +106,17 @@ void CGuiDocSpecial::OnSize(UINT nType,int cx,int cy)
 /*
 void CGuiDocSpecial::RecalTabs()
 {
-	int inumTabs=GetDockedCount();
+	INT_PTR inumTabs=GetDockedCount();
 	if (inumTabs > 1)
 	{
 
-		for (int i=0; i< inumTabs; i++)
+		for (INT_PTR i=0; i< inumTabs; i++)
 		{
-			//GetNumWnd(int m_numtab)
+			//GetNumWnd(INT_PTR m_numtab)
 			CString m_caption;
 			CWnd* pParent=(CWnd*)m_arrBars[i];
 			ASSERT(pParent);
-			int j=0;
+			INT_PTR j=0;
 			BOOL bFound=FALSE;
 			while(j< m_tabwnd.GetCount())
 			{

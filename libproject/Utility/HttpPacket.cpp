@@ -13,8 +13,8 @@
 // class HTTPPacket
 
 // static members
-int HTTPPacket::cur_code_ = 0;
-int HTTPPacket::generateCode() {
+INT_PTR HTTPPacket::cur_code_ = 0;
+INT_PTR HTTPPacket::generateCode() {
 	cur_code_++;
 	return cur_code_;
 }
@@ -71,11 +71,11 @@ bool HTTPPacket::isComplete()  const {
 		return dataextractor_->finished();
 }
 
-unsigned HTTPPacket::getHeaderSize() const {
+INT_PTR HTTPPacket::getHeaderSize() const {
 	return header_size_;
 }
 
-unsigned HTTPPacket::getDataSize() const { 
+INT_PTR HTTPPacket::getDataSize() const { 
 	if (http_data_ != NULL)
 		return http_data_->getTotalSize();
 	else
@@ -84,17 +84,17 @@ unsigned HTTPPacket::getDataSize() const {
 
 /////////////////////////////////////////////////////
 // 将数据保存在文件当中
-int HTTPPacket::achieve(const char * filename) {
+INT_PTR HTTPPacket::achieve(const char * filename) {
 	return raw_packets_->achieve(filename);
 }
-int  HTTPPacket::achieve_data(const char * filename) {
+INT_PTR  HTTPPacket::achieve_data(const char * filename) {
 	if (NULL != http_data_)
 		return http_data_->achieve(filename);
 	else
 		return 0;
 }
 
-//int  HTTPPacket::achieve_header(const char * filename) {
+//INT_PTR  HTTPPacket::achieve_header(const char * filename) {
 //	if (NULL != http_header_achieve_)
 //		return http_header_achieve_->achieve(filename);
 //	else
@@ -104,7 +104,7 @@ int  HTTPPacket::achieve_data(const char * filename) {
 ///////////////////////////////////////////////
 // 一下函数对原始数据包队列进行操作
 
-void HTTPPacket::addRawPacket(const char *buf, const int len) {
+void HTTPPacket::addRawPacket(const char *buf, const INT_PTR len) {
 	// 如果此函数分配内存失败，外层程序会处理相应异常
 	assert(raw_packets_ != NULL);
 	raw_packets_->write(buf, len);
@@ -118,7 +118,7 @@ ProtocolPacket<HTTP_PACKET_SIZE> * HTTPPacket::getRawPacket() {
 ////////////////////////////////////////////
 // 验证HTTP包，并将其加入到保重
 // 如果返回0, 则表示不是HTTP包
-int HTTPPacket::addBuffer(const char *buf, const int len, int * written_length) {
+INT_PTR HTTPPacket::addBuffer(const char *buf, const INT_PTR len, INT_PTR * written_length) {
 	try {
 		assert (written_length != NULL);
 
@@ -127,9 +127,9 @@ int HTTPPacket::addBuffer(const char *buf, const int len, int * written_length) 
 		// 循环调用指导数据处理完成
 		// 因为chunk编码方式可能多个包存在于一个物理包当中。。
 		// 所以必须不断的提取，知道数据结束
-		int bytes = 0;
+		INT_PTR bytes = 0;
 		while (bytes <= len) {
-			int bytes_read = extractData(&(buf[bytes]), len - bytes);
+			INT_PTR bytes_read = extractData(&(buf[bytes]), len - bytes);
 
 			bytes += bytes_read;
 
@@ -147,9 +147,9 @@ int HTTPPacket::addBuffer(const char *buf, const int len, int * written_length) 
 		assert(bytes <= len);
 		*written_length = bytes;
 		return 0;
-	} catch(int) {
+	} catch(INT_PTR) {
 		//WriteLog("E:\\workspace\\debuglog\\bbbb.log", 0, getCode(), buf, len);
-		DEBUG_MESSAGE("addBuffer int exception...");
+		DEBUG_MESSAGE("addBuffer INT_PTR exception...");
 		// 如果不是一个HTTP协议，那么直接保存，并将其表示为已经完成的包
 		dataextractor_ = HttpDataExtractor::Create(NULL, NULL);
 		addRawPacket(buf, len);
@@ -166,9 +166,9 @@ int HTTPPacket::addBuffer(const char *buf, const int len, int * written_length) 
 	}
 }
 
-int HTTPPacket::read(char *buf, const int bufsize, int &bytedread) {
-	int head_bytes_read = 0;
-	int data_bytes_read = 0;
+INT_PTR HTTPPacket::read(char *buf, const INT_PTR bufsize, INT_PTR &bytedread) {
+	INT_PTR head_bytes_read = 0;
+	INT_PTR data_bytes_read = 0;
 	if (header_read_ == false) {
 		header_read_ = true;
 		// head_bytes_read = http_header_achieve_->read(buf, bufsize);
@@ -179,7 +179,7 @@ int HTTPPacket::read(char *buf, const int bufsize, int &bytedread) {
 	return http_data_->getBytesCanRead();
 }
 
-int HTTPPacket::extractData(const char *buf, const int len) {
+INT_PTR HTTPPacket::extractData(const char *buf, const INT_PTR len) {
 	//char buffer[1024];
 	//sprintf(buffer, "[code %d]is completed %s, is header_exist %s", getCode(),
 	//			isComplete() ? "true" : "false", header_exist_ ? "true" : "false");
@@ -189,7 +189,7 @@ int HTTPPacket::extractData(const char *buf, const int len) {
 		// 是否是一个有效的HTTP包
 		if (!testHttpHeaderPacket(buf, len)) {
 			OutputDebugString("==HTTPPacket Exception in extractData");
-			throw int(0);
+			throw INT_PTR(0);
 		}
 		
 		assert (dataextractor_ == NULL);
@@ -210,13 +210,13 @@ int HTTPPacket::extractData(const char *buf, const int len) {
 		
 		// 保存头部
 		// http_header_achieve_ = new ProtocolPacket<HTTP_PACKET_SIZE>();// 存储头部
-		// const int header_written = http_header_achieve_->write(buf, header_size_);
+		// const INT_PTR header_written = http_header_achieve_->write(buf, header_size_);
 		// assert (header_written == header_size_);
 
 		// 创建内容解析器
 		dataextractor_ = HttpDataExtractor::Create(&http_header_, http_data_);
 
-		int bytes_dealed = header_size_;
+		INT_PTR bytes_dealed = header_size_;
 
 		// 如果除了头部仍然还有其他数据
 		if (len - header_size_ > 0)
@@ -242,7 +242,7 @@ int HTTPPacket::extractData(const char *buf, const int len) {
 
 	return 0; // 其实不会到这里的...
 }
-bool HTTPPacket::testHttpHeaderPacket(const char *buf, int len) {
+bool HTTPPacket::testHttpHeaderPacket(const char *buf, INT_PTR len) {
 	return http_header_.isHttpHeader(buf, len);
 }
 
@@ -256,7 +256,7 @@ bool HTTPPacket::transfefTail() {
 
 // 分析HTTP协议头
 // 保存HTTP协议的内容，而后获取头
-int HTTPPacket::parseHeader(const char *buffer_recv, const unsigned len) {
+INT_PTR HTTPPacket::parseHeader(const char *buffer_recv, const unsigned len) {
 	header_size_ =  http_header_.parseHeader(buffer_recv, len);
 	return header_size_;
 }
@@ -281,18 +281,18 @@ const char * HTTP_RESPONSE_HEADER::HEADER_ENDDING = "\r\n\r\n";
 const char * HTTP_RESPONSE_HEADER::HTTP_PROTOCOL_HEAD = "HTTP";
 
 // content_type
-// const int    HTTP_RESPONSE_HEADER::CONTYPE_GIF = 100;
+// const INT_PTR    HTTP_RESPONSE_HEADER::CONTYPE_GIF = 100;
 const char * HTTP_RESPONSE_HEADER::CONTYPE_GIF_NAME	= "image/gif";
-// const int    HTTP_RESPONSE_HEADER::CONTYPE_JPG = 101;
+// const INT_PTR    HTTP_RESPONSE_HEADER::CONTYPE_JPG = 101;
 const char * HTTP_RESPONSE_HEADER::CONTYPE_JPG_NAME	= "image/jpeg";
-// static const int    HTTP_RESPONSE_HEADER::CONTYPE_PNG = 102;
+// static const INT_PTR    HTTP_RESPONSE_HEADER::CONTYPE_PNG = 102;
 static const char * CONTYPE_PNG_NAME = "image/png";
 
-// const int    HTTP_RESPONSE_HEADER::CONTYPE_HTML =1;
+// const INT_PTR    HTTP_RESPONSE_HEADER::CONTYPE_HTML =1;
 const char * HTTP_RESPONSE_HEADER::CONTYPE_HTML_NAME	="text/html";
-// const int    HTTP_RESPONSE_HEADER::CONTYPE_CSS= 2;
+// const INT_PTR    HTTP_RESPONSE_HEADER::CONTYPE_CSS= 2;
 const char * HTTP_RESPONSE_HEADER::CONTYPE_CSS_NAME	= "text/css";
-// const int    HTTP_RESPONSE_HEADER::CONTYPE_JS = 3;
+// const INT_PTR    HTTP_RESPONSE_HEADER::CONTYPE_JS = 3;
 const char * HTTP_RESPONSE_HEADER::CONTYPE_JS_NAME	= "application/x-javascript";
 const char * HTTP_RESPONSE_HEADER::CONTYPE_XML_NAME = "text/xml";
 
@@ -302,11 +302,11 @@ const char * HTTP_RESPONSE_HEADER::HTTP_HEADER_TAIL  = "\r\n\r\n";
 
 // transfer_enconding
 const char * HTTP_RESPONSE_HEADER::TRANENCODING_CHUNKED_NAME = "chunked";
-// const int HTTP_RESPONSE_HEADER::TRANENCODING_CHUNKED = 1;
+// const INT_PTR HTTP_RESPONSE_HEADER::TRANENCODING_CHUNKED = 1;
 
 // content-encoding
 const char * HTTP_RESPONSE_HEADER::CONTENCODING_GZIP_NAME = "gzip";
-// const int    HTTP_RESPONSE_HEADER::CONTENCODING_GZIP = 1;
+// const INT_PTR    HTTP_RESPONSE_HEADER::CONTENCODING_GZIP = 1;
 
 // 链接
 const char * HTTP_RESPONSE_HEADER::CONNECTION_KEEP_ALIVE_NAME = "keep-alive";
@@ -332,19 +332,19 @@ HTTP_RESPONSE_HEADER::~HTTP_RESPONSE_HEADER() {
 // 对于某些HTTP response packet, 这里存在大量的包
 // 没有内容
 bool HTTP_RESPONSE_HEADER::existContent() const {
-	const int code =  getResponseCode();
+	const INT_PTR code =  getResponseCode();
 	if (code == 204) {
 		return false;
 	} else if (code == 304) {
 		return false;
-	} else if (1 == (int)(code/100)) {
+	} else if (1 == (INT_PTR)(code/100)) {
 		return false;
 	} else {
 		return true;
 	}
 }
 
-int HTTP_RESPONSE_HEADER::parseHeader(const char *header_data, const int len) {
+INT_PTR HTTP_RESPONSE_HEADER::parseHeader(const char *header_data, const INT_PTR len) {
 	char buf[HTTP_HEADER_MAX_LENGTH];
 	assert(HTTP_HEADER_MAX_LENGTH > len);
 
@@ -372,7 +372,7 @@ int HTTP_RESPONSE_HEADER::parseHeader(const char *header_data, const int len) {
 	}
 
 	// 返回整个头部的大小
-	const int total_header_length = HTTP_HEADER_TAIL_LENGTH + http_header_tail - header_data;
+	const INT_PTR total_header_length = HTTP_HEADER_TAIL_LENGTH + http_header_tail - header_data;
 	assert(len >= total_header_length);
 	return total_header_length;
 }
@@ -446,7 +446,7 @@ void HTTP_RESPONSE_HEADER::parseLine(const char *linedata) {
 	}
 }
 
-bool HTTP_RESPONSE_HEADER::isHttpHeader(const char *line, const int len) {
+bool HTTP_RESPONSE_HEADER::isHttpHeader(const char *line, const INT_PTR len) {
 	if (len < 4) return false;
 	if(line == strstr(line, HTTP_PROTOCOL_HEAD) /*&& NULL != strstr(line, "\r\n")*/)
 		return true;

@@ -161,10 +161,10 @@ COLORREF GuiDrawLayer::GetRGBColorTabs()
 //	byRvalue =byRvalue>>2;
 //	byGvalue =byGvalue>>2;
 //	byBvalue =byBvalue>>2;
-	int iMaximo=max(byRvalue,byGvalue);
+	INT_PTR iMaximo=max(byRvalue,byGvalue);
 	iMaximo=max(iMaximo,byBvalue);
 	iMaximo= 255-iMaximo;
-	iMaximo=iMaximo-(int)(iMaximo*0.51);
+	iMaximo=iMaximo-(INT_PTR)(iMaximo*0.51);
 	return RGB(byRvalue+iMaximo,byGvalue+iMaximo,byBvalue+iMaximo);	
 	
 }
@@ -175,10 +175,10 @@ COLORREF GuiDrawLayer::GetRGBColorTabs()
 	byRvalue =byRvalue>>2;
 	byGvalue =byGvalue>>2;
 	byBvalue =byBvalue>>2;
-	int iMaximo=max(byRvalue,byGvalue);
+	INT_PTR iMaximo=max(byRvalue,byGvalue);
 	iMaximo=max(iMaximo,byBvalue);
 	iMaximo= 255-iMaximo;
-	iMaximo=iMaximo-(int)(iMaximo*0.14);
+	iMaximo=iMaximo-(INT_PTR)(iMaximo*0.14);
 	return RGB(byRvalue+iMaximo,byGvalue+iMaximo,byBvalue+iMaximo);	
 */
 
@@ -190,10 +190,10 @@ COLORREF GuiDrawLayer::GetRGBSkinMenu()
 	byRvalue =byRvalue>>2;
 	byGvalue =byGvalue>>2;
 	byBvalue =byBvalue>>2;
-	int iMaximo=max(byRvalue,byGvalue);
+	INT_PTR iMaximo=max(byRvalue,byGvalue);
 	iMaximo=max(iMaximo,byBvalue);
 	iMaximo= 255-iMaximo;
-	iMaximo=iMaximo-(int)(iMaximo*0.018);
+	iMaximo=iMaximo-(INT_PTR)(iMaximo*0.018);
 	return RGB(byRvalue+iMaximo,byGvalue+iMaximo,byBvalue+iMaximo);	
 	
 }
@@ -213,10 +213,10 @@ COLORREF GuiDrawLayer::GetRGBColorGrayText()
 	byRvalue =byRvalue>>1;
 	byGvalue =byGvalue>>1;
 	byBvalue =byBvalue>>1;
-	int iMaximo=max(byRvalue,byGvalue);
+	INT_PTR iMaximo=max(byRvalue,byGvalue);
 	iMaximo=max(iMaximo,byBvalue);
 	iMaximo= 255-iMaximo;
-	iMaximo=iMaximo-(int)(iMaximo*0.60);
+	iMaximo=iMaximo-(INT_PTR)(iMaximo*0.60);
 	return RGB(byRvalue+iMaximo,byGvalue+iMaximo,byBvalue+iMaximo);	
 	
 }
@@ -263,10 +263,10 @@ COLORREF GuiDrawLayer::GetRGBPressBXP()
 	byRvalue =byRvalue>>2;
 	byGvalue =byGvalue>>2;
 	byBvalue =byBvalue>>2;
-	int iMaximo=max(byRvalue,byGvalue);
+	INT_PTR iMaximo=max(byRvalue,byGvalue);
 	iMaximo=max(iMaximo,byBvalue);
 	iMaximo= 255-iMaximo;
-	iMaximo=iMaximo-(int)(iMaximo*0.21);
+	iMaximo=iMaximo-(INT_PTR)(iMaximo*0.21);
 	return RGB(byRvalue+iMaximo,byGvalue+iMaximo,byBvalue+iMaximo);	
 	
 }
@@ -281,10 +281,10 @@ COLORREF GuiDrawLayer::GetRGBMenu()
 	byRvalue =byRvalue>>3;
 	byGvalue =byGvalue>>3;
 	byBvalue =byBvalue>>3;
-	int iMaximo=max(byRvalue,byGvalue);
+	INT_PTR iMaximo=max(byRvalue,byGvalue);
 	iMaximo=max(iMaximo,byBvalue);
 	iMaximo= 255-iMaximo;
-	iMaximo=iMaximo-(int)(iMaximo*0.47);
+	iMaximo=iMaximo-(INT_PTR)(iMaximo*0.47);
 	return RGB(byRvalue+iMaximo,byGvalue+iMaximo,byBvalue+iMaximo);	
 	
 }
@@ -299,10 +299,10 @@ COLORREF GuiDrawLayer::GetRGBTitleMenu()
 	byRvalue =byRvalue>>2;
 	byGvalue =byGvalue>>2;
 	byBvalue =byBvalue>>2;
-	int iMaximo=max(byRvalue,byGvalue);
+	INT_PTR iMaximo=max(byRvalue,byGvalue);
 	iMaximo=max(iMaximo,byBvalue);
 	iMaximo= 255-iMaximo;
-	iMaximo=iMaximo-(int)(iMaximo*0.8);
+	iMaximo=iMaximo-(INT_PTR)(iMaximo*0.8);
 	return RGB(byRvalue+iMaximo,byGvalue+iMaximo,byBvalue+iMaximo);	
 	
 }
@@ -324,10 +324,10 @@ COLORREF GuiDrawLayer::GetRGBFondoXP()
 	byRvalue =byRvalue>>2;
 	byGvalue =byGvalue>>2;
 	byBvalue =byBvalue>>2;
-	int iMaximo=max(byRvalue,byGvalue);
+	INT_PTR iMaximo=max(byRvalue,byGvalue);
 	iMaximo=max(iMaximo,byBvalue);
 	iMaximo= 255-iMaximo;
-	iMaximo=iMaximo-(int)(iMaximo*0.14);
+	iMaximo=iMaximo-(INT_PTR)(iMaximo*0.14);
 	return RGB(byRvalue+iMaximo,byGvalue+iMaximo,byBvalue+iMaximo);	
 }
 
@@ -368,7 +368,7 @@ HICON GuiDrawLayer::LoadIconLib(UINT uIcon)
 
 void GuiDrawLayer::DrawArrow(CDC* pDC,CRect m_rc,BOOL m_bDown)
 {
-	int difh =m_rc.Height()-mHeight.y;
+	INT_PTR difh =m_rc.Height()-mHeight.y;
 	difh/=2;
 	m_rc.left=m_rc.right-m_iWidthDrowDown;
 	m_img.Draw(pDC,m_bDown?0:2,CPoint(m_rc.left+2,m_rc.top+difh),ILD_TRANSPARENT);		
@@ -377,8 +377,8 @@ void GuiDrawLayer::DrawArrow(CDC* pDC,CRect m_rc,BOOL m_bDown)
 
 void GuiDrawLayer::DrawCheck(CDC* pDC,CRect m_rcTemp)
 {
-	int iMediaAltura=(m_rcTemp.Height()/2)-2;
-	int iMedioBox= m_rcTemp.Width()/2;
+	INT_PTR iMediaAltura=(m_rcTemp.Height()/2)-2;
+	INT_PTR iMedioBox= m_rcTemp.Width()/2;
 	CPen cp(PS_SOLID,1,GuiDrawLayer::GetRGBCaptionXP());
 	CPen *pOld=pDC->SelectObject(&cp);
 	pDC->MoveTo(m_rcTemp.left+1,m_rcTemp.top+iMediaAltura+3);
@@ -398,7 +398,7 @@ void GuiDrawLayer::DrawCheck(CDC* pDC,CRect m_rcTemp)
 	pDC->SelectObject(pOld);
 }
 
-HICON GuiDrawLayer::GetIcon(int nIcon)
+HICON GuiDrawLayer::GetIcon(INT_PTR nIcon)
 {
 	return m_img.ExtractIcon(nIcon);
 }
@@ -420,7 +420,7 @@ void GuiDrawLayer::DrawShade( CRect Rect,CPoint screen,CDC* pDC)
   // Get the desktop hDC... 
   HDC hDcDsk = GetWindowDC(0) ;
   
-  int X,Y;
+  INT_PTR X,Y;
   // Simulate a shadow on right edge... 
   for (X=1; X<=2 ;X++)
   { 
@@ -492,7 +492,7 @@ void CGuiControlBarButton::SetEnabled(BOOL bEnabled)
 	m_bEnabled=bEnabled;
 }
 
-void CGuiControlBarButton::Paint(CDC* pDC,int st,CRect rc,COLORREF clrFondo,BOOL isBackDark)
+void CGuiControlBarButton::Paint(CDC* pDC,INT_PTR st,CRect rc,COLORREF clrFondo,BOOL isBackDark)
 {
 	CBrush cb;
 	if (clrFondo==NULL_BRUSH)
@@ -530,8 +530,8 @@ void CGuiControlBarButton::Paint(CDC* pDC,int st,CRect rc,COLORREF clrFondo,BOOL
 		IMAGEINFO* pImageInfo = new IMAGEINFO;
 		m_imgList.GetImageInfo(m_nIcon,pImageInfo);
 		CRect rcbt=pImageInfo->rcImage;
-		int difh= rc.Height()-rcbt.Height();
-		int difw= rc.Width()-rcbt.Width();
+		INT_PTR difh= rc.Height()-rcbt.Height();
+		INT_PTR difw= rc.Width()-rcbt.Width();
 		if (difh< 0) difh=0;
 		if (difw< 0) difw=1;
 		difh/=2;
@@ -544,13 +544,13 @@ void CGuiControlBarButton::Paint(CDC* pDC,int st,CRect rc,COLORREF clrFondo,BOOL
 	cb.DeleteObject();
 }
 
-void CGuiControlBarButton::SetData(int nIcon,LPCTSTR lpMsg)
+void CGuiControlBarButton::SetData(INT_PTR nIcon,LPCTSTR lpMsg)
 {
 	m_nIcon=nIcon;
 	m_lpMsg=lpMsg;
 }
 
-void  CGuiControlBarButton::SetImageList(UINT nBitmapID, int cx, int nGrow, COLORREF crMask)
+void  CGuiControlBarButton::SetImageList(UINT nBitmapID, INT_PTR cx, INT_PTR nGrow, COLORREF crMask)
 {
 	CBitmap cbmp;
 	BITMAP bmp;
@@ -585,7 +585,7 @@ void  CGradient::SetDimensions(CSize Size)
 	m_Size=Size;
 }
 
-void CGradient::PrepareVertical(CDC* pDC,DWORD m_StyleDisplay,COLORREF m_clr, int nRate)
+void CGradient::PrepareVertical(CDC* pDC,DWORD m_StyleDisplay,COLORREF m_clr, INT_PTR nRate)
 {
 	BYTE byRvalue =GetRValue(m_clr);//+(nRate==30 ?10:(15));
 	BYTE byGvalue =GetGValue(m_clr);//+(nRate==30 ?10:(15));
@@ -807,7 +807,7 @@ void CGradient::PrepareVertical(CDC *pDC,UINT RTop,UINT GTop,UINT BTop,UINT RBot
 	double rStep,gStep,bStep;
 	double rCount,gCount,bCount;
 	double RectHeight=m_Size.cy/256.0;
-	const int NUM_COLORS=256;
+	const INT_PTR NUM_COLORS=256;
 	//We will start counting from TopColor to BottomColor
 	//So we give an initial value of the TopColor
 	rCount=RTop;
@@ -818,7 +818,7 @@ void CGradient::PrepareVertical(CDC *pDC,UINT RTop,UINT GTop,UINT BTop,UINT RBot
 	gStep=-((double)GTop-GBot)/NUM_COLORS;
 	bStep=-((double)BTop-BBot)/NUM_COLORS;
 	
-	for(int ColorCount=0;ColorCount<NUM_COLORS;ColorCount++)
+	for(INT_PTR ColorCount=0;ColorCount<NUM_COLORS;ColorCount++)
 	{
 		//Draw using current RGB values and Change RGB values
 		//to represent the next color in the chain
@@ -848,7 +848,7 @@ void CGradient::PrepareHorizontal(CDC *pDC,UINT RLeft,UINT GLeft,UINT BLeft,UINT
 	double rStep,gStep,bStep;
 	double rCount,gCount,bCount;
 	double RectWidth=m_Size.cx/256.0;
-	const int NUM_COLORS=256;
+	const INT_PTR NUM_COLORS=256;
 	rCount=RRight;
 	gCount=GRight;
 	bCount=BRight;
@@ -856,7 +856,7 @@ void CGradient::PrepareHorizontal(CDC *pDC,UINT RLeft,UINT GLeft,UINT BLeft,UINT
 	gStep=-((double)GRight-GLeft)/NUM_COLORS;
 	bStep=-((double)BRight-BLeft)/NUM_COLORS;
 	
-	for(int ColorCount=0;ColorCount<NUM_COLORS;ColorCount++)
+	for(INT_PTR ColorCount=0;ColorCount<NUM_COLORS;ColorCount++)
 	{
 		m_dcMem->FillRect(CRect(ColorCount*RectWidth,0,(ColorCount+1)*RectWidth,m_Size.cy),&CBrush(RGB(rCount,gCount,bCount)));
 		rCount+=rStep;
@@ -865,7 +865,7 @@ void CGradient::PrepareHorizontal(CDC *pDC,UINT RLeft,UINT GLeft,UINT BLeft,UINT
 	}
 }
 
-void CGradient::Draw(CDC *pDC, int xDest,int yDest,int xSrc, int ySrc, int Width, int Height,DWORD Rop)
+void CGradient::Draw(CDC *pDC, INT_PTR xDest,INT_PTR yDest,INT_PTR xSrc, INT_PTR ySrc, INT_PTR Width, INT_PTR Height,DWORD Rop)
 {
 	//Use BitBlt to Draw on a DC
 	

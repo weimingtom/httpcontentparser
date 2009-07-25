@@ -18,7 +18,7 @@ public:
 // 对话框数据 
 	enum { IDD = IDD_DLG_IMAGERULES };
 
-	virtual int OnApply();
+	virtual INT_PTR OnApply();
 	virtual void OnShow();
 protected:
 	virtual void restoreSetting();

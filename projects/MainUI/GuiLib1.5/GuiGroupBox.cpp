@@ -156,10 +156,10 @@ void CGuiGroupBox::OnPaint()
 	
 	//sentido del mensaje
 	
-	int nMode = dc.SetBkMode(TRANSPARENT);
+	INT_PTR nMode = dc.SetBkMode(TRANSPARENT);
 	dc.FillRect(rCText,&cb);
 	dc.SetTextColor(GuiDrawLayer::GetRGBCaptionXP());
-	int cont=SizeCad.cx;
+	INT_PTR cont=SizeCad.cx;
 	if (m_style == ALING_DOWN || m_style == ALING_UP)
 		dc.TextOut(rCText.left,rCText.bottom-2,m_Caption);
 	else

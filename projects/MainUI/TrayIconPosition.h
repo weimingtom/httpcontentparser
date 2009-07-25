@@ -16,10 +16,10 @@ public:
 	typedef enum Precision {Default=0,Low,Medium,High};
 	
 	void RestoreTrayIcon(HICON icon);
-	void SetPrecisionTimeOuts(int iLowSec, int iMedSec, int iHighSec);
+	void SetPrecisionTimeOuts(INT_PTR iLowSec, INT_PTR iMedSec, INT_PTR iHighSec);
 	BOOL GetTrayIconPosition(CPoint& point, Precision prPrec = Default);
 
-	void InitializePositionTracking(HWND hwndOfIconOwner, int iIconID);
+	void InitializePositionTracking(HWND hwndOfIconOwner, INT_PTR iIconID);
 	void SetDefaultPrecision(Precision newPrecision) { m_prDefaultPrecision = newPrecision; };
 	Precision GetDefaultPrecision(void) { return m_prDefaultPrecision; };
 
@@ -32,9 +32,9 @@ protected:
 	Precision	m_prDefaultPrecision;
 	CTime		m_tLastUpdate;
 	CPoint		m_ptPosition;
-	int			m_iTrayIconID;
+	INT_PTR			m_iTrayIconID;
 	HWND		m_hWndOfIconOwner;
-	int			m_iPrecisions[3];  //This is table of time outs in seconds of low,med and high precision modes.
+	INT_PTR			m_iPrecisions[3];  //This is table of time outs in seconds of low,med and high precision modes.
 	OSVERSIONINFO m_osVer;
 
 	BOOL FindOutPositionOfIcon(HICON icon);

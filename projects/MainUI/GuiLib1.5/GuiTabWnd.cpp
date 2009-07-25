@@ -191,7 +191,7 @@ void CGuiTabWnd::OnPaint()
 	else
 	{
 		CRect rc=m_rectDraw;
-		for (int i=0; i< 2; i++)
+		for (INT_PTR i=0; i< 2; i++)
 		{
 			dc.Draw3dRect(rc,GuiDrawLayer::GetRGBColorFace(GuiDrawLayer::m_Style),GuiDrawLayer::GetRGBColorFace(GuiDrawLayer::m_Style));
 			rc.DeflateRect(1,1);
@@ -220,7 +220,7 @@ BOOL CGuiTabWnd::Create(DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, UINT 
 	return CWnd::Create(NULL, _T(""), dwStyle |WS_CLIPSIBLINGS|WS_CLIPCHILDREN, rect, pParentWnd, nID);
 }
 
-int CGuiTabWnd::OnCreate(LPCREATESTRUCT lpCreateStruct) 
+INT_PTR CGuiTabWnd::OnCreate(LPCREATESTRUCT lpCreateStruct) 
 {
 	if (CWnd::OnCreate(lpCreateStruct) == -1)
 		return -1;
@@ -254,7 +254,7 @@ void CGuiTabWnd::RecalLayout()
 		}
 	}
 
-	for (int iCont=0; iCont< m_Numtabs;iCont++)
+	for (INT_PTR iCont=0; iCont< m_Numtabs;iCont++)
 	{
 		CGuiTab* ct=(CGuiTab*) m_pArray[iCont];
 		CWnd* m_tempWin= ct->pParent;
@@ -293,7 +293,7 @@ void CGuiTabWnd::RecalLayout()
 
 void CGuiTabWnd::AjustTabs()
 {
-	int m_iSizeAct=0;
+	INT_PTR m_iSizeAct=0;
 	m_iMinValRec=4;
 	CClientDC dc(this);
 	GetClientRect(m_rectCliente);
@@ -303,7 +303,7 @@ void CGuiTabWnd::AjustTabs()
 		m_rectCliente.bottom=m_rectCliente.top+(m_sizeImag.cy+SPACE_TAB+1);
 
 	CFont* m_fontOld=dc.SelectObject(&m_cfont);
-	for (int iCont=0; iCont< m_Numtabs;iCont++)
+	for (INT_PTR iCont=0; iCont< m_Numtabs;iCont++)
 	{
 		CGuiTab* ct=(CGuiTab*) m_pArray[iCont];
 		CRect m_Arect;
@@ -330,11 +330,11 @@ void CGuiTabWnd::AjustTabs()
 	//se debe proporcionar cada tab solo si es 3d
 	if (m_style== S3D)
 	{
-		int m_NewResize=4;
+		INT_PTR m_NewResize=4;
 		if (m_iMinValRec > m_rectCliente.Width()-4)
 		{
 			m_iSizeAct=(m_rectCliente.Width()-12)/m_Numtabs;
-			for (int iCont=0; iCont< m_Numtabs;iCont++)
+			for (INT_PTR iCont=0; iCont< m_Numtabs;iCont++)
 			{
 				CGuiTab* ct=(CGuiTab*) m_pArray[iCont];
 				CRect m_Arect;
@@ -371,7 +371,7 @@ void CGuiTabWnd::Drawtabs(CDC* dc)
 		dc->LineTo(m_rectTab.left, m_rectTab.bottom+3);
 		dc->MoveTo(m_rectTab.right, m_rectTab.bottom+3);
 	}	
-	for (int iCont=0; iCont< m_Numtabs;iCont++)
+	for (INT_PTR iCont=0; iCont< m_Numtabs;iCont++)
 	{
 		CGuiTab* ct=(CGuiTab*) m_pArray[iCont];
 		
@@ -456,7 +456,7 @@ void CGuiTabWnd::Drawtabs(CDC* dc)
 			}				
 		}
 		//se dibuja el icono
-		int nMode = dc->SetBkMode(TRANSPARENT);
+		INT_PTR nMode = dc->SetBkMode(TRANSPARENT);
 		CSize m_sChar=dc->GetTextExtent(ct->lpMsg,strlen(ct->lpMsg));
 		COLORREF clrtext;
 		if (iCont !=m_iSelectTab)
@@ -482,8 +482,8 @@ void CGuiTabWnd::Drawtabs(CDC* dc)
 				rectText.left+=m_sizeImag.cx+8;
 				rectText.right-=5;
 				CString m_cadBreak=ct->lpMsg;
-				int c=0;
-				int cont=m_cadBreak.GetLength();
+				INT_PTR c=0;
+				INT_PTR cont=m_cadBreak.GetLength();
 				while(cont > 1 )
 				{
 					CString m_scadtemp=m_cadBreak+szStrPoints;
@@ -514,7 +514,7 @@ void CGuiTabWnd::Drawtabs(CDC* dc)
 	dc->SelectObject(m_fontOld);
 }
 
-void CGuiTabWnd::SetImageList(UINT nBitmapID, int cx, int nGrow, COLORREF crMask)
+void CGuiTabWnd::SetImageList(UINT nBitmapID, INT_PTR cx, INT_PTR nGrow, COLORREF crMask)
 {
 	CBitmap cbmp;
 	BITMAP bmp;
@@ -534,7 +534,7 @@ CWnd* CGuiTabWnd::GetActiveWnd () const
 
 BOOL CGuiTabWnd::FindItem(HWND hWnd)
 {
-	for (int iCont=0; iCont< m_Numtabs;iCont++)
+	for (INT_PTR iCont=0; iCont< m_Numtabs;iCont++)
 	{
 		CGuiTab* ct=(CGuiTab*) m_pArray[iCont];
 		if (ct->pParent->GetSafeHwnd() == hWnd)
@@ -544,7 +544,7 @@ BOOL CGuiTabWnd::FindItem(HWND hWnd)
 
 }
 
-CWnd*  CGuiTabWnd::GetNumWnd(int m_numtab) const
+CWnd*  CGuiTabWnd::GetNumWnd(INT_PTR m_numtab) const
 {
         if (m_numtab > m_Numtabs)
 			return NULL;
@@ -560,7 +560,7 @@ CWnd*  CGuiTabWnd::GetNumWnd(int m_numtab) const
 
 void CGuiTabWnd::UpdateCaption(CWnd* pWnd,CString m_Title)
 {
-	for (int iCont=0; iCont< m_Numtabs;iCont++)
+	for (INT_PTR iCont=0; iCont< m_Numtabs;iCont++)
 	{
 		CGuiTab* ct=(CGuiTab*) m_pArray[iCont];
 		if (ct->pParent->GetSafeHwnd() == pWnd->GetSafeHwnd())
@@ -622,7 +622,7 @@ void CGuiTabWnd::Addtab(CWnd *pParent, CString lpMsg, UINT uIcon)
 }
 
 
-void CGuiTabWnd::DeleteTab(int m_numtab)
+void CGuiTabWnd::DeleteTab(INT_PTR m_numtab)
 {
 	if (m_numtab < m_Numtabs)
 	{
@@ -657,7 +657,7 @@ void CGuiTabWnd::DeleteTab(int m_numtab)
 	}
 }
 
-void CGuiTabWnd::OnSize(UINT nType, int cx, int cy) 
+void CGuiTabWnd::OnSize(UINT nType, INT_PTR cx, INT_PTR cy) 
 {
 	CWnd::OnSize(nType, cx, cy);
 	if (m_Numtabs > 0)
@@ -666,7 +666,7 @@ void CGuiTabWnd::OnSize(UINT nType, int cx, int cy)
 }
 
 
-void CGuiTabWnd::SetCurtab(int m_numtab)
+void CGuiTabWnd::SetCurtab(INT_PTR m_numtab)
 {
 	if (m_numtab < m_Numtabs && m_numtab != m_iSelectTab )
 	{
@@ -696,7 +696,7 @@ void CGuiTabWnd::SetCurtab(int m_numtab)
 
 }
 
-int CGuiTabWnd::GetCurtab()
+INT_PTR CGuiTabWnd::GetCurtab()
 {
 	return m_iSelectTab;
 }
@@ -706,7 +706,7 @@ void CGuiTabWnd::OnLButtonDown(UINT nFlags, CPoint point)
 {
 	// TODO: Add your message handler code here and/or call default
 	CWnd::OnLButtonDown(nFlags, point);
-	for (int iCont=0; iCont< m_Numtabs;iCont++)
+	for (INT_PTR iCont=0; iCont< m_Numtabs;iCont++)
 	{
 		CGuiTab* ct=(CGuiTab*) m_pArray[iCont];
 		if (ct->rect.PtInRect(point) != 0)
@@ -750,7 +750,7 @@ void CGuiTabWnd::SetStyle(Style estyle)
 void CGuiTabWnd::OnDestroy()
 {
 	// Libera la memoria
-    for( int i=0; i<m_Numtabs; i++ )
+    for( INT_PTR i=0; i<m_Numtabs; i++ )
     {
     CGuiTab *pTab = (CGuiTab*)m_pArray.GetAt(i);
     if( pTab )
@@ -762,7 +762,7 @@ void CGuiTabWnd::OnDestroy()
 }
 
 // daniel_h
-void CGuiTabWnd::SetTabsTitle(int iTabNr, CString sNewTitle)
+void CGuiTabWnd::SetTabsTitle(INT_PTR iTabNr, CString sNewTitle)
 {
 	CGuiTab* ct=(CGuiTab*) m_pArray[iTabNr];
 	if (ct!=NULL)
@@ -774,7 +774,7 @@ void CGuiTabWnd::SetTabsTitle(int iTabNr, CString sNewTitle)
 	}
 }
 
-void  CGuiTabWnd::SetTabMenu(UINT nMENU,int nNumTab)
+void  CGuiTabWnd::SetTabMenu(UINT nMENU,INT_PTR nNumTab)
 {
 	if (m_Numtabs >0)
 			((CGuiTab*)m_pArray[(nNumTab==0?m_Numtabs-1:nNumTab)])->AddMenu(nMENU);

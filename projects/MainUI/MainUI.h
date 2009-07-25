@@ -26,7 +26,7 @@ public:
 // й╣ож
 
 	DECLARE_MESSAGE_MAP()
-	virtual int ExitInstance();
+	virtual INT_PTR ExitInstance();
 protected:
 	BOOL Initialize(void);
 

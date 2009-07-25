@@ -15,7 +15,7 @@
 
 class CProgramList: public CListCtrlEx {
 public:
-	const CString GetToolTip(int, int, UINT nFlags, BOOL&);
+	const CString GetToolTip(INT_PTR, INT_PTR, UINT nFlags, BOOL&);
 };
 
 class CDlgProgramControl : public CBaseDlg {
@@ -31,11 +31,11 @@ public:
 	enum { IDD = IDD_DLG_PROGRAM };
 
 public:
-	virtual int OnApply();
+	virtual INT_PTR OnApply();
 	virtual void OnShow();
 	virtual void restoreSetting();
 
-	int addNewFile(const CFileInfo &fileinfo);
+	INT_PTR addNewFile(const CFileInfo &fileinfo);
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 支持
 
@@ -84,15 +84,15 @@ protected:
 	// 对于任何一个用户要添加的项，首先从deleteItems中删除，然后添加到addedItems当中
 	// 当用户执行操作的时候，将所有addedItems中的项进行添加，
 	// 所有delete中的项删除
-	typedef std::map<strutility::_tstring, int> MODIFY_ITEMS;
+	typedef std::map<strutility::_tstring, INT_PTR> MODIFY_ITEMS;
 	MODIFY_ITEMS  deleteItems_;
 	MODIFY_ITEMS addedItems_;
 
 protected:
-	void addItem(const std::string &filepath, const int iIndex);
-	void deleteItem(const std::string &filepath, const int iIndex);
+	void addItem(const std::string &filepath, const INT_PTR iIndex);
+	void deleteItem(const std::string &filepath, const INT_PTR iIndex);
 
-	void deleteJustFromUI(const int iIndex);
+	void deleteJustFromUI(const INT_PTR iIndex);
 
 	//  执行删除与添加
 	void executeDelete(IAppControl *pSetting);

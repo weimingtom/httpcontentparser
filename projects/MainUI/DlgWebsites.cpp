@@ -37,7 +37,7 @@ BEGIN_MESSAGE_MAP(CDlgWebsites, CPopupDialog)
 	ON_BN_CLICKED(IDC_BTN_CLEAR, OnBnClickedClear)
 END_MESSAGE_MAP()
 
-int CDlgWebsites::addItem(const _bstr_t &name, const long times, const long hightime, const long lowtime, const int iIndex) {
+INT_PTR CDlgWebsites::addItem(const _bstr_t &name, const long times, const long hightime, const long lowtime, const INT_PTR iIndex) {
 	TCHAR buffer[1024];
 	FILETIME ft;
 	ft.dwHighDateTime = hightime;
@@ -52,7 +52,7 @@ int CDlgWebsites::addItem(const _bstr_t &name, const long times, const long high
 	return 0;
 }
 
-int CDlgWebsites::showOnList() {
+INT_PTR CDlgWebsites::showOnList() {
 	try {
 		// Çå¿ÕListCtrl
 		m_list.DeleteAllItems();
@@ -66,7 +66,7 @@ int CDlgWebsites::showOnList() {
 		}
 
 		BSTR cur, next;
-		int cnt = 0;
+		INT_PTR cnt = 0;
 		long times, hightime, lowtime;
 
 		record->GetFirstWebsite((BSTR*)&cur, &times, &hightime, &lowtime);
@@ -104,18 +104,18 @@ BOOL CDlgWebsites::OnInitDialog()
 	static const struct
 	{
 		UINT nColHdrId;
-		int  nFormat;
-		int  nWidth;
+		INT_PTR  nFormat;
+		INT_PTR  nWidth;
 	} colData[] =
 	{
 		{IDS_DLG_WEBSITES,				  LVCFMT_LEFT,  130}, 
 		{IDS_DLG_WEBSITE_VISIT_TIMES, LVCFMT_CENTER, 70},
 		{IDS_DLG_WEBSITE_VISIT_LATEST_TIME,		  LVCFMT_RIGHT, 130},
 	};
-	const int nColCount = sizeof colData / sizeof colData[0];
+	const INT_PTR nColCount = sizeof colData / sizeof colData[0];
 
 	CString str;
-	for (int nColumn = 0; nColumn < nColCount; ++nColumn)
+	for (INT_PTR nColumn = 0; nColumn < nColCount; ++nColumn)
 	{
 		VERIFY(str.LoadString(colData[nColumn].nColHdrId));
 		m_list.InsertColumn(

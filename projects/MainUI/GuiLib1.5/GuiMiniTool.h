@@ -47,7 +47,7 @@ public:
 public:
 	CGuiToolButton		   m_bt;
 	CGuiComboBoxExt*      m_pwnd;
-	int				   m_btipo;  //es un boton o un derivado de Cwnd
+	INT_PTR				   m_btipo;  //es un boton o un derivado de Cwnd
 
 };
 
@@ -63,13 +63,13 @@ public:
 // Attributes
 public:
 	//*********************************************************************
-	void  AddButton(int nIndex,UINT Cmd,CMenu* pMenu=NULL,CString m_szCaption=_T(""),CString m_ToolTip=_T(""));
-	BOOL  CreateCombo(CGuiComboBoxExt* pControl,UINT nID,int iSize,
+	void  AddButton(INT_PTR nIndex,UINT Cmd,CMenu* pMenu=NULL,CString m_szCaption=_T(""),CString m_ToolTip=_T(""));
+	BOOL  CreateCombo(CGuiComboBoxExt* pControl,UINT nID,INT_PTR iSize,
 				DWORD dwStyle=WS_CHILD|WS_VISIBLE|CBS_AUTOHSCROLL|
 				CBS_DROPDOWNLIST|CBS_HASSTRINGS);
-	void  SetImageList(UINT nBitmapID, int cx, int nGrow, COLORREF crMask);
-	void  DelButton(int nIndex);
-	int   GetCountButton();
+	void  SetImageList(UINT nBitmapID, INT_PTR cx, INT_PTR nGrow, COLORREF crMask);
+	void  DelButton(INT_PTR nIndex);
+	INT_PTR   GetCountButton();
 	void  RecalLayout();
 	void  SetCaption(CString mSzCaption,Aling AlinText);
 	//*********************************************************************
@@ -80,13 +80,13 @@ public:
 	void  CalcAutoSize(CRect m_rc);
 	void  SetColorCaption(COLORREF	clrCaption);
 	void  Drawtext();
-	HICON GetImagIcon(int nNum);
+	HICON GetImagIcon(INT_PTR nNum);
 	CGuiToolButton* GetButton(UINT uID_Object);//,CGuiToolButton* m_btn);
 	
 	virtual void StyleDispl(DWORD dwDsp=GUISTYLE_XP)
 	{
 		m_StyleDisplay=dwDsp;
-		for (int i=0; i < nNumItems;i++)
+		for (INT_PTR i=0; i < nNumItems;i++)
     		if (((CArrButton*) m_arrButtons [i])->m_btipo ==TRUE)
 			{
 				((CArrButton*) m_arrButtons [i])->m_bt.StyleDispl(dwDsp);
@@ -101,12 +101,12 @@ protected:
    CPtrArray	m_arrButtons;
    CImageList	m_imgList;
    COLORREF		m_clrface;
-   int			nNumItems;
+   INT_PTR			nNumItems;
    Borders		m_border;
    Aling		m_AlingButton;		
    BOOL			m_bAutoSize;
-   int			m_nResultCombo;
-   int			m_nResultButtons; 
+   INT_PTR			m_nResultCombo;
+   INT_PTR			m_nResultButtons; 
    BOOL			m_bExisteCombo;
    CFont		m_cfont;	   
    CString		m_Caption;		
@@ -127,8 +127,8 @@ public:
 	// Generated message map functions
 protected:
 	//{{AFX_MSG(CGuiMiniTool)
-	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
-	afx_msg void OnSize(UINT nType, int cx, int cy);
+	afx_msg INT_PTR OnCreate(LPCREATESTRUCT lpCreateStruct);
+	afx_msg void OnSize(UINT nType, INT_PTR cx, INT_PTR cy);
 	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
 	afx_msg void OnPaint(); 
 	afx_msg void OnSysColorChange( );

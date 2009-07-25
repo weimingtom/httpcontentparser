@@ -58,8 +58,8 @@ void CFrameButton::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct) {
 
 	COLORREF m_Over = RGB(255, 193, 111);
 	CPen cpOver(PS_SOLID, 1, RGB(255, 193, 111));
-	int iMode      = pDC->SetBkMode(TRANSPARENT);
-	int iExtile    = GetButtonStyle();
+	INT_PTR iMode      = pDC->SetBkMode(TRANSPARENT);
+	INT_PTR iExtile    = GetButtonStyle();
 
 	// draw frame of checkbox
 	pDC->Draw3dRect(m_rcTemp, m_clrHigh, m_clrHigh);
@@ -92,7 +92,7 @@ void CFrameButton::DrawOrange(CDC* pDC, CRect m_rcTemp)
 {
 	if (m_bSelected== TRUE)
 	{
-		for (int i = 0; i < 2; i++)
+		for (INT_PTR i = 0; i < 2; i++)
 		{
 			COLORREF m_Over = RGB(255, 193+ (i + 10), 111+ (i + 10));
 			pDC->Draw3dRect(m_rcTemp, m_Over, m_Over);
@@ -148,8 +148,8 @@ void CFrameButton::DrawCheck(CDC* pDC, CRect rect)
 {
 	// 左上两条线
 	rect.DeflateRect(0, 0, 2, 1);
-	int left = rect.left, top = rect.top;
-	int right = rect.right, bottom = rect.bottom-1;
+	INT_PTR left = rect.left, top = rect.top;
+	INT_PTR right = rect.right, bottom = rect.bottom-1;
 	CPen pen(PS_SOLID, 1, RGB(172,222,160));
 	pDC->SelectObject(&pen);
 	pDC->MoveTo(left, top);
@@ -295,7 +295,7 @@ BOOL CFrameButton::OnEraseBkgnd(CDC* pDC)
 }
 
 
-int CFrameButton::OnCreate(LPCREATESTRUCT lpCreateStruct)
+INT_PTR CFrameButton::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if (CButton::OnCreate(lpCreateStruct) == -1)
 		return -1;

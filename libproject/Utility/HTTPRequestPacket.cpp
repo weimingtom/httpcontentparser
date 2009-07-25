@@ -6,7 +6,7 @@
 
 namespace {
 
-int ahieve_buffer(const TCHAR * filename, const char *buf, const int len) {
+INT_PTR ahieve_buffer(const TCHAR * filename, const char *buf, const INT_PTR len) {
 	if (len < 10) return 0;
 	std::fstream file;
 	file.open(filename, std::ios::out | std::ios::app);
@@ -14,7 +14,7 @@ int ahieve_buffer(const TCHAR * filename, const char *buf, const int len) {
 	return 0;
 }
 
-int gen_filename(TCHAR *filename, const int buf_size) {
+INT_PTR gen_filename(TCHAR *filename, const INT_PTR buf_size) {
 	_sntprintf(filename, buf_size, TEXT("c:\\%d.log"), GetTickCount());
 	return 0;
 }
@@ -34,32 +34,32 @@ HTTPRequestPacket::HTTPRequestPacket(void) {
 HTTPRequestPacket::~HTTPRequestPacket(void) {
 }
 
-int HTTPRequestPacket::getMainHostName(char *buffer, const int len) {
+INT_PTR HTTPRequestPacket::getMainHostName(char *buffer, const INT_PTR len) {
 	memset(buffer, 0, len);
 	strncpy(buffer, main_host_, getWrittenCount(len-1));
-	return static_cast<int>(strlen(buffer));
+	return static_cast<INT_PTR>(strlen(buffer));
 }
-int HTTPRequestPacket::getHost(char *buffer, const int len) {
+INT_PTR HTTPRequestPacket::getHost(char *buffer, const INT_PTR len) {
 	memset(buffer, 0, len);
 	strncpy(buffer, host_, getWrittenCount(len-1));
-	return static_cast<int>(strlen(buffer));
+	return static_cast<INT_PTR>(strlen(buffer));
 }
-int HTTPRequestPacket::getReferer(char *buffer, const int len) {
+INT_PTR HTTPRequestPacket::getReferer(char *buffer, const INT_PTR len) {
 	memset(buffer, 0, len);
 	strncpy(buffer, referer_, getWrittenCount(len-1));
-	return static_cast<int>(strlen(buffer));
+	return static_cast<INT_PTR>(strlen(buffer));
 }
-int HTTPRequestPacket::getUserAgent(char *buffer, const int len) {
+INT_PTR HTTPRequestPacket::getUserAgent(char *buffer, const INT_PTR len) {
 	memset(buffer, 0, len);
 	strncpy(buffer, useagent_, getWrittenCount(len-1));
-	return static_cast<int>(strlen(buffer));
+	return static_cast<INT_PTR>(strlen(buffer));
 }
 
-int HTTPRequestPacket::getGET(char *buffer, const int len) {
+INT_PTR HTTPRequestPacket::getGET(char *buffer, const INT_PTR len) {
 	memset(buffer, 0, len);
 	if (HTTP_REQUEST_OPETYPE_GET == getRequestType()) {
 		strncpy(buffer, oper_, len-1);
-		return static_cast<int>(strlen(buffer));
+		return static_cast<INT_PTR>(strlen(buffer));
 	}
 	return 0;
 }
@@ -72,10 +72,10 @@ void HTTPRequestPacket::reset() {
 }
 
 // 专门针对
-int HTTPRequestPacket::parsePacket(WSABUF * wsabuf, const int count) {
+INT_PTR HTTPRequestPacket::parsePacket(WSABUF * wsabuf, const INT_PTR count) {
 	char buffer[HTTP_REQUEST_PACKET_MAX] = {0};
-	int cur = 0;
-	for (int i = 0; i < count ; ++i) {
+	INT_PTR cur = 0;
+	for (INT_PTR i = 0; i < count ; ++i) {
 		memcpy(&(buffer[cur]), wsabuf[i].buf, wsabuf[i].len);
 		cur += wsabuf[i].len;
 	}
@@ -83,15 +83,15 @@ int HTTPRequestPacket::parsePacket(WSABUF * wsabuf, const int count) {
 	return parsePacket(buffer, cur);
 }
 
-int HTTPRequestPacket::parsePacket(char * buf, const int len) {
+INT_PTR HTTPRequestPacket::parsePacket(char * buf, const INT_PTR len) {
 	using namespace strutility;
 
 	const char * HTTP_REQUEST_NEW_LINE = "\r\n";
-	const int  HTTP_REQUEST_NEW_LINE_LENGTH = static_cast<int>(strlen(HTTP_REQUEST_NEW_LINE));
+	const INT_PTR  HTTP_REQUEST_NEW_LINE_LENGTH = static_cast<INT_PTR>(strlen(HTTP_REQUEST_NEW_LINE));
 	//reset buffer 
 	reset();
 
-	int cnt = 0;
+	INT_PTR cnt = 0;
 	const char *p = buf;
 	const char *next = strnstr(p, HTTP_REQUEST_NEW_LINE, HTTP_REQUEST_ITEM_MAX_LENGTH);
 
@@ -99,26 +99,26 @@ int HTTPRequestPacket::parsePacket(char * buf, const int len) {
 	while (next != NULL) {
 		if (strstr(p, HTTP_REQUEST_HOST) == p) {
 			// 主机地址只留DNS主名
-			const int tab_length = static_cast<int>(strlen(HTTP_REQUEST_HOST));
+			const INT_PTR tab_length = static_cast<INT_PTR>(strlen(HTTP_REQUEST_HOST));
 			strncpy(host_, p + tab_length, getWrittenCount(next - p - tab_length));
 			get_main_dns_name(main_host_, HTTP_REQUEST_ITEM_MAX_LENGTH, host_);
 			cnt++;
 		} else if (strstr(p, HTTP_REQUEST_REFERER) == p) {
-			const int tab_length = static_cast<int>(strlen(HTTP_REQUEST_REFERER));
+			const INT_PTR tab_length = static_cast<INT_PTR>(strlen(HTTP_REQUEST_REFERER));
 			strncpy(referer_, p + tab_length, getWrittenCount(next - p - tab_length));
 			cnt++;
 		} else if (strstr(p, HTTP_REQUEST_OPER_GET) == p) {
-			const int tab_length = static_cast<int>(strlen(HTTP_REQUEST_OPER_GET));
+			const INT_PTR tab_length = static_cast<INT_PTR>(strlen(HTTP_REQUEST_OPER_GET));
 			strncpy(oper_, p + tab_length, getWrittenCount(next - p - tab_length));
 			http_request_type_ = HTTP_REQUEST_OPETYPE_GET;
 			cnt++;
 		} else if (strstr(p, HTTP_REQUEST_OPER_POST) == p) {
-			const int tab_length = static_cast<int>(strlen(HTTP_REQUEST_OPER_POST));
+			const INT_PTR tab_length = static_cast<INT_PTR>(strlen(HTTP_REQUEST_OPER_POST));
 			strncpy(oper_, p + tab_length, getWrittenCount(next - p - tab_length));
 			http_request_type_ = HTTP_REQUEST_OPETYPE_POST;
 			cnt++;
 		} else if (strstr(p, HTTP_REQUEST_USER_AGENT) == p) {
-			const int tab_length = static_cast<int>(strlen(HTTP_REQUEST_USER_AGENT));
+			const INT_PTR tab_length = static_cast<INT_PTR>(strlen(HTTP_REQUEST_USER_AGENT));
 			strncpy(useagent_, p + tab_length, getWrittenCount(next-p-tab_length));
 			cnt++;
 		} else if (strstr(p, HTTP_REQUEST_OPER_POST) == p) {

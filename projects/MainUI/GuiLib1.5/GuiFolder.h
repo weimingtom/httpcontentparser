@@ -74,14 +74,14 @@ public:
 
 public:
 	void			AddFolder(CWnd* pParent, LPCSTR lpMsg, UINT uIMg = (UINT) - 1);
-	void			DeleteFolder(int m_iNumFolder, BOOL bUpdate = TRUE);
+	void			DeleteFolder(INT_PTR m_iNumFolder, BOOL bUpdate = TRUE);
 	void			RecalLayout();
 	virtual void	DrawFolder(CFolderBar* cfb, Style m_Style);
-	int				PointInFolder(CPoint pt);
+	INT_PTR				PointInFolder(CPoint pt);
 	void			EfectoScroll();
 	void			RemoveAllFolder();
 	void			TypeLook(TypeFolder tol);
-	void			SelectFolder(int m_iNumFolder);
+	void			SelectFolder(INT_PTR m_iNumFolder);
 	virtual void StyleDispl(DWORD dwDsp=GUISTYLE_XP)
 	{
 		m_StyleDisplay=dwDsp;
@@ -93,24 +93,24 @@ public:
 protected:
 	CPtrArray		m_ArrayFolder;
 	CToolTipCtrl	m_ToolTip;
-	int				m_NumFolders;   // total de folders
-	int				m_numFolderDown;
-	int				m_numFolderUp;   // numero de folders arriba
+	INT_PTR				m_NumFolders;   // total de folders
+	INT_PTR				m_numFolderDown;
+	INT_PTR				m_numFolderUp;   // numero de folders arriba
 	CFont*			cfont;
-	int				m_iSelected;
-	int				m_ultimoFolderResal;
-	int				m_iPosDown; // a partir de donde se ubica el anterior folder
-	int			    m_iposUp;   // a partir de donde se ubica el siguiente folder
-	int				m_itemp;
-	int				m_AntFolder; // folder anterior
+	INT_PTR				m_iSelected;
+	INT_PTR				m_ultimoFolderResal;
+	INT_PTR				m_iPosDown; // a partir de donde se ubica el anterior folder
+	INT_PTR			    m_iposUp;   // a partir de donde se ubica el siguiente folder
+	INT_PTR				m_itemp;
+	INT_PTR				m_AntFolder; // folder anterior
 	TypeFolder		m_typel;	// tipo de look
-	int				m_iWhatFolderIsDrawNow; // que folder estoy pintando
+	INT_PTR				m_iWhatFolderIsDrawNow; // que folder estoy pintando
 
 protected:
 	//{{AFX_MSG(CFolder)
 	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
 	afx_msg void OnPaint();
-	afx_msg void OnSize(UINT nType, int cx, int cy);
+	afx_msg void OnSize(UINT nType, INT_PTR cx, INT_PTR cy);
 	afx_msg void OnTimer(UINT nIDEvent);
 	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);

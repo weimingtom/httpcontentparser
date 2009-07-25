@@ -105,16 +105,16 @@ protected:
 	CMenu* m_pMenu;
 	//********************************************************
 	CToolTipCtrl	m_ToolTipCtrl;
-	int				m_iAling;	// message aling
-	int				m_iStyle;   // Border Style
-	int				m_iTypeButton; // Style bottom (Arrow,Normal,Link)
-	int				m_iSelected;
-	int				m_iStyleArrow;
+	INT_PTR				m_iAling;	// message aling
+	INT_PTR				m_iStyle;   // Border Style
+	INT_PTR				m_iTypeButton; // Style bottom (Arrow,Normal,Link)
+	INT_PTR				m_iSelected;
+	INT_PTR				m_iStyleArrow;
 	HICON			m_hicon[3];	
 	LPCTSTR			m_lpMsg;
 	BOOL			m_viewImage;
 	BOOL			m_ViewText;
-	int				m_iResMenu;
+	INT_PTR				m_iResMenu;
 	BOOL			m_iMenuActivo;
 	COLORREF		m_clrface;
 	CSize			m_szButton;
@@ -126,7 +126,7 @@ public:
 protected:
 	
 	//{{AFX_MSG(CSButton)
-	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+	afx_msg INT_PTR OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
 	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
 	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);

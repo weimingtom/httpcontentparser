@@ -50,7 +50,7 @@ public:
 
 public:
 	BOOL		m_bOverCombo;
-	int			m_iWidthDrowDown;
+	INT_PTR			m_iWidthDrowDown;
 	COLORREF	m_clrBtnFace;
 	COLORREF	m_clrBtnLight;
 	COLORREF	m_clrBtnDark;
@@ -66,7 +66,7 @@ public:
 	void		DrawArrow(CDC* pDC,CRect m_rc);
 	void		SetColor(COLORREF clrFace);
 	void        AutoColor(BOOL bColor=TRUE);
-	int			AddString(LPCTSTR lpszString);
+	INT_PTR			AddString(LPCTSTR lpszString);
 	void        ActiveHistory(BOOL bHistory);
 	void		LoadHistory(CString szHistory,BOOL bLoadCurrent);
 	void		SaveHistory(CString szHistory,BOOL bSaveCurrent);
@@ -91,11 +91,11 @@ protected:
 	afx_msg void OnTimer(UINT nIDEvent);
 	//afx_msg void OnKillFocus(CWnd* pNewWnd);
 	afx_msg void OnCbnKillfocus();//version 7.0
-	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+	afx_msg INT_PTR OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnSetFocus(CWnd* pOldWnd);
 	afx_msg void OnSysColorChange( );
 	afx_msg void OnCloseup();
-	afx_msg void OnSize(UINT nType, int cx, int cy);
+	afx_msg void OnSize(UINT nType, INT_PTR cx, INT_PTR cy);
 	//}}AFX_MSG
 
 	DECLARE_MESSAGE_MAP()

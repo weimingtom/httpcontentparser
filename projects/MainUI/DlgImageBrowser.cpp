@@ -38,7 +38,7 @@ END_MESSAGE_MAP()
 
 // CDlgImageBrowser 消息处理程序
 
-int CDlgImageBrowser::OnCreate(LPCREATESTRUCT lpCreateStruct)
+INT_PTR CDlgImageBrowser::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if (CDialog::OnCreate(lpCreateStruct) == -1)
 		return -1;
@@ -72,7 +72,7 @@ void CDlgImageBrowser::initImageControl() {
 	vector<strutility::_tstring> files;
 	GetFilespathInDir((LPCTSTR)m_imageDir, "*.*", &files);
 
-	int cnt = 0;
+	INT_PTR cnt = 0;
 	vector<strutility::_tstring>::iterator iter = files.begin();
 	for (; iter != files.end(); ++iter) {
 		if (strutility::endwith(iter->c_str(), ".jpg") || 

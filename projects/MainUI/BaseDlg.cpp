@@ -17,17 +17,17 @@ void CBaseDlg::SetModify(const bool changed) {
 }
 
 // 在切换窗口之后
-int  CBaseDlg::AfterChange() {
+INT_PTR  CBaseDlg::AfterChange() {
 	AfxGetMainWnd()->GetDlgItem(IDC_MAIN_OK)->EnableWindow(FALSE);
 	AfxGetMainWnd()->GetDlgItem(IDC_MAIN_APPLY)->EnableWindow(FALSE);
 	return 0;
 }
 
-int CBaseDlg::Apply() {
+INT_PTR CBaseDlg::Apply() {
 	return OnApply();
 }
 // 回复设置
-int CBaseDlg::Restore() {
+INT_PTR CBaseDlg::Restore() {
 	try {
 		SetModify(false);
 		restoreSetting();
@@ -39,12 +39,12 @@ int CBaseDlg::Restore() {
 
 // 在改变窗口之前
 // 
-int  CBaseDlg::BeforeChange() {
+INT_PTR  CBaseDlg::BeforeChange() {
 	if (Modified() == true) {
 		CString tips, caption;
 		tips.LoadString(IDS_APP_NAME);
 		caption.LoadString(IDS_TIP_SETTING_CHANGED);
-		int result = ::MessageBox(NULL, caption, tips, MB_YESNO | MB_ICONEXCLAMATION);
+		INT_PTR result = ::MessageBox(NULL, caption, tips, MB_YESNO | MB_ICONEXCLAMATION);
 		if (result == IDYES) {
 			Apply();
 			SetModify(false);

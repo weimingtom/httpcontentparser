@@ -50,12 +50,12 @@ public:
 	void Down();
 
 	void SetStyle(Border border);
-	CString GetText(int nItem);
+	CString GetText(INT_PTR nItem);
 	bool AddItem(CString m_szCad);
-	int GetNumItem();
+	INT_PTR GetNumItem();
 	CGuiNormalButton m_toolBtn;
 	CListCtrl* GetListCtrl();
-	void EditItem(const int nItem, const CString &itemText);
+	void EditItem(const INT_PTR nItem, const CString &itemText);
 
 	//  设置在规则改变是，处理的指针
 	void setOnTextChanged(OnTextChanged *onchanged) {onchanged_ = onchanged;}
@@ -77,8 +77,8 @@ public:
 	afx_msg void OnInsert();
 	afx_msg void OnPaint();
 	
-	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
-	afx_msg void OnSize(UINT nType, int cx, int cy);
+	afx_msg INT_PTR OnCreate(LPCREATESTRUCT lpCreateStruct);
+	afx_msg void OnSize(UINT nType, INT_PTR cx, INT_PTR cy);
 	afx_msg void OnEndlabeleditList(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnClickList(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnBeginlabeleditList(NMHDR *pNMHDR, LRESULT *pResult);

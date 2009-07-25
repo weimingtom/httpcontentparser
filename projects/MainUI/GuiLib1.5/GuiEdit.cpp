@@ -70,7 +70,7 @@ void CGuiEdit::PreSubclassWindow()
 	CEdit::PreSubclassWindow();
 }
 
-int CGuiEdit::OnCreate(LPCREATESTRUCT lpCreateStruct) 
+INT_PTR CGuiEdit::OnCreate(LPCREATESTRUCT lpCreateStruct) 
 {
 	if (CEdit::OnCreate(lpCreateStruct) == -1)
 		return -1;
@@ -169,7 +169,7 @@ void CGuiEdit::OnNcPaint()
 	rcClient.OffsetRect(-rcWindow.left,-rcWindow.top);
 	dc.ExcludeClipRect(rcClient);   
 	rcWindow.OffsetRect(-rcWindow.left, -rcWindow.top);
-	int ibotton=rcWindow.bottom;
+	INT_PTR ibotton=rcWindow.bottom;
 	rcWindow.top=rcWindow.bottom;
 	dc.FillRect(rcWindow,&cbr); 
 	rcWindow.top=0;
@@ -217,11 +217,11 @@ void CGuiEdit::OnChar(UINT nChar, UINT nRepCnt, UINT nFlags)
 	CEdit::OnChar(nChar, nRepCnt, nFlags);
 }
 
-void CGuiEdit::DeleteString(int nStartPos,int  nEndPos )
+void CGuiEdit::DeleteString(INT_PTR nStartPos,INT_PTR  nEndPos )
 {
-	for (int i=nStartPos; i <= nEndPos; i++)
+	for (INT_PTR i=nStartPos; i <= nEndPos; i++)
 		m_szShowMask.SetAt(i,m_cadResult.GetAt(i));	
-	int nNext = GetNextPos(nStartPos);
+	INT_PTR nNext = GetNextPos(nStartPos);
 	SetWindowText(m_szShowMask);
 	if (nNext > 0)
 		SetSel(nNext-1,nNext-1);	
@@ -229,10 +229,10 @@ void CGuiEdit::DeleteString(int nStartPos,int  nEndPos )
 
 }
 
-void CGuiEdit::DeleteAndAjust(int nStartPos,int  nEndPos )
+void CGuiEdit::DeleteAndAjust(INT_PTR nStartPos,INT_PTR  nEndPos )
 {
-	int nNext=nStartPos;
-	int difchar=DifCharReal(nStartPos, nEndPos);
+	INT_PTR nNext=nStartPos;
+	INT_PTR difchar=DifCharReal(nStartPos, nEndPos);
 
 	if (IsPosMask(nStartPos))
 		nNext = GetNextPos(nStartPos);	
@@ -244,16 +244,16 @@ void CGuiEdit::DeleteAndAjust(int nStartPos,int  nEndPos )
 
 }
 
-void CGuiEdit::AjustaCadena(int nStartPos,int  nEndPos )
+void CGuiEdit::AjustaCadena(INT_PTR nStartPos,INT_PTR  nEndPos )
 {
 	
-	int numCharMove=0;
-	int LastChar=FindLasCharR(); //el ultimo caracter valido de la cadena
-	int LastCharDel=LastChar;
-	int init =nStartPos;
-	for (int i=nStartPos; i <= LastChar; i++)
+	INT_PTR numCharMove=0;
+	INT_PTR LastChar=FindLasCharR(); //el ultimo caracter valido de la cadena
+	INT_PTR LastCharDel=LastChar;
+	INT_PTR init =nStartPos;
+	for (INT_PTR i=nStartPos; i <= LastChar; i++)
 	{
-			int nNext = GetNextPos(nStartPos);
+			INT_PTR nNext = GetNextPos(nStartPos);
 			if (IsValidChar(m_szShowMask.GetAt(nNext),nNext) || m_szShowMask.GetAt(nNext)==m_cadResult.GetAt(i))//el caracter se puede mover a esa posicion			
 			{
 				//se mueve el caracter
@@ -272,9 +272,9 @@ void CGuiEdit::AjustaCadena(int nStartPos,int  nEndPos )
 
 }
 
-int CGuiEdit::FindLasCharR()
+INT_PTR CGuiEdit::FindLasCharR()
 {
-	int i;
+	INT_PTR i;
 	for (i=m_szShowMask.GetLength()-1;i> -1; i--)
 	{
 		if (m_szShowMask.GetAt(i) ==' ' || IsPosMask(i))
@@ -288,19 +288,19 @@ int CGuiEdit::FindLasCharR()
 
 
 
-int CGuiEdit::NumCharNoMask()
+INT_PTR CGuiEdit::NumCharNoMask()
 {
-	int numEfect=0;
-	for (int i=0;i<m_cadResult.GetLength()-1; i++)
+	INT_PTR numEfect=0;
+	for (INT_PTR i=0;i<m_cadResult.GetLength()-1; i++)
 		if (!IsPosMask(m_cadResult.GetAt(i)))
 			numEfect++;
 	return numEfect;
 }
 
-int CGuiEdit::DifCharReal(int start, int fin)
+INT_PTR CGuiEdit::DifCharReal(INT_PTR start, INT_PTR fin)
 {
-	int numEfect=0;
-	for (int i=start;i<fin; i++)
+	INT_PTR numEfect=0;
+	for (INT_PTR i=start;i<fin; i++)
 		if (!IsPosMask(i))
 			numEfect++;
 	return numEfect;
@@ -310,10 +310,10 @@ int CGuiEdit::DifCharReal(int start, int fin)
 //2 -- BACK
 void CGuiEdit::ValidMask(UINT nChar)
 {
-	int nStartPos;
-	int ntempStartpos;
-	int nEndPos;
-	int nNext;
+	INT_PTR nStartPos;
+	INT_PTR ntempStartpos;
+	INT_PTR nEndPos;
+	INT_PTR nNext;
 	GetSel( nStartPos, nEndPos ); 
 	ntempStartpos=nStartPos;
 
@@ -390,7 +390,7 @@ void CGuiEdit::ValidMask(UINT nChar)
 	}
 }
 
-BOOL CGuiEdit::IsPosMask(int nStartPos)
+BOOL CGuiEdit::IsPosMask(INT_PTR nStartPos)
 {
 	TCHAR Char =m_szMask.GetAt(nStartPos);
 	if (Char == '#' || Char == '0')
@@ -401,7 +401,7 @@ BOOL CGuiEdit::IsPosMask(int nStartPos)
 
 }
 
-BOOL CGuiEdit::IsValidChar(UINT nChar,int nStartPos)
+BOOL CGuiEdit::IsValidChar(UINT nChar,INT_PTR nStartPos)
 {
 	
 	TCHAR Char =m_szMask.GetAt(nStartPos);
@@ -421,11 +421,11 @@ BOOL CGuiEdit::IsValidChar(UINT nChar,int nStartPos)
 	return TRUE;	
 }
 
-int CGuiEdit::GetNextPos(int start)
+INT_PTR CGuiEdit::GetNextPos(INT_PTR start)
 {
 	if (m_KeySpecial == 2)
 	{
-		for (int i= start-1; i>-1;i--)
+		for (INT_PTR i= start-1; i>-1;i--)
 		{
 			if (m_szMask.GetAt(i) == '#' || 
 				m_szMask.GetAt(i) == '0' ||
@@ -438,7 +438,7 @@ int CGuiEdit::GetNextPos(int start)
 	}
 
 	
-	for (int i= start+1; i< m_szMask.GetLength();i++)
+	for (INT_PTR i= start+1; i< m_szMask.GetLength();i++)
 	{
 		TCHAR m=m_szMask.GetAt(i);
 		if (m_szMask.GetAt(i) == '#' || 
@@ -471,7 +471,7 @@ void CGuiEdit::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		}
 		if(nChar == VK_RIGHT)
 		{
-			int nStartPos, nEndPos;
+			INT_PTR nStartPos, nEndPos;
 			GetSel( nStartPos, nEndPos ); 
 			m_KeySpecial=3;
 			//controlar que si no existen caracteres validos hacia
@@ -489,9 +489,9 @@ void CGuiEdit::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	CEdit::OnKeyDown(nChar, nRepCnt, nFlags);
 }
 
-BOOL  CGuiEdit::ValSpecialKey(int nStartPos,	int nEndPos)
+BOOL  CGuiEdit::ValSpecialKey(INT_PTR nStartPos,	INT_PTR nEndPos)
 {
-	int nNext=nStartPos;
+	INT_PTR nNext=nStartPos;
 	TCHAR Char =m_szMask.GetAt(nStartPos);
 	if (m_KeySpecial == 3)
 	{
@@ -515,7 +515,7 @@ void CGuiEdit::SetMask(CString mszMask,CString mszShowMask,Mask enTypeMask)
 	m_cadResult=mszShowMask;
 	SetWindowText(m_szShowMask);
 	SetLimitText( m_szMask.GetLength()+1);
-	int nNext = GetNextPos(0);
+	INT_PTR nNext = GetNextPos(0);
 	SetSel(nNext, nNext);
 }
 
@@ -527,7 +527,7 @@ BOOL CGuiEdit::PreTranslateMessage(MSG* pMsg)
 	return CEdit::PreTranslateMessage(pMsg);
 }
 
-void CGuiEdit::OnSize(UINT nType, int cx, int cy) 
+void CGuiEdit::OnSize(UINT nType, INT_PTR cx, INT_PTR cy) 
 {
 	CEdit::OnSize(nType, cx, cy);
 	RecalLayout();	
@@ -535,14 +535,14 @@ void CGuiEdit::OnSize(UINT nType, int cx, int cy)
 	
 }
 
-BOOL CGuiEdit::IsValPos(UINT nChar,int pos)
+BOOL CGuiEdit::IsValPos(UINT nChar,INT_PTR pos)
 {
 	if (IsValidChar(nChar,pos))
 	{
 		if (pos > 0)
 		{
 			m_KeySpecial=2;
-			int nNext=GetNextPos(pos);
+			INT_PTR nNext=GetNextPos(pos);
 			m_KeySpecial=0;
 			if (m_szShowMask.GetAt(nNext) == m_cadResult.GetAt(nNext) && pos > nNext)			
 			{
@@ -560,7 +560,7 @@ BOOL CGuiEdit::IsValPos(UINT nChar,int pos)
 void CGuiEdit::OnSetFocus(CWnd* pOldWnd) 
 {
 	CEdit::OnSetFocus(pOldWnd);
-	int nNext=GetNextPos(0);
+	INT_PTR nNext=GetNextPos(0);
 	SetSel(nNext,nNext);
 	
 }

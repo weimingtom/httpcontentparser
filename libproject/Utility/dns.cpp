@@ -15,10 +15,10 @@ const TCHAR * DNS_POSTFIX_GOV = ".gov";
 
 
 const char * HTTP = "http://";
-const int HTTP_LENGTH = 7;
+const INT_PTR HTTP_LENGTH = 7;
 
 const char * HTTPS = "https://";
-const int HTTPS_LENGTH = 8;
+const INT_PTR HTTPS_LENGTH = 8;
 
 bool isPostfix(TCHAR * postfix) {
 	if (postfix[4] == '\0' || postfix[4] == '.' || postfix[4] == '/' || postfix[4] == ':')
@@ -29,32 +29,32 @@ bool isPostfix(TCHAR * postfix) {
 
 // 之去掉如 .com.cn 或者 .com
 // 对于 www.comdie.cn就不应该去掉.com之后的内容
-int remove_postfix(TCHAR * name) {
+INT_PTR remove_postfix(TCHAR * name) {
 	TCHAR *p = NULL;
 	if (NULL != (p = _tcsstr(name, DNS_POSTFIX_COM))) {
 		if (isPostfix(p)) {
 			p[0] = '\0';
-			return (int)(p-name);
+			return (INT_PTR)(p-name);
 		}
 	} else if (NULL != (p = _tcsstr(name, DNS_POSTFIX_NET))) {
 		if (isPostfix(p)) {
 			p[0] = '\0';
-			return (int)(p-name);
+			return (INT_PTR)(p-name);
 		}
 	} else if (NULL != (p = _tcsstr(name, DNS_POSTFIX_EDU))) {
 		if (isPostfix(p)) {
 			p[0] = '\0';
-			return (int)(p-name);
+			return (INT_PTR)(p-name);
 		}
 	} else if (NULL != (p = _tcsstr(name, DNS_POSTFIX_ORG))) {
 		if (isPostfix(p)) {
 			p[0] = '\0';
-			return (int)(p-name);
+			return (INT_PTR)(p-name);
 		}
 	} else if (NULL != (p = _tcsstr(name, DNS_POSTFIX_GOV))) {
 		if (isPostfix(p)) {
 			p[0] = '\0';
-			return (int)(p-name);
+			return (INT_PTR)(p-name);
 		}
 	}
 
@@ -133,8 +133,8 @@ bool isContainsIP(TCHAR * dns) {
 		return false;
 }
 
-char * get_main_serv_name(TCHAR * name, const int len, const TCHAR * fulldns) {
-	const int min_buf_size = MAX_PATH;
+char * get_main_serv_name(TCHAR * name, const INT_PTR len, const TCHAR * fulldns) {
+	const INT_PTR min_buf_size = MAX_PATH;
 	assert (len >= min_buf_size);
 	using namespace strutility;
 
@@ -145,7 +145,7 @@ char * get_main_serv_name(TCHAR * name, const int len, const TCHAR * fulldns) {
 	strtolower(buffer);
 
 	// 去掉HTTP://
-	int begin = 0;
+	INT_PTR begin = 0;
 	if (strutility::beginwith(fulldns, HTTP)) {
 		begin += HTTP_LENGTH;
 	}
@@ -167,14 +167,14 @@ char * get_main_serv_name(TCHAR * name, const int len, const TCHAR * fulldns) {
 	return name;
 }
 
-int get_main_dns_name(TCHAR * main_name, const int bufsize, const TCHAR *fulldns) {
-	const int min_buf_size = MAX_PATH;
+INT_PTR get_main_dns_name(TCHAR * main_name, const INT_PTR bufsize, const TCHAR *fulldns) {
+	const INT_PTR min_buf_size = MAX_PATH;
 	assert (bufsize >= min_buf_size);
 	using namespace strutility;
 
 	TCHAR name[min_buf_size];
 	// 确定拷贝函数的其实位置，不过一www.开头就向后移动四个，否则就从0开始
-	const int start_index = beginwidht_www(fulldns) ? 4 : 0;
+	const INT_PTR start_index = beginwidht_www(fulldns) ? 4 : 0;
 	// 去掉头部
 	memset(name, 0, sizeof(name));
 	_tcscpy(name, &(fulldns[start_index]));
@@ -184,9 +184,9 @@ int get_main_dns_name(TCHAR * main_name, const int bufsize, const TCHAR *fulldns
 
 	// 去除掉后缀
 	// 仍然有问题 .net. 或者 .net'\0'才可以，否则的话， www.netconfig.com就只能剩下www了
-	const int len = remove_postfix(name);
+	const INT_PTR len = remove_postfix(name);
 	assert (len == _tcslen(name));
-	int len_remove_postfix = 0;
+	INT_PTR len_remove_postfix = 0;
 	
 	// 去掉国别
 	// 如果此时自首两个是.**， 那么去掉它，因为所有过的二级域名都是两个字符
@@ -200,7 +200,7 @@ int get_main_dns_name(TCHAR * main_name, const int bufsize, const TCHAR *fulldns
 	// 可能域名仍然后两个部分，例如
 	// 从尾部开始向前寻找'.'
 	bool a = false;
-	for (int i = len - len_remove_postfix - 1; i >=0; --i) {
+	for (INT_PTR i = len - len_remove_postfix - 1; i >=0; --i) {
 		if ('.' == name[i]) {
 			_tcscpy(main_name, &(name[i+1]));
 			// assert(_tcslen(main_name) >= 3); www.qq.com for exmaple.
@@ -209,7 +209,7 @@ int get_main_dns_name(TCHAR * main_name, const int bufsize, const TCHAR *fulldns
 	}
 
 	_tcsncpy(main_name, name, min_buf_size);
-	return  static_cast<int>(_tcslen(main_name));
+	return  static_cast<INT_PTR>(_tcslen(main_name));
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -237,12 +237,12 @@ bool CDNS::doDNSLookup() {
 	dnsIps_.clear();
 	hostIps_.clear();
 
-	for(int i = 0; dnsInfo->h_addr_list[i]; i++) 	{
+	for(INT_PTR i = 0; dnsInfo->h_addr_list[i]; i++) 	{
 		dnsIps_.push_back(inet_ntoa(*((struct in_addr *)dnsInfo->h_addr_list[i])));
 	}
 
 	if(dnsInfo->h_aliases[0]) 	{
-   	 	for(int i = 0; dnsInfo->h_aliases[i]; i++) 		{
+   	 	for(INT_PTR i = 0; dnsInfo->h_aliases[i]; i++) 		{
 			hostIps_.push_back(dnsInfo->h_aliases[i]);
 		}
 	}
@@ -261,11 +261,11 @@ std::string CDNS::getHostAt(const size_t index) {
 	}
 }
 
-size_t CDNS::getNumberOfHosts() const { 
+INT_PTR CDNS::getNumberOfHosts() const { 
 	return hostIps_.size(); 
 }
 
-size_t CDNS::getNumberOfIP() const {
+INT_PTR CDNS::getNumberOfIP() const {
 	return dnsIps_.size(); 
 }
 

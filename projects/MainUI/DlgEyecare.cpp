@@ -79,27 +79,27 @@ void CDlgEyecare::setEyecareTerminatedMode() {
 		HRESULT hr = CoCreateInstance(CLSID_Eyecare, NULL, CLSCTX_LOCAL_SERVER, IID_IEyecare, (LPVOID*)&pEyeCare);
 		if (FAILED(hr)) {
 			__LERR__("Create Eyecare failed with HRESULT value "<<hr);
-			throw int(SNOWMAN_ERROR_COM_INIT_FAILED);
+			throw INT_PTR(SNOWMAN_ERROR_COM_INIT_FAILED);
 		}
 
 		UINT checked = GetCheckedRadioButton(IDC_RAD_ENTER_SU_MODE, IDC_RAD_JUST_RESET_TIMER);
-		const int mode = (checked ==  IDC_RAD_ENTER_SU_MODE) ? 
+		const INT_PTR mode = (checked ==  IDC_RAD_ENTER_SU_MODE) ? 
 			EyecareSetting::EYECARE_TERMIN_ENTERSU : EyecareSetting::EYECARE_TERMIN_RESETTIMER;
 
 		pEyeCare->setTermMode(mode);
 		pEyeCare->Release();
 	} catch(...) {
 		__LERR__( "CATCH...");
-		throw int(SNOWMAN_ERROR_COM_INIT_FAILED);
+		throw INT_PTR(SNOWMAN_ERROR_COM_INIT_FAILED);
 	}
 }
 
-int CDlgEyecare::OnApply() {
+INT_PTR CDlgEyecare::OnApply() {
 	setEyecareTimespan();
 	setEyecareTerminatedMode();
 	
 	UINT checked = GetCheckedRadioButton(IDC_RAD_ENTER_SU_MODE, IDC_RAD_JUST_RESET_TIMER);
-	const int mode = (checked ==  IDC_RAD_ENTER_SU_MODE) ? 
+	const INT_PTR mode = (checked ==  IDC_RAD_ENTER_SU_MODE) ? 
 			EyecareSetting::EYECARE_TERMIN_ENTERSU : EyecareSetting::EYECARE_TERMIN_RESETTIMER;
 
 	return 0;

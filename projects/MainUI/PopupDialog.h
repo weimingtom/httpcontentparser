@@ -7,7 +7,7 @@
 // 注意：要使此类生效必须保证两次弹出对话框使用的是一个变量
 class CPopupDialog : public CDialog {
 public:
-	CPopupDialog(int, CWnd* pParent);
+	CPopupDialog(INT_PTR, CWnd* pParent);
 	~CPopupDialog(void);
 
 public:

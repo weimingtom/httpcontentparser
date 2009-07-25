@@ -28,26 +28,26 @@ protected:
 	DECLARE_MESSAGE_MAP()
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 
-	static const int Rows = 7;
-	static const int Column = 24;
+	static const INT_PTR Rows = 7;
+	static const INT_PTR Column = 24;
 
-	static const int ItemWidth = 13;
-	static const int ItemHeight = 24;
-	static const int RowHeight  = 25;
-	static const int MiddleLine_1  = 4;
-	static const int MiddleLine_2  = 2;
+	static const INT_PTR ItemWidth = 13;
+	static const INT_PTR ItemHeight = 24;
+	static const INT_PTR RowHeight  = 25;
+	static const INT_PTR MiddleLine_1  = 4;
+	static const INT_PTR MiddleLine_2  = 2;
 	CFrameButton cells[Rows][Column];
-	int	access_netword[Rows][Column];
+	INT_PTR	access_netword[Rows][Column];
 public: 
 	virtual BOOL Create(LPCTSTR lpszClassName, LPCTSTR lpszWindowName,
 		DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, UINT nID, CCreateContext* pContext = NULL);
 
-	void check(const int row, const int col);
-	void uncheck(const int row, const int col);
+	void check(const INT_PTR row, const INT_PTR col);
+	void uncheck(const INT_PTR row, const INT_PTR col);
 
 // enum function
 public:
-	void StarEnum(Enumerator2<int, int> *enumerate);
+	void StarEnum(Enumerator2<INT_PTR, INT_PTR> *enumerate);
 private:
 	void prepareForEnum();
 };

@@ -51,7 +51,7 @@ void CDlgScreenshot::DoDataExchange(CDataExchange* pDX)
 	DDX_Check(pDX, IDC_CHK_AUTOCLEAN, m_bEnableAutoclean);
 }
 
-int CDlgScreenshot::OnApply() {
+INT_PTR CDlgScreenshot::OnApply() {
 	try {
 		IScreenSave * screensave = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_ScreenSave, NULL, CLSCTX_LOCAL_SERVER, IID_IScreenSave, (LPVOID*)&screensave);
@@ -81,7 +81,7 @@ void CDlgScreenshot::restoreSetting() {
 		HRESULT hr = CoCreateInstance(CLSID_ScreenSave, NULL, CLSCTX_LOCAL_SERVER, IID_IScreenSave, (LPVOID*)&screensave);
 		if(FAILED(hr)) {
 			__LERR__("Create Sceensave failed with HRESULT value"<<hr);
-			throw int(SNOWMAN_ERROR_COM_INIT_FAILED);
+			throw INT_PTR(SNOWMAN_ERROR_COM_INIT_FAILED);
 		}
 
 		VARIANT_BOOL enabled;
@@ -96,7 +96,7 @@ void CDlgScreenshot::restoreSetting() {
 		screensave->getTimeSpan(&secs);
 		m_sliderSaveTimespan.SetRange(MIN_SCREEN_SNAPSHOT, MAX_SCREEN_SNAPSHOT);
 		m_sliderSaveTimespan.SetTicFreq(10);
-		int pos = secs / 60;
+		INT_PTR pos = secs / 60;
 		m_sliderSaveTimespan.SetPos(pos);
 
 		// 设置自动清理
@@ -113,7 +113,7 @@ void CDlgScreenshot::restoreSetting() {
 		setTimespanTips();
 	} catch (...) {
 		__LERR__("CATCH(...)");
-		throw int(SNOWMAN_ERROR_COM_INIT_FAILED);
+		throw INT_PTR(SNOWMAN_ERROR_COM_INIT_FAILED);
 	}
 }
 

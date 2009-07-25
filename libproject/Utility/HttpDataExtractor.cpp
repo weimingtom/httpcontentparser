@@ -15,8 +15,8 @@ namespace {
 
 
 const char * chunk_token = "\r\n";
-const int chunk_token_length = 2;	// 长度后面紧跟的长度
-const int chunk_tail_length = 2;	// \r\n的长度....
+const INT_PTR chunk_token_length = 2;	// 长度后面紧跟的长度
+const INT_PTR chunk_tail_length = 2;	// \r\n的长度....
 
 // 这个结尾代表所有CHUNK的结尾
 // 尾部应该是这样，但是前一个\r\n是紧跟0, 后面一个是chunk的结尾
@@ -30,11 +30,11 @@ class FixContent : public HttpDataExtractor {
 public:
 	FixContent(ProtocolPacket<HTTP_PACKET_SIZE> *data, const HTTP_RESPONSE_HEADER *);
 	~FixContent();
-	virtual int addBuffer(const char *buf, const int len);
+	virtual INT_PTR addBuffer(const char *buf, const INT_PTR len);
 	virtual bool finished() const;
 private:
 	friend class HttpDataExtractor;
-	int expected_length_;		// 与其的大小
+	INT_PTR expected_length_;		// 与其的大小
 	ProtocolPacket<HTTP_PACKET_SIZE> * data_;
 	const HTTP_RESPONSE_HEADER * http_header_;
 	bool finished_;
@@ -48,7 +48,7 @@ class NoContent : public HttpDataExtractor {
 	public:
 	NoContent(ProtocolPacket<HTTP_PACKET_SIZE> *data, const HTTP_RESPONSE_HEADER *);
 	~NoContent();
-	virtual int addBuffer(const char *buf, const int len);
+	virtual INT_PTR addBuffer(const char *buf, const INT_PTR len);
 	virtual bool finished() const;
 private:
 	friend class HttpDataExtractor;
@@ -62,7 +62,7 @@ class CloseConnectionLinkt : public HttpDataExtractor {
 	public:
 	CloseConnectionLinkt(ProtocolPacket<HTTP_PACKET_SIZE> *data, const HTTP_RESPONSE_HEADER *);
 	~CloseConnectionLinkt();
-	virtual int addBuffer(const char *buf, const int len);
+	virtual INT_PTR addBuffer(const char *buf, const INT_PTR len);
 	virtual bool finished() const;
 private:
 	friend class HttpDataExtractor;
@@ -77,17 +77,17 @@ public:
 	ChunkPacket(ProtocolPacket<HTTP_PACKET_SIZE> *data, const HTTP_RESPONSE_HEADER *);
 	~ChunkPacket();
 	// 负责去掉chunk的头部和尾部，并把数据部分放入缓冲区
-	virtual int addBuffer(const char *buf, const int len);
+	virtual INT_PTR addBuffer(const char *buf, const INT_PTR len);
 	virtual bool finished() const;	// chunk是否已经结束
 private:
-	int write_to_buffer(const char * buf, const int len);
+	INT_PTR write_to_buffer(const char * buf, const INT_PTR len);
 	bool finished_;
 	ProtocolPacket<HTTP_PACKET_SIZE> * data_;
 	const HTTP_RESPONSE_HEADER * http_header_;
 
 	// 如果一个IP包不包含一个完整的chunk包
 	// 这时候整个包没有全部完成.....
-	int cur_need_length_;
+	INT_PTR cur_need_length_;
 
 	// 禁用
 	ChunkPacket(ChunkPacket &) {}
@@ -99,17 +99,17 @@ public:
 	NoSepcifiedLength(ProtocolPacket<HTTP_PACKET_SIZE> *data, const HTTP_RESPONSE_HEADER *);
 	~NoSepcifiedLength();
 	// 负责去掉chunk的头部和尾部，并把数据部分放入缓冲区
-	virtual int addBuffer(const char *buf, const int len);
+	virtual INT_PTR addBuffer(const char *buf, const INT_PTR len);
 	virtual bool finished() const;	// chunk是否已经结束
 private:
-	int write_to_buffer(const char * buf, const int len);
+	INT_PTR write_to_buffer(const char * buf, const INT_PTR len);
 	bool finished_;
 	ProtocolPacket<HTTP_PACKET_SIZE> * data_;
 	const HTTP_RESPONSE_HEADER * http_header_;
 
 	// 如果一个IP包不包含一个完整的chunk包
 	// 这时候整个包没有全部完成.....
-	int cur_need_length_;
+	INT_PTR cur_need_length_;
 
 	// 禁用
 	NoSepcifiedLength(NoSepcifiedLength &) {}
@@ -129,25 +129,25 @@ ChunkPacket::~ChunkPacket() {
 }
 
 // 按需要的字节数写入到缓冲区中，不过数据不足则全部写入
-int ChunkPacket::write_to_buffer(const char * buf, const int len) {
+INT_PTR ChunkPacket::write_to_buffer(const char * buf, const INT_PTR len) {
 	if (cur_need_length_ == 0)
 		return 0;
 
 	// 注意需要的数据中包含\r\n， 
 	if (len >= cur_need_length_) {
 		// 不写入尾部三个字符
-		int written = data_->write(buf, cur_need_length_ - chunk_tail_length);
+		INT_PTR written = data_->write(buf, cur_need_length_ - chunk_tail_length);
 		cur_need_length_ = 0;
 		return written + chunk_tail_length;
 	} else {
-		int written = data_->write(buf, len);
+		INT_PTR written = data_->write(buf, len);
 		cur_need_length_ -= written;
 		assert(len == written);
 		return written;
 	}
 }
 // 
-int ChunkPacket::addBuffer(const char *buf, const int len) {
+INT_PTR ChunkPacket::addBuffer(const char *buf, const INT_PTR len) {
 	assert(finished_ == false);
 	// 如果给出的缓冲区长度为0， 直接返回
 	if (len == 0) {
@@ -155,21 +155,21 @@ int ChunkPacket::addBuffer(const char *buf, const int len) {
 		return 0;
 	}
 
-	int chunk_head_bytes  = 0;
+	INT_PTR chunk_head_bytes  = 0;
 	// 首先获取长度
 	if (cur_need_length_ == 0) {
-		const int chunk_data_len = strtol(buf, NULL, 16);
+		const INT_PTR chunk_data_len = strtol(buf, NULL, 16);
 		// 到达了chunk的尾部
 		if (chunk_data_len == 0) {
 			finished_ = true;
-			return static_cast<int>(strlen(whole_chunk_tail));
+			return static_cast<INT_PTR>(strlen(whole_chunk_tail));
 		}
 		// 保存需要读取的长度, 注意还有尾部的三个自己，当然不要将尾部写入到缓冲区里
 		cur_need_length_ = chunk_data_len + chunk_tail_length;
 		
 		// 得到chunk头部的分隔符，从而获取头部的长度
 		const char * data_header = strstr(buf, chunk_token);
-		if (data_header == NULL) throw int(0);
+		if (data_header == NULL) throw INT_PTR(0);
 		chunk_head_bytes = data_header + strlen(chunk_token) - buf;
 	}
 
@@ -191,8 +191,8 @@ FixContent::FixContent(ProtocolPacket<HTTP_PACKET_SIZE> *data,
 FixContent::~FixContent() {
 }
 
-int FixContent::addBuffer(const char *buf, const int len) {
-	const int except_len = http_header_->getContentLength();
+INT_PTR FixContent::addBuffer(const char *buf, const INT_PTR len) {
+	const INT_PTR except_len = http_header_->getContentLength();
 	assert(http_header_->isChunk() == false);
 	assert(finished_ == false);
 
@@ -203,9 +203,9 @@ int FixContent::addBuffer(const char *buf, const int len) {
 	}
 	// 如果指定了长度
 	if (except_len != HTTP_RESPONSE_HEADER::NO_DESIGNATION) {
-		const int recv_len = data_->getTotalSize();	// 已经接受到的
-		int need_recv = except_len - recv_len;	// 还需要接受多少
-		int should_recv = need_recv >= len ? len : need_recv;
+		const INT_PTR recv_len = data_->getTotalSize();	// 已经接受到的
+		INT_PTR need_recv = except_len - recv_len;	// 还需要接受多少
+		INT_PTR should_recv = need_recv >= len ? len : need_recv;
 
 		if (need_recv == should_recv)
 			finished_ = true;
@@ -237,7 +237,7 @@ bool NoContent::finished() const {
 	return finished_;
 }
 
-int NoContent::addBuffer(const char *buf, const int len) {
+INT_PTR NoContent::addBuffer(const char *buf, const INT_PTR len) {
 	return 0;
 }
 
@@ -255,7 +255,7 @@ bool CloseConnectionLinkt::finished() const {
 	return finished_;
 }
 
-int CloseConnectionLinkt::addBuffer(const char *buf, const int len) {
+INT_PTR CloseConnectionLinkt::addBuffer(const char *buf, const INT_PTR len) {
 	return len;
 }
 
@@ -275,7 +275,7 @@ bool NoSepcifiedLength::finished() const {
 	return finished_;
 }
 
-int NoSepcifiedLength::addBuffer(const char *buf, const int len) {
+INT_PTR NoSepcifiedLength::addBuffer(const char *buf, const INT_PTR len) {
 	if (0 == len) {
 		finished_ = true;
 	}

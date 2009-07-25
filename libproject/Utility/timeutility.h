@@ -13,8 +13,8 @@ namespace timeutility {
 
 struct tm tmfromstring(const TCHAR * timestr);
 
-TCHAR * USFormatTime(SYSTEMTIME  ft, TCHAR *buffer, int len);
-TCHAR * USFormatTime(FILETIME ft, TCHAR * buffer, int len);
+TCHAR * USFormatTime(SYSTEMTIME  ft, TCHAR *buffer, INT_PTR len);
+TCHAR * USFormatTime(FILETIME ft, TCHAR * buffer, INT_PTR len);
 
 FILETIME ft_from_tm(const tm &t);
 };

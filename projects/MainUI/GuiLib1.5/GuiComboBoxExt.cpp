@@ -66,7 +66,7 @@ BOOL CGuiComboBoxExt::PreTranslateMessage(MSG* pMsg)
 	
 	if (pMsg->message == WM_KEYDOWN)
 	{
-		int nVirtKey = (int) pMsg->wParam;
+		INT_PTR nVirtKey = (INT_PTR) pMsg->wParam;
 		if (nVirtKey == VK_RETURN )
 		{
 			//if (!(GetStyle( ) & CBS_DROPDOWNLIST))
@@ -141,11 +141,11 @@ void CGuiComboBoxExt::ActiveHistory(BOOL bHistory)
 
 void CGuiComboBoxExt::SaveHistory(CString szHistory,BOOL bSaveCurrent)
 {
-	int nSize=GetCount();
+	INT_PTR nSize=GetCount();
 	if (szHistory.IsEmpty()) return;
 	if (nSize == 0) return;
 	DeleteHistory(szHistory);
-	int nCurs=GetCurSel();
+	INT_PTR nCurs=GetCurSel();
 	CString sKey=szHistory;
 	CString sCad;
 	CWinApp* pAppWin = AfxGetApp();
@@ -157,7 +157,7 @@ void CGuiComboBoxExt::SaveHistory(CString szHistory,BOOL bSaveCurrent)
 		pAppWin->WriteProfileString("ComboHistory",nKeyHist,sCad);
 	}
 	
-	for(int i=0; i< nSize; i++)
+	for(INT_PTR i=0; i< nSize; i++)
 	{
 		GetLBText(i,sCad);
 		sKey.Format("%s%d",szHistory,i);
@@ -171,7 +171,7 @@ void CGuiComboBoxExt::LoadHistory(CString szHistory,BOOL bLoadCurrent)
 	CString sKey=szHistory;
 	CString sCad;
 	CWinApp* pAppWin = AfxGetApp();
-	int i=0;
+	INT_PTR i=0;
 	while(1){
 		sKey.Format("%s%d",szHistory,i++);
 		sCad=pAppWin->GetProfileString("ComboHistory",sKey);
@@ -192,7 +192,7 @@ void CGuiComboBoxExt::LoadHistory(CString szHistory,BOOL bLoadCurrent)
 }
 
 
-int	 CGuiComboBoxExt::AddString(LPCTSTR lpszString)
+INT_PTR	 CGuiComboBoxExt::AddString(LPCTSTR lpszString)
 {
 	CString szCadAdd;
 	szCadAdd=lpszString;
@@ -201,8 +201,8 @@ int	 CGuiComboBoxExt::AddString(LPCTSTR lpszString)
 		return CComboBox::AddString(lpszString);
 	szCadAdd.TrimLeft(" ");
 	szCadAdd.TrimRight(" ");
-	int nret=CComboBox::InsertString(0,szCadAdd);
-	int nFindCad=FindStringExact(0, szCadAdd);
+	INT_PTR nret=CComboBox::InsertString(0,szCadAdd);
+	INT_PTR nFindCad=FindStringExact(0, szCadAdd);
 	if (nFindCad != -1 && nFindCad != 0)
 		DeleteString(nFindCad );
 	SetCurSel(nret);	
@@ -223,8 +223,8 @@ void CGuiComboBoxExt::DeleteHistory(CString szHistory)
     sPath+= szHistory;
     if (rk.Open(HKEY_CURRENT_USER, sPath) != ERROR_SUCCESS)
       return;
-	int nCount = GetCount();
-    for (int i = 0; i < nCount; i++)
+	INT_PTR nCount = GetCount();
+    for (INT_PTR i = 0; i < nCount; i++)
     {
 	  sKey.Format("%s%d", szHistory,i);
       rk.DeleteValue(sKey);
@@ -360,7 +360,7 @@ void CGuiComboBoxExt::DrawCombo(enTypeShow enShow,CDC* pDC)
 
 void CGuiComboBoxExt::DrawArrow(CDC* pDC,CRect m_rc)
 {
-	int difh =m_rc.Height()-mHeight.y;
+	INT_PTR difh =m_rc.Height()-mHeight.y;
 	difh/=2;
 	
 	m_rc.left=m_rc.right-m_iWidthDrowDown;
@@ -421,7 +421,7 @@ void CGuiComboBoxExt::OnCbnKillfocus() //version 7.0
 	
 }
 
-int CGuiComboBoxExt::OnCreate(LPCREATESTRUCT lpCreateStruct) 
+INT_PTR CGuiComboBoxExt::OnCreate(LPCREATESTRUCT lpCreateStruct) 
 {
 	if (CComboBox::OnCreate(lpCreateStruct) == -1)
 		return -1;

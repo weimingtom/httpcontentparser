@@ -39,7 +39,7 @@ BEGIN_MESSAGE_MAP(CDlgSearchWordList, CPopupDialog)
 END_MESSAGE_MAP()
 
 
-int CDlgSearchWordList::addItem(const _bstr_t &name, const long times, const long searchengine_type, const long hightime, const long lowtime, const int iIndex) {
+INT_PTR CDlgSearchWordList::addItem(const _bstr_t &name, const long times, const long searchengine_type, const long hightime, const long lowtime, const INT_PTR iIndex) {
 	TCHAR buffer[1024];
 	FILETIME ft;
 	ft.dwHighDateTime = hightime;
@@ -57,7 +57,7 @@ int CDlgSearchWordList::addItem(const _bstr_t &name, const long times, const lon
 	m_list.SetItemText(iIndex, 3, timeutility::USFormatTime(ft, buffer, 1024));
 	return 0;
 }
-int CDlgSearchWordList::showOnList() {
+INT_PTR CDlgSearchWordList::showOnList() {
 	try {
 		m_list.DeleteAllItems();
 
@@ -71,7 +71,7 @@ int CDlgSearchWordList::showOnList() {
 		}
 
 		BSTR cur, next;
-		int cnt = 0;
+		INT_PTR cnt = 0;
 		long times, searchengine, hightime, lowtime;
 
 		record->GetFirstSearchKeyword(&cur, &times, &searchengine, &hightime, &lowtime);
@@ -102,8 +102,8 @@ void CDlgSearchWordList::InitList()
 	static const struct
 	{
 		UINT nColHdrId;
-		int  nFormat;
-		int  nWidth;
+		INT_PTR  nFormat;
+		INT_PTR  nWidth;
 	} colData[] =
 	{
 		{IDS_DLG_WEBSITES_NAME,				  LVCFMT_LEFT,  90}, 
@@ -111,10 +111,10 @@ void CDlgSearchWordList::InitList()
 		{IDS_DLG_SEACHWORD_SEARCH_TIMES, LVCFMT_CENTER, 70},
 		{IDS_DLG_SEACHWORD_LAST_TIME,		  LVCFMT_RIGHT, 100},
 	};
-	const int nColCount = sizeof colData / sizeof colData[0];
+	const INT_PTR nColCount = sizeof colData / sizeof colData[0];
 
 	CString str;
-	for (int nColumn = 0; nColumn < nColCount; ++nColumn)
+	for (INT_PTR nColumn = 0; nColumn < nColCount; ++nColumn)
 	{
 		VERIFY(str.LoadString(colData[nColumn].nColHdrId));
 		m_list.InsertColumn(

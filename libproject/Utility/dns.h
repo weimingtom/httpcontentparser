@@ -6,12 +6,12 @@
 
 bool beginwidht_www(const TCHAR * fulldns);
 // 获取DNS的主名
-int get_main_dns_name(TCHAR * name, const int len, const TCHAR *fulldns);
+INT_PTR get_main_dns_name(TCHAR * name, const INT_PTR len, const TCHAR *fulldns);
 
 // 例如 sports.sina.com/index.html.
 // 他会返回 sina.com
 // 如果是 www.sina.com.cn, 他会返回www.sina.com
-char* get_main_serv_name(TCHAR * name, const int len, const TCHAR * fulldns);
+char* get_main_serv_name(TCHAR * name, const INT_PTR len, const TCHAR * fulldns);
 
 // 检测DNS中是否包含IP地址
 bool isContainsIP(TCHAR * dns);
@@ -28,8 +28,8 @@ public:
 	bool			doDNSLookup();
 	std::string     getIPAt(const size_t index);
 	std::string     getHostAt(const size_t index);
-	size_t          getNumberOfHosts() const; 
-	size_t          getNumberOfIP() const ;
+	INT_PTR          getNumberOfHosts() const; 
+	INT_PTR          getNumberOfIP() const ;
 	void			setHostname(const std::string & hostname) { hostName_ = hostname; }
 
 protected:

@@ -62,7 +62,7 @@ void CDlgImageRule::DoDataExchange(CDataExchange* pDX)
 void CDlgImageRule::OnShow() {
 }
 
-int CDlgImageRule::OnApply() {
+INT_PTR CDlgImageRule::OnApply() {
 	UpdateData(TRUE);
 	// 保存在记录的类中
 	//g_configuration.getContentCheckSetting()->enableCheck(IMAGE_TYPE_GIF, m_bCheckGIF);
