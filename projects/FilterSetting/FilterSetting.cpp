@@ -11,8 +11,8 @@
 #include <apputility\apputility.h>
 #include <app_constants.h>
 #include <passwordtype.h>
-#include <webhistoryrecordersetting.h>
-#include <xmlconfiguration.h>
+#include <setting\webhistoryrecordersetting.h>
+#include <setting\xmlconfiguration.h>
 #include <searchengine_define.h>
 #include <searchkeywordutil.h>
 #include <shell\shellutility.h>

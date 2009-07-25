@@ -6,7 +6,7 @@
 #include <time.h>
 #include <string>
 #include <atltime.h>
-#include <settingitem.h>
+#include <setting\settingitem.h>
 
 // 应该能够支持64位时间
 // 此类负责各种自动清空的操作

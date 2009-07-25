@@ -4,7 +4,7 @@
 
 #include <com\FilterSetting_i.c>
 #include <com\FilterSetting.h>
-#include <xmlconfiguration.h>
+#include <setting\xmlconfiguration.h>
 
 extern IDNSSetting *g_dnssetting;
 

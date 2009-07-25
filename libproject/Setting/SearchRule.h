@@ -5,8 +5,8 @@
 //#include <set>
 //#include <map>
 #include <Enumerate.h>
-#include <settingitem.h>
-#include <configitem.h>
+#include <setting\settingitem.h>
+#include <setting\configitem.h>
 #include <xmldefined.h>
 
 // 用来记录Search Rule的实现

@@ -8,7 +8,7 @@
 #include "FilterSetting.h"
 #include "globalvariable.h"
 #include <typeconvert.h>
-#include <eyecaresetting.h>
+#include <setting\eyecaresetting.h>
 // CEyecare
 
 CEyecare::CEyecare() {

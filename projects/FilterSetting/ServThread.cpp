@@ -3,7 +3,7 @@
 #include "assert.h"
 #include "globalvariable.h"
 #include <app_constants.h>
-#include <apputility.h>
+#include <apputility\apputility.h>
 #include <PrintScreen.h>
 #include <searchengine_define.h>
 #include <searchkeywordutil.h>

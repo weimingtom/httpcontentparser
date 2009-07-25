@@ -5,7 +5,7 @@
 #include ".\globalvariable.h"
 #include ".\ServThread.h"
 #include <typeconvert.h>
-#include <apputility.h>
+#include <apputility\apputility.h>
 #include <utility\strutility.h>
 #include <utility\dns.h>
 #include <searchengine_define.h>

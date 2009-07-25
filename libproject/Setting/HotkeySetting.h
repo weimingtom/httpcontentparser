@@ -1,10 +1,11 @@
 #ifndef _SETTING_HOTKEYSETTING_H__
 #define _SETTING_HOTKEYSETTING_H__
 
-#include <configitem.h>
+#include <setting\configitem.h>
+#include <setting\settingitem.h>
 #include <string>
 #include <map>
-#include <settingitem.h>
+
 
 
 // 读取热键的设置

@@ -3,7 +3,7 @@
 #include "stdafx.h"
 #include ".\screensave.h"
 #include "globalvariable.h"
-#include <apputility.h>
+#include <apputility\apputility.h>
 #include <typeconvert.h>
 
 // CScreenshotRecord

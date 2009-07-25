@@ -3,9 +3,9 @@
 #include "stdafx.h"
 #include ".\WebHistoryRecorder.h"
 #include ".\globalvariable.h"
-#include <webhistoryrecordersetting.h>
+#include <setting\webhistoryrecordersetting.h>
 #include <typeconvert.h>
-#include <apputility.h>
+#include <apputility\apputility.h>
 
 // CWebHistoryRecorder
 

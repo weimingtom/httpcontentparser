@@ -10,7 +10,7 @@
 #include <utility\strutility.h>
 #include <DebugOutput.h>
 #include ".\appcontrol.h"
-#include <apputility.h>
+#include <apputility\apputility.h>
 #include <logger\logger.h>
 
 // CAppControl

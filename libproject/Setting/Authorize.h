@@ -5,9 +5,10 @@
 #include <map>
 #include <passwordtype.h>
 #include <Enumerate.h>
-#include <configitem.h>
+#include <setting\configitem.h>
+#include <setting\settingitem.h>
 #include <xmldefined.h>
-#include <settingitem.h>
+
 
 class XMLConfiguration;
 

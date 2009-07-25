@@ -2,11 +2,11 @@
 #define _FILTER_SETTING_GLOBALVARIABLE_H__
 
 #include "FilterSetting.h"
-#include <authorize.h>
-#include <eyecaresetting.h>
-#include <webhistoryrecordersetting.h>
-#include <dnssetting.h>
-#include <xmlconfiguration.h>
+#include <setting\authorize.h>
+#include <setting\eyecaresetting.h>
+#include <setting\webhistoryrecordersetting.h>
+#include <setting\dnssetting.h>
+#include <setting\xmlconfiguration.h>
 #include <searchkeywordutil.h>
 #include <websitesutil.h>
 #include <softwareEncrypt\LicenseInfo.h>

@@ -42,24 +42,23 @@
 				CommandLine="copy .\debug\settingd.lib ..\..\lib"/>
 			<Tool
 				Name="VCPreBuildEventTool"
-				CommandLine="copy .\settingitem.h ..\..\include
-copy .\webhistoryrecordersetting.h ..\..\include
-copy .\authorize.h ..\..\include
-copy .\eyecaresetting.h ..\..\include
-copy .\screenshot.h ..\..\include
-copy .\calculagraph.h ..\..\include
-copy .\DNSSetting.h ..\..\include
-copy .\contentchecksetting.h ..\..\include
-copy .\XMLconfiguration.h ..\..\include
-copy .\SearchRule.h ..\..\include
-copy .\onlinehoursetting.h ..\..\include
-copy .\autoclean.h ..\..\include
-copy .\configitem.h ..\..\include
-copy .\hotkeysetting.h ..\..\include
-copy .\timeoutswitch.h ..\..\include
-copy .\programcontrol.h ..\..\include
-copy .\miscsetting.h ..\..\include
-"/>
+				CommandLine="copy .\settingitem.h ..\..\include\setting
+copy .\webhistoryrecordersetting.h ..\..\include\setting
+copy .\authorize.h ..\..\include\setting
+copy .\eyecaresetting.h ..\..\include\setting
+copy .\screenshot.h ..\..\include\setting
+copy .\calculagraph.h ..\..\include\setting
+copy .\DNSSetting.h ..\..\include\setting
+copy .\contentchecksetting.h ..\..\include\setting
+copy .\XMLconfiguration.h ..\..\include\setting
+copy .\SearchRule.h ..\..\include\setting
+copy .\onlinehoursetting.h ..\..\include\setting
+copy .\autoclean.h ..\..\include\setting
+copy .\configitem.h ..\..\include\setting
+copy .\hotkeysetting.h ..\..\include\setting
+copy .\timeoutswitch.h ..\..\include\setting
+copy .\programcontrol.h ..\..\include\setting
+copy .\miscsetting.h ..\..\include\setting"/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
 			<Tool
@@ -101,23 +100,23 @@ copy .\miscsetting.h ..\..\include
 				CommandLine="copy .\release\setting.lib ..\..\lib"/>
 			<Tool
 				Name="VCPreBuildEventTool"
-				CommandLine="copy .\settingitem.h ..\..\include
-copy .\webhistoryrecordersetting.h ..\..\include
-copy .\authorize.h ..\..\include
-copy .\eyecaresetting.h ..\..\include
-copy .\screenshot.h ..\..\include
-copy .\calculagraph.h ..\..\include
-copy .\DNSSetting.h ..\..\include
-copy .\contentchecksetting.h ..\..\include
-copy .\XMLconfiguration.h ..\..\include
-copy .\SearchRule.h ..\..\include
-copy .\onlinehoursetting.h ..\..\include
-copy .\autoclean.h ..\..\include
-copy .\configitem.h ..\..\include
-copy .\hotkeysetting.h ..\..\include
-copy .\timeoutswitch.h ..\..\include
-copy .\programcontrol.h ..\..\include
-copy .\miscsetting.h ..\..\include
+				CommandLine="copy .\settingitem.h ..\..\include\setting
+copy .\webhistoryrecordersetting.h ..\..\include\setting
+copy .\authorize.h ..\..\include\setting
+copy .\eyecaresetting.h ..\..\include\setting
+copy .\screenshot.h ..\..\include\setting
+copy .\calculagraph.h ..\..\include\setting
+copy .\DNSSetting.h ..\..\include\setting
+copy .\contentchecksetting.h ..\..\include\setting
+copy .\XMLconfiguration.h ..\..\include\setting
+copy .\SearchRule.h ..\..\include\setting
+copy .\onlinehoursetting.h ..\..\include\setting
+copy .\autoclean.h ..\..\include\setting
+copy .\configitem.h ..\..\include\setting
+copy .\hotkeysetting.h ..\..\include\setting
+copy .\timeoutswitch.h ..\..\include\setting
+copy .\programcontrol.h ..\..\include\setting
+copy .\miscsetting.h ..\..\include\setting
 "/>
 			<Tool
 				Name="VCPreLinkEventTool"/>

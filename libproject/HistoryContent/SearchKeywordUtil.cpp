@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include ".\searchkeywordutil.h"
-#include <apputility.h>
+#include <apputility\apputility.h>
 #include <algorithm>
 #include <fstream>
 #include <iostream>

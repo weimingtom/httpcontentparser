@@ -1,7 +1,7 @@
 #include "StdAfx.h"
 #include ".\hotkeysetting.h"
 
-#include <configitem.h>
+#include <setting\configitem.h>
 #include <xmldefined.h>
 #include <map>
 #include <string>

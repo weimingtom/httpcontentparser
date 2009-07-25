@@ -11,8 +11,8 @@
 #include <map>
 #include <string>
 #include <Enumerate.h>
-#include <settingitem.h>
-#include <configitem.h>
+#include <setting\settingitem.h>
+#include <setting\configitem.h>
 #include <xmldefined.h>
 
 // 目前我们使用的机制有些适应性不高，我们需要增加cache机制。

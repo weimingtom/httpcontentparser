@@ -5,7 +5,7 @@
 #include <driver_const.h>
 #include <assert.h>
 #include <string>
-#include <apputility.h>
+#include <apputility\apputility.h>
 #include ".\globalvariable.h"
 #include "resource.h"
 
@@ -68,8 +68,7 @@ int  AppController::begin()
 	// 初始化缓冲区
 	DWORD dw;
 	DWORD buffer_init[64];
-	// TODO:不能兼容64为
-	DWORD * addr=(DWORD *)(1+(DWORD)GetProcAddress(GetModuleHandle("ntdll.dll"),"NtCreateSection"));  
+	DWORD * addr=(DWORD *)(1+(DWORD*)GetProcAddress(GetModuleHandle("ntdll.dll"),"NtCreateSection"));  
 	ZeroMemory(buffer_init,sizeof(buffer_init));
 
 	buffer_init[0] = addr[0];                                                                              // 传入函数NtCreateSection的路径
@@ -194,7 +193,7 @@ int AppController::InstallService() {
 	// 获取驱动程序的路径
 	char namebuff[MAX_PATH]; 
 	GetModuleFileName(NULL, namebuff, MAX_PATH);
-	DWORD  a=strlen(namebuff);
+	int  a=strlen(namebuff);
 	while(1)
 	{
 		if(namebuff[a]=='\\')break;
