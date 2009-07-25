@@ -628,24 +628,37 @@ int WSPAPI WSPStartup(
 	LPWSPPROC_TABLE		lpProcTable
 )
 {
+
 	TCHAR				sLibraryPath[512];
     LPWSPSTARTUP        WSPStartupFunc      = NULL;
 	HMODULE				hLibraryHandle		= NULL;
     INT                 ErrorCode           = 0; 
+	
+	__OUTPUT_DEBUG_CALL__
 
-	if (!GetHookProvider(lpProtocolInfo, sLibraryPath)
-		|| (hLibraryHandle = LoadLibrary(sLibraryPath)) == NULL
-		|| (WSPStartupFunc = (LPWSPSTARTUP)GetProcAddress(
-			hLibraryHandle, "WSPStartup")) == NULL
-		)
+	if (!GetHookProvider(lpProtocolInfo, sLibraryPath)) 	{
+		PACKETGRASPER_TRC("WSPStartup Failed because{GetHookProvider(lpProtocolInfo, sLibraryPath)}");  
 		return WSAEPROVIDERFAILEDINIT;
+	}
+
+	if ((hLibraryHandle = LoadLibrary(sLibraryPath)) == NULL) {
+		PACKETGRASPER_TRC("WSPStartup Failed because{hLibraryHandle = LoadLibrary(sLibraryPath)) == NULL}");  
+		return WSAEPROVIDERFAILEDINIT;
+	}
+
+	if ((WSPStartupFunc = (LPWSPSTARTUP)GetProcAddress(hLibraryHandle, "WSPStartup")) == NULL) {
+		PACKETGRASPER_TRC("WSPStartup Failed because{GetProcAddress(hLibraryHandle, \"WSPStartup\"}");  
+		return WSAEPROVIDERFAILEDINIT;
+	}
 
 	PrintProtocolInfo(lpProtocolInfo, sLibraryPath);
 
-	if ((ErrorCode = WSPStartupFunc(wVersionRequested, lpWSPData
-		, lpProtocolInfo, upcallTable, lpProcTable)) != ERROR_SUCCESS)
+	if ((ErrorCode = WSPStartupFunc(wVersionRequested, lpWSPData	, lpProtocolInfo, upcallTable, lpProcTable)) != ERROR_SUCCESS)
+	{
+		PACKETGRASPER_TRC("WSPStartup Failed because WSPStartupFunc()");
 		return ErrorCode;
-	
+	}
+
 	yanglei_utility::SingleLock<yanglei_utility::CAutoCreateCS> lock(&gCriticalSection);
 
 	MainUpCallTable = upcallTable;
