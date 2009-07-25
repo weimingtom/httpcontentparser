@@ -68,9 +68,9 @@ ServThread::ServThread(void) {
 ServThread::~ServThread(void) {
 }
 
-int ServThread::setHotKey(WORD vKey, WORD fsModifiers, int type) {
+INT_PTR ServThread::setHotKey(WORD vKey, WORD fsModifiers, INT_PTR type) {
 	if (type == HOTKEY_LANUCH_MAINUI) { 
-		return (int)SendMessage(hwnd_, WM_REGISTER_HOTKEY, MAKEWPARAM(vKey, fsModifiers), (LPARAM)type);
+		return (INT_PTR)SendMessage(hwnd_, WM_REGISTER_HOTKEY, MAKEWPARAM(vKey, fsModifiers), (LPARAM)type);
 	} else {
 		return TRUE;
 	} 
@@ -94,14 +94,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 
 			// 设置HOTKEY
 			{
-				DWORD hotkey = g_configuration.getHotkey()->getHotkey(CONFIG_HOTKEY_LAUNCH);
+				DWORD_PTR hotkey = g_configuration.getHotkey()->getHotkey(CONFIG_HOTKEY_LAUNCH);
 				if ( 0 != hotkey) 
 					server->setHotKey(HIWORD(hotkey), LOWORD(hotkey), HOTKEY_LANUCH_MAINUI);
 			}
 			break;
 		case WM_HOTKEY:
 			{
-				const int hotkey_id = (int)wParam;
+				const INT_PTR hotkey_id = (INT_PTR)wParam;
 				if (hotkey_id == HOTKEY_LANUCH_MAINUI) {
 					StartMainUI();
 				}
@@ -133,9 +133,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 			break;
 		case WM_REGISTER_HOTKEY: 
 			// 如何进行错误处理
-			UnregisterHotKey(hWnd, (int)lParam);
+			UnregisterHotKey(hWnd, (INT_PTR)lParam);
 			if (0 != wParam && 0 != lParam) {	// 如果没有设置键
-				return RegisterHotKey(hWnd, (int)lParam, HIWORD(wParam), LOWORD(wParam));
+				return RegisterHotKey(hWnd, (INT_PTR)lParam, HIWORD(wParam), LOWORD(wParam));
 			}
 			return TRUE;
 		case WM_DESTROY:
@@ -175,7 +175,7 @@ HWND createWindow() {
 // 1. 启动眼睛保护
 // 2. 响应HOTKEY
 // 3. 屏幕保存
-DWORD ServThread::TreadProc(LPVOID param) {
+DWORD_PTR ServThread::TreadProc(LPVOID param) {
 	// 创建一个窗口
 	ServThread::getInstance()->hwnd_ = createWindow();
 	MSG msg = {0};

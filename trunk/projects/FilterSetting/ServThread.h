@@ -13,18 +13,18 @@ private:
 	static ServThread *pInstance;
 public:
 	HANDLE getThreadHandle()  { return hThread_;}
-	int   setHotKey(WORD vKey, WORD key, int type);
+	INT_PTR   setHotKey(WORD vKey, WORD key, INT_PTR type);
 private:
 	void startServer();
-	static DWORD TreadProc(LPVOID param);
+	static DWORD_PTR TreadProc(LPVOID param);
 	ServThread(void);
 
-	DWORD dwThreadId_;
+	DWORD_PTR dwThreadId_;
 	HANDLE hThread_;
 	HWND  hwnd_;
 
-	DWORD m_tickAutoSave;	// 自动保存屏幕的时间间隔
-	DWORD m_tickEyecare;	// 启动保护眼睛的时间间隔
+	DWORD_PTR m_tickAutoSave;	// 自动保存屏幕的时间间隔
+	DWORD_PTR m_tickEyecare;	// 启动保护眼睛的时间间隔
 
 	// hotkey ids;
 	void initialize();

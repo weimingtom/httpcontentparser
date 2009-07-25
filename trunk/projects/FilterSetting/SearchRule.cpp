@@ -19,7 +19,7 @@ STDMETHODIMP CSearchRule::InterfaceSupportsErrorInfo(REFIID riid)
 		&IID_ISearchRule
 	};
 
-	for (int i=0; i < sizeof(arr) / sizeof(arr[0]); i++)
+	for (INT_PTR i=0; i < sizeof(arr) / sizeof(arr[0]); i++)
 	{
 		if (InlineIsEqualGUID(*arr[i],riid))
 			return S_OK;
@@ -34,13 +34,13 @@ STDMETHODIMP CSearchRule::check(BSTR search_word, BSTR host_name, VARIANT_BOOL* 
 		*pass = VARIANT_TRUE;
 	}
 
-	const int buffer_length = 1024;
+	const INT_PTR buffer_length = 1024;
 	char mcbs[buffer_length] = {0};
 
 	// 处理search word, 如果search  word是一个UTF8串	
 	_bstr_t bstrWord = search_word;
 	const char * utf8 = (char*)bstrWord;
-	const int search_word_len = strlen(utf8);
+	const INT_PTR search_word_len = strlen(utf8);
 
 	// 如果搜索词汇过长，则直接退出
 	if (search_word_len > buffer_length) {
@@ -59,7 +59,7 @@ STDMETHODIMP CSearchRule::check(BSTR search_word, BSTR host_name, VARIANT_BOOL* 
 	*pass = convert(passed);
 
 	// 记录
-	const int buf_size = 512;
+	const INT_PTR buf_size = 512;
 	char main_name[buf_size];
 	get_main_dns_name(main_name, buf_size, (TCHAR*)_bstr_t(host_name));
 
@@ -70,7 +70,7 @@ STDMETHODIMP CSearchRule::check(BSTR search_word, BSTR host_name, VARIANT_BOOL* 
 
 	//  通知上层应用程序
 	if (VARIANT_FALSE  == *pass) {
-		const int msg_buffer_size = 512;
+		const INT_PTR msg_buffer_size = 512;
 		TCHAR msg_buffer[msg_buffer_size];
 		CString str;
 		str.LoadString(IDS_TIP_CANSEARCH);

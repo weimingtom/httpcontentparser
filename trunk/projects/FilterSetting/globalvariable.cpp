@@ -35,7 +35,7 @@ bool checkApppath(const TCHAR *fullpath) {
 	}
 }
 
-int getAppStatus() {
+LONG getAppStatus() {
 	if ( true == g_configuration.uninstall()) {
 		return SNOWMAN_STATUS_UNINSTALL;
 	} else {
@@ -43,13 +43,13 @@ int getAppStatus() {
 	}
 }
 
-int refreshAppstatus() {
+LONG refreshAppstatus() {
 	g_licenseInfo.initialize();
 	SettingItem::setAppStatus(getAppStatus());
 	return 0;
 }
 
-int getInstallDays() {
+LONG getInstallDays() {
 	return g_licenseInfo.getInstallDays();
 }
 
@@ -64,7 +64,7 @@ bool registered() {
 void NotifyUser(const char * msg) {
 	COPYDATASTRUCT copydata;
 	copydata.dwData =WM_SHOW_MSG_TOOLTIP ;
-	copydata.cbData = _tcslen(msg) + 1;	// 连最后的"\0"一起发送
+	copydata.cbData = (DWORD_PTR)_tcslen(msg) + 1;	// 连最后的"\0"一起发送
 	copydata.lpData = (PVOID)msg;
 
 	HWND hWndMainUI = GetMainUIHWND();

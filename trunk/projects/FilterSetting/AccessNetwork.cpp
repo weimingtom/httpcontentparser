@@ -17,7 +17,7 @@ STDMETHODIMP CAccessNetwork::InterfaceSupportsErrorInfo(REFIID riid)
 		&IID_IAccessNetwork
 	};
 
-	for (int i=0; i < sizeof(arr) / sizeof(arr[0]); i++)
+	for (INT_PTR i=0; i < sizeof(arr) / sizeof(arr[0]); i++)
 	{
 		if (InlineIsEqualGUID(*arr[i],riid))
 			return S_OK;
@@ -36,7 +36,7 @@ STDMETHODIMP CAccessNetwork::accessNetwork(VARIANT_BOOL* bAccessable)
 
 		//  通知上层应用程序
 	if (VARIANT_FALSE  == *bAccessable) {
-		const int msg_buffer_size = 512;
+		const INT_PTR msg_buffer_size = 512;
 		TCHAR msg_buffer[msg_buffer_size];
 		CString str;
 		str.LoadString(IDS_TIP_NETWORK_NOT_ACCESSABLE);

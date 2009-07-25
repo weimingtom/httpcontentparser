@@ -30,7 +30,7 @@ STDMETHODIMP CAppControl::RemoveItem(BSTR path) {
 STDMETHODIMP CAppControl::GetFirstItem(BSTR* path, LONG *hasValue) {
 	ProgramControl::FILEINFO * fileinfo;
 	strutility::_tstring fullpath;
-	int result = g_configuration.getProgramControl()->getFirstItem(&fullpath, &fileinfo);
+	INT_PTR result = g_configuration.getProgramControl()->getFirstItem(&fullpath, &fileinfo);
 	if (0 != result) {
 		*path = _bstr_t(fullpath.c_str());
 		*hasValue =SELF_COM_SUCCEED;
@@ -44,7 +44,7 @@ STDMETHODIMP CAppControl::GetFirstItem(BSTR* path, LONG *hasValue) {
 STDMETHODIMP CAppControl::GetNextItem(BSTR cur, BSTR* nxt, LONG * hasValue) {
 	ProgramControl::FILEINFO * fileinfo;
 	strutility::_tstring fullpath;
-	int result = g_configuration.getProgramControl()->getNextItem((TCHAR*)_bstr_t(cur), &fullpath, &fileinfo);
+	INT_PTR result = g_configuration.getProgramControl()->getNextItem((TCHAR*)_bstr_t(cur), &fullpath, &fileinfo);
 	if (0 != result) {
 		*nxt = _bstr_t(fullpath.c_str());
 		*hasValue = SELF_COM_SUCCEED;

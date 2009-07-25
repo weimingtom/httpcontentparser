@@ -17,7 +17,7 @@ STDMETHODIMP CWebContentRecord::InterfaceSupportsErrorInfo(REFIID riid)
 		&IID_IWebContentRecord
 	};
 
-	for (int i=0; i < sizeof(arr) / sizeof(arr[0]); i++)
+	for (INT_PTR i=0; i < sizeof(arr) / sizeof(arr[0]); i++)
 	{
 		if (InlineIsEqualGUID(*arr[i],riid))
 			return S_OK;
@@ -27,7 +27,7 @@ STDMETHODIMP CWebContentRecord::InterfaceSupportsErrorInfo(REFIID riid)
 
 STDMETHODIMP CWebContentRecord::SearchKeyword(BSTR keyword, LONG searchEngine)
 {
-	g_searchwordUtil.addKeyword(std::string((TCHAR*)_bstr_t(keyword)), static_cast<int>(searchEngine));
+	g_searchwordUtil.addKeyword(std::string((TCHAR*)_bstr_t(keyword)), static_cast<INT_PTR>(searchEngine));
 	return S_OK;
 }
 
