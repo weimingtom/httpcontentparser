@@ -10,7 +10,7 @@
 #include <tinyXML\tinyxml.h>
 #include <webcontenttype.h>
 #include <DebugOutput.h>
-#include <apputility.h>
+#include <apputility\apputility.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <tchar.h>

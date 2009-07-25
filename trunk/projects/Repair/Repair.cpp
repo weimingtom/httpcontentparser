@@ -4,9 +4,9 @@
 #include "stdafx.h"
 #include ".\Repair.h"
 #include ".\RepairDlg.h"
-#include <apputility.h>
 #include <app_constants.h>
-#include <AppinstallValidate.h>
+#include <apputility\apputility.h>
+#include <apputility\AppinstallValidate.h>
 #include <softwareStatus.h>
 #include <COM\FilterSetting_i.c>
 #include <COM\FilterSetting.h>

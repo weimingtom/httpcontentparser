@@ -5,7 +5,7 @@
 #include "MainUI.h"
 #include ".\dlgseachwordlist.h"
 #include ".\globalvariable.h"
-#include <apputility.h>
+#include <apputility\apputility.h>
 #include <comdef.h>
 #include <com\comutility.h>
 #include <utility\timeutility.h>

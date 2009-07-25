@@ -8,7 +8,7 @@
 #include ".\globalvariable.h"
 #include <app_constants.h>
 #include <softwarestatus.h>
-#include <apputility.h>
+#include <apputility\apputility.h>
 #include <comdef.h>
 #include <logger\logger.h>
 

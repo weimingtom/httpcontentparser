@@ -7,7 +7,6 @@
 
 
 // CAutoTraHotKeyCtrl
-
 IMPLEMENT_DYNAMIC(CAutoTraHotKeyCtrl, CHotKeyCtrl)
 CAutoTraHotKeyCtrl::CAutoTraHotKeyCtrl()
 {

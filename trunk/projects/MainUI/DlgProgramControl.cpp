@@ -6,8 +6,8 @@
 #include "DlgProgramControl.h"
 #include ".\dlgprogramcontrol.h"
 #include ".\globalvariable.h"
-#include <apputility.h>
-#include <fileinfo.h>
+#include <apputility\apputility.h>
+#include <apputility\fileinfo.h>
 #include <comdef.h>
 #include <com\comutility.h>
 #include <com\resultvalue.h>
