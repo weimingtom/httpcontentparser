@@ -34,9 +34,6 @@ APPUTILITYDLL_API   const TCHAR * GetInstallPath(TCHAR *install_path, const int 
 APPUTILITYDLL_API   const TCHAR * GetInstallPathFromRegistry(TCHAR * install_path, const DWORD len);
 APPUTILITYDLL_API   const TCHAR * GetFileRecordInstallDate(TCHAR * fullpath, const int len);
 
-// 获取SPI的安装路径
-APPUTILITYDLL_API   const TCHAR * GetSPIInstallPath(TCHAR * fullpath, const int len);
-
 // 获取配置文件的路径
 APPUTILITYDLL_API   const TCHAR * GetAppConfigFilename(TCHAR *fullpath, const int len);
 
