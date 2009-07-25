@@ -8,10 +8,10 @@
 #include <com\FilterSetting.h>
 #include <com\comutility.h>
 #include <softwareStatus.h>
-#include <AppInstallValidate.h>
+#include <apputility\AppInstallValidate.h>
+#include <apputility\apputility.h>
 #include <app_constants.h>
 #include<typeconvert.h>
-#include <apputility.h>
 #include <driver_const.h>
 #include <comdef.h>
 #include ".\logger_def.h"

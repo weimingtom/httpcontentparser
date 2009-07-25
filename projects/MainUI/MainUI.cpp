@@ -6,11 +6,11 @@
 #include ".\MainUIDlg.h"
 #include ".\Globalvariable.h"
 #include ".\Services.h"
-#include <apputility.h>
+#include <apputility\apputility.h>
 #include <typeconvert.h>
 #include <app_constants.h>
 #include <com\comutility.h>
-#include <AppinstallValidate.h>
+#include <apputility\AppinstallValidate.h>
 #include <softwareStatus.h>
 #include ".\share.h"
 #include <logger\logger.h>

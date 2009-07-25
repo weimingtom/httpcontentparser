@@ -3,7 +3,7 @@
 
 #include <string>
 #include <utility\strutility.h>
-#include <ApputilityDLL.H>
+#include <apputility\ApputilityDLL.H>
 
 // class CFileInfo
 // 用于获取文件的版本信息， 图标等

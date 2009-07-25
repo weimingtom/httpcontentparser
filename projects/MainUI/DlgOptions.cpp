@@ -7,7 +7,7 @@
 #include ".\globalvariable.h"
 #include <app_constants.h>
 #include <xmldefined.h>
-#include <apputility.h>
+#include <apputility\apputility.h>
 #include <comdef.h>
 #include <com\comutility.h>
 #include <typeconvert.h>

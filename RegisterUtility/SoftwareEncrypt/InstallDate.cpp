@@ -10,7 +10,7 @@
 #include <utility\timeutility.h>
 #include <boost/scope_exit.hpp>
 #include <boost/exception.hpp>
-#include <apputility.h>
+#include <apputility\apputility.h>
 #include <DebugOutput.h>
 
 #define __SOFTWAREENCRYPT_INSTALLDATE__(FMT) _DEBUG_STREAM_TRC_("[Family007][SoftwareEncrypt][InstallDate]"<<FMT )

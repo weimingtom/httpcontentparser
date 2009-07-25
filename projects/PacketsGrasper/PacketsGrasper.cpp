@@ -5,7 +5,7 @@
 
 #include ".\dnsmap.h"
 #include ".\serviceUtility.h"
-#include <apputility.h>
+#include <apputility\apputility.h>
 #include <utility\debugmessage.h>
 #include <utility\fd_set_utility.h>
 #include <utility\HttpPacket.h>
@@ -14,7 +14,7 @@
 #include <utility\syncutility.h>
 #include <logdebug.h>
 #include <app_constants.h>
-#include <AppinstallValidate.h>
+#include <apputility\AppinstallValidate.h>
 #include <softwareStatus.h>
 #include <DebugOutput.h>
 #include <stdio.h>

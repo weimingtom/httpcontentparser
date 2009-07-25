@@ -2,7 +2,7 @@
 #define _FILTER_SETTING_SYS_UTILITY_H__
 
 #include <utility\strutility.h>
-#include <ApputilityDLL.H>
+#include <apputility\ApputilityDLL.H>
 #include <aclapi.h>
 
 // ±£´æÆÁÄ»

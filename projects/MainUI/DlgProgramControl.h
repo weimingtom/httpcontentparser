@@ -8,7 +8,7 @@
 #include ".\ListView\ListViewCtrlEx.h"
 #include ".\globalvariable.h"
 #include <utility\strutility.h>
-#include <fileinfo.h>
+#include <apputility\fileinfo.h>
 #include <string>
 #include <map>
 #include <set>

@@ -10,7 +10,7 @@
 #include ".\dlgseachwordlist.h"
 #include ".\dlgwebsites.h"
 #include <typeconvert.h>
-#include <apputility.h>
+#include <apputility\apputility.h>
 #include <comdef.h>
 #include <logger\logger.h>
 

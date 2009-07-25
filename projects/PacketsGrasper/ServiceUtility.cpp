@@ -9,7 +9,7 @@
 #include <utility\seachpacket.h>
 #include <utility\dns.h>
 #include <DebugOutput.h>
-#include <AppinstallValidate.h>
+#include <apputility\AppinstallValidate.h>
 #include <softwareStatus.h>
 #include <typeconvert.h>
 #include <string>

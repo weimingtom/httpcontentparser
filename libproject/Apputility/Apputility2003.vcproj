@@ -42,10 +42,10 @@
 "/>
 			<Tool
 				Name="VCPreBuildEventTool"
-				CommandLine="copy .\apputility.h ..\..\include
-copy .\AppInstallValidate.h ..\..\include
-copy .\Fileinfo.h ..\..\include
-"/>
+				CommandLine="copy .\apputility.h ..\..\include\apputility
+copy .\AppInstallValidate.h ..\..\include\apputility
+copy .\Fileinfo.h ..\..\include\apputility
+copy .\ApputilityDLL.h ..\..\include\apputility"/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
 			<Tool
@@ -90,10 +90,10 @@ copy .\release\Apputility.lib ..\..\lib\Apputility.lib
 "/>
 			<Tool
 				Name="VCPreBuildEventTool"
-				CommandLine="copy .\apputility.h ..\..\include
-copy .\AppInstallValidate.h ..\..\include
-copy .\Fileinfo.h ..\..\include
-"/>
+				CommandLine="copy .\apputility.h ..\..\include\apputility
+copy .\AppInstallValidate.h ..\..\include\apputility
+copy .\Fileinfo.h ..\..\include\apputility
+copy .\ApputilityDLL.h ..\..\include\apputility"/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
 			<Tool

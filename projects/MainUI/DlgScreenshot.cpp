@@ -7,7 +7,7 @@
 #include ".\globalvariable.h"
 #include ".\dlgscreenshot.h"
 #include ".\DlgImageBrowser.h"
-#include <apputility.h>
+#include <apputility\apputility.h>
 #include <typeconvert.h>
 #include <logger\logger.h>
 

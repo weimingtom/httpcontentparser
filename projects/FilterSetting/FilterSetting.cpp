@@ -7,8 +7,8 @@
 #include ".\servthread.h"
 #include ".\driverMngr.h"
 #include <utility\timeutility.h>
-#include <AppinstallValidate.h>
-#include <apputility.h>
+#include <apputility\AppinstallValidate.h>
+#include <apputility\apputility.h>
 #include <app_constants.h>
 #include <passwordtype.h>
 #include <webhistoryrecordersetting.h>

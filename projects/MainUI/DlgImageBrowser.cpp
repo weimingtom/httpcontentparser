@@ -6,7 +6,7 @@
 #include "DlgImageBrowser.h"
 #include ".\dlgimagebrowser.h"
 #include <utility\strutility.h>
-#include <apputility.h>
+#include <apputility\apputility.h>
 #include <vector>
 #include <string>
 
