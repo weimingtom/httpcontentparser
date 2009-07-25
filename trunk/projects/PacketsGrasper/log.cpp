@@ -95,14 +95,14 @@ namespace {
 void init_logger(HMODULE hModule) {
 	TCHAR filename[MAX_PATH], dir[MAX_PATH];
 	// 获取DLL的路径
-	GetModuleFileName(hModule, filename, MAX_PATH);
+	GetModuleFileName(hModule, filename, MAX_PATH);	// 得到的DLL的文件名
 	GetFileNameDir(filename, dir, MAX_PATH);
 	_sntprintf(filename, MAX_PATH, "%s\\log\\pgrasper.log", dir);
 	init_app_logger(filename);
 
 	//获取caller_name
 	TCHAR callerpath[MAX_PATH];
-	GetModuleFileName(NULL, callerpath, MAX_PATH);
+	GetModuleFileName(NULL, callerpath, MAX_PATH);	// 传入NULL, D得到的是调用者的
 	GetFileName(callerpath, g_caller_name, MAX_PATH);
 	_sntprintf(filename, MAX_PATH, "%s\\log\\dpgrasper_%s.log", dir, g_caller_name);
 	init_debug_logger(filename);
