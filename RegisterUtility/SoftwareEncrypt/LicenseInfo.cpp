@@ -5,8 +5,11 @@
 #include "baseEncrypt.h"
 #include <softwareStatus.h>
 #include <app_constants.h>
+#include <DebugOutput.h>
 
 #define UNINSTALL_INDICATOR		TEXT("uninstall.dll")
+
+#define __SOFTWAREENCRYPT_LICENSEINFO__(FMT) _DEBUG_STREAM_TRC_("[Family007][SoftwareEncrypt][LicenseInfo]"<<FMT )
 
 namespace software_encrypt {
 LicenseInfo::LicenseInfo(void) : initialized_(false){
