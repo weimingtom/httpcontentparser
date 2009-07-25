@@ -20,7 +20,7 @@ public:
 // 对话框数据
 	enum { IDD = IDD_DLG_DNS_RULE };
 
-	virtual int OnApply();
+	virtual INT_PTR OnApply();
 	virtual void OnShow();
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 支持

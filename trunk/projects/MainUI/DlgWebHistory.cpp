@@ -83,7 +83,7 @@ void CDlgWebHistory::ChangeRecordType() {
 	}
 }
 
-int CDlgWebHistory::OnApply() {
+INT_PTR CDlgWebHistory::OnApply() {
 	ChangeRecordType();
 	return 0;
 }
@@ -101,7 +101,7 @@ void CDlgWebHistory::restoreSetting() {
 		HRESULT hr = CoCreateInstance(CLSID_WebHistoryRecorder, NULL, CLSCTX_ALL, IID_IWebHistoryRecorder, (LPVOID*)&pWebHistory);
 		if (FAILED(hr)) {
 			__LERR__("Create historyRecord with HRESULT value "<<hr);
-			throw int(SNOWMAN_ERROR_COM_INIT_FAILED);
+			throw INT_PTR(SNOWMAN_ERROR_COM_INIT_FAILED);
 		}
 
 		VARIANT_BOOL isEnabled;
@@ -125,7 +125,7 @@ void CDlgWebHistory::restoreSetting() {
 		UpdateData(FALSE);
 	} catch(...) {
 		__LERR__( "CATCH(_com_error)");
-		throw int(SNOWMAN_ERROR_COM_INIT_FAILED);
+		throw INT_PTR(SNOWMAN_ERROR_COM_INIT_FAILED);
 	}
 }
 BEGIN_MESSAGE_MAP(CDlgWebHistory, CDialog)

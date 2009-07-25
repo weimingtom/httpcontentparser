@@ -17,7 +17,7 @@ public:
 	enum { IDD = IDD_DLG_HELP };
 
 	virtual void restoreSetting();
-	virtual int OnApply();
+	virtual INT_PTR OnApply();
 	virtual void OnShow();
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV Ö§³Ö

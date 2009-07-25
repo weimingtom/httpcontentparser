@@ -13,7 +13,7 @@
 #include <logger\logger.h>
 
 // 初始化静态变量
-int CDlgChangePassword::static_dlg_show_cnt = false;
+INT_PTR CDlgChangePassword::static_dlg_show_cnt = false;
 // CDlgChangePassword 对话框
 
 IMPLEMENT_DYNAMIC(CDlgChangePassword, CPopupDialog)
@@ -97,7 +97,7 @@ void CDlgChangePassword::OnBnClickedOk()
 {
 	try {
 		UpdateData(TRUE);
-		int msgId = Services::validatePwd(m_strNew, m_strRetype);
+		INT_PTR msgId = Services::validatePwd(m_strNew, m_strRetype);
 		if (msgId != 0) {
 			AfxMessageBox(msgId);
 			resetFileds();

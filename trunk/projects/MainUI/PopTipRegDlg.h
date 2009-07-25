@@ -24,7 +24,7 @@ protected:
 	DECLARE_MESSAGE_MAP()
 
 private:
-	static int show_count_;
+	static INT_PTR show_count_;
 
 	virtual BOOL OnInitDialog();
 

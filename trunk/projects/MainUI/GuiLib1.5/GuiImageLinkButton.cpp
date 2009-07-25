@@ -57,7 +57,7 @@ void CGuiImageLinkButton::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 	UINT  uState=lpDrawItemStruct->itemState;
 	CFont* m_OldFont;
 	CBrush cb;
-	int calculodify;
+	INT_PTR calculodify;
 
 	cb.CreateSolidBrush(m_clColor); //deberia ser blanco
 	
@@ -81,7 +81,7 @@ void CGuiImageLinkButton::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 	
 	if (m_SizeText.cx > 2)
 	{
-		int nMode = pdc->SetBkMode(TRANSPARENT);
+		INT_PTR nMode = pdc->SetBkMode(TRANSPARENT);
 		COLORREF clOldColor=pdc->SetTextColor(RGB(0,0,200));
 		rectletra=rc;
 		rectletra.left+=m_iDent+m_SizeImage.cx+8;

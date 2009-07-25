@@ -58,7 +58,7 @@ END_MESSAGE_MAP()
 
 // CGuiSysTray message handlers
 
-void CGuiSysTray::StartAnimation(int nMilliseconds,int nPosInit, int nPosEnd)
+void CGuiSysTray::StartAnimation(INT_PTR nMilliseconds,INT_PTR nPosInit, INT_PTR nPosEnd)
 {
 	if(m_bStartAnimation)
 		return;
@@ -120,7 +120,7 @@ BOOL CGuiSysTray::SetTips(LPCTSTR lpszTip)
 	return (Shell_NotifyIcon(NIM_MODIFY, &tnid));
 }
 
-void CGuiSysTray::SetImageList(UINT nBitmapID, int cx, int nGrow, COLORREF crMask)
+void CGuiSysTray::SetImageList(UINT nBitmapID, INT_PTR cx, INT_PTR nGrow, COLORREF crMask)
 {
 	CBitmap cbmp;
 	BITMAP bmp;

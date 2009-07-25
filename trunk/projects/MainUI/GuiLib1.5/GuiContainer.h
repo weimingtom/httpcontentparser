@@ -101,20 +101,20 @@ public:
 	// Generated message map functions
 protected:
 	CPtrArray	m_arrContainer;
-	int			m_nItems;
+	INT_PTR			m_nItems;
 	COLORREF	m_clrface;
 	Borders		m_enBorder;
-	int			m_nResultCWnd;
-    int			m_nResultTools; 	
+	INT_PTR			m_nResultCWnd;
+    INT_PTR			m_nResultTools; 	
 	CWnd*		pParent;
 	BOOL		m_bUseWin;
 	BOOL		m_bDrawBorder;
 protected:
 	//{{AFX_MSG(CGuiContainer)
-	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+	afx_msg INT_PTR OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnPaint();
 	afx_msg void OnSysColorChange();
-	afx_msg void OnSize(UINT nType, int cx, int cy);
+	afx_msg void OnSize(UINT nType, INT_PTR cx, INT_PTR cy);
 	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
 	afx_msg void OnWindowPosChanging(WINDOWPOS* lpwndpos);
 	afx_msg void OnDestroy();

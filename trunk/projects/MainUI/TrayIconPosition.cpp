@@ -34,7 +34,7 @@ CTrayIconPosition::~CTrayIconPosition()
 
 }
 
-void CTrayIconPosition::InitializePositionTracking(HWND hwndOfIconOwner, int iIconID)
+void CTrayIconPosition::InitializePositionTracking(HWND hwndOfIconOwner, INT_PTR iIconID)
 {
 	m_hWndOfIconOwner = hwndOfIconOwner;
 	m_iTrayIconID = iIconID;
@@ -48,7 +48,7 @@ BOOL CTrayIconPosition::GetTrayIconPosition(CPoint &point, Precision prPrec)
 	}
 
 	//let's find the time from last tray icon position calculation
-	int iTotalSec = (int)(m_tLastUpdate - CTime::GetCurrentTime()).GetTotalSeconds();
+	INT_PTR iTotalSec = (INT_PTR)(m_tLastUpdate - CTime::GetCurrentTime()).GetTotalSeconds();
 	if(iTotalSec < 0)
 	{
 		iTotalSec = -iTotalSec;
@@ -124,7 +124,7 @@ BOOL CTrayIconPosition::GetTrayIconPosition(CPoint &point, Precision prPrec)
 	position of tray icon in time shorter than 60 seconds - there will be no recalculation
 	and previous calculated value will be used.
 */
-void CTrayIconPosition::SetPrecisionTimeOuts(int iLowSec, int iMedSec, int iHighSec)
+void CTrayIconPosition::SetPrecisionTimeOuts(INT_PTR iLowSec, INT_PTR iMedSec, INT_PTR iHighSec)
 {
 	m_iPrecisions[0] = iLowSec;
 	m_iPrecisions[1] = iMedSec;
@@ -165,8 +165,8 @@ CRect CTrayIconPosition::GetTrayWndRect()
 	}    
 	else    
 	{        
-		int nWidth  = GetSystemMetrics(SM_CXSCREEN);
-        int nHeight = GetSystemMetrics(SM_CYSCREEN);
+		INT_PTR nWidth  = GetSystemMetrics(SM_CXSCREEN);
+        INT_PTR nHeight = GetSystemMetrics(SM_CYSCREEN);
         rect.SetRect(nWidth-40, nHeight-20, nWidth, nHeight);
     }    
 	return rect;
@@ -177,11 +177,11 @@ CRect CTrayIconPosition::GetTrayWndRect()
 BOOL CTrayIconPosition::CheckIfColorIsBlackOrNearBlack(COLORREF crColor)
 {
 	BOOL bColorIsBlack = FALSE;
-	for(int iRed=0;iRed<4;iRed++)
+	for(INT_PTR iRed=0;iRed<4;iRed++)
 	{
-		for(int iGreen=0;iGreen<4;iGreen++)
+		for(INT_PTR iGreen=0;iGreen<4;iGreen++)
 		{
-			for(int iBlue=0;iBlue<4;iBlue++)
+			for(INT_PTR iBlue=0;iBlue<4;iBlue++)
 			{
 				if(crColor == RGB(iRed,iGreen,iBlue))
 				{
@@ -209,10 +209,10 @@ BOOL CTrayIconPosition::FindOutPositionOfIcon(HICON icon)
 	  HDC hdcScreen = GetDC(NULL);
 
 //since tray window can be strethed verticaly let's scan this area in few steps starting from the bottom to the top.
-for(int iy = m_rtRectangleOfTheTray.bottom-3; iy > m_rtRectangleOfTheTray.top; iy--)
+for(INT_PTR iy = m_rtRectangleOfTheTray.bottom-3; iy > m_rtRectangleOfTheTray.top; iy--)
 {
-	  int iNoOfPixelsInLine=0;
-	  for(int ix=m_rtRectangleOfTheTray.left;ix<m_rtRectangleOfTheTray.right;ix++)
+	  INT_PTR iNoOfPixelsInLine=0;
+	  for(INT_PTR ix=m_rtRectangleOfTheTray.left;ix<m_rtRectangleOfTheTray.right;ix++)
 	  {
 		  COLORREF crPixel = GetPixel(hdcScreen, ix, iy);
 		  COLORREF crPixel2 = GetPixel(hdcScreen, ix, iy-2);

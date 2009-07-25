@@ -1,7 +1,7 @@
 #include "StdAfx.h"
 #include ".\popupdialog.h"
 
-CPopupDialog::CPopupDialog(int id, CWnd* pParent) 
+CPopupDialog::CPopupDialog(INT_PTR id, CWnd* pParent) 
 	: CDialog(id, pParent)
 {
 	m_bOpened_ = false;
@@ -16,7 +16,7 @@ INT_PTR CPopupDialog::DoModal()
 {
 	if (false == m_bOpened_) {
 		m_bOpened_ = true;
-		int result =  CDialog::DoModal();
+		INT_PTR result =  CDialog::DoModal();
 		m_bOpened_ = false;
 		return result;
 	} else {

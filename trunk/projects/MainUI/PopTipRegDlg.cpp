@@ -11,7 +11,7 @@
 // CPopTipRegDlg ¶Ô»°¿ò
 #define SHOW_TIMES		5
 
-int CPopTipRegDlg::show_count_ = -1;
+INT_PTR CPopTipRegDlg::show_count_ = -1;
 
 IMPLEMENT_DYNAMIC(CPopTipRegDlg, CDialog)
 CPopTipRegDlg::CPopTipRegDlg(CWnd* pParent /*=NULL*/)

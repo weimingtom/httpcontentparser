@@ -107,7 +107,7 @@ UINT GetSafeTimerID(HWND hWnd, const UINT uiElapse);
 BOOL DrawMenubarItem(CWnd* pWnd,CMenu* pMenu, UINT nItemIndex,UINT nState);
 
 WORD NumBitmapColors(LPBITMAPINFOHEADER lpBitmap);
-HBITMAP LoadColorBitmap(LPCTSTR lpszResourceName, HMODULE hInst, int* pNumcol=NULL);
+HBITMAP LoadColorBitmap(LPCTSTR lpszResourceName, HMODULE hInst, INT_PTR* pNumcol=NULL);
 
 void UpdateMenuBarColor(HMENU hMenu=NULL);
 
@@ -128,10 +128,10 @@ public:
   virtual ~CNewMenuIcons();
 
 public:
-  BOOL GetIconSize(int* cx, int* cy);
+  BOOL GetIconSize(INT_PTR* cx, INT_PTR* cy);
   CSize GetIconSize();
 
-  virtual int FindIndex(UINT nID);
+  virtual INT_PTR FindIndex(UINT nID);
   virtual void OnSysColorChange();
 
   virtual BOOL LoadToolBar(LPCTSTR lpszResourceName, HMODULE hInst);
@@ -140,17 +140,17 @@ public:
   virtual BOOL DoMatch(LPCTSTR lpszResourceName, HMODULE hInst);
   virtual BOOL DoMatch(WORD* pToolInfo, COLORREF crTransparent=CLR_NONE);
 
-  virtual BOOL LoadBitmap(int nWidth, int nHeight, LPCTSTR lpszResourceName, HMODULE hInst=NULL);
+  virtual BOOL LoadBitmap(INT_PTR nWidth, INT_PTR nHeight, LPCTSTR lpszResourceName, HMODULE hInst=NULL);
 
 //  virtual BOOL SetBlendImage();
-  virtual int AddGloomIcon(HICON hIcon, int nIndex=-1);
-  virtual int AddGrayIcon(HICON hIcon, int nIndex=-1);
+  virtual INT_PTR AddGloomIcon(HICON hIcon, INT_PTR nIndex=-1);
+  virtual INT_PTR AddGrayIcon(HICON hIcon, INT_PTR nIndex=-1);
   virtual BOOL MakeImages();
 
   void SetResourceName(LPCTSTR lpszResourceName);
 
-  int AddRef();
-  int Release();
+  INT_PTR AddRef();
+  INT_PTR Release();
 
 #if defined(_DEBUG) || defined(_AFXDLL)
   // Diagnostic Support
@@ -161,7 +161,7 @@ public:
 public:
   LPCTSTR m_lpszResourceName;
   HMODULE m_hInst;
-  int m_nColors;
+  INT_PTR m_nColors;
   COLORREF m_crTransparent;
 
   CImageList m_IconsList;
@@ -181,9 +181,9 @@ public:
   virtual ~CNewMenuBitmaps();
 
 public:
-  int Add(UINT nID, COLORREF crTransparent=CLR_NONE);
-  int Add(HICON hIcon, UINT nID=0);
-  int Add(CBitmap* pBitmap, COLORREF crTransparent=CLR_NONE);
+  INT_PTR Add(UINT nID, COLORREF crTransparent=CLR_NONE);
+  INT_PTR Add(HICON hIcon, UINT nID=0);
+  INT_PTR Add(CBitmap* pBitmap, COLORREF crTransparent=CLR_NONE);
 
   virtual void OnSysColorChange();
 
@@ -220,7 +220,7 @@ public:
   UINT m_nSyncFlag;
 
   CNewMenuIcons* m_pMenuIcon;
-  int m_nMenuIconOffset;
+  INT_PTR m_nMenuIconOffset;
 
   void* m_pData;
 };
@@ -268,62 +268,62 @@ public:
   // Functions for loading and applying bitmaps to menus (see example application)
   virtual BOOL LoadMenu(HMENU hMenu);
   virtual BOOL LoadMenu(LPCTSTR lpszResourceName);
-  virtual BOOL LoadMenu(int nResource);
+  virtual BOOL LoadMenu(INT_PTR nResource);
 
   BOOL LoadToolBar(WORD* pIconInfo, COLORREF crTransparent=CLR_NONE);
   BOOL LoadToolBar(LPCTSTR lpszResourceName, HMODULE hInst = NULL);
   BOOL LoadToolBar(UINT nToolBar, HMODULE hInst = NULL);
-  BOOL LoadToolBars(const UINT *arID,int n, HMODULE hInst = NULL);
+  BOOL LoadToolBars(const UINT *arID,INT_PTR n, HMODULE hInst = NULL);
 
-  BOOL LoadFromToolBar(UINT nID,UINT nToolBar,int& xoffset);
+  BOOL LoadFromToolBar(UINT nID,UINT nToolBar,INT_PTR& xoffset);
   BOOL AddBitmapToImageList(CImageList *list,UINT nResourceID);
 
-  static HBITMAP LoadSysColorBitmap(int nResourceId);
+  static HBITMAP LoadSysColorBitmap(INT_PTR nResourceId);
   // custom check mark bitmaps
-  void LoadCheckmarkBitmap(int unselect, int select); 
+  void LoadCheckmarkBitmap(INT_PTR unselect, INT_PTR select); 
 
   // functions for appending a menu option, use the AppendMenu call
-  BOOL AppendMenu(UINT nFlags,UINT nIDNewItem=0,LPCTSTR lpszNewItem=NULL,int nIconNormal=-1);
-  BOOL AppendMenu(UINT nFlags,UINT nIDNewItem,LPCTSTR lpszNewItem,CImageList *il,int xoffset);
+  BOOL AppendMenu(UINT nFlags,UINT nIDNewItem=0,LPCTSTR lpszNewItem=NULL,INT_PTR nIconNormal=-1);
+  BOOL AppendMenu(UINT nFlags,UINT nIDNewItem,LPCTSTR lpszNewItem,CImageList *il,INT_PTR xoffset);
   BOOL AppendMenu(UINT nFlags,UINT nIDNewItem,LPCTSTR lpszNewItem,CBitmap *bmp);
 
-  BOOL AppendODMenu(LPCTSTR lpstrText, UINT nFlags = MF_OWNERDRAW, UINT nID = 0, int nIconNormal = -1);  
+  BOOL AppendODMenu(LPCTSTR lpstrText, UINT nFlags = MF_OWNERDRAW, UINT nID = 0, INT_PTR nIconNormal = -1);  
   BOOL AppendODMenu(LPCTSTR lpstrText, UINT nFlags, UINT nID, CBitmap* pbmp);
-  BOOL AppendODMenu(LPCTSTR lpstrText, UINT nFlags, UINT nID, CImageList *il, int xoffset);
-  BOOL AppendODMenu(LPCTSTR lpstrText, UINT nFlags, UINT nID, CNewMenuIcons* pIcons, int nIndex);
+  BOOL AppendODMenu(LPCTSTR lpstrText, UINT nFlags, UINT nID, CImageList *il, INT_PTR xoffset);
+  BOOL AppendODMenu(LPCTSTR lpstrText, UINT nFlags, UINT nID, CNewMenuIcons* pIcons, INT_PTR nIndex);
 
   // for appending a popup menu (see example application)
   CNewMenu* AppendODPopupMenu(LPCTSTR lpstrText);
 
   // functions for inserting a menu option, use the InsertMenu call (see above define)
-  BOOL InsertMenu(UINT nPosition,UINT nFlags,UINT nIDNewItem=0,LPCTSTR lpszNewItem=NULL,int nIconNormal=-1);
-  BOOL InsertMenu(UINT nPosition,UINT nFlags,UINT nIDNewItem,LPCTSTR lpszNewItem,CImageList *il,int xoffset);
+  BOOL InsertMenu(UINT nPosition,UINT nFlags,UINT nIDNewItem=0,LPCTSTR lpszNewItem=NULL,INT_PTR nIconNormal=-1);
+  BOOL InsertMenu(UINT nPosition,UINT nFlags,UINT nIDNewItem,LPCTSTR lpszNewItem,CImageList *il,INT_PTR xoffset);
   BOOL InsertMenu(UINT nPosition,UINT nFlags,UINT nIDNewItem,LPCTSTR lpszNewItem,CBitmap *bmp);
 
-  BOOL InsertODMenu(UINT nPosition,LPCTSTR lpstrText, UINT nFlags = MF_OWNERDRAW,UINT nID = 0,int nIconNormal = -1);  
+  BOOL InsertODMenu(UINT nPosition,LPCTSTR lpstrText, UINT nFlags = MF_OWNERDRAW,UINT nID = 0,INT_PTR nIconNormal = -1);  
   BOOL InsertODMenu(UINT nPosition,LPCTSTR lpstrText, UINT nFlags, UINT nID, CBitmap* pBmp);
-  BOOL InsertODMenu(UINT nPosition,LPCTSTR lpstrText, UINT nFlags, UINT nID, CImageList *il,int xoffset);
-  BOOL InsertODMenu(UINT nPosition,LPCTSTR lpstrText, UINT nFlags, UINT nID, CNewMenuIcons* pIcons, int nIndex);
+  BOOL InsertODMenu(UINT nPosition,LPCTSTR lpstrText, UINT nFlags, UINT nID, CImageList *il,INT_PTR xoffset);
+  BOOL InsertODMenu(UINT nPosition,LPCTSTR lpstrText, UINT nFlags, UINT nID, CNewMenuIcons* pIcons, INT_PTR nIndex);
 
   // Same as ModifyMenu but replacement for CNewMenu
   BOOL ModifyODMenu(UINT nPosition, UINT nFlags, UINT nIDNewItem = 0,LPCTSTR lpszNewItem = NULL);
 	BOOL ModifyODMenu(UINT nPosition, UINT nFlags, UINT nIDNewItem, const CBitmap* pBmp);
 
   // functions for modifying a menu option, use the ModifyODMenu call (see above define)
-  BOOL ModifyODMenu(LPCTSTR lpstrText, UINT nID=0, int nIconNormal=-1);
-  BOOL ModifyODMenu(LPCTSTR lpstrText, UINT nID, CImageList *il, int xoffset);
-  BOOL ModifyODMenu(LPCTSTR lpstrText, UINT nID, CNewMenuIcons* pIcons, int nIndex);
+  BOOL ModifyODMenu(LPCTSTR lpstrText, UINT nID=0, INT_PTR nIconNormal=-1);
+  BOOL ModifyODMenu(LPCTSTR lpstrText, UINT nID, CImageList *il, INT_PTR xoffset);
+  BOOL ModifyODMenu(LPCTSTR lpstrText, UINT nID, CNewMenuIcons* pIcons, INT_PTR nIndex);
 
   BOOL ModifyODMenu(LPCTSTR lpstrText,UINT nID,CBitmap *bmp);
-  BOOL ModifyODMenu(LPCTSTR lpstrText,LPCTSTR OptionText,int nIconNormal);
+  BOOL ModifyODMenu(LPCTSTR lpstrText,LPCTSTR OptionText,INT_PTR nIconNormal);
   // use this method for adding a solid/hatched colored square beside a menu option
   // courtesy of Warren Stevens
-  BOOL ModifyODMenu(LPCTSTR lpstrText,UINT nID,COLORREF fill,COLORREF border,int hatchstyle=-1);
+  BOOL ModifyODMenu(LPCTSTR lpstrText,UINT nID,COLORREF fill,COLORREF border,INT_PTR hatchstyle=-1);
 
   // for deleting and removing menu options
   BOOL  DeleteMenu(UINT uiId,UINT nFlags);
   BOOL  RemoveMenu(UINT uiId,UINT nFlags);
-  int RemoveMenu(LPCTSTR pText, ESeperator sPos=CNewMenu::NONE);
+  INT_PTR RemoveMenu(LPCTSTR pText, ESeperator sPos=CNewMenu::NONE);
 
   // function for retrieving and setting a menu options text (use this function
   // because it is ownerdrawn)
@@ -332,8 +332,8 @@ public:
 
   // Getting a submenu from it's name or position
   CMenu* GetSubMenu (LPCTSTR lpszSubMenuName) const;
-  CMenu* GetSubMenu (int nPos) const;
-  int GetMenuPosition(LPCTSTR pText);
+  CMenu* GetSubMenu (INT_PTR nPos) const;
+  INT_PTR GetMenuPosition(LPCTSTR pText);
 
   // Destoying
   virtual BOOL DestroyMenu();
@@ -400,7 +400,7 @@ public:
 
   // Customizing:
   // Set icon size
-  void SetIconSize(int width, int height);
+  void SetIconSize(INT_PTR width, INT_PTR height);
 
   // set the color in the bitmaps that is the background transparent color
   COLORREF SetBitmapBackground(COLORREF newColor);
@@ -426,9 +426,9 @@ public:
 
 // Miscellaneous Protected Member functions
 protected:
-  CNewMenuIcons* GetMenuIcon(int &nIndex, UINT nID, CImageList *pil, int xoffset);
-  CNewMenuIcons* GetMenuIcon(int &nIndex, int nID);
-  CNewMenuIcons* GetMenuIcon(int &nIndex, CBitmap* pBmp);
+  CNewMenuIcons* GetMenuIcon(INT_PTR &nIndex, UINT nID, CImageList *pil, INT_PTR xoffset);
+  CNewMenuIcons* GetMenuIcon(INT_PTR &nIndex, INT_PTR nID);
+  CNewMenuIcons* GetMenuIcon(INT_PTR &nIndex, CBitmap* pBmp);
 
   CNewMenuIcons* GetToolbarIcons(UINT nToolBar, HMODULE hInst=NULL);
 
@@ -441,15 +441,15 @@ protected:
   void SetLastMenuRect(HDC hDC, LPRECT pRect);
 
   CNewMenuItemData* FindMenuItem(UINT nID);
-  CNewMenu* FindMenuOption(int nId, int& nLoc);
-  CNewMenu* FindMenuOption(LPCTSTR lpstrText, int& nLoc);
+  CNewMenu* FindMenuOption(INT_PTR nId, INT_PTR& nLoc);
+  CNewMenu* FindMenuOption(LPCTSTR lpstrText, INT_PTR& nLoc);
 
-  CNewMenu* FindAnotherMenuOption(int nId, int& nLoc, CArray<CNewMenu*,CNewMenu*>&newSubs, CArray<int,int&>&newLocs);
+  CNewMenu* FindAnotherMenuOption(INT_PTR nId, INT_PTR& nLoc, CArray<CNewMenu*,CNewMenu*>&newSubs, CArray<INT_PTR,INT_PTR&>&newLocs);
 
   CNewMenuItemData* NewODMenu(UINT pos, UINT nFlags, UINT nID, LPCTSTR string);
 
   void SynchronizeMenu();
-  void InitializeMenuList(int value);
+  void InitializeMenuList(INT_PTR value);
   void DeleteMenuList();
   
   CNewMenuItemData* FindMenuList(UINT nID);
@@ -478,8 +478,8 @@ protected:
 
   void DrawItem_SpecialStyle (LPDRAWITEMSTRUCT lpDIS, BOOL bIsMenubar);
 
-//  BOOL ImageListDuplicate(CImageList* il,int xoffset,CImageList* newlist);
-  void ColorBitmap(CDC* pDC, CBitmap& bmp, CSize size, COLORREF fill, COLORREF border, int hatchstyle=-1);
+//  BOOL ImageListDuplicate(CImageList* il,INT_PTR xoffset,CImageList* newlist);
+  void ColorBitmap(CDC* pDC, CBitmap& bmp, CSize size, COLORREF fill, COLORREF border, INT_PTR hatchstyle=-1);
   
 // Member Variables
 public:
@@ -501,8 +501,8 @@ protected:
   static LOGFONT m_MenuTitleFont;
   static CTypedPtrList<CPtrList, CNewMenuIcons*>* m_pSharedMenuIcons;
 
-  int m_iconX;
-  int m_iconY;
+  INT_PTR m_iconX;
+  INT_PTR m_iconY;
 
   HWND m_hTempOwner;
 
@@ -511,8 +511,8 @@ protected:
   CImageList* m_checkmaps;
   BOOL m_checkmapsshare;
 
-  int m_selectcheck;
-  int m_unselectcheck;
+  INT_PTR m_selectcheck;
+  INT_PTR m_unselectcheck;
 
   BOOL m_bDynIcons;
 
@@ -603,7 +603,7 @@ protected:
     return Entries;
   }
 
-  afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct)
+  afx_msg INT_PTR OnCreate(LPCREATESTRUCT lpCreateStruct)
   {
     if (baseClass::OnCreate(lpCreateStruct) == -1)
       return -1;
@@ -764,7 +764,7 @@ protected:
     return nHitCode;
   }
 
-  afx_msg void OnMeasureItem(int nIDCtl, LPMEASUREITEMSTRUCT lpMIS) 
+  afx_msg void OnMeasureItem(INT_PTR nIDCtl, LPMEASUREITEMSTRUCT lpMIS) 
   {
     if(!CNewMenu::OnMeasureItem(GetCurrentMessage()))
     {
@@ -1054,7 +1054,7 @@ class CNewMenuHelper
 {
 private:
   DWORD m_dwOldFlags;
-  int m_OldMenuDrawStyle;
+  INT_PTR m_OldMenuDrawStyle;
 
 public: 
   CNewMenuHelper(DWORD dwFlags);

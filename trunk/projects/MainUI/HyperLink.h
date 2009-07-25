@@ -48,8 +48,8 @@ protected:
 
 	// Implementation
 protected:
-	HINSTANCE GotoURL(LPCTSTR url, int showcmd);
-	void ReportError(int nError);
+	HINSTANCE GotoURL(LPCTSTR url, INT_PTR showcmd);
+	void ReportError(INT_PTR nError);
 	LONG GetRegKey(HKEY key, LPCTSTR subkey, LPTSTR retdata);
 	void PositionWindow();
 	void SetDefaultCursor();

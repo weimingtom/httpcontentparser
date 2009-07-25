@@ -27,7 +27,7 @@ std::string CDlgHelp::getHelpLink() const {
 void CDlgHelp::restoreSetting() {
 }
 
-int CDlgHelp::OnApply() {
+INT_PTR CDlgHelp::OnApply() {
 	return 0;
 }
 

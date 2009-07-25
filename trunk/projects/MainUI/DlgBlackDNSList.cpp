@@ -29,7 +29,7 @@ std::string CDlgBlackDNSList::getHelpLink() const {
 }
 
 
-int CDlgBlackDNSList::OnApply() {
+INT_PTR CDlgBlackDNSList::OnApply() {
 	rules.Apply();
 
 	// DNS CHECK «∑Òø…”√
@@ -74,7 +74,7 @@ void CDlgBlackDNSList::restoreSetting() {
 		UpdateData(FALSE);
 	} catch(...) {
 		__LERR__("CATCH...");
-		throw int(SNOWMAN_ERROR_COM_INIT_FAILED);
+		throw INT_PTR(SNOWMAN_ERROR_COM_INIT_FAILED);
 	}
 
 }

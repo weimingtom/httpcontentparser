@@ -238,7 +238,7 @@ public:
 };
 
 // Helpers for casting
-__inline HMENU UIntToHMenu(const unsigned int ui )
+__inline HMENU UIntToHMenu(const UINT_PTR ui )
 {
   return( (HMENU)(UINT_PTR)ui );
 }
@@ -333,9 +333,9 @@ WORD NumBitmapColors(LPBITMAPINFOHEADER lpBitmap)
   return 0;
 }
 
-static int NumScreenColors()
+static INT_PTR NumScreenColors()
 {
-  static int nColors = 0;
+  static INT_PTR nColors = 0;
   if (!nColors)
   {
     // DC of the desktop
@@ -349,7 +349,7 @@ static int NumScreenColors()
   return nColors;
 }  
 
-HBITMAP LoadColorBitmap(LPCTSTR lpszResourceName, HMODULE hInst, int* pNumcol)
+HBITMAP LoadColorBitmap(LPCTSTR lpszResourceName, HMODULE hInst, INT_PTR* pNumcol)
 {
   if(hInst==0)
   {
@@ -746,9 +746,9 @@ COLORREF DarkenColor( long lScale, COLORREF lColor)
 COLORREF MixedColor(COLORREF colorA,COLORREF colorB)
 {
   // ( 86a + 14b ) / 100
-  int red   = MulDiv(86,GetRValue(colorA),100) + MulDiv(14,GetRValue(colorB),100);
-  int green = MulDiv(86,GetGValue(colorA),100) + MulDiv(14,GetGValue(colorB),100);
-  int blue  = MulDiv(86,GetBValue(colorA),100) + MulDiv(14,GetBValue(colorB),100);
+  INT_PTR red   = MulDiv(86,GetRValue(colorA),100) + MulDiv(14,GetRValue(colorB),100);
+  INT_PTR green = MulDiv(86,GetGValue(colorA),100) + MulDiv(14,GetGValue(colorB),100);
+  INT_PTR blue  = MulDiv(86,GetBValue(colorA),100) + MulDiv(14,GetBValue(colorB),100);
 
   return RGB( red,green,blue);
 }
@@ -756,9 +756,9 @@ COLORREF MixedColor(COLORREF colorA,COLORREF colorB)
 COLORREF MidColor(COLORREF colorA,COLORREF colorB)
 { 
   // (7a + 3b)/10
-  int red   = MulDiv(7,GetRValue(colorA),10) + MulDiv(3,GetRValue(colorB),10);
-  int green = MulDiv(7,GetGValue(colorA),10) + MulDiv(3,GetGValue(colorB),10);
-  int blue  = MulDiv(7,GetBValue(colorA),10) + MulDiv(3,GetBValue(colorB),10);
+  INT_PTR red   = MulDiv(7,GetRValue(colorA),10) + MulDiv(3,GetRValue(colorB),10);
+  INT_PTR green = MulDiv(7,GetGValue(colorA),10) + MulDiv(3,GetGValue(colorB),10);
+  INT_PTR blue  = MulDiv(7,GetBValue(colorA),10) + MulDiv(3,GetBValue(colorB),10);
 
   return RGB( red, green, blue);
 }
@@ -780,14 +780,14 @@ COLORREF GetXpHighlightColor()
 
 COLORREF GrayColor(COLORREF crColor)
 { 
-  int Gray  = (((int)GetRValue(crColor)) + GetGValue(crColor) + GetBValue(crColor))/3;
+  INT_PTR Gray  = (((INT_PTR)GetRValue(crColor)) + GetGValue(crColor) + GetBValue(crColor))/3;
 
   return RGB( Gray,Gray,Gray);
 }
 
 BOOL IsLightColor(COLORREF crColor)
 {
-  return (((int)GetRValue(crColor)) + GetGValue(crColor) + GetBValue(crColor))>(3*128);
+  return (((INT_PTR)GetRValue(crColor)) + GetGValue(crColor) + GetBValue(crColor))>(3*128);
 }
 
 // Function splits a color into its RGB components and
@@ -801,7 +801,7 @@ COLORREF LightenColor( long lScale, COLORREF lColor)
   return RGB(R, G, B); 
 }
 
-COLORREF BleachColor(int Add, COLORREF color)
+COLORREF BleachColor(INT_PTR Add, COLORREF color)
 {
   return RGB( min (GetRValue(color)+Add, 255),
               min (GetGValue(color)+Add, 255),
@@ -813,7 +813,7 @@ void DrawGradient(CDC* pDC,CRect& Rect,
                   COLORREF StartColor,COLORREF EndColor, 
                   BOOL bHorizontal,BOOL bUseSolid)
 {
-  int Count = pDC->GetDeviceCaps(NUMCOLORS);
+  INT_PTR Count = pDC->GetDeviceCaps(NUMCOLORS);
   if(Count==-1)
     bUseSolid = FALSE;
 
@@ -861,7 +861,7 @@ void DrawGradient(CDC* pDC,CRect& Rect,
     BYTE EndGreen  = GetGValue(EndColor);
     BYTE EndBlue   = GetBValue(EndColor);
 
-    int n = (bHorizontal)?Rect.Width():Rect.Height();
+    INT_PTR n = (bHorizontal)?Rect.Width():Rect.Height();
 
     // only need for the rest, can be optimized
     {
@@ -877,13 +877,13 @@ void DrawGradient(CDC* pDC,CRect& Rect,
         pDC->FillRect(Rect,&TempBrush);
       }
     }
-    int dy = 2;
+    INT_PTR dy = 2;
     n-=dy;
-    for(int dn=0;dn<=n;dn+=dy)
+    for(INT_PTR dn=0;dn<=n;dn+=dy)
     {
-      BYTE ActRed = (BYTE)(MulDiv(int(EndRed)-StartRed,dn,n)+StartRed);
-      BYTE ActGreen = (BYTE)(MulDiv(int(EndGreen)-StartGreen,dn,n)+StartGreen);
-      BYTE ActBlue = (BYTE)(MulDiv(int(EndBlue)-StartBlue,dn,n)+StartBlue);
+      BYTE ActRed = (BYTE)(MulDiv(INT_PTR(EndRed)-StartRed,dn,n)+StartRed);
+      BYTE ActGreen = (BYTE)(MulDiv(INT_PTR(EndGreen)-StartGreen,dn,n)+StartGreen);
+      BYTE ActBlue = (BYTE)(MulDiv(INT_PTR(EndBlue)-StartBlue,dn,n)+StartBlue);
 
       CRect TempRect; 
       if(bHorizontal)
@@ -1061,7 +1061,7 @@ public:
   static CMenuTheme* FindTheme(DWORD dwThemeId);
 
 private:
-  static LRESULT CALLBACK NewMenuHook(int code, WPARAM wParam, LPARAM lParam);
+  static LRESULT CALLBACK NewMenuHook(INT_PTR code, WPARAM wParam, LPARAM lParam);
   static BOOL CheckSubclassing(HWND hWnd,BOOL bSpecialWnd);
   static LRESULT CALLBACK SubClassMenu(HWND hWnd,  UINT uMsg, WPARAM wParam,  LPARAM lParam );
   static void UnsubClassMenu(HWND hWnd);
@@ -1131,7 +1131,7 @@ CNewMenuIcons::~CNewMenuIcons()
   }
 }
 
-int CNewMenuIcons::AddRef()
+INT_PTR CNewMenuIcons::AddRef()
 {
   if(this==NULL)
     return NULL;
@@ -1139,7 +1139,7 @@ int CNewMenuIcons::AddRef()
   return ++m_dwRefCount;
 }
 
-int CNewMenuIcons::Release()
+INT_PTR CNewMenuIcons::Release()
 {
   if(this==NULL)
     return NULL;
@@ -1198,9 +1198,9 @@ BOOL CNewMenuIcons::DoMatch(WORD* pIconInfo, COLORREF crTransparent)
     if( pInfo->wBitmapID && IS_INTRESOURCE(m_lpszResourceName) &&
         ((UINT)(UINT_PTR)m_lpszResourceName)==pInfo->wBitmapID)
     {
-      int nCount = (int)m_IDs.GetSize();
+      INT_PTR nCount = (INT_PTR)m_IDs.GetSize();
       WORD* pID = pInfo->ids();
-      for(int nIndex=0 ; nIndex<nCount ; nIndex++,pID++)
+      for(INT_PTR nIndex=0 ; nIndex<nCount ; nIndex++,pID++)
       {
         if( (*pID)==0 || m_IDs.GetAt(nIndex)!=(*pID) )
         {
@@ -1213,9 +1213,9 @@ BOOL CNewMenuIcons::DoMatch(WORD* pIconInfo, COLORREF crTransparent)
   return FALSE;
 } 
 
-int CNewMenuIcons::FindIndex(UINT nID)
+INT_PTR CNewMenuIcons::FindIndex(UINT nID)
 {
-  int nIndex = (int)m_IDs.GetSize();
+  INT_PTR nIndex = (INT_PTR)m_IDs.GetSize();
   while(nIndex--)
   {
     if(m_IDs.GetAt(nIndex)==nID)
@@ -1226,15 +1226,15 @@ int CNewMenuIcons::FindIndex(UINT nID)
   return -1;
 }
 
-BOOL CNewMenuIcons::GetIconSize(int* cx, int* cy)
+BOOL CNewMenuIcons::GetIconSize(INT_PTR* cx, INT_PTR* cy)
 {
   return ::ImageList_GetIconSize(m_IconsList,cx,cy);
 }
 
 CSize CNewMenuIcons::GetIconSize()
 {
-  int cx=0;
-  int cy=0;
+  INT_PTR cx=0;
+  INT_PTR cy=0;
   if(::ImageList_GetIconSize(m_IconsList,&cx,&cy))
   {
     return CSize(cx,cy);
@@ -1246,7 +1246,7 @@ void CNewMenuIcons::OnSysColorChange()
 {
   if(m_lpszResourceName!=NULL)
   {
-    int cx=16,cy=16;
+    INT_PTR cx=16,cy=16;
     if(GetIconSize(&cx, &cy) && LoadBitmap(cx,cy,m_lpszResourceName,m_hInst))
     {
       MakeImages();
@@ -1254,7 +1254,7 @@ void CNewMenuIcons::OnSysColorChange()
   }
 } 
 
-BOOL CNewMenuIcons::LoadBitmap(int nWidth, int nHeight, LPCTSTR lpszResourceName, HMODULE hInst)
+BOOL CNewMenuIcons::LoadBitmap(INT_PTR nWidth, INT_PTR nHeight, LPCTSTR lpszResourceName, HMODULE hInst)
 {
   m_nColors = 0;
   HBITMAP hBitmap = LoadColorBitmap(lpszResourceName,hInst,&m_nColors);
@@ -1363,7 +1363,7 @@ BOOL CNewMenuIcons::LoadToolBar(LPCTSTR lpszResourceName, HMODULE hInst)
   {
     // Remove all previous ID's
     m_IDs.RemoveAll();
-    for (int i = 0; i < pData->wItemCount; i++)
+    for (INT_PTR i = 0; i < pData->wItemCount; i++)
     { 
       UINT nID = pData->items()[i];
       if (nID)
@@ -1382,7 +1382,7 @@ BOOL CNewMenuIcons::LoadToolBar(LPCTSTR lpszResourceName, HMODULE hInst)
   return bResult;
 }
 
-int CNewMenuIcons::AddGloomIcon(HICON hIcon, int nIndex)
+INT_PTR CNewMenuIcons::AddGloomIcon(HICON hIcon, INT_PTR nIndex)
 {
   ICONINFO iconInfo = {0};
   if(!GetIconInfo(hIcon,&iconInfo))
@@ -1401,9 +1401,9 @@ int CNewMenuIcons::AddGloomIcon(HICON hIcon, int nIndex)
 
   CBitmap* pOldBitmap = myDC.SelectObject(&bmColor);
   COLORREF crPixel;
-  for(int i=0;i<size.cx;++i)
+  for(INT_PTR i=0;i<size.cx;++i)
   {
-    for(int j=0;j<size.cy;++j)
+    for(INT_PTR j=0;j<size.cy;++j)
     {
       crPixel = myDC.GetPixel(i,j);
       myDC.SetPixel(i,j,DarkenColor(50,crPixel));
@@ -1420,7 +1420,7 @@ int CNewMenuIcons::AddGloomIcon(HICON hIcon, int nIndex)
   return (m_IconsList.Replace(nIndex,&bmColor,&bmMask)) ? nIndex: -1;
 }
 
-int CNewMenuIcons::AddGrayIcon(HICON hIcon, int nIndex)
+INT_PTR CNewMenuIcons::AddGrayIcon(HICON hIcon, INT_PTR nIndex)
 {
   ICONINFO iconInfo = {0};
   if(!GetIconInfo(hIcon,&iconInfo))
@@ -1442,9 +1442,9 @@ int CNewMenuIcons::AddGrayIcon(HICON hIcon, int nIndex)
 //  COLORREF crBtnFace = GetSysColor(COLOR_BTNFACE);
 //  COLORREF crBtnShadow = GetSysColor(COLOR_BTNSHADOW);
   COLORREF crPixel;
-  for(int i=0;i<size.cx;++i)
+  for(INT_PTR i=0;i<size.cx;++i)
   {
-    for(int j=0;j<size.cy;++j)
+    for(INT_PTR j=0;j<size.cy;++j)
     {
       crPixel = myDC.GetPixel(i,j);
 
@@ -1473,7 +1473,7 @@ int CNewMenuIcons::AddGrayIcon(HICON hIcon, int nIndex)
 
 BOOL CNewMenuIcons::MakeImages()
 {
-  int nCount = m_IconsList.GetImageCount();
+  INT_PTR nCount = m_IconsList.GetImageCount();
   if(!nCount)
   {
     return FALSE;
@@ -1484,7 +1484,7 @@ BOOL CNewMenuIcons::MakeImages()
   ilTemp.Attach(m_IconsList.Detach()); 
   m_IconsList.Create(size.cx,size.cy,ILC_COLORDDB|ILC_MASK,0,10);
 
-  for(int nIndex=0;nIndex<nCount;nIndex++)
+  for(INT_PTR nIndex=0;nIndex<nCount;nIndex++)
   {
     HICON hIcon = ilTemp.ExtractIcon(nIndex);
     m_IconsList.Add(hIcon);
@@ -1510,9 +1510,9 @@ CNewMenuBitmaps::~CNewMenuBitmaps()
 {
 }
 
-int CNewMenuBitmaps::Add(UINT nID, COLORREF crTransparent)
+INT_PTR CNewMenuBitmaps::Add(UINT nID, COLORREF crTransparent)
 {
-  int nIndex = (int)m_IDs.GetSize();
+  INT_PTR nIndex = (INT_PTR)m_IDs.GetSize();
   while(nIndex--)
   {
     if(m_IDs.GetAt(nIndex)==nID)
@@ -1563,8 +1563,8 @@ int CNewMenuBitmaps::Add(UINT nID, COLORREF crTransparent)
 
 void CNewMenuBitmaps::OnSysColorChange()
 {
-  int nCount = (int)m_IDs.GetSize();
-  for(int nIndex=0;nIndex<nCount;nIndex+=MENU_ICONS)
+  INT_PTR nCount = (INT_PTR)m_IDs.GetSize();
+  for(INT_PTR nIndex=0;nIndex<nCount;nIndex+=MENU_ICONS)
   {
     //Todo reload icons
     HICON hIcon = m_IconsList.ExtractIcon(nIndex);
@@ -1575,7 +1575,7 @@ void CNewMenuBitmaps::OnSysColorChange()
   }
 }
 
-int CNewMenuBitmaps::Add(HICON hIcon, UINT nID)
+INT_PTR CNewMenuBitmaps::Add(HICON hIcon, UINT nID)
 {
   ICONINFO iconInfo = {0};
   if(!GetIconInfo(hIcon,&iconInfo))
@@ -1608,7 +1608,7 @@ int CNewMenuBitmaps::Add(HICON hIcon, UINT nID)
   }
   if(nID)
   {
-    int nIndex = (int)m_IDs.GetSize();
+    INT_PTR nIndex = (INT_PTR)m_IDs.GetSize();
     while(nIndex--)
     {
       if(m_IDs.GetAt(nIndex)==nID)
@@ -1625,14 +1625,14 @@ int CNewMenuBitmaps::Add(HICON hIcon, UINT nID)
   COLORREF clr = CLR_NONE;
   m_TranspColors.Add(clr);
   m_IDs.Add(nID);
-  int nIndex = m_IconsList.Add(hIcon);
+  INT_PTR nIndex = m_IconsList.Add(hIcon);
   AddGloomIcon(hIcon);
   AddGrayIcon(hIcon);
 
   return nIndex;
 }
 
-int CNewMenuBitmaps::Add(CBitmap* pBitmap, COLORREF crTransparent)
+INT_PTR CNewMenuBitmaps::Add(CBitmap* pBitmap, COLORREF crTransparent)
 {
   ASSERT(pBitmap);
 
@@ -1658,7 +1658,7 @@ int CNewMenuBitmaps::Add(CBitmap* pBitmap, COLORREF crTransparent)
   UINT nID = 0;
   m_TranspColors.Add(crTransparent);
   m_IDs.Add(nID);
-  int nIndex = m_IconsList.Add(pBitmap,crTransparent);
+  INT_PTR nIndex = m_IconsList.Add(pBitmap,crTransparent);
   HICON hIcon = m_IconsList.ExtractIcon(nIndex);
   AddGloomIcon(hIcon);
   AddGrayIcon(hIcon);
@@ -1997,7 +1997,7 @@ CMenu* CNewMenu::FindPopupMenuFromIDData(CMenu* pMenu, UINT nID, ULONG_PTR pData
   ASSERT_VALID(pMenu);
   // walk through all items, looking for ID match
   UINT nItems = pMenu->GetMenuItemCount();
-  for (int iItem = 0; iItem < (int)nItems; iItem++)
+  for (INT_PTR iItem = 0; iItem < (INT_PTR)nItems; iItem++)
   {
     CMenu* pPopup = pMenu->GetSubMenu(iItem);
     if (pPopup!=NULL)
@@ -2039,7 +2039,7 @@ CMenu* CNewMenu::FindPopupMenuFromID(CMenu* pMenu, UINT nID)
   ASSERT_VALID(pMenu);
   // walk through all items, looking for ID match
   UINT nItems = pMenu->GetMenuItemCount();
-  for (int iItem = 0; iItem < (int)nItems; iItem++)
+  for (INT_PTR iItem = 0; iItem < (INT_PTR)nItems; iItem++)
   {
     CMenu* pPopup = pMenu->GetSubMenu(iItem);
     if (pPopup != NULL)
@@ -2065,8 +2065,8 @@ CMenu* CNewMenu::FindPopupMenuFromID(CMenu* pMenu, UINT nID)
 BOOL CNewMenu::DestroyMenu()
 {
   // Destroy Sub menus:
-  int m;
-  int numSubMenus = (int)m_SubMenus.GetUpperBound();
+  INT_PTR m;
+  INT_PTR numSubMenus = (INT_PTR)m_SubMenus.GetUpperBound();
   for(m = numSubMenus; m >= 0; m--)
   {
     // Destroy only if we createt it!!!!!
@@ -2079,7 +2079,7 @@ BOOL CNewMenu::DestroyMenu()
   m_SubMenus.RemoveAll();
 
   // Destroy menu data
-  int numItems = (int)m_MenuItemList.GetUpperBound();
+  INT_PTR numItems = (INT_PTR)m_MenuItemList.GetUpperBound();
   for(m = 0; m <= numItems; m++)
   {
     delete(m_MenuItemList[m]);
@@ -2301,7 +2301,7 @@ void CNewMenu::DrawMenuTitle(LPDRAWITEMSTRUCT lpDIS, BOOL bIsMenuBar)
   SIZE size = {0,0};
   VERIFY(::GetTextExtentPoint32(pDC->m_hDC,pMenuData->m_szMenuText,pMenuData->m_szMenuText.GetLength(),&size));
   COLORREF oldColor = pDC->SetTextColor(::GetSysColor(COLOR_CAPTIONTEXT));
-  int OldMode = pDC->SetBkMode(TRANSPARENT);
+  INT_PTR OldMode = pDC->SetBkMode(TRANSPARENT);
 
   if(pMenuData->m_nTitleFlags&MFT_GRADIENT)
   {
@@ -2325,7 +2325,7 @@ void CNewMenu::DrawMenuTitle(LPDRAWITEMSTRUCT lpDIS, BOOL bIsMenuBar)
       }
       else
       {
-        int maxSpace = ((rect.Width()-size.cx)/2);
+        INT_PTR maxSpace = ((rect.Width()-size.cx)/2);
         TextPoint.x+=min(maxSpace,10);
       }
 
@@ -2497,9 +2497,9 @@ void CNewMenu::DrawItem_WinXP(LPDRAWITEMSTRUCT lpDIS, BOOL bIsMenuBar)
         colorBorder = bHighContrast?GetSysColor(COLOR_BTNTEXT):DarkenColor(128,GetMenuBarColor());
         Pen.CreatePen(PS_SOLID,0,colorBorder);
 
-        int X,Y;
+        INT_PTR X,Y;
         CRect rect = RectR;
-        int winH = rect.Height(); 
+        INT_PTR winH = rect.Height(); 
 
         // Simulate a shadow on right edge... 
         if (NumScreenColors() <= 256) 
@@ -2660,7 +2660,7 @@ void CNewMenu::DrawItem_WinXP(LPDRAWITEMSTRUCT lpDIS, BOOL bIsMenuBar)
       leftStr.Empty();
       rightStr.Empty();
 
-      int tablocr=strText.ReverseFind(_T('\t'));
+      INT_PTR tablocr=strText.ReverseFind(_T('\t'));
       if(tablocr!=-1)
       {
         rightStr=strText.Mid(tablocr+1);
@@ -2675,7 +2675,7 @@ void CNewMenu::DrawItem_WinXP(LPDRAWITEMSTRUCT lpDIS, BOOL bIsMenuBar)
       UINT nFormat  = DT_LEFT| DT_SINGLELINE|DT_VCENTER;
       UINT nFormatr = DT_RIGHT|DT_SINGLELINE|DT_VCENTER;
 
-      int iOldMode = pDC->SetBkMode( TRANSPARENT);
+      INT_PTR iOldMode = pDC->SetBkMode( TRANSPARENT);
       CFont* pOldFont = pDC->SelectObject (&fontMenu);
 
       COLORREF OldTextColor;
@@ -3056,9 +3056,9 @@ void CNewMenu::DrawItem_XP_2003(LPDRAWITEMSTRUCT lpDIS, BOOL bIsMenuBar)
         colorBorder = bHighContrast?GetSysColor(COLOR_BTNTEXT):DarkenColor(128,GetMenuBarColor());
         Pen.CreatePen(PS_SOLID,0,colorBorder);
 
-        int X,Y;
+        INT_PTR X,Y;
         CRect rect = RectR;
-        int winH = rect.Height(); 
+        INT_PTR winH = rect.Height(); 
 
         // Simulate a shadow on right edge... 
         if (NumScreenColors() <= 256) 
@@ -3234,7 +3234,7 @@ void CNewMenu::DrawItem_XP_2003(LPDRAWITEMSTRUCT lpDIS, BOOL bIsMenuBar)
       leftStr.Empty();
       rightStr.Empty();
 
-      int tablocr = strText.ReverseFind(_T('\t'));
+      INT_PTR tablocr = strText.ReverseFind(_T('\t'));
       if(tablocr!=-1)
       {
         rightStr = strText.Mid(tablocr+1);
@@ -3249,7 +3249,7 @@ void CNewMenu::DrawItem_XP_2003(LPDRAWITEMSTRUCT lpDIS, BOOL bIsMenuBar)
       UINT nFormat  = DT_LEFT| DT_SINGLELINE|DT_VCENTER;
       UINT nFormatr = DT_RIGHT|DT_SINGLELINE|DT_VCENTER;
 
-      int iOldMode = pDC->SetBkMode( TRANSPARENT);
+      INT_PTR iOldMode = pDC->SetBkMode( TRANSPARENT);
       CFont* pOldFont = pDC->SelectObject (&fontMenu);
 
       COLORREF OldTextColor;
@@ -3508,7 +3508,7 @@ void CNewMenu::DrawItem_SpecialStyle (LPDRAWITEMSTRUCT lpDIS, BOOL bIsMenuBar)
   }
   pDC->FillSolidRect(rect,colorBack);
 
-  int iOldMode = pDC->SetBkMode( TRANSPARENT);
+  INT_PTR iOldMode = pDC->SetBkMode( TRANSPARENT);
   CString strText = pMenuData->GetString();
   COLORREF crTextColor;
   if(!(lpDIS->itemState & ODS_GRAYED))
@@ -3658,7 +3658,7 @@ void CNewMenu::DrawItem_Icy(LPDRAWITEMSTRUCT lpDIS, BOOL bIsMenuBar)
     BOOL checkflag=FALSE;
 
     CBrush m_brSelect;
-    int nIconNormal=-1;
+    INT_PTR nIconNormal=-1;
 
     // set some colors and the font
     m_brSelect.CreateSolidBrush(colorHilight);
@@ -3878,7 +3878,7 @@ void CNewMenu::DrawItem_Icy(LPDRAWITEMSTRUCT lpDIS, BOOL bIsMenuBar)
       CString leftStr,rightStr;
       leftStr.Empty();rightStr.Empty();
 
-      int tablocr = strText.ReverseFind(_T('\t'));
+      INT_PTR tablocr = strText.ReverseFind(_T('\t'));
       if(tablocr!=-1)
       {
         rightStr = strText.Mid(tablocr+1);
@@ -3890,7 +3890,7 @@ void CNewMenu::DrawItem_Icy(LPDRAWITEMSTRUCT lpDIS, BOOL bIsMenuBar)
         leftStr = strText;
       }
 
-      int iOldMode = pDC->SetBkMode( TRANSPARENT);
+      INT_PTR iOldMode = pDC->SetBkMode( TRANSPARENT);
       // Draw the text in the correct colour:
       UINT nFormat  = DT_LEFT|DT_SINGLELINE|DT_VCENTER;
       UINT nFormatr = DT_RIGHT|DT_SINGLELINE|DT_VCENTER;
@@ -4069,7 +4069,7 @@ void CNewMenu::DrawItem_OldStyle (LPDRAWITEMSTRUCT lpDIS, BOOL bIsMenuBar)
     BOOL checkflag=FALSE;
 
     CBrush m_brSelect;
-    int nIconNormal=-1;
+    INT_PTR nIconNormal=-1;
     //CImageList *bitmap=NULL;
 
     // set some colors and the font
@@ -4251,7 +4251,7 @@ void CNewMenu::DrawItem_OldStyle (LPDRAWITEMSTRUCT lpDIS, BOOL bIsMenuBar)
       CString leftStr,rightStr;
       leftStr.Empty();rightStr.Empty();
 
-      int tablocr = strText.ReverseFind(_T('\t'));
+      INT_PTR tablocr = strText.ReverseFind(_T('\t'));
       if(tablocr!=-1)
       {
         rightStr = strText.Mid(tablocr+1);
@@ -4263,7 +4263,7 @@ void CNewMenu::DrawItem_OldStyle (LPDRAWITEMSTRUCT lpDIS, BOOL bIsMenuBar)
         leftStr = strText;
       }
 
-      int iOldMode = pDC->SetBkMode( TRANSPARENT);
+      INT_PTR iOldMode = pDC->SetBkMode( TRANSPARENT);
       // Draw the text in the correct colour:
       UINT nFormat  = DT_LEFT|DT_SINGLELINE|DT_VCENTER;
       UINT nFormatr = DT_RIGHT|DT_SINGLELINE|DT_VCENTER;
@@ -4401,7 +4401,7 @@ void CNewMenu::MeasureItem_OldStyle( LPMEASUREITEMSTRUCT lpMIS, BOOL bIsMenuBar 
       CFont* pOldFont = myDC.SelectObject (&font);
       LPCTSTR lpstrText = pMenuData->GetString();
       SIZE size = {0,0};
-      VERIFY(::GetTextExtentPoint32(myDC.m_hDC,lpstrText,(int)_tcslen(lpstrText),&size));
+      VERIFY(::GetTextExtentPoint32(myDC.m_hDC,lpstrText,(INT_PTR)_tcslen(lpstrText),&size));
       // Select old font in
       myDC.SelectObject(pOldFont);  
 
@@ -4488,7 +4488,7 @@ void CNewMenu::MeasureItem_OldStyle( LPMEASUREITEMSTRUCT lpMIS, BOOL bIsMenuBar 
       lpMIS->itemWidth = m_iconX + size.cx + m_iconX + GAP;
     }
 
-    int temp = GetSystemMetrics(SM_CYMENU);
+    INT_PTR temp = GetSystemMetrics(SM_CYMENU);
     lpMIS->itemHeight = (temp>(m_iconY+4)) ? temp : (m_iconY+4);
     if(lpMIS->itemHeight<((UINT)size.cy) )
     {
@@ -4502,7 +4502,7 @@ void CNewMenu::MeasureItem_OldStyle( LPMEASUREITEMSTRUCT lpMIS, BOOL bIsMenuBar 
     {
       BOOL bGetNext = FALSE;
       // search the actual menu item
-      for (int j=0;j<m_MenuItemList.GetUpperBound();++j)
+      for (INT_PTR j=0;j<m_MenuItemList.GetUpperBound();++j)
       {
         CNewMenuItemData* pTemp = m_MenuItemList[j];
         if(pTemp==pMenuData || bGetNext==TRUE)
@@ -4550,7 +4550,7 @@ void CNewMenu::MeasureItem_Icy( LPMEASUREITEMSTRUCT lpMIS, BOOL bIsMenuBar )
       CFont* pOldFont = myDC.SelectObject (&font);
       LPCTSTR lpstrText = pMenuData->GetString();
       SIZE size = {0,0};
-      VERIFY(::GetTextExtentPoint32(myDC.m_hDC,lpstrText,(int)_tcslen(lpstrText),&size));
+      VERIFY(::GetTextExtentPoint32(myDC.m_hDC,lpstrText,(INT_PTR)_tcslen(lpstrText),&size));
       // Select old font in
       myDC.SelectObject(pOldFont);  
 
@@ -4638,7 +4638,7 @@ void CNewMenu::MeasureItem_Icy( LPMEASUREITEMSTRUCT lpMIS, BOOL bIsMenuBar )
       lpMIS->itemWidth = m_iconX + size.cx + m_iconX + GAP;
     }
 
-    int temp = GetSystemMetrics(SM_CYMENU);
+    INT_PTR temp = GetSystemMetrics(SM_CYMENU);
     lpMIS->itemHeight = (temp>(m_iconY + 6)) ? temp : (m_iconY+6);
     if(lpMIS->itemHeight<((UINT)size.cy) )
     {
@@ -4652,7 +4652,7 @@ void CNewMenu::MeasureItem_Icy( LPMEASUREITEMSTRUCT lpMIS, BOOL bIsMenuBar )
     {
       BOOL bGetNext = FALSE;
       // search the actual menu item
-      for (int j=0;j<m_MenuItemList.GetUpperBound();++j)
+      for (INT_PTR j=0;j<m_MenuItemList.GetUpperBound();++j)
       {
         CNewMenuItemData* pTemp = m_MenuItemList[j];
         if(pTemp==pMenuData || bGetNext==TRUE)
@@ -4700,7 +4700,7 @@ void CNewMenu::MeasureItem_WinXP( LPMEASUREITEMSTRUCT lpMIS, BOOL bIsMenuBar )
       CFont* pOldFont = myDC.SelectObject (&font);
       LPCTSTR lpstrText = pMenuData->GetString();
       SIZE size = {0,0};
-      VERIFY(::GetTextExtentPoint32(myDC.m_hDC,lpstrText,(int)_tcslen(lpstrText),&size));
+      VERIFY(::GetTextExtentPoint32(myDC.m_hDC,lpstrText,(INT_PTR)_tcslen(lpstrText),&size));
       // Select old font in
       myDC.SelectObject(pOldFont);  
 
@@ -4788,7 +4788,7 @@ void CNewMenu::MeasureItem_WinXP( LPMEASUREITEMSTRUCT lpMIS, BOOL bIsMenuBar )
       lpMIS->itemWidth = 2 + m_iconX +4+ size.cx + GetSystemMetrics(SM_CYMENU) / 2;
     }
 
-    int temp = GetSystemMetrics(SM_CYMENU);
+    INT_PTR temp = GetSystemMetrics(SM_CYMENU);
     lpMIS->itemHeight = temp>m_iconY+8 ? temp : m_iconY+7;
     if(lpMIS->itemHeight<((UINT)size.cy) )
     {
@@ -4802,7 +4802,7 @@ void CNewMenu::MeasureItem_WinXP( LPMEASUREITEMSTRUCT lpMIS, BOOL bIsMenuBar )
     {
       BOOL bGetNext = FALSE;
       // search the actual menu item
-      for (int j=0;j<m_MenuItemList.GetUpperBound();++j)
+      for (INT_PTR j=0;j<m_MenuItemList.GetUpperBound();++j)
       {
         CNewMenuItemData* pTemp = m_MenuItemList[j];
         if(pTemp==pMenuData || bGetNext==TRUE)
@@ -4828,13 +4828,13 @@ void CNewMenu::MeasureItem_WinXP( LPMEASUREITEMSTRUCT lpMIS, BOOL bIsMenuBar )
   }
 }
 
-void CNewMenu::SetIconSize (int width, int height)
+void CNewMenu::SetIconSize (INT_PTR width, INT_PTR height)
 {
   m_iconX = width;
   m_iconY = height;
 }
 
-BOOL CNewMenu::AppendODMenu(LPCTSTR lpstrText, UINT nFlags, UINT nID, int nIconNormal)
+BOOL CNewMenu::AppendODMenu(LPCTSTR lpstrText, UINT nFlags, UINT nID, INT_PTR nIconNormal)
 {
   return CNewMenu::AppendODMenu(lpstrText,nFlags,nID,(CImageList*)NULL,nIconNormal);
 }
@@ -4842,22 +4842,22 @@ BOOL CNewMenu::AppendODMenu(LPCTSTR lpstrText, UINT nFlags, UINT nID, int nIconN
 BOOL CNewMenu::AppendODMenu(LPCTSTR lpstrText, UINT nFlags, UINT nID,
                             CBitmap* pBmp)
 {
-  int nIndex = -1;
+  INT_PTR nIndex = -1;
   CNewMenuIconLock iconLock(GetMenuIcon(nIndex,pBmp));
   return AppendODMenu(lpstrText,nFlags,nID,iconLock,nIndex);
 }
 
 BOOL CNewMenu::AppendODMenu(LPCTSTR lpstrText, UINT nFlags, UINT nID,
-                           CImageList* pil, int xoffset)
+                           CImageList* pil, INT_PTR xoffset)
 {
-  int nIndex = 0;
+  INT_PTR nIndex = 0;
   // Helper for addref and release
   CNewMenuIconLock iconLock(GetMenuIcon(nIndex,nID,pil,xoffset));
   return AppendODMenu(lpstrText,nFlags,nID,iconLock,nIndex);
 }
 
 BOOL CNewMenu::AppendODMenu(LPCTSTR lpstrText, UINT nFlags, UINT nID,
-                            CNewMenuIcons* pIcons, int nIndex)
+                            CNewMenuIcons* pIcons, INT_PTR nIndex)
 {
   // Add the MF_OWNERDRAW flag if not specified:
   if(!nID)
@@ -4912,9 +4912,9 @@ BOOL CNewMenu::AppendODMenu(LPCTSTR lpstrText, UINT nFlags, UINT nID,
 }
 
 BOOL CNewMenu::InsertODMenu(UINT nPosition, LPCTSTR lpstrText, UINT nFlags, UINT nID,
-                           int nIconNormal)
+                           INT_PTR nIconNormal)
 {
-  int nIndex = -1;
+  INT_PTR nIndex = -1;
   CNewMenuIcons* pIcons=NULL;
 
   if(nIconNormal>=0)
@@ -4942,25 +4942,25 @@ BOOL CNewMenu::InsertODMenu(UINT nPosition, LPCTSTR lpstrText, UINT nFlags, UINT
 BOOL CNewMenu::InsertODMenu(UINT nPosition, LPCTSTR lpstrText, UINT nFlags, UINT nID,
                             CBitmap* pBmp)
 {
-  int nIndex = -1;
+  INT_PTR nIndex = -1;
   CNewMenuIconLock iconLock(GetMenuIcon(nIndex,pBmp));
   return InsertODMenu(nPosition,lpstrText,nFlags,nID,iconLock,nIndex);
 }
 
 BOOL CNewMenu::InsertODMenu(UINT nPosition, LPCTSTR lpstrText, UINT nFlags, UINT nID,
-                            CImageList *pil, int xoffset)
+                            CImageList *pil, INT_PTR xoffset)
 {
-  int nIndex = -1;
+  INT_PTR nIndex = -1;
   CNewMenuIconLock iconLock(GetMenuIcon(nIndex,nID,pil,xoffset));
   return InsertODMenu(nPosition,lpstrText,nFlags,nID,iconLock,nIndex);
 }
 
 BOOL CNewMenu::InsertODMenu(UINT nPosition, LPCTSTR lpstrText, UINT nFlags, UINT nID,
-                            CNewMenuIcons* pIcons, int nIndex)
+                            CNewMenuIcons* pIcons, INT_PTR nIndex)
 {
   if(!(nFlags & MF_BYPOSITION))
   {
-    int iPosition =0;
+    INT_PTR iPosition =0;
     CNewMenu* pMenu = FindMenuOption(nPosition,iPosition);
     if(pMenu)
     {
@@ -5030,7 +5030,7 @@ BOOL CNewMenu::ModifyODMenu(UINT nPosition, UINT nFlags, UINT nIDNewItem,LPCTSTR
 {
   if(!(nFlags & MF_BYPOSITION))
   {
-    int iPosition =0;
+    INT_PTR iPosition =0;
     CNewMenu* pMenu = FindMenuOption(nPosition,iPosition);
     if(pMenu)
     {
@@ -5069,7 +5069,7 @@ BOOL CNewMenu::ModifyODMenu(UINT nPosition, UINT nFlags, UINT nIDNewItem, const 
 {
   if(!(nFlags & MF_BYPOSITION))
   {
-    int iPosition =0;
+    INT_PTR iPosition =0;
     CNewMenu* pMenu = FindMenuOption(nPosition,iPosition);
     if(pMenu)
     {
@@ -5104,12 +5104,12 @@ BOOL CNewMenu::ModifyODMenu(UINT nPosition, UINT nFlags, UINT nIDNewItem, const 
   return bRet;
 }
 
-BOOL CNewMenu::ModifyODMenu(LPCTSTR lpstrText, UINT nID, int nIconNormal)
+BOOL CNewMenu::ModifyODMenu(LPCTSTR lpstrText, UINT nID, INT_PTR nIconNormal)
 {
-  int nLoc;
+  INT_PTR nLoc;
   CNewMenuItemData* pItemData;
   CArray<CNewMenu*,CNewMenu*>newSubs;
-  CArray<int,int&>newLocs;
+  CArray<INT_PTR,INT_PTR&>newLocs;
 
   BOOL bModifyOK = TRUE;
 
@@ -5138,7 +5138,7 @@ BOOL CNewMenu::ModifyODMenu(LPCTSTR lpstrText, UINT nID, int nIconNormal)
     pItemData->m_nMenuIconOffset=-1;
     if(nIconNormal>=0)
     {
-      int nxOffset = -1;
+      INT_PTR nxOffset = -1;
       CNewMenuIcons* pIcons=NULL;
       if(LoadFromToolBar(nID,nIconNormal,nxOffset))
       {
@@ -5200,9 +5200,9 @@ BOOL CNewMenu::ModifyODMenu(LPCTSTR lpstrText, UINT nID, int nIconNormal)
   return (CMenu::ModifyMenu(nID,pItemData->m_nFlags,nID,(LPCTSTR)pItemData)) && bModifyOK;
 }
 
-BOOL CNewMenu::ModifyODMenu(LPCTSTR lpstrText, UINT nID, CImageList *pil, int xoffset)
+BOOL CNewMenu::ModifyODMenu(LPCTSTR lpstrText, UINT nID, CImageList *pil, INT_PTR xoffset)
 {
-  int nIndex = 0;
+  INT_PTR nIndex = 0;
   CNewMenuIcons* pIcons = GetMenuIcon(nIndex,nID,pil,xoffset);
   pIcons->AddRef();
 
@@ -5213,13 +5213,13 @@ BOOL CNewMenu::ModifyODMenu(LPCTSTR lpstrText, UINT nID, CImageList *pil, int xo
   return bResult; 
 }
 
-BOOL CNewMenu::ModifyODMenu(LPCTSTR lpstrText, UINT nID, CNewMenuIcons* pIcons, int xoffset)
+BOOL CNewMenu::ModifyODMenu(LPCTSTR lpstrText, UINT nID, CNewMenuIcons* pIcons, INT_PTR xoffset)
 {
   ASSERT(pIcons);
-  int nLoc;
+  INT_PTR nLoc;
   CNewMenuItemData *pItemData;
   CArray<CNewMenu*,CNewMenu*>newSubs;
-  CArray<int,int&>newLocs;
+  CArray<INT_PTR,INT_PTR&>newLocs;
   BOOL bModifyOK = TRUE;
 
   // Find the old CNewMenuItemData structure:
@@ -5252,8 +5252,8 @@ BOOL CNewMenu::ModifyODMenu(LPCTSTR lpstrText, UINT nID, CNewMenuIcons* pIcons, 
 
       pItemData->m_nMenuIconOffset = xoffset; 
 
-      int x=0;
-      int y=0;
+      INT_PTR x=0;
+      INT_PTR y=0;
       if(pSubMenu && pIcons->GetIconSize(&x,&y))
       {
         // Correct the size of the menuitem
@@ -5314,7 +5314,7 @@ BOOL CNewMenu::ModifyODMenu(LPCTSTR lpstrText, UINT nID, CBitmap* bmp)
   return ModifyODMenu(lpstrText,nID,(CImageList*)NULL,0);
 }
 
-BOOL CNewMenu::ModifyODMenu(LPCTSTR lpstrText, UINT nID, COLORREF fill, COLORREF border, int hatchstyle)
+BOOL CNewMenu::ModifyODMenu(LPCTSTR lpstrText, UINT nID, COLORREF fill, COLORREF border, INT_PTR hatchstyle)
 {
   // Get device context
   CClientDC DC(0);
@@ -5324,9 +5324,9 @@ BOOL CNewMenu::ModifyODMenu(LPCTSTR lpstrText, UINT nID, COLORREF fill, COLORREF
   return ModifyODMenu(lpstrText,nID,&bmp);
 }
 
-BOOL CNewMenu::ModifyODMenu(LPCTSTR lpstrText, LPCTSTR OptionText, int nIconNormal)
+BOOL CNewMenu::ModifyODMenu(LPCTSTR lpstrText, LPCTSTR OptionText, INT_PTR nIconNormal)
 {
-  int nIndex = 0;
+  INT_PTR nIndex = 0;
   CNewMenu* pOptionMenu = FindMenuOption(OptionText,nIndex);
 
   if(pOptionMenu!=NULL && nIndex>=0)
@@ -5417,11 +5417,11 @@ CNewMenuItemData* CNewMenu::NewODMenu(UINT pos, UINT nFlags, UINT nID, LPCTSTR s
   return(pItemData);
 };
 
-BOOL CNewMenu::LoadToolBars(const UINT* arID, int n, HMODULE hInst)
+BOOL CNewMenu::LoadToolBars(const UINT* arID, INT_PTR n, HMODULE hInst)
 {
   ASSERT(arID);
   BOOL returnflag = TRUE;
-  for(int i=0;i<n;++i)
+  for(INT_PTR i=0;i<n;++i)
   {
     if(!LoadToolBar(arID[i],hInst))
     {
@@ -5433,7 +5433,7 @@ BOOL CNewMenu::LoadToolBars(const UINT* arID, int n, HMODULE hInst)
 
 DWORD CNewMenu::SetMenuIcons(CNewMenuIcons* pMenuIcons)
 {
-  int nCount = (int)pMenuIcons->m_IDs.GetSize();
+  INT_PTR nCount = (INT_PTR)pMenuIcons->m_IDs.GetSize();
   while(nCount--)
   {
     ModifyODMenu(NULL,pMenuIcons->m_IDs[nCount],pMenuIcons,nCount*MENU_ICONS);
@@ -5441,7 +5441,7 @@ DWORD CNewMenu::SetMenuIcons(CNewMenuIcons* pMenuIcons)
   return pMenuIcons->m_dwRefCount;
 }
 
-CNewMenuIcons* CNewMenu::GetMenuIcon(int &nIndex, UINT nID, CImageList *pil, int xoffset)
+CNewMenuIcons* CNewMenu::GetMenuIcon(INT_PTR &nIndex, UINT nID, CImageList *pil, INT_PTR xoffset)
 {
   if(pil==NULL || xoffset<0)
   { 
@@ -5485,7 +5485,7 @@ CNewMenuIcons* CNewMenu::GetMenuIcon(int &nIndex, UINT nID, CImageList *pil, int
   return NULL;
 }
 
-CNewMenuIcons* CNewMenu::GetMenuIcon(int &nIndex, int nID)
+CNewMenuIcons* CNewMenu::GetMenuIcon(INT_PTR &nIndex, INT_PTR nID)
 {  
   if(m_pSharedMenuIcons!=NULL)
   {
@@ -5526,7 +5526,7 @@ CNewMenuIcons* CNewMenu::GetMenuIcon(int &nIndex, int nID)
   return NULL;
 }
 
-CNewMenuIcons* CNewMenu::GetMenuIcon(int &nIndex, CBitmap* pBmp)
+CNewMenuIcons* CNewMenu::GetMenuIcon(INT_PTR &nIndex, CBitmap* pBmp)
 { 
   if(pBmp==NULL)
   { 
@@ -5654,9 +5654,9 @@ BOOL CNewMenu::LoadToolBar(UINT nToolBar, HMODULE hInst)
   return LoadToolBar((LPCTSTR)(UINT_PTR)nToolBar,hInst);
 }
 
-BOOL CNewMenu::LoadFromToolBar(UINT nID, UINT nToolBar, int& xoffset)
+BOOL CNewMenu::LoadFromToolBar(UINT nID, UINT nToolBar, INT_PTR& xoffset)
 {
-  int xset,offset;
+  INT_PTR xset,offset;
   UINT nStyle;
   BOOL returnflag=FALSE;
   CToolBar bar;
@@ -5688,7 +5688,7 @@ BOOL CNewMenu::LoadFromToolBar(UINT nID, UINT nToolBar, int& xoffset)
 CNewMenuItemData* CNewMenu::FindMenuItem(UINT nID)
 {
   CNewMenuItemData *pData = NULL;
-  int i;
+  INT_PTR i;
   
   for(i = 0; i <= m_MenuItemList.GetUpperBound(); i++)
   {
@@ -5700,7 +5700,7 @@ CNewMenuItemData* CNewMenu::FindMenuItem(UINT nID)
   }
   if (!pData)
   {
-    int loc;
+    INT_PTR loc;
     CNewMenu *pMenu = FindMenuOption(nID, loc);
     ASSERT(pMenu != this);
     if (loc >= 0)
@@ -5712,15 +5712,15 @@ CNewMenuItemData* CNewMenu::FindMenuItem(UINT nID)
 }
 
 
-CNewMenu* CNewMenu::FindAnotherMenuOption(int nId, int& nLoc,
+CNewMenu* CNewMenu::FindAnotherMenuOption(INT_PTR nId, INT_PTR& nLoc,
                                           CArray<CNewMenu*,CNewMenu*>&newSubs,
-                                          CArray<int,int&>&newLocs)
+                                          CArray<INT_PTR,INT_PTR&>&newLocs)
 {
-  int i,numsubs,j;
+  INT_PTR i,numsubs,j;
   CNewMenu *pSubMenu,*pgoodmenu;
   BOOL foundflag;
   
-  for(i=0;i<(int)(GetMenuItemCount());++i)
+  for(i=0;i<(INT_PTR)(GetMenuItemCount());++i)
   {
     pSubMenu = DYNAMIC_DOWNCAST(CNewMenu,GetSubMenu(i));
     if(pSubMenu)
@@ -5731,9 +5731,9 @@ CNewMenu* CNewMenu::FindAnotherMenuOption(int nId, int& nLoc,
         return pgoodmenu;
       }
     }
-    else if(nId==(int)GetMenuItemID(i))
+    else if(nId==(INT_PTR)GetMenuItemID(i))
     {
-      numsubs = (int)newSubs.GetSize();
+      numsubs = (INT_PTR)newSubs.GetSize();
       foundflag = TRUE;
       for(j=0;j<numsubs;++j)
       {
@@ -5755,12 +5755,12 @@ CNewMenu* CNewMenu::FindAnotherMenuOption(int nId, int& nLoc,
   return NULL;
 }
 
-CNewMenu* CNewMenu::FindMenuOption(int nId, int& nLoc)
+CNewMenu* CNewMenu::FindMenuOption(INT_PTR nId, INT_PTR& nLoc)
 {
-  int i;
+  INT_PTR i;
   CNewMenu *pSubMenu,*pgoodmenu;
   
-  for(i=0;i<(int)(GetMenuItemCount());++i)
+  for(i=0;i<(INT_PTR)(GetMenuItemCount());++i)
   {
     pSubMenu = DYNAMIC_DOWNCAST(CNewMenu,GetSubMenu(i));
     if(pSubMenu)
@@ -5771,7 +5771,7 @@ CNewMenu* CNewMenu::FindMenuOption(int nId, int& nLoc)
         return pgoodmenu;
       }
     }
-    else if(nId==(int)GetMenuItemID(i))
+    else if(nId==(INT_PTR)GetMenuItemID(i))
     {
       nLoc = i;
       return(this);
@@ -5781,11 +5781,11 @@ CNewMenu* CNewMenu::FindMenuOption(int nId, int& nLoc)
   return NULL;
 }
 
-CNewMenu* CNewMenu::FindMenuOption(LPCTSTR lpstrText, int& nLoc)
+CNewMenu* CNewMenu::FindMenuOption(LPCTSTR lpstrText, INT_PTR& nLoc)
 { 
-  int i;
+  INT_PTR i;
   // First look for all item text.
-  for(i=0;i<=(int)m_MenuItemList.GetUpperBound();++i)
+  for(i=0;i<=(INT_PTR)m_MenuItemList.GetUpperBound();++i)
   {  
     if(m_MenuItemList[i]->m_szMenuText.Compare(lpstrText)==NULL)
     {
@@ -5795,7 +5795,7 @@ CNewMenu* CNewMenu::FindMenuOption(LPCTSTR lpstrText, int& nLoc)
   }
   CNewMenu* pSubMenu;
   // next, look in all submenus
-  for(i=0; i<(int)(GetMenuItemCount());++i)
+  for(i=0; i<(INT_PTR)(GetMenuItemCount());++i)
   {
     pSubMenu = DYNAMIC_DOWNCAST(CNewMenu,GetSubMenu(i));
     if(pSubMenu)
@@ -5818,7 +5818,7 @@ BOOL CNewMenu::LoadMenu(HMENU hMenu)
     return FALSE;
   }
   m_bIsPopupMenu = FALSE;
-  for(int i=0;i<(int)(GetMenuItemCount());++i)
+  for(INT_PTR i=0;i<(INT_PTR)(GetMenuItemCount());++i)
   { 
     HMENU hSubMenu = ::GetSubMenu(m_hMenu,i);
     if(hSubMenu)
@@ -5833,7 +5833,7 @@ BOOL CNewMenu::LoadMenu(HMENU hMenu)
   return TRUE;
 }
 
-BOOL CNewMenu::LoadMenu(int nResource)
+BOOL CNewMenu::LoadMenu(INT_PTR nResource)
 {
   return(CNewMenu::LoadMenu(MAKEINTRESOURCE(nResource)));
 }
@@ -5910,7 +5910,7 @@ void* CNewMenu::GetMenuDataPtr() const
 }
 
 
-void CNewMenu::LoadCheckmarkBitmap(int unselect, int select)
+void CNewMenu::LoadCheckmarkBitmap(INT_PTR unselect, INT_PTR select)
 {
   if(unselect>0 && select>0)
   {
@@ -5942,7 +5942,7 @@ BOOL CNewMenu::GetMenuText(UINT id, CString& string, UINT nFlags/*= MF_BYPOSITIO
 {
   if(MF_BYPOSITION&nFlags)
   {
-    UINT numMenuItems = (int)m_MenuItemList.GetUpperBound();
+    UINT numMenuItems = (INT_PTR)m_MenuItemList.GetUpperBound();
     if(id<=numMenuItems)
     {
       string = m_MenuItemList[id]->GetString();
@@ -5951,7 +5951,7 @@ BOOL CNewMenu::GetMenuText(UINT id, CString& string, UINT nFlags/*= MF_BYPOSITIO
   }
   else
   {
-    int uiLoc;
+    INT_PTR uiLoc;
     CNewMenu* pMenu = FindMenuOption(id,uiLoc);
     if(NULL!=pMenu)
     {
@@ -5963,7 +5963,7 @@ BOOL CNewMenu::GetMenuText(UINT id, CString& string, UINT nFlags/*= MF_BYPOSITIO
 
 CNewMenuItemData* CNewMenu::CheckMenuItemData(ULONG_PTR nItemData) const
 {
-  for(int i=0;i<=m_MenuItemList.GetUpperBound();++i)
+  for(INT_PTR i=0;i<=m_MenuItemList.GetUpperBound();++i)
   {
     CNewMenuItemData* pItem = m_MenuItemList[i];
     if ( ((ULONG_PTR)pItem)==nItemData )
@@ -5977,7 +5977,7 @@ CNewMenuItemData* CNewMenu::CheckMenuItemData(ULONG_PTR nItemData) const
 
 CNewMenuItemData* CNewMenu::FindMenuList(UINT nID)
 {
-  for(int i=0;i<=m_MenuItemList.GetUpperBound();++i)
+  for(INT_PTR i=0;i<=m_MenuItemList.GetUpperBound();++i)
   {
     CNewMenuItemData* pMenuItem = m_MenuItemList[i];
     if(pMenuItem->m_nID==nID && !pMenuItem->m_nSyncFlag)
@@ -5989,9 +5989,9 @@ CNewMenuItemData* CNewMenu::FindMenuList(UINT nID)
   return NULL;
 }
 
-void CNewMenu::InitializeMenuList(int value)
+void CNewMenu::InitializeMenuList(INT_PTR value)
 {
-  for(int i=0;i<=m_MenuItemList.GetUpperBound();++i)
+  for(INT_PTR i=0;i<=m_MenuItemList.GetUpperBound();++i)
   {
     m_MenuItemList[i]->m_nSyncFlag = value;
   }
@@ -5999,7 +5999,7 @@ void CNewMenu::InitializeMenuList(int value)
 
 void CNewMenu::DeleteMenuList()
 {
-  for(int i=0;i<=m_MenuItemList.GetUpperBound();++i)
+  for(INT_PTR i=0;i<=m_MenuItemList.GetUpperBound();++i)
   {
     if(!m_MenuItemList[i]->m_nSyncFlag)
     {
@@ -6148,7 +6148,7 @@ void CNewMenu::OnInitMenuPopup(HWND hWnd, CMenu* pPopupMenu, UINT nIndex, BOOL b
 
 BOOL CNewMenu::Replace(UINT nID, UINT nNewID)
 {
-  int nLoc=0;
+  INT_PTR nLoc=0;
   CNewMenu* pTempMenu = FindMenuOption(nID,nLoc);
   if(pTempMenu && nLoc >= 0)
   {
@@ -6230,12 +6230,12 @@ LRESULT CNewMenu::FindKeyboardShortcut(UINT nChar, UINT nFlags, CMenu* pMenu)
     key.SetAt(1,(TCHAR)nChar);
     key.MakeLower();
     CString menutext;
-    int menusize = (int)pNewMenu->GetMenuItemCount();
+    INT_PTR menusize = (INT_PTR)pNewMenu->GetMenuItemCount();
     if(menusize!=(pNewMenu->m_MenuItemList.GetUpperBound()+1))
     {
       pNewMenu->SynchronizeMenu();
     }
-    for(int i=0;i<menusize;++i)
+    for(INT_PTR i=0;i<menusize;++i)
     {
       if(pNewMenu->GetMenuText(i,menutext))
       {
@@ -6346,7 +6346,7 @@ BOOL CNewMenu::Draw3DCheckmark(CDC *pDC, CRect rect, HBITMAP hbmpChecked, HBITMA
   return FALSE;
 }
 
-HBITMAP CNewMenu::LoadSysColorBitmap(int nResourceId)
+HBITMAP CNewMenu::LoadSysColorBitmap(INT_PTR nResourceId)
 {
   HINSTANCE hInst = AfxFindResourceHandle(MAKEINTRESOURCE(nResourceId),RT_BITMAP);
   HRSRC hRsrc = ::FindResource(hInst,MAKEINTRESOURCE(nResourceId),RT_BITMAP);
@@ -6385,9 +6385,9 @@ HBITMAP CNewMenu::LoadSysColorBitmap(int nResourceId)
 //       = Both  seperators at both ends;
 // remove the menu item based on their text, return -1 if not found, otherwise 
 // return the menu position;
-int CNewMenu::RemoveMenu(LPCTSTR pText, ESeperator sPos)
+INT_PTR CNewMenu::RemoveMenu(LPCTSTR pText, ESeperator sPos)
 {
-  int nPos = GetMenuPosition(pText);
+  INT_PTR nPos = GetMenuPosition(pText);
   if(nPos != -1)
   {
     switch (sPos)
@@ -6434,7 +6434,7 @@ BOOL CNewMenu::RemoveMenu(UINT uiId, UINT nFlags)
       if(NULL==pSubMenu)
       {
         UINT uiCommandId = GetMenuItemID(uiId);
-        for(int i=0;i<m_MenuItemList.GetSize(); i++)
+        for(INT_PTR i=0;i<m_MenuItemList.GetSize(); i++)
         {
           if(m_MenuItemList[i]->m_nID==uiCommandId)
           {
@@ -6448,20 +6448,20 @@ BOOL CNewMenu::RemoveMenu(UINT uiId, UINT nFlags)
       else
       {
         // Only remove the menu.
-        int numSubMenus = (int)m_SubMenus.GetUpperBound();
-        for(int m = numSubMenus; m >= 0; m--)
+        INT_PTR numSubMenus = (INT_PTR)m_SubMenus.GetUpperBound();
+        for(INT_PTR m = numSubMenus; m >= 0; m--)
         {
           if(m_SubMenus[m]==pSubMenu->m_hMenu)
           {
             m_SubMenus.RemoveAt(m);
           }
         }
-//        int num = pSubMenu->GetMenuItemCount();
-//        for(int i=num-1;i>=0;--i)
+//        INT_PTR num = pSubMenu->GetMenuItemCount();
+//        for(INT_PTR i=num-1;i>=0;--i)
 //        {
 //          pSubMenu->RemoveMenu(i,MF_BYPOSITION);
 //        }
-        for(int i=(int)m_MenuItemList.GetUpperBound();i>=0;i--)
+        for(INT_PTR i=(INT_PTR)m_MenuItemList.GetUpperBound();i>=0;i--)
         {
           if(m_MenuItemList[i]->m_nID==HMenuToUInt(pSubMenu->m_hMenu) )
           {
@@ -6478,7 +6478,7 @@ BOOL CNewMenu::RemoveMenu(UINT uiId, UINT nFlags)
   }
   else
   {
-    int iPosition =0;
+    INT_PTR iPosition =0;
     CNewMenu* pMenu = FindMenuOption(uiId,iPosition);
     if(pMenu)
     {
@@ -6505,7 +6505,7 @@ BOOL CNewMenu::DeleteMenu(UINT uiId, UINT nFlags)
       if(NULL==pSubMenu)
       {
         UINT uiCommandId = GetMenuItemID(uiId);
-        for(int i=0;i<m_MenuItemList.GetSize(); i++)
+        for(INT_PTR i=0;i<m_MenuItemList.GetSize(); i++)
         {
           if(m_MenuItemList[i]->m_nID==uiCommandId)
           {
@@ -6518,8 +6518,8 @@ BOOL CNewMenu::DeleteMenu(UINT uiId, UINT nFlags)
       else
       {
         BOOL bCanDelete = FALSE;
-        int numSubMenus = (int)m_SubMenus.GetUpperBound();
-        for(int m = numSubMenus; m >= 0; m--)
+        INT_PTR numSubMenus = (INT_PTR)m_SubMenus.GetUpperBound();
+        for(INT_PTR m = numSubMenus; m >= 0; m--)
         {
           if(m_SubMenus[m]==pSubMenu->m_hMenu)
           {
@@ -6527,12 +6527,12 @@ BOOL CNewMenu::DeleteMenu(UINT uiId, UINT nFlags)
             bCanDelete = TRUE;
           }
         }
-//        int num = pSubMenu->GetMenuItemCount();
-//        for(int i=num-1;i>=0;--i)
+//        INT_PTR num = pSubMenu->GetMenuItemCount();
+//        for(INT_PTR i=num-1;i>=0;--i)
 //        {
 //          pSubMenu->DeleteMenu(i,MF_BYPOSITION);
 //        }
-        for(int i=(int)m_MenuItemList.GetUpperBound();i>=0;i--)
+        for(INT_PTR i=(INT_PTR)m_MenuItemList.GetUpperBound();i>=0;i--)
         {
           if(m_MenuItemList[i]->m_nID==HMenuToUInt(pSubMenu->m_hMenu) )
           {
@@ -6552,7 +6552,7 @@ BOOL CNewMenu::DeleteMenu(UINT uiId, UINT nFlags)
   }
   else
   {
-    int iPosition =0;
+    INT_PTR iPosition =0;
     CNewMenu* pMenu = FindMenuOption(uiId,iPosition);
     if(pMenu)
     {
@@ -6562,12 +6562,12 @@ BOOL CNewMenu::DeleteMenu(UINT uiId, UINT nFlags)
   return CMenu::DeleteMenu(uiId,nFlags);
 } 
 
-BOOL CNewMenu::AppendMenu(UINT nFlags, UINT nIDNewItem, LPCTSTR lpszNewItem, int nIconNormal)
+BOOL CNewMenu::AppendMenu(UINT nFlags, UINT nIDNewItem, LPCTSTR lpszNewItem, INT_PTR nIconNormal)
 {
   return AppendODMenu(lpszNewItem,nFlags,nIDNewItem,nIconNormal);
 }
 
-BOOL CNewMenu::AppendMenu(UINT nFlags, UINT nIDNewItem, LPCTSTR lpszNewItem, CImageList* il, int xoffset)
+BOOL CNewMenu::AppendMenu(UINT nFlags, UINT nIDNewItem, LPCTSTR lpszNewItem, CImageList* il, INT_PTR xoffset)
 {
   return AppendODMenu(lpszNewItem,nFlags,nIDNewItem,il,xoffset);
 }
@@ -6577,12 +6577,12 @@ BOOL CNewMenu::AppendMenu(UINT nFlags, UINT nIDNewItem, LPCTSTR lpszNewItem, CBi
   return AppendODMenu(lpszNewItem,nFlags,nIDNewItem,bmp);
 }
 
-BOOL CNewMenu::InsertMenu(UINT nPosition, UINT nFlags, UINT nIDNewItem, LPCTSTR lpszNewItem, int nIconNormal)
+BOOL CNewMenu::InsertMenu(UINT nPosition, UINT nFlags, UINT nIDNewItem, LPCTSTR lpszNewItem, INT_PTR nIconNormal)
 {
   return InsertODMenu(nPosition,lpszNewItem,nFlags,nIDNewItem,nIconNormal);
 }
 
-BOOL CNewMenu::InsertMenu(UINT nPosition, UINT nFlags, UINT nIDNewItem, LPCTSTR lpszNewItem, CImageList* il, int xoffset)
+BOOL CNewMenu::InsertMenu(UINT nPosition, UINT nFlags, UINT nIDNewItem, LPCTSTR lpszNewItem, CImageList* il, INT_PTR xoffset)
 {
   return InsertODMenu(nPosition,lpszNewItem,nFlags,nIDNewItem,il,xoffset);
 }
@@ -6609,18 +6609,18 @@ CNewMenu* CNewMenu::AppendODPopupMenu(LPCTSTR lpstrText)
   return NULL;
 }
 
-CMenu* CNewMenu::GetSubMenu(int nPos) const
+CMenu* CNewMenu::GetSubMenu(INT_PTR nPos) const
 {
   return CMenu::GetSubMenu (nPos);
 }
 
 CMenu* CNewMenu::GetSubMenu(LPCTSTR lpszSubMenuName) const
 {
-  int num = GetMenuItemCount ();
+  INT_PTR num = GetMenuItemCount ();
   CString name;
   MENUITEMINFO info = {0};
 
-  for (int i=0; i<num; i++)
+  for (INT_PTR i=0; i<num; i++)
   {
     GetMenuString (i, name, MF_BYPOSITION); 
     // fix from George Menhorn
@@ -6647,13 +6647,13 @@ CMenu* CNewMenu::GetSubMenu(LPCTSTR lpszSubMenuName) const
 
 // Tongzhe Cui, Functions to remove a popup menu based on its name. Seperators
 // before and after the popup menu can also be removed if they exist.
-int CNewMenu::GetMenuPosition(LPCTSTR pText)
+INT_PTR CNewMenu::GetMenuPosition(LPCTSTR pText)
 {
-  for(int i=0;i<(int)(GetMenuItemCount());++i)
+  for(INT_PTR i=0;i<(INT_PTR)(GetMenuItemCount());++i)
   {
     if(!GetSubMenu(i))
     { 
-      for(int j=0;j<=m_MenuItemList.GetUpperBound();++j)
+      for(INT_PTR j=0;j<=m_MenuItemList.GetUpperBound();++j)
       {  
         if(m_MenuItemList[j]->m_szMenuText.Compare(pText)==NULL)
         {
@@ -6668,7 +6668,7 @@ int CNewMenu::GetMenuPosition(LPCTSTR pText)
 
 BOOL CNewMenu::RemoveMenuTitle()
 {
-  int numMenuItems = (int)m_MenuItemList.GetSize();
+  INT_PTR numMenuItems = (INT_PTR)m_MenuItemList.GetSize();
 
   // We need a seperator at the beginning of the menu
   if(!numMenuItems || !((m_MenuItemList[0]->m_nFlags)&MF_SEPARATOR) )
@@ -6704,12 +6704,12 @@ BOOL CNewMenu::SetMenuTitle(LPCTSTR pTitle, UINT nTitleFlags)
   }
 
   // Check the menu integrity
-  if((int)GetMenuItemCount()!=(int)m_MenuItemList.GetSize())
+  if((INT_PTR)GetMenuItemCount()!=(INT_PTR)m_MenuItemList.GetSize())
   {
     SynchronizeMenu();
   }
 
-  int numMenuItems = (int)m_MenuItemList.GetSize();
+  INT_PTR numMenuItems = (INT_PTR)m_MenuItemList.GetSize();
 
   // We need a seperator at the beginning of the menu
   if(!numMenuItems || !((m_MenuItemList[0]->m_nFlags)&MF_SEPARATOR) )
@@ -6717,7 +6717,7 @@ BOOL CNewMenu::SetMenuTitle(LPCTSTR pTitle, UINT nTitleFlags)
     InsertMenu(0,MF_SEPARATOR|MF_BYPOSITION);
   }
 
-  numMenuItems = (int)m_MenuItemList.GetSize();
+  numMenuItems = (INT_PTR)m_MenuItemList.GetSize();
   if(numMenuItems)
   {
     CNewMenuItemData* pMenuData = m_MenuItemList[0];
@@ -6757,7 +6757,7 @@ BOOL CNewMenu::SetMenuText(UINT id, CString string, UINT nFlags/*= MF_BYPOSITION
 {
   if(MF_BYPOSITION&nFlags)
   {
-    int numMenuItems = (int)m_MenuItemList.GetSize();
+    INT_PTR numMenuItems = (INT_PTR)m_MenuItemList.GetSize();
     if(id<UINT(numMenuItems))
     {
       // get current menu state so it doesn't change
@@ -6775,7 +6775,7 @@ BOOL CNewMenu::SetMenuText(UINT id, CString string, UINT nFlags/*= MF_BYPOSITION
   }
   else
   {
-    int uiLoc;
+    INT_PTR uiLoc;
     CNewMenu* pMenu = FindMenuOption(id,uiLoc);
     if(NULL!=pMenu)
     {
@@ -6786,7 +6786,7 @@ BOOL CNewMenu::SetMenuText(UINT id, CString string, UINT nFlags/*= MF_BYPOSITION
 }
 
 // courtesy of Warren Stevens
-void CNewMenu::ColorBitmap(CDC* pDC, CBitmap& bmp, CSize size, COLORREF fill, COLORREF border, int hatchstyle)
+void CNewMenu::ColorBitmap(CDC* pDC, CBitmap& bmp, CSize size, COLORREF fill, COLORREF border, INT_PTR hatchstyle)
 {
   // Create a memory DC
   CDC MemDC;
@@ -6954,7 +6954,7 @@ void CNewMenu::DrawSpecialChar(CDC* pDC, LPCRECT pRect, TCHAR Sign, BOOL bBold)
   MyFont.CreateFontIndirect (&logfont);
 
   CFont* pOldFont = pDC->SelectObject (&MyFont); 
-  int OldMode = pDC->SetBkMode(TRANSPARENT);  
+  INT_PTR OldMode = pDC->SetBkMode(TRANSPARENT);  
 
   pDC->DrawText (&Sign,1,rect,DT_CENTER|DT_SINGLELINE);
 
@@ -7098,7 +7098,7 @@ void CMenuTheme::DrawShade( HWND hWnd, HDC hDC, CPoint screen)
   //// Get the desktop hDC... 
   //HDC hDcDsk = GetWindowDC(0) ;
   
-  int X,Y;
+  INT_PTR X,Y;
   // Simulate a shadow on right edge... 
   if (NumScreenColors() <= 256) 
   {
@@ -7306,7 +7306,7 @@ BOOL CMenuTheme::OnNcCalcSize(HWND hWnd, NCCALCSIZE_PARAMS* pCalc)
     AfxTrace(_T("OnNcCalcSize 0 hwnd=0x%lX, (top=%ld,bottom=%ld,left=%ld,right=%ld)\n"),hWnd,pCalc->rgrc->top,pCalc->rgrc->bottom,pCalc->rgrc->left,pCalc->rgrc->right);
    #endif
 
-    int cx=0,cy=0;
+    INT_PTR cx=0,cy=0;
     if(!IsShadowEnabled())
     {
       cx = 5;
@@ -8163,7 +8163,7 @@ LRESULT CALLBACK CNewMenuHook::SubClassMenu(HWND hWnd,      // handle to window
 BOOL CNewMenuHook::CheckSubclassing(HWND hWnd, BOOL bSpecialWnd)
 {
   TCHAR Name[20];
-  int Count = GetClassName (hWnd,Name,ARRAY_SIZE(Name));
+  INT_PTR Count = GetClassName (hWnd,Name,ARRAY_SIZE(Name));
   // Check for the menu-class
   if(Count!=6 || _tcscmp(Name,_T("#32768"))!=0)
   {
@@ -8353,7 +8353,7 @@ public:
 
 };
 
-LRESULT CALLBACK CNewMenuHook::NewMenuHook(int code, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK CNewMenuHook::NewMenuHook(INT_PTR code, WPARAM wParam, LPARAM lParam)
 {
   AFX_MANAGE_STATE(AfxGetModuleState());
 
@@ -8370,7 +8370,7 @@ LRESULT CALLBACK CNewMenuHook::NewMenuHook(int code, WPARAM wParam, LPARAM lPara
     if (hWnd && hWnd!=acthWnd && hWnd!=acthMenu)
     {
       TCHAR Name[20];
-      int Count = GetClassName (hWnd,Name,ARRAY_SIZE(Name));
+      INT_PTR Count = GetClassName (hWnd,Name,ARRAY_SIZE(Name));
       // Check for the menu-class
       if(Count!=6 || _tcscmp(Name,_T("#32768"))!=0)
       {
@@ -8399,7 +8399,7 @@ LRESULT CALLBACK CNewMenuHook::NewMenuHook(int code, WPARAM wParam, LPARAM lPara
         if( (m_bSubclassFlag&NEW_MENU_DIALOG_SUBCLASS) && pTemp->message==WM_CREATE)
         {
           TCHAR Name[20];
-          int Count = GetClassName (hWnd,Name,ARRAY_SIZE(Name));
+          INT_PTR Count = GetClassName (hWnd,Name,ARRAY_SIZE(Name));
           // Check for the Dialog-class
           if(Count==6 && _tcscmp(Name,_T("#32770"))==0 )
           { 
@@ -8507,8 +8507,8 @@ void CNewDialog::OnInitMenuPopup(CMenu* pMenu, UINT nIndex, BOOL bSysMenu)
       if (pParent != NULL &&
         (hParentMenu = ::GetMenu(pParent->m_hWnd)) != NULL)
       {
-        int nIndexMax = ::GetMenuItemCount(hParentMenu);
-        for (int nIndex = 0; nIndex < nIndexMax; nIndex++)
+        INT_PTR nIndexMax = ::GetMenuItemCount(hParentMenu);
+        for (INT_PTR nIndex = 0; nIndex < nIndexMax; nIndex++)
         {
           if (::GetSubMenu(hParentMenu, nIndex) == pMenu->m_hMenu)
           {
@@ -8692,7 +8692,7 @@ void CNewFrameWnd::EnableDocking(DWORD dwDockStyle)
   ASSERT((dwDockStyle & ~(CBRS_ALIGN_ANY|CBRS_FLOAT_MULTI)) == 0);
 
   m_pFloatingFrameClass = RUNTIME_CLASS(CNewMiniDockFrameWnd);
-  for (int i = 0; i < 4; i++)
+  for (INT_PTR i = 0; i < 4; i++)
   {
     if (dwDockBarMap[i][1] & dwDockStyle & CBRS_ALIGN_ANY)
     {
@@ -8852,7 +8852,7 @@ void CNewMDIFrameWnd::EnableDocking(DWORD dwDockStyle)
   ASSERT((dwDockStyle & ~(CBRS_ALIGN_ANY|CBRS_FLOAT_MULTI)) == 0);
 
   m_pFloatingFrameClass = RUNTIME_CLASS(CNewMiniDockFrameWnd);
-  for (int i = 0; i < 4; i++)
+  for (INT_PTR i = 0; i < 4; i++)
   {
     if (dwDockBarMap[i][1] & dwDockStyle & CBRS_ALIGN_ANY)
     {

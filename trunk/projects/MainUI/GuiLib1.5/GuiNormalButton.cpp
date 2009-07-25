@@ -103,11 +103,11 @@ void CGuiNormalButton::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 	
 
 	
-	int calculodify;
+	INT_PTR calculodify;
 	calculodify=rc.Height()-(m_SizeImage.cy);
 	calculodify/=2;
-	int nHeigh=calculodify+(m_bShowDark?1:0);
-	int nWidth=rc.Width()/2 ;
+	INT_PTR nHeigh=calculodify+(m_bShowDark?1:0);
+	INT_PTR nWidth=rc.Width()/2 ;
 	CPoint m_point=CPoint(nWidth,nHeigh);
 	
 	if (m_SizeImage.cx > 2)
@@ -123,7 +123,7 @@ void CGuiNormalButton::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 	}
 	if (m_SizeText.cx > 2)
 	{
-		int nMode = pdc->SetBkMode(TRANSPARENT);
+		INT_PTR nMode = pdc->SetBkMode(TRANSPARENT);
 		CRect rectletra=rc;
 		rectletra.left+=m_SizeImage.cx;
 		CPoint pt=CSize(rectletra.top,rectletra.left);

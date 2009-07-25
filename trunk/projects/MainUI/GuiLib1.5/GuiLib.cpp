@@ -35,7 +35,7 @@ static char THIS_FILE[] = __FILE__;
 
 static AFX_EXTENSION_MODULE GuiLibDLL = { NULL, NULL };
 
-extern "C" int APIENTRY
+extern "C" INT_PTR APIENTRY
 DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpReserved)
 {
 	// Remove this if you use lpReserved

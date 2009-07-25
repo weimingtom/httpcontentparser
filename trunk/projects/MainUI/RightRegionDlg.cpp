@@ -40,7 +40,7 @@ BEGIN_MESSAGE_MAP(CRightRegionDlg, CDialog)
 	ON_WM_CTLCOLOR()
 END_MESSAGE_MAP()
 
-int CRightRegionDlg::initialize(CImageList	*pImageList, CDialog *pParent) {
+INT_PTR CRightRegionDlg::initialize(CImageList	*pImageList, CDialog *pParent) {
 	ASSERT (NULL != pParent);
 	ASSERT(NULL != pImageList); 
 	m_pImageList = pImageList;
@@ -62,15 +62,15 @@ int CRightRegionDlg::initialize(CImageList	*pImageList, CDialog *pParent) {
 
 
 // CRightRegionDlg 消息处理程序
-int CRightRegionDlg::OnCancelChange() {
+INT_PTR CRightRegionDlg::OnCancelChange() {
 	ASSERT (NULL != m_curDlg);
 	m_curDlg->Restore();	// 恢复设置
 	m_curDlg->SetModify(false);
 	return SUCCESS_ON_APPLY;
 }
 
-int CRightRegionDlg::OnChangeDlgPage(const int itemData) {
-	int dlgpage = getItemIDS(itemData);
+INT_PTR CRightRegionDlg::OnChangeDlgPage(const INT_PTR itemData) {
+	INT_PTR dlgpage = getItemIDS(itemData);
 	if (m_curDlg->BeforeChange() == 1) {
 		// 如果用户确认修改
 		setCurDlg(dlgpage);
@@ -84,7 +84,7 @@ int CRightRegionDlg::OnChangeDlgPage(const int itemData) {
 	return SUCCESS_ON_APPLY;
 }
 
-int CRightRegionDlg::OnApplyChange() {
+INT_PTR CRightRegionDlg::OnApplyChange() {
 	ASSERT (NULL != m_curDlg);
 	if ( -1 == m_curDlg->Apply()) {
 		m_curDlg->Restore();					// 回复设置
@@ -217,7 +217,7 @@ void CRightRegionDlg::initDlgs() {
 	}
 }
 
-void CRightRegionDlg::setRightTitle(const int item) {
+void CRightRegionDlg::setRightTitle(const INT_PTR item) {
 	CRect rect;
 	CWnd * pos = this->GetDlgItem(IDC_PAGE_ICON_POS);
 	if (pos != NULL) {

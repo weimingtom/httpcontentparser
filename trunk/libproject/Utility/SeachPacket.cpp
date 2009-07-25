@@ -48,7 +48,7 @@ bool SeachPacket::is_yahoo_seach(const char *oper) {
 	}
 }
 
-int SeachPacket::parse_google(const char * oper) {
+INT_PTR SeachPacket::parse_google(const char * oper) {
 	if (false == is_google_seach(oper)) {
 		return 0;
 	}
@@ -59,9 +59,9 @@ int SeachPacket::parse_google(const char * oper) {
 	}
 
 	seach_engine_ = SEACH_ENGINE_GOOGLE;
-	return (int)strlen(seach_word);
+	return (INT_PTR)strlen(seach_word);
 }
-int SeachPacket::parse_baidu(const char * oper) {
+INT_PTR SeachPacket::parse_baidu(const char * oper) {
 	if (false == is_baidu_seach(oper)) {
 		return 0;
 	}
@@ -72,9 +72,9 @@ int SeachPacket::parse_baidu(const char * oper) {
 	}
 
 	seach_engine_ = SEACH_ENGINE_BAIDU;
-	return (int)strlen(seach_word);
+	return (INT_PTR)strlen(seach_word);
 }
-int SeachPacket::parse_yahoo(const char * oper) {
+INT_PTR SeachPacket::parse_yahoo(const char * oper) {
 	if (false == is_yahoo_seach(oper)) {
 		return 0;
 	}
@@ -85,13 +85,13 @@ int SeachPacket::parse_yahoo(const char * oper) {
 	}
 
 	seach_engine_ = SEACH_ENGINE_YAHOO;
-	return (int)strlen(seach_word);
+	return (INT_PTR)strlen(seach_word);
 }
 
 //===============================================================
 // 分析包
 
-int SeachPacket::parse(const char * oper, const char * host_name) {
+INT_PTR SeachPacket::parse(const char * oper, const char * host_name) {
 	if (strlen(host_name) == 0) {
 		return 0;
 	}
@@ -112,7 +112,7 @@ int SeachPacket::parse(const char * oper, const char * host_name) {
 
 	// 如果host_name以http://开头
 	const char *http  = "http://";
-	const int http_len = static_cast<int>(strlen(http));
+	const INT_PTR http_len = static_cast<INT_PTR>(strlen(http));
 	if (true == beginwith(host_name, http)) {
 		host_name += http_len;
 	}
@@ -131,8 +131,8 @@ int SeachPacket::parse(const char * oper, const char * host_name) {
 }
 
 
-int SeachPacket::get_seach_word(char *buf, const int size) {
+INT_PTR SeachPacket::get_seach_word(char *buf, const INT_PTR size) {
 	memset(buf, 0, size);
 	strncpy(buf, seach_word, size);
-	return (int)strlen(buf);
+	return (INT_PTR)strlen(buf);
 }

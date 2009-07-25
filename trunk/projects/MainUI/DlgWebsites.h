@@ -8,7 +8,7 @@
 // CDlgWebsites 对话框
 class CWebsitesList: public CListCtrlEx {
   public:
-	  const CString GetToolTip(int, int, UINT nFlags, BOOL&) { return "";}
+	  const CString GetToolTip(INT_PTR, INT_PTR, UINT nFlags, BOOL&) { return "";}
 };
 
 class CDlgWebsites : public CPopupDialog
@@ -23,8 +23,8 @@ public:
 	enum { IDD = IDD_POPDLG_WEBSITES };
 
 protected:
-	int showOnList();
-	int addItem(const _bstr_t &name, const long times, const long hightime, const long lowtime, const int iIndex);
+	INT_PTR showOnList();
+	INT_PTR addItem(const _bstr_t &name, const long times, const long hightime, const long lowtime, const INT_PTR iIndex);
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 支持
 	virtual BOOL OnInitDialog();

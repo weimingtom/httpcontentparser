@@ -36,7 +36,7 @@ std::string CDlgOptions::getHelpLink() const {
 namespace {
 
 
-	BOOL notifyCOMServiceHotkey(WORD vKey, WORD vModifiers, const int type) {
+	BOOL notifyCOMServiceHotkey(WORD vKey, WORD vModifiers, const INT_PTR type) {
 		try {
 			AutoInitInScale auto_init_com;
 			VARIANT_BOOL bSucc;
@@ -57,7 +57,7 @@ namespace {
 		}
 	}
 
-	BOOL setHotkey(WORD vKey, WORD vModifier, const int type) {
+	BOOL setHotkey(WORD vKey, WORD vModifier, const INT_PTR type) {
 		// 首先注销当前的热键
 		UnregisterHotKey(AfxGetMainWnd()->GetSafeHwnd(), type);
 
@@ -92,7 +92,7 @@ void CDlgOptions::DoDataExchange(CDataExchange* pDX)
 	DDX_Check(pDX, IDC_CHK_ASKME_AGAIN_WHENCLOSE, m_bAskmeOnClose);
 }
 
-int CDlgOptions::setHotKey() {
+INT_PTR CDlgOptions::setHotKey() {
 	// 注册热键
 	WORD vModifier, vKey;
 
@@ -121,7 +121,7 @@ int CDlgOptions::setHotKey() {
 	return SUCCESS_APPLY;
 }
 
-int CDlgOptions::setMisc() {
+INT_PTR CDlgOptions::setMisc() {
 	// 设置
 	try {
 		AutoInitInScale auto_init_com;
@@ -144,7 +144,7 @@ int CDlgOptions::setMisc() {
 	}
 }
 
-int CDlgOptions::OnApply() {
+INT_PTR CDlgOptions::OnApply() {
 	UpdateData(TRUE);
 	SetAutoRun();
 	if ( FAILED_APPLY== setHotKey() || FAILED_APPLY == setMisc()) {
@@ -165,7 +165,7 @@ void CDlgOptions::restoreSetting() {
 		HRESULT hr = CoCreateInstance(CLSID_SnowmanSetting, NULL, CLSCTX_LOCAL_SERVER, IID_ISnowmanSetting, (LPVOID*)&app);
 		if (FAILED(hr)) {
 			__LERR__("Create AccessNetwork failed with HRESULT value "<<hr);
-			throw int(SNOWMAN_ERROR_COM_INIT_FAILED);
+			throw INT_PTR(SNOWMAN_ERROR_COM_INIT_FAILED);
 		}
 
 		// 热键
@@ -193,7 +193,7 @@ void CDlgOptions::restoreSetting() {
 		UpdateData(FALSE);
 	} catch (...) {
 		__LERR__("CATCH(...)");
-		throw int(SNOWMAN_ERROR_COM_INIT_FAILED);
+		throw INT_PTR(SNOWMAN_ERROR_COM_INIT_FAILED);
 	}
 }
 

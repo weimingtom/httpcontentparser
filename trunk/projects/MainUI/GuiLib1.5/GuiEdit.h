@@ -59,17 +59,17 @@ public:
 	void RecalLayout();
 	void SetMask(CString mszMask, CString mszShowMask, Mask enTypeMask = MASK_FREEMASK);
 	void ValidMask(UINT nChar);
-	int  GetNextPos(int start);
-	BOOL IsValidChar(UINT nChar, int nStartPos);
-	BOOL ValSpecialKey(int nStartPos,	int nEndPos);
-	BOOL IsPosMask(int StartPos);
-	void DeleteString(int nStartPos, int  nEndPos);
-	void AjustaCadena(int nStartPos, int  nEndPos);
-	int  NumCharNoMask();
-	int  FindLasCharR();
-	void DeleteAndAjust(int nStartPos, int  nEndPos);
-	int  DifCharReal(int start, int fin);
-	BOOL IsValPos(UINT nChar, int pos);
+	INT_PTR  GetNextPos(INT_PTR start);
+	BOOL IsValidChar(UINT nChar, INT_PTR nStartPos);
+	BOOL ValSpecialKey(INT_PTR nStartPos,	INT_PTR nEndPos);
+	BOOL IsPosMask(INT_PTR StartPos);
+	void DeleteString(INT_PTR nStartPos, INT_PTR  nEndPos);
+	void AjustaCadena(INT_PTR nStartPos, INT_PTR  nEndPos);
+	INT_PTR  NumCharNoMask();
+	INT_PTR  FindLasCharR();
+	void DeleteAndAjust(INT_PTR nStartPos, INT_PTR  nEndPos);
+	INT_PTR  DifCharReal(INT_PTR start, INT_PTR fin);
+	BOOL IsValPos(UINT nChar, INT_PTR pos);
 
 	// CString GetMask();
 	// Operations
@@ -84,7 +84,7 @@ public:
 	Mask         m_enMask;
 	CString      StrToUse;
 	CString      m_cadResult;
-	int		     m_KeySpecial;
+	INT_PTR		     m_KeySpecial;
 
 public:
 	virtual ~CGuiEdit();
@@ -92,11 +92,11 @@ public:
 	// Generated message map functions
 protected:
 	//{{AFX_MSG(CGuiEdit)
-	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+	afx_msg INT_PTR OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnPaint();
 	afx_msg void OnSysColorChange();
 	afx_msg void OnNcPaint();
-	afx_msg void OnSize(UINT nType, int cx, int cy);
+	afx_msg void OnSize(UINT nType, INT_PTR cx, INT_PTR cy);
 	afx_msg void OnChar(UINT nChar, UINT nRepCnt, UINT nFlags);
 	afx_msg void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
 	afx_msg void OnSetFocus(CWnd* pOldWnd);

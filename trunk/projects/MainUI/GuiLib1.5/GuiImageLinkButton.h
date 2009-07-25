@@ -33,12 +33,12 @@ public:
 	virtual ~CGuiImageLinkButton(void);
 	//esta funcion identa la cadenade caracteres a la derecha en el caso
 	//que no exista imagen
-	void AjustRightText(int nIdent){m_iDent=nIdent;}
+	void AjustRightText(INT_PTR nIdent){m_iDent=nIdent;}
 protected:
 	CFont	m_cfontSelect;
 	CFont	m_cfontNormal;
 	CRect	rectletra;
-	int     m_iDent;
+	INT_PTR     m_iDent;
 protected:
 	DECLARE_MESSAGE_MAP()
 	

@@ -43,27 +43,27 @@ class CThreadPool
 {
 public:
 	struct ListNode{
-		int ItemNo;
+		INT_PTR ItemNo;
 		CString FileName;
-		int ImageNo;
+		INT_PTR ImageNo;
 	};
 
 protected:
 	std::deque<struct ListNode> Queue;
 	CRITICAL_SECTION CriticalSection;
 
-	int m_Offset;
-	int m_Type;		// 0: InPool, 1: OutPool;
+	INT_PTR m_Offset;
+	INT_PTR m_Type;		// 0: InPool, 1: OutPool;
 
 public:
-	BOOL DeleteItem(int nItem);
-	void InsertNode(int ItemNo, CString FileName="", int ImageNo=0);
-	void AddNode(int ItemNo, int ImageNo);
+	BOOL DeleteItem(INT_PTR nItem);
+	void InsertNode(INT_PTR ItemNo, CString FileName="", INT_PTR ImageNo=0);
+	void AddNode(INT_PTR ItemNo, INT_PTR ImageNo);
 	struct ListNode GetNextNode(BOOL bRemove);
 	void Clear();
 	BOOL IsEmpty()	{	return Queue.empty();	}
 
-	CThreadPool(int Type)
+	CThreadPool(INT_PTR Type)
 	{	
 		m_Type = Type;
 		m_Offset = 0;
@@ -77,7 +77,7 @@ public:
 };
 
 // Used by In Pool.
-void CThreadPool::InsertNode(int ItemNo, CString FileName, int ImageNo)
+void CThreadPool::InsertNode(INT_PTR ItemNo, CString FileName, INT_PTR ImageNo)
 {
 	EnterCriticalSection( & CriticalSection );
 
@@ -98,7 +98,7 @@ void CThreadPool::InsertNode(int ItemNo, CString FileName, int ImageNo)
 }
 
 // Used by Out pool
-void CThreadPool::AddNode(int ItemNo, int ImageNo)
+void CThreadPool::AddNode(INT_PTR ItemNo, INT_PTR ImageNo)
 {
 	EnterCriticalSection( & CriticalSection );
 
@@ -175,7 +175,7 @@ struct CThreadPool::ListNode CThreadPool::GetNextNode(BOOL bRemove)
 }
 
 
-BOOL CThreadPool::DeleteItem(int nItem)
+BOOL CThreadPool::DeleteItem(INT_PTR nItem)
 {
 	ASSERT( m_Type == 0 || m_Type == 1);
 	EnterCriticalSection( & CriticalSection );
@@ -219,7 +219,7 @@ BOOL CThreadPool::DeleteItem(int nItem)
 
 IMPLEMENT_DYNCREATE(CThumbCtrl, CListCtrl)
 
-CThumbCtrl::CThumbCtrl(int ThumbWidth, int ThumbHeight)
+CThumbCtrl::CThumbCtrl(INT_PTR ThumbWidth, INT_PTR ThumbHeight)
 {
 	m_pThread = NULL;
 	m_ThumbWidth = ThumbWidth;
@@ -290,7 +290,7 @@ void CThumbCtrl::Dump(CDumpContext& dc) const
 /////////////////////////////////////////////////////////////////////////////
 // CThumbCtrl message handlers
 
-int CThumbCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct) 
+INT_PTR CThumbCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct) 
 {
 	if (CListCtrl::OnCreate(lpCreateStruct) == -1)
 		return -1;
@@ -347,7 +347,7 @@ int CThumbCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	*pResult = 0;
 }*/
 
-int CThumbCtrl::InsertItem(int ItemNo, LPCTSTR lpszFileName)
+INT_PTR CThumbCtrl::InsertItem(INT_PTR ItemNo, LPCTSTR lpszFileName)
 {
 	CString PathName, FileName;
 
@@ -428,14 +428,14 @@ UINT CThumbCtrl::ImageRendering(LPVOID Param)
 	CThumbCtrl *Parent = pParameter->Parent;
 	CListCtrl *list = (CListCtrl *)CWnd::FromHandle(pParameter->hListView);
 	CImageList *ImageList = (CImageList *)CImageList::FromHandle(pParameter->hImageList);
-	int Margin = Parent->m_Margin;
-	int ThumbWidth = Parent->m_ThumbWidth;
-	int ThumbHeight = Parent->m_ThumbHeight;
+	INT_PTR Margin = Parent->m_Margin;
+	INT_PTR ThumbWidth = Parent->m_ThumbWidth;
+	INT_PTR ThumbHeight = Parent->m_ThumbHeight;
 	delete pParameter;
 
 	CString		PathName, FileName;
 	BSTR		bstrPathName;
-	int			imgNo, ItemNo;
+	INT_PTR			imgNo, ItemNo;
 	Image		* img, * Thumb;
 	Rect		ActRect;
 	CBitmap		Bmp, * pOldBmp;
@@ -576,7 +576,7 @@ LRESULT CThumbCtrl::OnUpdateImageData(WPARAM, LPARAM)
 	CThreadPool::ListNode node;
 	//CListCtrl & list = GetListCtrl();
 	node = pThreadOutPool->GetNextNode(TRUE);
-	int res;
+	INT_PTR res;
 	while( node.ItemNo != -1 )
 	{
 		res = SetItem(node.ItemNo, 0, LVIF_IMAGE, NULL, node.ImageNo, 0, 0, 0);

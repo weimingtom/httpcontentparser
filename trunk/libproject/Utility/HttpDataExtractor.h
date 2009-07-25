@@ -14,9 +14,9 @@ class HTTP_RESPONSE_HEADER;
 // 2. 使用 content-length
 class HttpDataExtractor {
 public:
-	virtual int addBuffer(const char * buf, const int len) = 0;
+	virtual INT_PTR addBuffer(const char * buf, const INT_PTR len) = 0;
 	virtual bool finished() const = 0;
-	int getExtractorTypeCode();
+	INT_PTR getExtractorTypeCode();
 
 	// 对于没有指定长度的包，他可能是主动关闭连接的，
 	// 这时候需要我们传送一个0长度的包

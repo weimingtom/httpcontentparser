@@ -33,7 +33,7 @@ std::string CDlgSearchRule::getHelpLink() const {
 }
 
 
-int CDlgSearchRule::OnApply() {
+INT_PTR CDlgSearchRule::OnApply() {
 	rules.Apply();
 	UpdateData();
 	try {
@@ -87,7 +87,7 @@ void CDlgSearchRule::restoreSetting() {
 		HRESULT hr = CoCreateInstance(CLSID_SearchRule, NULL, CLSCTX_LOCAL_SERVER, IID_ISearchRule, (LPVOID*)&seach_rule);
 		if (FAILED(hr)) {
 			__LERR__("Create SearchRule failed with HRESULT vlaue "<<std::hex<<hr);
-			throw int(SNOWMAN_ERROR_COM_INIT_FAILED);
+			throw INT_PTR(SNOWMAN_ERROR_COM_INIT_FAILED);
 		}
 
 		BSTR cur, next;
@@ -112,7 +112,7 @@ void CDlgSearchRule::restoreSetting() {
 		UpdateData(FALSE);
 	} catch (...) {
 		__LERR__( "CATCH(...)");
-		throw int(SNOWMAN_ERROR_COM_INIT_FAILED);
+		throw INT_PTR(SNOWMAN_ERROR_COM_INIT_FAILED);
 	}
 }
 

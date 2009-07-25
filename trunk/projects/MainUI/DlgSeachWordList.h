@@ -16,7 +16,7 @@
 class CECListCtrlEx: public CListCtrlEx
 {
   public:
-	  const CString GetToolTip(int, int, UINT nFlags, BOOL&) { return "";}
+	  const CString GetToolTip(INT_PTR, INT_PTR, UINT nFlags, BOOL&) { return "";}
 };
 
 // CDlgSeachWordList 对话框
@@ -34,9 +34,9 @@ protected:
 	void InitList();
 
 	// 显示
-	int showOnList();
+	INT_PTR showOnList();
 
-	int addItem(const _bstr_t &name, const long times, const long searchengine_type, const long hightime, const long lowtime, const int iIndex);
+	INT_PTR addItem(const _bstr_t &name, const long times, const long searchengine_type, const long hightime, const long lowtime, const INT_PTR iIndex);
 
 // 对话框数据
 	enum { IDD = IDD_POPDLG_SEACHWORD_HISTORY };

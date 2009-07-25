@@ -19,7 +19,7 @@ public:
 	enum { IDD = IDD_DLG_ABOUT };
 
 protected:
-	virtual int OnApply();
+	virtual INT_PTR OnApply();
 	virtual void OnShow();
 	virtual void restoreSetting() {}
 	virtual BOOL OnInitDialog();

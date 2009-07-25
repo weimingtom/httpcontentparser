@@ -33,11 +33,11 @@ public:
 	enum { IDD = IDD_DLG_RIGHTREGION };
 
 public:
-	int OnApplyChange();
-	int OnCancelChange();
-	int OnChangeDlgPage(const int itemdata);
+	INT_PTR OnApplyChange();
+	INT_PTR OnCancelChange();
+	INT_PTR OnChangeDlgPage(const INT_PTR itemdata);
 
-	int initialize(CImageList	*m_pImageList, CDialog *pParent);
+	INT_PTR initialize(CImageList	*m_pImageList, CDialog *pParent);
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 支持
 	virtual BOOL OnInitDialog();
@@ -76,7 +76,7 @@ private:
 	CFont	m_fontTitle;
 	
 private:
-	void setRightTitle(const int item);
+	void setRightTitle(const INT_PTR item);
 	void drawRightIcon(CDC *pDC);
 
 	CImageList	*m_pImageList;			// 导航树上的图标
@@ -86,7 +86,7 @@ private:
 	WORD getItemIcon(DWORD itemData);
 	WORD getItemIDS(DWORD itemData);
 public:
-	static const int SUCCESS_ON_APPLY = 0;
-	static const int FAILED_ON_APPLY = -1;
+	static const INT_PTR SUCCESS_ON_APPLY = 0;
+	static const INT_PTR FAILED_ON_APPLY = -1;
 	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
 };

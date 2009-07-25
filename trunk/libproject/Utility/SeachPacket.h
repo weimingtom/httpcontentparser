@@ -12,10 +12,10 @@ public:
 	// 返回值 0
 	// 表示没有结果
 	// 非0表示解析成功
-	int parse(const char * oper, const char * host_name);
+	INT_PTR parse(const char * oper, const char * host_name);
 
 	// 获取信息
-	int get_seach_word(char *buf, const int size);
+	INT_PTR get_seach_word(char *buf, const INT_PTR size);
 
 	enum {
 		SEACH_ENGINE_UNKNOWN = 0,
@@ -24,11 +24,11 @@ public:
 		SEACH_ENGINE_BAIDU
 	};
 	
-	int getSeachEngineType() const { return seach_engine_;}
+	INT_PTR getSeachEngineType() const { return seach_engine_;}
 private:
-	int parse_google(const char * oper);
-	int parse_baidu(const char * oper);
-	int parse_yahoo(const char * oper);
+	INT_PTR parse_google(const char * oper);
+	INT_PTR parse_baidu(const char * oper);
+	INT_PTR parse_yahoo(const char * oper);
 
 	bool is_yahoo_seach(const char *oper);
 	bool is_baidu_seach(const char *oper);
@@ -37,7 +37,7 @@ private:
 	char seach_word[MAX_PATH];
 	char language_[MAX_PATH];
 	
-	int seach_engine_;
+	INT_PTR seach_engine_;
 };
 
 #endif  // _UTILITY_SEACHPACKET_H__

@@ -61,22 +61,22 @@ public:
 	void    SetTypeTab(TypeTab Type=TYPE_NORMAL);
 	void	virtual Drawtabs(CDC* dc);
 	void	Addtab(CWnd* pParent,CString lpMsg,UINT uIcon);
-	void	SetImageList(UINT nBitmapID, int cx, int nGrow, COLORREF crMask);
+	void	SetImageList(UINT nBitmapID, INT_PTR cx, INT_PTR nGrow, COLORREF crMask);
 	void	RecalLayout();
 	virtual void AjustTabs();
-	void    SetCurtab(int m_numtab);
-	int     GetCurtab();
-	void    DeleteTab(int m_numTab);
+	void    SetCurtab(INT_PTR m_numtab);
+	INT_PTR     GetCurtab();
+	void    DeleteTab(INT_PTR m_numTab);
 	void	ShowTitle(CString m_Caption);
 	CWnd*   GetActiveWnd () const;
-	CWnd*   GetNumWnd(int m_numtab)  const;
-	int     GetCount(){return m_Numtabs;}
+	CWnd*   GetNumWnd(INT_PTR m_numtab)  const;
+	INT_PTR     GetCount(){return m_Numtabs;}
 	void	SetActualTitle(BOOL bActual);
 	void    SetALingTabs(AlingTab alnTab);
 	BOOL	FindItem(HWND hWnd);
 	void    UpdateCaption(CWnd* pWnd,CString m_Title);
-	void    SetTabsTitle(int iTabNr, CString sNewTitle);
-	void    SetTabMenu(UINT nMENU,int nNumTab=0);
+	void    SetTabsTitle(INT_PTR iTabNr, CString sNewTitle);
+	void    SetTabMenu(UINT nMENU,INT_PTR nNumTab=0);
 	
 	virtual void StyleDispl(DWORD dwDsp=GUISTYLE_XP)
 	{m_StyleDisplay=dwDsp;SendMessage(WM_NCPAINT);Invalidate(); UpdateWindow();}
@@ -89,10 +89,10 @@ protected:
 	BOOL			m_ActualTitle;
 	CPtrArray		m_pArray;
 	CSize			m_sizeImag;
-	int				m_Numtabs;
-	int				m_iMinValRec;
-	int				m_ActualVar;
-	int				m_iSelectTab;
+	INT_PTR				m_Numtabs;
+	INT_PTR				m_iMinValRec;
+	INT_PTR				m_ActualVar;
+	INT_PTR				m_iSelectTab;
 	CRect			m_rectCliente;
 	CRect			m_rectTab;
 	CToolTipCtrl	CToolTip;
@@ -110,8 +110,8 @@ protected:
 	//{{AFX_MSG(CGuiTabWnd)
 		afx_msg BOOL OnEraseBkgnd(CDC* pDC);
 		afx_msg void OnPaint();
-		afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
-		afx_msg void OnSize(UINT nType, int cx, int cy);
+		afx_msg INT_PTR OnCreate(LPCREATESTRUCT lpCreateStruct);
+		afx_msg void OnSize(UINT nType, INT_PTR cx, INT_PTR cy);
 		afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
 		afx_msg void OnSysColorChange( );
 		afx_msg void OnRButtonDown(UINT nFlags, CPoint point);

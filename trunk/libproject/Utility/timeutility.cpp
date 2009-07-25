@@ -65,7 +65,7 @@ struct tm tmfromstring(const TCHAR * timestr) {
 	return t;
 }
 
-TCHAR * USFormatTime(SYSTEMTIME  ft, TCHAR *buffer, int len) {
+TCHAR * USFormatTime(SYSTEMTIME  ft, TCHAR *buffer, INT_PTR len) {
 	if (ft.wHour <= 12) {
 		_snprintf(buffer, len, "%02d:%02d am %02d/%02d/%04d", ft.wHour, ft.wMinute, ft.wMonth, ft.wDay, ft.wYear);
 	} else {
@@ -75,7 +75,7 @@ TCHAR * USFormatTime(SYSTEMTIME  ft, TCHAR *buffer, int len) {
 	return buffer;
 }
 
-TCHAR * USFormatTime(FILETIME ft, TCHAR * buffer, int len) {
+TCHAR * USFormatTime(FILETIME ft, TCHAR * buffer, INT_PTR len) {
 	SYSTEMTIME st;
 	FileTimeToSystemTime(&ft, &st);
 	return USFormatTime(st, buffer, len);

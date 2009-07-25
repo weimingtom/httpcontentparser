@@ -14,7 +14,7 @@
 class CThumbCtrl : public CListCtrl
 {
 public:
-	CThumbCtrl(int ThumbWidth=100, int ThumbHeight=100);           // protected constructor used by dynamic creation
+	CThumbCtrl(INT_PTR ThumbWidth=100, INT_PTR ThumbHeight=100);           // protected constructor used by dynamic creation
 	virtual ~CThumbCtrl();
 	DECLARE_DYNCREATE(CThumbCtrl)
 
@@ -30,10 +30,10 @@ public:
 
 // Operations
 public:
-	int InsertItem(int nItem, LPCTSTR lpszFileName);
-	int m_Margin;
-	int m_ThumbHeight;
-	int m_ThumbWidth;
+	INT_PTR InsertItem(INT_PTR nItem, LPCTSTR lpszFileName);
+	INT_PTR m_Margin;
+	INT_PTR m_ThumbHeight;
+	INT_PTR m_ThumbWidth;
 
 // Overrides
 	// ClassWizard generated virtual function overrides
@@ -72,7 +72,7 @@ protected:
 	CImageList m_BackupImageList;
 
 	//{{AFX_MSG(CThumbCtrl)
-	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+	afx_msg INT_PTR OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnDeleteItem(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnDeleteAllItems(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnDestroy();

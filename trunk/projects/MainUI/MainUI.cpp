@@ -25,7 +25,7 @@
 #pragma   comment(linker,"/section:shared,rws")   
 #pragma data_seg("shared")
 HWND share_hwnd = 0;
-int mainui_app_count = 0;
+INT_PTR mainui_app_count = 0;
 #pragma data_seg()
 
 #define MUTEX_NAME TEXT("2A144C85-AF84-4f88-8F7D-6C794A2800EB")
@@ -145,7 +145,7 @@ BOOL CMainUIApp::InitInstance() {
 	return FALSE;
 }
 
-int CMainUIApp::ExitInstance()
+INT_PTR CMainUIApp::ExitInstance()
 {
 	GdiplusShutdown( m_GdiplusToken);
 	SafeRelease(g_dnssetting);

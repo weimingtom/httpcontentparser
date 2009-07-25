@@ -16,7 +16,7 @@
 
 // CDlgProgramControl 对话框
 
-const CString CProgramList::GetToolTip(int nItem, int nSubItem, UINT nFlags, BOOL&) {
+const CString CProgramList::GetToolTip(INT_PTR nItem, INT_PTR nSubItem, UINT nFlags, BOOL&) {
 	return "";
 }
 
@@ -43,7 +43,7 @@ void CDlgProgramControl::DoDataExchange(CDataExchange* pDX)
 	DDX_Check(pDX, IDC_CHK_ENABLE_APPCONTROL, m_bEnableAppControl);
 }
 
-void CDlgProgramControl::addItem(const std::string &filepath, const int iIndex) {
+void CDlgProgramControl::addItem(const std::string &filepath, const INT_PTR iIndex) {
 	addedItems_.insert(std::make_pair(filepath, iIndex));
 	
 	// 从删除列表中删除
@@ -53,7 +53,7 @@ void CDlgProgramControl::addItem(const std::string &filepath, const int iIndex) 
 	}
 }
 
-void CDlgProgramControl::deleteItem(const std::string &filepath, const int nItem) {
+void CDlgProgramControl::deleteItem(const std::string &filepath, const INT_PTR nItem) {
 	deleteItems_.insert(std::make_pair(filepath, nItem));
 
 	// 从添加列表中删除
@@ -107,7 +107,7 @@ void CDlgProgramControl::resetContent() {
 	listdata_.clear();
 }
 
-int CDlgProgramControl::OnApply() {
+INT_PTR CDlgProgramControl::OnApply() {
 	try {
 		UpdateData(TRUE);
 		AutoInitInScale _auto;
@@ -151,7 +151,7 @@ void CDlgProgramControl::restoreSetting() {
 		HRESULT hr = CoCreateInstance(CLSID_AppControl, NULL, CLSCTX_LOCAL_SERVER, IID_IAppControl, (LPVOID*)&pSetting);
 		if (FAILED(hr)) {
 			__LERR__("Create AppControl failed with HRESULT value "<<std::hex<<hr);
-			throw int(SNOWMAN_ERROR_COM_INIT_FAILED);
+			throw INT_PTR(SNOWMAN_ERROR_COM_INIT_FAILED);
 		}
 	
 		// 清空内容
@@ -181,11 +181,11 @@ void CDlgProgramControl::restoreSetting() {
 		UpdateData(FALSE);
 	} catch (...) {
 		__LERR__("CATCH(...)");
-		throw int(SNOWMAN_ERROR_COM_INIT_FAILED);
+		throw INT_PTR(SNOWMAN_ERROR_COM_INIT_FAILED);
 	}
 }
 
-int CDlgProgramControl::addNewFile(const CFileInfo &info) {
+INT_PTR CDlgProgramControl::addNewFile(const CFileInfo &info) {
 	// 如果已经存在，则返回-1
  	if (listdata_.find(info.getFilePath()) != listdata_.end()) {
 		return -1;
@@ -193,7 +193,7 @@ int CDlgProgramControl::addNewFile(const CFileInfo &info) {
 
 	// 获取图标
 	HICON hIcon = info.getICON();
-	int iconIndex = 1;
+	INT_PTR iconIndex = 1;
 	if (hIcon != NULL) {
 		iconIndex = m_imagelist.Add(hIcon);
 	}
@@ -210,7 +210,7 @@ int CDlgProgramControl::addNewFile(const CFileInfo &info) {
 		displayName = info.getProductName().c_str();
 	}
 
-	int iItemIndex = iItemIndex = m_list.InsertItem(m_list.GetItemCount(), displayName, iconIndex);
+	INT_PTR iItemIndex = iItemIndex = m_list.InsertItem(m_list.GetItemCount(), displayName, iconIndex);
 	m_list.SetItemText(iItemIndex, 1, info.getFilePath().c_str());
 	m_list.SetItemText(iItemIndex, 2, info.getCompanyName().c_str());
 	m_list.SetItemText(iItemIndex, 3, info.getDescription().c_str());
@@ -246,7 +246,7 @@ void CDlgProgramControl::OnBnClickedBtnAdd()
 
 		// 获取信息
 		CFileInfo info((LPCTSTR)dlg.GetPathName());
-		int iIndex = addNewFile(info);
+		INT_PTR iIndex = addNewFile(info);
 		if (iIndex < 0) {
 			AfxMessageBox(IDS_DLG_PROGRAM_PATH_IN_LIMITDIR, MB_OK | MB_ICONEXCLAMATION);
 		} else {
@@ -280,8 +280,8 @@ BOOL CDlgProgramControl::OnInitDialog()
 	static const struct
 	{
 		UINT nColHdrId;
-		int  nFormat;
-		int  nWidth;
+		INT_PTR  nFormat;
+		INT_PTR  nWidth;
 	} colData[] =
 	{
 		{IDS_DLG_PROGRAM_CONTROL_NAME,			 LVCFMT_LEFT,  80}, 
@@ -289,10 +289,10 @@ BOOL CDlgProgramControl::OnInitDialog()
 		{IDS_DLG_PROGRAM_CONTROL_COMPANY,	 LVCFMT_LEFT, 90},
 		{IDS_DLG_PROGRAM_CONTROL_DESCRIPT,		 LVCFMT_LEFT, 130},
 	};
-	const int nColCount = sizeof colData / sizeof colData[0];
+	const INT_PTR nColCount = sizeof colData / sizeof colData[0];
 
 	CString str;
-	for (int nColumn = 0; nColumn < nColCount; ++nColumn)
+	for (INT_PTR nColumn = 0; nColumn < nColCount; ++nColumn)
 	{
 		VERIFY(str.LoadString(colData[nColumn].nColHdrId));
 		m_list.InsertColumn(
@@ -312,7 +312,7 @@ BOOL CDlgProgramControl::OnInitDialog()
 	return TRUE;  // return TRUE unless you set the focus to a control
 }
 
-void CDlgProgramControl::deleteJustFromUI(const int nItem) {
+void CDlgProgramControl::deleteJustFromUI(const INT_PTR nItem) {
 	assert (-1 != nItem);
 	// 将待删除的项保存起来，一边在用户按下Apply或者OK按钮时执行删除
 	ITEMDATA * data = (ITEMDATA*)m_list.GetItemData(nItem);
@@ -330,7 +330,7 @@ void CDlgProgramControl::OnBnClickedBtnDel()
 	POSITION pos = m_list.GetFirstSelectedItemPosition();
 	if (pos) {
 		// 获取选中的项，
-		int nItem = m_list.GetNextSelectedItem(pos);
+		INT_PTR nItem = m_list.GetNextSelectedItem(pos);
 		if (nItem != -1) {
 			deleteJustFromUI(nItem);
 		}

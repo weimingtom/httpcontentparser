@@ -162,11 +162,11 @@ void CGuiToolButton::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 		pdc->FillRect(rc,&cb);
 
 
-	int calculodify;
+	INT_PTR calculodify;
 	calculodify=rc.Height()-(m_SizeImage.cy);
 	calculodify/=2;
-	int nHeigh=calculodify+(m_bShowDark?1:0);
-	int nWidth=m_ScrollButton?rc.Width()/2 :2;
+	INT_PTR nHeigh=calculodify+(m_bShowDark?1:0);
+	INT_PTR nWidth=m_ScrollButton?rc.Width()/2 :2;
 	CPoint m_point=CPoint(nWidth,nHeigh);
 	
 	if (m_SizeImage.cx > 2)
@@ -182,9 +182,9 @@ void CGuiToolButton::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 	}
 	if (m_SizeText.cx > 2)
 	{
-		int nMode = pdc->SetBkMode(TRANSPARENT);
+		INT_PTR nMode = pdc->SetBkMode(TRANSPARENT);
 		CRect rectletra=rc;
-		int nt=m_ScrollButton?0:8;
+		INT_PTR nt=m_ScrollButton?0:8;
 		rectletra.left+=m_SizeImage.cx+nt;
 		CPoint pt=CSize(rectletra.top,rectletra.left);
 		if (uState & ODS_DISABLED)
@@ -324,7 +324,7 @@ CSize CGuiToolButton::GetSizeButton()
 void CGuiToolButton::RecalSize()
 {
 	CRect m_rect;
-	int m_High=0;
+	INT_PTR m_High=0;
 	if (GetSafeHwnd() == NULL) return;
 	CClientDC dc(this);
 	GetClientRect(&m_rect);
@@ -361,7 +361,7 @@ void CGuiToolButton::SethIcon(HICON hIcon)
 void CGuiToolButton::ShowMenu()
 {
 	CRect rcW;
-	int x,y;
+	INT_PTR x,y;
 	GetWindowRect(&rcW);
 	
 	x=rcW.left;

@@ -109,7 +109,7 @@ void CGuiDropDownEdit::OnNcPaint()
 	
 }
 
-int CGuiDropDownEdit::OnCreate(LPCREATESTRUCT lpCreateStruct)
+INT_PTR CGuiDropDownEdit::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if (CStatic::OnCreate(lpCreateStruct) == -1)
 		return -1;
@@ -122,7 +122,7 @@ void CGuiDropDownEdit::SetStyle(Border border)
 	m_border=border;
 }
 
-void CGuiDropDownEdit::SetLimitText(int numText)
+void CGuiDropDownEdit::SetLimitText(INT_PTR numText)
 {
 	m_Edit.SetLimitText(numText);
 }

@@ -23,13 +23,13 @@ class CListBase
    CListBase();
   ~CListBase();
 
-  BOOL         ColorSortColumn   (BOOL bEnable = TRUE, int nSortColumn = 0);
+  BOOL         ColorSortColumn   (BOOL bEnable = TRUE, INT_PTR nSortColumn = 0);
   virtual void DrawSmallIcon     (CDC* pDC, LVITEM* pItem, LPRECT pRect);
   virtual void DrawStateIcon     (CDC* pDC, LVITEM* pItem, LPRECT pRect);
   virtual void DrawSubItemText   (CDC* pDC, LVITEM* pItem, LVCOLUMN* pColumn,
                                   LPRECT pRect);
-  void         EnableColumn      (int nColumn, BOOL bEnableIt = TRUE);
-  void         EnableColumnHiding(int nColumn, BOOL bEnableIt = TRUE);
+  void         EnableColumn      (INT_PTR nColumn, BOOL bEnableIt = TRUE);
+  void         EnableColumnHiding(INT_PTR nColumn, BOOL bEnableIt = TRUE);
 
   void EnableColumnSeparators(BOOL bEnable = TRUE)
   {
@@ -37,38 +37,38 @@ class CListBase
   }
 
   void EnableExplorerStyle();
-  void EnableSortIcon     (BOOL bEnable = TRUE, int nSortColumn = 0);
+  void EnableSortIcon     (BOOL bEnable = TRUE, INT_PTR nSortColumn = 0);
   void EnableSubItemTips  (BOOL bEnable = TRUE) {m_bSubItemTips = bEnable;}
 
-  int GetColumnCount() const
+  INT_PTR GetColumnCount() const
   {
-    return static_cast<int>(m_aColumnData.GetSize());
+    return static_cast<INT_PTR>(m_aColumnData.GetSize());
   }
 
   POSITION GetFirstCheckedItemPosition() const;
-  int      GetNextCheckedItem         (POSITION& pos) const;
-  int      GetSortColumn              () const {return m_iSortColumn;}
+  INT_PTR      GetNextCheckedItem         (POSITION& pos) const;
+  INT_PTR      GetSortColumn              () const {return m_iSortColumn;}
   BOOL                  GetState  (LPBYTE* ppState, LPUINT pnStateLen) const;
-  virtual const CString GetToolTip(int /*nItem*/) {return _T("");}
+  virtual const CString GetToolTip(INT_PTR /*nItem*/) {return _T("");}
 
-  virtual const CString GetToolTip(int /*nItem*/, int /*nSubItem*/,
+  virtual const CString GetToolTip(INT_PTR /*nItem*/, INT_PTR /*nSubItem*/,
                                    UINT /*nFlags*/, BOOL& /*bAsLabel*/)
   {
     return _T("");
   }
 
-  BOOL IsColumnEnabled(int nColumn) const
+  BOOL IsColumnEnabled(INT_PTR nColumn) const
   {
     return m_aColumnData[nColumn]->m_bEnabled;
   }
 
-  BOOL IsSubItemWidthSufficient(int nItem, int nSubItem, LPCTSTR pszText);
+  BOOL IsSubItemWidthSufficient(INT_PTR nItem, INT_PTR nSubItem, LPCTSTR pszText);
   BOOL KeepLabelLeft           (BOOL bKeepLeft = true);
   BOOL RestoreState            (LPCTSTR pszSection, LPCTSTR pszEntry);
   BOOL SaveState               (LPCTSTR pszSection, LPCTSTR pszEntry) const;
-  void SetSortColumn           (int nColumn);
+  void SetSortColumn           (INT_PTR nColumn);
   BOOL SetState                (LPBYTE pState, UINT nStateLen);
-  void ShowColumn              (int nColumn, BOOL bShowIt = TRUE);
+  void ShowColumn              (INT_PTR nColumn, BOOL bShowIt = TRUE);
 
 	private:
   enum EXPLORER_STYLE {NONE, XP, VISTA};
@@ -94,8 +94,8 @@ class CListBase
     bool      m_bEnabled;
     bool      m_bHidingAllowed;
     bool      m_bVisible;
-    int       m_nWidth;
-    int       m_nOrder;
+    INT_PTR       m_nWidth;
+    INT_PTR       m_nOrder;
     LVCOLUMN* m_pLVColumn;
   };
 
@@ -108,25 +108,25 @@ class CListBase
     CArray<LVITEM*> m_apLVItem;
   };
 
-  static int CALLBACK CompareFunc          (LPARAM lParam1, LPARAM lParam2,
+  static INT_PTR CALLBACK CompareFunc          (LPARAM lParam1, LPARAM lParam2,
                                             LPARAM lParamSort);
   void                CreateSortIcons      ();
   void                DrawItem             (LPDRAWITEMSTRUCT lpDrawItemStruct);
   LVCOLUMN*           DupLVColumn          (LVCOLUMN* pLVColumn) const;
   LVITEM*             DupLVItem            (LVITEM* pLVItem) const;
   void                EraseRect            (CDC* pDC, LPRECT pRect);
-  bool                GetLabelRect         (int nItem, int nSubItem, LPRECT pRect);
-  LVITEM*             GetLVITEM            (int nItem, int nSubItem = 0) const;
-  int                 GetLogicalIndex      (int nPhysicalColumn) const;
-  int                 GetLogicalOrder      (int nPhysicalOrder) const;
-  int                 GetPhysicalIndex     (int nColumnIndex) const;
-  int                 GetPhysicalOrder     (int nColumnOrder) const;
-  bool                GetStateIconRect     (int nItem, LPRECT pRect);
-  void                HideColumn           (int nColumn);
-  int                 IndexToOrder         (int nIndex);
+  bool                GetLabelRect         (INT_PTR nItem, INT_PTR nSubItem, LPRECT pRect);
+  LVITEM*             GetLVITEM            (INT_PTR nItem, INT_PTR nSubItem = 0) const;
+  INT_PTR                 GetLogicalIndex      (INT_PTR nPhysicalColumn) const;
+  INT_PTR                 GetLogicalOrder      (INT_PTR nPhysicalOrder) const;
+  INT_PTR                 GetPhysicalIndex     (INT_PTR nColumnIndex) const;
+  INT_PTR                 GetPhysicalOrder     (INT_PTR nColumnOrder) const;
+  bool                GetStateIconRect     (INT_PTR nItem, LPRECT pRect);
+  void                HideColumn           (INT_PTR nColumn);
+  INT_PTR                 IndexToOrder         (INT_PTR nIndex);
   void                InitializeSubCtrls   ();
   void                InvalidateNonItemArea();
-  void                JustifyFirstColumn   (int nFormat);
+  void                JustifyFirstColumn   (INT_PTR nFormat);
   BOOL                OnBeginLabelEdit     (NMHDR* pNMHDR);
   LRESULT             OnCancelEditLabel    ();
 	BOOL                OnColumnclick        (NMHDR* pNMHDR, LRESULT* pResult);
@@ -148,7 +148,7 @@ class CListBase
   LRESULT             OnGetItemRect        (WPARAM wParam, LPARAM lParam);
   LRESULT             OnGetItemText        (WPARAM wParam, LPARAM lParam);
   LRESULT             OnGetSubItemRect     (WPARAM wParam, LPARAM lParam);
-  int                 OnHitTest            (LPARAM lParam);
+  INT_PTR                 OnHitTest            (LPARAM lParam);
   void                OnHScroll            ();
   LRESULT             OnInsertColumn       (WPARAM wParam, LPARAM lParam);
   LRESULT             OnInsertItem         (LPARAM lParam);
@@ -176,19 +176,19 @@ class CListBase
   LRESULT             OnSetItemText        (WPARAM wParam, LPARAM lParam);
   LRESULT             OnSortItems          (WPARAM wParam, LPARAM lParam);
 	void                OnSysColorChange     ();
-  int                 OrderToIndex         (int nOrder);
+  INT_PTR                 OrderToIndex         (INT_PTR nOrder);
   void                PrepareHotUnderlining();
-  void                RedisplayColumn      (int nColumn);
+  void                RedisplayColumn      (INT_PTR nColumn);
   void                RefreshToolTips      ();
   void                SetHotCursorAndItem  (LPLVHITTESTINFO pInfo);
   void                SetSortIcon          ();
 
   static UINT          m_winver;
   static VISUAL_STYLE  m_visualStyle;
-  static const int     m_iFirstColXOff;
-  static const int     m_iNextColXOff;
-  static const int     m_iColumnSeparatorWidth;
-  int                  m_iIconXOff; // offset of icon may vary of
+  static const INT_PTR     m_iFirstColXOff;
+  static const INT_PTR     m_iNextColXOff;
+  static const INT_PTR     m_iColumnSeparatorWidth;
+  INT_PTR                  m_iIconXOff; // offset of icon may vary of
                                     // unknown reason
   HTHEME               m_hTheme;
   CListCtrlHelper*     m_pListCtrl;
@@ -197,7 +197,7 @@ class CListBase
   bool                 m_bTopMost;
   bool                 m_bFocusSet;
   CArray<COLUMN_DATA*> m_aColumnData;
-  int                  m_iColumnHidingAllowed;
+  INT_PTR                  m_iColumnHidingAllowed;
   BOOL                 m_bColumnSeparators;
   bool                 m_bExplorerStyle;
   BOOL                 m_bSortIconEnabled;
@@ -208,29 +208,29 @@ class CListBase
   CImageList           m_imglstSortIcons;
   CBitmap              m_bmpUpArrow;
   CBitmap              m_bmpDownArrow;
-  int                  m_iUpArrow;
-  int                  m_iDownArrow;
+  INT_PTR                  m_iUpArrow;
+  INT_PTR                  m_iDownArrow;
   DWORD                m_dwColSortColor;
-  int                  m_iSortColumn;
-  int                  m_iFormatOfSubItem0;
+  INT_PTR                  m_iSortColumn;
+  INT_PTR                  m_iFormatOfSubItem0;
   BOOL                 m_bKeepLabelLeft;
   bool                 m_bLocked;
   bool                 m_bControl;
   bool                 m_bIconXOffCalculated;
   bool                 m_bFixedBkColor;
   DWORD                m_dwExtendedStyle;
-  int                  m_iItemUnderCursor;
-  int                  m_iHotItem;
+  INT_PTR                  m_iItemUnderCursor;
+  INT_PTR                  m_iHotItem;
   COLORREF             m_dwHotLite;
   HCURSOR              m_hCursorCustom;
   HCURSOR              m_hCursorArrow;
   HCURSOR              m_hCursorHand;
   PFNLVCOMPARE         m_pfnLVCompare;
   LPARAM               m_lParamSort;
-  CList<int>           m_lstVisibleItemsPreviouslySelected;
-  int                  m_iItemLastSelected;
-  int                  m_iFirstCachedItem;
-  int                  m_iLastCachedItem;
+  CList<INT_PTR>           m_lstVisibleItemsPreviouslySelected;
+  INT_PTR                  m_iItemLastSelected;
+  INT_PTR                  m_iFirstCachedItem;
+  INT_PTR                  m_iLastCachedItem;
   bool                 m_bAlwaysGetSmallIconRect;
   bool                 m_bIgnoreNextMouseMove;
   bool                 m_bRefreshToolTips;
@@ -245,15 +245,15 @@ class CListBase
   BOOL                 m_bLabelUnfolded;
   CLabelEdit*          m_pLabelEdit;                         
   CString              m_strEditedLabel;
-  int                  m_iItemEdit;
+  INT_PTR                  m_iItemEdit;
   bool                 m_bLabelEditingCancelled;
   bool                 m_bOnEndLabelEdit;
   bool                 m_bOnGetDispinfo;
   bool                 m_bOnPaint;
   bool                 m_bRepost;
 
-  int                  m_iCurrentItem;
-  int                  m_iCurrentSubItem;
+  INT_PTR                  m_iCurrentItem;
+  INT_PTR                  m_iCurrentSubItem;
   UINT                 m_fCurrentFlags;
 };
 
@@ -284,7 +284,7 @@ class CListCtrlEx: public CListCtrl, public CListBase
   afx_msg LRESULT OnCancelEditLabel    (WPARAM, LPARAM);
 	afx_msg BOOL    OnColumnclick        (NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void    OnContextMenu        (CWnd* pWnd, CPoint point);
-  afx_msg int     OnCreate             (LPCREATESTRUCT lpCreateStruct);
+  afx_msg INT_PTR     OnCreate             (LPCREATESTRUCT lpCreateStruct);
 	afx_msg void    OnCustomDraw         (NMHDR* pNMHDR, LRESULT* pResult);
   afx_msg LRESULT OnDeleteAllItems     (WPARAM, LPARAM);
   afx_msg LRESULT OnDeleteColumn       (WPARAM wParam, LPARAM);

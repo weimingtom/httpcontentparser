@@ -33,7 +33,7 @@ std::string CDlgOnlineHour::getHelpLink() const {
 
 namespace {
 	// 设置
-class Enumerator : public Enumerator2<int, int> {
+class Enumerator : public Enumerator2<INT_PTR, INT_PTR> {
 public:
 	Enumerator(IAccessNetwork * access) {
 		accessNetwork_ = access;
@@ -42,13 +42,13 @@ public:
 
 	// 取消已有的设置
 	void reset() {
-		for (int day = 0; day < 7; ++day) {
-			for (int hour = 0; hour < 24; ++hour) {
+		for (INT_PTR day = 0; day < 7; ++day) {
+			for (INT_PTR hour = 0; hour < 24; ++hour) {
 				accessNetwork_->removeBlockTime(day, hour);
 			}
 		}
 	}
-	virtual int Enum(const int day, const int hour) {
+	virtual INT_PTR Enum(const INT_PTR day, const INT_PTR hour) {
 		accessNetwork_->setBlockTime(day, hour);
 		return 0;
 	}
@@ -58,7 +58,7 @@ private:
 };
 }; // namespace
 
-int CDlgOnlineHour::OnApply() {
+INT_PTR CDlgOnlineHour::OnApply() {
 	try {
 		AutoInitInScale _auto;
 
@@ -103,12 +103,12 @@ void CDlgOnlineHour::restoreSetting() {
 			IID_IAccessNetwork, (LPVOID*)&accessNetwork);
 		if (FAILED(hr)) {
 			__LERR__("Create AccessNetwork with HRESULT value "<<std::hex<<hr);
-			throw int(SNOWMAN_ERROR_COM_INIT_FAILED);
+			throw INT_PTR(SNOWMAN_ERROR_COM_INIT_FAILED);
 		}
 
 		VARIANT_BOOL isSettingEnabled;
-		for (int day = 0; day < 7; ++day) {
-			for (int hour = 0; hour < 24; ++hour) {
+		for (INT_PTR day = 0; day < 7; ++day) {
+			for (INT_PTR hour = 0; hour < 24; ++hour) {
 				hr = accessNetwork->SettingAccessNetwork(day, hour, &isSettingEnabled);
 				if (false == convert(isSettingEnabled)) {
 					cells.check(day, hour);
@@ -122,7 +122,7 @@ void CDlgOnlineHour::restoreSetting() {
 		UpdateData(FALSE);
 	} catch (...) {
 		__LERR__("CATCH(...)");
-		throw int(SNOWMAN_ERROR_COM_INIT_FAILED);
+		throw INT_PTR(SNOWMAN_ERROR_COM_INIT_FAILED);
 	}
 }
 

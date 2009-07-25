@@ -30,7 +30,7 @@ extern HWND share_hwnd;
 #endif
 
 #define CALLMESSAGE WM_USER + 0x10
-const int POS_HISTORY_MENU_ITEM			 = 3;
+const INT_PTR POS_HISTORY_MENU_ITEM			 = 3;
 
 #define MAX_TOOLTIPS_SHOWTIME		   5000		//  能够出现的最长时间
 #define MAX_TOOLTIPS_FREQUENCY		   5000		//  能够出现的最大时间间隔
@@ -131,7 +131,7 @@ void CMainUIDlg::OnSysCommand(UINT nID, LPARAM lParam)
 
 // 相应热键消息
 LRESULT CMainUIDlg::OnHotKey(WPARAM wParam, LPARAM lParam) {
-	int id = (int)wParam;
+	INT_PTR id = (INT_PTR)wParam;
 	if (id == HOTKEY_SHOW_MAINUI) {
 		if (isShown()) {
 			// 使用热键显示及隐藏是，不检测切换
@@ -247,12 +247,12 @@ void CMainUIDlg::OnPaint()
 		SendMessage(WM_ICONERASEBKGND, reinterpret_cast<WPARAM>(dc.GetSafeHdc()), 0);
 
 		// 使图标在工作矩形中居中
-		int cxIcon = GetSystemMetrics(SM_CXICON);
-		int cyIcon = GetSystemMetrics(SM_CYICON);
+		INT_PTR cxIcon = GetSystemMetrics(SM_CXICON);
+		INT_PTR cyIcon = GetSystemMetrics(SM_CYICON);
 		CRect rect;
 		GetClientRect(&rect);
-		int x = (rect.Width() - cxIcon + 1) / 2;
-		int y = (rect.Height() - cyIcon + 1) / 2;
+		INT_PTR x = (rect.Width() - cxIcon + 1) / 2;
+		INT_PTR y = (rect.Height() - cyIcon + 1) / 2;
 
 		// 绘制图标
 		dc.DrawIcon(x, y, m_hIcon);
@@ -274,9 +274,9 @@ void CMainUIDlg::InitTreeNodes() {
 	// 初始化ImageList
 	m_imageList.Create(16, 16, ILC_COLOR32 | ILC_MASK, 50, 5);
 	m_imageList.Add(AfxGetApp()->LoadIcon(IDI_DEFAULT));
-	const int INDEX_HOME		= m_imageList.Add(AfxGetApp()->LoadIcon(IDI_TREE_HOME));
-	const int INDEX_OPTION	=m_imageList.Add(AfxGetApp()->LoadIcon(IDI_TREE_OPTION));
-	const int INDEX_INFORM = m_imageList.Add(AfxGetApp()->LoadIcon(IDI_TREE_INFO));
+	const INT_PTR INDEX_HOME		= m_imageList.Add(AfxGetApp()->LoadIcon(IDI_TREE_HOME));
+	const INT_PTR INDEX_OPTION	=m_imageList.Add(AfxGetApp()->LoadIcon(IDI_TREE_OPTION));
+	const INT_PTR INDEX_INFORM = m_imageList.Add(AfxGetApp()->LoadIcon(IDI_TREE_INFO));
 	m_treeNavigation.SetImageList(&m_imageList, TVSIL_NORMAL);
 
 	CString strRoot;
@@ -310,11 +310,11 @@ void CMainUIDlg::InitTreeNodes() {
 
 
 void CMainUIDlg::setToolsTreeItems() {
-	const int INDEX_TOOLS	= m_imageList.Add(AfxGetApp()->LoadIcon(IDI_TREE_TOOLS));
-	const int INDEX_APP = m_imageList.Add(AfxGetApp()->LoadIcon(IDI_TREE_APPCONTROL));
-	const int INDEX_SCREEN = m_imageList.Add(AfxGetApp()->LoadIcon(IDI_TREE_SCREENSHOT));
-	const int INDEX_ONLINETIME = m_imageList.Add(AfxGetApp()->LoadIcon(IDI_TREE_ONLINETIME));
-	const int INDEX_EYECARE = m_imageList.Add(AfxGetApp()->LoadIcon(IDI_TREE_EYECARE));
+	const INT_PTR INDEX_TOOLS	= m_imageList.Add(AfxGetApp()->LoadIcon(IDI_TREE_TOOLS));
+	const INT_PTR INDEX_APP = m_imageList.Add(AfxGetApp()->LoadIcon(IDI_TREE_APPCONTROL));
+	const INT_PTR INDEX_SCREEN = m_imageList.Add(AfxGetApp()->LoadIcon(IDI_TREE_SCREENSHOT));
+	const INT_PTR INDEX_ONLINETIME = m_imageList.Add(AfxGetApp()->LoadIcon(IDI_TREE_ONLINETIME));
+	const INT_PTR INDEX_EYECARE = m_imageList.Add(AfxGetApp()->LoadIcon(IDI_TREE_EYECARE));
 
 	CString strItem;
 	strItem.LoadString(IDS_TREE_LEV1_TOOLS);
@@ -352,11 +352,11 @@ void CMainUIDlg::setToolsTreeItems() {
 }
 
 void CMainUIDlg::setRulesTreeItems() {
-	const int INDEX_WEB	= m_imageList.Add(AfxGetApp()->LoadIcon(IDI_TREE_WEB));
-	const int INDEX_HISTORY = m_imageList.Add(AfxGetApp()->LoadIcon(IDI_TREE_HISTORY));
-	const int INDEX_SEARCH = m_imageList.Add(AfxGetApp()->LoadIcon(IDI_TREE_SEACH));
-	const int INDEX_BLACK	= m_imageList.Add(AfxGetApp()->LoadIcon(IDI_TREE_BLACK_DNS));
-	const int INDEX_WHITE = m_imageList.Add(AfxGetApp()->LoadIcon(IDI_TREE_WHITE_DNS));
+	const INT_PTR INDEX_WEB	= m_imageList.Add(AfxGetApp()->LoadIcon(IDI_TREE_WEB));
+	const INT_PTR INDEX_HISTORY = m_imageList.Add(AfxGetApp()->LoadIcon(IDI_TREE_HISTORY));
+	const INT_PTR INDEX_SEARCH = m_imageList.Add(AfxGetApp()->LoadIcon(IDI_TREE_SEACH));
+	const INT_PTR INDEX_BLACK	= m_imageList.Add(AfxGetApp()->LoadIcon(IDI_TREE_BLACK_DNS));
+	const INT_PTR INDEX_WHITE = m_imageList.Add(AfxGetApp()->LoadIcon(IDI_TREE_WHITE_DNS));
 
 	CString strItem;
 	strItem.LoadString(IDS_TREE_LEV1_RULES);
@@ -514,7 +514,7 @@ void CMainUIDlg::UpdateUIStateByModel() {
 
 // 设置托盘的图标
 void CMainUIDlg::setupTrayMenu() {
-	const int SYSTRAY_ID = 1;
+	const INT_PTR SYSTRAY_ID = 1;
 	CNewMenu::SetMenuDrawMode(CNewMenu::STYLE_XP_2003);
 	m_trayMenu.LoadMenu(IDC_MENU_TRAY_PARENT);
 

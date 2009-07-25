@@ -49,7 +49,7 @@ void CGuiLabelButton::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 	UINT  uState=lpDrawItemStruct->itemState;
 	CFont* m_OldFont;
 	CBrush cb;
-	int calculodify;
+	INT_PTR calculodify;
 
 	cb.CreateSolidBrush(m_clColor); //deberia ser blanco
 	m_OldFont=pdc->SelectObject(&m_cfont);
@@ -66,7 +66,7 @@ void CGuiLabelButton::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 	}
 	if (m_SizeText.cx > 2)
 	{
-		int nMode = pdc->SetBkMode(TRANSPARENT);
+		INT_PTR nMode = pdc->SetBkMode(TRANSPARENT);
 		CRect rectletra=rc;
 		rectletra.left+=m_SizeImage.cx > 0 ? m_SizeImage.cx+8: 0;
 		CPoint pt=CSize(rectletra.top,rectletra.left);

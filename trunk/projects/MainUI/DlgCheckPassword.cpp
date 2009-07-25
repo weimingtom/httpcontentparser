@@ -10,7 +10,7 @@
 
 
 // 初始化静态变量
-int CDlgCheckPassword::static_dlg_show_cnt = false;
+INT_PTR CDlgCheckPassword::static_dlg_show_cnt = false;
 
 // CDlgCheckPassword 对话框
 

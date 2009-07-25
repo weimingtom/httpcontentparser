@@ -38,7 +38,7 @@ void CDlgWhiteDNSList::DoDataExchange(CDataExchange* pDX)
 	DDX_Check(pDX, IDC_CHK_DENY_OTHERS, m_bCheckDenyAllOthers);
 }
 
-int CDlgWhiteDNSList::OnApply() {
+INT_PTR CDlgWhiteDNSList::OnApply() {
 	UpdateData(TRUE);
 
 	rules.Apply();
@@ -78,7 +78,7 @@ void CDlgWhiteDNSList::restoreSetting() {
 		UpdateData(FALSE);
 	} catch(...) {
 		__LERR__("CATCH(...)");
-		throw int(SNOWMAN_ERROR_COM_INIT_FAILED);
+		throw INT_PTR(SNOWMAN_ERROR_COM_INIT_FAILED);
 	}
 }
 

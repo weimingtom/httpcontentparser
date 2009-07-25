@@ -10,26 +10,26 @@
 namespace strutility {
 
 void strtolower(TCHAR * src) {
-	const int len = static_cast<int>(_tcslen(src));
-	for (int i = 0; i < len; ++i) {
+	const INT_PTR len = static_cast<INT_PTR>(_tcslen(src));
+	for (INT_PTR i = 0; i < len; ++i) {
 		if (isupper(src[i])) {
 			src[i] = _tolower(src[i]);
 		}
 	}
 }
 void strtoupper(TCHAR * src) {
-	const int len = static_cast<int>(_tcslen(src));
-	for (int i = 0; i < len; ++i) {
+	const INT_PTR len = static_cast<INT_PTR>(_tcslen(src));
+	for (INT_PTR i = 0; i < len; ++i) {
 		if (islower(src[i])) {
 			src[i] = _toupper(src[i]);
 		}
 	}
 }
 // 去掉tail之后的
-int remove_after(TCHAR * name, const TCHAR * tail) {
+INT_PTR remove_after(TCHAR * name, const TCHAR * tail) {
 	const TCHAR * p = _tcsstr(name, tail);
 	if (NULL != p) {
-		const int pos = p - name;
+		const INT_PTR pos = p - name;
 		name[pos] = '\0';
 		return pos;
 	} else {
@@ -68,8 +68,8 @@ void trim(TCHAR * str, TCHAR * trimed) {
 }
 
 
-const TCHAR *strnstr(const TCHAR *src, const TCHAR *des, const int len) {
-	const int buf_size = 1024 * 24;
+const TCHAR *strnstr(const TCHAR *src, const TCHAR *des, const INT_PTR len) {
+	const INT_PTR buf_size = 1024 * 24;
 	try {
 		if (buf_size > len + 1) {
 			TCHAR buffer[buf_size] = {0};
@@ -136,7 +136,7 @@ bool endwith(const TCHAR * src, const TCHAR *detail) {
 }
 
 namespace {
-int charToValue(char c) {
+INT_PTR charToValue(char c) {
 	if (c>='A' && c<='F') {
 		return 10 + c - 'A';
 	} else if (c >='a' && c<='f') {
@@ -150,13 +150,13 @@ int charToValue(char c) {
 }
 };
 
-char * utf8ToDBCS(const char *utf8, char * buffer, const int len) {
+char * utf8ToDBCS(const char *utf8, char * buffer, const INT_PTR len) {
 	using namespace std;
 	using namespace utf8;
 
 	// 创建UTF16缓冲区
-	int cnt = 0;
-	const int utf8len = strlen(utf8);
+	INT_PTR cnt = 0;
+	const INT_PTR utf8len = strlen(utf8);
 	unsigned short * utf16buffer = new unsigned short[utf8len];
 	memset(utf16buffer, 0, sizeof(unsigned short) * utf8len);
 
@@ -175,10 +175,10 @@ char * utf8ToDBCS(const char *utf8, char * buffer, const int len) {
 	return buffer;
 }
 
-char* extUTF8FromStr(const char * src, char * buffer, const int buflen) {
-	int cnt = 0;
-	int index = 0;
-	const int len = strlen(src);
+char* extUTF8FromStr(const char * src, char * buffer, const INT_PTR buflen) {
+	INT_PTR cnt = 0;
+	INT_PTR index = 0;
+	const INT_PTR len = strlen(src);
 	
 
 	while(cnt < len && index < buflen) {
@@ -203,7 +203,7 @@ char* extUTF8FromStr(const char * src, char * buffer, const int buflen) {
 
 // 从文件的开头结尾处取中间， 
 // contain指定是否包含开头及结尾
-int extract_string(TCHAR *result, const int buf_size, const TCHAR * src, const TCHAR *begin, const TCHAR *end, bool contain) {
+INT_PTR extract_string(TCHAR *result, const INT_PTR buf_size, const TCHAR * src, const TCHAR *begin, const TCHAR *end, bool contain) {
 	memset(result, 0, sizeof(TCHAR) * buf_size);
 	const TCHAR * src_beg = _tcsstr(src, begin);
 	// 如果无法找到开头
@@ -222,16 +222,16 @@ int extract_string(TCHAR *result, const int buf_size, const TCHAR * src, const T
 	// 拷贝操作
 	const TCHAR * copy_beg = contain ? src_beg: src_beg + _tcslen(begin);
 	const TCHAR * copy_end = contain ? src_end + _tcslen(end) : src_end;
-	int size = (int)(copy_end - copy_beg > buf_size ? buf_size : copy_end - copy_beg);
+	INT_PTR size = (INT_PTR)(copy_end - copy_beg > buf_size ? buf_size : copy_end - copy_beg);
 	memcpy(result, copy_beg, size * sizeof(TCHAR));
-	return (int)_tcslen(result);
+	return (INT_PTR)_tcslen(result);
 }
 
-int splitstring(const TCHAR *str, const TCHAR *seps, std::vector<_tstring> * vec) {
+INT_PTR splitstring(const TCHAR *str, const TCHAR *seps, std::vector<_tstring> * vec) {
 	try {
 		assert (NULL != vec);
 		// 获取长度
-		const int bufsize  = (int)_tcslen(str) + 1;
+		const INT_PTR bufsize  = (INT_PTR)_tcslen(str) + 1;
 		
 		// 分配缓冲区
 		TCHAR * buffer = new TCHAR[bufsize];
@@ -252,7 +252,7 @@ int splitstring(const TCHAR *str, const TCHAR *seps, std::vector<_tstring> * vec
 		}
 
 		delete[] buffer;
-		return (int)vec->size();
+		return (INT_PTR)vec->size();
 	} catch (...) {
 		return 0;
 	}
