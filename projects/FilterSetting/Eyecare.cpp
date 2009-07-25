@@ -33,7 +33,7 @@ STDMETHODIMP CEyecare::InterfaceSupportsErrorInfo(REFIID riid)
 		&IID_IEyecare
 	};
 
-	for (int i=0; i < sizeof(arr) / sizeof(arr[0]); i++)
+	for (INT_PTR i=0; i < sizeof(arr) / sizeof(arr[0]); i++)
 	{
 		if (InlineIsEqualGUID(*arr[i],riid))
 			return S_OK;
@@ -77,8 +77,8 @@ STDMETHODIMP CEyecare::getState(LONG* state) {
 }
 
 STDMETHODIMP CEyecare::endEyecare(BSTR password, VARIANT_BOOL *bSuccess) {
-	int old_state = g_configuration.getEyecareSetting()->getState();
-	int state = g_configuration.getEyecareSetting()->switchState((char*)_bstr_t(password));
+	INT_PTR old_state = g_configuration.getEyecareSetting()->getState();
+	INT_PTR state = g_configuration.getEyecareSetting()->switchState((char*)_bstr_t(password));
 	*bSuccess = (state != old_state) ? VARIANT_TRUE : VARIANT_FALSE;
 	return S_OK;
 }

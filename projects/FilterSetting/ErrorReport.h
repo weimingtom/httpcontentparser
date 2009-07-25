@@ -28,9 +28,9 @@ namespace Family007 {
 
 	public:
 		static void reportError(const char * winapi, const char  *function);
-		static void reportError(const int appcode, const char  *function);
+		static void reportError(const INT_PTR appcode, const char  *function);
 	private:
-		static std::string genErrMsg(const int appcode);
+		static std::string genErrMsg(const INT_PTR appcode);
 	};
 };
 

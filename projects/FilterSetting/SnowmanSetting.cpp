@@ -16,7 +16,7 @@
 
 // CSnowmanSetting
 STDMETHODIMP CSnowmanSetting::setHotkey(USHORT wVirtualKeyCode, USHORT wModifiers, LONG type, VARIANT_BOOL* bSuccess) {
-	BOOL bSucc = (int)ServThread::getInstance()->setHotKey(wVirtualKeyCode, wModifiers, type);
+	BOOL bSucc = (INT_PTR)ServThread::getInstance()->setHotKey(wVirtualKeyCode, wModifiers, type);
 	*bSuccess = convert(bSucc);
 
 	if (type == HOTKEY_LANUCH_MAINUI && FALSE == bSucc) {
@@ -127,7 +127,7 @@ STDMETHODIMP CSnowmanSetting::getPagesFolder(BSTR* path)
 
 STDMETHODIMP CSnowmanSetting::getHotkey(LONG type, USHORT* wVirtualKeyCode, USHORT* wModifier)
 {
-	DWORD hotkey = g_configuration.getHotkey()->getHotkey(getHotkeyname(type));
+	DWORD_PTR hotkey = g_configuration.getHotkey()->getHotkey(getHotkeyname(type));
 	 *wVirtualKeyCode = HIWORD(hotkey);
 	*wModifier = LOWORD(hotkey);
 	return S_OK;

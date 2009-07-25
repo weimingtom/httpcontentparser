@@ -21,8 +21,8 @@ AppController::AppController(CheckProcessCreate * checker) : checker_(checker) {
 AppController::~AppController() {
 }
 
-int AppController::InstallDriver() {
-	int rc = 0;
+INT_PTR AppController::InstallDriver() {
+	INT_PTR rc = 0;
 	rc = InstallService();
 	if (rc) {
 		goto exit;
@@ -31,17 +31,17 @@ exit:
 	return rc;
 }
 
-int AppController::UninstallDriver()
+INT_PTR AppController::UninstallDriver()
 {
-	int rc = 0;
+	INT_PTR rc = 0;
 
 	rc = DeleteService();
 	return rc;
 }
 
-int  AppController::begin()
+INT_PTR  AppController::begin()
 {
-	int rc = 0;
+	INT_PTR rc = 0;
 
 	rc = InstallDriver(); 
 
@@ -66,23 +66,21 @@ int  AppController::begin()
 	GetWindowsDirectory(SYSTEM_DIR, MAX_PATH);
 
 	// 初始化缓冲区
-	DWORD dw;
-	DWORD buffer_init[64];
-	DWORD * addr=(DWORD *)(1+(DWORD*)GetProcAddress(GetModuleHandle("ntdll.dll"),"NtCreateSection"));  
+	DWORD_PTR dw;
+	DWORD_PTR buffer_init[64];
+	DWORD_PTR * addr=(DWORD_PTR *)(1+(DWORD_PTR*)GetProcAddress(GetModuleHandle("ntdll.dll"),"NtCreateSection"));  
 	ZeroMemory(buffer_init,sizeof(buffer_init));
 
 	buffer_init[0] = addr[0];                                                                              // 传入函数NtCreateSection的路径
-	buffer_init[1] = (DWORD)exchange_buffer_.get_buffer_addr();         // 传入交换缓冲区的内容
-	buffer_init[2] = (DWORD)&SYSTEM_DIR[0];                                          // 传入SystemDir
+	buffer_init[1] = (DWORD_PTR)exchange_buffer_.get_buffer_addr();         // 传入交换缓冲区的内容
+	buffer_init[2] = (DWORD_PTR)&SYSTEM_DIR[0];                                          // 传入SystemDir
 	DeviceIoControl(m_hDevice,IO_CONTROL_BUFFER_INIT, buffer_init,512, buffer_init, 512, &dw, NULL);
-
 exit:
-
 	return rc;
 }
 
-int AppController::end() {
-	int rc = 0;
+INT_PTR AppController::end() {
+	INT_PTR rc = 0;
 
 	// 关闭
 	CloseHandle(m_hDevice);
@@ -94,8 +92,8 @@ int AppController::end() {
 	return rc;
 }
 
-int AppController::checkpassed(const char * fullpath) {
-	int result = 1;
+INT_PTR AppController::checkpassed(const char * fullpath) {
+	INT_PTR result = 1;
 	_DEBUG_STREAM_TRC_("[DriverMngr] Do you want to run"<<exchange_buffer_.get_filepath());
 
 	// 将结果写入内存
@@ -108,7 +106,7 @@ int AppController::checkpassed(const char * fullpath) {
 
 	// 给出提示
 	if (false == result) {
-		const int msg_buffer_size = 512;
+		const INT_PTR msg_buffer_size = 512;
 		TCHAR msg_buffer[msg_buffer_size];
 		TCHAR filename[MAX_PATH];
 		CString str;
@@ -121,13 +119,13 @@ int AppController::checkpassed(const char * fullpath) {
 	return result;
 }
 
-int AppController::checkpassed() {
+INT_PTR AppController::checkpassed() {
 	return checkpassed(exchange_buffer_.get_filepath().c_str());
 }
 
 // ==========================================
 // 线程
-DWORD CALLBACK CheckAppProc(LPVOID param) {
+DWORD_PTR CALLBACK CheckAppProc(LPVOID param) {
 	_DEBUG_STREAM_TRC_("[DriverMngr] Begin Thread Proc");
 	AppController * controlloer = (AppController*)param;
 	while(1)
@@ -138,7 +136,7 @@ DWORD CALLBACK CheckAppProc(LPVOID param) {
 		}
 
 		// if user's reply is positive, add the program to the white list
-		int passed = controlloer->checkpassed();
+		INT_PTR passed = controlloer->checkpassed();
 
 		// 如果调用了end函数， 退出线程
 		if (controlloer->exitThread()) {
@@ -158,7 +156,7 @@ AppController::ExchangeBuffer::ExchangeBuffer() {
 }
 
 bool AppController::ExchangeBuffer::need_check() {
-	int status;
+	INT_PTR status;
 	memmove(&status, &(exchange_buffer[ADDR_EXCHANGE_NOTIFY_APP]), 4);
 	return status == 1;
 }
@@ -169,8 +167,8 @@ std::string  AppController::ExchangeBuffer::get_filepath() {
 }
 
 void AppController::ExchangeBuffer::set_check_result(const bool passed) {
-	DWORD result = 1;
-	DWORD status = 0;
+	DWORD_PTR result = 1;
+	DWORD_PTR status = 0;
 	if (passed) {
 		result = 1;
 	} else {
@@ -183,8 +181,8 @@ void AppController::ExchangeBuffer::set_check_result(const bool passed) {
 void AppController::ExchangeBuffer::reset_status() {
 }
 
-int AppController::InstallService() {
-	int rc = 0;
+INT_PTR AppController::InstallService() {
+	INT_PTR rc = 0;
 	SC_HANDLE service_handle = NULL;
 	SC_HANDLE serverMan =NULL;
 
@@ -193,7 +191,7 @@ int AppController::InstallService() {
 	// 获取驱动程序的路径
 	char namebuff[MAX_PATH]; 
 	GetModuleFileName(NULL, namebuff, MAX_PATH);
-	int  a=strlen(namebuff);
+	INT_PTR  a=strlen(namebuff);
 	while(1)
 	{
 		if(namebuff[a]=='\\')break;
@@ -215,7 +213,7 @@ int AppController::InstallService() {
 	// 检测状态，如果处于，STOP或者STOP_PENDING则改变为START
 	service_handle = OpenService(serverMan, APPCONTROL_SERVICE, SC_MANAGER_ALL_ACCESS);
 	if (NULL != service_handle) {
-		DWORD dwBytesNeeded;
+		DWORD_PTR dwBytesNeeded;
 		SERVICE_STATUS_PROCESS ssp;
 
 		// 获取状态
@@ -277,14 +275,14 @@ exit:
 
 
 // 调用此函数， 首先应该关闭句柄，否则会超时
-int AppController::DeleteService() {
+INT_PTR AppController::DeleteService() {
 	SC_HANDLE schSCManager = NULL;
 	SC_HANDLE schService = NULL;
 	SERVICE_STATUS_PROCESS ssp;
-	DWORD dwStartTime = GetTickCount();
-	DWORD dwBytesNeeded;
-	const DWORD dwTimeout = 30000; // 30-second time-out
-	int rc = 0;
+	DWORD_PTR dwStartTime = GetTickCount();
+	DWORD_PTR dwBytesNeeded;
+	const DWORD_PTR dwTimeout = 30000; // 30-second time-out
+	INT_PTR rc = 0;
 
 	_DEBUG_STREAM_TRC_("[DriverMngr] Delete Service");
 

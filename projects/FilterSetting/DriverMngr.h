@@ -19,18 +19,18 @@ public:
 	// 安装驱动
 
 public:
-	int begin();
-	int end();
+	INT_PTR begin();
+	INT_PTR end();
 
 protected:
-	int InstallDriver();
-	int UninstallDriver();
+	INT_PTR InstallDriver();
+	INT_PTR UninstallDriver();
 	
-	int InstallService();
-	int DeleteService();
+	INT_PTR InstallService();
+	INT_PTR DeleteService();
 public:
-	int checkpassed(const char * filename);
-	int checkpassed();
+	INT_PTR checkpassed(const char * filename);
+	INT_PTR checkpassed();
 
 	// 是否退出线程
 	bool exitThread() const { return exit_thread_;}
@@ -41,10 +41,10 @@ public:
 
 private:
 	HANDLE m_hDevice;
-	DWORD dwThreadId;
-	friend DWORD CALLBACK CheckAppProc(LPVOID param);
+	DWORD_PTR dwThreadId;
+	friend DWORD_PTR CALLBACK CheckAppProc(LPVOID param);
 
-	volatile int exit_thread_;
+	volatile INT_PTR exit_thread_;
 
 	CheckProcessCreate * checker_;
 

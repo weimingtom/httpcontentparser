@@ -5,7 +5,7 @@
 
 namespace Family007{
 
-static std::string genErrMsg(const int appcode) {
+static std::string genErrMsg(const INT_PTR appcode) {
 	std::stringstream s;
 	return s.str();
 }
@@ -17,6 +17,6 @@ void ErrorManagement::reportError(const char * winapi, const char  *function) {
 	_DEBUG_STREAM_TRC_(strError.str().c_str());
 }
 
-void ErrorManagement::reportError(const int appcode, const char  *function) {
+void ErrorManagement::reportError(const INT_PTR appcode, const char  *function) {
 }
 };

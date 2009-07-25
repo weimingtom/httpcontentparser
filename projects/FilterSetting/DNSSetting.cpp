@@ -20,7 +20,7 @@ STDMETHODIMP CDNSSetting::InterfaceSupportsErrorInfo(REFIID riid)
 		&IID_IDNSSetting
 	};
 
-	for (int i=0; i < sizeof(arr) / sizeof(arr[0]); i++)
+	for (INT_PTR i=0; i < sizeof(arr) / sizeof(arr[0]); i++)
 	{
 		if (InlineIsEqualGUID(*arr[i],riid))
 			return S_OK;
@@ -74,8 +74,8 @@ STDMETHODIMP CDNSSetting::checkDNS(BSTR dns_name, VARIANT_BOOL* passed) {
 	
 	// 发送消息
 	if (VARIANT_FALSE  == *passed) {
-		const int dns_max_length = 64;	// 如果DNS大于这个长度将被截断
-		const int msg_buffer_size = 512;
+		const INT_PTR dns_max_length = 64;	// 如果DNS大于这个长度将被截断
+		const INT_PTR msg_buffer_size = 512;
 		TCHAR msg_buffer[msg_buffer_size];
 		TCHAR dns[dns_max_length] = {0};
 		CString str;

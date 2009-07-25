@@ -18,9 +18,9 @@ extern  SeachKeywordUtil g_searchwordUtil;
 extern WebsitesUtil g_websitesUtil;
 
 
-int getAppStatus();
-int refreshAppstatus();
-int getInstallDays();
+LONG getAppStatus();
+LONG refreshAppstatus();
+LONG getInstallDays();
 bool registered();
 bool tryRegister(const char * sn);
 bool checkApppath(const TCHAR *fullpath);

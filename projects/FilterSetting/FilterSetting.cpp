@@ -66,15 +66,15 @@ public :
 
 		return S_OK;
 	}
-	void ServiceMain(DWORD dwArgc, LPTSTR* lpszArgv);
+	void ServiceMain(DWORD_PTR dwArgc, LPTSTR* lpszArgv);
 };
 
 CFilterSettingModule _AtlModule;
 
 
 
-extern "C" int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, 
-                                LPTSTR lpCmdLine, int nShowCmd)
+extern "C" INT_PTR WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, 
+                                LPTSTR lpCmdLine, INT_PTR nShowCmd)
 {
 	// 根据lpCmdLine进行区分， 如果是注册组件或者卸载组件
 	// 则直接运行_AtlModule.WinMain(nShowCmd);
@@ -127,7 +127,7 @@ extern "C" int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/
 }
 
 
-void CFilterSettingModule::ServiceMain(DWORD dwArgc, LPTSTR* lpszArgv)
+void CFilterSettingModule::ServiceMain(DWORD_PTR dwArgc, LPTSTR* lpszArgv)
 {
 	CAtlServiceModuleT<CFilterSettingModule,IDS_SERVICENAME>::ServiceMain(dwArgc, lpszArgv);
 }
