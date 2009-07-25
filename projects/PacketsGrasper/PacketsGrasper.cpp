@@ -629,12 +629,13 @@ int WSPAPI WSPStartup(
 )
 {
 
-	TCHAR				sLibraryPath[512];
+	TCHAR						sLibraryPath[512];
     LPWSPSTARTUP        WSPStartupFunc      = NULL;
-	HMODULE				hLibraryHandle		= NULL;
-    INT                 ErrorCode           = 0; 
+	HMODULE					hLibraryHandle		= NULL;
+    INT								ErrorCode           = 0; 
 	
 	__OUTPUT_DEBUG_CALL__
+
 
 	if (!GetHookProvider(lpProtocolInfo, sLibraryPath)) 	{
 		PACKETGRASPER_TRC("WSPStartup Failed because{GetHookProvider(lpProtocolInfo, sLibraryPath)}");  
@@ -662,6 +663,7 @@ int WSPAPI WSPStartup(
 	yanglei_utility::SingleLock<yanglei_utility::CAutoCreateCS> lock(&gCriticalSection);
 
 	MainUpCallTable = upcallTable;
+
 
 	NextProcTable = *lpProcTable;
 
@@ -738,21 +740,31 @@ BOOL GetHookProvider(
 )
 {
 	TCHAR sItem[21];
+	BOOL bResult = TRUE;
 	GetRightEntryIdItem(pProtocolInfo, sItem);
 
 	HKEY	hSubkey;
 	DWORD	ulDateLenth	= MAX_PATH;
 	TCHAR	sTemp[MAX_PATH];
 
-	if (RegOpenKeyEx(HKEY_LOCAL_MACHINE
-		, REG_INSTALL_KEY, 0, KEY_ALL_ACCESS, &hSubkey) != ERROR_SUCCESS)
-		return FALSE;
-	if (RegQueryValueEx(hSubkey, sItem, 0, NULL, (BYTE*)sTemp, &ulDateLenth)
-		|| ExpandEnvironmentStrings(sTemp, sPathName, ulDateLenth) == 0)
-		return FALSE;
-	if(sPathName[0] == '\0' && sTemp[0] != '\0')
+	if (RegOpenKeyEx(HKEY_LOCAL_MACHINE, REG_INSTALL_KEY, 0, KEY_READ, &hSubkey) != ERROR_SUCCESS) {
+		PACKETGRASPER_TRC("RegOpenKeyEx Failed with error : " << GetLastError());
+		bResult =  FALSE;
+		goto exit;
+	}
+
+	if (RegQueryValueEx(hSubkey, sItem, 0, NULL, (BYTE*)sTemp, &ulDateLenth)|| ExpandEnvironmentStrings(sTemp, sPathName, ulDateLenth) == 0) {
+		PACKETGRASPER_TRC("RegQueryValueEx Failed with error : " << GetLastError());
+		bResult = FALSE;
+		goto exit;
+	}
+
+	if(sPathName[0] == '\0' && sTemp[0] != '\0') {
 		_tcscpy(sPathName, sTemp);
+	}
+
+exit:
 	RegCloseKey(hSubkey);
 
-	return TRUE;
+	return bResult;
 }
