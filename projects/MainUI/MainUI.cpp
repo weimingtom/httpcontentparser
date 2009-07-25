@@ -12,10 +12,10 @@
 #include <com\comutility.h>
 #include <apputility\AppinstallValidate.h>
 #include <softwareStatus.h>
-#include ".\share.h"
 #include <logger\logger.h>
 #include <logger\loggerlevel.h>
 #include ".\firstpwddlg.h"
+#include ".\share.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -103,17 +103,7 @@ BOOL CMainUIApp::InitInstance() {
 	}
 
 	// 获取应用程序状态
-	LONG app_status = SNOWMAN_STATUS_TRIAL;
-	try {
-		ISnowmanSetting * pSetting = NULL;
-		HRESULT hr = CoCreateInstance(CLSID_SnowmanSetting, NULL, CLSCTX_LOCAL_SERVER, IID_ISnowmanSetting, (LPVOID*)&pSetting);
-		if (FAILED(hr)) {
-			__LERR__( "Create Snowsetting with HRESULT vlaue "<<std::hex<<hr);
-		}
-		pSetting->getApplicationStatus(&app_status);
-	} catch (...) {
-		__LERR__("CATCH(...)");
-	}
+	LONG app_status = Services::getAppStatus();
 
 	// 初始化LOGGER
 	AppUtility::AppInstallValidate validator(VLAIDATE_NONE, app_status);
