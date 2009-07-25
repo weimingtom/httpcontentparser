@@ -96,6 +96,12 @@ APPUTILITYDLL_API   void GetMainUIPath(TCHAR * fullpath, const int len) {
 	_sntprintf(fullpath, len, "%s%s", installpath, APPLICATION_MAINUI_NAME);
 }
 
+APPUTILITYDLL_API   const TCHAR * GetSPIInstallPath(TCHAR * fullpath, const int len) {
+	TCHAR installpath[MAX_PATH];
+	GetModuleFileName(NULL, installpath, MAX_PATH);
+	_sntprintf(fullpath, MAX_PATH, TEXT("%s\\%s"), installpath, PACKETSGRASPER_DLL_NAME);
+	return fullpath;
+}
 
 // 获取主程序窗口
 APPUTILITYDLL_API   HWND GetMainUIHWND() {
