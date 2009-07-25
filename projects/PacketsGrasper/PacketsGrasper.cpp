@@ -1,12 +1,10 @@
 #include "stdafx.h"
 #include "selectio.h"
 #include "debug.h" 
-#include <stdio.h>
-#include <stdlib.h>
-#include <tchar.h>
-#include <dnsmap.h>
-#include <string>
-#include <serviceUtility.h>
+#include ".\log.h"
+
+#include ".\dnsmap.h"
+#include ".\serviceUtility.h"
 #include <apputility.h>
 #include <utility\debugmessage.h>
 #include <utility\fd_set_utility.h>
@@ -19,7 +17,10 @@
 #include <AppinstallValidate.h>
 #include <softwareStatus.h>
 #include <DebugOutput.h>
-#include ".\log.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <tchar.h>
+#include <string>
 
 #pragma data_seg(".inidata")
 	int				m_iRefCount		= 0;
@@ -600,11 +601,10 @@ BOOL WINAPI DllMain(
 	} else if (ul_reason_for_call == DLL_THREAD_DETACH) {
 	} else if (ul_reason_for_call == DLL_PROCESS_DETACH) { 
 		try {
-			
 			{
 				yanglei_utility::SingleLock<yanglei_utility::CAutoCreateCS> lock(&gCriticalSection);
 				m_iRefCount -- ;
-				PACKETGRASPER_TRC("DllMain Attach Count "<< m_iRefCount);  
+				PACKETGRASPER_TRC("DllMain Attach Count "<< m_iRefCount << " GetLastError() " <<GetLastError());  
 			}
 
 			//g_select.finalize();

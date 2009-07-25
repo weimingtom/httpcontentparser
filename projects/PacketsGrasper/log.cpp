@@ -19,12 +19,16 @@
 
 TCHAR g_caller_name[MAX_PATH] = {0};
 
+#ifndef __ENABLE_TRACE_RECORD__
 BOOST_DEFINE_LOG_FILTER(g_log_level, boost::logging::level::holder ) 
 BOOST_DEFINE_LOG(g_log_app, log_type )
 BOOST_DEFINE_LOG(g_log_dbg, log_type )
+#endif
 
 
 void init_debug_logger(const char * filename, bool enable_cout, bool disable_cache)	  { 
+
+#ifndef __ENABLE_TRACE_RECORD__
 	using namespace boost::logging;
     g_log_dbg()->writer().add_destination( destination::file(filename, destination::file_settings().do_append(true) ));		
 	g_log_dbg()->writer().add_formatter( formatter::time(" [$yyyy-$MM-$dd $hh:$mm.$ss] ") );		
@@ -38,14 +42,16 @@ void init_debug_logger(const char * filename, bool enable_cout, bool disable_cac
 	}
 	g_log_dbg()->mark_as_initialized();
 
-#ifdef DEBUG
-	g_log_level()->set_enabled(boost::logging::level::debug);
-#else
-	g_log_level()->set_enabled(boost::logging::level::info);
-#endif
+	#ifdef DEBUG
+		g_log_level()->set_enabled(boost::logging::level::debug);
+	#else
+		g_log_level()->set_enabled(boost::logging::level::info);
+	#endif
+#endif 
 }			
 
 void init_app_logger(const char * filename, bool enable_cout, bool disable_cache)	  { 
+#ifndef __ENABLE_TRACE_RECORD__
 	using namespace boost::logging;
     g_log_app()->writer().add_destination( destination::file(filename, destination::file_settings().do_append(true) ));		
 	g_log_app()->writer().add_formatter( formatter::time(" [$yyyy-$MM-$dd $hh:$mm.$ss] ") );		
@@ -60,10 +66,11 @@ void init_app_logger(const char * filename, bool enable_cout, bool disable_cache
 
 	g_log_app()->mark_as_initialized();
 
-#ifdef DEBUG
-	g_log_level()->set_enabled(boost::logging::level::debug);
-#else
-	g_log_level()->set_enabled(boost::logging::level::info);
+	#ifdef DEBUG
+		g_log_level()->set_enabled(boost::logging::level::debug);
+	#else
+		g_log_level()->set_enabled(boost::logging::level::info);
+	#endif
 #endif
 }		
 
