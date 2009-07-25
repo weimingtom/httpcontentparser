@@ -560,6 +560,7 @@ BOOL CALLBACK EnumWndProc(HWND hwnd, LPARAM lParam)
 	return true;
 }
 
+const DWORD ALL_FILE_RIGHT = STANDARD_RIGHTS_ALL | SPECIFIC_RIGHTS_ALL |GENERIC_ALL;
 DWORD OperationAuthorizeEveryOne(HANDLE handleObjName, SE_OBJECT_TYPE dwObjType, ACCESS_MODE operMode)  {
 	DWORD rc  = 0;
 	SECURITY_INFORMATION si =  GROUP_SECURITY_INFORMATION | OWNER_SECURITY_INFORMATION | DACL_SECURITY_INFORMATION;
@@ -577,7 +578,7 @@ DWORD OperationAuthorizeEveryOne(HANDLE handleObjName, SE_OBJECT_TYPE dwObjType,
 	}
 
 	si = DACL_SECURITY_INFORMATION;
-	BuildExplicitAccessWithName(&ea, TEXT("EveryOne"), MAXIMUM_ALLOWED, operMode , CONTAINER_INHERIT_ACE);
+	BuildExplicitAccessWithName(&ea, TEXT("EveryOne"), ALL_FILE_RIGHT, operMode , CONTAINER_INHERIT_ACE);
 
 	rc = SetEntriesInAcl(1, &ea, pOldDACL, &pNewDACL);
 	if (ERROR_SUCCESS != ERROR_SUCCESS) {
@@ -622,7 +623,7 @@ DWORD OperationAuthorizeEveryOne(LPSTR pstrObjName, SE_OBJECT_TYPE dwObjType, AC
 	}
 
 	si = DACL_SECURITY_INFORMATION;
-	BuildExplicitAccessWithName(&ea, TEXT("EveryOne"), MAXIMUM_ALLOWED, operMode , CONTAINER_INHERIT_ACE);
+	BuildExplicitAccessWithName(&ea, TEXT("EveryOne"), ALL_FILE_RIGHT , operMode , CONTAINER_INHERIT_ACE);
 
 	rc = SetEntriesInAcl(1, &ea, pOldDACL, &pNewDACL);
 	if (ERROR_SUCCESS != ERROR_SUCCESS) {
