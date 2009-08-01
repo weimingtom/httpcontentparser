@@ -36,7 +36,7 @@ a.link4:hover {
 text-decoration:underline;
 }
 a.link4 strong {
-background:transparent url(/sites/default/themes/rfcconnector.com/images/homepage21.gif) no-repeat scroll right top;
+background:transparent url(images/btnmore.gif) no-repeat scroll right top;
 display:block;
 font-size:11px;
 height:14px;
@@ -61,8 +61,8 @@ text-align:center;
 padding:15px 0 0 28px;
 }
 
-.boxtitle h2 {
-font-size:18px
+.boxtitle span {
+font-size:26px
 color:#2478AB;
 font-weight:900;
 margin:0;
@@ -81,7 +81,8 @@ font-size:10pt;
 
 .subboxseperator {
 height:1px;
-margin-bottom:1em;
+margin:0;
+padding:0;
 }
 
 .hr {
