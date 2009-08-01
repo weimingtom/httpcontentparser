@@ -1,0 +1,36 @@
+.bgpresentleft {
+	background:transparent url(images/presentleft.gif) repeat-x scroll 0 0;
+}
+
+.bgpresentright {
+	background:transparent url(images/presentright.gif) repeat-x scroll 0 0;
+}
+
+.bgpresentA {
+	background:transparent url(images/presentAbak.jpg) no-repeat scroll right bottom;
+}
+
+#present-menu-left a {
+background:transparent url(images/menuitem.gif) no-repeat scroll 0 5px;
+}
+
+#header-menu li {
+background:transparent url(images/topmenu_sperator.gif) no-repeat scroll 0 0;
+}
+
+#header-menu1 {
+background:transparent url(images/icon_home.gif) no-repeat scroll left center;
+}
+
+#header-menu2 {
+background:transparent url(images/icon_contact.gif) no-repeat scroll left center;
+}
+
+.boxtitle {
+background:transparent url(images/boxtitle.gif) no-repeat scroll left center;
+padding-left:27px;
+padding-top:3px;
+}
+
+.subboxseperator {
+}

@@ -1,0 +1,105 @@
+
+
+a {
+color:#30639F;
+}
+a:hover {
+text-decoration:none;
+}
+a.link1 {
+color:#80909C;
+font-size:9px;
+text-decoration:none;
+}
+a.link1:hover {
+text-decoration:underline;
+}
+a.link2 {
+color:#FFFFFF;
+font-weight:bold;
+text-decoration:none;
+}
+a.link2:hover {
+text-decoration:underline;
+}
+a.link3 {
+color:#30639F;
+font-size:10px;
+}
+a.link4 {
+background:transparent url(/sites/default/themes/rfcconnector.com/images/homepage20.gif) repeat-x scroll 0 0;
+color:#FFFFFF;
+display:block;
+text-decoration:none;
+}
+a.link4:hover {
+text-decoration:underline;
+}
+a.link4 strong {
+background:transparent url(/sites/default/themes/rfcconnector.com/images/homepage21.gif) no-repeat scroll right top;
+display:block;
+font-size:11px;
+height:14px;
+padding-right:17px;
+text-align:right;
+}
+
+p, blockquote, ul, ol, dl {
+margin-bottom:1em;
+margin-top:0;
+text-align:justify;
+}
+
+
+body {
+background-color:#FFFFFF;
+margin:0;
+padding:0;
+}
+
+
+body, th, td, input, textarea, select {
+color:#414E5A;
+font-family:Verdana,Arial,Helvetica,sans-serif;
+font-size:10pt;
+}
+
+#links {
+margin:0;
+padding:24px 0 10px;
+}
+
+.style1 {
+color:#30639F;
+font-size:9px;
+margin:0;
+padding:0;
+text-align:center;
+}
+
+.boxcontent {
+padding:15px 0 0 28px;
+}
+
+.boxtitle h2 {
+margin:0;
+padding:0;
+font-size:18px
+color:#339900;
+font-weight:900;
+}
+
+.subboxtitleimg {
+float:left;
+margin-right:15px;
+}
+
+.subboxtitle {
+color:#4EA307;
+font-size:10pt;
+}
+
+.subboxseperator {
+height:1px;
+margin-bottom:1em;
+}
