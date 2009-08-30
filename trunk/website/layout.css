@@ -61,6 +61,12 @@ margin:0 auto;
 width:766px;
 }
 
+#detail_present {
+height:70px;
+margin:0 auto;
+width:766px;
+}
+
 #presentA {
 float:left;
 height:207px;
@@ -113,6 +119,10 @@ margin:0 auto;
 padding:26px 0 30px;
 width:766px;
 height:auto;
+}
+
+#midcontent {
+	height:400px;
 }
 
 .contentbox {
