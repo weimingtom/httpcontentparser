@@ -18,10 +18,12 @@
 	  	var srcc = window.location;   
 		  srcc = srcc.toString();
 		  
-		  start = srcc.indexOf("#");   
-		  end = srcc.length;     
-		  srcc = srcc.substring(start+1,end);
-		  setVisableBlock(srcc);
+		  start = srcc.indexOf("#"); 
+		  if (-1 != start) {
+			  end = srcc.length;     
+			  srcc = srcc.substring(start+1,end);
+			  setVisableBlock(srcc);
+			}
 	  }
 		function setVisableBlock(divid) 
 		{
