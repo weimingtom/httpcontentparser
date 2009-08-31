@@ -11,7 +11,18 @@
 	<link rel="stylesheet" type="text/css" href="detail.css"/>
 	<head>
 		<script language="javascript">
+  
 		<!--
+	  function init()
+	  {
+	  	var srcc = window.location;   
+		  srcc = srcc.toString();
+		  
+		  start = srcc.indexOf("#");   
+		  end = srcc.length;     
+		  srcc = srcc.substring(start+1,end);
+		  setVisableBlock(srcc);
+	  }
 		function setVisableBlock(divid) 
 		{
 			document.getElementById("feature_websiteBlacklist").style.display="none";
@@ -24,6 +35,8 @@
 			document.getElementById(divid).style.display="block";
 			return false;
 		}
+		
+		window.onload=init;
 		-->
 	</script>
 		<title>Family007</title>
@@ -109,7 +122,6 @@
 				<div id="feature_Eyelightcare" class="feature_block">
 					<h3><span>Eyelight care</span></h3>
 				</div>
-				
 			</div>	<!--content-->
 
 
