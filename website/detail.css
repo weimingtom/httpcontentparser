@@ -1,0 +1,44 @@
+
+#preset_without_pic {
+height:0px;
+margin:0 auto;
+width:766px;
+}
+
+.feature_block {
+	height:400px;
+}
+
+.feature_block h3 {
+font-size:1.4em;
+color:#30639F;
+font-family:"times new roman",serif;
+}
+
+#feature_websiteBlacklist{
+	display:block;
+}
+
+#feature_searchword{
+	display:none;
+}
+
+#feature_screenrecord{
+	display:none;
+}
+
+#feature_applicationcontroln{
+	display:none;
+}
+
+#feature_webhistoryrecord{
+	display:none;
+}
+
+#feature_OnlinetimeControl{
+	display:none;
+}
+
+#feature_Eyelightcare{
+	display:none;
+}

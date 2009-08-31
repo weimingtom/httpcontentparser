@@ -8,7 +8,24 @@
 	<link rel="stylesheet" type="text/css" href="element.css"/>
 	<link rel="stylesheet" type="text/css" href="imgs.css"/>
 	<link rel="stylesheet" type="text/css" href="menu.css"/>
+	<link rel="stylesheet" type="text/css" href="detail.css"/>
 	<head>
+		<script language="javascript">
+		<!--
+		function setVisableBlock(divid) 
+		{
+			document.getElementById("feature_websiteBlacklist").style.display="none";
+			document.getElementById("feature_searchword").style.display="none";
+			document.getElementById("feature_screenrecord").style.display="none";
+			document.getElementById("feature_applicationcontroln").style.display="none";
+			document.getElementById("feature_webhistoryrecord").style.display="none";
+			document.getElementById("feature_OnlinetimeControl").style.display="none";
+			document.getElementById("feature_Eyelightcare").style.display="none";
+			document.getElementById(divid).style.display="block";
+			return false;
+		}
+		-->
+	</script>
 		<title>Family007</title>
 	</head>
 	<body>
@@ -34,7 +51,7 @@
 			
 			
 			<!-- ============= present ============= -->
-			<div id="detail_present">
+			<div id="preset_without_pic">
 				<div id="present-menu-left">
 					<ul>
 						<li><a id="mainmenu1" class="link2" href="./detail.html">Details</a></li>
@@ -51,22 +68,48 @@
 				<div id="sidebar">
 					<div id="linkmenu">
 						<div id="features">
+							<h3><span>Operation</span></h3>
+							<ul>
+								<li><a id="m011" href="javascript:;" onClick="setVisableBlock('feature_websiteBlacklist')">Common Operation</a></li>
+								<li><a id="m012" href="javascript:;" onClick="setVisableBlock('feature_searchword')">Searchword Blacklist</a></li>
+								<li><a id="m013" href="javascript:;" onClick="setVisableBlock('feature_searchword')">Screen Snapshot</a></li>
+							</ul>
 							<h3><span>Features</span></h3>
 							<ul>
-								<li><a id="m01" title="tanfa - home" href="../../index.html">Website Blacklist</a></li>
-								<li><a id="m02" title="tanfa - archives" href="../../archives/index.html">Searchword Blacklist</a></li>
-								<li><a id="m03" title="contact this sites author" href="../../contact.html">Screen Snapshot</a></li>
-								<li><a id="m04" title="tanfa - home" href="../../index.html">Application Control</a></li>
-								<li><a id="m05" title="tanfa - archives" href="../../archives/index.html">Webhistory Record</a></li>
-								<li><a id="m06" title="contact this sites author" href="../../contact.html">Online time Control</a></li>
-								<li><a id="m07" title="tanfa - home" href="../../index.html">Eyelight care</a></li>
+								<li><a id="m021" href="javascript:;" onClick="setVisableBlock('feature_websiteBlacklist')">Website Blacklist</a></li>
+								<li><a id="m022" href="javascript:;" onClick="setVisableBlock('feature_searchword')">Searchword Blacklist</a></li>
+								<li><a id="m023" href="javascript:;" onClick="setVisableBlock('feature_screenrecord')">Screen Snapshot</a></li>
+								<li><a id="m024" href="javascript:;" onClick="setVisableBlock('feature_applicationcontroln')">Application Control</a></li>
+								<li><a id="m025" href="javascript:;" onClick="setVisableBlock('feature_webhistoryrecord')">Webhistory Record</a></li>
+								<li><a id="m026" href="javascript:;" onClick="setVisableBlock('feature_OnlinetimeControl')">Online time Control</a></li>
+								<li><a id="m027" href="javascript:;" onClick="setVisableBlock('feature_Eyelightcare')">Eyelight care</a></li>
 							</ul>
 						</div>
 					</div>
 				</div>
 				
-				<div id="midcontent">
+				<div id="feature_websiteBlacklist" class="feature_block">
+					<h3><span>Website Blacklist</span></h3>
 				</div>
+				<div id="feature_searchword" class="feature_block">
+					<h3><span>Searchword Blacklist</span></h3>
+				</div>
+				<div id="feature_screenrecord" class="feature_block">
+					<h3><span>Screen Snapshot</span></h3>
+				</div>
+				<div id="feature_applicationcontroln" class="feature_block">
+					<h3><span>Application Control</span></h3>
+				</div>
+				<div id="feature_webhistoryrecord" class="feature_block">
+					<h3><span>Webhistory Record</span></h3>
+				</div>
+				<div id="feature_OnlinetimeControl" class="feature_block">
+					<h3><span>Online time Control</span></h3>
+				</div>
+				<div id="feature_Eyelightcare" class="feature_block">
+					<h3><span>Eyelight care</span></h3>
+				</div>
+				
 			</div>	<!--content-->
 
 
