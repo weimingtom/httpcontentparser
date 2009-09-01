@@ -148,6 +148,11 @@ top:0;
 width:50%;
 }
 
+.boxcontent {
+	padding:0;
+	margin:0;
+}
+
 .boxcontent td {
 	padding:0;
 	margin:0;
