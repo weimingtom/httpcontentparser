@@ -111,3 +111,32 @@ color:#414E5A;
 font-family:Verdana,Arial,Helvetica,sans-serif;
 font-size:10pt;
 }
+
+h1, h2, h3, h4, h5, h6 {
+-x-system-font:none;
+color:#339900;
+font-family:Arial,Helvetica,sans-serif;
+font-size:18px;
+font-size-adjust:none;
+font-stretch:normal;
+font-style:normal;
+font-variant:normal;
+font-weight:900;
+line-height:normal;
+}
+
+
+#contactform {
+	padding-top:40px;
+	padding-left:40px;
+}
+
+.form-item {
+	font-weight:bold;
+	margin-bottom:10px;
+}
+
+.form-required {
+color:#FF0000;
+font-weight:bold;
+}
