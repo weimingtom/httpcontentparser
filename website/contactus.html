@@ -50,6 +50,36 @@
 
 			<!-- =============content============= -->
 			<div id="content">
+				<div id="contactform">
+					<h2>Contact Form</h2>
+					<span>Thank you for your interest in RFC Connector. If you have any questions or comments, please direct them to sales@secept.com, or use the form below. We'll get back to you as soon as possible.</span>
+					<div class="hr"></div>
+					
+					<div class="form-item">
+						<label for="edit-message">Subject:<span class="form-required" title="This field is required.">*</span></label>
+						<br/>
+						<input id="edit-subject" class="form-text required" type="text" value="" size="60" name="subject" maxlength="255"/>
+					</div>
+						
+					<div class="form-item">
+						<label for="edit-message">Message:<span class="form-required" title="This field is required.">*</span></label>
+						<div class="resizable-textarea">
+							<span>
+								<textarea id="edit-message" name="message" rows="30" cols="58" style="opacity: 0.9999; height: 240px;">
+								</textarea>
+							</span>
+						</div>
+					</div>
+					
+					<div class="form-item">
+						<label for="edit-message">Your Mail:<span class="form-required" title="This field is required.">*</span></label>
+						 <br/>
+						<input id="edit-mailbox" class="form-text required" type="text" value="" size="60" name="subject" maxlength="255"/>
+					</div>
+					
+					<input id="edit-submit" class="form-submit" type="submit" value="Send e-mail" name="op"/>
+					
+				</div>
 			</div>	<!--content-->
 
 
