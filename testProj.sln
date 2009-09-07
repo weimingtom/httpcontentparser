@@ -35,6 +35,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Selectio", "test\TestSelect
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestMassiveData", "test\TestMassiveData\TestMassiveData.vcproj", "{E626C4E6-CE7C-40B0-A17F-D369C7EC9E9F}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfiguration) = preSolution
 		Debug = Debug
@@ -117,6 +121,14 @@ Global
 		{9DBE4172-DCAE-4D27-8131-7B16A30D149A}.Release.Build.0 = Release|Win32
 		{9DBE4172-DCAE-4D27-8131-7B16A30D149A}.Release Unicode.ActiveCfg = Release|Win32
 		{9DBE4172-DCAE-4D27-8131-7B16A30D149A}.Release Unicode.Build.0 = Release|Win32
+		{E626C4E6-CE7C-40B0-A17F-D369C7EC9E9F}.Debug.ActiveCfg = Debug|Win32
+		{E626C4E6-CE7C-40B0-A17F-D369C7EC9E9F}.Debug.Build.0 = Debug|Win32
+		{E626C4E6-CE7C-40B0-A17F-D369C7EC9E9F}.Debug Unicode.ActiveCfg = Debug|Win32
+		{E626C4E6-CE7C-40B0-A17F-D369C7EC9E9F}.Debug Unicode.Build.0 = Debug|Win32
+		{E626C4E6-CE7C-40B0-A17F-D369C7EC9E9F}.Release.ActiveCfg = Release|Win32
+		{E626C4E6-CE7C-40B0-A17F-D369C7EC9E9F}.Release.Build.0 = Release|Win32
+		{E626C4E6-CE7C-40B0-A17F-D369C7EC9E9F}.Release Unicode.ActiveCfg = Release|Win32
+		{E626C4E6-CE7C-40B0-A17F-D369C7EC9E9F}.Release Unicode.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 	EndGlobalSection
