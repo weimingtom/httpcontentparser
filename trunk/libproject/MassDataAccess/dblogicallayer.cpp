@@ -80,9 +80,9 @@ bool check_black_dns(const char * dns) {
         return false;
     }
 }
-bool check_black_searchword(const char *word, const char *engine) {
+bool check_black_searchword(const char* word, const char * engine){
     char buffer[1024];
-    _sntprintf(buffer, 1024, "select website from bwords where word= '%s' and engine = '%s'", word, engine);
+    _sntprintf(buffer, 1024, "select word from bwords where word= '%s' and engine = '%s'", word, engine);
     sqlite_query * query = g_conn_.create_query(buffer);
 
     if (NULL != query) {
@@ -109,7 +109,7 @@ int insert_black_dns(const char *dns) {
 }
 int insert_black_searchword(const char *word, const char *engine) {
     char buffer[1024];
-    _sntprintf(buffer, 1024, "insert into bwords(word, engine) values ('%s')", word, engine);
+    _sntprintf(buffer, 1024, "insert into bwords(word, engine) values ('%s', '%s')", word, engine);
     return g_conn_.execute_no_result(buffer);
 }
 
@@ -126,6 +126,6 @@ int del_black_dns(const char*dns) {
 }
 int del_black_searchword(const char*word, const char*engine) {
     char buffer[1024];
-    _sntprintf(buffer, 1024, "delete from bdns where word = '%s' and engine = '%s'", word, engine);
+    _sntprintf(buffer, 1024, "delete from bwords where word = '%s' and engine = '%s'", word, engine);
     return g_conn_.execute_no_result(buffer);
 }

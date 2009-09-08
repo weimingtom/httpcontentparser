@@ -10,7 +10,7 @@ int load_db(const char * dbname);
 // ¼ì²â
 bool check_white_dns(const char* dns);
 bool check_black_dns(const char* dns);
-bool check_black_searchword(const char* dns);
+bool check_black_searchword(const char* word, const char * engine);
 
 // Ôö¼ÓÉ¾³ýwebsites
 int insert_white_dns(const char* dns);
