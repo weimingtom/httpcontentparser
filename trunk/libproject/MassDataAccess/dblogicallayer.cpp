@@ -4,17 +4,9 @@
 
 sqlite_connection g_conn_;
 
-// 初始化数据库
-class db_conn {
-public:
-    db_conn() {
-    }
-    ~db_conn() {
-    }
-};
 
-int load_db(const std::string &dbname) {
-    return g_conn_.open(dbname.c_str());
+int load_db(const char * dbname) {
+    return g_conn_.open(dbname);
 }
 
 int verify_db() {
@@ -57,9 +49,9 @@ int auto_clean_wordsearched_list(const int days) {
 }
 
 // 检测
-bool check_white_dns(const std::string &dns) {
+bool check_white_dns(const char*dns) {
     char buffer[1024];
-    _sntprintf(buffer, 1024, "select count(*) from wdns where website= '%s'", dns.c_str());
+    _sntprintf(buffer, 1024, "select count(*) from wdns where website= '%s'", dns);
     sqlite_query * query = g_conn_.create_query(buffer);
 
     if (NULL != query) {
@@ -73,9 +65,9 @@ bool check_white_dns(const std::string &dns) {
     }
 }
 
-bool check_black_dns(const std::string &dns) {
+bool check_black_dns(const char * dns) {
     char buffer[1024];
-    _sntprintf(buffer, 1024, "select count(*) from bdns where website= '%s'", dns.c_str());
+    _sntprintf(buffer, 1024, "select count(*) from bdns where website= '%s'", dns);
     sqlite_query * query = g_conn_.create_query(buffer);
 
     if (NULL != query) {
@@ -88,9 +80,9 @@ bool check_black_dns(const std::string &dns) {
         return false;
     }
 }
-bool check_black_searchword(const std::string &word, const std::string &engine) {
+bool check_black_searchword(const char *word, const char *engine) {
     char buffer[1024];
-    _sntprintf(buffer, 1024, "select count(*) from bwords where word= '%s' and engine = '%s'", word.c_str(), engine.c_str());
+    _sntprintf(buffer, 1024, "select count(*) from bwords where word= '%s' and engine = '%s'", word, engine);
     sqlite_query * query = g_conn_.create_query(buffer);
 
     if (NULL != query) {
@@ -105,35 +97,35 @@ bool check_black_searchword(const std::string &word, const std::string &engine) 
 }
 
 // 插入数据
-int insert_white_dns(const std::string &dns) {
+int insert_white_dns(const char *dns) {
     char buffer[1024];
-    _sntprintf(buffer, 1024, "insert into wdns(website) values (%s)", dns.c_str());
+    _sntprintf(buffer, 1024, "insert into wdns(website) values ('%s')", dns);
     return g_conn_.execute_no_result(buffer);
 }
-int insert_black_dns(const std::string &dns) {
+int insert_black_dns(const char *dns) {
     char buffer[1024];
-    _sntprintf(buffer, 1024, "insert into bdns(website) values (%s)", dns.c_str());
+    _sntprintf(buffer, 1024, "insert into bdns(website) values ('%s')", dns);
     return g_conn_.execute_no_result(buffer);
 }
-int insert_black_searchword(const std::string &word, const std::string &engine) {
+int insert_black_searchword(const char *word, const char *engine) {
     char buffer[1024];
-    _sntprintf(buffer, 1024, "insert into bwords(word, engine) values (%s)", word.c_str(), engine.c_str());
+    _sntprintf(buffer, 1024, "insert into bwords(word, engine) values ('%s')", word, engine);
     return g_conn_.execute_no_result(buffer);
 }
 
 // 删除数据
-int del_white_dns(const std::string &dns) {
+int del_white_dns(const char*dns) {
     char buffer[1024];
-    _sntprintf(buffer, 1024, "del from wdns where website = '%s'", dns.c_str());
+    _sntprintf(buffer, 1024, "del from wdns where website = '%s'", dns);
     return g_conn_.execute_no_result(buffer);
 }
-int del_black_dns(const std::string &dns) {
+int del_black_dns(const char*dns) {
     char buffer[1024];
-    _sntprintf(buffer, 1024, "del from bdns where website = '%s'", dns.c_str());
+    _sntprintf(buffer, 1024, "del from bdns where website = '%s'", dns);
     return g_conn_.execute_no_result(buffer);
 }
-int del_black_searchword(const std::string &word, const std::string &engine) {
+int del_black_searchword(const char*word, const char*engine) {
     char buffer[1024];
-    _sntprintf(buffer, 1024, "del from bdns where word = '%s' and engine = '%s'", word.c_str(), engine.c_str());
+    _sntprintf(buffer, 1024, "del from bdns where word = '%s' and engine = '%s'", word, engine);
     return g_conn_.execute_no_result(buffer);
 }

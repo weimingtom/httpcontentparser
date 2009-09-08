@@ -5,13 +5,8 @@
 
 
 int report_error(const char  * errmsg, int code) {
-    printf("error messsage : %s", errmsg);
+    printf("error messsage : %s\n", errmsg);
     return 0;
-}
-
-boost::function<void (const int , const std::string&)> g_err_function = report_error;
-int set_error_msg_callback(boost::function<void (const int , const std::string&)> errfun) {
-    g_err_function  = errfun;
 }
 
 //===============================
@@ -111,7 +106,7 @@ int sqlite_query::prepare(sqlite_table * table) {
         for (int i = 0; i < columns; ++i) {
             const int col_type = sqlite3_column_type(stmt_, i);
             const char * col_name = sqlite3_column_name(stmt_, i);
-            table_->add_column(new sqlite_column(col_type, col_name));
+            table_->add_column(sqlite_column(col_type, col_name));
         }
     }
 exit:
@@ -146,34 +141,31 @@ int sqlite_query::fetch(sqlite_row * row) {
 int sqlite_query::fecth_value(sqlite_row * row) {
     int columns = sqlite3_column_count(stmt_);
 
-    sqlite_item * item = NULL;
     for (int i = 0; i < columns; ++i) {
         int type = sqlite3_column_type(stmt_, i);
         switch(type) {
             case SQLITE_INTEGER:
                 {
                 int value = sqlite3_column_int(stmt_, i);
-                item = new sqlite_item(value);
+                row->append_item(sqlite_item(value));
                 }
                 break;
             case SQLITE_FLOAT:
                 {
                     float value = (float)sqlite3_column_double(stmt_, i);
-                    item = new sqlite_item(value);
+                    row->append_item(sqlite_item(value));
                 }
                 break;
             case SQLITE_TEXT:
                 {
                 const unsigned char * value= sqlite3_column_text(stmt_, i);
-                item = new sqlite_item((const char *)value);
+                row->append_item(sqlite_item((const char *)value));
                 }
                 break;
             default:
-                item = NULL;
                 break;
         }
          
-        row->append_item(item);
     }
 
     return 0;
@@ -184,15 +176,25 @@ int sqlite_query::step() {
     return sqlite3_step(stmt_);
 }
 
-sqlite_table * sqlite_query::execute_at_one_time(sqlite_table * table) {
+int sqlite_query::execute_at_one_time(sqlite_table * table) {
     int rc = prepare(table);
+    if (rc) {
+        goto exit;
+    }
+
     execute();
 
     while (step() == SQLITE_ROW) {
         sqlite_row * row = table->new_row();
-        fetch(row);
+        int rc = fetch(row);
+        if (rc) {
+            delete row;
+            goto exit;
+        }
+        table->add_row(row);
     }
-    return NULL;
+exit:
+    return rc;
 }
 
 //================================
@@ -209,18 +211,18 @@ sqlite_row::~sqlite_row() {
 
 
 
-int sqlite_row::append_item(sqlite_item *item) {
+int sqlite_row::append_item(sqlite_item & item) {
     items_.push_back(item);
     return (int)items_.size();
 }
 
 
 
-sqlite_item * sqlite_row::operator[] (const int index) {
+sqlite_item  sqlite_row::operator[] (const int index) {
     return get_item(index);
 }
 
-sqlite_item* sqlite_row::operator[] (const std::string & name) {
+sqlite_item sqlite_row::operator[] (const std::string & name) {
     if (tab_ != NULL) {
         int index  =  tab_->get_column_index(name);
         if (-1 != index) {
@@ -230,7 +232,7 @@ sqlite_item* sqlite_row::operator[] (const std::string & name) {
     return NULL;
 }
 
-sqlite_item * sqlite_row::get_item(const int index) {
+sqlite_item  sqlite_row::get_item(const int index) {
     if (index < (int)items_.size()) {
         return items_.at(index);
     } else {
@@ -246,6 +248,10 @@ sqlite_column::sqlite_column(const int type, const std::string &name)
     name_ = name;
 }
 
+sqlite_column::sqlite_column(const sqlite_column &col) {
+    this->type_ = col.get_type();
+    this->name_ = col.get_name();
+}
 sqlite_column::~sqlite_column()
 {
 }
@@ -257,7 +263,6 @@ sqlite_table::sqlite_table() {
 
 sqlite_table::~sqlite_table(){
     free_rows();
-    free_columns();
  }
 
 sqlite_row * sqlite_table::new_row() {
@@ -265,16 +270,8 @@ sqlite_row * sqlite_table::new_row() {
     return newrow;
 }
 
-void sqlite_table::add_column(sqlite_column * column) {
+void sqlite_table::add_column(sqlite_column & column) {
     m_cols_.push_back(column);
-}
-
-void sqlite_table::free_columns() {
-    COLUMNS::iterator iter = m_cols_.begin();
-    for (; iter != m_cols_.end(); ++iter) {
-        delete *iter;
-    }
-    m_cols_.clear();
 }
 
 void sqlite_table::free_rows() {
@@ -289,7 +286,7 @@ int sqlite_table::get_column_index(const std::string &colname) {
     int index = 0;
     COLUMNS::iterator iter  = m_cols_.begin();
     for (; iter != m_cols_.end(); ++iter) {
-        if (colname == (*iter)->get_name()) {
+        if (colname == (*iter).get_name()) {
             return index;
         } else {
             index++;
@@ -297,5 +294,33 @@ int sqlite_table::get_column_index(const std::string &colname) {
     }
 
     return -1;
+}
+
+//================================
+// class sqlite_item
+sqlite_item::sqlite_item(const int value) {
+    type_ = INTEGER;
+    i_value = value;
+}
+
+sqlite_item::sqlite_item(const float value) {
+    type_ =  FLOAT;
+    f_value = value;
+}
+
+sqlite_item::sqlite_item(const char * value) {
+    type_ = STRING;
+    s_value = value;
+}
+
+sqlite_item::sqlite_item(const sqlite_item &item) {
+    type_ = item.get_type();
+    if (type_ == INTEGER) {
+        i_value = item.i_value;
+    } else if (type_ == FLOAT) {
+        f_value = item.f_value;
+    } else if (type_ == STRING) {
+        s_value = item.s_value;
+    }
 }
 

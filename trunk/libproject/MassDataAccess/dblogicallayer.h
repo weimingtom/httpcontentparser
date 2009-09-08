@@ -4,25 +4,25 @@
 #include <boost/function.hpp>
 
 
-int load_db(const std::string &dbname);
+int load_db(const char * dbname);
 
 
 // 检测
-bool check_white_dns(const std::string &dns);
-bool check_black_dns(const std::string &dns);
-bool check_black_searchword(const std::string &dns);
+bool check_white_dns(const char* dns);
+bool check_black_dns(const char* dns);
+bool check_black_searchword(const char* dns);
 
 // 增加删除websites
-int insert_white_dns(const std::string &dns);
-int insert_black_dns(const std::string &dns);
-int insert_black_searchword(const std::string &word, const std::string &engine);
-int del_white_dns(const std::string &dns);
-int del_black_dns(const std::string &dns);
-int del_black_searchword(const std::string &word, const std::string &engine);
+int insert_white_dns(const char* dns);
+int insert_black_dns(const char* dns);
+int insert_black_searchword(const char* word, const char* engine);
+int del_white_dns(const char* dns);
+int del_black_dns(const char* dns);
+int del_black_searchword(const char* word, const char* engine);
 
 // 历史记录
-int insert_website_visited(const std::string & website);
-int insert_word_searched(const std::string & word);
+int insert_website_visited(const char*  website);
+int insert_word_searched(const char*  word);
 int auto_clean_website_list(const int days);
 int auto_clean_wordsearched_list(const int days);
 
@@ -36,6 +36,6 @@ int initialize_db();         // 初始化数据库
 int backup_db();           // 备份数据库
 int revert_db();             // 从backup中恢复数据
 
-int set_error_msg_callback(boost::function<void (const int , const std::string&)> errfun);
+int set_error_msg_callback(boost::function<void (const int , const char*)> errfun);
 
 #endif  // _DBLOGICAL_LAYER_H__

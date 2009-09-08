@@ -29,20 +29,10 @@ class sqlite_column;
 
 class sqlite_item {
 public:
-    sqlite_item(const int value) {
-        type_ = INTEGER;
-        i_value = value;
-    }
-
-    sqlite_item(const float value) {
-        type_ =  FLOAT;
-        f_value = value;
-    }
-
-    sqlite_item(const char * value) {
-        type_ = STRING;
-        s_value = value;
-    }
+    sqlite_item(const sqlite_item &item) ;
+    sqlite_item(const int value);
+    sqlite_item(const float value) ;
+    sqlite_item(const char * value) ;
 
 public:
     int get_type() const {  return type_;}
@@ -76,15 +66,15 @@ public:
 
 public:
     int get_col_count() const { return (int)items_.size();}
-    int append_item(sqlite_item *item);
+    int append_item(sqlite_item & item);
 public:
-    sqlite_item * operator[] (const int index);
-    sqlite_item * operator[] (const std::string &name);
+    sqlite_item  operator[] (const int index);
+    sqlite_item  operator[] (const std::string &name);
 
 private:
-    sqlite_item * get_item(const int index);
+    sqlite_item  get_item(const int index);
 private:
-    typedef std::vector<sqlite_item *> SUBITEMS;
+    typedef std::vector<sqlite_item> SUBITEMS;
     SUBITEMS items_;
 };
 
@@ -93,8 +83,9 @@ public:
     sqlite_column(const int type, const std::string &name);
     ~sqlite_column();
 
+    sqlite_column(const sqlite_column &col);
 public:
-    const std::string & get_name() { return name_;}
+    const std::string & get_name() const { return name_;}
     int get_type() const { return type_;}
 private:
     std::string name_;
@@ -109,16 +100,15 @@ public:
 public:
     sqlite_row * new_row();
     int get_row_count() const { return (int)m_rows_.size();}
-
+    void add_row(sqlite_row * row) {m_rows_.push_back(row); }
 private:
-    void add_column(sqlite_column * column);
+    void add_column(sqlite_column & column);
 
-    void free_columns();
     void free_rows();
     int get_column_index(const std::string &colname);
 private:
     typedef std::vector<sqlite_row*> ROWS;
-    typedef std::vector<sqlite_column*> COLUMNS;
+    typedef std::vector<sqlite_column> COLUMNS;
     ROWS m_rows_;
     COLUMNS m_cols_;
     friend class sqlite_query;
@@ -136,7 +126,7 @@ public:
     int fetch(sqlite_row * row);
 
     // 一次性执行， 返回一个表
-    sqlite_table * execute_at_one_time(sqlite_table * table);
+    int execute_at_one_time(sqlite_table * table);
 private:
     int fecth_value(sqlite_row * row);
 private:
@@ -161,6 +151,5 @@ private:
     sqlite_table * table_;
 };
 
-int set_error_msg_callback(boost::function<int (const char *msg, const int code)>  errfun);
 
 #endif  // _SQLITE_UTILITY_H__
