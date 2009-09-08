@@ -39,19 +39,19 @@ int su_user_logoff() {
 // 自动清理
 int auto_clean_website_list(const int days) {
     char buffer[1024];
-    _sntprintf(buffer, 1024, "drop from webhistory where julianday('now') -  visit_time> %d", days);
+    _sntprintf(buffer, 1024, "delete from webhistory where julianday('now') -  visit_time> %d", days);
     return g_conn_.execute_no_result(buffer);
 }
 int auto_clean_wordsearched_list(const int days) {
     char buffer[1024];
-    _sntprintf(buffer, 1024, "drop from wordhistory where julianday('now') -  visit_time> %d", days);
+    _sntprintf(buffer, 1024, "delete from wordhistory where julianday('now') -  visit_time> %d", days);
     return g_conn_.execute_no_result(buffer);
 }
 
 // 检测
 bool check_white_dns(const char*dns) {
     char buffer[1024];
-    _sntprintf(buffer, 1024, "select count(*) from wdns where website= '%s'", dns);
+    _sntprintf(buffer, 1024, "select website from wdns where website= '%s'", dns);
     sqlite_query * query = g_conn_.create_query(buffer);
 
     if (NULL != query) {
@@ -67,7 +67,7 @@ bool check_white_dns(const char*dns) {
 
 bool check_black_dns(const char * dns) {
     char buffer[1024];
-    _sntprintf(buffer, 1024, "select count(*) from bdns where website= '%s'", dns);
+    _sntprintf(buffer, 1024, "select website from bdns where website= '%s'", dns);
     sqlite_query * query = g_conn_.create_query(buffer);
 
     if (NULL != query) {
@@ -82,7 +82,7 @@ bool check_black_dns(const char * dns) {
 }
 bool check_black_searchword(const char *word, const char *engine) {
     char buffer[1024];
-    _sntprintf(buffer, 1024, "select count(*) from bwords where word= '%s' and engine = '%s'", word, engine);
+    _sntprintf(buffer, 1024, "select website from bwords where word= '%s' and engine = '%s'", word, engine);
     sqlite_query * query = g_conn_.create_query(buffer);
 
     if (NULL != query) {
@@ -116,16 +116,16 @@ int insert_black_searchword(const char *word, const char *engine) {
 // 删除数据
 int del_white_dns(const char*dns) {
     char buffer[1024];
-    _sntprintf(buffer, 1024, "del from wdns where website = '%s'", dns);
+    _sntprintf(buffer, 1024, "delete from wdns where website = '%s'", dns);
     return g_conn_.execute_no_result(buffer);
 }
 int del_black_dns(const char*dns) {
     char buffer[1024];
-    _sntprintf(buffer, 1024, "del from bdns where website = '%s'", dns);
+    _sntprintf(buffer, 1024, "delete from bdns where website = '%s'", dns);
     return g_conn_.execute_no_result(buffer);
 }
 int del_black_searchword(const char*word, const char*engine) {
     char buffer[1024];
-    _sntprintf(buffer, 1024, "del from bdns where word = '%s' and engine = '%s'", word, engine);
+    _sntprintf(buffer, 1024, "delete from bdns where word = '%s' and engine = '%s'", word, engine);
     return g_conn_.execute_no_result(buffer);
 }
