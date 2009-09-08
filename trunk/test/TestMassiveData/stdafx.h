@@ -8,8 +8,8 @@
 #include <iostream>
 #include <tchar.h>
 
-#ifndef DEBUG
-#pragma comment(lib, "MassDataAccess.lib")
-#else
+#ifdef _DEBUG
 #pragma comment(lib, "MassDataAccessd.lib")
+#else
+#pragma comment(lib, "MassDataAccess.lib")
 #endif
