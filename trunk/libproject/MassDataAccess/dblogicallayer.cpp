@@ -4,6 +4,11 @@
 
 sqlite_connection g_conn_;
 
+namespace {
+ int enum_data(const char * sql, boost::function<int (const char*, const char *)> enum_fun);
+ int enum_data(const char * sql, boost::function<int (int, const char *)> enum_fun) ;
+};
+
 const int  LOG_ON = 0;
 const int  LOG_OFF = 1;
 
@@ -41,45 +46,23 @@ int su_user_logoff() {
     return g_conn_.execute_no_result(buffer);
 }
 
+// 返回
+int get_website_visited_count(int * count) {
+    return get_sql_select_count(&g_conn_, "select website from webhistory", count);
+}
+int get_word_searched_count(int * count) {
+    return get_sql_select_count(&g_conn_, "select word from wordhistory", count);
+}
+
+int enum_website_visited(boost::function<int (const char*, const char *)> enum_fun) {
+    return enum_data("select website, visit_time from webhistory", enum_fun);
+}
+int enum_word_searched(boost::function<int  (const char*, const char *)> enum_fun) {
+    return enum_data("select word, visit_time from wordhistory", enum_fun);
+}
+
 int enum_su_logon(boost::function<int (int, const char *)> f) {
-    int rc = 0;
-    char buffer[1024];
-     sqlite_table t;
-    _sntprintf(buffer, 1024, "select logon_type, logon_tm from sulogon");
-    sqlite_query * query = g_conn_.create_query(buffer);
-
-    if (NULL == query) {
-        rc = -1;
-        goto exit;
-    }
-
-    rc = query->prepare();
-    if (rc) {
-        goto exit;
-    }
-
-    rc = query->execute();
-    if (rc) {
-        sqlite_row row;
-        goto exit;
-    }
-
-    while (query->step() == SQLITE_ROW) {
-        sqlite_row  row;
-        int rc = query->fetch(&row);
-        if (rc) {
-            goto exit;
-        }
-
-        f(row[0].get_i_value(), row[1].get_s_value().c_str());
-    }
-
-exit:
-    if (query != NULL) {
-        delete query;
-        query  = NULL;
-    }
-    return rc;
+    return enum_data( "select logon_type, logon_tm from sulogon", f);
 }
 
 // 自动清理
@@ -120,49 +103,38 @@ int insert_word_searched(const char*  word, const char * engine, const char * ti
 
 // 检测
 bool check_white_dns(const char*dns) {
+    int count;
     char buffer[1024];
     _sntprintf(buffer, 1024, "select website from wdns where website= '%s'", dns);
-    sqlite_query * query = g_conn_.create_query(buffer);
-
-    if (NULL != query) {
-        sqlite_table t;
-        query->execute_at_one_time(&t);
-        delete query;
-        return t.get_row_count() > 0 ? true : false;
-    } else {
-        // 记录log
+    int rc =  get_sql_select_count(&g_conn_, buffer, &count);
+    if (rc) {
         return false;
+    } else {
+        return count > 0;
     }
 }
 
 bool check_black_dns(const char * dns) {
+    int count;
     char buffer[1024];
     _sntprintf(buffer, 1024, "select website from bdns where website= '%s'", dns);
-    sqlite_query * query = g_conn_.create_query(buffer);
-
-    if (NULL != query) {
-        sqlite_table t;
-        query->execute_at_one_time(&t);
-        delete query;
-        return t.get_row_count() > 0 ? true : false;
-    } else {
-        // 记录log
+    int rc =  get_sql_select_count(&g_conn_, buffer, &count);
+    if (rc) {
         return false;
+    } else {
+        return count > 0;
     }
 }
+
 bool check_black_searchword(const char* word, const char * engine){
+    int count;
     char buffer[1024];
     _sntprintf(buffer, 1024, "select word from bwords where word= '%s' and engine = '%s'", word, engine);
-    sqlite_query * query = g_conn_.create_query(buffer);
-
-    if (NULL != query) {
-        sqlite_table t;
-        query->execute_at_one_time(&t);
-        delete query;
-        return t.get_row_count() > 0 ? true : false;
-    } else {
-        // 记录log
+    int rc =  get_sql_select_count(&g_conn_, buffer, &count);
+    if (rc) {
         return false;
+    } else {
+        return count > 0;
     }
 }
 
@@ -198,4 +170,86 @@ int del_black_searchword(const char*word, const char*engine) {
     char buffer[1024];
     _sntprintf(buffer, 1024, "delete from bwords where word = '%s' and engine = '%s'", word, engine);
     return g_conn_.execute_no_result(buffer);
+}
+
+//===========================
+// 重复代码
+namespace {
+int enum_data(const char * sql, boost::function<int (int, const char *)> enum_fun) {
+    int rc = 0;
+    sqlite_table t;
+    sqlite_query * query = g_conn_.create_query(sql);
+
+    if (NULL == query) {
+        rc = -1;
+        goto exit;
+    }
+
+    rc = query->prepare();
+    if (rc) {
+        goto exit;
+    }
+
+    rc = query->execute();
+    if (rc) {
+        sqlite_row row;
+        goto exit;
+    }
+
+    while (query->step() == SQLITE_ROW) {
+        sqlite_row  row;
+        int rc = query->fetch(&row);
+        if (rc) {
+            goto exit;
+        }
+
+        enum_fun(row[0].get_i_value(), row[1].get_s_value().c_str());
+    }
+
+exit:
+    if (query != NULL) {
+        delete query;
+        query  = NULL;
+    }
+    return rc;
+}
+
+int enum_data(const char * sql, boost::function<int (const char*, const char *)> enum_fun) {
+    int rc = 0;
+    sqlite_table t;
+    sqlite_query * query = g_conn_.create_query(sql);
+
+    if (NULL == query) {
+        rc = -1;
+        goto exit;
+    }
+
+    rc = query->prepare();
+    if (rc) {
+        goto exit;
+    }
+
+    rc = query->execute();
+    if (rc) {
+        sqlite_row row;
+        goto exit;
+    }
+
+    while (query->step() == SQLITE_ROW) {
+        sqlite_row  row;
+        int rc = query->fetch(&row);
+        if (rc) {
+            goto exit;
+        }
+
+        enum_fun(row[0].get_s_value().c_str(), row[1].get_s_value().c_str());
+    }
+
+exit:
+    if (query != NULL) {
+        delete query;
+        query  = NULL;
+    }
+    return rc;
+}
 }
