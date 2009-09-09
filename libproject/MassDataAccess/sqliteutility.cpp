@@ -318,3 +318,27 @@ sqlite_item::sqlite_item(const sqlite_item &item) {
     }
 }
 
+//==============================
+// utility function
+int get_sql_select_count(sqlite_connection * conn, const char * statement, int * count) {
+    assert(NULL != count);
+    sqlite_table t;
+    int rc = 0;
+    sqlite_query * query = conn->create_query(statement);
+
+    if (NULL == query) {
+        rc = -1;
+        goto exit;
+    }
+
+    query->execute_at_one_time(&t);
+    *count =  t.get_row_count();
+
+exit:
+    if (NULL != query) {
+        delete query;
+        query = NULL;
+    }
+    return rc;
+}
+
