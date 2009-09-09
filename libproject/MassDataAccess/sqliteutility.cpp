@@ -21,8 +21,9 @@ sqlite_connection::~sqlite_connection() {
 }
 
 int sqlite_connection::open(const char * name) {
+    assert(NULL != name);
     int rc = SQLITE_OK;
-    rc = sqlite3_open("record.data", &database_);
+    rc = sqlite3_open(name, &database_);
     if (rc ) {
         // 将errmsg写入日志
         rc = sqlite3_errcode(database_);
