@@ -7,7 +7,7 @@
 
 #include <iostream>
 #include <tchar.h>
-
+#include <windows.h>
 #ifdef _DEBUG
 #pragma comment(lib, "MassDataAccessd.lib")
 #else
