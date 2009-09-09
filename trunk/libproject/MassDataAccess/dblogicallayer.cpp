@@ -75,7 +75,7 @@ int enum_su_logon(boost::function<int (int, const char *)> f) {
     }
 
 exit:
-    if (query == NULL) {
+    if (query != NULL) {
         delete query;
         query  = NULL;
     }
