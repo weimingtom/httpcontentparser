@@ -59,8 +59,7 @@ private:
 public:
     sqlite_row();
     sqlite_row(sqlite_table * tab);
-
-    sqlite_table * tab_;
+    sqlite_row(const sqlite_row &row);
 public:
     ~sqlite_row();
 
@@ -76,6 +75,8 @@ private:
 private:
     typedef std::vector<sqlite_item> SUBITEMS;
     SUBITEMS items_;
+
+    sqlite_table * tab_;
 };
 
 class sqlite_column {
@@ -98,16 +99,13 @@ public:
     ~sqlite_table();
 
 public:
-    sqlite_row * new_row();
     int get_row_count() const { return (int)m_rows_.size();}
-    void add_row(sqlite_row * row) {m_rows_.push_back(row); }
+    void add_row(sqlite_row & row) {m_rows_.push_back(row); }
 private:
     void add_column(sqlite_column & column);
-
-    void free_rows();
     int get_column_index(const std::string &colname);
 private:
-    typedef std::vector<sqlite_row*> ROWS;
+    typedef std::vector<sqlite_row> ROWS;
     typedef std::vector<sqlite_column> COLUMNS;
     ROWS m_rows_;
     COLUMNS m_cols_;
@@ -120,7 +118,7 @@ class sqlite_query {
 public:
     ~sqlite_query();
 public:
-    int prepare(sqlite_table * table);
+    int prepare();
     int execute();
     int step();
     int fetch(sqlite_row * row);
@@ -146,9 +144,6 @@ private:
     // sqlite_query长于sqlite_connection以至于
     // 能够保证database_总是存在的
     sqlite3  *database_;
-
-    // 保存结果集
-    sqlite_table * table_;
 };
 
 
