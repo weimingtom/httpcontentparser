@@ -1,8 +1,10 @@
 #ifndef _SOFTWARE_ENCRYPT_INSTALLDATE_H__
 #define _SOFTWARE_ENCRYPT_INSTALLDATE_H__
 
-#include <boost/date_time/gregorian/gregorian.hpp>
-#include <boost/date_time/posix_time/posix_time.hpp>
+#include <boost/date_time/gregorian/gregorian_types.hpp>
+#include <boost/date_time/posix_time/time_formatters.hpp>
+#include <boost/date_time/posix_time/posix_time_types.hpp>
+#include <boost/date_time/posix_time/conversion.hpp>
 #include <windows.h>
 
 namespace software_encrypt {
