@@ -88,26 +88,12 @@ sqlite_query::~sqlite_query() {
 
 // 准备执行
 // 获取结果的列数, 并对table进行初始化
-int sqlite_query::prepare(sqlite_table * table) {
+int sqlite_query::prepare() {
     const char * pbinary_stmt = NULL;
     int columns = 0;
     int rc = sqlite3_prepare(database_, statement_.c_str(), statement_.length(), &stmt_, &pbinary_stmt);
     if (rc) {
         goto exit;
-    }
-
-    table_ = table;
-
-    if (NULL != table) {
-        // 列数
-        columns = sqlite3_column_count(stmt_);
-
-    // 获取每一列的类型
-        for (int i = 0; i < columns; ++i) {
-            const int col_type = sqlite3_column_type(stmt_, i);
-            const char * col_name = sqlite3_column_name(stmt_, i);
-            table_->add_column(sqlite_column(col_type, col_name));
-        }
     }
 exit:
     if (rc) {
@@ -130,9 +116,6 @@ int sqlite_query::uninitialize() {
 }
 
 int sqlite_query::fetch(sqlite_row * row) {
-    assert (NULL != table_);
-
-    int columns = sqlite3_column_count(stmt_);
     fecth_value(row);
     return 0;
 }
@@ -177,18 +160,32 @@ int sqlite_query::step() {
 }
 
 int sqlite_query::execute_at_one_time(sqlite_table * table) {
-    int rc = prepare(table);
+    assert(NULL != table);
+    int columns = 0;
+    int rc = prepare();
     if (rc) {
         goto exit;
     }
 
-    execute();
+    rc = execute();
+    if (rc) {
+        goto exit;
+    }
+
+    // 列数
+     columns = sqlite3_column_count(stmt_);
+
+    // 获取每一列的类型
+    for (int i = 0; i < columns; ++i) {
+        const int col_type = sqlite3_column_type(stmt_, i);
+        const char * col_name = sqlite3_column_name(stmt_, i);
+        table->add_column(sqlite_column(col_type, col_name));
+    }
 
     while (step() == SQLITE_ROW) {
-        sqlite_row * row = table->new_row();
-        int rc = fetch(row);
+        sqlite_row  row;
+        int rc = fetch(&row);
         if (rc) {
-            delete row;
             goto exit;
         }
         table->add_row(row);
@@ -204,6 +201,15 @@ sqlite_row::sqlite_row() {
 }
 
 sqlite_row::sqlite_row(sqlite_table * tab) : tab_(tab){
+}
+
+sqlite_row::sqlite_row(const sqlite_row &row) {
+    this->tab_ = row.tab_;
+    
+    SUBITEMS::const_iterator iter = row.items_.begin();
+    for (; iter != row.items_.end(); ++iter) {
+        this->items_.push_back(*iter);
+    }
 }
 
 sqlite_row::~sqlite_row() {
@@ -262,25 +268,12 @@ sqlite_table::sqlite_table() {
 }
 
 sqlite_table::~sqlite_table(){
-    free_rows();
  }
-
-sqlite_row * sqlite_table::new_row() {
-    sqlite_row * newrow =  new sqlite_row(this);
-    return newrow;
-}
 
 void sqlite_table::add_column(sqlite_column & column) {
     m_cols_.push_back(column);
 }
 
-void sqlite_table::free_rows() {
-    ROWS::iterator iter = m_rows_.begin();
-    for (; iter != m_rows_.end(); ++iter) {
-        delete *iter;
-    }
-    m_rows_.clear();
-}
 
 int sqlite_table::get_column_index(const std::string &colname) {
     int index = 0;
