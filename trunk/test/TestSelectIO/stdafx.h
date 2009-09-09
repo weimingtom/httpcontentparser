@@ -23,7 +23,7 @@
 #ifdef _DEBUG
 #	pragma comment(lib, "cppunitd.lib")
 #	pragma comment(lib, "testrunnerd.lib")
-#	pragma comment(lib, ".\\SelectIODebug\\selectiod.lib")
+#	pragma comment(lib, ".\SelectIODebug\selectiod.lib")
 #	pragma comment(lib, "utilityd.lib")
 #	pragma comment(lib, "apputilityd.lib")
 #else 
