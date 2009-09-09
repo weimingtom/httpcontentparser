@@ -19,10 +19,12 @@
 #include <softwareEncrypt\baseEncrypt.h>
 
 #ifdef _DEBUG
+#	pragma comment(lib, "apputilityd.lib")
 #	pragma comment(lib, "cppunitd.lib")
 #	pragma comment(lib, "testrunnerd.lib")
 #	pragma comment(lib, "softwareencryptd.lib")
 #else 
+#	pragma comment(lib, "apputility.lib")
 #	pragma comment(lib, "TestRunner.lib")
 #	pragma comment(lib, "cppunit.lib")
 #	pragma comment(lib, "softwareencrypt.lib")
