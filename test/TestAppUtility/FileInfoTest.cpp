@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include ".\fileinfotest.h"
-#include <fileinfo.h>
+#include <apputility\fileinfo.h>
 #include <iostream>
 
 FileInfoTest::FileInfoTest(void) {
