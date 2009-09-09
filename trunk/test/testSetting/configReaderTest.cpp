@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include ".\configreadertest.h"
-#include <xmlconfiguration.h> 
+#include <setting\xmlconfiguration.h> 
 #include <webcontenttype.h>
 
 using namespace CPPUNIT_NS;
