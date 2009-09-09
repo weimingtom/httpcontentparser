@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include ".\contentsettingtest.h"
-#include <contentchecksetting.h>
+#include <setting\contentchecksetting.h>
 #include <webcontenttype.h>
 
 ContentSettingTest::ContentSettingTest(void) {

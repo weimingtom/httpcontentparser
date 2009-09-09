@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include ".\appcontroltest.h"
-#include <programcontrol.h>
+#include <setting\programcontrol.h>
 #include <utility\strutility.h>
 
 #define ITEM_FILE_1	TEXT("C:\\WINDOWS\\system32\\actmovie.exe")
