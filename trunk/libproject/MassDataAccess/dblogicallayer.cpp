@@ -5,8 +5,10 @@
 sqlite_connection g_conn_;
 
 namespace {
+int enum_data(const char * sql, boost::function<int (const char *, const char *, const char *)>& enum_fun) ;
  int enum_data(const char * sql, boost::function<int (const char*, const char *)> & enum_fun);
  int enum_data(const char * sql, boost::function<int (int, const char *)> & enum_fun) ;
+ int enum_data(const char * sql, boost::function<int ( const char *)> & enum_fun);
 };
 
 const int  LOG_ON = 0;
@@ -54,17 +56,28 @@ int get_word_searched_count(int * count) {
     return get_sql_select_count(&g_conn_, "select word from wordhistory", count);
 }
 
+//====================================
+//  枚举函数
 int enum_website_visited(boost::function<int (const char*, const char *)> enum_fun) {
     return enum_data("select website, visit_time from webhistory", enum_fun);
 }
-int enum_word_searched(boost::function<int  (const char*, const char *)> enum_fun) {
-    return enum_data("select word, visit_time from wordhistory", enum_fun);
+int enum_word_searched(boost::function<int  (const char*, const char *, const char * )> enum_fun) {
+    return enum_data("select word, engine, visit_time from wordhistory", enum_fun);
 }
 
-int enum_su_logon(boost::function<int (int, const char *)> f) {
-    return enum_data( "select logon_type, logon_tm from sulogon", f);
+int enum_su_logon(boost::function<int (int, const char *)> enum_fun) {
+    return enum_data( "select logon_type, logon_tm from sulogon", enum_fun);
 }
 
+int enum_white_dns(boost::function<int ( const char*)> enum_fun) {
+     return enum_data( "select website from wdns", enum_fun);
+}
+int enum_black_dns(boost::function<int( const char*)> enum_fun) {
+     return enum_data( "select website  from bdns", enum_fun);
+}
+int enum_blacksearch_word(boost::function<int (const char*, const char *)> enum_fun) {
+    return enum_data( "select word, engine, visit_time from bwords", enum_fun);
+}
 // 自动清理
 int auto_clean_website_list(const int days) {
     char buffer[1024];
@@ -175,6 +188,44 @@ int del_black_searchword(const char*word, const char*engine) {
 //===========================
 // 重复代码
 namespace {
+int enum_data(const char * sql, boost::function<int (const char *, const char *, const char *)>& enum_fun) {
+    int rc = 0;
+    sqlite_table t;
+    sqlite_query * query = g_conn_.create_query(sql);
+
+    if (NULL == query) {
+        rc = -1;
+        goto exit;
+    }
+
+    rc = query->prepare();
+    if (rc) {
+        goto exit;
+    }
+
+    rc = query->execute();
+    if (rc) {
+        sqlite_row row;
+        goto exit;
+    }
+
+    while (query->step() == SQLITE_ROW) {
+        sqlite_row  row;
+        int rc = query->fetch(&row);
+        if (rc) {
+            goto exit;
+        }
+
+        enum_fun(row[0].get_s_value().c_str(), row[1].get_s_value().c_str(), row[2].get_s_value().c_str());
+    }
+
+exit:
+    if (query != NULL) {
+        delete query;
+        query  = NULL;
+    }
+    return rc;
+}
 int enum_data(const char * sql, boost::function<int (int, const char *)>& enum_fun) {
     int rc = 0;
     sqlite_table t;
@@ -243,6 +294,45 @@ int enum_data(const char * sql, boost::function<int (const char*, const char *)>
         }
 
         enum_fun(row[0].get_s_value().c_str(), row[1].get_s_value().c_str());
+    }
+
+exit:
+    if (query != NULL) {
+        delete query;
+        query  = NULL;
+    }
+    return rc;
+}
+
+int enum_data(const char * sql, boost::function<int ( const char *)> & enum_fun) {
+    int rc = 0;
+    sqlite_table t;
+    sqlite_query * query = g_conn_.create_query(sql);
+
+    if (NULL == query) {
+        rc = -1;
+        goto exit;
+    }
+
+    rc = query->prepare();
+    if (rc) {
+        goto exit;
+    }
+
+    rc = query->execute();
+    if (rc) {
+        sqlite_row row;
+        goto exit;
+    }
+
+    while (query->step() == SQLITE_ROW) {
+        sqlite_row  row;
+        int rc = query->fetch(&row);
+        if (rc) {
+            goto exit;
+        }
+
+        enum_fun(row[0].get_s_value().c_str());
     }
 
 exit:
