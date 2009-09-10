@@ -5,8 +5,8 @@
 sqlite_connection g_conn_;
 
 namespace {
- int enum_data(const char * sql, boost::function<int (const char*, const char *)> enum_fun);
- int enum_data(const char * sql, boost::function<int (int, const char *)> enum_fun) ;
+ int enum_data(const char * sql, boost::function<int (const char*, const char *)> & enum_fun);
+ int enum_data(const char * sql, boost::function<int (int, const char *)> & enum_fun) ;
 };
 
 const int  LOG_ON = 0;
@@ -68,12 +68,12 @@ int enum_su_logon(boost::function<int (int, const char *)> f) {
 // 自动清理
 int auto_clean_website_list(const int days) {
     char buffer[1024];
-    _sntprintf(buffer, 1024, "delete from webhistory where julianday('now') -  visit_time> %d", days);
+    _sntprintf(buffer, 1024, "delete from webhistory where julianday('now') -  julianday(visit_time)> %d", days);
     return g_conn_.execute_no_result(buffer);
 }
 int auto_clean_wordsearched_list(const int days) {
     char buffer[1024];
-    _sntprintf(buffer, 1024, "delete from wordhistory where julianday('now') -  visit_time> %d", days);
+    _sntprintf(buffer, 1024, "delete from wordhistory where julianday('now') -  julianday(visit_time)> %d", days);
     return g_conn_.execute_no_result(buffer);
 }
 
@@ -175,7 +175,7 @@ int del_black_searchword(const char*word, const char*engine) {
 //===========================
 // 重复代码
 namespace {
-int enum_data(const char * sql, boost::function<int (int, const char *)> enum_fun) {
+int enum_data(const char * sql, boost::function<int (int, const char *)>& enum_fun) {
     int rc = 0;
     sqlite_table t;
     sqlite_query * query = g_conn_.create_query(sql);
@@ -214,7 +214,7 @@ exit:
     return rc;
 }
 
-int enum_data(const char * sql, boost::function<int (const char*, const char *)> enum_fun) {
+int enum_data(const char * sql, boost::function<int (const char*, const char *)> & enum_fun) {
     int rc = 0;
     sqlite_table t;
     sqlite_query * query = g_conn_.create_query(sql);
