@@ -25,6 +25,7 @@ const char * website3 = "www.zhidao.com";
 const char * website4 = "www.google.com";
 const char * website5 = "www.not.com";
 const char * dbfilename = "hello.db";
+const char * memdb = ":memory:";
 const char * word = "word";
 
 boost::unit_test::test_suite* init_unit_test_suite( int argc, char* argv[] ) {
@@ -40,7 +41,7 @@ boost::unit_test::test_suite* init_unit_test_suite( int argc, char* argv[] ) {
 
 namespace {
 std::string format_ptime_to_timestamp( boost::posix_time::ptime & pt) {
-    boost::format formatter("%+2d %+2d %+2d %+2d :%+2d:%+2d ");
+    boost::format formatter("%04d-%02d-%02d %02d:%02d:%02d ");
 
     formatter % pt.date().year() % pt.date().month() % pt.date().day() 
         % pt.time_of_day().hours() % pt.time_of_day().minutes() % pt.time_of_day().seconds();
@@ -62,6 +63,40 @@ int print_info(int type, const char * timestamp) {
 };
 
 int test_auto_website_clean() {
+    // 设置环境
+    using namespace boost::posix_time;
+    using namespace boost::gregorian;
+    using namespace boost::date_time;
+
+    using boost::posix_time::ptime;
+    using boost::date_time::second_clock;
+    boost::posix_time::ptime pt(second_clock<ptime>::universal_time());
+    boost::posix_time::time_duration td(24, 0, 0);
+    // 为最近30天，每天插入两个词汇并设置不同的auto_clear day
+    // 对结果进行分析
+
+    int cnt = 0;
+    for (int i = 0; i < 30; ++i)  {
+        pt -= td;
+        BOOST_CHECK(0 == insert_word_searched(word, "google", format_ptime_to_timestamp(pt).c_str()));
+        cnt ++;
+    }
+
+    int count = 0;
+    BOOST_CHECK(0 ==get_word_searched_count(&count));
+    BOOST_CHECK(count == cnt);
+
+   // enum_website_visited(&print_words);
+
+    int cnt2 = 1;
+    for (int i = 30; i > 0; --i) {
+        // 自动清理
+        BOOST_CHECK(0 == auto_clean_wordsearched_list(i));
+        BOOST_CHECK(0 ==get_word_searched_count(&count));
+        BOOST_CHECK(count == (cnt - cnt2));
+        cnt2++;
+    }
+
     return 0;
 }
 
@@ -90,7 +125,7 @@ int test_auto_searchword_clean() {
     BOOST_CHECK(0 ==get_website_visited_count(&count));
     BOOST_CHECK(count == cnt);
 
-    enum_website_visited(&print_words);
+   // enum_website_visited(&print_words);
 
     int cnt2 = 1;
     for (int i = 30; i > 0; --i) {
@@ -98,6 +133,7 @@ int test_auto_searchword_clean() {
         BOOST_CHECK(0 == auto_clean_website_list(i));
         BOOST_CHECK(0 ==get_website_visited_count(&count));
         BOOST_CHECK(count == (cnt - cnt2));
+        cnt2++;
     }
 
     return 0;
@@ -114,7 +150,7 @@ int test_sulogon() {
     su_user_logoff();
     su_user_logoff();
 
-    // enum_su_logon(print_info);
+    enum_su_logon(print_info);
 
     return 0;
 }
@@ -214,12 +250,7 @@ int test_blasklisted_dns() {
 // 初始化数据库
 // 删除数据文件，创建表等
 int init_db() {
-    TCHAR workdir[MAX_PATH], dbpath[MAX_PATH];
-    GetCurrentDirectory(MAX_PATH, workdir);
-    _sntprintf(dbpath, MAX_PATH, TEXT("%s\\%s"), workdir, dbfilename);
-    DeleteFile(dbpath);
-    int a = GetLastError();
-    load_db(dbfilename);
+    load_db(memdb);
 
     initialize_db();
     return 0;
