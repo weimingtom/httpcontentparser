@@ -14,8 +14,11 @@ WTL安装
 AppWiz
   AppWizCE 11,666 CPL.TXT
     include 102,730 
+
     readme.htm
+
     Samples 
+
 3，进入AppWiz目录，可以看到几个.js脚本文件，本来可以用这个安装的，但我想手工安装。所以不看他了。进入Files目录。此目录称为源路径$SOURCEDIR。准备开始安装了。 
  （1）得到VC安装目录$VCDIR: 读注册表："HKLM\\Software\\Microsoft\\VisualStudio\\7.1\\Setup\\VC\\ProductDir" 
   
