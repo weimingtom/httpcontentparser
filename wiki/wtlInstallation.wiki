@@ -1,0 +1,36 @@
+#summary WTL安装
+#labels WTL
+
+= Introduction =
+
+WTL安装
+
+
+= Details =
+
+1，从网上下载WTL 7.5 4291 版：http://sourceforge.net/projects/wtl/，得到wtl75_4291.zip 
+
+2，将wtl75_4291.zip解压缩后，得到文件目录结构如下：
+AppWiz
+  AppWizCE 11,666 CPL.TXT
+    include 102,730 
+    readme.htm
+    Samples 
+3，进入AppWiz目录，可以看到几个.js脚本文件，本来可以用这个安装的，但我想手工安装。所以不看他了。进入Files目录。此目录称为源路径$SOURCEDIR。准备开始安装了。 
+ （1）得到VC安装目录$VCDIR: 读注册表："HKLM\\Software\\Microsoft\\VisualStudio\\7.1\\Setup\\VC\\ProductDir" 
+  
+ （2）将($SOURCEDIR)\WTLAppWiz.* 总共三个文件 复制到 ($VCDIR)\vcprojects下。 
+
+ （3）在($VCDIR)\vcprojects下创建目录 WTL 
+
+ （4）复制 WTLAppWiz.vsdir到刚创建的目录WTL下。并修改该文件内容： 找到“WTLAppWiz.vsz”，替换为：“..\WTLAppWiz.vsz”。存盘。 
+
+ （5）转到目录($VCDIR)\vcwizard,创建目录 WTLWiz (-->$WTLWiz) 
+
+ （6）复制($SOURCEDIR)\下的所有目录到刚创建的WTLWiz目录中去。 
+
+ （7）修改(($VCDIR)\vcprojects\WTLAppWiz.vsz文件， a，在“Wizard=VsWizard.VsWizardEngine”后添加“.7.1”，变成了“Wizard=VsWizard.VsWizardEngine.7.1” b，修改：Param="ABSOLUTE_PATH = ."将 .变为 ($WTLWiz)代表的路径。如下： Param="ABSOLUTE_PATH = D:\Program Files\Microsoft Visual Studio .NET 2003\Vc7\VCWizards\WTLWiz" 
+
+ （8）将解压缩后得到的include目录下的所有头文件复制到 ($VCDIR)\atlmfc\include 
+
+ （9）安装成功。
