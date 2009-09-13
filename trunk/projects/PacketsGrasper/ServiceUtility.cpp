@@ -1,8 +1,6 @@
 #include "stdafx.h"
 #include "./serviceUtility.h"
-#include <com\FilterSetting_i.c>
-#include <com\FilterSetting.h>
-#include <com\comutility.h>
+#include "./BufferCallCom.h"
 #include <utility\httprequestpacket.h>
 #include <utility\debugmessage.h>
 #include <utility\strutility.h>
