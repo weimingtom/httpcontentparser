@@ -8,8 +8,6 @@
 #include <boost\test\test_tools.hpp>
 using namespace boost::unit_test;
 
-
-
 namespace {
 	void printDataItem(const std::string &name, const SeachKeywordUtil::KEYWORD_DATA &data) {
 		using namespace std;

@@ -64,7 +64,7 @@ private:
 	HANDLE hThread_;
 
 	friend DWORD CALLBACK HandlePacket(LPVOID lParam);
-	friend class SelectIOTest;
+	friend void testRemovePacket();
 };
 
 #endif  // _SELECTIO_HANDLE_QUEUE_H__

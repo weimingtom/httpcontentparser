@@ -3,18 +3,12 @@
 #include "..\..\projects\PacketsGrasper\serviceUtility.h"
 #include <utility/HTTPRequestPacket.h>
 
-namespace {
-};
-ServiceutilityTest::ServiceutilityTest(void)
-{
-}
+#include <boost\test\test_tools.hpp>
+using namespace boost::unit_test;
 
-ServiceutilityTest::~ServiceutilityTest(void)
-{
-}
 
 // 这里的测试与COM的状态有关。
-void ServiceutilityTest::TestCheckSeachRule() {
+void TestCheckSeachRule() {
 	{
 	char * require = "GET /search?hl=en&q=hello1&btnG=Google+Search&aq=f&oq= HTTP/1.1\r\n"
 			"Host: www.google.com\r\n"
@@ -29,7 +23,7 @@ void ServiceutilityTest::TestCheckSeachRule() {
 
 	// 注意: 要使此测试成功， 需要在BLACK WORD中添加'hello1'.
 	// 否则将会失败
-	CPPUNIT_ASSERT(false ==  checkSeachRule(&packet));
+	BOOST_CHECK(false ==  checkSeachRule(&packet));
 	}
 
 	{
@@ -44,6 +38,6 @@ void ServiceutilityTest::TestCheckSeachRule() {
 	HTTPRequestPacket packet;
 	packet.parsePacket(require, (int)strlen(require));
 
-	CPPUNIT_ASSERT(true ==  checkSeachRule(&packet));
+	BOOST_CHECK(true ==  checkSeachRule(&packet));
 	}
 }

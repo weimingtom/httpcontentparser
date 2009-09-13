@@ -63,7 +63,7 @@ protected:
 
 	// 保存WSPRecv的函数指针
 	MYWSPRECV * lpWSPRecv;
-	friend class SelectIOTest;
+	friend void testRemovePacket();
 
 // 检查包的的内容
 	bool handlePacket(HTTPPacket *packet);
