@@ -1,9 +1,6 @@
 #ifndef _TEST_SELECTIO_SELECTIO_TEST_H__
 #define _TEST_SELECTIO_SELECTIO_TEST_H__
 
-#include <cppunit/extensions/HelperMacros.h>
-
-
 // SelectIOTest
 void testCloseSocket();
 void testRemovePacket();

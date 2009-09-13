@@ -19,15 +19,15 @@ void TestDNSMap() {
 
 	int data2 = 2;
 	string dns2 = "sina";
-	dnsmap.add(data1, dns1);
+	dnsmap.add(data2, dns2);
 
 	int data3 = 3;
 	string dns3 = "baidu";
-	dnsmap.add(data1, dns1);
+	dnsmap.add(data3, dns3);
 
 	int data4 = 4;
 	string dns4 = "sohu";
-	dnsmap.add(data1, dns1);
+	dnsmap.add(data4, dns4);
 
 	BOOST_CHECK(dns1 == dnsmap.get(data1));
 	BOOST_CHECK(dns2 == dnsmap.get(data2));
