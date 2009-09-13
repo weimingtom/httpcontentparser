@@ -1,8 +1,6 @@
 #ifndef _TEST_FILTER_SETTING_FILTERSETTINGTEST_H__
 #define _TEST_FILTER_SETTING_FILTERSETTINGTEST_H__
 
-#include <cppunit/extensions/HelperMacros.h>
-
 class FilterSettingTest : public CPPUNIT_NS::TestFixture {
 public:
 	CPPUNIT_TEST_SUITE(FilterSettingTest);
