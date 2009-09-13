@@ -1,9 +1,10 @@
 #include "StdAfx.h"
 #include ".\appinstallvaltest.h"
-#include <AppinstallValidate.h>
+#include <apputility\AppinstallValidate.h>
 #include <app_constants.h>
 #include <softwareStatus.h>
-using namespace CPPUNIT_NS;
+#include <boost\test\test_tools.hpp>
+using namespace boost::unit_test;
 
 namespace {
 using namespace std;
@@ -54,42 +55,37 @@ HMODULE GetModule(const TCHAR * exefilename) {
 }
 };
 
-AppInstallValTest::AppInstallValTest(void)
-{
-}
-
-AppInstallValTest::~AppInstallValTest(void)
-{
-}
-
-void AppInstallValTest::testRunInCOM() {
+void testRunInCOM() {
 	AppUtility::AppInstallValidate t1(VALIDATE_COM, SNOWMAN_STATUS_REGISTERED);
 	t1.repair();
 	// 这里失败是因为COM文件也不存在，也返回了错误
-	CPPUNIT_ASSERT(t1.errno_ == PACKETSFILTERED_FILE_NOT_FOUND);
+	BOOST_CHECK(t1.getErrorCode()  == PACKETSFILTERED_FILE_NOT_FOUND);
 }
-void AppInstallValTest::testRunInSPI() {
+void testRunInSPI() {
 	AppUtility::AppInstallValidate t1(VALIDATE_SPI, SNOWMAN_STATUS_REGISTERED);
 	t1.repair();
-	CPPUNIT_ASSERT(t1.errno_ == F_COM_FILE_NOT_FOUND);
+	BOOST_CHECK(t1.getErrorCode() == F_COM_FILE_NOT_FOUND);
 }
-void AppInstallValTest::testRunInNone() {
+void testRunInNone() {
 }
 
-void AppInstallValTest::testShouldRepair() {
+void testServieInstall() {
+}
+
+void testShouldRepair() {
 	AppUtility::AppInstallValidate t1(VALIDATE_COM, SNOWMAN_STATUS_REGISTERED);
 
-	CPPUNIT_ASSERT(t1.shouldRepairCOM() == false);
-	CPPUNIT_ASSERT(t1.shouldRepairRegistry() == true);
-	CPPUNIT_ASSERT(t1.shouldRepairSPI() == true);
+	BOOST_CHECK(t1.shouldRepairCOM() == false);
+	BOOST_CHECK(t1.shouldRepairRegistry() == true);
+	BOOST_CHECK(t1.shouldRepairSPI() == true);
 
 	AppUtility::AppInstallValidate t2(VALIDATE_SPI, SNOWMAN_STATUS_REGISTERED);
-	CPPUNIT_ASSERT(t2.shouldRepairCOM() == true);
-	CPPUNIT_ASSERT(t2.shouldRepairRegistry() == false);
-	CPPUNIT_ASSERT(t2.shouldRepairSPI() == false);
+	BOOST_CHECK(t2.shouldRepairCOM() == true);
+	BOOST_CHECK(t2.shouldRepairRegistry() == false);
+	BOOST_CHECK(t2.shouldRepairSPI() == false);
 
 	AppUtility::AppInstallValidate t3(VLAIDATE_NONE, SNOWMAN_STATUS_REGISTERED);
-	CPPUNIT_ASSERT(t3.shouldRepairCOM() == true);
-	CPPUNIT_ASSERT(t3.shouldRepairRegistry() == true);
-	CPPUNIT_ASSERT(t3.shouldRepairSPI() == true);
+	BOOST_CHECK(t3.shouldRepairCOM() == true);
+	BOOST_CHECK(t3.shouldRepairRegistry() == true);
+	BOOST_CHECK(t3.shouldRepairSPI() == true);
 }

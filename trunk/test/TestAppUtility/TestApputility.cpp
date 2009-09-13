@@ -5,32 +5,27 @@
 #include ".\appinstallvaltest.h"
 #include ".\AppUtilitytest.h"
 #include ".\fileinfotest.h"
+#include <boost\test\included\unit_test.hpp>
 
-CPPUNIT_TEST_SUITE_REGISTRATION(FileInfoTest);
-CPPUNIT_TEST_SUITE_REGISTRATION(AppInstallValTest);
-CPPUNIT_TEST_SUITE_REGISTRATION(AppUtilityTest);
+using namespace boost::unit_test;
 
-int _tmain(int argc, _TCHAR* argv[])
-{
-  // Create the event manager and test controller
-  CPPUNIT_NS::TestResult controller;
+boost::unit_test::test_suite* init_unit_test_suite( int argc, char* argv[] ) {
+    framework::master_test_suite().add( BOOST_TEST_CASE(&testShouldRepair) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&testRunInCOM) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&testRunInSPI) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&testRunInNone) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&testServieInstall) );
 
-  // Add a listener that colllects test result
-  CPPUNIT_NS::TestResultCollector result;
-  controller.addListener( &result );        
+    framework::master_test_suite().add( BOOST_TEST_CASE(&testGetMainUIName) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&testGetInstallPath) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&testGetAppConfigFilename) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&testGetImageDirectory) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&testGetPageDirectory) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&testGetRecordConfigfile) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&testGetFileNameDir) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&testRegisterOper) );
 
-  // Add a listener that print dots as test run.
-  CPPUNIT_NS::BriefTestProgressListener progress;
-  controller.addListener( &progress );      
+    framework::master_test_suite().add( BOOST_TEST_CASE(&testSVCHOST) );
 
-  // Add the top suite to the test runner
-  CPPUNIT_NS::TestRunner runner;
-  runner.addTest( CPPUNIT_NS::TestFactoryRegistry::getRegistry().makeTest() );
-  runner.run( controller );
-
-  // Print test in a compiler compatible format.
-  CPPUNIT_NS::CompilerOutputter outputter( &result, CPPUNIT_NS::stdCOut() );
-  outputter.write(); 
-
-  return result.wasSuccessful() ? 0 : 1;
+    return 0;
 }

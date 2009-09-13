@@ -37,37 +37,45 @@ public:
 	void getErrorMessage(TCHAR * msg, const int len);
 
 	int uninstall();
+
+    int getErrorCode() const { return errno_;}
 private:
 	bool validateReigstrInstallPath(const TCHAR *path);
 	bool repairRegistryInstallPath(const TCHAR * path);
-	bool shouldRepairRegistry();
-
+	
 	// SPI
 	void repairSPI(bool removefirst);
 	void installSPI();
-	bool shouldRepairSPI();
-
+	
 	// COM Service
 	//bool serviceWorking();
 	void repairCOM(bool removefirst);
-	bool shouldRepairCOM();
 
 	// install shell extension
-
 	void getCurrentPath(HMODULE hModule);
 private:
 	int type_;
 	int status_;			// 保存应用程序的状态
-
-	bool shouldInstall();
+	
 	void setErrNo(int new_error);
 	UINT errno_;
 
+public:
+    bool shouldRepairSPI();
+    bool shouldInstall();
+    bool shouldRepairRegistry();
+    bool shouldRepairCOM();
+
 private:
 	AppInstallValidate(void);
-	friend class AppInstallValTest;
-	
 	TCHAR install_path[MAX_PATH];	// 安装路径
+
+private:
+    friend  void testShouldRepair();
+    friend  void testRunInCOM();
+    friend  void testRunInSPI();
+    friend  void testRunInNone();
+    friend  void testServieInstall();
 };
 
 APPUTILITYDLL_API UINT UninstallSPI();

@@ -2,14 +2,11 @@
 #include ".\fileinfotest.h"
 #include <apputility\fileinfo.h>
 #include <iostream>
+#include <boost\test\test_tools.hpp>
+using namespace boost::unit_test;
 
-FileInfoTest::FileInfoTest(void) {
-}
 
-FileInfoTest::~FileInfoTest(void) {
-}
-
-void FileInfoTest::testSVCHOST() {
+void testSVCHOST() {
 	using namespace std;
 
 	CFileInfo fileinfo("C:\\WINDOWS\\system32\\svchost.exe");
