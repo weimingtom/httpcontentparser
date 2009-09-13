@@ -1,28 +1,16 @@
 #include "StdAfx.h"
 #include ".\installdatetest.h"
 #include <softwareencrypt\installdate.h>
+#include <boost\test\test_tools.hpp>
 #include <boost/date_time/gregorian/gregorian.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <iostream>
 #include <time.h>
 
-InstallDateTest::InstallDateTest(void) {
-	rawdate = software_encrypt::getInstallDataTime();
-} 
 
-InstallDateTest::~InstallDateTest(void) {
-	tm t =	to_tm(rawdate);
-	FILETIME ft;
-	SYSTEMTIME st = st_from_tm(t);
-	SystemTimeToFileTime(&st, &ft);
-	software_encrypt::internal_utility::setInstallDateFile(ft);
-	software_encrypt::internal_utility::setInstallDataOnRegistry(ft);
-	software_encrypt::internal_utility::setInstallDateInWin(ft);
-}
+using namespace boost::unit_test;
 
-
-
-void InstallDateTest::TestInstallDateItem() {
+void TestInstallDateItem() {
 	using namespace software_encrypt;
 	using namespace boost::posix_time;
 
@@ -53,7 +41,7 @@ void InstallDateTest::TestInstallDateItem() {
 
 	ptime t1 =getInstallDataTime();
 	ptime t2 =from_ftime<ptime>(ft3);
-	CPPUNIT_ASSERT(t1 == t2);
+	BOOST_CHECK(t1 == t2);
 	}
 
 	{
@@ -82,7 +70,7 @@ void InstallDateTest::TestInstallDateItem() {
 	ptime t2 =from_ftime<ptime>(ft2);
 	std::cout<<"pWin: " << to_simple_string(t1)<< std::endl;
 	std::cout<<"pWin: " << to_simple_string(t2)<< std::endl;
-	CPPUNIT_ASSERT(t1 == t2);
+	BOOST_CHECK(t1 == t2);
 	}
 
 	{
@@ -109,11 +97,11 @@ void InstallDateTest::TestInstallDateItem() {
 
 	ptime t1 =getInstallDataTime();
 	ptime t2 =from_ftime<ptime>(ft1);
-	CPPUNIT_ASSERT(t1 == t2);
+	BOOST_CHECK(t1 == t2);
 	}
 }
 
-void InstallDateTest::TestGetInstallDateFromRegistry() {
+void TestGetInstallDateFromRegistry() {
 	using namespace software_encrypt;
 	using namespace boost::posix_time;
 	SYSTEMTIME st = {0};
@@ -128,7 +116,7 @@ void InstallDateTest::TestGetInstallDateFromRegistry() {
 	internal_utility::setInstallDataOnRegistry(ft);
 	ptime t1 = internal_utility::getInstallDateFromRegistry();
 	ptime t2 =from_ftime<ptime>(ft);
-	CPPUNIT_ASSERT(t1 == t2);
+	BOOST_CHECK(t1 == t2);
 	}
 	
 	{
@@ -141,7 +129,7 @@ void InstallDateTest::TestGetInstallDateFromRegistry() {
 	internal_utility::setInstallDataOnRegistry(ft);
 	ptime t1 = internal_utility::getInstallDateFromRegistry();
 	ptime t2 =from_ftime<ptime>(ft);
-	CPPUNIT_ASSERT(t1 == t2);
+	BOOST_CHECK(t1 == t2);
 	}
 
 	{
@@ -157,11 +145,11 @@ void InstallDateTest::TestGetInstallDateFromRegistry() {
 	internal_utility::setInstallDataOnRegistry(ft);
 	ptime t1 = internal_utility::getInstallDateFromRegistry();
 	ptime t2 =from_ftime<ptime>(ft);
-	CPPUNIT_ASSERT(t1 == t2);
+	BOOST_CHECK(t1 == t2);
 	}
 }
 
-void InstallDateTest::TestGetInstallDateFromWin() {
+void TestGetInstallDateFromWin() {
 	using namespace software_encrypt;
 	using namespace boost::posix_time;
 	SYSTEMTIME st = {0};
@@ -176,10 +164,10 @@ void InstallDateTest::TestGetInstallDateFromWin() {
 	internal_utility::setInstallDateInWin(ft);
 	ptime t1 = internal_utility::getInstallDateFromWin();
 	ptime t2 =from_ftime<ptime>(ft);
-	CPPUNIT_ASSERT(t1 == t2);
+	BOOST_CHECK(t1 == t2);
 	}
 }
-void InstallDateTest::TestGetInstallDateFromFile() {
+void TestGetInstallDateFromFile() {
 	using namespace software_encrypt;
 	using namespace boost::posix_time;
 	SYSTEMTIME st = {0};
@@ -194,7 +182,7 @@ void InstallDateTest::TestGetInstallDateFromFile() {
 	internal_utility::setInstallDateFile(ft);
 	ptime t1 = internal_utility::getInstallDateFromFile();
 	ptime t2 =from_ftime<ptime>(ft);
-	CPPUNIT_ASSERT(t1 == t2);
+	BOOST_CHECK(t1 == t2);
 	}
 }
 

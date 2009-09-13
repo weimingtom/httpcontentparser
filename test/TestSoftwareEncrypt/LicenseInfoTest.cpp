@@ -8,9 +8,11 @@
 #include <softwareStatus.h>
 #include <app_constants.h>
 #include <string>
+#include <boost\test\test_tools.hpp>
 #include <boost/date_time/gregorian/gregorian_types.hpp>
 #include <boost/date_time/gregorian/gregorian.hpp>
 
+using namespace boost::unit_test;
 
 namespace {
 	// 获取当前日期前days的日期的FILETIME
@@ -26,24 +28,9 @@ namespace {
 	}
 }
 
-LicenseInfoTest::LicenseInfoTest(void) {
-	rawSN1 = software_encrypt::internal_utility::getSN();
-	rawdate = software_encrypt::getInstallDataTime();
-}
 
-LicenseInfoTest::~LicenseInfoTest(void) {
-	software_encrypt::internal_utility::storeSN(rawSN1);
 
-	tm t =	to_tm(rawdate);
-	FILETIME ft;
-	SYSTEMTIME st = st_from_tm(t);
-	SystemTimeToFileTime(&st, &ft);
-	software_encrypt::internal_utility::setInstallDateFile(ft);
-	software_encrypt::internal_utility::setInstallDataOnRegistry(ft);
-	software_encrypt::internal_utility::setInstallDateInWin(ft);
-}
-
-void LicenseInfoTest::testInstallDate() {
+void testInstallDate() {
 	using namespace software_encrypt;
 	using namespace software_encrypt::internal_utility;
 	using namespace std;
@@ -70,8 +57,8 @@ void LicenseInfoTest::testInstallDate() {
 
 	LicenseInfo ii;
 	ii.initialize();
-	CPPUNIT_ASSERT(ii.registered() == false);
-	CPPUNIT_ASSERT(ii.getAppStatus() == SNOWMAN_STATUS_OVERTIME);
+	BOOST_CHECK(ii.registered() == false);
+	BOOST_CHECK(ii.getAppStatus() == SNOWMAN_STATUS_OVERTIME);
 	}
 
 	// 合法的
@@ -90,8 +77,8 @@ void LicenseInfoTest::testInstallDate() {
 
 	LicenseInfo ii;
 	ii.initialize();
-	CPPUNIT_ASSERT(ii.registered() == true);
-	CPPUNIT_ASSERT(ii.getAppStatus() == SNOWMAN_STATUS_REGISTERED);
+	BOOST_CHECK(ii.registered() == true);
+	BOOST_CHECK(ii.getAppStatus() == SNOWMAN_STATUS_REGISTERED);
 	}
 
 	// 试用期内的
@@ -108,9 +95,9 @@ void LicenseInfoTest::testInstallDate() {
 	LicenseInfo ii;
 	ii.initialize();
 	int a = ii.getInstallDays();
-	CPPUNIT_ASSERT(ii.registered() == false);
-	CPPUNIT_ASSERT(ii.getInstallDays() == 5);
-	CPPUNIT_ASSERT(ii.getAppStatus() == SNOWMAN_STATUS_TRIAL);
+	BOOST_CHECK(ii.registered() == false);
+	BOOST_CHECK(ii.getInstallDays() == 5);
+	BOOST_CHECK(ii.getAppStatus() == SNOWMAN_STATUS_TRIAL);
 	
 	}
 
@@ -127,14 +114,14 @@ void LicenseInfoTest::testInstallDate() {
 
 	LicenseInfo ii;
 	ii.initialize();
-	CPPUNIT_ASSERT(ii.registered() == false);
-	CPPUNIT_ASSERT(ii.getAppStatus() == SNOWMAN_STATUS_OVERTIME);
-	CPPUNIT_ASSERT(ii.getDaysLeft() < 0);
-	CPPUNIT_ASSERT(ii.getInstallDays() == REG_SOFTWARE_TRAIL_DAYES+3) ;
+	BOOST_CHECK(ii.registered() == false);
+	BOOST_CHECK(ii.getAppStatus() == SNOWMAN_STATUS_OVERTIME);
+	BOOST_CHECK(ii.getDaysLeft() < 0);
+	BOOST_CHECK(ii.getInstallDays() == REG_SOFTWARE_TRAIL_DAYES+3) ;
 	}
 }
 
-void LicenseInfoTest::testSNStored() {
+void testSNStored() {
 	using namespace software_encrypt;
 	using namespace software_encrypt::internal_utility;
 	using namespace std;
@@ -142,10 +129,10 @@ void LicenseInfoTest::testSNStored() {
 	string sn1 = "aaa23infadhf-2u3nfad", sne1;
 	storeSN(sn1);
 	sne1 = getSN();
-	CPPUNIT_ASSERT(sn1 == sne1);
+	BOOST_CHECK(sn1 == sne1);
 }
 
-void LicenseInfoTest::testReg() {
+void testReg() {
 	using namespace software_encrypt;
 	using namespace software_encrypt::internal_utility;
 	using namespace std;
@@ -157,14 +144,14 @@ void LicenseInfoTest::testReg() {
 		storeSN(sn1);
 		LicenseInfo ii;
 		ii.initialize();
-		CPPUNIT_ASSERT(false == ii.registered());
-		CPPUNIT_ASSERT(SNOWMAN_STATUS_REGISTERED != ii.getAppStatus());
+		BOOST_CHECK(false == ii.registered());
+		BOOST_CHECK(SNOWMAN_STATUS_REGISTERED != ii.getAppStatus());
 		ii.regApp(sn1);
-		CPPUNIT_ASSERT(false == ii.registered());
-		CPPUNIT_ASSERT(SNOWMAN_STATUS_REGISTERED != ii.getAppStatus());
+		BOOST_CHECK(false == ii.registered());
+		BOOST_CHECK(SNOWMAN_STATUS_REGISTERED != ii.getAppStatus());
 		ii.regApp(sn2);
-		CPPUNIT_ASSERT(true == ii.registered());
-		CPPUNIT_ASSERT(SNOWMAN_STATUS_REGISTERED == ii.getAppStatus());
+		BOOST_CHECK(true == ii.registered());
+		BOOST_CHECK(SNOWMAN_STATUS_REGISTERED == ii.getAppStatus());
 
 	}
 
@@ -174,15 +161,15 @@ void LicenseInfoTest::testReg() {
 		storeSN(sn1);
 		LicenseInfo ii;
 		ii.initialize();
-		CPPUNIT_ASSERT(false == ii.registered());
-		CPPUNIT_ASSERT(SNOWMAN_STATUS_REGISTERED != ii.getAppStatus());
+		BOOST_CHECK(false == ii.registered());
+		BOOST_CHECK(SNOWMAN_STATUS_REGISTERED != ii.getAppStatus());
 
 		std::string sn = generateSN();
 		storeSN(sn);
 		LicenseInfo ii2;
 		ii2.initialize();
-		CPPUNIT_ASSERT(true == ii2.registered());
-		CPPUNIT_ASSERT(SNOWMAN_STATUS_REGISTERED == ii2.getAppStatus());
+		BOOST_CHECK(true == ii2.registered());
+		BOOST_CHECK(SNOWMAN_STATUS_REGISTERED == ii2.getAppStatus());
 	}
 
 	{
@@ -194,10 +181,10 @@ void LicenseInfoTest::testReg() {
 		storeSN(sn2);
 		LicenseInfo ii;
 		ii.initialize();
-		CPPUNIT_ASSERT(true == ii.registered());
-		CPPUNIT_ASSERT(SNOWMAN_STATUS_REGISTERED == ii.getAppStatus());
+		BOOST_CHECK(true == ii.registered());
+		BOOST_CHECK(SNOWMAN_STATUS_REGISTERED == ii.getAppStatus());
 		ii.regApp(sn1);
-		CPPUNIT_ASSERT(true == ii.registered());
-		CPPUNIT_ASSERT(SNOWMAN_STATUS_REGISTERED == ii.getAppStatus());
+		BOOST_CHECK(true == ii.registered());
+		BOOST_CHECK(SNOWMAN_STATUS_REGISTERED == ii.getAppStatus());
 	}
 }
