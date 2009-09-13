@@ -6,7 +6,17 @@
 #include <boost\test\test_tools.hpp>
 using namespace boost::unit_test;
 
+namespace {
+// 用于回复COM服务的状态
+class COM_State {
+public:
+    COM_State() {
+    }
 
+    ~COM_State() {
+    }
+};
+};
 // 这里的测试与COM的状态有关。
 void TestCheckSeachRule() {
 	{
@@ -38,6 +48,6 @@ void TestCheckSeachRule() {
 	HTTPRequestPacket packet;
 	packet.parsePacket(require, (int)strlen(require));
 
-	BOOST_CHECK(true ==  checkSeachRule(&packet));
+	BOOST_CHECK(false ==  checkSeachRule(&packet));
 	}
 }
