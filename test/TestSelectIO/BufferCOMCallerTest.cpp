@@ -60,10 +60,10 @@ void WebContentRecordCallerTest() {
 		for (int i = 0; i < buffer_cnt; ++i) {
 			record_caller_.Call(recorder_);
 
-			CPPUNIT_ASSERT(true == recorder_.shouldRecord(CONTENT_CHECK_PORN, IMAGE_TYPE_JPEG));
-			CPPUNIT_ASSERT(true == recorder_.shouldRecord(CONTENT_CHECK_NORMAL, IMAGE_TYPE_JPEG));
-			CPPUNIT_ASSERT(true == recorder_.shouldRecord(CONTENT_CHECK_PORN, CONTYPE_HTML));
-			CPPUNIT_ASSERT(true == recorder_.shouldRecord(CONTENT_CHECK_NORMAL, CONTYPE_HTML));
+			BOOST_CHECK(true == recorder_.shouldRecord(CONTENT_CHECK_PORN, IMAGE_TYPE_JPEG));
+			BOOST_CHECK(true == recorder_.shouldRecord(CONTENT_CHECK_NORMAL, IMAGE_TYPE_JPEG));
+			BOOST_CHECK(true == recorder_.shouldRecord(CONTENT_CHECK_PORN, CONTYPE_HTML));
+			BOOST_CHECK(true == recorder_.shouldRecord(CONTENT_CHECK_NORMAL, CONTYPE_HTML));
 
 			if (i == 15) {
 				pRecorder->put_RecordAllImage(convert(false));
@@ -75,10 +75,10 @@ void WebContentRecordCallerTest() {
 
 		// it happens.
 		record_caller_.Call(recorder_);
-		CPPUNIT_ASSERT(false == recorder_.shouldRecord(CONTENT_CHECK_PORN, IMAGE_TYPE_JPEG));
-		CPPUNIT_ASSERT(false == recorder_.shouldRecord(CONTENT_CHECK_NORMAL, IMAGE_TYPE_JPEG));
-		CPPUNIT_ASSERT(false == recorder_.shouldRecord(CONTENT_CHECK_PORN, CONTYPE_HTML));
-		CPPUNIT_ASSERT(false == recorder_.shouldRecord(CONTENT_CHECK_NORMAL, CONTYPE_HTML));
+		BOOST_CHECK(false == recorder_.shouldRecord(CONTENT_CHECK_PORN, IMAGE_TYPE_JPEG));
+		BOOST_CHECK(false == recorder_.shouldRecord(CONTENT_CHECK_NORMAL, IMAGE_TYPE_JPEG));
+		BOOST_CHECK(false == recorder_.shouldRecord(CONTENT_CHECK_PORN, CONTYPE_HTML));
+		BOOST_CHECK(false == recorder_.shouldRecord(CONTENT_CHECK_NORMAL, CONTYPE_HTML));
 	} catch (_com_error &) {
 	}
 
@@ -123,10 +123,10 @@ void WebContentCheckCallerTest() {
 
 		for (int i = 0; i < BUFFER_CALL_CNT; ++i) {
 			check_caller_.Call(checker_);
-			CPPUNIT_ASSERT(true == checker_.shouldCheck(&packet1));
-			CPPUNIT_ASSERT(true == checker_.shouldCheck(&packet2));
-			CPPUNIT_ASSERT(true == checker_.shouldCheck(&packet3));
-			CPPUNIT_ASSERT(true == checker_.shouldCheck(&packet4));
+			BOOST_CHECK(true == checker_.shouldCheck(&packet1));
+			BOOST_CHECK(true == checker_.shouldCheck(&packet2));
+			BOOST_CHECK(true == checker_.shouldCheck(&packet3));
+			BOOST_CHECK(true == checker_.shouldCheck(&packet4));
 
 			// 修改设置
 			if (i == 1) {
@@ -136,10 +136,10 @@ void WebContentCheckCallerTest() {
 		}
 
 		check_caller_.Call(checker_);
-		CPPUNIT_ASSERT(true == checker_.shouldCheck(&packet1));	
-		CPPUNIT_ASSERT(false == checker_.shouldCheck(&packet2));	// 应该大于10240
-		CPPUNIT_ASSERT(false == checker_.shouldCheck(&packet3));	// 因为是jpeg
-		CPPUNIT_ASSERT(false == checker_.shouldCheck(&packet4));
+		BOOST_CHECK(true == checker_.shouldCheck(&packet1));	
+		BOOST_CHECK(false == checker_.shouldCheck(&packet2));	// 应该大于10240
+		BOOST_CHECK(false == checker_.shouldCheck(&packet3));	// 因为是jpeg
+		BOOST_CHECK(false == checker_.shouldCheck(&packet4));
 	} catch (_com_error&) {
 	}
 }

@@ -149,7 +149,7 @@ void testMax() {
 	wsabuf.len = buf_size;
 	DWORD dwNumberOfBytesRecvd;
 
-	CPPUNIT_ASSERT( 1 == select.preselect(&readfds));
+	BOOST_CHECK( 1 == select.preselect(&readfds));
 	select.postselect(&readfds);
 	
 	while (1 == select.preselect(&readfds)) {
@@ -157,16 +157,16 @@ void testMax() {
 	}
 
 	Sleep(100);
-	CPPUNIT_ASSERT(select.prerecv(s, &wsabuf,
+	BOOST_CHECK(select.prerecv(s, &wsabuf,
 		1, &dwNumberOfBytesRecvd) == 0);
-	CPPUNIT_ASSERT(dwNumberOfBytesRecvd == (data1.length()));
+	BOOST_CHECK(dwNumberOfBytesRecvd == (data1.length()));
 
 	g_SockData.insert(make_pair(s, data2));
 	// 在读数据的时候， 数据不会被截取
-	CPPUNIT_ASSERT( 1 == select.preselect(&readfds));
+	BOOST_CHECK( 1 == select.preselect(&readfds));
 	select.postselect(&readfds);
-	CPPUNIT_ASSERT(1 == readfds.fd_count);
-	CPPUNIT_ASSERT(select.prerecv(s, &wsabuf,
+	BOOST_CHECK(1 == readfds.fd_count);
+	BOOST_CHECK(select.prerecv(s, &wsabuf,
 		1, &dwNumberOfBytesRecvd) == 1);
 }
 
@@ -230,17 +230,17 @@ void testMulitPacket() {
 	fd_set readfds;
 	FD_ZERO(&readfds);
 	FD_SET(s, &readfds);
-	CPPUNIT_ASSERT( 1 == select.preselect(&readfds));
+	BOOST_CHECK( 1 == select.preselect(&readfds));
 	select.postselect(&readfds);
 	
 	// 不完整
-	CPPUNIT_ASSERT(select.prerecv(s, &wsabuf, 1, &dwNumberOfBytesRecvd) == 1);
-	CPPUNIT_ASSERT(dwNumberOfBytesRecvd == 0);
-	CPPUNIT_ASSERT(select.prerecv(s, &wsabuf, 1, &dwNumberOfBytesRecvd) == 1);
-	CPPUNIT_ASSERT(dwNumberOfBytesRecvd == 0);
+	BOOST_CHECK(select.prerecv(s, &wsabuf, 1, &dwNumberOfBytesRecvd) == 1);
+	BOOST_CHECK(dwNumberOfBytesRecvd == 0);
+	BOOST_CHECK(select.prerecv(s, &wsabuf, 1, &dwNumberOfBytesRecvd) == 1);
+	BOOST_CHECK(dwNumberOfBytesRecvd == 0);
 
 	g_SockData.insert(make_pair(s, data2));
-	CPPUNIT_ASSERT( 1 == select.preselect(&readfds));
+	BOOST_CHECK( 1 == select.preselect(&readfds));
 	FD_SET(s, &readfds);
 	select.postselect(&readfds);
 
@@ -248,8 +248,8 @@ void testMulitPacket() {
 		FD_SET(s, &readfds);
 	}
 
-	CPPUNIT_ASSERT(select.prerecv(s, &wsabuf,1, &dwNumberOfBytesRecvd) == 0);
-	CPPUNIT_ASSERT(dwNumberOfBytesRecvd == data2.length() + data1.length());
+	BOOST_CHECK(select.prerecv(s, &wsabuf,1, &dwNumberOfBytesRecvd) == 0);
+	BOOST_CHECK(dwNumberOfBytesRecvd == data2.length() + data1.length());
 	}
 }
 
@@ -266,16 +266,16 @@ void testCopyBuffer() {
 	wsabuf[2].len = 4;
 
 	const char data1[] = "388888888888888888888888888888888888888888888888888";
-	CPPUNIT_ASSERT(getBufferTotalSize(wsabuf, 3) == 9);
-	CPPUNIT_ASSERT(WriteToBuffer(wsabuf, 3, 0, data1, static_cast<const int>(strlen(data1))) == 
+	BOOST_CHECK(getBufferTotalSize(wsabuf, 3) == 9);
+	BOOST_CHECK(WriteToBuffer(wsabuf, 3, 0, data1, static_cast<const int>(strlen(data1))) == 
 		getBufferTotalSize(wsabuf, 3));
-	CPPUNIT_ASSERT(WriteToBuffer(wsabuf, 3, 
+	BOOST_CHECK(WriteToBuffer(wsabuf, 3, 
 		getBufferTotalSize(wsabuf, 3), data1, static_cast<const int>(strlen(data1))) == 0);
-	CPPUNIT_ASSERT(WriteToBuffer(wsabuf, 3, 
+	BOOST_CHECK(WriteToBuffer(wsabuf, 3, 
 		getBufferTotalSize(wsabuf, 3)+1, data1, static_cast<const int>(strlen(data1))) == 0);
-	CPPUNIT_ASSERT(WriteToBuffer(wsabuf, 3, 
+	BOOST_CHECK(WriteToBuffer(wsabuf, 3, 
 		getBufferTotalSize(wsabuf, 3)-1, data1, static_cast<const int>(strlen(data1))) == 1);
-	CPPUNIT_ASSERT(WriteToBuffer(wsabuf, 3, 
+	BOOST_CHECK(WriteToBuffer(wsabuf, 3, 
 		getBufferTotalSize(wsabuf, 3)-2, data1, static_cast<const int>(strlen(data1))) == 2);
 }
 
@@ -301,7 +301,7 @@ void testInvalidateHTTPPacket() {
 	fd_set readfds;
 	FD_ZERO(&readfds);
 	FD_SET(s, &readfds);
-	CPPUNIT_ASSERT( 1 == select.preselect(&readfds));
+	BOOST_CHECK( 1 == select.preselect(&readfds));
 	select.postselect(&readfds);
 	}
 }
@@ -328,7 +328,7 @@ void testPostSelect() {
 	fd_set readfds;
 	FD_ZERO(&readfds);
 	FD_SET(s, &readfds);
-	CPPUNIT_ASSERT( 1 == select.preselect(&readfds));
+	BOOST_CHECK( 1 == select.preselect(&readfds));
 	select.postselect(&readfds);
 
 	// 等待知道数据处理完毕
@@ -343,10 +343,10 @@ void testPostSelect() {
 	wsabuf.buf = buffer;
 	wsabuf.len = buf_size;
 	DWORD dwNumberOfBytesRecvd;
-	CPPUNIT_ASSERT(select.prerecv(s, &wsabuf, 1, &dwNumberOfBytesRecvd) == 0);
-	CPPUNIT_ASSERT(dwNumberOfBytesRecvd == (data1.length()));
-	CPPUNIT_ASSERT(select.prerecv(s, &wsabuf, 1, &dwNumberOfBytesRecvd) == 1);
-	CPPUNIT_ASSERT(dwNumberOfBytesRecvd == 0);
+	BOOST_CHECK(select.prerecv(s, &wsabuf, 1, &dwNumberOfBytesRecvd) == 0);
+	BOOST_CHECK(dwNumberOfBytesRecvd == (data1.length()));
+	BOOST_CHECK(select.prerecv(s, &wsabuf, 1, &dwNumberOfBytesRecvd) == 1);
+	BOOST_CHECK(dwNumberOfBytesRecvd == 0);
 	}
 
 	// 一次传入三个包
@@ -399,7 +399,7 @@ void testPostSelect() {
 	wsabuf.len = buf_size;
 	DWORD dwNumberOfBytesRecvd;
 
-	CPPUNIT_ASSERT( 1 == select.preselect(&readfds));
+	BOOST_CHECK( 1 == select.preselect(&readfds));
 	select.postselect(&readfds);
 
 	while (1 == select.preselect(&readfds)) {
@@ -407,29 +407,29 @@ void testPostSelect() {
 	}
 
 
-	CPPUNIT_ASSERT(select.prerecv(s, &wsabuf, 1, &dwNumberOfBytesRecvd) == 0);
-	CPPUNIT_ASSERT(dwNumberOfBytesRecvd == (data1.length()));
+	BOOST_CHECK(select.prerecv(s, &wsabuf, 1, &dwNumberOfBytesRecvd) == 0);
+	BOOST_CHECK(dwNumberOfBytesRecvd == (data1.length()));
 
 	// 在包没有完成时，应该直接返回1
-	CPPUNIT_ASSERT( 1 == select.preselect(&readfds));
+	BOOST_CHECK( 1 == select.preselect(&readfds));
 	select.postselect(&readfds);
 
 	while (1 == select.preselect(&readfds)) {
 		FD_SET(s, &readfds);
 	}
 
-	CPPUNIT_ASSERT(select.prerecv(s, &wsabuf, 1, &dwNumberOfBytesRecvd) == 0);
-	CPPUNIT_ASSERT(dwNumberOfBytesRecvd == (data2.length()));
+	BOOST_CHECK(select.prerecv(s, &wsabuf, 1, &dwNumberOfBytesRecvd) == 0);
+	BOOST_CHECK(dwNumberOfBytesRecvd == (data2.length()));
 
-	CPPUNIT_ASSERT( 1 == select.preselect(&readfds));
+	BOOST_CHECK( 1 == select.preselect(&readfds));
 	select.postselect(&readfds);
 
 	while (1 == select.preselect(&readfds)) {
 		FD_SET(s, &readfds);
 	}
 
-	CPPUNIT_ASSERT(select.prerecv(s, &wsabuf, 1, &dwNumberOfBytesRecvd) == 0);
-	CPPUNIT_ASSERT(dwNumberOfBytesRecvd == (data3.length()));
+	BOOST_CHECK(select.prerecv(s, &wsabuf, 1, &dwNumberOfBytesRecvd) == 0);
+	BOOST_CHECK(dwNumberOfBytesRecvd == (data3.length()));
 	}
 }
 
@@ -439,12 +439,12 @@ void testPreSelect() {
 
 	fd_set readfds;
 	FD_ZERO(&readfds);
-	CPPUNIT_ASSERT(1 == select.preselect(&readfds));
-	CPPUNIT_ASSERT(1 == select.preselect(NULL));
+	BOOST_CHECK(1 == select.preselect(&readfds));
+	BOOST_CHECK(1 == select.preselect(NULL));
 
 	FD_SET(111, &readfds);
 	FD_SET(1111, &readfds);
-	CPPUNIT_ASSERT(1 == select.preselect(&readfds));
+	BOOST_CHECK(1 == select.preselect(&readfds));
 }
 
 void testConstantPackets() {
@@ -500,17 +500,17 @@ void testRemovePacket() {
 
 	int cnt = static_cast<int>(socket_set.size());
 	for (; iter != socket_set.end(); ++iter) {
-		CPPUNIT_ASSERT(select.packet_handle_queue_.socketPackets_._sockets_map_.size() == cnt);
+		BOOST_CHECK(select.packet_handle_queue_.socketPackets_._sockets_map_.size() == cnt);
 		FD_ZERO(&readfds);
 		FD_SET(*iter, &readfds);
 
-		CPPUNIT_ASSERT( 1 == select.preselect(&readfds));
+		BOOST_CHECK( 1 == select.preselect(&readfds));
 		select.postselect(&readfds);
-		CPPUNIT_ASSERT(select.prerecv(*iter, &wsabuf,
+		BOOST_CHECK(select.prerecv(*iter, &wsabuf,
 			1, &dwNumberOfBytesRecvd) == 0);
-		CPPUNIT_ASSERT(dwNumberOfBytesRecvd == (data1.length()));
+		BOOST_CHECK(dwNumberOfBytesRecvd == (data1.length()));
 		cnt--;
 	}
-	CPPUNIT_ASSERT(select.packet_handle_queue_.socketPackets_._sockets_map_.size() == 0);
+	BOOST_CHECK(select.packet_handle_queue_.socketPackets_._sockets_map_.size() == 0);
 	}
 }
