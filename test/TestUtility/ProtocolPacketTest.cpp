@@ -160,6 +160,7 @@ void testSeekRead() {
 		memset(buf_read, 0, sizeof(buf_read));
 		packet->read(buf_read, 1024);
 		BOOST_ASSERT(std::string(buf_read) == std::string("o world"));
+        delete packet;
 	}
 }
 

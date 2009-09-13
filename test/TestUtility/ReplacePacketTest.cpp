@@ -51,4 +51,5 @@ void testNewPacket() {
 	int a = new_packet->getDataSize() ;
 	BOOST_ASSERT(new_packet->getDataSize() == 723);
 	delete packet;
+    delete new_packet;
 }
