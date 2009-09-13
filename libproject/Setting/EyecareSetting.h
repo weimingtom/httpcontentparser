@@ -90,7 +90,7 @@ public:
 private:
 	int after_eyecare_terminated_;
 
-	friend class EyecareTest;
+	friend void TestSetLeft();
 
 	// XML
 public:

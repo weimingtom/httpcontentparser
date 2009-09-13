@@ -16,12 +16,10 @@ Authorize::~Authorize(void) {
 }
 
 void Authorize::defaultSetting() {
-	__SETTING_AUTHORIZE_TRC__("defaultSetting  password : " << DEFAULT_PASSWORD);
 	setSuPassword(DEFAULT_PASSWORD);
 }
 
 void Authorize::setSuPassword(const char * password) {
-	__SETTING_AUTHORIZE_TRC__("setSuPassword  password : " <<  password);
 	password_set_[PASSWORD_SU] = password;
 }
 

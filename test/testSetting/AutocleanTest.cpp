@@ -1,16 +1,12 @@
 #include "StdAfx.h"
 #include ".\autocleantest.h"
-#include <autoclean.h>
+#include <setting\autoclean.h>
 #include <atltime.h>
-
-AutocleanTest::AutocleanTest(void) {
-}
-
-AutocleanTest::~AutocleanTest(void) {
-}
+#include <boost\test\test_tools.hpp>
+using namespace boost::unit_test;
 
 
-void AutocleanTest::testAutoclean() {
+void testAutoclean() {
 	AutoClean autoclean;
 	CTime t = CTime::GetCurrentTime();
 	TCHAR buffer[MAX_PATH];
@@ -23,23 +19,23 @@ void AutocleanTest::testAutoclean() {
 
 	SettingItem::setModified(false);
 	autoclean.setTimespan(3);
-	CPPUNIT_ASSERT(true == SettingItem::isModified());
-	CPPUNIT_ASSERT(false == autoclean.shouldExec());
+	BOOST_CHECK(true == SettingItem::isModified());
+	BOOST_CHECK(false == autoclean.shouldExec());
 	
 	SettingItem::setModified(false);
 	autoclean.setTimespan(2);
-	CPPUNIT_ASSERT(true == SettingItem::isModified());
-	CPPUNIT_ASSERT(false == autoclean.shouldExec());
+	BOOST_CHECK(true == SettingItem::isModified());
+	BOOST_CHECK(false == autoclean.shouldExec());
 	
 	SettingItem::setModified(false);
 	autoclean.setTimespan(1);
-	CPPUNIT_ASSERT(true == SettingItem::isModified());
-	CPPUNIT_ASSERT(true == autoclean.shouldExec());
+	BOOST_CHECK(true == SettingItem::isModified());
+	BOOST_CHECK(true == autoclean.shouldExec());
 	
 	SettingItem::setModified(false);
 	autoclean.reset();
 	autoclean.setTimespan(1);
-	CPPUNIT_ASSERT(true == SettingItem::isModified());
-	CPPUNIT_ASSERT(false == autoclean.shouldExec());
+	BOOST_CHECK(true == SettingItem::isModified());
+	BOOST_CHECK(false == autoclean.shouldExec());
 
 }

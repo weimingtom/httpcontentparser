@@ -44,15 +44,15 @@ private:
 
 private:
 	// for test
-	friend class AutocleanTest;
-	friend class AuthorizeTest;
-	friend class ContentSettingTest;
-	friend class DNSSettingTest;
-	friend class EyecareTest;
-	friend class WebHistoryRecordTest;
-	friend class HotkeySettingTest;
-	friend class OnlineHourSettingTest;
-	friend class SearchRuleTest;
+	friend void TestSeachRuleSetting();
+	friend void testJustPassedWhiteDNS();
+	friend void TestSetLeft();
+	friend void TestTwoWrong();
+	friend void testAutoclean();
+	friend void TestCheckPassword();
+	friend void TestOnlineHour();
+	friend void TestTwoModel();
+	friend void TestParentMode();
 	friend class ProgramControl;
 	friend class MiscSetting;
 };

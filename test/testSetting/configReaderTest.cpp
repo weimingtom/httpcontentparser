@@ -2,24 +2,21 @@
 #include ".\configreadertest.h"
 #include <setting\xmlconfiguration.h> 
 #include <webcontenttype.h>
+#include <boost\test\test_tools.hpp>
+using namespace boost::unit_test;
 
-using namespace CPPUNIT_NS;
 
 //==========================================
-// constructor and deconstructor
-ConfigReaderTest::ConfigReaderTest(void) {
-}
-ConfigReaderTest::~ConfigReaderTest(void) {
-}
+
 
 //===========================================
 //
-void ConfigReaderTest::TestReadFromFile() {
+void TestReadFromFile() {
 	//XMLConfiguration config;
 	//config.loadConfig();
 }
 
-void ConfigReaderTest::TestSaveFile() {
+void TestSaveFile() {
 	XMLConfiguration config;
 	//config.saveConfig(TEXT("c:\\default.xml"));
 	config.loadConfig(TEXT("D:\\workspace\\current_edition\\debug\\config.xml"));
