@@ -14,40 +14,73 @@
 #include ".\autocleantest.h"
 #include ".\hotkeysettingtest.h"
 #include ".\appcontroltest.h" 
+#include <boost\test\included\unit_test.hpp>
 
-CPPUNIT_TEST_SUITE_REGISTRATION(CalculargraphTest);
-CPPUNIT_TEST_SUITE_REGISTRATION(EyecareTest);
-CPPUNIT_TEST_SUITE_REGISTRATION(DNSSettingTest);
-CPPUNIT_TEST_SUITE_REGISTRATION(AppControlTest);
-CPPUNIT_TEST_SUITE_REGISTRATION(HotkeySettingTest);
-CPPUNIT_TEST_SUITE_REGISTRATION(AutocleanTest);
-CPPUNIT_TEST_SUITE_REGISTRATION(WebHistoryRecordTest);
-CPPUNIT_TEST_SUITE_REGISTRATION(OnlineHourSettingTest);
-CPPUNIT_TEST_SUITE_REGISTRATION(SearchRuleTest);
-CPPUNIT_TEST_SUITE_REGISTRATION(ConfigReaderTest);
-CPPUNIT_TEST_SUITE_REGISTRATION(ContentSettingTest);
-CPPUNIT_TEST_SUITE_REGISTRATION(AuthorizeTest);
 
-int _tmain(int argc, _TCHAR* argv[]) {
-	 // Create the event manager and test controller
-	CPPUNIT_NS::TestResult controller;
+using namespace boost::unit_test;
 
-	// Add a listener that colllects test result
-	CPPUNIT_NS::TestResultCollector result;
-	controller.addListener( &result );        
+boost::unit_test::test_suite* init_unit_test_suite( int argc, char* argv[] ) {
+    // AppControlTest
+    framework::master_test_suite().add( BOOST_TEST_CASE(&testAppConrol) );
 
-	// Add a listener that print dots as test run.
-	CPPUNIT_NS::BriefTestProgressListener progress;
-	controller.addListener( &progress );      
+    // AuthorizeTest 
+    framework::master_test_suite().add( BOOST_TEST_CASE(&TestCheckPassword) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&TestChangePassword) );
 
-	// Add the top suite to the test runner
-	CPPUNIT_NS::TestRunner runner;
-	runner.addTest( CPPUNIT_NS::TestFactoryRegistry::getRegistry().makeTest() );
-	runner.run( controller );
+    // AutocleanTest
+    framework::master_test_suite().add( BOOST_TEST_CASE(&testAutoclean) );
 
-	// Print test in a compiler compatible format.
-	CPPUNIT_NS::CompilerOutputter outputter( &result, CPPUNIT_NS::stdCOut() ); 
-	outputter.write(); 
+    // CalculargraphTest
+    framework::master_test_suite().add( BOOST_TEST_CASE(&TestForceswitch) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&TestSetASmallerTime) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&TestCulargraph) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&testCalarStopTimer) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&testMulitSetTimeLeft) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&testMultiStopTimer) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&TestMultiCalculargraph) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&TestSetTimeEscape) );
 
-	return result.wasSuccessful() ? 0 : 1;
+    // ConfigReaderTest
+    framework::master_test_suite().add( BOOST_TEST_CASE(&TestReadFromFile) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&TestSaveFile) );
+
+    // ContentSettingTest
+    framework::master_test_suite().add( BOOST_TEST_CASE(&TestEnableCheck) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&TestNeedCheck) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&TestTwoModel) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&TestTwoWrong) );
+
+    // DNSSettingTest
+    framework::master_test_suite().add( BOOST_TEST_CASE(&testCheck) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&testFuzzeCheck) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&testTwoModels) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&testJustPassedWhiteDNS) );
+
+    // EyecareTest
+    framework::master_test_suite().add( BOOST_TEST_CASE(&TestPassword) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&TestSwitchState) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&TestTimeSetting) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&TestSetLeft) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&TestMultiModelSwitch) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&TestAfterModelSwitch) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&TestModelsInParentAndChild) );
+
+    // HotkeySettingTest
+    framework::master_test_suite().add( BOOST_TEST_CASE(&testHotkey) );
+
+    // OnlineHourSettingTest
+    framework::master_test_suite().add( BOOST_TEST_CASE(&TestOnlineHour) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&TestTowModeSwitched) );
+
+    // SearchRuleTest
+    framework::master_test_suite().add( BOOST_TEST_CASE(&TestSeachRuleSetting) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&TestSeachEnabled) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&TestParentChildMode) );
+
+    // WebHistoryRecordTest
+    framework::master_test_suite().add( BOOST_TEST_CASE(&TestDefault) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&TestRegular) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&TestEnable) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&TestParentMode) );
+    return 0;
 }

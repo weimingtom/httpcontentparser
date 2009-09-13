@@ -1,14 +1,10 @@
 #include "StdAfx.h"
 #include ".\hotkeysettingtest.h"
-#include <hotkeysetting.h>
+#include <setting\hotkeysetting.h>
 #include <tinyXML\tinyxml.h>
+#include <boost\test\test_tools.hpp>
+using namespace boost::unit_test;
 
-HotkeySettingTest::HotkeySettingTest(void) {
-}
-
-HotkeySettingTest::~HotkeySettingTest(void) {
-}
-
-void HotkeySettingTest::testHotkey() {
+void testHotkey() {
 	// HotkeySetting hotkey();
 }
