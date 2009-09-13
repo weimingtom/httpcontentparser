@@ -4,13 +4,8 @@
 #include <utility\strutility.h>
 #include <app_constants.h>
 #include <iostream>
-
-
-AppUtilityTest::AppUtilityTest(void) {
-}
-
-AppUtilityTest::~AppUtilityTest(void) {
-}
+#include <boost\test\test_tools.hpp>
+using namespace boost::unit_test;
 
 namespace {
 using namespace std;
@@ -62,7 +57,7 @@ HMODULE GetModule(const TCHAR * exefilename) {
 };
 
 
-void AppUtilityTest::testGetMainUIName() {
+void testGetMainUIName() {
 	TCHAR workdir[MAX_PATH], fullpath[MAX_PATH], expected[MAX_PATH], installpath[MAX_PATH], exefile[MAX_PATH];
 	GetModuleFileName(NULL, exefile, MAX_PATH);
 	GetFileNameDir(exefile, workdir, MAX_PATH);
@@ -71,30 +66,30 @@ void AppUtilityTest::testGetMainUIName() {
 
 	_tcslwr(expected);
 	_tcslwr(fullpath);
-	CPPUNIT_ASSERT( expected == _tcsstr(expected, fullpath));
-	CPPUNIT_ASSERT( 0 == _tcscmp(fullpath, expected));
+	BOOST_CHECK( expected == _tcsstr(expected, fullpath));
+	BOOST_CHECK( 0 == _tcscmp(fullpath, expected));
 
 	GetInstallPath(installpath, MAX_PATH);
 	GetMainUIPath(fullpath, MAX_PATH);
 	_tcslwr(fullpath);
-	CPPUNIT_ASSERT( expected == _tcsstr(expected, fullpath));
-	CPPUNIT_ASSERT( 0 == _tcscmp(fullpath, expected));
+	BOOST_CHECK( expected == _tcsstr(expected, fullpath));
+	BOOST_CHECK( 0 == _tcscmp(fullpath, expected));
 
 	std::cout<<"MainUI fullpath: " << fullpath << std::endl;
 
 }
-void AppUtilityTest::testGetFileNameDir() {
+void testGetFileNameDir() {
 	const TCHAR * name = TEXT("WAHT.EXE");
 	const TCHAR * dir = TEXT("c:\\program files\\hello\\");
 	TCHAR fullpath[MAX_PATH], result[MAX_PATH];
 	_sntprintf(fullpath, MAX_PATH, "%s%s", dir, name);
 	GetFileNameDir(fullpath, result, MAX_PATH);
 	_tcslwr(fullpath);
-	CPPUNIT_ASSERT( 0 == _tcscmp(dir, result));
+	BOOST_CHECK( 0 == _tcscmp(dir, result));
 }
 
 // 保存历史的配置文件
-void AppUtilityTest::testGetRecordConfigfile() {
+void testGetRecordConfigfile() {
 	TCHAR workdir[MAX_PATH], fullpath[MAX_PATH], configfile[MAX_PATH], installpath[MAX_PATH], exefile[MAX_PATH];
 	GetModuleFileName(NULL, exefile, MAX_PATH);
 	GetFileNameDir(exefile, workdir, MAX_PATH);
@@ -105,14 +100,14 @@ void AppUtilityTest::testGetRecordConfigfile() {
 
 	_tcslwr(configfile);
 	_tcslwr(fullpath);
-	CPPUNIT_ASSERT( configfile == _tcsstr(configfile, fullpath));
-	CPPUNIT_ASSERT( 0 == _tcscmp(fullpath, configfile));
+	BOOST_CHECK( configfile == _tcsstr(configfile, fullpath));
+	BOOST_CHECK( 0 == _tcscmp(fullpath, configfile));
 
 	std::cout<<"Record History config : " << fullpath << std::endl;
 }
 
 // 保存网页的路径
-void AppUtilityTest::testGetPageDirectory() {
+void testGetPageDirectory() {
 	TCHAR workdir[MAX_PATH], fullpath[MAX_PATH], pageseDir[MAX_PATH], installpath[MAX_PATH], exefile[MAX_PATH];
 	GetModuleFileName(NULL, exefile, MAX_PATH);
 	GetFileNameDir(exefile, workdir, MAX_PATH);
@@ -121,16 +116,16 @@ void AppUtilityTest::testGetPageDirectory() {
 	GetInstallPath(installpath, MAX_PATH);
 	GetPageDirectory(fullpath, MAX_PATH);
 
-	CPPUNIT_ASSERT( true == strutility::endwith(pageseDir, "\\"));
+	BOOST_CHECK( true == strutility::endwith(pageseDir, "\\"));
 	_tcslwr(fullpath);
 	_tcslwr(pageseDir);
-	CPPUNIT_ASSERT( pageseDir == _tcsstr(pageseDir, fullpath));
-	CPPUNIT_ASSERT( 0 == _tcscmp(fullpath, pageseDir));
+	BOOST_CHECK( pageseDir == _tcsstr(pageseDir, fullpath));
+	BOOST_CHECK( 0 == _tcscmp(fullpath, pageseDir));
 
 	std::cout<<"Page directory : " << fullpath << std::endl;
 }
 // 保存图片的路径
-void AppUtilityTest::testGetImageDirectory() {
+void testGetImageDirectory() {
 	TCHAR workdir[MAX_PATH], fullpath[MAX_PATH], imageDir[MAX_PATH], installpath[MAX_PATH], exefile[MAX_PATH];
 	GetModuleFileName(NULL, exefile, MAX_PATH);
 	GetFileNameDir(exefile, workdir, MAX_PATH);
@@ -141,14 +136,14 @@ void AppUtilityTest::testGetImageDirectory() {
 
 	_tcslwr(fullpath);
 	_tcslwr(imageDir);
-	CPPUNIT_ASSERT( true == strutility::endwith(imageDir, "\\"));
-	CPPUNIT_ASSERT( imageDir == _tcsstr(imageDir, fullpath));
-	CPPUNIT_ASSERT( 0 == _tcscmp(fullpath, imageDir));
+	BOOST_CHECK( true == strutility::endwith(imageDir, "\\"));
+	BOOST_CHECK( imageDir == _tcsstr(imageDir, fullpath));
+	BOOST_CHECK( 0 == _tcscmp(fullpath, imageDir));
 
 	std::cout<<"Image directory : " << fullpath << std::endl;
 }
 
-void AppUtilityTest::testGetInstallPath() {
+void testGetInstallPath() {
 	HMODULE handle = GetModule(TEXT("TestSysutility.exe"));
 	TCHAR workdir[MAX_PATH], install_path[MAX_PATH], exefile[MAX_PATH];
 
@@ -163,16 +158,16 @@ void AppUtilityTest::testGetInstallPath() {
 		workdir[len+1] = '\0';
 	}
 
-	CPPUNIT_ASSERT( true == strutility::endwith(install_path, "\\"));
-	CPPUNIT_ASSERT( true == strutility::endwith(workdir, "\\"));
+	BOOST_CHECK( true == strutility::endwith(install_path, "\\"));
+	BOOST_CHECK( true == strutility::endwith(workdir, "\\"));
 	_tcslwr(workdir);
 	_tcslwr(install_path);
-	CPPUNIT_ASSERT( install_path == _tcsstr(install_path, workdir));
+	BOOST_CHECK( install_path == _tcsstr(install_path, workdir));
 
 	std::cout<<"Install directory : " << install_path << std::endl;
 }
 
-void AppUtilityTest::testGetAppConfigFilename() {
+void testGetAppConfigFilename() {
 	TCHAR workdir[MAX_PATH], fullpath[MAX_PATH], configfilename[MAX_PATH], exefile[MAX_PATH];
 	GetModuleFileName(NULL, exefile, MAX_PATH);
 	GetFileNameDir(exefile, workdir, MAX_PATH);
@@ -183,13 +178,13 @@ void AppUtilityTest::testGetAppConfigFilename() {
 	_tcslwr(configfilename);
 	_tcslwr(fullpath);
 
-	CPPUNIT_ASSERT( fullpath == _tcsstr(fullpath, configfilename));
-	CPPUNIT_ASSERT( 0 == _tcscmp(fullpath, configfilename));
+	BOOST_CHECK( fullpath == _tcsstr(fullpath, configfilename));
+	BOOST_CHECK( 0 == _tcscmp(fullpath, configfilename));
 
 	std::cout<<"App config : " << fullpath << std::endl;
 }
 
-void AppUtilityTest::testRegisterOper() {
+void testRegisterOper() {
 	//HMODULE handle = GetModule(TEXT("TestSysutility.exe"));
 	//BOOL isAuto_run = isAutoRun(handle);
 }
