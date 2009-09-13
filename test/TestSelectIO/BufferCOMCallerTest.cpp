@@ -8,9 +8,6 @@
 #include <boost\test\test_tools.hpp>
 using namespace boost::unit_test;
 
-
-
-
 const char * packet1_data = "HTTP/1.1 200 OK\r\n"
 "Content-Type: image/gif\r\n"
 "Content-Length: 3072\r\n\r\n";
