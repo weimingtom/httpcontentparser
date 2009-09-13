@@ -45,7 +45,7 @@ private:
 	// ÁÙ½çÇø
 	yanglei_utility::CAutoCreateCS cs_;
 
-	friend class SelectIOTest;
+	friend void testRemovePacket();
 };
 
 #endif  // _SELECTIO_SOCKETPACKETS_H__

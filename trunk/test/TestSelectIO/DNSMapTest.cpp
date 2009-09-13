@@ -3,15 +3,12 @@
 #include "..\..\projects\PacketsGrasper\DNSMap.h"
 #include <string>
 
+#include <boost\test\test_tools.hpp>
+using namespace boost::unit_test;
 using namespace std;
 
-DNSMapTest::DNSMapTest(void) {
-}
 
-DNSMapTest::~DNSMapTest(void) {
-}
-
-void DNSMapTest::TestDNSMap() {
+void TestDNSMap() {
 	DNSMap dnsmap;
 
 	int data1 = 1;
@@ -32,16 +29,16 @@ void DNSMapTest::TestDNSMap() {
 	string dns4 = "sohu";
 	dnsmap.add(data1, dns1);
 
-	CPPUNIT_ASSERT(dns1 == dnsmap.get(data1));
-	CPPUNIT_ASSERT(dns2 == dnsmap.get(data2));
-	CPPUNIT_ASSERT(dns3 == dnsmap.get(data3));
-	CPPUNIT_ASSERT(dns4 == dnsmap.get(data4));
+	BOOST_CHECK(dns1 == dnsmap.get(data1));
+	BOOST_CHECK(dns2 == dnsmap.get(data2));
+	BOOST_CHECK(dns3 == dnsmap.get(data3));
+	BOOST_CHECK(dns4 == dnsmap.get(data4));
 
 	// 测试一个不存在的
 	int datax = 1010;
-	CPPUNIT_ASSERT(dnsmap.get(datax) == "");
+	BOOST_CHECK(dnsmap.get(datax) == "");
 
 	// remove
 	dnsmap.remove(data1);
-	CPPUNIT_ASSERT(dnsmap.get(data1) == "");
+	BOOST_CHECK(dnsmap.get(data1) == "");
 }

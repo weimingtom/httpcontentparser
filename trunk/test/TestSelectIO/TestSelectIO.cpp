@@ -5,33 +5,34 @@
 #include ".\selectiotest.h"
 #include ".\buffercomcallertest.h"
 #include ".\serviceutilitytest.h"
+#include ".\dnsmapTest.h"
+#include <boost\test\included\unit_test.hpp>
 
-CPPUNIT_TEST_SUITE_REGISTRATION(ServiceutilityTest);
-CPPUNIT_TEST_SUITE_REGISTRATION(BufferCOMCallerTest);
-CPPUNIT_TEST_SUITE_REGISTRATION(SelectIOTest);
+using namespace boost::unit_test;
 
-int _tmain(int argc, _TCHAR* argv[])
-{
-  // Create the event manager and test controller
-  CPPUNIT_NS::TestResult controller;
+boost::unit_test::test_suite* init_unit_test_suite( int argc, char* argv[] ) {
+    // BufferCOMCallerTest
+    framework::master_test_suite().add( BOOST_TEST_CASE(&WebContentRecordCallerTest) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&WebContentCheckCallerTest) );
 
-  // Add a listener that colllects test result
-  CPPUNIT_NS::TestResultCollector result;
-  controller.addListener( &result );        
+    //DNSMapTest
+    framework::master_test_suite().add( BOOST_TEST_CASE(&TestDNSMap) );
 
-  // Add a listener that print dots as test run.
-  CPPUNIT_NS::BriefTestProgressListener progress;
-  controller.addListener( &progress );      
+    // SelectIOTest
+    framework::master_test_suite().add( BOOST_TEST_CASE(&testCloseSocket) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&testRemovePacket) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&testConstantPackets) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&testMax) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&testZeroChunk) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&testMulitPacket) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&testPreSelect) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&testInvalidateHTTPPacket) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&testPostSelect) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&testCopyBuffer) );
 
-  // Add the top suite to the test runner
-  CPPUNIT_NS::TestRunner runner;
-  runner.addTest( CPPUNIT_NS::TestFactoryRegistry::getRegistry().makeTest() );
-  runner.run( controller );
-
-  // Print test in a compiler compatible format.
-  CPPUNIT_NS::CompilerOutputter outputter( &result, CPPUNIT_NS::stdCOut() );
-  outputter.write(); 
-
-  return result.wasSuccessful() ? 0 : 1;
+    // Search Rules
+    framework::master_test_suite().add( BOOST_TEST_CASE(&TestCheckSeachRule) );
+    return 0;
 }
+
 

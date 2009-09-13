@@ -5,13 +5,10 @@
 #include <comdef.h>
 #include <webcontenttype.h>
 
-BufferCOMCallerTest::BufferCOMCallerTest(void)
-{
-}
+#include <boost\test\test_tools.hpp>
+using namespace boost::unit_test;
 
-BufferCOMCallerTest::~BufferCOMCallerTest(void)
-{
-}
+
 
 
 const char * packet1_data = "HTTP/1.1 200 OK\r\n"
@@ -39,7 +36,7 @@ const int data4_size = 10241;
 char data4[data4_size] = {0};
 
 
-void BufferCOMCallerTest::WebContentRecordCallerTest() {
+void WebContentRecordCallerTest() {
 	// set.
 	try {
 		AutoInitInScale _auto_com_init;
@@ -86,7 +83,7 @@ void BufferCOMCallerTest::WebContentRecordCallerTest() {
 	}
 
 }
-void BufferCOMCallerTest::WebContentCheckCallerTest() {
+void WebContentCheckCallerTest() {
 	try {
 		AutoInitInScale _auto_com_init;
 

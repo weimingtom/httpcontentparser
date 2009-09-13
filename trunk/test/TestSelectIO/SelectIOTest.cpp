@@ -3,13 +3,10 @@
 #include <map>
 #include <set>
 #include <string>
+
+#include <boost\test\test_tools.hpp>
+using namespace boost::unit_test;
 using namespace std;
-
-SelectIOTest::SelectIOTest(void) {
-}
-
-SelectIOTest::~SelectIOTest(void) {
-}
 
 namespace {
 
@@ -70,7 +67,7 @@ int WSPAPI WSPRecv(
 } // namespace
 
 
-void SelectIOTest::testCloseSocket() {
+void testCloseSocket() {
 	string data1 = "HTTP/1.1 200 OK\r\n"
 		"Date: Thu, 24 Apr 2008 02:37:48 GMT\r\n"
 		"Accept-Ranges: bytes\r\n"
@@ -121,7 +118,7 @@ void SelectIOTest::testCloseSocket() {
 
 // 测试混合内容
 // 让一个完整的包，后面跟着一个88
-void SelectIOTest::testMax() {
+void testMax() {
 	string data1 = "HTTP/1.1 200 OK\r\n"
 	"Date: Thu, 24 Apr 2008 02:37:48 GMT\r\n"
 	"Accept-Ranges: bytes\r\n"
@@ -174,7 +171,7 @@ void SelectIOTest::testMax() {
 }
 
 
-void SelectIOTest::testZeroChunk() {
+void testZeroChunk() {
 	// 测试没有长度的chunk
 	string data1 = "HTTP/1.1 302 Found\r\n"
 	"Date: Thu, 10 Jul 2008 15:46:27 GMT\r\n"
@@ -198,7 +195,7 @@ void SelectIOTest::testZeroChunk() {
 	select.setRecv(WSPRecv);
 	g_SockData.insert(make_pair(s, data1));
 }
-void SelectIOTest::testMulitPacket() {
+void testMulitPacket() {
 		// test case 1: 简单验证
 	{
 	string data1 = "HTTP/1.1 200 OK\r\n"
@@ -256,7 +253,7 @@ void SelectIOTest::testMulitPacket() {
 	}
 }
 
-void SelectIOTest::testCopyBuffer() {
+void testCopyBuffer() {
 	char buffer1[2];
 	char buffer2[3];
 	char buffer3[4];
@@ -283,7 +280,7 @@ void SelectIOTest::testCopyBuffer() {
 }
 
 // 传入一个非法的HTTP包，查看反应
-void SelectIOTest::testInvalidateHTTPPacket() {
+void testInvalidateHTTPPacket() {
 		{
 	string data1 = "HMTTP/1.1 200 OK\r\n"
 	"Date: Thu, 24 Apr 2008 02:37:48 GMT\r\n"
@@ -309,7 +306,7 @@ void SelectIOTest::testInvalidateHTTPPacket() {
 	}
 }
 
-void SelectIOTest::testPostSelect() {
+void testPostSelect() {
 	// test case 1: 简单验证
 	{
 	string data1 = "HTTP/1.1 200 OK\r\n"
@@ -436,7 +433,7 @@ void SelectIOTest::testPostSelect() {
 	}
 }
 
-void SelectIOTest::testPreSelect() {
+void testPreSelect() {
 	CSelectIO select;
 	select.setRecv(WSPRecv);
 
@@ -450,7 +447,7 @@ void SelectIOTest::testPreSelect() {
 	CPPUNIT_ASSERT(1 == select.preselect(&readfds));
 }
 
-void SelectIOTest::testConstantPackets() {
+void testConstantPackets() {
 	// 数据缓冲区
 	const int buf_size = 1024 * 64;
 	char buffer[buf_size];
@@ -460,7 +457,7 @@ void SelectIOTest::testConstantPackets() {
 	// fd_set readfds;
 }
 
-void SelectIOTest::testRemovePacket() {
+void testRemovePacket() {
 	// testcase
 	// 连续加入多个socket 的完整， 然后分别去除
 	// 最后测试在Packet中是否仍然存在未完成的包
