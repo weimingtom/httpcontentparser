@@ -218,6 +218,7 @@ void testSeriesPacket() {
 	// assert (0 == result);
 	BOOST_ASSERT(bytes4 == 0);
 	BOOST_ASSERT(true == packet->isComplete());
+    delete packet;
 }
 
 // 当接受到一个错误的HTTP包时
@@ -233,6 +234,8 @@ void testWrongHeader() {
 	BOOST_ASSERT(-1 == (int)packet->addBuffer(buffer1, (int)strlen(buffer1), &length));
 	BOOST_ASSERT(packet->isComplete() == true);	// 这时候标记为完成的
 	// BOOST_ASSERT(0 == packet->addBuffer(buffer2, strlen(buffer2)));
+
+    delete packet;
 }
 
 // 测试获取原始数据包
@@ -285,6 +288,7 @@ void testZeroChunk() {
 	BOOST_ASSERT(0 == packet->addBuffer(data1, (int)strlen(data1), &added_length));
 	BOOST_ASSERT((int)strlen(data1) == added_length);
 	BOOST_ASSERT(packet->isComplete() == true);
+    delete packet;
 }
 
 // 测试编码方式为chunk的HTTP包
@@ -700,4 +704,5 @@ void testActuallyPacket() {
 	int actual_length;
 	HTTPPacket *packet = new HTTPPacket;
 	BOOST_ASSERT(0 == packet->addBuffer(acutal_data, strlen(acutal_data), &actual_length));
+    delete packet;
 }
