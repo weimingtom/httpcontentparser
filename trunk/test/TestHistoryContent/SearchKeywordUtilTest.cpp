@@ -5,11 +5,10 @@
 #include <iostream>
 #include <utility/timeutility.h>
 
-SearchKeywordUtilTest::SearchKeywordUtilTest(void) {
-}
+#include <boost\test\test_tools.hpp>
+using namespace boost::unit_test;
 
-SearchKeywordUtilTest::~SearchKeywordUtilTest(void) {
-}
+
 
 namespace {
 	void printDataItem(const std::string &name, const SeachKeywordUtil::KEYWORD_DATA &data) {
@@ -25,7 +24,7 @@ namespace {
 
 
 // 测试此类的文件读取
-void SearchKeywordUtilTest::testReadSearchWordsFileOper() {
+void testReadSearchWordsFileOper() {
 	SeachKeywordUtil util;
 	util.addKeyword("hello1", SEARCHENGINE_GOOGLE);
 	util.addKeyword("hello2", SEARCHENGINE_YAHOO);
@@ -41,7 +40,7 @@ void SearchKeywordUtilTest::testReadSearchWordsFileOper() {
 }
 
 
-void SearchKeywordUtilTest::testReadSearcEnumerator() {
+void testReadSearcEnumerator() {
 	SeachKeywordUtil util;
 	util.load(".\\textcase2.txt");
 
@@ -58,6 +57,6 @@ void SearchKeywordUtilTest::testReadSearcEnumerator() {
 }
 
 
-void SearchKeywordUtilTest::testReadSearcGetNext() {
+void testReadSearcGetNext() {
 }
 

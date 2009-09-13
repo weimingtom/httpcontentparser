@@ -134,9 +134,6 @@
 			<File
 				RelativePath=".\TestHistoryContent.cpp">
 			</File>
-			<File
-				RelativePath=".\WebsiteUtilTest.cpp">
-			</File>
 		</Filter>
 		<Filter
 			Name="Í·ÎÄ¼þ"
@@ -144,6 +141,9 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
 			<File
 				RelativePath=".\stdafx.h">
+			</File>
+			<File
+				RelativePath=".\WebsiteUtilTest.cpp">
 			</File>
 			<File
 				RelativePath=".\WebsiteUtilTest.h">

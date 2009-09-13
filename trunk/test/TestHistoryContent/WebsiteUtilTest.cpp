@@ -1,11 +1,8 @@
 #include "StdAfx.h"
 #include ".\websiteutiltest.h"
 
-WebsiteUtilTest::WebsiteUtilTest(void) {
-}
-
-WebsiteUtilTest::~WebsiteUtilTest(void) {
-}
+#include <boost\test\test_tools.hpp>
+using namespace boost::unit_test;
 
 
 namespace {
@@ -21,7 +18,7 @@ namespace {
 
 
 
-void WebsiteUtilTest::testReadWebisitesGetNext() {
+void testReadWebisitesGetNext() {
 	WebsitesUtil util;
 	util.addWebsite("www.sina.com");
 	util.addWebsite("www.google.com");
@@ -36,7 +33,7 @@ void WebsiteUtilTest::testReadWebisitesGetNext() {
 	util.save(".\\textcase1.txt");
 }
 
-void WebsiteUtilTest::testReadWebisitesEnumerator() {
+void testReadWebisitesEnumerator() {
 	WebsitesUtil util;
 	util.load(".\\textcase1.txt");
 
@@ -51,5 +48,5 @@ void WebsiteUtilTest::testReadWebisitesEnumerator() {
 		str = next;
 	}
 }
-void WebsiteUtilTest::testReadWebisitesWordsFileOper() {
+void testReadWebisitesWordsFileOper() {
 }
