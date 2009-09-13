@@ -5,13 +5,7 @@
 
 using namespace yanglei_utility;
 
-SyncObjectTest::SyncObjectTest(void)
-{
-}
 
-SyncObjectTest::~SyncObjectTest(void)
-{
-}
 
 ::CRITICAL_SECTION cs_;
 
@@ -35,7 +29,7 @@ DWORD CALLBACK OrigCriticalSection(LPVOID pParam) {
 	return 0;
 }
 
-void SyncObjectTest::testCase1() {
+void testCase1() {
 	DWORD dwThread;
 	
 	::InitializeCriticalSection(&cs_);
@@ -63,7 +57,7 @@ DWORD CALLBACK AutoCriticalSectionProc(LPVOID pParam) {
 }
 
 
-void SyncObjectTest::testAutoCriticalSection() {
+void testAutoCriticalSection() {
 	DWORD dwThread;
 	CreateThread(NULL, 1, AutoCriticalSectionProc, (LPVOID)p1, 0, &dwThread);
 	CreateThread(NULL, 1, AutoCriticalSectionProc, (LPVOID)p2, 0, &dwThread);
@@ -88,7 +82,7 @@ DWORD CALLBACK TheadTestMutexNamed(LPVOID pParam) {
 	return 0;
 }
 
-void SyncObjectTest::testSysMutexWithName() {
+void testSysMutexWithName() {
 
 	DWORD dwThread;
 	CreateThread(NULL, 1, TheadTestMutexNamed, (LPVOID)p1, 0, &dwThread);
@@ -113,7 +107,7 @@ DWORD CALLBACK TheadTestMutexUnnamed(LPVOID pParam) {
 	return 0;
 }
 
-void SyncObjectTest::testSysMutexWithoutName() {
+void testSysMutexWithoutName() {
 	DWORD dwThread;
 	CreateThread(NULL, 1, TheadTestMutexUnnamed, (LPVOID)p1, 0, &dwThread);
 	CreateThread(NULL, 1, TheadTestMutexUnnamed, (LPVOID)p2, 0, &dwThread);

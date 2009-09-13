@@ -3,13 +3,8 @@
 #include <utility\replacepacket.h>
 #include <utility\HttpPacket.h>
 
-ReplacePacketTest::ReplacePacketTest(void)
-{
-}
-
-ReplacePacketTest::~ReplacePacketTest(void)
-{
-}
+#include <boost\test\test_tools.hpp>
+using namespace boost::unit_test;
 
 const char packet1[] = 	"HTTP/1.1 302 Found\r\n"
 "Date: Thu, 24 Apr 2008 02:37:48 GMT\r\n"
@@ -41,7 +36,7 @@ const char packet1[] = 	"HTTP/1.1 302 Found\r\n"
 "12345678901234567890123456789012";	// 682
 
 
-void ReplacePacketTest::testNewPacket() {
+void testNewPacket() {
 	int written;
 	HTTPPacket *packet = new HTTPPacket;
 	packet->addBuffer(packet1, static_cast<int>(strlen(packet1)), &written);
@@ -49,11 +44,11 @@ void ReplacePacketTest::testNewPacket() {
 
 	FillBlankPacket(packet, new_packet);
 
-	CPPUNIT_ASSERT(0 == strcmp(new_packet->getHeader()->getDate(), "Thu, 24 Apr 2008 02:37:48 GMT"));
-	CPPUNIT_ASSERT(0 == strcmp(new_packet->getHeader()->getHeaderLine(), "HTTP/1.1 302 Found"));
-	CPPUNIT_ASSERT(0 == strcmp(new_packet->getHeader()->getServer(), "Apache/1.3.37 (Unix) mod_gzip/1.3.26.1"));
-	CPPUNIT_ASSERT(new_packet->isComplete());
+    BOOST_ASSERT(0 == strcmp(new_packet->getHeader()->getDate(), "Thu, 24 Apr 2008 02:37:48 GMT"));
+	BOOST_ASSERT(0 == strcmp(new_packet->getHeader()->getHeaderLine(), "HTTP/1.1 302 Found"));
+	BOOST_ASSERT(0 == strcmp(new_packet->getHeader()->getServer(), "Apache/1.3.37 (Unix) mod_gzip/1.3.26.1"));
+	BOOST_ASSERT(new_packet->isComplete());
 	int a = new_packet->getDataSize() ;
-	CPPUNIT_ASSERT(new_packet->getDataSize() == 723);
+	BOOST_ASSERT(new_packet->getDataSize() == 723);
 	delete packet;
 }

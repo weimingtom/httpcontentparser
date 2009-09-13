@@ -2,134 +2,132 @@
 #include ".\webcontenttest.h"
 #include <webcontenttype.h>
 
-WebContentTest::WebContentTest(void) {
-}
+#include <boost\test\test_tools.hpp>
+using namespace boost::unit_test;
 
-WebContentTest::~WebContentTest(void) {
-}
 
-void WebContentTest::testImageType() {
+void testImageType() {
 
 	// IMAGE_TYPE_GIF
 	{
 	unsigned type = IMAGE_TYPE_GIF;
-	CPPUNIT_ASSERT(true == isImage(type));
-	CPPUNIT_ASSERT(false == isText(type));
-	CPPUNIT_ASSERT(false == isPorn(type));
+	BOOST_ASSERT(true == isImage(type));
+	BOOST_ASSERT(false == isText(type));
+	BOOST_ASSERT(false == isPorn(type));
 
 	setPron(&type);
 
-	CPPUNIT_ASSERT(true == isImage(type));
-	CPPUNIT_ASSERT(false == isText(type));
-	CPPUNIT_ASSERT(true == isPorn(type));
+	BOOST_ASSERT(true == isImage(type));
+	BOOST_ASSERT(false == isText(type));
+	BOOST_ASSERT(true == isPorn(type));
 
 	resetPorn(&type);
-	CPPUNIT_ASSERT(true == isImage(type));
-	CPPUNIT_ASSERT(false == isText(type));
-	CPPUNIT_ASSERT(false == isPorn(type));
+	BOOST_ASSERT(true == isImage(type));
+	BOOST_ASSERT(false == isText(type));
+	BOOST_ASSERT(false == isPorn(type));
 	}
 
 	// type == IMAGE_TYPE_JPEG
 	{
 	unsigned type = IMAGE_TYPE_JPEG;
-	CPPUNIT_ASSERT(true == isImage(type));
-	CPPUNIT_ASSERT(false == isText(type));
-	CPPUNIT_ASSERT(false == isPorn(type));
+	BOOST_ASSERT(true == isImage(type));
+	BOOST_ASSERT(false == isText(type));
+	BOOST_ASSERT(false == isPorn(type));
 
 	setPron(&type);
 
-	CPPUNIT_ASSERT(true == isImage(type));
-	CPPUNIT_ASSERT(false == isText(type));
-	CPPUNIT_ASSERT(true == isPorn(type));
+	BOOST_ASSERT(true == isImage(type));
+	BOOST_ASSERT(false == isText(type));
+	BOOST_ASSERT(true == isPorn(type));
 
 	resetPorn(&type);
-	CPPUNIT_ASSERT(true == isImage(type));
-	CPPUNIT_ASSERT(false == isText(type));
-	CPPUNIT_ASSERT(false == isPorn(type));
+	BOOST_ASSERT(true == isImage(type));
+	BOOST_ASSERT(false == isText(type));
+	BOOST_ASSERT(false == isPorn(type));
 	}
 
 	// type == IMAGE_TYPE_PNG
 	{
 	unsigned type = IMAGE_TYPE_PNG;
-	CPPUNIT_ASSERT(true == isImage(type));
-	CPPUNIT_ASSERT(false == isText(type));
-	CPPUNIT_ASSERT(false == isPorn(type));
+	BOOST_ASSERT(true == isImage(type));
+	BOOST_ASSERT(false == isText(type));
+	BOOST_ASSERT(false == isPorn(type));
 
 	setPron(&type);
 
-	CPPUNIT_ASSERT(true == isImage(type));
-	CPPUNIT_ASSERT(false == isText(type));
-	CPPUNIT_ASSERT(true == isPorn(type));
+	BOOST_ASSERT(true == isImage(type));
+	BOOST_ASSERT(false == isText(type));
+	BOOST_ASSERT(true == isPorn(type));
 
 	resetPorn(&type);
-	CPPUNIT_ASSERT(true == isImage(type));
-	CPPUNIT_ASSERT(false == isText(type));
-	CPPUNIT_ASSERT(false == isPorn(type));
+	BOOST_ASSERT(true == isImage(type));
+	BOOST_ASSERT(false == isText(type));
+	BOOST_ASSERT(false == isPorn(type));
 	}
 
 	// type == IMAGE_TYPE_BMP
 	{
 	unsigned type = IMAGE_TYPE_BMP;
-	CPPUNIT_ASSERT(true == isImage(type));
-	CPPUNIT_ASSERT(false == isText(type));
-	CPPUNIT_ASSERT(false == isPorn(type));
+	BOOST_ASSERT(true == isImage(type));
+	BOOST_ASSERT(false == isText(type));
+	BOOST_ASSERT(false == isPorn(type));
 
 	setPron(&type);
 
-	CPPUNIT_ASSERT(true == isImage(type));
-	CPPUNIT_ASSERT(false == isText(type));
-	CPPUNIT_ASSERT(true == isPorn(type));
+	BOOST_ASSERT(true == isImage(type));
+	BOOST_ASSERT(false == isText(type));
+	BOOST_ASSERT(true == isPorn(type));
 
 	resetPorn(&type);
-	CPPUNIT_ASSERT(true == isImage(type));
-	CPPUNIT_ASSERT(false == isText(type));
-	CPPUNIT_ASSERT(false == isPorn(type));
+	BOOST_ASSERT(true == isImage(type));
+	BOOST_ASSERT(false == isText(type));
+	BOOST_ASSERT(false == isPorn(type));
 	}
 }
 
-void  WebContentTest::textOtherTypes() {
+void  textOtherTypes() {
 	// CONTYPE_CSS
 	{
 	unsigned type = CONTYPE_CSS;
-	CPPUNIT_ASSERT(false == isImage(type));
-	CPPUNIT_ASSERT(false == isText(type));
-	CPPUNIT_ASSERT(false == isPorn(type));
+	BOOST_ASSERT(false == isImage(type));
+	BOOST_ASSERT(false == isText(type));
+	BOOST_ASSERT(false == isPorn(type));
 
 	setPron(&type);
 
-	CPPUNIT_ASSERT(false == isImage(type));
-	CPPUNIT_ASSERT(false == isText(type));
-	CPPUNIT_ASSERT(true == isPorn(type));
+	BOOST_ASSERT(false == isImage(type));
+	BOOST_ASSERT(false == isText(type));
+	BOOST_ASSERT(true == isPorn(type));
 
 	resetPorn(&type);
-	CPPUNIT_ASSERT(false == isImage(type));
-	CPPUNIT_ASSERT(false == isText(type));
-	CPPUNIT_ASSERT(false == isPorn(type));
+	BOOST_ASSERT(false == isImage(type));
+	BOOST_ASSERT(false == isText(type));
+	BOOST_ASSERT(false == isPorn(type));
 	}
 }
 
-void WebContentTest::testFFFF() {
+void testFFFF() {
 
-	CPPUNIT_ASSERT (false == (isImage(0xFFFFFFFF) || isText(0xFFFFFFF)));
+	BOOST_ASSERT (false == (isImage(0xFFFFFFFF) || isText(0xFFFFFFF)));
 }
 
-void WebContentTest::testTextType() {
+void testTextType() {
 		// CONTYPE_HTML
 	{
 	unsigned type = CONTYPE_HTML;
-	CPPUNIT_ASSERT(false == isImage(type));
-	CPPUNIT_ASSERT(true == isText(type));
-	CPPUNIT_ASSERT(false == isPorn(type));
+	BOOST_ASSERT(false == isImage(type));
+	BOOST_ASSERT(true == isText(type));
+	BOOST_ASSERT(false == isPorn(type));
 
 	setPron(&type);
 
-	CPPUNIT_ASSERT(false == isImage(type));
-	CPPUNIT_ASSERT(true == isText(type));
-	CPPUNIT_ASSERT(true == isPorn(type));
+	BOOST_ASSERT(false == isImage(type));
+	BOOST_ASSERT(true == isText(type));
+	BOOST_ASSERT(true == isPorn(type));
 
 	resetPorn(&type);
-	CPPUNIT_ASSERT(false == isImage(type));
-	CPPUNIT_ASSERT(true == isText(type));
-	CPPUNIT_ASSERT(false == isPorn(type));
+	BOOST_ASSERT(false == isImage(type));
+	BOOST_ASSERT(true == isText(type));
+	BOOST_ASSERT(false == isPorn(type));
 	}
 }

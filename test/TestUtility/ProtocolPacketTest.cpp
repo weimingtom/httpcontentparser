@@ -1,42 +1,37 @@
 #include "StdAfx.h"
 #include ".\protocolpackettest.h"
 #include <utility\protocolpacket.h>
-using namespace CPPUNIT_NS;
+#include <boost\test\test_tools.hpp>
+using namespace boost::unit_test;
 
 #define BUF_SIZE = (1024 * 16);
 
-ProtocolPacketTest::ProtocolPacketTest(void) {
-}
-
-ProtocolPacketTest::~ProtocolPacketTest(void) {
-}
 
 
-
-void  ProtocolPacketTest::testGetBytesCanRead() {
+void  testGetBytesCanRead() {
 	const unsigned buf_size = 100;
 	ProtocolPacket<buf_size> *packet = new ProtocolPacket<buf_size>();
 	char buf_read[1024] = {0};
 	packet->write(buf_read, 1024);
 
-	CPPUNIT_ASSERT(10 == packet->read(buf_read, 10));
-	CPPUNIT_ASSERT(1014 == packet->getBytesCanRead());
-	CPPUNIT_ASSERT(10 == packet->read(buf_read, 10));
-	CPPUNIT_ASSERT(1004 == packet->getBytesCanRead());
-	CPPUNIT_ASSERT(1000 == packet->read(buf_read, 1000));
-	CPPUNIT_ASSERT(4 == packet->getBytesCanRead());
-	CPPUNIT_ASSERT(4 == packet->read(buf_read, 4));
-	CPPUNIT_ASSERT(0 == packet->getBytesCanRead());
+	BOOST_ASSERT(10 == packet->read(buf_read, 10));
+	BOOST_ASSERT(1014 == packet->getBytesCanRead());
+	BOOST_ASSERT(10 == packet->read(buf_read, 10));
+	BOOST_ASSERT(1004 == packet->getBytesCanRead());
+	BOOST_ASSERT(1000 == packet->read(buf_read, 1000));
+	BOOST_ASSERT(4 == packet->getBytesCanRead());
+	BOOST_ASSERT(4 == packet->read(buf_read, 4));
+	BOOST_ASSERT(0 == packet->getBytesCanRead());
 	delete packet;
 }
-void ProtocolPacketTest::testSeekRead() {
+void testSeekRead() {
 	{
 		// 这里如果 buf = 1会失败，不过也没有什么好办法吧
 		const unsigned buf_size = 2;
 		char buf_read[12] = {0};
 		ProtocolPacket<buf_size> *packet = new ProtocolPacket<buf_size>();
 
-		CPPUNIT_ASSERT(0 == packet->read(buf_read, 11));
+		BOOST_ASSERT(0 == packet->read(buf_read, 11));
 		char buffer[] = "hello world";
 		unsigned len = (int)strlen(buffer);
 		int loop_cnt = 8;
@@ -48,17 +43,17 @@ void ProtocolPacketTest::testSeekRead() {
 		memset(buf_read, 0, sizeof(buf_read));
 		packet->seek_read(0);
 		packet->read(buf_read, 11);
-		CPPUNIT_ASSERT(std::string(buf_read) == std::string(buffer));
+		BOOST_ASSERT(std::string(buf_read) == std::string(buffer));
 
 		packet->seek_read(3);
 		memset(buf_read, 0, sizeof(buf_read));
 		packet->read(buf_read, 10);
-		CPPUNIT_ASSERT(std::string(buf_read) == std::string("lo worldhe"));
+		BOOST_ASSERT(std::string(buf_read) == std::string("lo worldhe"));
 
 		packet->seek_read(11);
 		memset(buf_read, 0, sizeof(buf_read));
 		packet->read(buf_read, 8);
-		CPPUNIT_ASSERT(std::string(buf_read) == std::string("hello wo"));
+		BOOST_ASSERT(std::string(buf_read) == std::string("hello wo"));
 		delete packet;
 	}
 
@@ -75,15 +70,15 @@ void ProtocolPacketTest::testSeekRead() {
 		char buf_read[12] = {0};
 		packet->seek_read(0);
 		packet->read(buf_read, 11);
-		CPPUNIT_ASSERT(std::string(buf_read) == std::string(buffer));
+		BOOST_ASSERT(std::string(buf_read) == std::string(buffer));
 
 		packet->seek_read(3);
 		packet->read(buf_read, 11);
-		CPPUNIT_ASSERT(std::string(buf_read) == std::string("lo worldhel"));
+		BOOST_ASSERT(std::string(buf_read) == std::string("lo worldhel"));
 
 		packet->seek_read(11);
 		packet->read(buf_read, 11);
-		CPPUNIT_ASSERT(std::string(buf_read) == std::string(buffer));
+		BOOST_ASSERT(std::string(buf_read) == std::string(buffer));
 		delete packet;
 	}
 
@@ -101,17 +96,17 @@ void ProtocolPacketTest::testSeekRead() {
 		packet->seek_read(0);
 		memset(buf_read, 0, sizeof(buf_read));
 		packet->read(buf_read, 11);
-		CPPUNIT_ASSERT(std::string(buf_read) == std::string(buffer));
+		BOOST_ASSERT(std::string(buf_read) == std::string(buffer));
 
 		packet->seek_read(3);
 		memset(buf_read, 0, sizeof(buf_read));
 		packet->read(buf_read, 11);
-		CPPUNIT_ASSERT(std::string(buf_read) == std::string("lo worldhel"));
+		BOOST_ASSERT(std::string(buf_read) == std::string("lo worldhel"));
 
 		packet->seek_read(11);
 		memset(buf_read, 0, sizeof(buf_read));
 		packet->read(buf_read, 11);
-		CPPUNIT_ASSERT(std::string(buf_read) == std::string(buffer));
+		BOOST_ASSERT(std::string(buf_read) == std::string(buffer));
 		delete packet;
 	}
 
@@ -129,22 +124,22 @@ void ProtocolPacketTest::testSeekRead() {
 		packet->seek_read(0);
 		memset(buf_read, 0, sizeof(buf_read));
 		packet->read(buf_read, 11);
-		CPPUNIT_ASSERT(std::string(buf_read) == std::string(buffer));
+		BOOST_ASSERT(std::string(buf_read) == std::string(buffer));
 
 		packet->seek_read(3);
 		memset(buf_read, 0, sizeof(buf_read));
 		packet->read(buf_read, 9);
-		CPPUNIT_ASSERT(std::string(buf_read) == std::string("lo worldh"));
+		BOOST_ASSERT(std::string(buf_read) == std::string("lo worldh"));
 
 		packet->seek_read(4);
 		memset(buf_read, 0, sizeof(buf_read));
 		packet->read(buf_read, 8);
-		CPPUNIT_ASSERT(std::string(buf_read) == std::string("o worldh"));
+		BOOST_ASSERT(std::string(buf_read) == std::string("o worldh"));
 
 		packet->seek_read(33);
 		memset(buf_read, 0, sizeof(buf_read));
 		packet->read(buf_read, 11);
-		CPPUNIT_ASSERT(std::string(buf_read) == std::string(buffer));
+		BOOST_ASSERT(std::string(buf_read) == std::string(buffer));
 		delete packet;
 
 	}
@@ -164,12 +159,12 @@ void ProtocolPacketTest::testSeekRead() {
 		packet->seek_read(4);
 		memset(buf_read, 0, sizeof(buf_read));
 		packet->read(buf_read, 1024);
-		CPPUNIT_ASSERT(std::string(buf_read) == std::string("o world"));
+		BOOST_ASSERT(std::string(buf_read) == std::string("o world"));
 	}
 }
 
 
-void ProtocolPacketTest::testSeekWrite() {
+void testSeekWrite() {
 	const unsigned buf_size = 11;
 	ProtocolPacket<buf_size> *packet = new ProtocolPacket<buf_size>();
 
@@ -179,12 +174,12 @@ void ProtocolPacketTest::testSeekWrite() {
 	for(int i = 0; i < loop_cnt; i++) { 
 		packet->write(buffer, len);
 	}
-	CPPUNIT_ASSERT(packet->getTotalSize() == len * loop_cnt);
+	BOOST_ASSERT(packet->getTotalSize() == len * loop_cnt);
 	packet->seek_write(0);
 	packet->write(_strupr(buffer), len);
 	delete packet;
 }
-void ProtocolPacketTest::testWrite() {
+void testWrite() {
 	const unsigned buf_size = 5;
 	ProtocolPacket<buf_size> *packet = new ProtocolPacket<buf_size>();
 
@@ -194,7 +189,7 @@ void ProtocolPacketTest::testWrite() {
 	for(int i = 0; i < loop_cnt; i++) { 
 		packet->write(buffer, len);
 	}
-	CPPUNIT_ASSERT(packet->getTotalSize() == len * loop_cnt);
+	BOOST_ASSERT(packet->getTotalSize() == len * loop_cnt);
 	delete packet;
 
 	{
@@ -207,7 +202,7 @@ void ProtocolPacketTest::testWrite() {
 		for(int i = 0; i < loop_cnt; i++) { 
 			packet->write(buffer, len);
 		}
-		CPPUNIT_ASSERT(packet->getTotalSize() == len * loop_cnt);
+		BOOST_ASSERT(packet->getTotalSize() == len * loop_cnt);
 		delete packet;
 	}
 
@@ -221,7 +216,7 @@ void ProtocolPacketTest::testWrite() {
 		for(int i = 0; i < loop_cnt; i++) { 
 			packet->write(buffer, len);
 		}
-		CPPUNIT_ASSERT(packet->getTotalSize() == len * loop_cnt);
+		BOOST_ASSERT(packet->getTotalSize() == len * loop_cnt);
 		delete packet;
 	}
 
@@ -234,12 +229,12 @@ void ProtocolPacketTest::testWrite() {
 		const unsigned buf_size = 83;
 		ProtocolPacket<buf_size> *packet = new ProtocolPacket<buf_size>();
 		packet->write(buffer, 1024);
-		CPPUNIT_ASSERT(packet->getTotalSize() == 1024);
+		BOOST_ASSERT(packet->getTotalSize() == 1024);
 		delete packet;
 	}
 }
 
-void ProtocolPacketTest::testLoopRead() {
+void testLoopRead() {
 	// 只读取一个字符
 	{
 		const unsigned buf_size = 3;
@@ -253,16 +248,16 @@ void ProtocolPacketTest::testLoopRead() {
 
 		char buf[12] = {0};
 		int dwRead = packet->read(buf, 1);
-		CPPUNIT_ASSERT(buf[0] == 'a');
-		CPPUNIT_ASSERT(dwRead == 1);
+		BOOST_ASSERT(buf[0] == 'a');
+		BOOST_ASSERT(dwRead == 1);
 		dwRead = packet->read(buf, 1);
-		CPPUNIT_ASSERT(buf[0] == 'b');
-		CPPUNIT_ASSERT(dwRead == 1);
+		BOOST_ASSERT(buf[0] == 'b');
+		BOOST_ASSERT(dwRead == 1);
 		dwRead = packet->read(buf, 1);
-		CPPUNIT_ASSERT(buf[0] == 'c');
-		CPPUNIT_ASSERT(dwRead == 1);
+		BOOST_ASSERT(buf[0] == 'c');
+		BOOST_ASSERT(dwRead == 1);
 		dwRead = packet->read(buf, 1);
-		CPPUNIT_ASSERT(dwRead == 0);
+		BOOST_ASSERT(dwRead == 0);
 
 
 		delete packet;
@@ -282,7 +277,7 @@ void ProtocolPacketTest::testLoopRead() {
 		int dwRead = packet->read(buf, 1);
 		int index = 'a';
 		while (dwRead != 0) {
-			CPPUNIT_ASSERT(buf[0] == index);
+			BOOST_ASSERT(buf[0] == index);
 			dwRead = packet->read(buf, 1);
 			if (index == 'z')
 				index = 'a';
@@ -296,7 +291,7 @@ void ProtocolPacketTest::testLoopRead() {
 
 // testRead一些列函数测试不同默认缓冲区下
 // 的读写操作
-void ProtocolPacketTest::testRead() {
+void testRead() {
 	{
 	const unsigned buf_size = 10;
 	ProtocolPacket<buf_size> *packet = new ProtocolPacket<buf_size>();
@@ -315,7 +310,7 @@ void ProtocolPacketTest::testRead() {
 	for (int i = 0; i < 3; ++i) {
 		strcpy(&(buf_gen[len*i]), buffer); 
 	}
-	CPPUNIT_ASSERT(std::string(buf_read) == std::string(buf_gen));
+	BOOST_ASSERT(std::string(buf_read) == std::string(buf_gen));
 	delete packet;
 	}
 	{
@@ -336,7 +331,7 @@ void ProtocolPacketTest::testRead() {
 	for (int i = 0; i < 3; ++i) {
 		strcpy(&(buf_gen[len*i]), buffer); 
 	}
-	CPPUNIT_ASSERT(std::string(buf_read) == std::string(buf_gen));
+	BOOST_ASSERT(std::string(buf_read) == std::string(buf_gen));
 	delete packet;
 	}
 	{
@@ -357,7 +352,7 @@ void ProtocolPacketTest::testRead() {
 	for (int i = 0; i < 3; ++i) {
 		strcpy(&(buf_gen[len*i]), buffer); 
 	}
-	CPPUNIT_ASSERT(std::string(buf_read) == std::string(buf_gen));
+	BOOST_ASSERT(std::string(buf_read) == std::string(buf_gen));
 	delete packet;
 	}
 	{
@@ -378,7 +373,7 @@ void ProtocolPacketTest::testRead() {
 	for (int i = 0; i < 3; ++i) {
 		strcpy(&(buf_gen[len*i]), buffer); 
 	}
-	CPPUNIT_ASSERT(std::string(buf_read) == std::string(buf_gen));
+	BOOST_ASSERT(std::string(buf_read) == std::string(buf_gen));
 	delete packet;
 	}
 }
