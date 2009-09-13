@@ -4,31 +4,16 @@
 #include "stdafx.h"
 #include ".\searchkeywordutiltest.h"
 #include ".\websiteutiltest.h"
+#include <boost\test\included\unit_test.hpp>
+using namespace boost::unit_test;
 
-CPPUNIT_TEST_SUITE_REGISTRATION(WebsiteUtilTest);
-CPPUNIT_TEST_SUITE_REGISTRATION(SearchKeywordUtilTest);
+boost::unit_test::test_suite* init_unit_test_suite( int argc, char* argv[] ) {
+    framework::master_test_suite().add( BOOST_TEST_CASE(&testReadWebisitesGetNext) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&testReadWebisitesEnumerator) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&testReadWebisitesWordsFileOper) );
 
-int _tmain(int argc, _TCHAR* argv[])
-{
-	// Create the event manager and test controller
-	CPPUNIT_NS::TestResult controller;
-
-	// Add a listener that colllects test result
-	CPPUNIT_NS::TestResultCollector result;
-	controller.addListener( &result );        
-
-	// Add a listener that print dots as test run.
-	CPPUNIT_NS::BriefTestProgressListener progress;
-	controller.addListener( &progress );      
-
-	// Add the top suite to the test runner
-	CPPUNIT_NS::TestRunner runner;
-	runner.addTest( CPPUNIT_NS::TestFactoryRegistry::getRegistry().makeTest() );
-	runner.run( controller );
-
-	// Print test in a compiler compatible format.
-	CPPUNIT_NS::CompilerOutputter outputter( &result, CPPUNIT_NS::stdCOut() ); 
-	outputter.write(); 
-
-	return result.wasSuccessful() ? 0 : 1;
+    framework::master_test_suite().add( BOOST_TEST_CASE(&testReadSearcEnumerator) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&testReadSearcGetNext) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&testReadSearchWordsFileOper) );
+    return 0;
 }
