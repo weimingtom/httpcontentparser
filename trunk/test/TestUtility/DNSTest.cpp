@@ -1,348 +1,350 @@
 #include "StdAfx.h"
 #include ".\dnstest.h"
+#include <boost\test\test_tools.hpp>
+using namespace boost::unit_test;
 
-void DNSTest::TestGetMainServName() {
+void TestGetMainServName() {
 	char buffer[1024];
 	{
 	char *dns1 = "www.sina.com";
 	get_main_serv_name(buffer, 1024, dns1);
-	CPPUNIT_ASSERT(0 == strcmp(buffer, dns1));
+	BOOST_ASSERT(0 == strcmp(buffer, dns1));
 
 	char *dns2 = "http:\\www.sina.com";
 	char * result2 = "www.sina.com";
 	get_main_serv_name(buffer, 1024, dns1);
-	CPPUNIT_ASSERT(0 == strcmp(buffer, result2));
+	BOOST_ASSERT(0 == strcmp(buffer, result2));
 	}
 
 	{
 	char *dns1 = "9.186.118.34:80/index.html";
 	char * result1 = "9.186.118.34:80";
 	get_main_serv_name(buffer, 1024, dns1);
-	CPPUNIT_ASSERT(0 == strcmp(buffer, result1));
+	BOOST_ASSERT(0 == strcmp(buffer, result1));
 	}
 
 	{
 	char *dns1 = "http://www.hao123.com/jinshi.htm";
 	char * result1 = "www.hao123.com";
 	get_main_serv_name(buffer, 1024, dns1);
-	CPPUNIT_ASSERT(0 == strcmp(buffer, result1));
+	BOOST_ASSERT(0 == strcmp(buffer, result1));
 	}
 
 	{
 	char *dns = "http://www.google.com/coop/cse/";
 	char * result = "www.google.com";
 	get_main_serv_name(buffer, 1024, dns);
-	CPPUNIT_ASSERT(0 == strcmp(buffer, result));
+	BOOST_ASSERT(0 == strcmp(buffer, result));
 	}
 
 	{
 	char *dns = "http://www.google.name/coop/cse/";
 	char * result = "www.google.name";
 	get_main_serv_name(buffer, 1024, dns);
-	CPPUNIT_ASSERT(0 == strcmp(buffer, result));
+	BOOST_ASSERT(0 == strcmp(buffer, result));
 	}
 
 	{
 	char *dns = "https://www.google.com/accounts/ManageAccount";
 	char * result = "www.google.com";
 	get_main_serv_name(buffer, 1024, dns);
-	CPPUNIT_ASSERT(0 == strcmp(buffer, result));
+	BOOST_ASSERT(0 == strcmp(buffer, result));
 	}
 
 	{
 	char *dns = "https://s.google.com/accounts/ManageAccount";
 	char * result = "s.google.com";
 	get_main_serv_name(buffer, 1024, dns);
-	CPPUNIT_ASSERT(0 == strcmp(buffer, result));
+	BOOST_ASSERT(0 == strcmp(buffer, result));
 	}
 }
-void DNSTest::TestContainIPinDNS() {
+void TestContainIPinDNS() {
 	{
 	char *dns1 = "www.sina.com";
-	CPPUNIT_ASSERT(! isContainsIP(dns1));
+	BOOST_ASSERT(! isContainsIP(dns1));
 
 	char *dns2 = "http:\\www.sina.com";
-	CPPUNIT_ASSERT(! isContainsIP(dns2));
+	BOOST_ASSERT(! isContainsIP(dns2));
 	}
 
 	{
 	char *dns1 = "9.186.118.34:80/index.html";
-	CPPUNIT_ASSERT( isContainsIP(dns1));
+	BOOST_ASSERT( isContainsIP(dns1));
 
 	char *dns2 = "http://9.186.118.34:80/index.html";
-	CPPUNIT_ASSERT( isContainsIP(dns2));
+	BOOST_ASSERT( isContainsIP(dns2));
 
 	char *dns3 = "http://288.186.118.34:80/index.html";
-	CPPUNIT_ASSERT(! isContainsIP(dns3));
+	BOOST_ASSERT(! isContainsIP(dns3));
 
 	char *dns4 = "http://288.186.118.3480/index.html";
-	CPPUNIT_ASSERT(! isContainsIP(dns4));
+	BOOST_ASSERT(! isContainsIP(dns4));
 
 	char *dns5 = "http://288.186.118.34index.html";
-	CPPUNIT_ASSERT(! isContainsIP(dns5));
+	BOOST_ASSERT(! isContainsIP(dns5));
 
 	char *dns6 = "https://288.186.118.34index.html";
-	CPPUNIT_ASSERT(! isContainsIP(dns6));
+	BOOST_ASSERT(! isContainsIP(dns6));
 	}
 }
-void DNSTest::TestValidateIPWithEnd() {
+void TestValidateIPWithEnd() {
 	// 结尾包含其他字母
 	{
 	char * end;
 	TCHAR * ip1 = "9.186.181.1dfe";
-	CPPUNIT_ASSERT(validateStringIP(ip1, &end));
-	CPPUNIT_ASSERT(end[0] == 'd');
-	CPPUNIT_ASSERT(end[1] == 'f');
+	BOOST_ASSERT(validateStringIP(ip1, &end));
+	BOOST_ASSERT(end[0] == 'd');
+	BOOST_ASSERT(end[1] == 'f');
 
 	TCHAR * ip2 = "9.186.1.1d";
-	CPPUNIT_ASSERT(validateStringIP(ip2, &end));
-	CPPUNIT_ASSERT(*end == 'd');
+	BOOST_ASSERT(validateStringIP(ip2, &end));
+	BOOST_ASSERT(*end == 'd');
 
 	TCHAR * ip3 = "9.1.11.34b";
-	CPPUNIT_ASSERT(validateStringIP(ip3, &end));
-	CPPUNIT_ASSERT(*end == 'b');
+	BOOST_ASSERT(validateStringIP(ip3, &end));
+	BOOST_ASSERT(*end == 'b');
 
 	TCHAR * ip4 = "1.82.255.34a";
-	CPPUNIT_ASSERT(validateStringIP(ip4, &end));
-	CPPUNIT_ASSERT(*end == 'a');
+	BOOST_ASSERT(validateStringIP(ip4, &end));
+	BOOST_ASSERT(*end == 'a');
 	}
 }
-void DNSTest::TestvalidateIP() {
+void TestvalidateIP() {
 	{
 	TCHAR * ip1 = "9.186.181.34";
-	CPPUNIT_ASSERT(validateStringIP(ip1));
+	BOOST_ASSERT(validateStringIP(ip1));
 	}
 
 	// 数字超限
 	{
 	TCHAR * ip1 = "738.186.181.34";
-	CPPUNIT_ASSERT(!validateStringIP(ip1));
+	BOOST_ASSERT(!validateStringIP(ip1));
 
 	TCHAR * ip2 = "38.286.181.34";
-	CPPUNIT_ASSERT(!validateStringIP(ip2));
+	BOOST_ASSERT(!validateStringIP(ip2));
 
 	TCHAR * ip3 = "38.186.281.34";
-	CPPUNIT_ASSERT(!validateStringIP(ip3));
+	BOOST_ASSERT(!validateStringIP(ip3));
 
 	TCHAR * ip4 = "38.186.181.334";
-	CPPUNIT_ASSERT(!validateStringIP(ip4));
+	BOOST_ASSERT(!validateStringIP(ip4));
 	}
 
 	// 包含字母
 	{
 	TCHAR * ip1 = "9.186.181.aa";
-	CPPUNIT_ASSERT(!validateStringIP(ip1));
+	BOOST_ASSERT(!validateStringIP(ip1));
 
 	TCHAR * ip2 = "9.186.aa.34";
-	CPPUNIT_ASSERT(!validateStringIP(ip2));
+	BOOST_ASSERT(!validateStringIP(ip2));
 
 	TCHAR * ip3 = "9.aa.11.34";
-	CPPUNIT_ASSERT(!validateStringIP(ip3));
+	BOOST_ASSERT(!validateStringIP(ip3));
 
 	TCHAR * ip4 = "a.82.255.34";
-	CPPUNIT_ASSERT(!validateStringIP(ip4));
+	BOOST_ASSERT(!validateStringIP(ip4));
 	}
 }
 
-void DNSTest::GetMainNameWithPort() {
+void GetMainNameWithPort() {
 	TCHAR result[MAX_PATH];
 	{
 		const TCHAR * test_unit = "www.sina.com:80";
 		const TCHAR * expected_result = "sina";
 		int result_length = get_main_dns_name(result, MAX_PATH, test_unit);
-		CPPUNIT_ASSERT( result_length == _tcslen(expected_result));
-		CPPUNIT_ASSERT( 0 == _tcscmp(result, expected_result));
+		BOOST_ASSERT( result_length == _tcslen(expected_result));
+		BOOST_ASSERT( 0 == _tcscmp(result, expected_result));
 	}
 }
-void DNSTest::GetMainNameFromBrowseAddresss() {
+void GetMainNameFromBrowseAddresss() {
 	TCHAR result[MAX_PATH];
 	{
 		const TCHAR * test_unit = "code.google.com/p/httpcontentparser/issues/detail?id=57";
 		const TCHAR * expected_result = "google";
-		CPPUNIT_ASSERT( _tcslen(expected_result) == 
+		BOOST_ASSERT( _tcslen(expected_result) == 
 			get_main_dns_name(result, MAX_PATH,test_unit));
-		CPPUNIT_ASSERT( 0 == _tcscmp(result, expected_result));
+		BOOST_ASSERT( 0 == _tcscmp(result, expected_result));
 	}
 
 	{
 		const TCHAR * test_unit = "www.baidu.com/s?ie=gb2312&bs=%B0%C2%B6%FB%C2%B3%CB%E9%C6%AC&sr=&z=&cl=3&f=8&wd=%C4%CE%B6%FB%C2%B3%CB%E9%C6%AC&ct=0";
 		const TCHAR * expected_result = "baidu";
-		CPPUNIT_ASSERT( _tcslen(expected_result) == 
+		BOOST_ASSERT( _tcslen(expected_result) == 
 			get_main_dns_name(result, MAX_PATH,test_unit));
-		CPPUNIT_ASSERT( 0 == _tcscmp(result, expected_result));
+		BOOST_ASSERT( 0 == _tcscmp(result, expected_result));
 	}
 
 	{
 		const TCHAR * test_unit = "sports.sina.com.cn/nba/";
 		const TCHAR * expected_result = "sina";
-		CPPUNIT_ASSERT( _tcslen(expected_result) == 
+		BOOST_ASSERT( _tcslen(expected_result) == 
 			get_main_dns_name(result, MAX_PATH,test_unit));
-		CPPUNIT_ASSERT( 0 == _tcscmp(result, expected_result));
+		BOOST_ASSERT( 0 == _tcscmp(result, expected_result));
 	}
 
 	{
 		const TCHAR * test_unit = "images.sohu.com";
 		const TCHAR * expected_result = "sohu";
-		CPPUNIT_ASSERT( _tcslen(expected_result) == 
+		BOOST_ASSERT( _tcslen(expected_result) == 
 			get_main_dns_name(result, MAX_PATH,test_unit));
-		CPPUNIT_ASSERT( 0 == _tcscmp(result, expected_result));
+		BOOST_ASSERT( 0 == _tcscmp(result, expected_result));
 	}
 
 	{
 		const TCHAR * test_unit = "alpha.brand.sogou.com";
 		const TCHAR * expected_result = "sogou";
-		CPPUNIT_ASSERT( _tcslen(expected_result) == 
+		BOOST_ASSERT( _tcslen(expected_result) == 
 			get_main_dns_name(result, MAX_PATH,test_unit));
-		CPPUNIT_ASSERT( 0 == _tcscmp(result, expected_result));
+		BOOST_ASSERT( 0 == _tcscmp(result, expected_result));
 	}
 
 	{
 		const TCHAR * test_unit = "www.qq.com";
 		const TCHAR * expected_result = "qq";
-		CPPUNIT_ASSERT( _tcslen(expected_result) == 
+		BOOST_ASSERT( _tcslen(expected_result) == 
 			get_main_dns_name(result, MAX_PATH,test_unit));
-		CPPUNIT_ASSERT( 0 == _tcscmp(result, expected_result));
+		BOOST_ASSERT( 0 == _tcscmp(result, expected_result));
 	}
 }
 
-void DNSTest::GetMainNameFromBrowseAddressswithProto() {
+void GetMainNameFromBrowseAddressswithProto() {
 	TCHAR result[MAX_PATH];
 	{
 		const TCHAR * test_unit = "http://code.google.com/p/httpcontentparser/issues/detail?id=57";
 		const TCHAR * expected_result = "google";
-		CPPUNIT_ASSERT( _tcslen(expected_result) == 
+		BOOST_ASSERT( _tcslen(expected_result) == 
 			get_main_dns_name(result, MAX_PATH,test_unit));
-		CPPUNIT_ASSERT( 0 == _tcscmp(result, expected_result));
+		BOOST_ASSERT( 0 == _tcscmp(result, expected_result));
 	}
 
 	{
 		const TCHAR * test_unit = "http://www.baidu.com/s?ie=gb2312&bs=%B0%C2%B6%FB%C2%B3%CB%E9%C6%AC&sr=&z=&cl=3&f=8&wd=%C4%CE%B6%FB%C2%B3%CB%E9%C6%AC&ct=0";
 		const TCHAR * expected_result = "baidu";
-		CPPUNIT_ASSERT( _tcslen(expected_result) == 
+		BOOST_ASSERT( _tcslen(expected_result) == 
 			get_main_dns_name(result, MAX_PATH,test_unit));
-		CPPUNIT_ASSERT( 0 == _tcscmp(result, expected_result));
+		BOOST_ASSERT( 0 == _tcscmp(result, expected_result));
 	}
 
 	{
 		const TCHAR * test_unit = "http://sports.sina.com.cn/nba/";
 		const TCHAR * expected_result = "sina";
-		CPPUNIT_ASSERT( _tcslen(expected_result) == 
+		BOOST_ASSERT( _tcslen(expected_result) == 
 			get_main_dns_name(result, MAX_PATH,test_unit));
-		CPPUNIT_ASSERT( 0 == _tcscmp(result, expected_result));
+		BOOST_ASSERT( 0 == _tcscmp(result, expected_result));
 	}
 
 	{
 		const TCHAR * test_unit = "https://sports.sina.com.cn/nba/";
 		const TCHAR * expected_result = "sina";
-		CPPUNIT_ASSERT( _tcslen(expected_result) == 
+		BOOST_ASSERT( _tcslen(expected_result) == 
 			get_main_dns_name(result, MAX_PATH,test_unit));
-		CPPUNIT_ASSERT( 0 == _tcscmp(result, expected_result));
+		BOOST_ASSERT( 0 == _tcscmp(result, expected_result));
 	}
 }
 
-void DNSTest::GetMainNameTest() {
+void GetMainNameTest() {
 	TCHAR result[MAX_PATH];
 
 	{
 		const TCHAR * test_unit = "p2.WWW.SINA.com.cn";
 		const TCHAR * expected_result = "sina";
-		CPPUNIT_ASSERT( _tcslen(expected_result) == 
+		BOOST_ASSERT( _tcslen(expected_result) == 
 			get_main_dns_name(result, MAX_PATH,test_unit));
-		CPPUNIT_ASSERT( 0 == _tcscmp(result, expected_result));
+		BOOST_ASSERT( 0 == _tcscmp(result, expected_result));
 	}
 
 	{
 		const TCHAR * test_unit = "seach.netorg.cn";
 		const TCHAR * expected_result = "netorg";
-		CPPUNIT_ASSERT( _tcslen(expected_result)
+		BOOST_ASSERT( _tcslen(expected_result)
 			== get_main_dns_name(result, MAX_PATH,test_unit));
-		CPPUNIT_ASSERT( 0 == _tcscmp(result, expected_result));
+		BOOST_ASSERT( 0 == _tcscmp(result, expected_result));
 	}
 
 
 	{
 		const TCHAR * test_unit = "www.google.cn";
 		const TCHAR * expected_result = "google";
-		CPPUNIT_ASSERT( _tcslen(expected_result) == 
+		BOOST_ASSERT( _tcslen(expected_result) == 
 			get_main_dns_name(result, MAX_PATH,test_unit));
-		CPPUNIT_ASSERT( 0 == _tcscmp(result, expected_result));
+		BOOST_ASSERT( 0 == _tcscmp(result, expected_result));
 	}
 
 	{
 		const TCHAR * test_unit = "www.netorg.cn";
 		const TCHAR * expected_result = "netorg";
-		CPPUNIT_ASSERT( _tcslen(expected_result) == 
+		BOOST_ASSERT( _tcslen(expected_result) == 
 			get_main_dns_name(result, MAX_PATH,test_unit));
-		CPPUNIT_ASSERT( 0 == _tcscmp(result, expected_result));
+		BOOST_ASSERT( 0 == _tcscmp(result, expected_result));
 	}
 
 	{
 		const TCHAR * test_unit = "www.orgkk.cn";
 		const TCHAR * expected_result = "orgkk";
-		CPPUNIT_ASSERT( _tcslen(expected_result) == 
+		BOOST_ASSERT( _tcslen(expected_result) == 
 			get_main_dns_name(result, MAX_PATH,test_unit));
-		CPPUNIT_ASSERT( 0 == _tcscmp(result, expected_result));
+		BOOST_ASSERT( 0 == _tcscmp(result, expected_result));
 	}
 
 	
 	{
 		const TCHAR * test_unit = "www.comkk.cn";
 		const TCHAR * expected_result = "comkk";
-		CPPUNIT_ASSERT( _tcslen(expected_result) == 
+		BOOST_ASSERT( _tcslen(expected_result) == 
 			get_main_dns_name(result, MAX_PATH,test_unit));
-		CPPUNIT_ASSERT( 0 == _tcscmp(result, expected_result));
+		BOOST_ASSERT( 0 == _tcscmp(result, expected_result));
 	}
 
 	{
 		const TCHAR * test_unit = "hello1";
 		const TCHAR * expected_result = "hello1";
-		CPPUNIT_ASSERT( _tcslen(expected_result) == 
+		BOOST_ASSERT( _tcslen(expected_result) == 
 			get_main_dns_name(result, MAX_PATH,test_unit));
-		CPPUNIT_ASSERT( 0 == _tcscmp(result, expected_result));
+		BOOST_ASSERT( 0 == _tcscmp(result, expected_result));
 	}
 
 	{
 		const TCHAR * test_unit = "seach.SINA.com.cn";
 		const TCHAR * expected_result = "sina";
-		CPPUNIT_ASSERT( _tcslen(expected_result) == 
+		BOOST_ASSERT( _tcslen(expected_result) == 
 			get_main_dns_name(result, MAX_PATH,test_unit));
-		CPPUNIT_ASSERT( 0 == _tcscmp(result, expected_result));
+		BOOST_ASSERT( 0 == _tcscmp(result, expected_result));
 	}
 
 	{
 		const TCHAR * test_unit = "www.google.SINA.com.cn";
 		const TCHAR * expected_result = "sina";
-		CPPUNIT_ASSERT( _tcslen(expected_result) == 
+		BOOST_ASSERT( _tcslen(expected_result) == 
 			get_main_dns_name(result, MAX_PATH,test_unit));
-		CPPUNIT_ASSERT( 0 == _tcscmp(result, expected_result));
+		BOOST_ASSERT( 0 == _tcscmp(result, expected_result));
 	}
 
 	{
 		const TCHAR * test_unit = "www.bit.edu.cn";
 		const TCHAR * expected_result = "bit";
-		CPPUNIT_ASSERT( _tcslen(expected_result) == 
+		BOOST_ASSERT( _tcslen(expected_result) == 
 			get_main_dns_name(result, MAX_PATH,test_unit));
-		CPPUNIT_ASSERT( 0 == _tcscmp(result, expected_result));
+		BOOST_ASSERT( 0 == _tcscmp(result, expected_result));
 	}
 
 	{
 		const TCHAR * test_unit = "google.cn";
 		const TCHAR * expected_result = "google";
-		CPPUNIT_ASSERT( _tcslen(expected_result) == 
+		BOOST_ASSERT( _tcslen(expected_result) == 
 			get_main_dns_name(result, MAX_PATH,test_unit));
-		CPPUNIT_ASSERT( 0 == _tcscmp(result, expected_result));
+		BOOST_ASSERT( 0 == _tcscmp(result, expected_result));
 	}
 
 	{
 		const TCHAR * test_unit = "google";
 		const TCHAR * expected_result = "google";
-		CPPUNIT_ASSERT( _tcslen(expected_result) == 
+		BOOST_ASSERT( _tcslen(expected_result) == 
 			get_main_dns_name(result, MAX_PATH,test_unit));
-		CPPUNIT_ASSERT( 0 == _tcscmp(result, expected_result));
+		BOOST_ASSERT( 0 == _tcscmp(result, expected_result));
 	}
 
 }
-void DNSTest::BeginWWWTest() {
+void BeginWWWTest() {
 	const TCHAR * test_case1 = TEXT("www.");
 	const TCHAR * test_case2 = TEXT("wwww.");
 	const TCHAR * test_case3 = TEXT("w.ww.sina.");
@@ -352,16 +354,16 @@ void DNSTest::BeginWWWTest() {
 	const TCHAR * test_case7 = TEXT("WwW.");
 	const TCHAR * test_case8 = TEXT("Www.");
 
-	CPPUNIT_ASSERT(true == beginwidht_www(test_case1));
-	CPPUNIT_ASSERT(false == beginwidht_www(test_case2));
-	CPPUNIT_ASSERT(false == beginwidht_www(test_case3));
-	CPPUNIT_ASSERT(false == beginwidht_www(test_case4));
-	CPPUNIT_ASSERT(false == beginwidht_www(test_case5));
-	CPPUNIT_ASSERT(false == beginwidht_www(test_case6));
-	CPPUNIT_ASSERT(true == beginwidht_www(test_case7));
-	CPPUNIT_ASSERT(true == beginwidht_www(test_case8));
+	BOOST_ASSERT(true == beginwidht_www(test_case1));
+	BOOST_ASSERT(false == beginwidht_www(test_case2));
+	BOOST_ASSERT(false == beginwidht_www(test_case3));
+	BOOST_ASSERT(false == beginwidht_www(test_case4));
+	BOOST_ASSERT(false == beginwidht_www(test_case5));
+	BOOST_ASSERT(false == beginwidht_www(test_case6));
+	BOOST_ASSERT(true == beginwidht_www(test_case7));
+	BOOST_ASSERT(true == beginwidht_www(test_case8));
 }
-void DNSTest::GetMultHostName() {
+void GetMultHostName() {
 	//std::string dnsname = "www.sina.com";
 	//const std::string noneIp = "";
 	//std::vector<std::string> hostnames;
@@ -372,13 +374,13 @@ void DNSTest::GetMultHostName() {
 	//dns.setHostname(dnsname);
 	//dns.doDNSLookup();
 	//
-	//CPPUNIT_ASSERT(dns.getHostAt(4) == noneIp);
-	//CPPUNIT_ASSERT(dns.getNumberOfHosts() == 3);
-	//CPPUNIT_ASSERT(hostnames.find(dns.getHostAt(0)) != hostnames.end());
-	//CPPUNIT_ASSERT(hostnames.find(dns.getHostAt(1)) != hostnames.end());
-	//CPPUNIT_ASSERT(hostnames.find(dns.getHostAt(2)) != hostnames.end());
+	//BOOST_ASSERT(dns.getHostAt(4) == noneIp);
+	//BOOST_ASSERT(dns.getNumberOfHosts() == 3);
+	//BOOST_ASSERT(hostnames.find(dns.getHostAt(0)) != hostnames.end());
+	//BOOST_ASSERT(hostnames.find(dns.getHostAt(1)) != hostnames.end());
+	//BOOST_ASSERT(hostnames.find(dns.getHostAt(2)) != hostnames.end());
 }
-void DNSTest::GetDNS() {
+void GetDNS() {
 	//std::string dnsname = "www.bitstart.net";
 	//std::string bitstartIp = _T("10.1.130.111");
 	//const std::string noneIp = _T("");
@@ -386,12 +388,12 @@ void DNSTest::GetDNS() {
 	//// 查询自身网址
 	//CDNS dns;
 	////dns.doDNSLookup();
-	////CPPUNIT_ASSERT(dns.getNumberOfIP() == 1);
+	////BOOST_ASSERT(dns.getNumberOfIP() == 1);
  //
 	//// 查询给定网址
 	//dns.setHostname(dnsname);
 	//dns.doDNSLookup();
-	//CPPUNIT_ASSERT(dns.getNumberOfIP() == 1);
-	//CPPUNIT_ASSERT(dns.getIPAt(0) == bitstartIp);
-	//CPPUNIT_ASSERT(dns.getIPAt(1) == noneIp);
+	//BOOST_ASSERT(dns.getNumberOfIP() == 1);
+	//BOOST_ASSERT(dns.getIPAt(0) == bitstartIp);
+	//BOOST_ASSERT(dns.getIPAt(1) == noneIp);
 }

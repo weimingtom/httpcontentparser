@@ -3,16 +3,13 @@
 #include <utility\SeachPacket.h>
 #include <utility\httprequestPacket.h>
 
-SeachPacketTest::SeachPacketTest(void) 
-{
-}
+#include <boost\test\test_tools.hpp>
+using namespace boost::unit_test;
 
-SeachPacketTest::~SeachPacketTest(void) {
-}
 
 // 对于主流的搜索引擎其hostname, 全部都是 search.**.com
 // 如search.yahoo.com
-void SeachPacketTest::yahooTest() {
+void yahooTest() {
 	//GET http://www.yahoo.com/r/sx/*-http://search.yahoo.com/search?p=word&vc=&fr=yfp-t-501&toggle=1&cop=mss&ei=UTF-8&fp_ip=CN HTTP/1.1
 	//Referer: http://www.yahoo.com/
 	//Accept-Encoding: gzip,deflate,bzip2,sdch
@@ -25,11 +22,11 @@ void SeachPacketTest::yahooTest() {
 		char * host_name = "search.yahoo.com";
 		char result[HTTP_REQUEST_ITEM_MAX_LENGTH];
 		SeachPacket packet;
-		CPPUNIT_ASSERT(SeachPacket::SEACH_ENGINE_UNKNOWN ==packet.getSeachEngineType());
-		CPPUNIT_ASSERT( 0 != packet.parse(oper, host_name));
+		BOOST_ASSERT(SeachPacket::SEACH_ENGINE_UNKNOWN ==packet.getSeachEngineType());
+		BOOST_ASSERT( 0 != packet.parse(oper, host_name));
 		packet.get_seach_word(result, HTTP_REQUEST_ITEM_MAX_LENGTH);
-		CPPUNIT_ASSERT( 0 == strcmp("word", result));
-		CPPUNIT_ASSERT(SeachPacket::SEACH_ENGINE_YAHOO == packet.getSeachEngineType());
+		BOOST_ASSERT( 0 == strcmp("word", result));
+		BOOST_ASSERT(SeachPacket::SEACH_ENGINE_YAHOO == packet.getSeachEngineType());
 	}
 
 
@@ -47,15 +44,15 @@ void SeachPacketTest::yahooTest() {
 		char * host_name = "search.yahoo.com";
 		char result[HTTP_REQUEST_ITEM_MAX_LENGTH];
 		SeachPacket packet;
-		CPPUNIT_ASSERT(SeachPacket::SEACH_ENGINE_UNKNOWN ==packet.getSeachEngineType());
-		CPPUNIT_ASSERT( 0 != packet.parse(oper, host_name));
+		BOOST_ASSERT(SeachPacket::SEACH_ENGINE_UNKNOWN ==packet.getSeachEngineType());
+		BOOST_ASSERT( 0 != packet.parse(oper, host_name));
 		packet.get_seach_word(result, HTTP_REQUEST_ITEM_MAX_LENGTH);
-		CPPUNIT_ASSERT( 0 == strcmp("word", result));
-		CPPUNIT_ASSERT(SeachPacket::SEACH_ENGINE_YAHOO == packet.getSeachEngineType());
+		BOOST_ASSERT( 0 == strcmp("word", result));
+		BOOST_ASSERT(SeachPacket::SEACH_ENGINE_YAHOO == packet.getSeachEngineType());
 	}
 }
 
-void SeachPacketTest::googleTest() {
+void googleTest() {
 	//GET http://www.google.com/search?hl=en&q=word&btnG=Google+Search&aq=f&oq=wor HTTP/1.1
 	//Referer: http://www.google.com/
 	//Accept: text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5
@@ -70,11 +67,11 @@ void SeachPacketTest::googleTest() {
 	char * host_name = "www.google.com";
 	char result[HTTP_REQUEST_ITEM_MAX_LENGTH];
 	SeachPacket packet;
-	CPPUNIT_ASSERT(SeachPacket::SEACH_ENGINE_UNKNOWN ==packet.getSeachEngineType());
-	CPPUNIT_ASSERT( 0 != packet.parse(oper, host_name));
+	BOOST_ASSERT(SeachPacket::SEACH_ENGINE_UNKNOWN ==packet.getSeachEngineType());
+	BOOST_ASSERT( 0 != packet.parse(oper, host_name));
 	packet.get_seach_word(result, HTTP_REQUEST_ITEM_MAX_LENGTH);
-	CPPUNIT_ASSERT( 0 == strcmp("word", result));
-	CPPUNIT_ASSERT(SeachPacket::SEACH_ENGINE_GOOGLE == packet.getSeachEngineType());
+	BOOST_ASSERT( 0 == strcmp("word", result));
+	BOOST_ASSERT(SeachPacket::SEACH_ENGINE_GOOGLE == packet.getSeachEngineType());
 	}
 
 	//GET /search?hl=zh-CN&newwindow=1&q=aaaaa++bbbbb&btnG=Google+%E6%90%9C%E7%B4%A2&meta= HTTP/1.1
@@ -88,14 +85,14 @@ void SeachPacketTest::googleTest() {
 	char * host_name = "www.google.cn";
 	char result[HTTP_REQUEST_ITEM_MAX_LENGTH];
 	SeachPacket packet;
-	CPPUNIT_ASSERT(SeachPacket::SEACH_ENGINE_UNKNOWN ==packet.getSeachEngineType());
-	CPPUNIT_ASSERT( 0 != packet.parse(oper, host_name));
+	BOOST_ASSERT(SeachPacket::SEACH_ENGINE_UNKNOWN ==packet.getSeachEngineType());
+	BOOST_ASSERT( 0 != packet.parse(oper, host_name));
 	packet.get_seach_word(result, HTTP_REQUEST_ITEM_MAX_LENGTH);
-	CPPUNIT_ASSERT( 0 == strcmp("aaaaa++bbbbb", result));
-	CPPUNIT_ASSERT(SeachPacket::SEACH_ENGINE_GOOGLE == packet.getSeachEngineType());
+	BOOST_ASSERT( 0 == strcmp("aaaaa++bbbbb", result));
+	BOOST_ASSERT(SeachPacket::SEACH_ENGINE_GOOGLE == packet.getSeachEngineType());
 	}
 }
-void SeachPacketTest::baiduTest() {
+void baiduTest() {
 	//GET http://www.baidu.com/s?wd=word HTTP/1.1
 	//Referer: http://www.baidu.com/
 	//Accept: text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5
@@ -109,23 +106,23 @@ void SeachPacketTest::baiduTest() {
 	char * host_name = "www.baidu.com";
 	char result[HTTP_REQUEST_ITEM_MAX_LENGTH];
 	SeachPacket packet;
-	CPPUNIT_ASSERT(SeachPacket::SEACH_ENGINE_UNKNOWN ==packet.getSeachEngineType());
-	CPPUNIT_ASSERT( 0 != packet.parse(oper, host_name));
+	BOOST_ASSERT(SeachPacket::SEACH_ENGINE_UNKNOWN ==packet.getSeachEngineType());
+	BOOST_ASSERT( 0 != packet.parse(oper, host_name));
 	packet.get_seach_word(result, HTTP_REQUEST_ITEM_MAX_LENGTH);
-	CPPUNIT_ASSERT( 0 == strcmp("word", result));
-	CPPUNIT_ASSERT(SeachPacket::SEACH_ENGINE_BAIDU == packet.getSeachEngineType());
+	BOOST_ASSERT( 0 == strcmp("word", result));
+	BOOST_ASSERT(SeachPacket::SEACH_ENGINE_BAIDU == packet.getSeachEngineType());
 }
-void SeachPacketTest::getContentTest() {
+void getContentTest() {
 	{
 		char * oper = "/s?wd=ddddddddddddddddddd HTTP/1.1";
 		char * host_name = "www.baidu.cn";
 		char result[HTTP_REQUEST_ITEM_MAX_LENGTH];
 		SeachPacket packet;
-		CPPUNIT_ASSERT(SeachPacket::SEACH_ENGINE_UNKNOWN ==packet.getSeachEngineType());
-		CPPUNIT_ASSERT( 0 != packet.parse(oper, host_name));
+		BOOST_ASSERT(SeachPacket::SEACH_ENGINE_UNKNOWN ==packet.getSeachEngineType());
+		BOOST_ASSERT( 0 != packet.parse(oper, host_name));
 		packet.get_seach_word(result, HTTP_REQUEST_ITEM_MAX_LENGTH);
-		CPPUNIT_ASSERT( 0 == strcmp("ddddddddddddddddddd", result));
-		CPPUNIT_ASSERT(SeachPacket::SEACH_ENGINE_BAIDU == packet.getSeachEngineType());
+		BOOST_ASSERT( 0 == strcmp("ddddddddddddddddddd", result));
+		BOOST_ASSERT(SeachPacket::SEACH_ENGINE_BAIDU == packet.getSeachEngineType());
 	}
 
 	{
@@ -133,11 +130,11 @@ void SeachPacketTest::getContentTest() {
 		char * host_name = "search.yahoo.com";
 		char result[HTTP_REQUEST_ITEM_MAX_LENGTH];
 		SeachPacket packet;
-		CPPUNIT_ASSERT(SeachPacket::SEACH_ENGINE_UNKNOWN ==packet.getSeachEngineType());
-		CPPUNIT_ASSERT( 0 != packet.parse(oper, host_name));
+		BOOST_ASSERT(SeachPacket::SEACH_ENGINE_UNKNOWN ==packet.getSeachEngineType());
+		BOOST_ASSERT( 0 != packet.parse(oper, host_name));
 		packet.get_seach_word(result, HTTP_REQUEST_ITEM_MAX_LENGTH);
-		CPPUNIT_ASSERT( 0 == strcmp("ddddddddddddddd", result));
-		CPPUNIT_ASSERT(SeachPacket::SEACH_ENGINE_YAHOO == packet.getSeachEngineType());
+		BOOST_ASSERT( 0 == strcmp("ddddddddddddddd", result));
+		BOOST_ASSERT(SeachPacket::SEACH_ENGINE_YAHOO == packet.getSeachEngineType());
 	}
 
 	{
@@ -145,12 +142,12 @@ void SeachPacketTest::getContentTest() {
 		char * host_name = "search.yahoo.com";
 		char result[HTTP_REQUEST_ITEM_MAX_LENGTH];
 		SeachPacket packet;
-		CPPUNIT_ASSERT(SeachPacket::SEACH_ENGINE_UNKNOWN ==packet.getSeachEngineType());
+		BOOST_ASSERT(SeachPacket::SEACH_ENGINE_UNKNOWN ==packet.getSeachEngineType());
 		int aa = packet.parse(oper, host_name);
-		CPPUNIT_ASSERT( 0 != aa);
+		BOOST_ASSERT( 0 != aa);
 		packet.get_seach_word(result, HTTP_REQUEST_ITEM_MAX_LENGTH);
-		CPPUNIT_ASSERT( 0 == strcmp("safdasdf", result));
-		CPPUNIT_ASSERT(SeachPacket::SEACH_ENGINE_YAHOO == packet.getSeachEngineType());
+		BOOST_ASSERT( 0 == strcmp("safdasdf", result));
+		BOOST_ASSERT(SeachPacket::SEACH_ENGINE_YAHOO == packet.getSeachEngineType());
 	}
 
 
@@ -161,9 +158,9 @@ void SeachPacketTest::getContentTest() {
 		char * host_name = "www.google.com";
 
 		SeachPacket packet;
-		CPPUNIT_ASSERT(SeachPacket::SEACH_ENGINE_UNKNOWN == packet.getSeachEngineType());
-		CPPUNIT_ASSERT( 0 == packet.parse(oper, host_name));
-		CPPUNIT_ASSERT(SeachPacket::SEACH_ENGINE_UNKNOWN == packet.getSeachEngineType());
+		BOOST_ASSERT(SeachPacket::SEACH_ENGINE_UNKNOWN == packet.getSeachEngineType());
+		BOOST_ASSERT( 0 == packet.parse(oper, host_name));
+		BOOST_ASSERT(SeachPacket::SEACH_ENGINE_UNKNOWN == packet.getSeachEngineType());
 	}
 
 	{
@@ -172,9 +169,9 @@ void SeachPacketTest::getContentTest() {
 		char * host_name = "www.google.com";
 
 		SeachPacket packet;
-		CPPUNIT_ASSERT(SeachPacket::SEACH_ENGINE_UNKNOWN == packet.getSeachEngineType());
-		CPPUNIT_ASSERT( 0 != packet.parse(oper, host_name));
-		CPPUNIT_ASSERT(SeachPacket::SEACH_ENGINE_GOOGLE == packet.getSeachEngineType());
+		BOOST_ASSERT(SeachPacket::SEACH_ENGINE_UNKNOWN == packet.getSeachEngineType());
+		BOOST_ASSERT( 0 != packet.parse(oper, host_name));
+		BOOST_ASSERT(SeachPacket::SEACH_ENGINE_GOOGLE == packet.getSeachEngineType());
 	}
 
 	{
@@ -183,8 +180,8 @@ void SeachPacketTest::getContentTest() {
 		char * host_name = "www.baidu.com";
 
 		SeachPacket packet;
-		CPPUNIT_ASSERT(SeachPacket::SEACH_ENGINE_UNKNOWN == packet.getSeachEngineType());
-		CPPUNIT_ASSERT( 0 == packet.parse(oper, host_name));
+		BOOST_ASSERT(SeachPacket::SEACH_ENGINE_UNKNOWN == packet.getSeachEngineType());
+		BOOST_ASSERT( 0 == packet.parse(oper, host_name));
 	}
 
 	{
@@ -192,11 +189,11 @@ void SeachPacketTest::getContentTest() {
 		char * host_name = "www.baidu.com";
 		char result[HTTP_REQUEST_ITEM_MAX_LENGTH];
 		SeachPacket packet;
-		CPPUNIT_ASSERT(SeachPacket::SEACH_ENGINE_UNKNOWN ==packet.getSeachEngineType());
-		CPPUNIT_ASSERT( 0 != packet.parse(oper, host_name));
+		BOOST_ASSERT(SeachPacket::SEACH_ENGINE_UNKNOWN ==packet.getSeachEngineType());
+		BOOST_ASSERT( 0 != packet.parse(oper, host_name));
 		packet.get_seach_word(result, HTTP_REQUEST_ITEM_MAX_LENGTH);
-		CPPUNIT_ASSERT( 0 == strcmp("hhhhhhhhhhhhhhhhhhhhhh", result));
-		CPPUNIT_ASSERT(SeachPacket::SEACH_ENGINE_BAIDU == packet.getSeachEngineType());
+		BOOST_ASSERT( 0 == strcmp("hhhhhhhhhhhhhhhhhhhhhh", result));
+		BOOST_ASSERT(SeachPacket::SEACH_ENGINE_BAIDU == packet.getSeachEngineType());
 	}
 
 	{
@@ -204,8 +201,8 @@ void SeachPacketTest::getContentTest() {
 		char * oper = "/s?ie=gb2312&bs=hhhhhhhhhhhhhhhhhhhhhh&sr=&z=&cl=3&f=8&wd=hhhhhhhhhhhhhhhhhhhhhh&ct=0 HTTP/1.1";
 		char * host_name = "c.baidu1.com";
 		SeachPacket packet;
-		CPPUNIT_ASSERT(SeachPacket::SEACH_ENGINE_UNKNOWN ==packet.getSeachEngineType());
-		CPPUNIT_ASSERT( 0 == packet.parse(oper, host_name));
+		BOOST_ASSERT(SeachPacket::SEACH_ENGINE_UNKNOWN ==packet.getSeachEngineType());
+		BOOST_ASSERT( 0 == packet.parse(oper, host_name));
 	}
 
 	{
@@ -213,11 +210,11 @@ void SeachPacketTest::getContentTest() {
 		char * host_name = "www.google.com//";
 		SeachPacket packet;
 		char result[HTTP_REQUEST_ITEM_MAX_LENGTH];
-		CPPUNIT_ASSERT(SeachPacket::SEACH_ENGINE_UNKNOWN ==packet.getSeachEngineType());
-		CPPUNIT_ASSERT( 0 != packet.parse(oper, host_name));
+		BOOST_ASSERT(SeachPacket::SEACH_ENGINE_UNKNOWN ==packet.getSeachEngineType());
+		BOOST_ASSERT( 0 != packet.parse(oper, host_name));
 		packet.get_seach_word(result, HTTP_REQUEST_ITEM_MAX_LENGTH);
-		CPPUNIT_ASSERT( 0 == strcmp("word", result));
-		CPPUNIT_ASSERT(SeachPacket::SEACH_ENGINE_GOOGLE == packet.getSeachEngineType());
+		BOOST_ASSERT( 0 == strcmp("word", result));
+		BOOST_ASSERT(SeachPacket::SEACH_ENGINE_GOOGLE == packet.getSeachEngineType());
 	}
 
 		{
@@ -226,8 +223,8 @@ void SeachPacketTest::getContentTest() {
 		char * oper = "search?hl=en&q=word&btnG=Search HTTP/1.1";
 		char * host_name = "search.google.com";
 		SeachPacket packet;
-		CPPUNIT_ASSERT(SeachPacket::SEACH_ENGINE_UNKNOWN ==packet.getSeachEngineType());
-		CPPUNIT_ASSERT( 0 == packet.parse(oper, host_name));
-		CPPUNIT_ASSERT(SeachPacket::SEACH_ENGINE_UNKNOWN == packet.getSeachEngineType());
+		BOOST_ASSERT(SeachPacket::SEACH_ENGINE_UNKNOWN ==packet.getSeachEngineType());
+		BOOST_ASSERT( 0 == packet.parse(oper, host_name));
+		BOOST_ASSERT(SeachPacket::SEACH_ENGINE_UNKNOWN == packet.getSeachEngineType());
 	}
 }

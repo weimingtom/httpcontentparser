@@ -17,45 +17,105 @@
 #include ".\replacepackettest.h"
 #include ".\syncobjecttest.h"
 
-CPPUNIT_TEST_SUITE_REGISTRATION(SeachPacketTest);
-CPPUNIT_TEST_SUITE_REGISTRATION(DNSTest);
-CPPUNIT_TEST_SUITE_REGISTRATION(ReplacePacketTest);
-CPPUNIT_TEST_SUITE_REGISTRATION(HTTPRequestHeaderTest);
-CPPUNIT_TEST_SUITE_REGISTRATION(BufferCallerTest);
-CPPUNIT_TEST_SUITE_REGISTRATION(HttpRequestPacketTest);
-CPPUNIT_TEST_SUITE_REGISTRATION(ZipUtilityTest);
-CPPUNIT_TEST_SUITE_REGISTRATION(TimeutilityTest);
-CPPUNIT_TEST_SUITE_REGISTRATION(WebContentTest);
-CPPUNIT_TEST_SUITE_REGISTRATION(StrUtilityTest);
-CPPUNIT_TEST_SUITE_REGISTRATION(HttpRequestPacketTest);
-CPPUNIT_TEST_SUITE_REGISTRATION(HTTPPacketTest);
-CPPUNIT_TEST_SUITE_REGISTRATION(ProtocolPacketTest);
-CPPUNIT_TEST_SUITE_REGISTRATION(FDUtilityTest);
-CPPUNIT_TEST_SUITE_REGISTRATION(SyncObjectTest);
+#include <boost\test\included\unit_test.hpp>
+using namespace boost::unit_test;
 
+boost::unit_test::test_suite* init_unit_test_suite( int argc, char* argv[] ) {
+    // BufferCallerTest
+    framework::master_test_suite().add( BOOST_TEST_CASE(&CallTest) );
 
-int _tmain(int argc, _TCHAR* argv[])
-{
-  // Create the event manager and test controller
-  CPPUNIT_NS::TestResult controller;
+    // HTTPPacketTest
+    framework::master_test_suite().add( BOOST_TEST_CASE(&TestGetMainServName) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&TestContainIPinDNS) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&TestValidateIPWithEnd) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&TestvalidateIP) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&GetMultHostName) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&GetDNS) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&GetMainNameWithPort) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&GetMainNameTest) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&BeginWWWTest) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&GetMainNameFromBrowseAddresss) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&GetMainNameFromBrowseAddressswithProto) );
 
-  // Add a listener that colllects test result
-  CPPUNIT_NS::TestResultCollector result;
-  controller.addListener( &result );        
+    // FDUtilityTest
+    framework::master_test_suite().add( BOOST_TEST_CASE(&testFDAdd) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&testFDSet) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&testFDDel) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&testNone) );
 
-  // Add a listener that print dots as test run.
-  CPPUNIT_NS::BriefTestProgressListener progress;
-  controller.addListener( &progress );      
+    // HTTPPacketTest
+    framework::master_test_suite().add( BOOST_TEST_CASE(&testActuallyPacket) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&testConnectionState) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&testZeorLengthPacket) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&testNoContentHeader) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&testAdd0LengthPacket) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&testZeroChunk) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&testNoLengthSepecified) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&testNoContentPacket) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&testSeriesPacket) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&testWrongHeader) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&testChunk) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&testAddSinglePacket) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&testAddSeriesPacket) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&testRawPacket) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&testNoContentChunk) );
 
-  // Add the top suite to the test runner
-  CPPUNIT_NS::TestRunner runner;
-  runner.addTest( CPPUNIT_NS::TestFactoryRegistry::getRegistry().makeTest() );
-  runner.run( controller );
+    // HttpRequestPacketTest
+    framework::master_test_suite().add( BOOST_TEST_CASE(&parsePacket) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&parseMultiPacket) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&NoteHTTPRequest) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&miscTest) );
 
-  // Print test in a compiler compatible format.
-  CPPUNIT_NS::CompilerOutputter outputter( &result, CPPUNIT_NS::stdCOut() );
-  outputter.write(); 
+    // HTTPRequestHeaderTest
+    framework::master_test_suite().add( BOOST_TEST_CASE(&testHTTPHeaderParsed) );
 
-  return result.wasSuccessful() ? 0 : 1;
+    // ProtocolPacketTest
+    framework::master_test_suite().add( BOOST_TEST_CASE(&testGetBytesCanRead) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&testSeekRead) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&testSeekWrite) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&testWrite) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&testLoopRead) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&testRead) );
+
+    // ReplacePacketTest
+    framework::master_test_suite().add( BOOST_TEST_CASE(&testNewPacket) );
+
+    // SeachPacketTest
+    framework::master_test_suite().add( BOOST_TEST_CASE(&getContentTest) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&baiduTest) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&googleTest) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&yahooTest) );
+
+    // StrUtilityTest
+    framework::master_test_suite().add( BOOST_TEST_CASE(&TestSplitString) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&Teststrnstr) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&Test_extract_string) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&Test_remove_after) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&TestEndWith) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&TestToLower) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&TestToUpper) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&Test_extUTF8FromStr) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&Test_utf8ToDBCS) );
+
+    // TimeutilityTest
+    framework::master_test_suite().add( BOOST_TEST_CASE(&testMintueTimespan) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&testTmfromString) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&testUSFormatTime) );
+
+    // WebContentTest
+    framework::master_test_suite().add( BOOST_TEST_CASE(testFFFF) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&testImageType) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&testTextType) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&textOtherTypes) );
+
+    // ZipUtilityTest
+    framework::master_test_suite().add( BOOST_TEST_CASE(&testZlibUtility) );
+
+    // SyncObjectTest
+    framework::master_test_suite().add( BOOST_TEST_CASE(testCase1) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&testAutoCriticalSection) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&testSysMutexWithName) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&testSysMutexWithoutName) );
+
+    return 0;
 }
-

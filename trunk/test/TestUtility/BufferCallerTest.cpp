@@ -1,13 +1,9 @@
 #include "StdAfx.h"
 #include ".\buffercallertest.h"
+#include <boost\test\test_tools.hpp>
+using namespace boost::unit_test;
 
-BufferCallerTest::BufferCallerTest(void)
-{
-}
 
-BufferCallerTest::~BufferCallerTest(void)
-{
-}
 
 class TestObject {
 public:
@@ -22,7 +18,7 @@ public:
 };
 
 
-void BufferCallerTest::CallTest() {
+void CallTest() {
 	{ // TEST 1
 	TestObject obj;
 	BufferCaller<TestObject, 3> caller;
@@ -31,7 +27,7 @@ void BufferCallerTest::CallTest() {
 		caller.Call(obj);
 	}
 
-	CPPUNIT_ASSERT(2 == obj.cnt);
+	BOOST_ASSERT(2 == obj.cnt);
 	}
 
 	{ // TEST 2
@@ -42,7 +38,7 @@ void BufferCallerTest::CallTest() {
 		caller.Call(obj);
 	}
 
-	CPPUNIT_ASSERT(3 == obj.cnt);
+	BOOST_ASSERT(3 == obj.cnt);
 	}
 	{ // TEST 3
 	TestObject obj;
@@ -51,6 +47,6 @@ void BufferCallerTest::CallTest() {
 	for (int i = 0; i < 8; i++) {
 		caller.Call(obj);
 	}
-	CPPUNIT_ASSERT(3 == obj.cnt);
+	BOOST_ASSERT(3 == obj.cnt);
 	}
 }

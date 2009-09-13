@@ -1,16 +1,9 @@
 #include "StdAfx.h"
 #include ".\HTTPResponseHeaderTest .h"
 #include <utility\HttpPacket.h>
+#include <boost\test\test_tools.hpp>
+using namespace boost::unit_test;
 
-using namespace CPPUNIT_NS;
-
-HTTPRequestHeaderTest::HTTPRequestHeaderTest(void)
-{
-}
-
-HTTPRequestHeaderTest::~HTTPRequestHeaderTest(void)
-{
-}
 
 const char packet1[] = 	"HTTP/1.1 302 Found\r\n"
 "Date: Thu, 24 Apr 2008 02:37:48 GMT\r\n"
@@ -110,53 +103,53 @@ const char packet6[] = "HTTP/1.1 200 OK\r\n"
 		"Transfer-Encoding: chunked\r\n"
 		"Connection: close\r\n\r\n";
 
-void HTTPRequestHeaderTest::testHTTPHeaderParsed() {
+void testHTTPHeaderParsed() {
 	// 测试头部解析是否正确
 	HTTP_RESPONSE_HEADER header1;
 	header1.parseHeader(packet1, (int)strlen(packet1));
-	CPPUNIT_ASSERT(header1.isChunk()== false);
-	CPPUNIT_ASSERT(header1.getContentType()== CONTYPE_HTML);
-	CPPUNIT_ASSERT(header1.getConnectionState()== HTTP_RESPONSE_HEADER::CONNECT_CLOSE);
-	CPPUNIT_ASSERT(header1.getContentLength() == 682);
-	CPPUNIT_ASSERT(header1.getResponseCode() == 302);
-	CPPUNIT_ASSERT(header1.existContent() == true);
+	BOOST_ASSERT(header1.isChunk()== false);
+	BOOST_ASSERT(header1.getContentType()== CONTYPE_HTML);
+	BOOST_ASSERT(header1.getConnectionState()== HTTP_RESPONSE_HEADER::CONNECT_CLOSE);
+	BOOST_ASSERT(header1.getContentLength() == 682);
+	BOOST_ASSERT(header1.getResponseCode() == 302);
+	BOOST_ASSERT(header1.existContent() == true);
 
 	HTTP_RESPONSE_HEADER header2;
 	header2.parseHeader(packet2, (int)strlen(packet2));
-	CPPUNIT_ASSERT(header2.isChunk()== false);
-	CPPUNIT_ASSERT(header2.getContentType()==  CONTYPE_GIF);
-	CPPUNIT_ASSERT(header2.getConnectionState()==  HTTP_RESPONSE_HEADER::CONNECT_KEEP_ALIVE);
-	CPPUNIT_ASSERT(header2.getContentLength() == 234);
-	CPPUNIT_ASSERT(header2.getResponseCode() == 302);
-	CPPUNIT_ASSERT(header2.existContent() == true);
+	BOOST_ASSERT(header2.isChunk()== false);
+	BOOST_ASSERT(header2.getContentType()==  CONTYPE_GIF);
+	BOOST_ASSERT(header2.getConnectionState()==  HTTP_RESPONSE_HEADER::CONNECT_KEEP_ALIVE);
+	BOOST_ASSERT(header2.getContentLength() == 234);
+	BOOST_ASSERT(header2.getResponseCode() == 302);
+	BOOST_ASSERT(header2.existContent() == true);
 	const char * p = header2.getHeaderLine();
-	CPPUNIT_ASSERT(0 == strcmp(header2.getDate(), "Thu, 24 Apr 2008 02:37:48 GMT"));
-	CPPUNIT_ASSERT(0 == strcmp(header2.getHeaderLine(), "HTTP/1.1 302 Found"));
-	CPPUNIT_ASSERT(0 == strlen(header2.getServer()));
+	BOOST_ASSERT(0 == strcmp(header2.getDate(), "Thu, 24 Apr 2008 02:37:48 GMT"));
+	BOOST_ASSERT(0 == strcmp(header2.getHeaderLine(), "HTTP/1.1 302 Found"));
+	BOOST_ASSERT(0 == strlen(header2.getServer()));
 
 	HTTP_RESPONSE_HEADER header3;
 	header3.parseHeader(packet3, (int)strlen(packet3));
-	CPPUNIT_ASSERT(header3.isChunk()== false);
-	CPPUNIT_ASSERT(header3.getContentType()== CONTYPE_JPG);
-	CPPUNIT_ASSERT(header3.getConnectionState()== HTTP_RESPONSE_HEADER::CONNECT_CLOSE);
-	CPPUNIT_ASSERT(header3.getContentLength() == 62);
-	CPPUNIT_ASSERT(header3.getResponseCode() == 302);
-	CPPUNIT_ASSERT(header3.existContent() == true);
-	CPPUNIT_ASSERT(0 == strlen(header3.getDate()));
+	BOOST_ASSERT(header3.isChunk()== false);
+	BOOST_ASSERT(header3.getContentType()== CONTYPE_JPG);
+	BOOST_ASSERT(header3.getConnectionState()== HTTP_RESPONSE_HEADER::CONNECT_CLOSE);
+	BOOST_ASSERT(header3.getContentLength() == 62);
+	BOOST_ASSERT(header3.getResponseCode() == 302);
+	BOOST_ASSERT(header3.existContent() == true);
+	BOOST_ASSERT(0 == strlen(header3.getDate()));
 
 	HTTP_RESPONSE_HEADER header4;
 	header4.parseHeader(packet4, (int)strlen(packet4));
-	CPPUNIT_ASSERT(header4.getContentType()== CONTYPE_HTML);
-	CPPUNIT_ASSERT(header4.getConnectionState()== HTTP_RESPONSE_HEADER::NO_DESIGNATION);
-	CPPUNIT_ASSERT(header4.isChunk()== true);
-	CPPUNIT_ASSERT(header4.getResponseCode() == 200);
-	CPPUNIT_ASSERT(header4.existContent() == true);
+	BOOST_ASSERT(header4.getContentType()== CONTYPE_HTML);
+	BOOST_ASSERT(header4.getConnectionState()== HTTP_RESPONSE_HEADER::NO_DESIGNATION);
+	BOOST_ASSERT(header4.isChunk()== true);
+	BOOST_ASSERT(header4.getResponseCode() == 200);
+	BOOST_ASSERT(header4.existContent() == true);
 
 	HTTP_RESPONSE_HEADER header6;
 	header6.parseHeader(packet6, (int)strlen(packet4));
-	CPPUNIT_ASSERT(header6.getContentType()== CONTYPE_HTML);
-	CPPUNIT_ASSERT(header6.getContentLength()== 3);
-	CPPUNIT_ASSERT(header6.isChunk()== false);
-	CPPUNIT_ASSERT(header6.getResponseCode() == 200);
-	CPPUNIT_ASSERT(header6.existContent() == true);
+	BOOST_ASSERT(header6.getContentType()== CONTYPE_HTML);
+	BOOST_ASSERT(header6.getContentLength()== 3);
+	BOOST_ASSERT(header6.isChunk()== false);
+	BOOST_ASSERT(header6.getResponseCode() == 200);
+	BOOST_ASSERT(header6.existContent() == true);
 }
