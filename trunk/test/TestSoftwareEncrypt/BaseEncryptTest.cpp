@@ -1,16 +1,13 @@
 #include "StdAfx.h"
 #include ".\baseencrypttest.h"
 #include <string>
+#include <boost\test\test_tools.hpp>
 
-BaseEncryptTest::BaseEncryptTest(void) {
-}
+using namespace boost::unit_test;
 
-BaseEncryptTest::~BaseEncryptTest(void) {
-}
-
-void BaseEncryptTest::TestBaseEncry() {
+void TestBaseEncry() {
 	for (int i = 0; i < 1000; i ++) {
 		std::string sn = generateSN();
-		CPPUNIT_ASSERT(true == validateSN(sn));
+		BOOST_CHECK(true == validateSN(sn));
 	}
 }

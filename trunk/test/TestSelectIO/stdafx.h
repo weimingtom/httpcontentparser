@@ -23,13 +23,13 @@
 #ifdef _DEBUG
 #	pragma comment(lib, "cppunitd.lib")
 #	pragma comment(lib, "testrunnerd.lib")
-#	pragma comment(lib, ".\SelectIODebug\selectiod.lib")
+#	pragma comment(lib, ".\\SelectIODebug\\selectiod.lib")
 #	pragma comment(lib, "utilityd.lib")
 #	pragma comment(lib, "apputilityd.lib")
 #else 
 #	pragma comment(lib, "TestRunner.lib")
 #	pragma comment(lib, "cppunit.lib")
-#	pragma comment(lib, ".\selectiorelease\selectio.lib")
+#	pragma comment(lib, ".\\selectiorelease\\selectio.lib")
 #	pragma comment(lib, "utility.lib")
 #	pragma comment(lib, "apputility.lib")
 #endif

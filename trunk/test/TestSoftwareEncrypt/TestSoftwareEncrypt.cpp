@@ -5,32 +5,55 @@
 #include "BaseEncryptTest.h"
 #include ".\installdatetest.h"
 #include ".\licenseinfotest.h"
+#include <softwareEncrypt\serialNumber.h>
+#include <softwareEncrypt\LicenseInfo.h>
+#include <softwareEncrypt\baseEncrypt.h>
+#include <softwareencrypt\installdate.h>
+#include <softwareStatus.h>
+#include <boost\test\included\unit_test.hpp>
+#include <boost/date_time/posix_time/posix_time_types.hpp>
+#include <boost/date_time/posix_time/posix_time_duration.hpp>
+#include <boost/date_time/microsec_time_clock.hpp>
+#include <boost/date_time/time.hpp>
+#include <boost/function.hpp>
+#include <boost/format.hpp>
 
-CPPUNIT_TEST_SUITE_REGISTRATION(LicenseInfoTest);
-CPPUNIT_TEST_SUITE_REGISTRATION(InstallDateTest);
-CPPUNIT_TEST_SUITE_REGISTRATION(BaseEncryptTest);
+// 在测试用例当中原有设置可能被修改
+// 此类是为了在程序退出时能够恢复状态
+namespace {
+class test_unit_restore {
+public:
+    test_unit_restore() {
+	    rawdate = software_encrypt::getInstallDataTime();
+    }
 
-int _tmain(int argc, _TCHAR* argv[]) {
-	// Create the event manager and test controller
-	CPPUNIT_NS::TestResult controller;
+    ~test_unit_restore() {
+        tm t =	to_tm(rawdate);
+        FILETIME ft;
+        SYSTEMTIME st = st_from_tm(t);
+        SystemTimeToFileTime(&st, &ft);
+        software_encrypt::internal_utility::setInstallDateFile(ft);
+        software_encrypt::internal_utility::setInstallDataOnRegistry(ft);
+        software_encrypt::internal_utility::setInstallDateInWin(ft);
+    }
 
-	// Add a listener that colllects test result
-	CPPUNIT_NS::TestResultCollector result;
-	controller.addListener( &result );        
+private:
+    boost::posix_time::ptime rawdate; 
+} an_test_store_;
+}
 
-	// Add a listener that print dots as test run.
-	CPPUNIT_NS::BriefTestProgressListener progress;
-	controller.addListener( &progress );      
 
-	// Add the top suite to the test runner
-	CPPUNIT_NS::TestRunner runner;
-	runner.addTest( CPPUNIT_NS::TestFactoryRegistry::getRegistry().makeTest() );
-	runner.run( controller );
+using namespace boost::unit_test;
 
-	// Print test in a compiler compatible format.
-	CPPUNIT_NS::CompilerOutputter outputter( &result, CPPUNIT_NS::stdCOut() ); 
-	outputter.write(); 
-
-	return result.wasSuccessful() ? 0 : 1;
+boost::unit_test::test_suite* init_unit_test_suite( int argc, char* argv[] ) {
+    framework::master_test_suite().add( BOOST_TEST_CASE(&TestInstallDateItem) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&TestGetInstallDateFromRegistry) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&TestGetInstallDateFromFile) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&TestGetInstallDateFromWin) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&testSNStored) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&testReg) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&testInstallDate) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&TestBaseEncry) );
+    return 0;
 }
 
