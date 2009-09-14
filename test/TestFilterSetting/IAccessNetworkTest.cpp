@@ -7,20 +7,19 @@
 #include <time.h>
 #include <stdio.h>
 
+#include <boost\test\test_tools.hpp>
+using namespace boost::unit_test;
+
+
 namespace {
 void unsetBlocktime(const int day, const int hour);
 void setBlocktime(const int day, const int hour) ;
 bool accessNetword();
 };
 
-IAccessNetworkTest::IAccessNetworkTest(void) {
-}
-
-IAccessNetworkTest::~IAccessNetworkTest(void) {
-}
 
 // 在父子两种模式下运行
-void IAccessNetworkTest::TestTwoModel() {
+void TestTwoModel() {
 	GetInChildMode();
 	time_t t;
 	struct tm * local;
@@ -32,22 +31,22 @@ void IAccessNetworkTest::TestTwoModel() {
 
 	unsetBlocktime(local->tm_wday, local->tm_hour);
 	bool accessable = accessNetword();
-	CPPUNIT_ASSERT (true == accessable);
+	BOOST_ASSERT (true == accessable);
 
 	time(&t);
 	local= localtime(&t);
 	setBlocktime(local->tm_wday, local->tm_hour);
 	accessable = accessNetword();
-	CPPUNIT_ASSERT (false == accessable);
+	BOOST_ASSERT (false == accessable);
 
 	GetInParentModel();
 	accessable = accessNetword();
-	CPPUNIT_ASSERT (true == accessable);
+	BOOST_ASSERT (true == accessable);
 	GetInChildMode();
 	accessable = accessNetword();
-	CPPUNIT_ASSERT (false == accessable);
+	BOOST_ASSERT (false == accessable);
 }
-void IAccessNetworkTest::TestSetAndGetBlockTime() {
+void TestSetAndGetBlockTime() {
 	GetInChildMode();
 	time_t t;
 	struct tm * local;
@@ -59,20 +58,20 @@ void IAccessNetworkTest::TestSetAndGetBlockTime() {
 
 	unsetBlocktime(local->tm_wday, local->tm_hour);
 	bool accessable = accessNetword();
-	CPPUNIT_ASSERT (true == accessable);
+	BOOST_ASSERT (true == accessable);
 
 	time(&t);
 	local= localtime(&t);
 	setBlocktime(local->tm_wday, local->tm_hour);
 	accessable = accessNetword();
-	CPPUNIT_ASSERT (false == accessable);
+	BOOST_ASSERT (false == accessable);
 
 
 	time(&t);
 	local= localtime(&t);
 	unsetBlocktime(local->tm_wday, local->tm_hour);
 	accessable = accessNetword();
-	CPPUNIT_ASSERT (true == accessable);
+	BOOST_ASSERT (true == accessable);
 }
 
 
@@ -86,7 +85,7 @@ bool accessNetword() {
 		IAccessNetwork *accessNetword = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_AccessNetwork, NULL, CLSCTX_LOCAL_SERVER, IID_IAccessNetwork, (LPVOID*)&accessNetword);
 		if (FAILED(hr)) {
-			CPPUNIT_ASSERT(false);
+			BOOST_ASSERT(false);
 			return false;
 		}
 
@@ -111,7 +110,7 @@ void setBlocktime(const int day, const int hour) {
 		IAccessNetwork *accessNetword = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_AccessNetwork, NULL, CLSCTX_LOCAL_SERVER, IID_IAccessNetwork, (LPVOID*)&accessNetword);
 		if (FAILED(hr)) {
-			CPPUNIT_ASSERT(false);
+			BOOST_ASSERT(false);
 			return;
 		}
 
@@ -132,7 +131,7 @@ void unsetBlocktime(const int day, const int hour) {
 		IAccessNetwork *accessNetword = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_AccessNetwork, NULL, CLSCTX_LOCAL_SERVER, IID_IAccessNetwork, (LPVOID*)&accessNetword);
 		if (FAILED(hr)) {
-			CPPUNIT_ASSERT(false);
+			BOOST_ASSERT(false);
 			return;
 		}
 

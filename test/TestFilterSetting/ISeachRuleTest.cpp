@@ -7,17 +7,11 @@
 #include <com\FilterSetting.h>
 #include <com\comutility.h>
 #include <comdef.h>
-
-ISeachRuleTest::ISeachRuleTest(void)
-{
-}
-
-ISeachRuleTest::~ISeachRuleTest(void)
-{
-}
+#include <boost\test\test_tools.hpp>
+using namespace boost::unit_test;
 
 
-void ISeachRuleTest::TestRemove() {
+void TestRemove() {
 	GetInChildMode();
 
 	AutoInitInScale auto_;
@@ -38,17 +32,17 @@ void ISeachRuleTest::TestRemove() {
 	seachrule->enableCheckSeachEngine(_bstr_t(seach_name1), VARIANT_TRUE);
 	seachrule->enableCheckSeachEngine(_bstr_t(seach_name2), VARIANT_FALSE);
 	seachrule->check(test_string,  _bstr_t(seach_name1), &passed);
-	CPPUNIT_ASSERT (VARIANT_FALSE == passed);
+	BOOST_ASSERT (VARIANT_FALSE == passed);
 	seachrule->check(test_string,  _bstr_t(seach_name2),&passed);
-	CPPUNIT_ASSERT (VARIANT_TRUE == passed);
+	BOOST_ASSERT (VARIANT_TRUE == passed);
 
 	seachrule->removeBlackSeachWord(test_string);
 	seachrule->check(test_string,  _bstr_t(seach_name2),&passed);
-	CPPUNIT_ASSERT (VARIANT_TRUE == passed);
+	BOOST_ASSERT (VARIANT_TRUE == passed);
 	seachrule->check(test_string,  _bstr_t(seach_name1), &passed);
-	CPPUNIT_ASSERT (VARIANT_TRUE == passed);
+	BOOST_ASSERT (VARIANT_TRUE == passed);
 }
-void ISeachRuleTest::TestISeachRule() {
+void TestISeachRule() {
 	GetInChildMode();
 
 	AutoInitInScale auto_;
@@ -71,24 +65,24 @@ void ISeachRuleTest::TestISeachRule() {
 	seachrule->enableCheckSeachEngine(_bstr_t(seach_name2), VARIANT_FALSE);
 
 	seachrule->check(test_string,  _bstr_t(seach_name1), &passed);
-	CPPUNIT_ASSERT (VARIANT_FALSE == passed);
+	BOOST_ASSERT (VARIANT_FALSE == passed);
 
 	seachrule->check(test_string,  _bstr_t(seach_name2),&passed);
-	CPPUNIT_ASSERT (VARIANT_TRUE == passed);
+	BOOST_ASSERT (VARIANT_TRUE == passed);
 
 	seachrule->check(test_string_none, _bstr_t(seach_name1),&passed);
-	CPPUNIT_ASSERT (VARIANT_TRUE == passed);
+	BOOST_ASSERT (VARIANT_TRUE == passed);
 
 	seachrule->enableCheckSeachEngine(_bstr_t(seach_name1), VARIANT_FALSE);
 
 	seachrule->check(test_string, _bstr_t(seach_name1),&passed);
-	CPPUNIT_ASSERT (VARIANT_TRUE == passed);
+	BOOST_ASSERT (VARIANT_TRUE == passed);
 
 	seachrule->check(test_string_none, _bstr_t(seach_name1),&passed);
-	CPPUNIT_ASSERT (VARIANT_TRUE == passed);
+	BOOST_ASSERT (VARIANT_TRUE == passed);
 
 	seachrule->check(test_string_none, _bstr_t(seach_name2),&passed);
-	CPPUNIT_ASSERT (VARIANT_TRUE == passed);
+	BOOST_ASSERT (VARIANT_TRUE == passed);
 
 	SafeRelease(seachrule);
 }

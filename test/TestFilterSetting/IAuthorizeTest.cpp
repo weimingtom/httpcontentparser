@@ -5,15 +5,11 @@
 #include <passwordtype.h>
 #include <comdef.h>
 #include <typeconvert.h>
-
-IAuthorizeTest::IAuthorizeTest(void) {
-}
-
-IAuthorizeTest::~IAuthorizeTest(void) {
-}
+#include <boost\test\test_tools.hpp>
+using namespace boost::unit_test;
 
 
-void IAuthorizeTest::testCheckPassword() {
+void testCheckPassword() {
 	try {
 		CoInitialize(NULL);
 		_VARIANT_BOOL passed;
@@ -22,7 +18,7 @@ void IAuthorizeTest::testCheckPassword() {
 		IAuthorize *authorize = NULL;
 		HRESULT hr = CoCreateInstance(CLSID_Authorize, NULL, CLSCTX_LOCAL_SERVER, IID_IAuthorize, (LPVOID*)&authorize);
 		if (FAILED(hr)) {
-			CPPUNIT_ASSERT(false);
+			BOOST_ASSERT(false);
 			return ;
 		}
 		
@@ -32,24 +28,24 @@ void IAuthorizeTest::testCheckPassword() {
 		_bstr_t new_password = "234";
 
 		authorize->checkPassword(last_password, &corrected);
-		CPPUNIT_ASSERT(true == convert(corrected));
+		BOOST_ASSERT(true == convert(corrected));
 
 		authorize->checkPassword(wrong_password, &corrected);
-		CPPUNIT_ASSERT(false == convert(corrected));
+		BOOST_ASSERT(false == convert(corrected));
 
 		authorize->checkPassword(new_password, &corrected);
-		CPPUNIT_ASSERT(false == convert(corrected));
+		BOOST_ASSERT(false == convert(corrected));
 
 
 		authorize->changePassword(new_password, wrong_password, &corrected);
-		CPPUNIT_ASSERT(false == convert(corrected));
+		BOOST_ASSERT(false == convert(corrected));
 
 		authorize->changePassword(new_password, last_password, &corrected);
-		CPPUNIT_ASSERT(true == convert(corrected));
+		BOOST_ASSERT(true == convert(corrected));
 
 		// 改回默认密码，否则测试可能失败
 		authorize->changePassword(_bstr_t(DEFAULT_PASSWORD), new_password, &corrected);
-		CPPUNIT_ASSERT(true == convert(corrected));
+		BOOST_ASSERT(true == convert(corrected));
 		
 		authorize->Release();
 		CoUninitialize();

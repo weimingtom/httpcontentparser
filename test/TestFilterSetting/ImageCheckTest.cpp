@@ -6,17 +6,12 @@
 #include <typeconvert.h>
 #include <comdef.h>
 #include <webcontenttype.h>
+#include <boost\test\test_tools.hpp>
+using namespace boost::unit_test;
 
-ImageCheckTest::ImageCheckTest(void)
-{
-}
-
-ImageCheckTest::~ImageCheckTest(void)
-{
-}
 
 // 注意此测试在父模式下可能失效
-void ImageCheckTest::TestImageCheck() {
+void TestImageCheck() {
 	AutoInitInScale _auto_com_init;
 
 	{
@@ -39,32 +34,32 @@ void ImageCheckTest::TestImageCheck() {
 	VARIANT_BOOL should_checked;
 	pCheck->shouldCheck(IMAGE_TYPE_JPEG, &should_checked);
 	bool checkJPEG = convert(should_checked);
-	CPPUNIT_ASSERT(true == checkJPEG);
+	BOOST_ASSERT(true == checkJPEG);
 
 	pCheck->shouldCheck(IMAGE_TYPE_GIF, &should_checked);
 	bool checkGIF = convert(should_checked);
-	CPPUNIT_ASSERT(true == checkGIF);
+	BOOST_ASSERT(true == checkGIF);
 
 	pCheck->shouldCheck(IMAGE_TYPE_PNG, &should_checked);
 	bool checkPNG = convert(should_checked);
-	CPPUNIT_ASSERT(true == checkPNG);
+	BOOST_ASSERT(true == checkPNG);
 
 	pCheck->shouldCheck(IMAGE_TYPE_BMP, &should_checked);
 	bool checkBMP= convert(should_checked);
-	CPPUNIT_ASSERT(true == checkBMP);
+	BOOST_ASSERT(true == checkBMP);
 
 	pCheck->shouldCheck(CONTYPE_HTML, &should_checked);
 	bool checkHTML= convert(should_checked);
-	CPPUNIT_ASSERT(true == checkHTML);
+	BOOST_ASSERT(true == checkHTML);
 
 	long imageCheckTightness;
 	long minScope, maxScope;
 	pCheck->get_ImageCheckTightness(&imageCheckTightness);
 	pCheck->getCheckScope(&minScope, &maxScope);
 	
-	CPPUNIT_ASSERT(tight_ness == imageCheckTightness);
-	CPPUNIT_ASSERT(c_minScope == minScope);
-	CPPUNIT_ASSERT(c_maxScope == maxScope);
+	BOOST_ASSERT(tight_ness == imageCheckTightness);
+	BOOST_ASSERT(c_minScope == minScope);
+	BOOST_ASSERT(c_maxScope == maxScope);
 	pCheck->Release();
 	}
 
@@ -88,32 +83,32 @@ void ImageCheckTest::TestImageCheck() {
 	VARIANT_BOOL should_checked;
 	pCheck->shouldCheck(IMAGE_TYPE_JPEG, &should_checked);
 	bool checkJPEG = convert(should_checked);
-	CPPUNIT_ASSERT(true == checkJPEG);
+	BOOST_ASSERT(true == checkJPEG);
 
 	pCheck->shouldCheck(IMAGE_TYPE_GIF, &should_checked);
 	bool checkGIF = convert(should_checked);
-	CPPUNIT_ASSERT(false == checkGIF);
+    BOOST_ASSERT(false == checkGIF);
 
 	pCheck->shouldCheck(IMAGE_TYPE_PNG, &should_checked);
 	bool checkPNG = convert(should_checked);
-	CPPUNIT_ASSERT(true == checkPNG);
+	BOOST_ASSERT(true == checkPNG);
 
 	pCheck->shouldCheck(IMAGE_TYPE_BMP, &should_checked);
 	bool checkBMP= convert(should_checked);
-	CPPUNIT_ASSERT(false == checkBMP);
+	BOOST_ASSERT(false == checkBMP);
 
 	pCheck->shouldCheck(CONTYPE_HTML, &should_checked);
 	bool checkHTML= convert(should_checked);
-	CPPUNIT_ASSERT(true == checkHTML);
+	BOOST_ASSERT(true == checkHTML);
 
 	long imageCheckTightness;
 	long minScope, maxScope;
 	pCheck->get_ImageCheckTightness(&imageCheckTightness);
 	pCheck->getCheckScope(&minScope, &maxScope);
 	
-	CPPUNIT_ASSERT(tight_ness == imageCheckTightness);
-	CPPUNIT_ASSERT(c_minScope == minScope);
-	CPPUNIT_ASSERT(c_maxScope == maxScope);
+	BOOST_ASSERT(tight_ness == imageCheckTightness);
+	BOOST_ASSERT(c_minScope == minScope);
+	BOOST_ASSERT(c_maxScope == maxScope);
 	pCheck->Release();
 	}
 }

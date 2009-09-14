@@ -8,36 +8,31 @@
 #include ".\iaccessnetworktest.h"
 #include ".\iseachruletest.h"
 #include ".\imagechecktest.h"
+#include <boost\test\included\unit_test.hpp>
+using namespace boost::unit_test;
 
-CPPUNIT_TEST_SUITE_REGISTRATION(ImageCheckTest);
-CPPUNIT_TEST_SUITE_REGISTRATION(ISeachRuleTest);
-CPPUNIT_TEST_SUITE_REGISTRATION(IAccessNetworkTest);
-CPPUNIT_TEST_SUITE_REGISTRATION(EyecareTest);
-CPPUNIT_TEST_SUITE_REGISTRATION(FilterSettingTest);
-CPPUNIT_TEST_SUITE_REGISTRATION(IAuthorizeTest);
+boost::unit_test::test_suite* init_unit_test_suite( int argc, char* argv[] ) {
+    // IAccessNetworkTest
+    framework::master_test_suite().add( BOOST_TEST_CASE(&TestSetAndGetBlockTime) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&TestTwoModel) );
 
-int _tmain(int argc, _TCHAR* argv[])
-{
-	// Create the event manager and test controller
-	CPPUNIT_NS::TestResult controller;
+    // FilterSettingTest
+    framework::master_test_suite().add( BOOST_TEST_CASE(&TestcheckDNS) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&TestaddBlackDNS) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&TestPassedWhiteDNS) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&TestEnableWhiteAndPassWhite) );
 
-	// Add a listener that colllects test result
-	CPPUNIT_NS::TestResultCollector result;
-	controller.addListener( &result );        
+    // IAuthorizeTest
+    framework::master_test_suite().add( BOOST_TEST_CASE(&testCheckPassword) );
 
-	// Add a listener that print dots as test run.
-	CPPUNIT_NS::BriefTestProgressListener progress;
-	controller.addListener( &progress );      
+    // ImageCheckTest
+    framework::master_test_suite().add( BOOST_TEST_CASE(&TestImageCheck) );
 
-	// Add the top suite to the test runner
-	CPPUNIT_NS::TestRunner runner;
-	runner.addTest( CPPUNIT_NS::TestFactoryRegistry::getRegistry().makeTest() );
-	runner.run( controller );
+    // EyecareTest
+    framework::master_test_suite().add( BOOST_TEST_CASE(&getTimeLeft) );
 
-	// Print test in a compiler compatible format.
-	CPPUNIT_NS::CompilerOutputter outputter( &result, CPPUNIT_NS::stdCOut() ); 
-	outputter.write(); 
-
-	return result.wasSuccessful() ? 0 : 1;
+    // ISeachRuleTest
+    framework::master_test_suite().add( BOOST_TEST_CASE(&TestISeachRule) );
+    framework::master_test_suite().add( BOOST_TEST_CASE(&TestRemove) );
+    return 0;
 }
-
