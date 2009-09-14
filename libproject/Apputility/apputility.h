@@ -46,6 +46,7 @@ APPUTILITYDLL_API   const TCHAR * GetPageDirectory(TCHAR * filename, const unsig
 
 // 获取保存搜错词的文件
 APPUTILITYDLL_API   const TCHAR * GetSearchWordFile(TCHAR * filename, const unsigned len);
+APPUTILITYDLL_API   const TCHAR * GetDbFile(TCHAR * filename, const unsigned len);
 
 // 获取保存网址的文件
 APPUTILITYDLL_API   const TCHAR* GetWebSiteFile(TCHAR * filename, const unsigned len);
