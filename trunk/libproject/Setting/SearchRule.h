@@ -1,9 +1,9 @@
 #ifndef _SETTING_SEARCHRULE_H__
 #define _SETTING_SEARCHRULE_H__
 
-//#include <string>
-//#include <set>
-//#include <map>
+#include <string>
+#include <set>
+#include <map>
 #include <Enumerate.h>
 #include <setting\settingitem.h>
 #include <setting\configitem.h>
