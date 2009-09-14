@@ -4,6 +4,9 @@
 #include <com\FilterSetting.h>
 #include <comdef.h>
 #include <typeconvert.h>
+#include <boost\test\test_tools.hpp>
+using namespace boost::unit_test;
+
 
 bool checkDNS(const char *dns_name) {
 	try {
@@ -29,12 +32,12 @@ bool checkDNS(const char *dns_name) {
 	}
 }
 
-void FilterSettingTest::TestPassedWhiteDNS() {
+void TestPassedWhiteDNS() {
 	CoInitialize(NULL);
 	IDNSSetting *dnssetting = NULL;
 	HRESULT hr = CoCreateInstance(CLSID_DNSSetting, NULL, CLSCTX_LOCAL_SERVER, IID_IDNSSetting, (LPVOID*)&dnssetting);
 	if (FAILED(hr)) {
-		CPPUNIT_ASSERT(false);
+		BOOST_ASSERT(false);
 	}
 
 	VARIANT_BOOL passed;
@@ -49,11 +52,11 @@ void FilterSettingTest::TestPassedWhiteDNS() {
 	dnssetting->justEnableWhiteDNS(VARIANT_FALSE);
 	
 	dnssetting->checkDNS(black_dns, &passed);
-	CPPUNIT_ASSERT(false == convert(passed));
+	BOOST_ASSERT(false == convert(passed));
 	dnssetting->checkDNS(white_dns, &passed);
-	CPPUNIT_ASSERT(true == convert(passed));
+	BOOST_ASSERT(true == convert(passed));
 	dnssetting->checkDNS(none_relate, &passed);
-	CPPUNIT_ASSERT(true == convert(passed));
+	BOOST_ASSERT(true == convert(passed));
 
 	// 启用仅通过WHITE DNS
 	dnssetting->enableBlackDNSCheck(VARIANT_TRUE);
@@ -61,34 +64,34 @@ void FilterSettingTest::TestPassedWhiteDNS() {
 	dnssetting->justEnableWhiteDNS(VARIANT_TRUE);
 	
 	dnssetting->checkDNS(black_dns, &passed);
-	CPPUNIT_ASSERT(false == convert(passed));
+	BOOST_ASSERT(false == convert(passed));
 	dnssetting->checkDNS(white_dns, &passed);
-	CPPUNIT_ASSERT(true == convert(passed));
+	BOOST_ASSERT(true == convert(passed));
 	dnssetting->checkDNS(none_relate, &passed);
-	CPPUNIT_ASSERT(false == convert(passed));
+	BOOST_ASSERT(false == convert(passed));
 
 	// 当关闭白名单时，JUST PASSED 也将关闭
 	dnssetting->enableWhiteDNSCheck(VARIANT_FALSE);
 	dnssetting->checkDNS(black_dns, &passed);
-	CPPUNIT_ASSERT(false == convert(passed));
+	BOOST_ASSERT(false == convert(passed));
 	dnssetting->checkDNS(white_dns, &passed);
-	CPPUNIT_ASSERT(true == convert(passed));
+	BOOST_ASSERT(true == convert(passed));
 	dnssetting->checkDNS(none_relate, &passed);
-	CPPUNIT_ASSERT(true == convert(passed));
+	BOOST_ASSERT(true == convert(passed));
 
 
 	CoUninitialize();
 }
-void FilterSettingTest::TestEnableWhiteAndPassWhite() {
+void TestEnableWhiteAndPassWhite() {
 
 }
 
-void FilterSettingTest::TestcheckDNS() {
+void TestcheckDNS() {
 	CoInitialize(NULL);
 	IDNSSetting *dnssetting = NULL;
 	HRESULT hr = CoCreateInstance(CLSID_DNSSetting, NULL, CLSCTX_LOCAL_SERVER, IID_IDNSSetting, (LPVOID*)&dnssetting);
 	if (FAILED(hr)) {
-		CPPUNIT_ASSERT(false);
+		BOOST_ASSERT(false);
 	}
 	
 	dnssetting->justEnableWhiteDNS(VARIANT_FALSE);
@@ -96,23 +99,23 @@ void FilterSettingTest::TestcheckDNS() {
 	dnssetting->enableWhiteDNSCheck(VARIANT_TRUE);
 	dnssetting->addBlackDNS(_bstr_t("sina.com"));
 	bool passed  = checkDNS("news.sina.com");
-	CPPUNIT_ASSERT(passed == false);
+	BOOST_ASSERT(passed == false);
 
 	dnssetting->enableBlackDNSCheck(VARIANT_TRUE);
 	dnssetting->enableWhiteDNSCheck(VARIANT_TRUE);
 	passed  = checkDNS("p1.sina.com");
-	CPPUNIT_ASSERT(passed == false);
+	BOOST_ASSERT(passed == false);
 
 	dnssetting->Release();
 	CoUninitialize();
 }
 
-void FilterSettingTest::TestaddBlackDNS() {
+void TestaddBlackDNS() {
 	CoInitialize(NULL);
 	IDNSSetting *dnssetting = NULL;
 	HRESULT hr = CoCreateInstance(CLSID_DNSSetting, NULL, CLSCTX_LOCAL_SERVER, IID_IDNSSetting, (LPVOID*)&dnssetting);
 	if (FAILED(hr)) {
-		CPPUNIT_ASSERT(false);
+		BOOST_ASSERT(false);
 	}
 
 	dnssetting->justEnableWhiteDNS(VARIANT_FALSE);
@@ -120,12 +123,12 @@ void FilterSettingTest::TestaddBlackDNS() {
 	dnssetting->enableWhiteDNSCheck(VARIANT_TRUE);
 	dnssetting->addBlackDNS(_bstr_t("sina.com"));
 	bool passed  = checkDNS("sina.com");
-	CPPUNIT_ASSERT(passed == false);
+	BOOST_ASSERT(passed == false);
 
 	dnssetting->enableBlackDNSCheck(VARIANT_TRUE);
 	dnssetting->enableWhiteDNSCheck(VARIANT_TRUE);
 	passed  = checkDNS("sina.com");
-	CPPUNIT_ASSERT(passed == false);
+	BOOST_ASSERT(passed == false);
 
 	dnssetting->Release();
 	CoUninitialize();
@@ -134,16 +137,3 @@ void FilterSettingTest::TestaddBlackDNS() {
 
 //==============================
 // constructor and deconstructors
-FilterSettingTest::FilterSettingTest(void) {
-}
-
-FilterSettingTest::~FilterSettingTest(void) {
-}
-
-
-//===========================
-// virtual 
-void FilterSettingTest::setUp() {
-}
-void FilterSettingTest::tearDown() {
-}

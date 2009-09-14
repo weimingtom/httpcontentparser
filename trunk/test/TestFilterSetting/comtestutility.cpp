@@ -6,6 +6,9 @@
 #include <com\comutility.h>
 #include <typeconvert.h>
 #include <comdef.h>
+#include <boost\test\test_tools.hpp>
+using namespace boost::unit_test;
+
 
 bool isRunOnParentModel() {
 	AutoInitInScale auot;
