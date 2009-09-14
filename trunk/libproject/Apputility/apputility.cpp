@@ -275,6 +275,16 @@ APPUTILITYDLL_API   const TCHAR * GetPornWebSiteFile(TCHAR *filename, const unsi
 	return filename;
 }
 
+APPUTILITYDLL_API   const TCHAR * GetDbFile(TCHAR * filename, const unsigned len) {
+    TCHAR installPath[MAX_PATH];
+    GetInstallPath(installPath, MAX_PATH);
+
+    assert (filename != NULL);
+    assert ( true == strutility::endwith(installPath, "\\"));
+    GenerateFullPath(filename, MAX_PATH, installPath, TEXT("db.dump"));
+    return filename;
+}
+
 // 获取记录图片 文字历史的文件的路径
 APPUTILITYDLL_API   const TCHAR * GetRecordConfigfile(TCHAR *filename, const unsigned len) {
 	TCHAR installPath[MAX_PATH];
