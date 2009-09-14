@@ -2,9 +2,8 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="Hardware2008"
-	ProjectGUID="{EC65E27D-9148-41F4-BAB3-1C6E78F6419A}"
-	RootNamespace="Hardware2008"
+	Name="ApputilityMT2008"
+	ProjectGUID="{850E07E5-8AEA-42C9-9537-9A4DEF89E925}"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="131072"
 	>
@@ -18,14 +17,16 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="Debug"
-			IntermediateDirectory="Debug"
+			OutputDirectory="DebugMT"
+			IntermediateDirectory="DebugMT"
 			ConfigurationType="4"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
+			UseOfMFC="0"
 			CharacterSet="2"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+				CommandLine="&#x0D;&#x0A;"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -42,10 +43,11 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;_VISUAL_STUDIO_2008_"
+				AdditionalIncludeDirectories="..\..\include"
+				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
-				RuntimeLibrary="3"
+				RuntimeLibrary="1"
 				UsePrecompiledHeader="2"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="true"
@@ -62,7 +64,7 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="$(OutDir)/Hardware.lib"
+				OutputFile="$(OutDir)/apputility.lib"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -78,14 +80,16 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				CommandLine="copy .\debugMT\AppUtility.lib ..\..\lib\apputilityMTd.lib&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="Release"
-			IntermediateDirectory="Release"
+			OutputDirectory="ReleaseMT"
+			IntermediateDirectory="ReleaseMT"
 			ConfigurationType="4"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
+			UseOfMFC="0"
 			CharacterSet="2"
 			>
 			<Tool
@@ -106,8 +110,9 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;_VISUAL_STUDIO_2008_"
-				RuntimeLibrary="2"
+				AdditionalIncludeDirectories="..\..\include"
+				PreprocessorDefinitions="WIN32;NDEBUG;_LIB"
+				RuntimeLibrary="0"
 				UsePrecompiledHeader="2"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="true"
@@ -124,7 +129,7 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="$(OutDir)/Hardware.lib"
+				OutputFile="$(OutDir)/apputility.lib"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -140,6 +145,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				CommandLine="&#x0D;&#x0A;copy .\releaseMT\Apputility.lib ..\..\lib\ApputilityMT.lib&#x0D;&#x0A;"
 			/>
 		</Configuration>
 	</Configurations>
@@ -152,7 +158,7 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath=".\stdafx.cpp"
+				RelativePath="..\Apputility\stdafx.cpp"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -178,7 +184,7 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath=".\stdafx.h"
+				RelativePath="..\Apputility\stdafx.h"
 				>
 			</File>
 		</Filter>
@@ -189,19 +195,55 @@
 			>
 		</Filter>
 		<Filter
-			Name="hardware"
+			Name="install"
 			>
 			<File
-				RelativePath=".\hardwareinfo.cpp"
+				RelativePath="..\Apputility\XInstall.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\hardwareinfo.h"
+				RelativePath="..\Apputility\XInstall.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="registry"
+			>
+			<File
+				RelativePath="..\Apputility\AppInstallValidate.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\Apputility\AppInstallValidate.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="apputility"
+			>
+			<File
+				RelativePath="..\Apputility\apputility.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\Apputility\apputility.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="FileInfo"
+			>
+			<File
+				RelativePath="..\Apputility\FileInfo.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\Apputility\FileInfo.h"
 				>
 			</File>
 		</Filter>
 		<File
-			RelativePath=".\ReadMe.txt"
+			RelativePath="..\Apputility\ReadMe.txt"
 			>
 		</File>
 	</Files>
