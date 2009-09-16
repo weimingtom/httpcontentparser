@@ -3,6 +3,7 @@
 
 #include <stdlib.h>
 #include <time.h>
+#include <boost/date_time/posix_time/posix_time_types.hpp>
 
 namespace timeutility {
 //
@@ -17,6 +18,8 @@ TCHAR * USFormatTime(SYSTEMTIME  ft, TCHAR *buffer, INT_PTR len);
 TCHAR * USFormatTime(FILETIME ft, TCHAR * buffer, INT_PTR len);
 
 FILETIME ft_from_tm(const tm &t);
+
+std::string format_ptime_to_timestamp( boost::posix_time::ptime & pt);
 };
 
 #endif  // _UTILITY_TIMEUTILITY_H__
