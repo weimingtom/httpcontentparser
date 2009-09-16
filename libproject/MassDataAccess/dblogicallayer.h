@@ -10,15 +10,15 @@ int load_db(const char * dbname);
 // ¼ì²â
 bool check_white_dns(const char* dns);
 bool check_black_dns(const char* dns);
-bool check_black_searchword(const char* word, const char * engine);
+bool check_black_searchword(const char* word);
 
 // Ôö¼ÓÉ¾³ýwebsites
 int insert_white_dns(const char* dns);
 int insert_black_dns(const char* dns);
-int insert_black_searchword(const char* word, const char* engine);
+int insert_black_searchword(const char* word);
 int del_white_dns(const char* dns);
 int del_black_dns(const char* dns);
-int del_black_searchword(const char* word, const char* engine);
+int del_black_searchword(const char* word);
 
 // Ã¶¾Ù
 int enum_white_dns(boost::function<int ( const char*)> enum_fun);

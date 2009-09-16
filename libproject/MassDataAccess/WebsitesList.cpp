@@ -70,8 +70,6 @@ void WebsiteList::add_website(const std::string &dns_name) {
 
 
 void WebsiteList::enum_webistes(boost::function<int (const char *)> enum_fun) {
-	assert (NULL != enumerator);
-
 	WEBSITES_SET::const_iterator iter = websites_set_.begin();
 	for (; iter != websites_set_.end(); ++iter) {
         enum_fun(iter->second.c_str());
