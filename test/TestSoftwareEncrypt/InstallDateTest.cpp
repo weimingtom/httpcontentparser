@@ -2,7 +2,6 @@
 #include ".\installdatetest.h"
 #include <softwareencrypt\installdate.h>
 #include <boost\test\test_tools.hpp>
-#include <boost/date_time/gregorian/gregorian.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <iostream>
 #include <time.h>
