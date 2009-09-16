@@ -22,7 +22,7 @@
 				AdditionalOptions="/W3"
 				Optimization="0"
 				AdditionalIncludeDirectories="..\..\include"
-				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;TIXML_USE_STL;___OUPUT_DEBUG_STRING___;DNS_SETTING_TRACE_ENABLED"
+				PreprocessorDefinitions="BOOST_DATE_TIME_NO_LIB;WIN32;_DEBUG;_LIB;TIXML_USE_STL;___OUPUT_DEBUG_STRING___;DNS_SETTING_TRACE_ENABLED"
 				MinimalRebuild="TRUE"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -58,7 +58,8 @@ copy .\configitem.h ..\..\include\setting
 copy .\hotkeysetting.h ..\..\include\setting
 copy .\timeoutswitch.h ..\..\include\setting
 copy .\programcontrol.h ..\..\include\setting
-copy .\miscsetting.h ..\..\include\setting"/>
+copy .\miscsetting.h ..\..\include\setting
+"/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
 			<Tool
@@ -82,7 +83,7 @@ copy .\miscsetting.h ..\..\include\setting"/>
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="..\..\include"
-				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;TIXML_USE_STL;___OUPUT_DEBUG_STRING___"
+				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;BOOST_DATE_TIME_NO_LIB;TIXML_USE_STL;___OUPUT_DEBUG_STRING___"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="3"
 				WarningLevel="3"
