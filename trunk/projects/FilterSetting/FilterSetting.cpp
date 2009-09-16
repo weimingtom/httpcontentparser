@@ -15,7 +15,6 @@
 #include <setting\xmlconfiguration.h>
 #include <searchengine_define.h>
 #include <searchkeywordutil.h>
-#include <shell\shellutility.h>
 #include <softwareStatus.h>
 #include <string>
 #include <time.h>
