@@ -23,7 +23,7 @@ int del_black_searchword(const char* word);
 // 枚举
 int enum_white_dns(boost::function<int ( const char*)> enum_fun);
 int enum_black_dns(boost::function<int( const char*)> enum_fun);
-int enum_blacksearch_word(boost::function<int (const char*, const char *)> enum_fun);
+int enum_blacksearch_word(boost::function<int (const char*)> enum_fun);
 
 // 历史记录
 int insert_website_visited(const char*  website);
