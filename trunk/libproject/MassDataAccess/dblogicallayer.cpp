@@ -23,9 +23,9 @@ int verify_db() {
 }
 
 int initialize_db() {
-    g_conn_.execute_no_result("create table wdns      (website char(50), visit_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP )");
+    g_conn_.execute_no_result("create table wdns     (website char(50), visit_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP )");
     g_conn_.execute_no_result("create table bdns      (website char(50), visit_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP )");
-    g_conn_.execute_no_result("create table bwords (word char(50),  engine char (50), visit_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP )");
+    g_conn_.execute_no_result("create table bwords (word char(50), visit_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP )");
 
     // 创建具有历史记录的表
     g_conn_.execute_no_result("create table wordhistory  (word char(50), engine char (50), visit_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP )");
@@ -78,8 +78,8 @@ int enum_white_dns(boost::function<int ( const char*)> enum_fun) {
 int enum_black_dns(boost::function<int( const char*)> enum_fun) {
      return enum_data( "select website  from bdns", enum_fun);
 }
-int enum_blacksearch_word(boost::function<int (const char*, const char *)> enum_fun) {
-    return enum_data( "select word, engine, visit_time from bwords", enum_fun);
+int enum_blacksearch_word(boost::function<int (const char*)> enum_fun) {
+    return enum_data( "select word, visit_time from bwords", enum_fun);
 }
 // 自动清理
 int auto_clean_website_list(const int days) {
@@ -142,10 +142,10 @@ bool check_black_dns(const char * dns) {
     }
 }
 
-bool check_black_searchword(const char* word, const char * engine){
+bool check_black_searchword(const char* word) {
     int count;
     char buffer[1024];
-    _sntprintf(buffer, 1024, "select word from bwords where word= '%s' and engine = '%s'", word, engine);
+    _sntprintf(buffer, 1024, "select word from bwords where word= '%s'", word);
     int rc =  get_sql_select_count(&g_conn_, buffer, &count);
     if (rc) {
         return false;
@@ -165,9 +165,9 @@ int insert_black_dns(const char *dns) {
     _sntprintf(buffer, 1024, "insert into bdns(website) values ('%s')", dns);
     return g_conn_.execute_no_result(buffer);
 }
-int insert_black_searchword(const char *word, const char *engine) {
+int insert_black_searchword(const char *word) {
     char buffer[1024];
-    _sntprintf(buffer, 1024, "insert into bwords(word, engine) values ('%s', '%s')", word, engine);
+    _sntprintf(buffer, 1024, "insert into bwords(word) values ('%s')", word);
     return g_conn_.execute_no_result(buffer);
 }
 
@@ -182,9 +182,9 @@ int del_black_dns(const char*dns) {
     _sntprintf(buffer, 1024, "delete from bdns where website = '%s'", dns);
     return g_conn_.execute_no_result(buffer);
 }
-int del_black_searchword(const char*word, const char*engine) {
+int del_black_searchword(const char*word) {
     char buffer[1024];
-    _sntprintf(buffer, 1024, "delete from bwords where word = '%s' and engine = '%s'", word, engine);
+    _sntprintf(buffer, 1024, "delete from bwords where word = '%s'", word);
     return g_conn_.execute_no_result(buffer);
 }
 
