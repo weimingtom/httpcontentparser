@@ -38,6 +38,11 @@ int su_user_logon();
 int su_user_logoff();
 int enum_su_logon(boost::function<int (int, const char *)> f);
 
+// 应用程序
+int add_program(const std::string &product_name);
+int remove_program(const std::string &product_name);
+int enum_program(boost::function<int (const char*)> enum_fun);
+
 // 
 int verify_db();             // 验证数据库
 int initialize_db();         // 初始化数据库

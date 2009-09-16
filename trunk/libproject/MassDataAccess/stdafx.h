@@ -7,6 +7,7 @@
 #include <iostream>
 #include <tchar.h>
 #include <sqlite3.h>
+#include <windows.h>
 
 #pragma comment(lib, "sqlite3.lib")
 

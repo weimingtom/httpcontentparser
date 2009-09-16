@@ -40,7 +40,12 @@
 				CommandLine="copy .\debug\MassDataAccess.lib ..\..\lib\MassDataAccessd.lib"/>
 			<Tool
 				Name="VCPreBuildEventTool"
-				CommandLine="copy .\dblogicallayer.h ..\..\include"/>
+				CommandLine="
+copy .\dblogicallayer.h ..\..\include\test
+copy .\WebsiteList.h ..\..\include\DataHolder
+copy .\AppList.h ..\..\include\DataHolder
+copy .\WordList.h ..\..\include\DataHolder
+copy .\DbMgr.h ..\..\include\DataHolder"/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
 			<Tool
@@ -81,7 +86,11 @@
 				CommandLine="copy .\release\MassDataAccess.lib ..\..\lib\MassDataAccess.lib"/>
 			<Tool
 				Name="VCPreBuildEventTool"
-				CommandLine="copy .\dblogicallayer.h ..\..\include"/>
+				CommandLine="copy .\dblogicallayer.h ..\..\include\test
+copy .\WebsiteList.h ..\..\include\DataHolder
+copy .\AppList.h ..\..\include\DataHolder
+copy .\WordList.h ..\..\include\DataHolder
+copy .\DbMgr.h ..\..\include\DataHolder"/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
 			<Tool
@@ -150,6 +159,38 @@
 			</File>
 			<File
 				RelativePath=".\dblogicallayer.h">
+			</File>
+		</Filter>
+		<Filter
+			Name="DataHolder"
+			Filter="">
+			<File
+				RelativePath=".\AppList.cpp">
+			</File>
+			<File
+				RelativePath=".\AppList.h">
+			</File>
+			<File
+				RelativePath=".\WebsiteList.h">
+			</File>
+			<File
+				RelativePath=".\WebsitesList.cpp">
+			</File>
+			<File
+				RelativePath=".\WordList.cpp">
+			</File>
+			<File
+				RelativePath=".\WordList.h">
+			</File>
+		</Filter>
+		<Filter
+			Name="DbMgr"
+			Filter="">
+			<File
+				RelativePath=".\DbMgr.cpp">
+			</File>
+			<File
+				RelativePath=".\DbMgr.h">
 			</File>
 		</Filter>
 		<File
