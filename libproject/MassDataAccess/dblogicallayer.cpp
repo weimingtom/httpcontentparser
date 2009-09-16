@@ -32,6 +32,9 @@ int initialize_db() {
     g_conn_.execute_no_result("create table webhistory  (website char(50),  visit_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP )");
 
     // 超级用户登录
+    g_conn_.execute_no_result("create table appcontrol  (appname char(255))");
+
+    // 超级用户登录
     g_conn_.execute_no_result("create table sulogon  (logon_type integer,  logon_tm TIMESTAMP DEFAULT CURRENT_TIMESTAMP )");
     return 0;
 }
