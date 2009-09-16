@@ -12,7 +12,6 @@
 #include <boost/exception.hpp>
 #include <apputility\apputility.h>
 #include <DebugOutput.h>
-#include <boost/date_time/posix_time/time_formatters.hpp>
 
 #define __SOFTWAREENCRYPT_INSTALLDATE__(FMT) _DEBUG_STREAM_TRC_("[Family007][SoftwareEncrypt][InstallDate]"<<FMT )
 
@@ -259,7 +258,7 @@ int setInstall() {
 
 std::string getInstallData() {
 	boost::posix_time::ptime installtime = getInstallDataTime();
-    return timeutility::format_ptime_to_timestamp(installtime);
+    return "";timeutility::format_ptime_to_timestamp(installtime);
 }
 
 };
