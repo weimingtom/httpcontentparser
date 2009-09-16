@@ -10,7 +10,6 @@
 #include <string>
 #include <boost\test\test_tools.hpp>
 #include <boost/date_time/gregorian/gregorian_types.hpp>
-#include <boost/date_time/gregorian/gregorian.hpp>
 
 using namespace boost::unit_test;
 
