@@ -21,7 +21,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="..\..\include"
-				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;___OUPUT_DEBUG_STRING___"
+				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;BOOST_DATE_TIME_NO_LIB;___OUPUT_DEBUG_STRING___"
 				MinimalRebuild="TRUE"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -45,7 +45,8 @@
 				CommandLine="copy .\apputility.h ..\..\include\apputility
 copy .\AppInstallValidate.h ..\..\include\apputility
 copy .\Fileinfo.h ..\..\include\apputility
-copy .\ApputilityDLL.h ..\..\include\apputility"/>
+copy .\ApputilityDLL.h ..\..\include\apputility
+"/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
 			<Tool
@@ -70,7 +71,7 @@ copy .\ApputilityDLL.h ..\..\include\apputility"/>
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="..\..\include"
-				PreprocessorDefinitions="WIN32;NDEBUG;_LIB"
+				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;BOOST_DATE_TIME_NO_LIB"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="3"
 				WarningLevel="3"
@@ -93,7 +94,8 @@ copy .\release\Apputility.lib ..\..\lib\Apputility.lib
 				CommandLine="copy .\apputility.h ..\..\include\apputility
 copy .\AppInstallValidate.h ..\..\include\apputility
 copy .\Fileinfo.h ..\..\include\apputility
-copy .\ApputilityDLL.h ..\..\include\apputility"/>
+copy .\ApputilityDLL.h ..\..\include\apputility
+"/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
 			<Tool
