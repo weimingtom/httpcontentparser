@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "./timeutility.h"
 #include <assert.h>
+#include <boost/format.hpp> 
 
 namespace timeutility {
 
@@ -79,6 +80,14 @@ TCHAR * USFormatTime(FILETIME ft, TCHAR * buffer, INT_PTR len) {
 	SYSTEMTIME st;
 	FileTimeToSystemTime(&ft, &st);
 	return USFormatTime(st, buffer, len);
+}
+
+std::string format_ptime_to_timestamp( boost::posix_time::ptime & pt) {
+    boost::format formatter("%04d-%02d-%02d %02d:%02d:%02d ");
+
+    formatter % pt.date().year() % pt.date().month() % pt.date().day() 
+        % pt.time_of_day().hours() % pt.time_of_day().minutes() % pt.time_of_day().seconds();
+    return formatter.str();
 }
 
 }; // namespace 
