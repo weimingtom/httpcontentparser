@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "LogicalLayerTest.h"
-
+#include <test\dblogicallayer.h>
 #include <boost/date_time/posix_time/posix_time_types.hpp>
 #include <boost/date_time/posix_time/posix_time_duration.hpp>
 #include <boost/date_time/microsec_time_clock.hpp>
@@ -146,36 +146,31 @@ int test_blasklisted_word() {
     const char * word2 = "word2";
     const char * word3 = "word3";
     const char * word4 = "word4";
+    const char * word5 = "word5";
     const char * engine1 = "google";
     const char * engine2 = "baidu";
 
-    BOOST_CHECK(0 == insert_black_searchword(word1, engine1));
-    BOOST_CHECK(0 == insert_black_searchword(word2, engine1));
-    BOOST_CHECK(0 == insert_black_searchword(word3, engine2));
-    BOOST_CHECK(0 == insert_black_searchword(word4, engine2));
+    BOOST_CHECK(0 == insert_black_searchword(word1));
+    BOOST_CHECK(0 == insert_black_searchword(word2));
+    BOOST_CHECK(0 == insert_black_searchword(word3));
+    BOOST_CHECK(0 == insert_black_searchword(word4));
 
-    BOOST_CHECK(true  == check_black_searchword(word1, engine1));
-    BOOST_CHECK(true  == check_black_searchword(word2, engine1));
-    BOOST_CHECK(false  == check_black_searchword(word3, engine1));
-    BOOST_CHECK(false  == check_black_searchword(word4, engine1));
-    BOOST_CHECK(false  == check_black_searchword(word1, engine2));
-    BOOST_CHECK(false  == check_black_searchword(word2, engine2));
-    BOOST_CHECK(true  == check_black_searchword(word3, engine2));
-    BOOST_CHECK(true  == check_black_searchword(word4, engine2));
-    
+    BOOST_CHECK(true  == check_black_searchword(word1));
+    BOOST_CHECK(true  == check_black_searchword(word2));
+    BOOST_CHECK(true  == check_black_searchword(word3));
+    BOOST_CHECK(true  == check_black_searchword(word4));
+    BOOST_CHECK(false  == check_black_searchword(word5));
 
-    BOOST_CHECK(0 == del_black_searchword(word1, engine1));
-    BOOST_CHECK(0 == del_black_searchword(word3, engine2));
 
-    BOOST_CHECK(false  == check_black_searchword(word1, engine1));
-    BOOST_CHECK(true  == check_black_searchword(word2, engine1));
-    BOOST_CHECK(false  == check_black_searchword(word3, engine1));
-    BOOST_CHECK(false  == check_black_searchword(word4, engine1));
-    BOOST_CHECK(false  == check_black_searchword(word1, engine2));
-    BOOST_CHECK(false  == check_black_searchword(word2, engine2));
-    BOOST_CHECK(false  == check_black_searchword(word3, engine2));
-    BOOST_CHECK(true  == check_black_searchword(word4, engine2));
 
+    BOOST_CHECK(0 == del_black_searchword(word1));
+    BOOST_CHECK(0 == del_black_searchword(word3));
+
+    BOOST_CHECK(false  == check_black_searchword(word1));
+    BOOST_CHECK(true  == check_black_searchword(word2));
+    BOOST_CHECK(false == check_black_searchword(word3));
+    BOOST_CHECK(true  == check_black_searchword(word4));
+    BOOST_CHECK(false  == check_black_searchword(word5));
     return 0;
 }
 

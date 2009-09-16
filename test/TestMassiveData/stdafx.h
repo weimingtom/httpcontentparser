@@ -11,7 +11,6 @@
 
 #include <time.h>
 #include <stdlib.h>
-#include <dblogicallayer.h>
 
 #ifdef _DEBUG
 #pragma comment(lib, "MassDataAccessd.lib")
