@@ -67,8 +67,6 @@ void TestInstallDateItem() {
 
 	ptime t1 =getInstallDataTime();
 	ptime t2 =from_ftime<ptime>(ft2);
-	std::cout<<"pWin: " << to_simple_string(t1)<< std::endl;
-	std::cout<<"pWin: " << to_simple_string(t2)<< std::endl;
 	BOOST_CHECK(t1 == t2);
 	}
 
