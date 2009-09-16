@@ -1,7 +1,6 @@
 #ifndef _SOFTWARE_ENCRYPT_LICENSEINFO_H__
 #define _SOFTWARE_ENCRYPT_LICENSEINFO_H__
 
-#include <boost/date_time/gregorian/gregorian.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <string>
 
