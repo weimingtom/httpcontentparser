@@ -19,7 +19,7 @@ int WordList::get_first_word(std::string * word) const {
 	}
 }
 
-int WordList::get_next_word(std::string * word,  const std::string &cur_word) const {
+int WordList::get_next_word(const std::string &cur_word, std::string * word) const {
     assert(NULL != word);
     assert(cur_word.length() > 0);
 
