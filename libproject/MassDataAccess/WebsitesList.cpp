@@ -9,24 +9,29 @@ WebsiteList::~WebsiteList(void) {
 }
 
 // 获取DNS列表
-std::string  WebsiteList::get_first_website() {
+int  WebsiteList::get_first_website(std::string * website) {
+    assert(NULL != website);
+
 	if (websites_set_.size() == 0) {
-		return std::string("");
+		return 1;
 	} else {
-		return websites_set_.begin()->second;
+		*website =  websites_set_.begin()->second;
+        return 0;
 	}
 }
 
-std::string WebsiteList::get_next_website(const std::string &name) {
+int WebsiteList::get_next_website(const std::string &name, std::string *next_item) {
+    assert(NULL != next_item);
 	assert (name.length() != 0);
 	if (name.length() == 0) {
-		return name;
+		return -1;
 	} else {
 		WEBSITES_SET::iterator iter = websites_set_.upper_bound(name);
 		if (iter == websites_set_.end()) {
-			return std::string("");
+			return -1;
 		} else {
-			return iter->second;
+			*next_item =  iter->second;
+            return 0;
 		}
 	}
 }
@@ -47,25 +52,27 @@ bool WebsiteList::is_in_set(const std::string &dns_name) const {
 
 //=====================================
 // 从DNS中移除
-bool WebsiteList::remote_website(const std::string &dns_name) {
+int WebsiteList::remote_website(const std::string &dns_name) {
 	TCHAR buffer[1024];
 	get_main_dns_name(buffer, 1024, dns_name.c_str());
 
 	WEBSITES_SET::iterator iter = websites_set_.find(buffer);
 	if (websites_set_.end() != iter) {
 		websites_set_.erase(iter);
-		return true;
-	}
-	return false;
+		return 0;
+    } else {
+	    return 1;
+    }
 }
 
-void WebsiteList::add_website(const std::string &dns_name) {
+int WebsiteList::add_website(const std::string &dns_name) {
 	// 去除DNS MAIN name
 	const int buf_size = 256;
 	TCHAR main_dns[buf_size], main_host_name[buf_size];
 	get_main_dns_name(main_dns, buf_size, dns_name.c_str());
 	get_main_serv_name(main_host_name, buf_size, dns_name.c_str());
 	websites_set_.insert(std::make_pair(main_dns, main_host_name));
+    return 0;
 }
 
 

@@ -23,7 +23,7 @@ public:
 	// 获取DNS
 	// 之所以采用这种方式，是因为map不能使用下表进行访问
 	int get_first_word(std::string * word) const ;
-    int get_next_word(std::string * word,  const std::string &cur_word) const;
+    int get_next_word(const std::string &cur_word, std::string * word) const ;
 
     int get_item_num() const { return words_set_.size();}
 protected:
