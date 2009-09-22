@@ -146,16 +146,6 @@
 				RelativePath=".\stdafx.h">
 			</File>
 		</Filter>
-		<Filter
-			Name="DataHolder"
-			Filter="">
-			<File
-				RelativePath=".\DataHolderTest.cpp">
-			</File>
-			<File
-				RelativePath=".\DataHolderTest.h">
-			</File>
-		</Filter>
 		<File
 			RelativePath=".\ReadMe.txt">
 		</File>
