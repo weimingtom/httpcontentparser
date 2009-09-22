@@ -40,12 +40,8 @@
 				CommandLine="copy .\debug\MassDataAccess.lib ..\..\lib\MassDataAccessd.lib"/>
 			<Tool
 				Name="VCPreBuildEventTool"
-				CommandLine="
-copy .\dblogicallayer.h ..\..\include\test
-copy .\WebsiteList.h ..\..\include\DataHolder
-copy .\AppList.h ..\..\include\DataHolder
-copy .\WordList.h ..\..\include\DataHolder
-copy .\DbMgr.h ..\..\include\DataHolder
+				CommandLine="copy .\dblogicallayer.h ..\..\include\MassDataAccess
+
 "/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
@@ -87,11 +83,8 @@ copy .\DbMgr.h ..\..\include\DataHolder
 				CommandLine="copy .\release\MassDataAccess.lib ..\..\lib\MassDataAccess.lib"/>
 			<Tool
 				Name="VCPreBuildEventTool"
-				CommandLine="copy .\dblogicallayer.h ..\..\include\test
-copy .\WebsiteList.h ..\..\include\DataHolder
-copy .\AppList.h ..\..\include\DataHolder
-copy .\WordList.h ..\..\include\DataHolder
-copy .\DbMgr.h ..\..\include\DataHolder
+				CommandLine="copy .\dblogicallayer.h ..\..\include\MassDataAccess
+
 "/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
