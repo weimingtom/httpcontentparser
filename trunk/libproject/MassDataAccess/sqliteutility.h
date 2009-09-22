@@ -7,6 +7,8 @@
 #include <map>
 #include <assert.h>
 
+namespace sqllite_utility {
+
 class sqlite_query;
 
 class sqlite_connection {
@@ -149,5 +151,7 @@ private:
 
 // some utility functions
 int get_sql_select_count(sqlite_connection * conn, const char * statement, int * count);
+
+}
 
 #endif  // _SQLITE_UTILITY_H__
