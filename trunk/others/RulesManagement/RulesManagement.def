@@ -1,9 +1,0 @@
-; RulesManagement.def : 定义模块参数。
-
-LIBRARY      "RulesManagement.DLL"
-
-EXPORTS
-	DllCanUnloadNow		PRIVATE
-	DllGetClassObject	PRIVATE
-	DllRegisterServer	PRIVATE
-	DllUnregisterServer	PRIVATE
