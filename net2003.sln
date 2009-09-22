@@ -82,6 +82,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MassDataAccess", "libprojec
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HistoryReader", "libproject\HistoryReader\HistoryReader.vcproj", "{5BE50901-B624-4018-95FD-140DFFC84E0D}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfiguration) = preSolution
 		Debug = Debug
@@ -236,6 +240,14 @@ Global
 		{BCDBD172-09AF-44AA-B980-8DFBBA17CC93}.Release.Build.0 = Release|Win32
 		{BCDBD172-09AF-44AA-B980-8DFBBA17CC93}.Release Unicode.ActiveCfg = Release|Win32
 		{BCDBD172-09AF-44AA-B980-8DFBBA17CC93}.Release Unicode.Build.0 = Release|Win32
+		{5BE50901-B624-4018-95FD-140DFFC84E0D}.Debug.ActiveCfg = Debug|Win32
+		{5BE50901-B624-4018-95FD-140DFFC84E0D}.Debug.Build.0 = Debug|Win32
+		{5BE50901-B624-4018-95FD-140DFFC84E0D}.Debug Unicode.ActiveCfg = Debug|Win32
+		{5BE50901-B624-4018-95FD-140DFFC84E0D}.Debug Unicode.Build.0 = Debug|Win32
+		{5BE50901-B624-4018-95FD-140DFFC84E0D}.Release.ActiveCfg = Release|Win32
+		{5BE50901-B624-4018-95FD-140DFFC84E0D}.Release.Build.0 = Release|Win32
+		{5BE50901-B624-4018-95FD-140DFFC84E0D}.Release Unicode.ActiveCfg = Release|Win32
+		{5BE50901-B624-4018-95FD-140DFFC84E0D}.Release Unicode.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 	EndGlobalSection

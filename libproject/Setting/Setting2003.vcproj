@@ -59,6 +59,10 @@ copy .\hotkeysetting.h ..\..\include\setting
 copy .\timeoutswitch.h ..\..\include\setting
 copy .\programcontrol.h ..\..\include\setting
 copy .\miscsetting.h ..\..\include\setting
+copy .\WebsiteList.h ..\..\include\setting\DataHolder
+copy .\AppList.h ..\..\include\setting\DataHolder
+copy .\WordList.h ..\..\include\setting\DataHolder
+copy .\DbMgr.h ..\..\include\setting\DataHolder
 "/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
@@ -118,6 +122,10 @@ copy .\hotkeysetting.h ..\..\include\setting
 copy .\timeoutswitch.h ..\..\include\setting
 copy .\programcontrol.h ..\..\include\setting
 copy .\miscsetting.h ..\..\include\setting
+copy .\WebsiteList.h ..\..\include\setting\DataHolder
+copy .\AppList.h ..\..\include\setting\DataHolder
+copy .\WordList.h ..\..\include\setting\DataHolder
+copy .\DbMgr.h ..\..\include\setting\DataHolder
 "/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
@@ -333,6 +341,34 @@ copy .\miscsetting.h ..\..\include\setting
 			</File>
 			<File
 				RelativePath=".\configItem.h">
+			</File>
+		</Filter>
+		<Filter
+			Name="DataHolder"
+			Filter="">
+			<File
+				RelativePath=".\AppList.cpp">
+			</File>
+			<File
+				RelativePath=".\AppList.h">
+			</File>
+			<File
+				RelativePath=".\DbMgr.cpp">
+			</File>
+			<File
+				RelativePath=".\DbMgr.h">
+			</File>
+			<File
+				RelativePath=".\WebsiteList.h">
+			</File>
+			<File
+				RelativePath=".\WebsitesList.cpp">
+			</File>
+			<File
+				RelativePath=".\WordList.cpp">
+			</File>
+			<File
+				RelativePath=".\WordList.h">
 			</File>
 		</Filter>
 		<File
