@@ -50,10 +50,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AppUtility", "libproject\Ap
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HistoryContent", "libproject\HistoryContent\HistoryContent.vcproj", "{8DAC3D17-DFD3-4FE0-9751-34BEBF84C21F}"
-	ProjectSection(ProjectDependencies) = postProject
-	EndProjectSection
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SoftwareEncrypt", "RegisterUtility\SoftwareEncrypt\SoftwareEncrypt.vcproj", "{9E22A563-69C9-48A7-AFFF-4E3D41077852}"
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
@@ -176,14 +172,6 @@ Global
 		{950E97E5-8DCB-44E9-9237-9A4DEF89E925}.Release.Build.0 = Release|Win32
 		{950E97E5-8DCB-44E9-9237-9A4DEF89E925}.Release Unicode.ActiveCfg = Release|Win32
 		{950E97E5-8DCB-44E9-9237-9A4DEF89E925}.Release Unicode.Build.0 = Release|Win32
-		{8DAC3D17-DFD3-4FE0-9751-34BEBF84C21F}.Debug.ActiveCfg = Debug|Win32
-		{8DAC3D17-DFD3-4FE0-9751-34BEBF84C21F}.Debug.Build.0 = Debug|Win32
-		{8DAC3D17-DFD3-4FE0-9751-34BEBF84C21F}.Debug Unicode.ActiveCfg = Debug|Win32
-		{8DAC3D17-DFD3-4FE0-9751-34BEBF84C21F}.Debug Unicode.Build.0 = Debug|Win32
-		{8DAC3D17-DFD3-4FE0-9751-34BEBF84C21F}.Release.ActiveCfg = Release|Win32
-		{8DAC3D17-DFD3-4FE0-9751-34BEBF84C21F}.Release.Build.0 = Release|Win32
-		{8DAC3D17-DFD3-4FE0-9751-34BEBF84C21F}.Release Unicode.ActiveCfg = Release|Win32
-		{8DAC3D17-DFD3-4FE0-9751-34BEBF84C21F}.Release Unicode.Build.0 = Release|Win32
 		{9E22A563-69C9-48A7-AFFF-4E3D41077852}.Debug.ActiveCfg = Debug|Win32
 		{9E22A563-69C9-48A7-AFFF-4E3D41077852}.Debug.Build.0 = Debug|Win32
 		{9E22A563-69C9-48A7-AFFF-4E3D41077852}.Debug Unicode.ActiveCfg = Debug|Win32
