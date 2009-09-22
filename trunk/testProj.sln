@@ -23,10 +23,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestAppUtility", "test\Test
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestHistoryContent", "test\TestHistoryContent\TestHistoryContent.vcproj", "{B1F97CC3-921C-45F6-99FE-7B9EF5BCE834}"
-	ProjectSection(ProjectDependencies) = postProject
-	EndProjectSection
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestSoftwareEncrypt", "test\TestSoftwareEncrypt\TestSoftwareEncrypt.vcproj", "{0B5E78ED-3E0A-4DBE-B590-B283DBF8D98C}"
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
@@ -97,14 +93,6 @@ Global
 		{82442190-6EDE-4A41-8282-119A5F796AA8}.Release.Build.0 = Release|Win32
 		{82442190-6EDE-4A41-8282-119A5F796AA8}.Release Unicode.ActiveCfg = Release|Win32
 		{82442190-6EDE-4A41-8282-119A5F796AA8}.Release Unicode.Build.0 = Release|Win32
-		{B1F97CC3-921C-45F6-99FE-7B9EF5BCE834}.Debug.ActiveCfg = Debug|Win32
-		{B1F97CC3-921C-45F6-99FE-7B9EF5BCE834}.Debug.Build.0 = Debug|Win32
-		{B1F97CC3-921C-45F6-99FE-7B9EF5BCE834}.Debug Unicode.ActiveCfg = Debug|Win32
-		{B1F97CC3-921C-45F6-99FE-7B9EF5BCE834}.Debug Unicode.Build.0 = Debug|Win32
-		{B1F97CC3-921C-45F6-99FE-7B9EF5BCE834}.Release.ActiveCfg = Release|Win32
-		{B1F97CC3-921C-45F6-99FE-7B9EF5BCE834}.Release.Build.0 = Release|Win32
-		{B1F97CC3-921C-45F6-99FE-7B9EF5BCE834}.Release Unicode.ActiveCfg = Release|Win32
-		{B1F97CC3-921C-45F6-99FE-7B9EF5BCE834}.Release Unicode.Build.0 = Release|Win32
 		{0B5E78ED-3E0A-4DBE-B590-B283DBF8D98C}.Debug.ActiveCfg = Debug|Win32
 		{0B5E78ED-3E0A-4DBE-B590-B283DBF8D98C}.Debug.Build.0 = Debug|Win32
 		{0B5E78ED-3E0A-4DBE-B590-B283DBF8D98C}.Debug Unicode.ActiveCfg = Debug|Win32
