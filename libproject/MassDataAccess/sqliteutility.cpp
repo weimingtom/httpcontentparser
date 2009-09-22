@@ -3,6 +3,7 @@
 #include <sqlite3.h>
 #include <assert.h>
 
+namespace sqllite_utility {
 
 int report_error(const char  * errmsg, int code) {
     printf("error messsage : %s\n", errmsg);
@@ -342,3 +343,4 @@ exit:
     return rc;
 }
 
+}

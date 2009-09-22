@@ -45,7 +45,8 @@ copy .\dblogicallayer.h ..\..\include\test
 copy .\WebsiteList.h ..\..\include\DataHolder
 copy .\AppList.h ..\..\include\DataHolder
 copy .\WordList.h ..\..\include\DataHolder
-copy .\DbMgr.h ..\..\include\DataHolder"/>
+copy .\DbMgr.h ..\..\include\DataHolder
+"/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
 			<Tool
@@ -90,7 +91,8 @@ copy .\DbMgr.h ..\..\include\DataHolder"/>
 copy .\WebsiteList.h ..\..\include\DataHolder
 copy .\AppList.h ..\..\include\DataHolder
 copy .\WordList.h ..\..\include\DataHolder
-copy .\DbMgr.h ..\..\include\DataHolder"/>
+copy .\DbMgr.h ..\..\include\DataHolder
+"/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
 			<Tool
@@ -159,38 +161,6 @@ copy .\DbMgr.h ..\..\include\DataHolder"/>
 			</File>
 			<File
 				RelativePath=".\dblogicallayer.h">
-			</File>
-		</Filter>
-		<Filter
-			Name="DataHolder"
-			Filter="">
-			<File
-				RelativePath=".\AppList.cpp">
-			</File>
-			<File
-				RelativePath=".\AppList.h">
-			</File>
-			<File
-				RelativePath=".\WebsiteList.h">
-			</File>
-			<File
-				RelativePath=".\WebsitesList.cpp">
-			</File>
-			<File
-				RelativePath=".\WordList.cpp">
-			</File>
-			<File
-				RelativePath=".\WordList.h">
-			</File>
-		</Filter>
-		<Filter
-			Name="DbMgr"
-			Filter="">
-			<File
-				RelativePath=".\DbMgr.cpp">
-			</File>
-			<File
-				RelativePath=".\DbMgr.h">
 			</File>
 		</Filter>
 		<File

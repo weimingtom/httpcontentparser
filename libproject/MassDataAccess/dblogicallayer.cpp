@@ -2,6 +2,8 @@
 #include "dblogicallayer.h"
 #include "sqliteutility.h"
 
+using namespace sqllite_utility;
+
 sqlite_connection g_conn_;
 
 namespace {
